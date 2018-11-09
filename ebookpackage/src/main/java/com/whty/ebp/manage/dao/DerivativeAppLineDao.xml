@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.ebp.manage.dao.DerivativeAppLineDao">
+
+
+	<resultMap type="com.whty.ebp.manage.model.DerivativeAppLine" id="derivativeAppLineResultPage">
+		<result column="id" property="id" jdbcType="VARCHAR" />
+		<result column="line_name" property="lineName" jdbcType="VARCHAR" />
+		<result column="description" property="description" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+
+	<select id="listByCondition" parameterType="map" resultMap="derivativeAppLineResultPage">
+		SELECT * FROM TA_DERIVATIVE_APP_LINE where 1=1
+		<if test="lineName != null "> and line_name=#{lineName}</if>
+	</select>
+	
+	<insert id="save">
+		insert into TA_DERIVATIVE_APP_LINE(
+		<trim suffixOverrides=",">
+			<if test="id != null">id,</if>
+			<if test="lineName != null">line_name,</if>
+			<if test="description != null">description,</if>
+			<if test="createTime != null">create_Time,</if>
+		</trim>
+		)
+		values(
+		<trim suffixOverrides=",">
+			<if test="id != null">#{id},</if>
+			<if test="lineName != null">#{lineName},</if>
+			<if test="description != null">#{description},</if>
+			<if test="createTime != null">#{createTime},</if>
+		</trim>
+		)
+	</insert>
+	
+</mapper>

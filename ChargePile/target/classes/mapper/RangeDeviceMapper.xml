@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fxzhj.mapper.RangeDeviceMapper">
+	<resultMap id="BaseResultMap" type="com.fxzhj.model.RangeDevice">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="device_id" property="deviceId" jdbcType="BIGINT" />
+		<result column="site_name" property="siteName" jdbcType="VARCHAR" />
+		<result column="tel_phone" property="telPhone" jdbcType="VARCHAR" />
+		<result column="lng" property="lng" jdbcType="VARCHAR" />
+		<result column="lat" property="lat" jdbcType="VARCHAR" />
+		<result column="start_time" property="startTime" jdbcType="VARCHAR" />
+		<result column="end_time" property="endTime" jdbcType="VARCHAR" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		id, device_id, site_name, tel_phone, lng, lat, start_time, end_time
+	</sql>
+	
+	<!-- 根据community_id删除数据 -->
+	<delete id="deleteByCId" parameterType="java.lang.Integer">
+		delete from t_range_device where device_id in (
+			select id from t_device where community_id=#{0})
+	</delete>
+	
+	<!-- 根据area_id删除数据 -->
+	<delete id="deleteByAId" parameterType="java.lang.Integer">
+		delete from t_range_device where device_id in (
+			select id from t_device where area_id=#{0})
+	</delete>
+	
+	<!-- 新增修改 -->
+	<insert id="addBean" parameterType="com.fxzhj.model.RangeDevice">
+		insert into t_range_device (id, device_id, site_name, tel_phone,lng, lat, start_time, end_time)
+		values (#{id}, #{deviceId},	#{siteName}, #{telPhone}, #{lng}, #{lat}, #{startTime}, #{endTime})
+	</insert>
+	
+	<cache />
+</mapper>

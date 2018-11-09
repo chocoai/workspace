@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.ebp.sys.dao.SysButtonDao">
+	<resultMap type="com.whty.ebp.sys.model.SysButton" id="ButtonResult">
+		<result column="id" property="id"/>
+		<result column="button_name" property="buttonName"/>
+		<result column="sort_num" property="sortNum"/>
+		<result column="status" property="status"/>
+		<result column="modular_id" property="modularId"/>
+		<result column="modular_name" property="modularName"/>
+	</resultMap>
+	
+	<select id="queryButton" parameterType="map" resultMap="ButtonResult">
+		select b.*,m.modular_name from SYS_BUTTON b left join SYS_MODULAR m ON b.modular_id= m.id where modular_id=#{modularId} order by sort_num 
+	</select>
+	<!-- 新增菜单按钮-->
+	<insert id="addButton" parameterType="com.whty.ebp.sys.model.SysButton">
+		insert into SYS_BUTTON (
+			<if test="id != null">id,</if>
+			<if test="buttonName != null">button_name,</if>
+			<if test="sortNum != null">sort_num,</if>
+			<if test="status != null">status,</if>
+			<if test="modularId != null">modular_id</if>
+		) values (
+			<if test="id != null">#{id,jdbcType=VARCHAR},</if>
+			<if test="buttonName != null">#{buttonName,jdbcType=VARCHAR},</if>
+			<if test="sortNum != null">#{sortNum},</if>
+			<if test="status != null">#{status,jdbcType=VARCHAR},</if>
+			<if test="modularId != null">#{modularId,jdbcType=VARCHAR}</if>
+		)
+	</insert>
+	<!-- 更新菜单按钮-->
+	<update id="updateButton" parameterType="com.whty.ebp.sys.model.SysButton">
+		update SYS_BUTTON 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="buttonName != null">button_name=#{buttonName},</if>
+			<if test="sortNum != null">sort_num=#{sortNum},</if>
+			<if test="status != null">status=#{status},</if>
+			<if test="modularId != null">modular_id=#{modularId},</if>
+		</trim>
+		where id=#{id}
+	</update>
+	<delete id="deleteButton" parameterType="string">
+		delete from SYS_BUTTON
+		where id=#{id}
+	</delete>
+	
+		<select id="queryButtonNamesByUserId" parameterType="map" resultType="string">
+		select sb.button_name name 
+   		from SYS_USER_ROLE sur 
+             left join SYS_ROLE_BUTTON srb on sur.role_id = srb.role_id
+             left join SYS_BUTTON sb on sb.id = srb.button_id
+		where sur.user_id = #{userId} and srb.modular_id = #{modularId}
+	</select>
+</mapper>

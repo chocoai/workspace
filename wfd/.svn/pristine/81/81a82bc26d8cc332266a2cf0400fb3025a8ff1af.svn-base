@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.wfd.page.dao.TUserMapper">
+  <resultMap id="BaseResultMap" type="com.whty.wfd.page.model.TUser">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="user_type" jdbcType="VARCHAR" property="userType" />
+    <result column="person_id" jdbcType="VARCHAR" property="personId" />
+    <result column="platform_code" jdbcType="VARCHAR" property="platformCode" />
+    <result column="login_platform_code" jdbcType="VARCHAR" property="loginPlatformCode" />
+    <result column="school_id" jdbcType="INTEGER" property="schoolId" />
+    
+    <result column="logo_url"  property="logoUrl" />
+    
+    <result column="orga_id" property="orgaId" />
+    
+    <result column="identity_id" property="identityId" />
+    
+     <result column="receive_message" property="receiveMessage" />
+    
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, name, account, create_time, update_time, user_type, person_id, platform_code, 
+    login_platform_code, school_id,orga_id,logo_url,identity_id,receive_message
+  </sql>
+  
+  
+  <select id="selectUserByPlate" parameterType="map" resultMap="BaseResultMap">
+  	select * from t_user where school_id=#{schoolId} and id in
+(select distinct(user_id) from t_class_user t1 right join t_class_plate t2 on t1.class_id=t2.class_id
+where 1=1
+    <if test="plateId !=null and plateId !=''">
+      and plate_id=#{plateId}
+    </if>
+union all select distinct(user_id) from t_plate_user
+where 1=1
+    <if test="plateId !=null and plateId !=''">
+      and plate_id=#{plateId}
+    </if>
+) order by convert(name using gbk)
+  </select>
+
+  <select id="selectUserByPlateName" parameterType="map" resultMap="BaseResultMap">
+    select * from t_user where school_id=#{schoolId}
+      <if test="userName !=null and userName !=''">
+          and name LIKE #{userName}
+      </if>
+      and id in
+    (select distinct(user_id) from t_class_user t1 right join t_class_plate t2 on t1.class_id=t2.class_id
+    where 1=1
+    <if test="plateId !=null and plateId !=''">
+      and plate_id=#{plateId}
+    </if>
+    union all select distinct(user_id) from t_plate_user
+    where 1=1
+    <if test="plateId !=null and plateId !=''">
+      and plate_id=#{plateId}
+    </if>
+    ) order by convert(name using gbk)
+  </select>
+  
+  
+   <select id="selectByPlatePostId" parameterType="string" resultMap="BaseResultMap">
+  	select * from t_user where id in (select creator from t_plate_post where id=#{_parameter})
+  </select>
+  
+  <select id="selectByPlate" parameterType="map" resultMap="BaseResultMap">
+  	select * from t_user where id in(select user_id from t_plate_user where plate_id=#{plateId}) order by convert(name using gbk)
+  </select>
+  
+  <select id="selectByClass"  parameterType="map" resultMap="BaseResultMap">
+  	select t2.* from t_class_user class_user left join t_user t2 on class_user.user_id = t2.id 
+  	where 1=1
+  	<if test="classId !=null">
+  		and class_user.class_id = #{classId}
+  	</if>
+  	
+  </select>
+  
+  <select id="selectByExample" parameterType="com.whty.wfd.page.model.TUserExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_user
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_user
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.whty.wfd.page.model.TUserExample">
+    delete from t_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.whty.wfd.page.model.TUser">
+    insert into t_user (id, name, account, 
+      create_time, update_time, user_type, 
+      person_id, platform_code, login_platform_code, 
+      school_id,logo_url,orga_id,identity_id)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{account,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{userType,jdbcType=VARCHAR}, 
+      #{personId,jdbcType=VARCHAR}, #{platformCode,jdbcType=VARCHAR}, #{loginPlatformCode,jdbcType=VARCHAR}, 
+      #{schoolId,jdbcType=INTEGER},#{logoUrl},#{orgaId},#{identityId})
+  </insert>
+  <insert id="insertSelective" parameterType="com.whty.wfd.page.model.TUser">
+    insert into t_user
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="name != null">
+        name,
+      </if>
+      <if test="account != null">
+        account,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="userType != null">
+        user_type,
+      </if>
+      <if test="personId != null">
+        person_id,
+      </if>
+      <if test="platformCode != null">
+        platform_code,
+      </if>
+      <if test="loginPlatformCode != null">
+        login_platform_code,
+      </if>
+      <if test="schoolId != null">
+        school_id,
+      </if>
+      <if test="logoUrl != null">
+        logo_url,
+      </if>
+      <if test="orgaId != null">
+        orga_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null">
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null">
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userType != null">
+        #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="personId != null">
+        #{personId,jdbcType=VARCHAR},
+      </if>
+      <if test="platformCode != null">
+        #{platformCode,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPlatformCode != null">
+        #{loginPlatformCode,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolId != null">
+        #{schoolId,jdbcType=INTEGER},
+      </if>
+      <if test="logoUrl != null">
+        #{logoUrl},
+      </if>
+      <if test="orgaId != null">
+        #{orgaId},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.whty.wfd.page.model.TUserExample" resultType="java.lang.Long">
+    select count(*) from t_user
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_user
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null">
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.account != null">
+        account = #{record.account,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userType != null">
+        user_type = #{record.userType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.personId != null">
+        person_id = #{record.personId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.platformCode != null">
+        platform_code = #{record.platformCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.loginPlatformCode != null">
+        login_platform_code = #{record.loginPlatformCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schoolId != null">
+        school_id = #{record.schoolId,jdbcType=INTEGER},
+      </if>
+      <if test="record.logoUrl != null">
+        logo_url = #{record.logoUrl},
+      </if>
+      <if test="record.orgaId != null">
+        orgaId = #{record.orgaId},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_user
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      account = #{record.account,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      user_type = #{record.userType,jdbcType=VARCHAR},
+      person_id = #{record.personId,jdbcType=VARCHAR},
+      platform_code = #{record.platformCode,jdbcType=VARCHAR},
+      login_platform_code = #{record.loginPlatformCode,jdbcType=VARCHAR},
+      school_id = #{record.schoolId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.whty.wfd.page.model.TUser">
+    update t_user
+    <set>
+      <if test="logoUrl != null">
+        name = #{logo_url,jdbcType=VARCHAR},
+      </if>
+    
+      <if test="name != null">
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="account != null">
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userType != null">
+        user_type = #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="personId != null">
+        person_id = #{personId,jdbcType=VARCHAR},
+      </if>
+      <if test="platformCode != null">
+        platform_code = #{platformCode,jdbcType=VARCHAR},
+      </if>
+      <if test="loginPlatformCode != null">
+        login_platform_code = #{loginPlatformCode,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolId != null">
+        school_id = #{schoolId,jdbcType=INTEGER},
+      </if>
+      <if test="receiveMessage != null">
+        receive_message = #{receiveMessage},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.whty.wfd.page.model.TUser">
+    update t_user
+    set name = #{name,jdbcType=VARCHAR},
+      logo_url = #{logoUrl,jdbcType=VARCHAR},
+      account = #{account,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      user_type = #{userType,jdbcType=VARCHAR},
+      person_id = #{personId,jdbcType=VARCHAR},
+      platform_code = #{platformCode,jdbcType=VARCHAR},
+      login_platform_code = #{loginPlatformCode,jdbcType=VARCHAR},
+      receive_message = #{receiveMessage,jdbcType=VARCHAR},
+      orga_id = #{orgaId},
+      identity_id = #{identityId},
+      school_id = #{schoolId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

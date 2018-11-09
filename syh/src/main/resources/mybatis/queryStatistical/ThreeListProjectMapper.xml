@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ThreeListProjectMapper">
+  <resultMap id="BaseResultMap" type="ThreeListProject">
+    <result column="PROJECT_CID" jdbcType="VARCHAR" property="projectCid" />
+    <result column="PROJECT_NAME" jdbcType="VARCHAR" property="projectName" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+		PROJECT_CID,PROJECT_NAME
+  </sql>
+
+  <!-- 项目集合 -->
+  <select id="queryThreeProjectList" parameterType="java.lang.Integer" resultMap="BaseResultMap">		
+		select v.PROJECT_TYPE AS PROJECT_CID,v.CLASSIFY_NAME AS PROJECT_NAME 
+		from view_particpat_basic as v
+		where v.ATHLETES_TYPE = #{type,jdbcType=INTEGER}
+		and   v.ERSION_NUM = #{ersionNum,jdbcType=INTEGER}
+		group by v.PROJECT_TYPE
+   </select>  
+</mapper>

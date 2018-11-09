@@ -1,0 +1,82 @@
+		
+		<div class="sh_right">
+			<!----精彩专题 开始----->
+			<div class="jczt">
+				<div class="jczt_hd">
+					<!-- <span>精彩专题</span> -->
+					精彩专题
+				</div>
+				<div class="jczt_bd">
+					[@cms_content_list count='5' orderBy='4' titLen='20' typeId="2" channelOption='1' channelId='177'] 
+					[#list tag_list as content]
+					[#if content_index = 0] 
+					<div class="jczt_pic">
+						<a href="${content.url}" title="${content.title}">
+							<img src="${content.typeImg!site.defImg}">
+						</a>
+						<span class="jczt_bg">
+							<a href="${content.url}" title="${content.title}">[@text_cut s=content.title! len='20' append='...'/]</a>
+						</span>
+					</div>
+					<ul class="jczt_list">
+					[#elseif content_index > 0 ]
+						<li>
+							<a href="${content.url}" title="${content.title}">[@text_cut s=content.title! len='20' append='...'/]</a>
+						</li>
+					[/#if]
+					[#if !content_has_next] 
+					</ul>
+					[/#if]
+					[/#list]
+					[/@cms_content_list]
+				</div>
+			</div>
+			<!----精彩专题 结束----->
+		
+			<!-----活动精选 开始----->
+			<div class="hdjx">
+				<div class="jczt_hd">
+					<!-- <span>活动精选</span> -->
+					活动精选
+				</div>
+				<div class="hdjx_bd">
+					
+					[@cms_content_list count='3' orderBy='2' titLen='20' typeId="2" channelOption='1' channelId = '178' ] 
+					<!-- <div class="hdjx02"> -->
+					[#list tag_list as content]
+					<div class="hdjx01">
+						<a href="${content.url}" title="${content.title}">
+							<img src="${content.typeImg!site.defImg}">
+						</a>
+						<div class="hdjx01_tit">
+							<a href="${content.url}" title="${content.title}">[@text_cut s=content.title! len='20' append='...'/]</a>
+						</div>
+					</div>
+					
+					[/#list]
+					<!-- </div> -->
+					[/@cms_content_list]
+				</div>
+			</div>
+			<!-----活动精选 结束----->
+		
+			<!------每周热帖 开始------>
+			<div class="mzrt">
+				<div class="jczt_hd">
+					<!-- <span>每周热帖</span> -->
+					每周热帖
+				</div>
+				<div class="mzrt_bd">
+					<ul>
+					[@cms_content_list count='10' orderBy='7' titLen='20' typeId="1,2,3,4" channelOption='1' channelId = 85 ] 
+					[#list tag_list as content]
+						<li>
+							<a href="${content.url}">[@text_cut s=content.title! len='20' append='...'/]</a>
+						</li>
+					[/#list]
+					[/@cms_content_list]
+					</ul>
+				</div>
+			</div>
+			<!-----每周热帖 结束----->
+		</div>

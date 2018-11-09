@@ -1,0 +1,413 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.iHealthCloud.mapper.HdBloodPressureMapper">
+	<resultMap id="BaseResultMap" type="com.yhcrt.iHealthCloud.entity.HdBloodPressure">
+		<id column="cid" jdbcType="INTEGER" property="cid" />
+		<result column="imei" jdbcType="VARCHAR" property="imei" />
+		<result column="member_id" jdbcType="INTEGER" property="memberId" />
+		<result column="data_date" jdbcType="VARCHAR" property="dataDate" />
+		<result column="upload_time" jdbcType="VARCHAR" property="uploadTime" />
+		<result column="dbp" jdbcType="INTEGER" property="dbp" />
+		<result column="sbp" jdbcType="INTEGER" property="sbp" />
+		<result column="cext1" jdbcType="VARCHAR" property="cext1" />
+		<result column="cext2" jdbcType="VARCHAR" property="cext2" />
+		<result column="cext3" jdbcType="VARCHAR" property="cext3" />
+		<result column="iext1" jdbcType="INTEGER" property="iext1" />
+		<result column="iext2" jdbcType="INTEGER" property="iext2" />
+		<result column="dext1" jdbcType="DATE" property="dext1" />
+		<result column="dext2" jdbcType="DATE" property="dext2" />
+	</resultMap>
+	
+	<resultMap id="ExtendBloodPressureResultMap" type="com.yhcrt.iHealthCloud.pojo.BloodPressureDTO">
+		<result column="dataDate" jdbcType="VARCHAR" property="dataDate" />
+		<result column="dbp" jdbcType="VARCHAR" property="dbp" />
+		<result column="sbp" jdbcType="VARCHAR" property="sbp" />
+	</resultMap>
+	
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		cid, imei, member_id, data_date, upload_time, dbp, sbp, cext1, cext2,
+		cext3, iext1, iext2, dext1, dext2
+	</sql>
+	
+	<!-- 向数据库中请求近7天的所有数据 -->
+	<select id="selectHdBloodPressure" parameterType="map" resultMap="BaseResultMap">
+		select 
+			cid, imei, member_id, data_date, DATE_FORMAT(MAX(upload_time), '%m-%d') upload_time, 
+			SUM(dbp) dbp, SUM(sbp) sbp, cext1, cext2, cext3, iext1, iext2, dext1, dext2 
+		from hd_blood_pressure 
+		where member_id=#{memberId} 
+		and DATE_FORMAT(upload_time, '%Y-%m-%d') &gt;= DATE_FORMAT(#{startTime}, '%Y-%m-%d') 
+		and DATE_FORMAT(upload_time, '%Y-%m-%d') &lt;= DATE_FORMAT(#{endTime}, '%Y-%m-%d')
+		GROUP BY DATE_FORMAT(upload_time, '%Y-%m-%d') 
+		ORDER BY upload_time desc
+	</select>
+	
+	<select id="getLatestBloodPressure" parameterType="java.lang.String" resultType="com.yhcrt.iHealthCloud.pojo.BloodPressureDTO">
+		SELECT data_date AS dataDate, dbp, sbp FROM hd_blood_pressure
+	 	WHERE member_id = #{memberId,jdbcType=VARCHAR} ORDER BY data_date DESC LIMIT 1
+	</select>
+	
+	<select id="listBloodPressureByTime" parameterType="map" resultMap="ExtendBloodPressureResultMap">
+		SELECT substring(data_date,12,5) AS dataDate, dbp, sbp FROM hd_blood_pressure
+	 	WHERE member_id = #{memberId,jdbcType=VARCHAR}
+		       AND data_date &gt;= #{startTime,jdbcType=VARCHAR}
+		       AND data_date &lt;= #{endTime,jdbcType=VARCHAR}
+		ORDER BY data_date DESC	
+	</select>
+	
+	<select id="getBloodPressureDataForWeek" parameterType="java.lang.String" resultMap="ExtendBloodPressureResultMap">
+		select DATE_FORMAT(data_date, '%m-%d') AS dataDate,dbp,sbp from hd_blood_pressure 
+		where data_date > DATE_FORMAT(subdate(now(), INTERVAL 7 DAY), '%Y-%m-%d')
+		and member_id = #{memberId,jdbcType=VARCHAR} order by data_date ASC
+	</select>
+	
+	<select id="getMaxMinAvgBloodPressureDataForWeek" parameterType="java.lang.String" resultType="com.yhcrt.iHealthCloud.pojo.DataItem">
+		select CONCAT(max(t.dbp),',',max(t.sbp))as max ,CONCAT( min(t.dbp),',',min(t.sbp)) as min,concat(round(avg(t.dbp)),',',round(avg(t.sbp))) as avg 
+		from  (select DATE_FORMAT(data_date, '%m-%d') AS dataDate,dbp,sbp from hd_blood_pressure 
+				where data_date > DATE_FORMAT(subdate(now(), INTERVAL 7 DAY), '%Y-%m-%d')
+				and member_id = #{memberId,jdbcType=VARCHAR} order by data_date desc) t
+	</select>	
+	
+	<select id="selectByExample"
+		parameterType="com.yhcrt.iHealthCloud.entity.HdBloodPressureExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from hd_blood_pressure
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from hd_blood_pressure
+		where cid = #{cid,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from hd_blood_pressure
+		where cid = #{cid,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample"
+		parameterType="com.yhcrt.iHealthCloud.entity.HdBloodPressureExample">
+		delete from hd_blood_pressure
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.yhcrt.iHealthCloud.entity.HdBloodPressure">
+		insert into hd_blood_pressure (cid, imei, member_id,
+		data_date, upload_time, dbp,
+		sbp, cext1, cext2,
+		cext3, iext1, iext2,
+		dext1, dext2)
+		values (#{cid,jdbcType=INTEGER}, #{imei,jdbcType=VARCHAR},
+		#{memberId,jdbcType=INTEGER},
+		#{dataDate,jdbcType=VARCHAR}, #{uploadTime,jdbcType=VARCHAR}, #{dbp,jdbcType=INTEGER},
+		#{sbp,jdbcType=INTEGER}, #{cext1,jdbcType=VARCHAR},
+		#{cext2,jdbcType=VARCHAR},
+		#{cext3,jdbcType=VARCHAR}, #{iext1,jdbcType=INTEGER}, #{iext2,jdbcType=INTEGER},
+		#{dext1,jdbcType=DATE}, #{dext2,jdbcType=DATE})
+	</insert>
+	<insert id="insertSelective" parameterType="com.yhcrt.iHealthCloud.entity.HdBloodPressure">
+		insert into hd_blood_pressure
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="cid != null">
+				cid,
+			</if>
+			<if test="imei != null">
+				imei,
+			</if>
+			<if test="memberId != null">
+				member_id,
+			</if>
+			<if test="dataDate != null">
+				data_date,
+			</if>
+			<if test="uploadTime != null">
+				upload_time,
+			</if>
+			<if test="dbp != null">
+				dbp,
+			</if>
+			<if test="sbp != null">
+				sbp,
+			</if>
+			<if test="cext1 != null">
+				cext1,
+			</if>
+			<if test="cext2 != null">
+				cext2,
+			</if>
+			<if test="cext3 != null">
+				cext3,
+			</if>
+			<if test="iext1 != null">
+				iext1,
+			</if>
+			<if test="iext2 != null">
+				iext2,
+			</if>
+			<if test="dext1 != null">
+				dext1,
+			</if>
+			<if test="dext2 != null">
+				dext2,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="cid != null">
+				#{cid,jdbcType=INTEGER},
+			</if>
+			<if test="imei != null">
+				#{imei,jdbcType=VARCHAR},
+			</if>
+			<if test="memberId != null">
+				#{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="dataDate != null">
+				#{dataDate,jdbcType=VARCHAR},
+			</if>
+			<if test="uploadTime != null">
+				#{uploadTime,jdbcType=VARCHAR},
+			</if>
+			<if test="dbp != null">
+				#{dbp,jdbcType=INTEGER},
+			</if>
+			<if test="sbp != null">
+				#{sbp,jdbcType=INTEGER},
+			</if>
+			<if test="cext1 != null">
+				#{cext1,jdbcType=VARCHAR},
+			</if>
+			<if test="cext2 != null">
+				#{cext2,jdbcType=VARCHAR},
+			</if>
+			<if test="cext3 != null">
+				#{cext3,jdbcType=VARCHAR},
+			</if>
+			<if test="iext1 != null">
+				#{iext1,jdbcType=INTEGER},
+			</if>
+			<if test="iext2 != null">
+				#{iext2,jdbcType=INTEGER},
+			</if>
+			<if test="dext1 != null">
+				#{dext1,jdbcType=DATE},
+			</if>
+			<if test="dext2 != null">
+				#{dext2,jdbcType=DATE},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample"
+		parameterType="com.yhcrt.iHealthCloud.entity.HdBloodPressureExample"
+		resultType="java.lang.Long">
+		select count(*) from hd_blood_pressure
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update hd_blood_pressure
+		<set>
+			<if test="record.cid != null">
+				cid = #{record.cid,jdbcType=INTEGER},
+			</if>
+			<if test="record.imei != null">
+				imei = #{record.imei,jdbcType=VARCHAR},
+			</if>
+			<if test="record.memberId != null">
+				member_id = #{record.memberId,jdbcType=INTEGER},
+			</if>
+			<if test="record.dataDate != null">
+				data_date = #{record.dataDate,jdbcType=VARCHAR},
+			</if>
+			<if test="record.uploadTime != null">
+				upload_time = #{record.uploadTime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.dbp != null">
+				dbp = #{record.dbp,jdbcType=INTEGER},
+			</if>
+			<if test="record.sbp != null">
+				sbp = #{record.sbp,jdbcType=INTEGER},
+			</if>
+			<if test="record.cext1 != null">
+				cext1 = #{record.cext1,jdbcType=VARCHAR},
+			</if>
+			<if test="record.cext2 != null">
+				cext2 = #{record.cext2,jdbcType=VARCHAR},
+			</if>
+			<if test="record.cext3 != null">
+				cext3 = #{record.cext3,jdbcType=VARCHAR},
+			</if>
+			<if test="record.iext1 != null">
+				iext1 = #{record.iext1,jdbcType=INTEGER},
+			</if>
+			<if test="record.iext2 != null">
+				iext2 = #{record.iext2,jdbcType=INTEGER},
+			</if>
+			<if test="record.dext1 != null">
+				dext1 = #{record.dext1,jdbcType=DATE},
+			</if>
+			<if test="record.dext2 != null">
+				dext2 = #{record.dext2,jdbcType=DATE},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update hd_blood_pressure
+		set cid = #{record.cid,jdbcType=INTEGER},
+		imei = #{record.imei,jdbcType=VARCHAR},
+		member_id = #{record.memberId,jdbcType=INTEGER},
+		data_date = #{record.dataDate,jdbcType=VARCHAR},
+		upload_time = #{record.uploadTime,jdbcType=VARCHAR},
+		dbp = #{record.dbp,jdbcType=INTEGER},
+		sbp = #{record.sbp,jdbcType=INTEGER},
+		cext1 = #{record.cext1,jdbcType=VARCHAR},
+		cext2 = #{record.cext2,jdbcType=VARCHAR},
+		cext3 = #{record.cext3,jdbcType=VARCHAR},
+		iext1 = #{record.iext1,jdbcType=INTEGER},
+		iext2 = #{record.iext2,jdbcType=INTEGER},
+		dext1 = #{record.dext1,jdbcType=DATE},
+		dext2 = #{record.dext2,jdbcType=DATE}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.iHealthCloud.entity.HdBloodPressure">
+		update hd_blood_pressure
+		<set>
+			<if test="imei != null">
+				imei = #{imei,jdbcType=VARCHAR},
+			</if>
+			<if test="memberId != null">
+				member_id = #{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="dataDate != null">
+				data_date = #{dataDate,jdbcType=VARCHAR},
+			</if>
+			<if test="uploadTime != null">
+				upload_time = #{uploadTime,jdbcType=VARCHAR},
+			</if>
+			<if test="dbp != null">
+				dbp = #{dbp,jdbcType=INTEGER},
+			</if>
+			<if test="sbp != null">
+				sbp = #{sbp,jdbcType=INTEGER},
+			</if>
+			<if test="cext1 != null">
+				cext1 = #{cext1,jdbcType=VARCHAR},
+			</if>
+			<if test="cext2 != null">
+				cext2 = #{cext2,jdbcType=VARCHAR},
+			</if>
+			<if test="cext3 != null">
+				cext3 = #{cext3,jdbcType=VARCHAR},
+			</if>
+			<if test="iext1 != null">
+				iext1 = #{iext1,jdbcType=INTEGER},
+			</if>
+			<if test="iext2 != null">
+				iext2 = #{iext2,jdbcType=INTEGER},
+			</if>
+			<if test="dext1 != null">
+				dext1 = #{dext1,jdbcType=DATE},
+			</if>
+			<if test="dext2 != null">
+				dext2 = #{dext2,jdbcType=DATE},
+			</if>
+		</set>
+		where cid = #{cid,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.yhcrt.iHealthCloud.entity.HdBloodPressure">
+		update hd_blood_pressure
+		set imei = #{imei,jdbcType=VARCHAR},
+		member_id = #{memberId,jdbcType=INTEGER},
+		data_date = #{dataDate,jdbcType=VARCHAR},
+		upload_time = #{uploadTime,jdbcType=VARCHAR},
+		dbp = #{dbp,jdbcType=INTEGER},
+		sbp = #{sbp,jdbcType=INTEGER},
+		cext1 = #{cext1,jdbcType=VARCHAR},
+		cext2 = #{cext2,jdbcType=VARCHAR},
+		cext3 = #{cext3,jdbcType=VARCHAR},
+		iext1 = #{iext1,jdbcType=INTEGER},
+		iext2 = #{iext2,jdbcType=INTEGER},
+		dext1 = #{dext1,jdbcType=DATE},
+		dext2 = #{dext2,jdbcType=DATE}
+		where cid = #{cid,jdbcType=INTEGER}
+	</update>
+</mapper>

@@ -1,0 +1,251 @@
+package com.yhcrt.iHealthCloud.service.impl;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.yhcrt.iHealthCloud.base.BaseService;
+import com.yhcrt.iHealthCloud.common.Constants;
+import com.yhcrt.iHealthCloud.entity.Area;
+import com.yhcrt.iHealthCloud.entity.Member;
+import com.yhcrt.iHealthCloud.entity.Organization;
+import com.yhcrt.iHealthCloud.entity.OrganizationExample;
+import com.yhcrt.iHealthCloud.entity.OrganizationExample.Criteria;
+import com.yhcrt.iHealthCloud.entity.Service;
+import com.yhcrt.iHealthCloud.entity.ServiceExample;
+import com.yhcrt.iHealthCloud.entity.ServicePrice;
+import com.yhcrt.iHealthCloud.entity.ServicePriceExample;
+import com.yhcrt.iHealthCloud.entity.SysDictionary;
+import com.yhcrt.iHealthCloud.entity.SysDictionaryExample;
+import com.yhcrt.iHealthCloud.entity.UserComment;
+import com.yhcrt.iHealthCloud.entity.YwImageExample;
+import com.yhcrt.iHealthCloud.mapper.MemberMapper;
+import com.yhcrt.iHealthCloud.mapper.OrganizationMapper;
+import com.yhcrt.iHealthCloud.mapper.ServiceMapper;
+import com.yhcrt.iHealthCloud.mapper.ServicePriceMapper;
+import com.yhcrt.iHealthCloud.mapper.SysDictionaryMapper;
+import com.yhcrt.iHealthCloud.mapper.UserCommentMapper;
+import com.yhcrt.iHealthCloud.mapper.YwImageMapper;
+import com.yhcrt.iHealthCloud.service.AreaService;
+import com.yhcrt.iHealthCloud.service.ServiceService;
+import com.yhcrt.iHealthCloud.util.Const;
+import com.yhcrt.iHealthCloud.util.OrgConst;
+
+/**
+ * 
+ * @author rpf
+ *
+ */
+@org.springframework.stereotype.Service
+public class ServiceServiceImpl extends BaseService implements ServiceService {
+
+	@Autowired
+	private ServiceMapper serviceMapper;
+	@Autowired
+	private OrganizationMapper organizationMapper;
+	@Autowired
+	private SysDictionaryMapper sysDictMappper;
+	@Autowired
+	private AreaService areaService;
+	@Autowired
+	private MemberMapper memberMapper;
+	@Autowired
+	private YwImageMapper ywImageMapper;
+	@Autowired
+	private UserCommentMapper userCommentMapper;
+	@Autowired
+	private ServicePriceMapper servicePriceMapper;
+
+	@Override
+	public Integer add(Service service) {
+		return serviceMapper.insert(service);
+	}
+
+	@Override
+	public Integer del(Integer cid) {
+		return serviceMapper.deleteByPrimaryKey(cid);
+	}
+
+	@Override
+	public Integer upd(Service service) {
+		return serviceMapper.updateByPrimaryKeySelective(service);
+	}
+
+	@Override
+	public Service get(Integer cid) {
+		return serviceMapper.selectByPrimaryKey(cid);
+	}
+
+	@Override
+	public List<Service> getAll(HashMap<String, Object> params) {
+		return serviceMapper.search(params);
+	}
+
+	@Override
+	public String getServices(JSONObject jsonObject) {
+		JSONObject bizObj = getBizObj(jsonObject);
+		String orgType = bizObj.getString("org_type");
+		String serviceType = bizObj.getString("service_type");
+		String areaCode = bizObj.getString("area_code");
+		String currentPage = bizObj.getString(Const.TAG_CURRENT_PAGE);
+		String pageSize = bizObj.getString(Const.TAG_PAGE_SIZE);
+		List<Integer> orgIds = new ArrayList<Integer>();
+
+		OrganizationExample organizationExample = new OrganizationExample();
+		Criteria criteria = organizationExample.createCriteria();
+		if (StringUtils.isNotBlank(orgType)) {
+			criteria.andOrgTypeEqualTo(orgType);
+		}
+		if (StringUtils.isNotBlank(areaCode)) {
+			criteria.andAreaIdLike(areaCode + "%");
+		}
+		if (StringUtils.isNotBlank(orgType) || StringUtils.isNotBlank(areaCode)) {
+			List<Organization> orgList = organizationMapper.selectByExample(organizationExample);
+			for (Organization organization : orgList) {
+				orgIds.add(organization.getOrgId());
+			}
+		}
+
+		ServiceExample example = new ServiceExample();
+		com.yhcrt.iHealthCloud.entity.ServiceExample.Criteria serviceCriteria = example.createCriteria();
+		if (StringUtils.isNotBlank(serviceType)) {
+			serviceCriteria.andServiceTypeEqualTo(serviceType);
+		}
+		if (orgIds.size() > 0) {
+			serviceCriteria.andOrgIdIn(orgIds);
+		}
+
+		try {
+			PageHelper.startPage(Integer.parseInt(currentPage), Integer.parseInt(pageSize));
+			List<Service> services = serviceMapper.selectByExample(example);
+			PageInfo<Service> pageInfo = new PageInfo<Service>(services);
+			setPagingData(jsonObject, pageInfo.getPages(), pageInfo.getPageNum());
+			requestSucceed(jsonObject, services, "");
+		} catch (Exception e) {
+			requestFailed(jsonObject, Constants.ExceptionMsg.SERVER_ERROR);
+			e.printStackTrace();
+		}
+		return toJsonStringWithOutNull(jsonObject);
+	}
+
+	@Override
+	public String getServiceFilterItem(JSONObject jsonObject) {
+		JSONObject bizObj = getBizObj(jsonObject);
+		SysDictionaryExample example = new SysDictionaryExample();
+		// 机构类型
+		example.createCriteria().andDictEnNameEqualTo(OrgConst.ORG_TYPE);
+		List<SysDictionary> orgTypes = sysDictMappper.selectByExample(example);
+		// 服务类型
+		example.clear();
+		example.createCriteria().andDictEnNameEqualTo(OrgConst.SERVICE_TYPE);
+		List<SysDictionary> serviceTypes = sysDictMappper.selectByExample(example);
+		// 地区列表,目前暂取武汉市各区
+		final Integer whAreaId = 1004;
+		List<Area> areas = areaService.getChildAreaByParentId(whAreaId);
+		
+		bizObj.put("orgTypes", orgTypes);
+		bizObj.put("serviceTypes", serviceTypes);
+		bizObj.put("areas", areas);
+		jsonObject.put(Const.TAG_STS, Const.TAG_STS_SUCCESS);
+		return toJsonStringWithOutNull(jsonObject);
+	}
+
+	@Override
+	public String getServiceDetail(JSONObject jsonObject) {
+		JSONObject bizObj = getBizObj(jsonObject);
+		String serviceId = bizObj.getString("service_id");
+		if (StringUtils.isNotBlank(serviceId)) {
+			Service service = get(Integer.parseInt(serviceId));
+			requestSucceed(jsonObject, service, "");
+		}
+		return toJsonStringWithOutNull(jsonObject);
+	}
+	@Override
+	public String getServiceDetailItem(JSONObject jsonObject) {
+		// 获取参数
+		JSONObject biz = jsonObject.getJSONObject("biz");
+		String serviceId = biz.getString("service_id");
+		// 对参数进行非空判断
+		if (judgeAgumentsIsLegal(jsonObject, serviceId)) {
+			// 向数据库请求数据并判断是否分页
+			Service service = get(Integer.parseInt(serviceId));
+			if (service != null) {
+				JSONObject servicejson = (JSONObject) JSON.toJSON(service);
+				YwImageExample example = new YwImageExample();
+				example.createCriteria().andRefIdEqualTo(service.getServiceId()).andModuleCodeEqualTo(Constants.SERVICE);
+				servicejson.put("images", ywImageMapper.selectByExample(example));
+				
+				UserComment comment = new UserComment();
+				comment.setRefId(service.getServiceId());
+				comment.setCommentType(Constants.SERVICE);
+				
+				Long count = userCommentMapper.countAll(comment);
+				if(count!=0){
+					List<UserComment> commentListAll = userCommentMapper.selectAll(comment, 2);
+					JSONArray commentJsonList = new JSONArray();
+					for(UserComment userComment : commentListAll){
+						JSONObject userCommentJson = (JSONObject) JSON.toJSON(userComment);
+						Member member = memberMapper.selectByPrimaryKey(Integer.valueOf(userComment.getMemberId()));
+						userCommentJson.put("userLogo", member.getHeadPic());
+						userCommentJson.put("nickName", member.getNickName());
+						commentJsonList.add(userCommentJson);
+					}
+					servicejson.put("comments", commentJsonList);
+				}
+				ServicePriceExample priceExample = new ServicePriceExample();
+				priceExample.createCriteria().andServiceIdEqualTo(service.getServiceId());
+				List<ServicePrice> priceList = servicePriceMapper.selectByExampleWithBLOBs(priceExample);
+				for (ServicePrice servicePrice : priceList) {
+					SysDictionary  dict = sysDictMappper.getByDictValue(servicePrice.getUnit());
+					if(dict==null){
+						priceList.remove(servicePrice);
+						continue;
+					}
+					servicePrice.setUnit(dict.getDictKey());
+				}
+				servicejson.put("titleImg", servicejson.get("titleImg")==null?"":servicejson.get("titleImg"));
+				servicejson.put("tel", "18627899132");
+				servicejson.put("priceList", priceList);
+				servicejson.put("moreComments",count);
+				jsonObject.put(Const.TAG_BIZ, servicejson);
+				jsonObject.put(Const.TAG_STS, Const.TAG_STS_SUCCESS);
+				jsonObject.put(Const.TAG_RMK, "获取成功！");
+			} else {
+				requestFailed(jsonObject, "不存在此服务");
+			}
+		} else {
+			requestFailed(jsonObject, Const.RMK_BIZ_PARAM_NULL);
+		}
+		return jsonObject.toJSONString();
+	}
+	
+	@Override
+	public List<Service> selectBy(Service service,String serviceName) {
+		return serviceMapper.selectBy(service,serviceName);
+	}
+	@Override
+	public List<Service> selectByOrgId(Integer orgId) {
+		ServiceExample example = new ServiceExample();
+		example.setOrderByClause("score desc");
+		example.createCriteria().andOrgIdEqualTo(orgId);
+		return serviceMapper.selectByExample(example);
+	}
+
+	@Override
+	public List<Service> selectBySearchText(String searchText) {
+		ServiceExample example = new ServiceExample();
+		example.setOrderByClause("create_time desc");
+		example.createCriteria().andServiceNameLike("%"+searchText+"%");
+		example.or().andServiceIntroLike("%"+searchText+"%");
+		return serviceMapper.selectByExample(example);
+	}
+
+}

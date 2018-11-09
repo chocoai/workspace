@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.mxbj.api.dao.NoteGuidKeyDao">
+
+	<resultMap type="com.whty.mxbj.api.model.NoteGuidKey" id="NoteGuidKeyResult">
+		<result column="user_id" property="userId" />
+		<result column="guid_keys" property="guidKeys" />
+		<result column="ever_note_id" property="everNoteId" />
+		<result column="user_platform_code" property="userPlatformCode" />
+	</resultMap>
+
+	<insert id="save">
+		insert into T_NOTE_GUIDKEY (
+		USER_ID
+		,EVER_note_ID
+		,user_platform_code
+		<if test="guidKeys != null ">,guid_Keys</if>
+		) values(
+		#{userId}
+		,#{everNoteId}
+		,#{userPlatformCode}
+		<if test="guidKeys != null ">,#{guidKeys}</if>
+		)
+	</insert>
+
+	<update id="update">
+		update T_NOTE_GUIDKEY
+		set
+		<trim prefixOverrides=",">
+			<if test="guidKeys != null ">,guid_Keys=#{guidKeys}</if>
+		</trim>
+		where user_id = #{userId} and ever_note_Id = #{everNoteId} and user_platform_Code=#{userPlatformCode}
+	</update>
+
+	<select id="listByCondition" parameterType="map" resultMap="NoteGuidKeyResult">
+		select * from T_NOTE_GUIDKEY
+		where 1=1
+		<if test="userId != null and userId != '' "> and user_id=#{userId}</if>
+		<if test="everNoteId != null and everNoteId != '' "> and ever_note_Id=#{everNoteId}</if>
+		<if test="userPlatformCode != null and userPlatformCode != '' "> and user_platform_code=#{userPlatformCode}</if>
+	</select>
+
+</mapper>

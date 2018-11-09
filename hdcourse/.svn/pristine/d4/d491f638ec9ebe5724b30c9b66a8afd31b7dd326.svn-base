@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!-- 全局映射器启用缓存 -->
+        <setting name="cacheEnabled" value="true"/>
+        <!-- 查询时，关闭关联对象即时加载以提高性能 -->
+        <setting name="lazyLoadingEnabled" value="false"/>
+        <setting name="autoMappingBehavior" value="FULL"/>
+     	<!-- --><setting name="logImpl" value="STDOUT_LOGGING" /> 
+    </settings>
+
+	<!-- mybaties别名配置 -->
+    <typeAliases>
+    	<typeAlias type="com.whty.assis.demo.model.Demo" alias="Demo"/>
+    	<typeAlias type="com.whty.assis.demo.model.Ta_user" alias="Ta_user"/>
+    	<typeAlias type="com.whty.assis.demo.model.ManageUserInfo" alias="ManageUserInfo"/>
+    	<typeAlias type="com.whty.assis.sysrole.model.SysModular" alias="SysModular"/>
+    	<typeAlias type="com.whty.assis.manage.model.BaseProperty" alias="BaseProperty"/>
+    </typeAliases>
+	<plugins>
+		<plugin interceptor="com.whty.page.interceptor.PaginationInterceptor">
+		</plugin>
+	</plugins>
+</configuration>

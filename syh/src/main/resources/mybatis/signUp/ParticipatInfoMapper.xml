@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ParticipatInfoMapper">
+  <resultMap id="BaseResultMap" type="ParticipatInfo">
+    <id column="CID" jdbcType="INTEGER" property="cid" />
+    <result column="PID" jdbcType="INTEGER" property="pid" />
+    <result column="ISPER_UNIT" jdbcType="INTEGER" property="isperUnit" />
+    <result column="ISCOMBINATION_TEAM" jdbcType="INTEGER" property="iscombinationTeam" />
+    <result column="ISINDIVIDUAL" jdbcType="INTEGER" property="isindividual" />
+    <result column="CREA_TIME" jdbcType="VARCHAR" property="creaTime" />
+    <result column="CREA_REN" jdbcType="VARCHAR" property="creaRen" />
+    <result column="ORDER_NUM" jdbcType="INTEGER" property="orderNum" />
+    <result column="BACKUP" jdbcType="VARCHAR" property="backup" />
+    <result column="EXP1" jdbcType="INTEGER" property="exp1" />
+    <result column="EXP2" jdbcType="INTEGER" property="exp2" />
+    <result column="EXP3" jdbcType="VARCHAR" property="exp3" />
+    <result column="EXP4" jdbcType="VARCHAR" property="exp4" />
+    <result column="EXP5" jdbcType="VARCHAR" property="exp5" />
+    <result column="EXP6" jdbcType="VARCHAR" property="exp6" />
+    <!-- 获取项目信息 -->
+	<association property="projectManager" column="PID"  select="ProjectManagerMapper.queryProjectByCid" />
+	<!-- 获取参赛明细 -->
+	<collection property="participatDetails" ofType="ParticipatDetail"  column="CID" select="ParticipatDetailMapper.getByParticipatCid"/>
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+    CID, PID, ISPER_UNIT, ISCOMBINATION_TEAM, ISINDIVIDUAL, CREA_TIME, CREA_REN, ORDER_NUM, 
+    BACKUP, EXP1, EXP2, EXP3, EXP4, EXP5, EXP6
+  </sql>
+  <!-- 判断某项赛事是否有运动员参赛 -->
+  <select id="countByProjectCid" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select count(*) from participat_info where PID = #{pid,jdbcType=INTEGER}
+  </select>
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    ,UNIT_NAME as unitNames,ATHLETE_NAME as participatNames,ATHLETE_CID as participatCids,UNIT_CID as unitCids
+    from
+    view_par_info
+    where CID = #{cid,jdbcType=INTEGER}
+  </select>
+  <!-- 通过参数查询 -->
+  <select id="quertByParam" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List" />
+    ,UNIT_NAME as unitNames,ATHLETE_NAME as participatNames,ATHLETE_CID as participatCids,UNIT_CID as unitCids
+		from
+		view_par_info 
+		<include refid="where_all" />
+		order by ORDER_NUM  DESC,CREA_TIME DESC
+  </select>
+  
+    <!-- 参数报名信息下拉，新增惩罚处理页面用 -->
+  <select id="getForSelect" parameterType="java.util.Map"
+		resultType="map">
+	select
+	  group_concat(b1.ATHLETE_NAME) as athleteName,group_concat(u1.cid ) as unitCids,
+	  case when  i1.ISCOMBINATION_TEAM=1 then  group_concat(u1.unit_Name)  else u1.unit_Name  end  as  unitName ,
+	  i1.CID as participatId
+	 from participat_info i1
+		 inner join  participat_detail d1 on d1.PARTICIPAT_ID=i1.cid
+		 inner join athlete_base_info b1 on b1.cid=d1.ATHLETE_ID
+		 inner join unit_info u1 on b1.UNIT_CID=u1.cid
+		 inner join project_manager p1  on i1.pid=p1.cid     
+		 inner join  class_manager c1  on p1.P_CID=c1.cid
+	WHERE p1.CID = #{projectCid,jdbcType=INTEGER} 
+	group by i1.CID
+	having unitCids like "%,${unitCid},%"  or unitCids like "${unitCid},%" or unitCids like "%,${unitCid}"
+  </select>
+  
+    <!-- 通过参数查询 -->
+  <select id="quertByParamDoneScore" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List" />
+    ,UNIT_NAME as unitNames,ATHLETE_NAME as participatNames,ATHLETE_CID as participatCids,UNIT_CID as unitCids
+		from
+		view_par_info 
+		<include refid="where_all" />
+		and exp1=1 
+		order by ORDER_NUM  DESC,CREA_TIME DESC
+  </select>
+  
+   <!-- 查询未记录成绩的信息 -->
+   <select id="quertByParamNoScore" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List" />
+		,UNIT_NAME as unitNames,ATHLETE_NAME as participatNames
+		from
+		view_par_info v
+		<include refid="where_all" />
+		and v.exp1 is null
+<!-- 		 AND  EXISTS (
+			 select count(*) from participat_detail d where 
+			 d.PARTICIPAT_ID=v.CID and (d.SCORES IS NULL OR d.SCORES='' ) 
+			 AND (d.RANKING IS NULL OR d.RANKING='')  HAVING  count(*)>0
+		 ) 
+		order by ORDER_NUM DESC,CREA_TIME DESC -->
+  </select>
+  <sql id="where_all">
+		where 1 = 1
+		<if test="param != null and param!='' ">
+			and ((LOWER(ATHLETE_NAME) like CONCAT("%",#{param},"%")
+			or
+			LOWER(UNIT_NAME) like CONCAT("%",#{param},"%")))
+		</if>
+		<if test="pCid != null">
+			and PID = #{pCid,jdbcType=INTEGER}
+		</if>
+  </sql>
+  
+  
+  <delete id="deleteByCid" parameterType="java.lang.Integer">
+    delete from participat_info
+    where CID = #{cid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByCids" parameterType="java.lang.Integer" flushCache="false">
+		delete from
+		participat_info
+		where
+		CID in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+   </delete>
+
+  <insert id="save" parameterType="ParticipatInfo">
+    insert into participat_info (CID, PID, ISPER_UNIT, 
+      ISCOMBINATION_TEAM, ISINDIVIDUAL, CREA_TIME, 
+      CREA_REN, ORDER_NUM, BACKUP, 
+      EXP1, EXP2, EXP3, EXP4, 
+      EXP5, EXP6)
+    values (#{cid,jdbcType=INTEGER}, #{pid,jdbcType=INTEGER}, #{isperUnit,jdbcType=INTEGER}, 
+      #{iscombinationTeam,jdbcType=INTEGER}, #{isindividual,jdbcType=INTEGER}, #{creaTime,jdbcType=VARCHAR}, 
+      #{creaRen,jdbcType=VARCHAR}, #{orderNum,jdbcType=INTEGER}, #{backup,jdbcType=VARCHAR}, 
+      #{exp1,jdbcType=INTEGER}, #{exp2,jdbcType=INTEGER}, #{exp3,jdbcType=VARCHAR}, #{exp4,jdbcType=VARCHAR}, 
+      #{exp5,jdbcType=VARCHAR}, #{exp6,jdbcType=VARCHAR})
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="ParticipatInfo">
+    update participat_info
+    <set>
+      <if test="pid != null">
+        PID = #{pid,jdbcType=INTEGER},
+      </if>
+      <if test="isperUnit != null">
+        ISPER_UNIT = #{isperUnit,jdbcType=INTEGER},
+      </if>
+      <if test="iscombinationTeam != null">
+        ISCOMBINATION_TEAM = #{iscombinationTeam,jdbcType=INTEGER},
+      </if>
+      <if test="isindividual != null">
+        ISINDIVIDUAL = #{isindividual,jdbcType=INTEGER},
+      </if>
+      <if test="creaTime != null">
+        CREA_TIME = #{creaTime,jdbcType=VARCHAR},
+      </if>
+      <if test="creaRen != null">
+        CREA_REN = #{creaRen,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNum != null">
+        ORDER_NUM = #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="backup != null">
+        BACKUP = #{backup,jdbcType=VARCHAR},
+      </if>
+      <if test="exp1 != null">
+        EXP1 = #{exp1,jdbcType=INTEGER},
+      </if>
+      <if test="exp2 != null">
+        EXP2 = #{exp2,jdbcType=INTEGER},
+      </if>
+      <if test="exp3 != null">
+        EXP3 = #{exp3,jdbcType=VARCHAR},
+      </if>
+      <if test="exp4 != null">
+        EXP4 = #{exp4,jdbcType=VARCHAR},
+      </if>
+      <if test="exp5 != null">
+        EXP5 = #{exp5,jdbcType=VARCHAR},
+      </if>
+      <if test="exp6 != null">
+        EXP6 = #{exp6,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CID = #{cid,jdbcType=INTEGER}
+  </update>
+
+</mapper>

@@ -1,0 +1,15 @@
+/**
+ * 
+ */
+package com.whty.assis.api.dao;
+
+import com.whty.assis.api.model.AppTools;
+import com.whty.assis.base.dao.IBaseDao;
+
+/**
+ * @author zhangzheng
+ * @date   2018年8月7日
+ */
+public interface AppToolsDao extends IBaseDao<AppTools>{
+
+}

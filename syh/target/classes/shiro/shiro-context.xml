@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	   http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.2.xsd"
+	default-lazy-init="true">
+
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<!-- loginUrl、successUrl、unauthorizedUrl：分别对应登录地址、登录成功后默认跳转地址、未授权跳转地址，用于给相应拦截器的 -->
+		<property name="loginUrl" value="/login/login" />
+		<property name="successUrl" value="/" />
+		<!-- 如果您请求的资源不再您的权限范围，则跳转到/401请求地址 -->  
+        <property name="unauthorizedUrl" value="/open/unauthorized"/>  
+		<property name="filters">
+			<util:map>
+				<entry key="login" value-ref="loginFilter" />
+				<entry key="res" value-ref="resFilter" />
+				<entry key="logout" value-ref="logoutFilter" />
+			</util:map>
+		</property>
+		<!--anon匿名 authc登录认证 user用户已登录 logout退出filter -->
+		<property name="filterChainDefinitions">
+			<value>
+				<!--静态资源可以匿名访问 -->
+				/System/index = login
+				/open/logout = logout
+				/login/** = anon
+				/js/** = anon
+				/css/** = anon 
+				/img/** = anon
+				/static/** = anon
+				/open/**=anon
+				
+				/user/**=anon
+				
+				<!-- 系统配置 -->
+				/System/**  =anon
+				/sysDept/** = anon
+				/sysDict/** = anon
+				/sysLog/** = anon
+				/sysMuserInfo/** = anon
+				/sysRes/** = anon
+				/sysRole/** = anon
+				/sysConfig/** = anon
+				/common/** = anon
+				
+				<!-- 开发时可注释登录和权限拦截 = login,res -->
+			 <!--	/System/** = login
+				/** = login,res -->
+				/** =login,res 
+			</value>
+		</property>
+	</bean>
+  	<bean id="loginFilter" class="com.yhcrt.shiro.filter.LoginFilter"/> 
+  	<bean id="resFilter" class="com.yhcrt.shiro.filter.ResFilter"/> 
+	<bean id="logoutFilter" class="com.yhcrt.shiro.filter.UserLogoutFilter"/>
+	
+	
+	<!-- 安全管理器 -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<property name="realm" ref="sampleRealm" />
+		<property name="rememberMeManager" ref="rememberMeManager" />
+		<!-- 开发时关掉缓存 -->
+		<!-- <property name="cacheManager" ref="shiroEhcacheManager" /> -->
+	</bean>
+	<!-- 登录认证 -->
+	<bean id="sampleRealm" class="com.yhcrt.shiro.SampleRealm"></bean>
+	<!-- 配置缓存管理器 -->
+	<bean id="shiroEhcacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+		<property name="cacheManagerConfigFile" value="classpath:shiro/ehcache-shiro.xml">
+		</property>
+	</bean>
+	<!-- 会话Cookie模板 -->  
+	<bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+		<constructor-arg value="rememberMe" />
+		<property name="httpOnly" value="true" />
+		<property name="maxAge" value="3600" /><!-- 365天 -->
+	</bean>
+	<!-- rememberMe管理器 -->
+	<bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+		<property name="cipherKey" value="#{T(org.apache.shiro.codec.Base64).decode('4AvVhmFLUs0KTA3Kprsdag==')}" />
+		<property name="cookie" ref="rememberMeCookie" />
+	</bean>
+
+	<!-- Enable Shiro Annotations for Spring-configured beans. Only run after -->
+	<!-- the lifecycleBeanProcessor has run: -->
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+</beans>

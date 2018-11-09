@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>东楚论坛</title>
+<link href="${base}/style/main.css" rel="stylesheet" type="text/css">
+<link href="${base}/style/lanmu.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${base}/js/jquery.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		if('${error!}' != ''){
+			alert('${error!}');
+		}
+		var haveCount = '${haveCount!}';
+		if(haveCount != '' && haveCount <= 0){
+			$(".captcha").show();
+			$("#captcha").show();
+			$("#captcha_message").show();
+		}else{
+			$(".captcha").hide();
+			$("#captcha").hide();
+			$("#captcha_message").hide();
+		}
+		$("#username").focus(function(){
+			$("#username_message").css("visibility","hidden");
+		});
+		$("#username").blur(function(){
+			if($("#username").val()==''){
+				$("#username_message").html('用户名不能为空');
+				$("#username_message").css("visibility","visible");
+			}
+		});
+		$("#password").focus(function(){
+			$("#password_message").css("visibility","hidden");
+		});
+		$("#password").blur(function(){
+			if($("#password").val()==''){
+				$("#password_message").html('密码不能为空');
+				$("#password_message").css("visibility","visible");
+			}
+		});
+		$("#captcha").focus(function(){
+			$("#captcha_message").css("visibility","hidden");
+		});
+		$("#captcha").blur(function(){
+			if($("#captcha").val()==''){
+				$("#captcha_message").html('验证码不能为空');
+				$("#captcha_message").css("visibility","visible");
+			}
+		});
+	});
+	
+	document.onkeydown=function(event){ 
+		e = event ? event :(window.event ? window.event : null); 
+		if(e.keyCode==13){   //回车
+			submitForm();
+		} 
+	};
+	
+	function submitForm(){
+		if($("#username").val()==''){
+			$("#username_message").text('用户名不能为空');
+			$("#username_message").css("visibility","visible");
+			return ;
+		}
+		if($("#password").val()==''){
+			$("#password_message").text('密码不能为空');
+			$("#password_message").css("visibility","visible");
+			return ;
+		}
+		if($(".captcha").css('display')=='none'){
+			
+		}else{
+			if($("#captcha").val()==''){
+				$("#captcha_message").text('验证码不能为空');
+				$("#captcha_message").css("visibility","visible");
+				return ;
+			}
+		}
+		$("#jvForm").submit();
+	}
+</script>
+</head>
+
+<body class="body">
+	<div class="loginbox">
+		<div class="login">
+			<div class="login_logo">
+				<a href="${base}/"><img src="${base}/images/logo.png" alt="" /></a>
+			</div>
+			<div class="login_con">
+				<div class="login_tit">登录东楚论坛账号</div>
+				<div class="login_form">
+					<form  id="jvForm" action="${base}/login.jspx" method="post">
+						<div class="inputbox">
+							<i class="user_ico"></i>
+							<input type="text" class="user_text logintext" name="username" id="username" placeholder="用户名">
+						</div>
+						<div class="login_tips" id="username_message" style="visibility:hidden;">用户名不能为空</div>
+						<div class="inputbox">
+							<i class="password_ico"></i>
+							<input type="password" class="password_text logintext" name="password" id="password" placeholder="请输入密码">
+						</div>
+						<div class="login_tips" id="password_message" style="visibility:hidden;">密码错误</div>
+						<div class="captcha">
+							<div style="float:left;"><input type="text" class="input_captcha" name="captcha" id="captcha" value=""/></div>
+							<div style="float:left;"><img src="${base}/captcha.svl" onclick="this.src='${base}/captcha.svl?d='+new Date()"/></div>
+						</div>
+						<div style="clear:left;"></div>
+						<div class="login_tips_captcha" id="captcha_message" style="visibility:hidden;">验证码不能为空</div>
+						<div class="field">
+							<div class="field_l" style="display:none;">
+								<input type="checkbox" value="true" name="rememberMe"/>下次自动登录
+								<input type="hidden" name="returnUrl" value="/"/>
+							</div>
+							<div class="field_r">
+								<a href="${base}/personal/find_password.jspx">忘记密码</a>
+							</div>
+						</div>
+						<button class="submit_btn" type="button" onclick="submitForm()">登录</button>
+						<div class="other_register">
+							<div class="other_login">
+								<span>使用合作网站帐号登录：</span> <a href="#" class="other_log_ico qq"><em></em></a>
+								<a href="#" class="other_log_ico weixin"><em></em></a> <a
+									href="#" class="other_log_ico weibo"><em></em></a>
+							</div>
+							<div class="nowregister">
+								<a href="${base}/register.jspx">立即注册</a>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="reg_footerbox">
+		<div class="reg_footer">
+			<div class="footer">
+				<div class="footer_listbox">
+					<div class="footer_list">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+
+</html>

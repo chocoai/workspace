@@ -1,0 +1,21 @@
+<!--nav 开始-->
+<div class="nav">
+   <ul class="nav_box">
+   <li><a id="index" href="${base}/wh/index.jhtml" >首 页</a></li>
+   [@cms_channel_list parentId='90']
+   [#list tag_list as c]
+    <li><a id="${c.url}" href="${c.url}" >${c.name}</a></li>
+   [/#list]
+   [/@cms_channel_list]
+   </ul>
+ </div>
+<!--nav 开始-->
+<script type="text/javascript">
+$(".nav a").each(function(){  
+    $this = $(this);  
+    if($this[0].href==String(window.location)){  
+        $this.addClass("current");  
+    }  
+});  
+
+</script>

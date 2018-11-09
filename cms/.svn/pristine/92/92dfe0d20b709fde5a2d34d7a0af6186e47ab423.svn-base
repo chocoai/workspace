@@ -1,0 +1,32 @@
+<div class="apply-nav overflow mg-auto area" style="background:#fff;">
+    <div class="overflow clearfix apply-top border-bom">
+    	 
+        <a href="${base}/login.jspx?returnUrl=${location}" class="apply-login">登录</a>
+        <h2>东楚网--黄石新闻网</h2>
+        <a href="${base}/search.jspx" class="apply-sou">搜索</a>
+        <a href="#" class="apply-pup">导航</a>
+    </div>
+    <nav id="menu" class="nd-nav">
+        <ul class="n-index">
+            <li class="menu1"><a href="${base}/">首页</a></li>
+            <li class="menu2">[@cms_channel id='1']<a href="${tag_bean.url}">新闻</a>[/@cms_channel]</li>
+            <li class="menu3">[@cms_channel id='42']<a href="${tag_bean.url}">图轻松</a>[/@cms_channel]</li>
+            <li class="menu4">[@cms_channel id='46']<a href="${tag_bean.url}">视频</a>[/@cms_channel]</li>
+            <li class="menu5">[@cms_channel id='86']<a href="${tag_bean.url}">活动</a>[/@cms_channel]</li>
+        </ul>
+    </nav>
+    
+    <div class="i-icon mg-auto overflow area clearfix" id="apply-pup-icon">
+        <nav id="menu2" class="nd-nav">
+            <ul>
+                <li class="menu1">[@cms_channel id='84']<a href="${tag_bean.url}">房产</a>[/@cms_channel]</li>
+                <li class="menu2">[@cms_channel id='85']<a href="${tag_bean.url}">生活</a>[/@cms_channel]</li>
+                <li class="menu3">[@cms_channel id='88']<a href="${tag_bean.url}">财经</a>[/@cms_channel]</li>
+                <li class="menu4">[@cms_channel id='89']<a href="${tag_bean.url}">健康</a>[/@cms_channel]</li>
+                <li class="menu5">[@cms_channel id='90']<a href="${tag_bean.url}">文化</a>[/@cms_channel]</li>
+                
+            </ul>
+        </nav>
+    </div>
+    <script type="text/javascript" src="/${mobileRes!}/js/navi/com.js"></script> 
+</div>

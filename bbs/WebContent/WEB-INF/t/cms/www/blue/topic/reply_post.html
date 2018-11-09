@@ -1,0 +1,186 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>${bbsPost.topic.forum.title!}</title>
+<link href="${base}/style/main.css" rel="stylesheet" type="text/css">
+<link href="${base}/style/lanmu.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${base}/js/jquery.js"></script>
+<script type="text/javascript" src="${base}/js/popwin.js"></script>
+<link rel="stylesheet" href="${base}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="${base}/kindeditor/plugins/code/prettify.css" />
+<script charset="utf-8" src="${base}/kindeditor/kindeditor.js"></script>
+<script charset="utf-8" src="${base}/kindeditor/lang/zh_CN.js"></script>
+<script charset="utf-8" src="${base}/kindeditor/plugins/code/prettify.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var user = '${user!}';
+		if(user == ''){
+			location.href = "${base}/login.jspx";
+		}
+	});
+</script>
+<script type="text/javascript">
+	var editor1;
+	KindEditor.ready(function(K) {
+		editor1 = K.create('textarea[name="content"]', {
+			cssPath : '${base}/kindeditor/plugins/code/prettify.css',
+			uploadJson : '${base}/kindEditor/imgUpload.jhtml',
+			fileManagerJson : '${base}/kindeditor/file_manager_json.jsp',
+			allowFileManager : true,
+			filterMode:true,
+			afterCreate : function() {
+				var self = this;
+				K.ctrl(document, 13, function() {
+					self.sync();
+					document.forms['example'].submit();
+				});
+				K.ctrl(self.edit.doc, 13, function() {
+					self.sync();
+					document.forms['example'].submit();
+				});
+			}
+		});
+		prettyPrint();
+	});
+	
+	function savePost(){
+		editor1.sync();
+		var content = $("#content").val();
+		if(content == ''){
+			alert("回复内容不能为空");
+			return ;
+		}
+		$("#jvForm").submit();
+	}
+</script>
+</head>
+
+<body class="body">
+	<!---------顶部----------->
+	<div class="top">
+		<div class="top_center">
+			<div class="top_l">您好，欢迎来到东楚论坛！</div>
+			<div class="top_r">
+				[#if user??]
+				<div class="user_logout">
+					<span class="user_logout_name"><a href="${base}/member/index.jhtml">${user.username}</a></span>
+					<span class="logout"><a href="${base}/logout.jspx?returnUrl=/">退出</a></span>
+				</div>
+				[#else]
+				<ul>
+					<li><a href="javascript:void(0);"><img src="${base}/images/icon_signin_01.png"
+							alt="" /></a></li>
+					<li><a href="#"><img src="${base}/images/icon_signin_02.png"
+							alt="" /></a></li>
+					<li><a href="#"><img src="${base}/images/icon_signin_03.png"
+							alt="" /></a></li>
+				</ul>
+				<div class="dlzc">
+					<span><a href="${base}/login.jspx">登录</a></span>
+					<span class="register"><a href="${base}/register.jspx">注册</a></span>
+				</div>
+				[/#if]
+			</div>
+		</div>
+	</div>
+
+	<!-------logo、导航和搜索----------->
+	<div class="nav">
+		<div class="nav_center">
+			<h1>
+				<a href="${base}/"><img src="${base}/images/logo.png" alt="" /></a>
+			</h1>
+			<div class="navsearch">
+				<!----导航---->
+				<nav>
+					<ul>
+						<li><a href="/">东楚网首页</a></li>
+						<li><a href="${base}/dakaquan/index.jhtml">大咖圈</a></li>
+					</ul>
+				</nav>
+
+				<!----搜索---->
+				<div class="search radius6">
+					<form name="searchform" method="get" action="${base}/topic/search.jhtml">
+						<select name="searchType" id="choose">
+							<option value="0" selected>帖子</option>
+							<option value="1">用户</option>
+						</select>
+						<input class="inp_srh" type="text" name="keywords" placeholder="搜索其实很简单！">
+						<input class="btn_srh" type="submit" value="搜索">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!------------------中间内容部分------------------------>
+	<div class="big_center">
+		<!------当前位置------>
+		<div class="location">
+			<i></i> &nbsp;<a href="${base}/">东楚论坛</a> &nbsp;> &nbsp;
+			<a href="javascript:void(0);">论坛栏目</a> &nbsp;> &nbsp;
+			<a href="${bbsPost.topic.forum.url!}">${bbsPost.topic.forum.title!}</a> &nbsp;> &nbsp; ${bbsPost.topic.title!}
+		</div>
+
+		<!-----回帖----->
+		<div class="wpost replypost">
+			<div class="wpost_hd">回帖</div>
+			<div class="wpost_bd">
+				<form id="jvForm" action="${base}/post/o_save.jspx" method="post" enctype="multipart/form-data" validate="true">
+					<div class="wpost_bd_b rpost_hd">
+						<div class="postbefore">
+							<a href="${bbsPost.topic.url!}">回复原贴由
+								[#if bbsPost.indexCount==1]
+								 楼主 
+								[#else]
+								${bbsPost.indexCount-1}楼
+								[/#if]
+								&nbsp;<em> ${bbsPost.creater.username!}</em>&nbsp;
+								于${bbsPost.createTime!} 发表
+							</a>
+						</div>
+						<div class="postedit">
+							<textarea name="content" id="content"></textarea>
+						</div>
+					</div>
+					<input type="hidden" name="topicId" value="${bbsPost.topic.id!}"/>
+					[#if bbsPost.indexCount == 1]
+					<input type="hidden" name="upPostId" value=""/>
+					[#else]
+					<input type="hidden" name="upPostId" value="${bbsPost.id!}"/>
+					[/#if]
+					<input type="hidden" value="${postTypeId!}" name="postTypeId"/>
+					<input type="button" class="postsend_but" style="color:#ebebeb;" onclick="savePost()" value="发布回帖"/>
+				</form>
+			</div>
+		</div>
+
+		<!------页脚------>
+		<div class="footer">
+			<div class="footer_listbox">
+				<div class="footer_list">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!------------------返回顶部-------------------->
+	<div id="before">
+		<a href="http://bbs.hsdcw.com/" target="_blank" title="东楚论坛"
+			class='before'></a>
+	</div>
+	<div id="wechat" class="wechat">
+		<a href="javascript:void(0)"><div class="wechath"></div></a>
+	</div>
+	<a id="moquu_top" href="javascript:void(0)"></a>
+
+
+	<script type="text/javascript" src="${base}/js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="${base}/js/jquery.select.js"></script>
+
+</body>
+</html>

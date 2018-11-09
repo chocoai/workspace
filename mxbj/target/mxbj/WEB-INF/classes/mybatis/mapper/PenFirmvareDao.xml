@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.mxbj.api.dao.PenFirmvareDao">
+
+	<resultMap type="com.whty.mxbj.api.model.PenFirmvare" id="PenFirmvareResult">
+		<result column="id" property="id" />
+		<result column="version" property="version" />
+		<result column="memo" property="memo" />
+		<result column="pen_Model" property="penModel" />
+		<result column="status" property="status" />
+		<result column="down_Url" property="downUrl" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		
+	</resultMap>
+
+	<select id="getNewVersionByPenModel" parameterType="map" resultMap="PenFirmvareResult">
+		select * from T_PEN_FIRMVARE 
+		where 1=1
+		<if test="penModel != null and penModel != '' ">and pen_model=#{penModel}</if>
+	</select>
+
+</mapper>

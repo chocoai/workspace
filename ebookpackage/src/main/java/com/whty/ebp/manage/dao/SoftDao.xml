@@ -1,0 +1,677 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.ebp.manage.dao.SoftDao">
+	<!-- 这里的Soft是别名，需要在mybatis-config.xml中定义，或者写类全名 -->
+	<resultMap type="com.whty.ebp.manage.model.Soft" id="SoftResult">
+		<result column="id" property="id" jdbcType="VARCHAR" />
+		<result column="soft_name" property="softName" jdbcType="VARCHAR" />
+		<result column="soft_type" property="softType" jdbcType="VARCHAR" />
+		<result column="version_code" property="versionCode" jdbcType="VARCHAR" />
+		<result column="update_content" property="updateContent" jdbcType="CLOB" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="file_url" property="fileUrl" jdbcType="VARCHAR" />
+		<result column="file_name" property="fileName" jdbcType="VARCHAR" />
+		<result column="file_rename" property="fileRename" jdbcType="VARCHAR" />
+		<result column="file_type" property="fileType" jdbcType="VARCHAR" />
+		<result column="force_update" property="forceUpdate" jdbcType="VARCHAR" />
+		<result column="user_update" property="userUpdate" jdbcType="VARCHAR" />
+		<result column="isleveup" property="isleveup" jdbcType="VARCHAR" />
+		<result column="all_user_upgrade" property="allUserUpgrade" jdbcType="VARCHAR" />
+		<result column="file_size" property="fileSize" jdbcType="INTEGER" />
+		<result column="download_url" property="downloadUrl" jdbcType="VARCHAR" />
+	</resultMap>
+	
+
+	<resultMap type="com.whty.ebp.manage.model.Soft" id="upgradeSoftResult">
+		<result column="id" property="id" jdbcType="VARCHAR" />
+		<result column="soft_name" property="softName" jdbcType="VARCHAR" />
+		<result column="version_code" property="versionCode" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="user_update" property="userUpdate" jdbcType="VARCHAR" />
+		<result column="isleveup" property="isleveup" jdbcType="VARCHAR" />
+		<result column="all_user_upgrade" property="allUserUpgrade" jdbcType="VARCHAR" />
+		<result column="upgrade_version_code" property="upgradeVersionCode" jdbcType="VARCHAR" />
+		<result column="user_update_conflict" property="userUpdateConflict" jdbcType="VARCHAR" />
+		<result column="all_user_update_conflict" property="allUserUpdateConflict" jdbcType="VARCHAR" />
+		<result column="upgrade_package_num" property="upgradePackageNum" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<resultMap type="com.whty.ebp.manage.model.SoftFile" id="SoftFileResult">
+		<result column="id" property="id" jdbcType="VARCHAR" />
+		<result column="soft_id" property="softId" jdbcType="VARCHAR" />
+		<result column="absolute_url" property="absoluteUrl" jdbcType="VARCHAR" />
+		<result column="file_name" property="fileName" jdbcType="VARCHAR" />
+		<result column="file_path" property="filePath" jdbcType="VARCHAR" />
+		<result column="file_size" property="fileSize" jdbcType="VARCHAR" />
+		<result column="file_md5" property="fileMd5" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		
+		<result column="update_type" property="updateType" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	
+	<resultMap type="com.whty.ebp.manage.model.Soft" id="SoftVersionCodeResult">
+		<result column="id" property="id" jdbcType="VARCHAR" />
+		<result column="version_code" property="versionCode" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- 新增量升级检测新版本接口返回 -->
+	<resultMap type="com.whty.ebp.api.respvo.CheckNewSoft" id="CheckNewSoftResult">
+		<result column="id" property="id" jdbcType="VARCHAR" />
+		<result column="soft_name" property="softName" jdbcType="VARCHAR" />
+		<result column="version_code" property="versionCode" jdbcType="VARCHAR" />
+		<result column="update_content" property="updateContent" jdbcType="VARCHAR" />
+		<result column="FORCE_UPDATE" property="forceUpdate" jdbcType="VARCHAR" />
+		<result column="USER_UPDATE" property="userUpdate" jdbcType="VARCHAR" />
+		<result column="all_user_upgrade" property="allUserUpgrade" jdbcType="VARCHAR" />
+		<result column="FILE_URL" property="fileUrl" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- 静默升级检测新版本接口返回 -->
+	<resultMap type="com.whty.ebp.api.respvo.CheckNewSilentSoft" id="CheckNewSilentSoftResult">
+		<result column="id" property="id" jdbcType="VARCHAR" />
+		<result column="soft_name" property="softName" jdbcType="VARCHAR" />
+		<result column="version_code" property="versionCode" jdbcType="VARCHAR" />
+		<result column="update_content" property="updateContent" jdbcType="VARCHAR" />
+		<result column="FILE_URL" property="fileUrl" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- 增量升级和静默升级要下载的文件接口返回 -->
+	<resultMap type="com.whty.ebp.api.respvo.ClientFile" id="ClientFileResult">
+		<result column="id" property="pkid" jdbcType="VARCHAR" />
+		<result column="soft_id" property="softId" jdbcType="VARCHAR" />
+		<result column="file_name" property="fileName" jdbcType="VARCHAR" />
+		<result column="file_path" property="filePath" jdbcType="VARCHAR" />
+		<result column="file_size" property="fileSize" jdbcType="VARCHAR" />
+		<result column="file_md5" property="fileMd5" jdbcType="VARCHAR" />
+		<result column="update_type" property="updateType" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="VARCHAR" />
+		<result column="absolute_url" property="absoluteUrl" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- 如果插入的字段可能为空，则要设置jdbcType -->
+	<insert id="saveSoft" parameterType="com.whty.ebp.manage.model.Soft">
+		insert into TA_SOFT (
+			id
+			<if test="softName != null and softName != ''">,soft_name</if>
+			<if test="softType != null and softType != ''">,soft_type</if>
+			<if test="versionCode != null and versionCode != ''">,version_code</if>
+			<if test="updateContent != null and updateContent != ''">,update_content</if>
+			<if test="createTime != null">,create_time</if>
+			<if test="updateTime != null">,update_time</if>
+			<if test="status != null and status != ''">,status</if>
+			<if test="fileUrl != null and fileUrl != ''">,file_url</if>
+			<if test="fileName != null and fileName != ''">,file_name</if>
+			<if test="fileRename != null and fileRename != ''">,file_rename</if>
+			<if test="fileType != null and fileType != ''">,file_type</if>
+			<if test="forceUpdate != null and forceUpdate != ''">,force_update</if>
+			<if test="userUpdate != null and userUpdate != ''">,user_update</if>
+			<if test="isleveup != null and isleveup != ''">,isleveup</if>
+			<if test="fileSize != null">,file_size</if>
+			<if test="downloadUrl != null and downloadUrl != ''">,download_url</if>
+		) values (
+			#{id,jdbcType=VARCHAR}
+			<if test="softName != null and softName != ''">,#{softName,jdbcType=VARCHAR}</if>
+			<if test="softType != null and softType != ''">,#{softType,jdbcType=VARCHAR}</if>
+			<if test="versionCode != null and versionCode != ''">,#{versionCode,jdbcType=VARCHAR}</if>
+			<if test="updateContent != null and updateContent != ''">,#{updateContent,jdbcType=VARCHAR}</if>
+			<if test="createTime != null">,#{createTime,jdbcType=TIMESTAMP}</if>
+			<if test="updateTime != null">,#{updateTime,jdbcType=TIMESTAMP}</if>
+			<if test="status != null and status != ''">,#{status,jdbcType=VARCHAR}</if>
+			<if test="fileUrl != null and fileUrl != ''">,#{fileUrl,jdbcType=VARCHAR}</if>
+			<if test="fileName != null and fileName != ''">,#{fileName,jdbcType=VARCHAR}</if>
+			<if test="fileRename != null and fileRename != ''">,#{fileRename,jdbcType=VARCHAR}</if>
+			<if test="fileType != null and fileType != ''">,#{fileType,jdbcType=VARCHAR}</if>
+			<if test="forceUpdate != null and forceUpdate != ''">,#{forceUpdate,jdbcType=VARCHAR}</if>
+			<if test="userUpdate != null and userUpdate != ''">,#{userUpdate,jdbcType=VARCHAR}</if>
+			<if test="isleveup != null and isleveup != ''">,#{isleveup,jdbcType=VARCHAR}</if>
+			<if test="fileSize != null">,#{fileSize,jdbcType=INTEGER}</if>
+			<if test="downloadUrl != null and downloadUrl != ''">,#{downloadUrl,jdbcType=VARCHAR}</if>
+		)
+	</insert>
+	
+	<!-- 如果插入的字段可能为空，则要设置jdbcType -->
+	<update id="updateSoft" parameterType="com.whty.ebp.manage.model.Soft">
+		update TA_SOFT 
+		set 
+		<trim prefixOverrides=",">
+			<if test="softName != null and softName != ''">, soft_name=#{softName,jdbcType=VARCHAR}</if>
+			<if test="softType != null and softType != ''">, soft_type=#{softType,jdbcType=VARCHAR}</if>
+			<if test="versionCode != null and versionCode != ''">, version_code=#{versionCode,jdbcType=VARCHAR}</if>
+			<if test="updateContent != null and updateContent != ''">, update_content=#{updateContent,jdbcType=VARCHAR}</if>
+			<if test="updateTime != null">, update_time=#{updateTime,jdbcType=TIMESTAMP}</if>
+			<if test="status != null and status != ''">, status=#{status,jdbcType=VARCHAR}</if>
+			<if test="fileType != null and fileType != ''">, file_type=#{fileType,jdbcType=VARCHAR}</if>
+			<if test="forceUpdate != null and forceUpdate != ''">, force_update=#{forceUpdate,jdbcType=VARCHAR}</if>
+			<if test="userUpdate != null and userUpdate != ''">, user_update=#{userUpdate,jdbcType=VARCHAR}</if>
+			<if test="isleveup != null and isleveup != ''">, isleveup=#{isleveup,jdbcType=VARCHAR}</if>
+			<if test="allUserUpgrade != null and allUserUpgrade != ''">, all_user_upgrade=#{allUserUpgrade,jdbcType=VARCHAR}</if>
+			<if test="fileUrl != null and fileUrl != ''">, file_url=#{fileUrl,jdbcType=VARCHAR}</if>
+			<if test="downloadUrl != null and downloadUrl != ''">,download_url=#{downloadUrl,jdbcType=VARCHAR}</if>
+		</trim>
+			
+		where id=#{id,jdbcType=VARCHAR}
+	</update>
+	
+	<!-- 更新是否可升级状态  文件类型(0：安装包1：绿色包)-->
+	<update id="updateSoftIsleveup" parameterType="string">
+		update TA_SOFT set isleveup=#{_parameter} where file_type='1'
+	</update>
+	
+	<!-- 查询最新的客户端信息 -->
+	<select id="queryNewSoft" parameterType="map" resultMap="SoftResult">
+		select t.id,t.soft_name,t.soft_type,t.version_code,t.update_content,t.create_time,t.update_time,t.status,t.file_url,t.file_name,
+			t.file_rename,t.file_type,t.force_update,t.user_update,t.isleveup,t.all_user_upgrade,t.file_size,t.download_url
+		from (
+			select id,soft_name,soft_type,version_code,update_content,create_time,update_time,status,file_url,file_name,
+				file_rename,file_type,force_update,user_update,isleveup,all_user_upgrade,file_size,download_url
+			from TA_SOFT
+			where status='0'
+			<if test="fileType != null and fileType != ''">and file_type=#{fileType}</if>
+			<if test="softType != null and softType != ''">and soft_type=#{softType}</if>
+			order by version_code desc) t
+		where rownum=1
+	</select>
+	
+	<!-- 查询客户端版本列表 -->
+	<select id="querySoft" parameterType="map" resultMap="SoftResult">
+		select id,soft_name,soft_type,version_code,update_content,create_time,update_time,status,file_url,file_name,
+				file_rename,file_type,force_update,user_update,isleveup,all_user_upgrade,file_size,download_url
+		from TA_SOFT
+		where 1=1
+		<if test="id != null and id != ''">and id=#{id}</if>
+		<if test="newVersionCode != null and newVersionCode != ''">and <![CDATA[version_code<#{newVersionCode}]]></if>
+		<if test="fileType != null and fileType != ''">and file_type=#{fileType}</if>
+		<if test="softType != null and softType != ''">and soft_type=#{softType}</if>
+		<if test="versionCode != null and versionCode != ''">and version_code=#{versionCode}</if>
+		<if test="isleveup != null and isleveup != ''">and isleveup=#{isleveup}</if>
+		<if test="status != null and status != ''">and status=#{status}</if>
+		
+		<if test="softNameLike != null and softNameLike != ''">and soft_name like '%'||#{softNameLike}||'%'</if>
+		<if test="versionCodeLike != null and versionCodeLike != ''">and version_code like '%'||#{versionCodeLike}||'%'</if>
+		<if test="startTime != null and startTime != ''">and date_format(update_time,'%Y-%m-%d') >=#{startTime}</if>
+		<if test="endTime != null and endTime != ''"><![CDATA[and date_format(update_time,'%Y-%m-%d')<=#{endTime}]]></if>
+		
+		<if test="idList != null">
+			<foreach collection="idList" index="index" item="item" open="and (" separator="or" close=")">     
+				  id=#{item}
+			</foreach>
+		</if>
+		order by update_time desc
+	</select>
+	
+	<!-- 查询文件列表 -->
+	<select id="querySoftFile" parameterType="map" resultMap="SoftFileResult">
+		select sf.*,'add' update_type from TA_SOFT_FILE sf
+		where 1=1
+		<if test="softId != null and softId != ''">and soft_id=#{softId}</if>
+	</select>
+	
+	<!-- 查询文件列表 -->
+	<select id="querySoftUpgradeFile" parameterType="map" resultMap="SoftFileResult">
+		select sf.*,t.update_type from TA_SOFT_FILE sf
+		right join (select soft_file_id,update_type from TA_SOFT_UPGRADE where update_type='add' and old_soft_id=#{oldSoftId} and new_soft_id=#{newSoftId}) t
+		on sf.id=t.soft_file_id
+	</select>
+	
+	<!-- 保存客户端文件列表 -->
+	<insert id="saveSoftFileBatch" parameterType="java.util.List">
+		insert into TA_SOFT_FILE (id,soft_id,absolute_url,file_name,file_path,file_size,file_md5) values  
+		<foreach collection="list" item="item" index="index" separator=",">  
+		 (#{item.id},#{item.softId},#{item.absoluteUrl},#{item.fileName},
+        #{item.filePath},#{item.fileSize},#{item.fileMd5})  
+		</foreach>
+	</insert>
+	
+	<!-- 保存客户端升级的文件列表 -->
+	<insert id="saveSoftFileUpgradeBatch" parameterType="java.util.List">
+		insert into TA_SOFT_UPGRADE (id,old_soft_id,new_soft_id,soft_file_id,update_type) values 
+		<foreach collection="list" item="item" index="index" separator=",">  
+            (#{item.id},#{item.oldSoftId},#{item.newSoftId},#{item.softFileId},#{item.updateType})  
+        </foreach>  
+	</insert>
+	
+	<!-- 删除软件信息 -->
+	<delete id="deleteSoft" parameterType="java.util.List">
+		delete from TA_SOFT
+		<where>
+			<foreach collection="list" index="index" item="item" open="(" separator="or" close=")">     
+			  id=#{item}
+			</foreach>
+		</where>
+	</delete>
+	
+	<!-- 删除绿色包解压文件 -->
+	<delete id="deleteSoftFile" parameterType="java.util.List">
+		delete from TA_SOFT_FILE
+		<where>
+			<foreach collection="list" index="index" item="item" open="(" separator="or" close=")">     
+			  soft_id=#{item}
+			</foreach>
+		</where>
+	</delete>
+	
+	<!-- 删除升级文件 -->
+	<delete id="deleteSoftUpgradeFile" parameterType="java.util.List">
+		delete from TA_SOFT_UPGRADE
+		<where>
+			<foreach collection="list" index="index" item="item" open="(" separator="or" close=")">     
+			  old_soft_id=#{item} or new_soft_id=#{item}
+			</foreach>
+		</where>
+	</delete>
+	
+	<!-- 按条件查询用户 -->
+	<select id="querySetUserUpgrade" parameterType="map" resultType="Ta_user">
+		select tu.id,tu.user_id
+		,tu.user_name
+		,tu.user_account
+		,tu.org_id
+		,tu.org_name
+		,tu.status
+		,tu.login_count
+		,tu.use_time
+		,tu.last_time
+		,tu.create_time
+		,tu.update_time
+		,tu.gender
+		,tu.phone_number
+		,tu.email
+		,tu.real_name
+		,tu.user_type
+		,tu.birthday
+		,tu.address
+		,tu.area_code
+		,tu.area_name
+		,tu.platform_id
+		,decode(tsuu.user_id,null,0,1) canUpgrade
+		from (select id,user_id,user_name,user_account,org_id,org_name,status,login_count,use_time,last_time,create_time,
+			update_time,gender,phone_number,email,real_name,user_type,birthday,address,area_code,area_name,platform_id
+			from TA_USER
+			where status='0'
+			<if test="org_name != null and org_name != ''">and org_name like '%'||#{org_name}||'%'</if>
+			<if test="user_type != null and user_type != ''">and user_type=#{user_type}</if>
+			<if test="user_account != null and user_account != ''">and user_account like '%'||#{user_account}||'%'</if>
+		) tu left join (select user_id,platform_id from TA_SOFT_USER_UPGRADE where soft_id=#{softId}) tsuu 
+		on tu.user_id=tsuu.user_id and tu.platform_id=tsuu.platform_id
+		where 1=1
+		<if test="canUpgrade != null and canUpgrade != ''">and tsuu.user_id is not null </if>
+		order by tu.user_type desc
+	</select>
+	
+	<!-- 删除指定用户升级数据 -->
+	<delete id="deleteSoftUserUpgrade" parameterType="map">
+		delete from TA_SOFT_USER_UPGRADE 
+		where 1=1
+		<if test="softId != null and softId != ''">and soft_id=#{softId}</if>
+		<if test="list != null">
+		and exists (select 1 from TA_USER tu 
+					  where id in <foreach collection="list" item="item" open="(" separator="," close=")">#{item}</foreach>
+					  and tu.user_id=tsuu.user_id and tu.platform_id=tsuu.platform_id)
+		</if>
+		<if test="softIdList != null">
+		and soft_id in <foreach collection="softIdList" item="item" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+	</delete>
+	
+	<!-- 指定用户升级 -->
+	<insert id="setUserUpgrade" parameterType="map">
+		insert into TA_SOFT_USER_UPGRADE (user_id,soft_id,platform_id) 
+        select user_id,#{softId},platform_id 
+        from TA_USER 
+        where id in <foreach collection="list" item="item" open="(" separator="," close=")">#{item}</foreach>
+	</insert>
+	
+	<!-- 查询用户是否指定升级-->
+	<select id="querySoftUserUpgrade" parameterType="map" resultType="java.util.HashMap">
+		select *
+		from TA_SOFT_USER_UPGRADE
+		where 1=1
+		<if test="userId != null and userId != ''">and user_id=#{userId} </if>
+		<if test="softId != null and softId != ''">and soft_id=#{softId} </if>
+		<if test="platformCode != null and platformCode != ''">and platform_id=#{platformCode}</if>
+	</select>
+	
+	<!-- 先让当前可下载的安装包不能下载 -->
+	<update id="updateNoDownloadExe" parameterType="com.whty.ebp.manage.model.Soft">
+		update TA_SOFT SET isleveup='0',FILE_URL=REPLACE(FILE_URL,'tmpfs','teachassistantfiles')
+		where soft_type=#{softType} AND file_type='0' AND status='0' AND isleveup='1'
+	</update>
+	
+	<!-- 把原来的数据路径还原 -->
+	<update id="updateSoftUpgradeFileOldPath" parameterType="java.lang.String">
+	    UPDATE TA_SOFT_FILE SET absolute_url = replace(absolute_url,'/tmpfs/','/teachassistantfiles/')
+	    where soft_id=#{id}
+	</update>
+	<!-- 更新当前数据的路径 -->
+	<update id="updateSoftUpgradeFileTmpfs" parameterType="java.lang.String">
+	    UPDATE TA_SOFT_FILE SET absolute_url = replace(absolute_url,'/teachassistantfiles/','/tmpfs/')
+	    where soft_id=#{id}
+	</update>
+	
+	<select id="querySoftByMap" parameterType="map" resultMap="SoftResult">
+		select id,soft_name,soft_type,version_code,update_content,create_time,update_time,status,file_url,file_name,
+				file_rename,file_type,force_update,user_update,isleveup,all_user_upgrade,file_size,download_url
+		from TA_SOFT 
+		where file_type='1'
+		<if test="softType != null and softType != ''">and soft_type=#{softType}</if>
+		<if test="versionCode != null and versionCode != ''">and version_code=#{versionCode}</if>
+	</select>
+	
+	<!-- 查询客户端升级版本列表 -->
+	<select id="queryUpgradeSoft" parameterType="map" resultMap="upgradeSoftResult">
+		select s.id,s.soft_name,s.version_code,s.status,s.user_update,s.isleveup,s.all_user_upgrade,
+			 r.upgrade_version_code,
+			 if(s.user_update='0', (select replace(group_concat(distinct rt.version_code),',','；')
+			  		from TA_SOFT_VERSION_REL  rt
+            left join TA_SOFT st on rt.soft_id=st.id
+            where st.id!=s.id and st.isleveup=s.isleveup and st.user_update='1'
+            and rt.upgrade_soft_id in (select upgrade_soft_id from TA_SOFT_VERSION_REL where soft_id=s.id)),
+            '') as user_update_conflict,
+       		if(s.all_user_upgrade='0', (select replace(group_concat(distinct rt.version_code),',','；')
+			  		from TA_SOFT_VERSION_REL rt
+            left join TA_SOFT st on rt.soft_id=st.id
+            where st.id!=s.id and st.isleveup=s.isleveup and st.all_user_upgrade='1'
+            and rt.upgrade_soft_id in (select upgrade_soft_id from TA_SOFT_VERSION_REL where soft_id=s.id)),
+            '') as all_user_update_conflict,
+            r.upgrade_package_num
+		from (select * from TA_SOFT where file_type='1' and (isleveup='1' or isleveup='2') ) s
+		left join (select soft_id,replace(group_concat(version_code),',','；') as upgrade_version_code ,
+			sum(if(upgrade_package=null,0,1)) as upgrade_package_num
+			from TA_SOFT_VERSION_REL group by soft_id) r 
+			on s.id=r.soft_id
+		where 1=1
+		<if test="softId != null and softId != ''">and s.id=#{softId}</if>
+		<if test="softName != null and softName != ''">and s.soft_name like '%'||#{softName}||'%'</if>
+		<if test="versionCode != null and versionCode != ''">and s.version_code like '%'||#{versionCode}||'%'</if>
+		<if test="isleveup != null and isleveup != ''">and s.isleveup=#{isleveup}</if>
+		<if test='upgradeType == "1"'>and s.user_update='1'</if>
+		<if test='upgradeType == "2"'>and s.all_user_upgrade='1'</if>
+		order by s.update_time desc
+	</select>
+	
+	<!-- 查询升级版本列表 -->
+	<select id="queryUpgradeSoftId" parameterType="string" resultType="string">
+		select s.id from TA_SOFT s
+		where s.soft_type='0' and s.file_type='1'
+		and s.version_code in (select version_code from TA_SOFT_VERSION_REL where status='0' and soft_id=#{_parameter})
+	</select>
+	
+	<!-- 插入升级关联版本 -->
+	<insert id="insertUpgradeSoftRel" parameterType="map">
+		insert into TA_SOFT_VERSION_REL(soft_id,version_code,create_time,update_time,status,upgrade_soft_id)
+    	select #{softId},s.version_code,current_timestamp,current_timestamp,'0',s.id from TA_SOFT s
+    	where s.id in <foreach open="(" close=")" collection="list" item="item" separator=",">#{item}</foreach>
+	</insert>
+	
+	<!-- 删除升级关联版本 -->
+	<delete id="deleteUpgradeSoftRel" parameterType="map">
+		delete from TA_SOFT_VERSION_REL 
+		where 1=1
+		<if test="softId != null and softId !=''">and soft_id=#{softId}</if>
+		<if test="list != null">
+			and (soft_id in <foreach open="(" close=")" collection="list" item="item" separator=",">#{item}</foreach>
+				or 
+				upgrade_soft_id in <foreach open="(" close=")" collection="list" item="item" separator=",">#{item}</foreach>
+			)
+		</if>
+	</delete>
+	
+	<!-- 删除升级文件 -->
+	<delete id="deleteSoftUpgrade" parameterType="map">
+		delete from TA_SOFT_UPGRADE
+		where new_soft_id=#{newSoftId}
+			<if test="list != null">
+			and old_soft_id in <foreach collection="list" item="item" open="(" separator="," close=")">#{item}</foreach>
+			</if>
+	</delete>
+	
+	<!-- 查询版本列表 -->
+	<select id="queryVersionCode" resultMap="SoftVersionCodeResult" parameterType="map">
+		select s.id,s.version_code from TA_SOFT s
+		where s.soft_type='0' and s.file_type='1' and s.status='0'
+		<if test="isleveup != null and isleveup != ''">and s.isleveup=#{isleveup}</if>
+		order by s.update_time desc
+	</select>
+	
+	
+	<!-- 新版增量升级检测新版本接口，根据用户id，所属平台编码，用户版本号查询新版本 -->
+	<select id="newSoftList" parameterType="map" resultMap="CheckNewSoftResult">
+		select ts.id,ts.SOFT_NAME,ts.VERSION_CODE,ts.update_content,
+			ts.FORCE_UPDATE,ts.all_user_upgrade,ts.FILE_URL,
+			(select count(1)  from TA_SOFT_USER_UPGRADE tsuu 
+		 		where tsuu.soft_id = ts.id and tsuu.platform_id=#{userPlatformCode} and tsuu.user_id=#{userId}
+		 	) user_update
+		from TA_SOFT ts 
+		where ts.STATUS='0'
+		and ts.SOFT_TYPE='0'
+		and ts.FILE_TYPE='1'
+		and ts.ISLEVEUP='1'
+		and exists (
+		    select tsvr.soft_id  from TA_SOFT_VERSION_REL tsvr 
+		 where tsvr.soft_id = ts.id and tsvr.status='0' and tsvr.version_code=#{versionCode}
+		)
+	</select>
+	
+	<!-- 新版增量升级检测新版本接口，根据用户id，所属平台编码，用户版本号查询新版本 -->
+	<select id="newSoftList_1" parameterType="map" resultType="map">
+		select ts.ID,ts.SOFT_NAME,ts.VERSION_CODE,ts.UPDATE_CONTENT,
+			ts.FORCE_UPDATE,ts.ALL_USER_UPGRADE,ts.FILE_URL,
+			(select count(1)  from TA_SOFT_USER_UPGRADE tsuu 
+		 		where tsuu.soft_id = ts.id and tsuu.platform_id=#{userPlatformCode} and tsuu.user_id=#{userId} ) USER_UPDATE,
+		 	tsvr.UPGRADE_PACKAGE,tsvr.FILE_SIZE
+		from (select SOFT_ID,UPGRADE_PACKAGE,FILE_SIZE
+			from TA_SOFT_VERSION_REL 
+		 	where status='0' and version_code=#{versionCode}) tsvr
+		left join TA_SOFT ts on tsvr.soft_id=ts.id
+		where ts.STATUS='0'
+		and ts.SOFT_TYPE='0'
+		and ts.FILE_TYPE='1'
+		and ts.ISLEVEUP='1'
+	</select>
+	
+	<!-- 根据用户版本号,参数tag查询新版本列表 -->
+	<select id="newSilentSoftList" parameterType="map" resultMap="CheckNewSilentSoftResult">
+		select ts.id,ts.SOFT_NAME,ts.VERSION_CODE,ts.update_content,ts.FILE_URL  
+		from TA_SOFT ts 
+		where ts.STATUS='0'
+		and ts.SOFT_TYPE='0'
+		and ts.FILE_TYPE='1'
+		and ts.ISLEVEUP='2'
+		AND TS.USER_UPDATE=#{tag}
+		and exists (
+		    select tsvr.soft_id  from TA_SOFT_VERSION_REL tsvr 
+		 where tsvr.soft_id = ts.id and tsvr.status='0' and tsvr.version_code=#{versionCode}
+		)
+	</select>
+	
+	<!-- 根据用户版本号,参数tag查询新版本列表 -->
+	<select id="newSilentSoftList_1" parameterType="map" resultType="map">
+		select TS.ID,TS.SOFT_NAME,TS.VERSION_CODE,TS.UPDATE_CONTENT,TS.FILE_URL,tsvr.UPGRADE_PACKAGE,tsvr.FILE_SIZE
+		from TA_SOFT ts,(select SOFT_ID,UPGRADE_PACKAGE,FILE_SIZE  
+			from TA_SOFT_VERSION_REL 
+			where status='0' and version_code=#{versionCode}) tsvr 
+		where tsvr.soft_id = ts.id
+		and ts.STATUS='0'
+		and ts.SOFT_TYPE='0'
+		and ts.FILE_TYPE='1'
+		and ts.ISLEVEUP='2'
+		AND TS.USER_UPDATE=#{tag}
+	</select>
+	
+	<!-- 根据用户版本号,最新版本id查询新版本文件列表 -->
+	<select id="clientFileList" parameterType="map" resultMap="ClientFileResult">
+		select sf.id,
+		       sf.soft_id,
+		       sf.file_name,
+		       sf.file_path,
+		       sf.file_size,
+		       sf.file_md5,
+		       sf.create_time,
+		       sf.absolute_url,
+		       t.update_type
+		  from TA_SOFT_FILE sf
+		 right join (select soft_file_id, update_type
+		               from TA_SOFT_UPGRADE
+		              where update_type = 'add'
+		                and old_soft_id in
+		                    (select ts.id
+		                       from TA_SOFT ts
+		                      where ts.STATUS = '0'
+		                        and ts.SOFT_TYPE = '0'
+		                        and ts.FILE_TYPE = '1'
+		                        and ts.version_code = #{versionCode})
+		                and new_soft_id = #{id}) t
+		    on sf.id = t.soft_file_id
+	</select>
+	
+	<delete id="deleteVersionRelConflict" parameterType="map">
+		delete from TA_SOFT_VERSION_REL r
+		where exists(
+			select 1
+			from (
+				select rt.soft_id,rt.upgrade_soft_id
+				from TA_SOFT_VERSION_REL rt
+				left join TA_SOFT st on rt.soft_id = st.id
+				where st.id != #{softId}
+					and st.isleveup = (select isleveup from TA_SOFT where id=#{softId})
+					<if test="userUpdate != null and userUpdate != ''">and st.user_update=#{userUpdate}</if>
+					<if test="allUserUpgrade != null and allUserUpgrade != ''">and st.all_user_upgrade=#{allUserUpgrade}</if>
+					and rt.upgrade_soft_id in (select upgrade_soft_id from TA_SOFT_VERSION_REL where soft_id=#{softId})
+			) t
+			where r.soft_id=t.soft_id and r.upgrade_soft_id=t.upgrade_soft_id
+		)
+	</delete>
+	
+	<delete id="deleteSoftUpgradeConflict" parameterType="map">
+		delete from TA_SOFT_UPGRADE r
+		where exists(
+			select 1
+			from (
+				select rt.soft_id,rt.upgrade_soft_id
+				from TA_SOFT_VERSION_REL rt
+				left join TA_SOFT st on rt.soft_id = st.id
+				where st.id != #{softId}
+					and st.isleveup = (select isleveup from TA_SOFT where id=#{softId})
+					<if test="userUpdate != null and userUpdate != ''">and st.user_update=#{userUpdate}</if>
+					<if test="allUserUpgrade != null and allUserUpgrade != ''">and st.all_user_upgrade=#{allUserUpgrade}</if>
+					and rt.upgrade_soft_id in (select upgrade_soft_id from TA_SOFT_VERSION_REL where soft_id=#{softId})
+			) t
+			where r.new_soft_id=t.soft_id and r.old_soft_id=t.upgrade_soft_id
+		)
+	</delete>
+	
+	<select id="queryNewSoftList" parameterType="map" resultMap="SoftResult">
+		select ts.id,ts.soft_name,ts.soft_type,ts.version_code,
+			ts.update_content,ts.create_time,ts.update_time,
+			ts.status,ts.file_url,ts.file_name,ts.file_rename,
+			ts.file_type,ts.force_update,
+			ts.isleveup,ts.all_user_upgrade,ts.file_size,
+			(select count(1)  from TA_SOFT_USER_UPGRADE tsuu 
+		 		where tsuu.soft_id = ts.id and tsuu.platform_id=#{platformCode} and tsuu.user_id=#{userId}
+		 	) user_update,
+		 	ts.download_url
+		from TA_SOFT ts 
+		where ts.STATUS='0'
+		and ts.SOFT_TYPE='0'
+		and ts.FILE_TYPE='1'
+		and ts.ISLEVEUP='1'
+		and exists (
+		    select tsvr.soft_id  from TA_SOFT_VERSION_REL tsvr 
+		 where tsvr.soft_id = ts.id and tsvr.status='0' and tsvr.version_code=#{versionCode}
+		)
+		order by ts.update_time desc
+	</select>
+	
+	
+	<select id="queryWidgetPage" parameterType="map" resultType="map">
+		select t1.*,t2.widget_name,t2.description from TA_WIDGET_LOG t1 left join TA_WIDGET t2 on t1.widget_id = t2.id
+		where 1=1
+		<if test="machineInfo != null and machineInfo != ''">and t1.machine_info like '%'||#{machineInfo}||'%'</if>
+		<if test="widgetName != null and widgetName != ''">and t2.widget_name like '%'||#{widgetName}||'%'</if>
+		<if test="startTime != null and startTime != ''">and to_char(t1.create_time,'yyyy-mm-dd')>=#{startTime}</if>
+		<if test="endTime != null and endTime != ''"><![CDATA[and to_char(t1.create_time,'yyyy-mm-dd')<=#{endTime}]]></if>
+	</select>
+	
+	<!-- 查询生成升级包的文件列表 -->
+	<select id="queryPowerPage" parameterType="map" resultType="map">
+		select ID,MACHINE_INFO,CREATE_TIME 
+		from TA_POWEROFF where 1=1 
+		<if test="machineInfo != null and machineInfo != ''">and machine_info like '%'||#{machineInfo}||'%'</if>
+		<if test="startTime != null and startTime != ''">and to_char(create_time,'yyyy-mm-dd')>=#{startTime}</if>
+		<if test="endTime != null and endTime != ''"><![CDATA[and to_char(create_time,'yyyy-mm-dd')<=#{endTime}]]></if>
+	</select>
+	
+	
+	<!-- 查询生成升级包的文件列表 -->
+	<select id="queryUpgradeFileList" parameterType="string" resultType="map">
+		select u.old_soft_id,f.absolute_url,f.file_path
+		from TA_SOFT_VERSION_REL r
+		left join TA_SOFT_UPGRADE u on  r.soft_id=u.new_soft_id and r.upgrade_soft_id=u.old_soft_id and u.update_type='add'
+		left join TA_SOFT_FILE f on u.soft_file_id=f.id
+		where r.soft_id=#{_parameter} and r.upgrade_package is null and u.old_soft_id is not null
+	</select>
+	
+	<!-- 生成升级包 -->
+	<update id="updateUpgradePackage" parameterType="list">
+		<foreach collection="list" item="item" open="begin" close=";end;" separator=";">
+		update TA_SOFT_VERSION_REL r set r.UPGRADE_PACKAGE=#{item.upgrade_package},r.FILE_SIZE=#{item.file_size}
+		where r.soft_id=#{item.new_soft_id} and r.upgrade_soft_id=#{item.old_soft_id}
+	   </foreach>
+	</update>
+	
+	<!-- 删除升级包 -->
+	<update id="updateUpgradePackageNull" parameterType="list">
+		<foreach collection="list" item="item" open="begin" close=";end;" separator=";">
+		update TA_SOFT_VERSION_REL r set r.UPGRADE_PACKAGE=null,r.FILE_SIZE=null
+		where r.soft_id=#{item.new_soft_id} and r.upgrade_soft_id=#{item.old_soft_id}
+	   </foreach>
+	</update>
+	
+	<!-- 删除升级关联版本时，删除对应的升级包文件 -->
+	<select id="queryUpgradeSoftRel" parameterType="map" resultType="string">
+		select r.UPGRADE_PACKAGE
+		from TA_SOFT_VERSION_REL r
+		where 1=1
+		<if test="softId != null and softId !=''">and soft_id=#{softId}</if>
+		<if test="list != null">
+			and (soft_id in <foreach open="(" close=")" collection="list" item="item" separator=",">#{item}</foreach>
+				or 
+				upgrade_soft_id in <foreach open="(" close=")" collection="list" item="item" separator=",">#{item}</foreach>
+			)
+		</if>
+	</select>
+	
+	<!-- 删除升级版本冲突数据时，删除对应的升级包 -->
+	<select id="queryVersionRelConflict" parameterType="map" resultType="string">
+		select r.UPGRADE_PACKAGE 
+		from TA_SOFT_VERSION_REL r
+		where exists(
+			select 1
+			from (
+				select rt.soft_id,rt.upgrade_soft_id
+				from TA_SOFT_VERSION_REL rt
+				left join TA_SOFT st on rt.soft_id = st.id
+				where st.id != #{softId}
+					and st.isleveup = (select isleveup from TA_SOFT where id=#{softId})
+					<if test="userUpdate != null and userUpdate != ''">and st.user_update=#{userUpdate}</if>
+					<if test="allUserUpgrade != null and allUserUpgrade != ''">and st.all_user_upgrade=#{allUserUpgrade}</if>
+					and rt.upgrade_soft_id in (select upgrade_soft_id from TA_SOFT_VERSION_REL where soft_id=#{softId})
+			) t
+			where r.soft_id=t.soft_id and r.upgrade_soft_id=t.upgrade_soft_id
+		)
+	</select>
+	
+	<!-- 查询增量升级包 -->
+	<select id="queryUpgradePackage" parameterType="map" resultType="map">
+		select r.UPGRADE_PACKAGE,r.FILE_SIZE
+		from TA_SOFT_VERSION_REL r
+		where r.soft_id=#{id} and r.version_code=#{versionCode} and r.upgrade_package is not null
+	</select>
+	
+	
+	
+	
+</mapper>

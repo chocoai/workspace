@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>${channel.title!channel.name} - ${site.name}</title>
+<link rel="stylesheet" type="text/css" href="/${res}/css/sp.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/public_all.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/global.css" />
+<script type="text/javascript" src="/${res}/js/dc/settitle.js"></script><!--菜单切换-->
+
+</head>
+
+<body>
+
+[#include "../include/header.html"/]
+
+[#include "../include/navi.html"/]
+<!--nav 结束-->
+<div style=" clear:both;"></div>
+<!-- <div class="top">
+     <div class="box">
+         <div class="logo">东楚视频</div>
+     </div>
+</div>
+<div style=" clear:both;"></div> -->
+
+
+
+<!--内容 开始-->
+<div class="sp_box">
+
+  <div class="sp_center">
+     <div class="map sp_map mt10"><img src="/${res}/images/home.png" width="20" height="18"><a href="${base}/">首页</a> >  <a href="${base}/vedio/index.jhtml" >东楚视频</a>>  ${channel.name}视频</div>
+     <div class="sp_listpage"> 
+       <ul class="spmore_list">
+          [@cms_content_page count='10' orderBy='4' channelId=channel.id titLen='16' channelOption='1']  
+          [#list tag_pagination.list as a]
+             <li>
+                <a class="sp_pic" href="${a.url}" target="_blank" title="${a.title}"><img src="${a.titleImg!a.typeImg!site.defImg}"></a>
+                <a class="sp_tit"href="${a.url}" target="_blank" title="${a.title}">[@text_cut s=a.title len=titLen /] </a>
+                <span class="play_num"><i></i>${a.views}次</span>
+             </li>
+          [/#list]
+
+
+        </ul> 
+        <div class="list_dis">
+          <div class="jogger">[@cms_pagination sysPage='1'/] </div>
+        </div>
+       [/@cms_content_page]   
+     </div>
+  </div>
+</div>
+<!--内容 end-->
+
+<!--尾部 开始-->
+<div style=" clear:both;"></div>
+[#include "../include/footer.html"/]
+<!--尾部 开始-->
+
+</body>
+</html>

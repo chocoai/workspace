@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="keywords" content="${site.keywords!}" />
+<meta http-equiv="description" content="${site.description!}" />
+<title>${topic.name} - 专题 - ${site.name}</title>
+
+<link rel="stylesheet" type="text/css" href="/${res}/css/global.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/zt.css" />
+
+</head>
+
+<body>
+	<!---专题top 开始--->
+	<div class="zt_top">
+		<div class="zt_top_center">
+			<div class="zt_logo">
+				<a href="${base}/">
+					<img src="/${res}/images/logo.png">
+				</a>
+			</div>
+		</div>
+	</div>
+	<!---专题top 结束--->
+
+	<!----专题内容 开始--->
+	<div class="zt_con">
+		<div class="zt_con_center">
+			<h2 class="zt_bigtit">
+				<a href="${base}/topic/${topic.id}.jspx">${topic.name}</a>
+			</h2>
+			<div class="zt_cen">
+				<div class="zt_cen_l">
+					<ul>
+					[@cms_content_list count='10' orderBy='4' typeId='1,2,3,4' titLen='18' channelOption='1' topicId=topic.id]
+                    [#list tag_list as content]
+						<li>
+							<h3 class="zt_smatit">
+								<a href="${content.url}">${content.title}</a>
+							</h3>
+							<div class="edi_dat">
+								<span class="editor">${content.author!'本站编辑'}</span>
+								<span class="date">${content.releaseDate}</span>
+							</div>
+							<p class="zt_pra">
+								[@text_cut s=content.desc! len='150' append='...'/]
+								<a href="${content.url}">[详细]</a>
+							</p>
+							<p class="zt_pic">
+								<a href="${content.url}">
+									<img src="${content.titleImg!content.typeImg!}">
+								</a>
+							</p>
+						</li>
+					[/#list]
+                    [/@cms_content_list]
+						
+					</ul>
+					
+					<div class="showmore" style="text-align: center; margin-bottom: 20px;">
+						<a href="${base}/topic/getList.jsp?topicId=${topic.id}">查看更多</a>
+					</div>
+				</div>
+
+				<div class="zt_cen_r">
+				[#list topicChannels as topicChannel]
+					<div class="zt_cen_r_cell">
+						<h2 class="zt_cen_r_hd">
+							<a href="${base}/topic/getList.jsp?topicId=${topic.id}&topicChannelId=${topicChannel.channelId}">
+								${topicChannel.channelName}
+							</a>
+						</h2>
+						<p class="zt_cen_r_bd">
+						[@cms_content_list orderBy='4' typeId='1,2,3,4' titLen='18' channelOption='1' topicId=topic.id topicChannelId=topicChannel.channelId ]
+                    	[#list tag_list as content]
+                    	[#if !topicChannel_has_next]
+                    		<span class="pic_cell">
+								<a href="${content.url}" title="${content.title}"><img src="${content.titleImg!content.typeImg!}"></a>
+							</span>
+						[#else]
+							<a href="${content.url}" title="${content.title}"><span>[@text_cut s=content.title! len='20' append='...'/]</span></a><br>
+                    	[/#if]
+                    	[/#list]
+                    	[/@cms_content_list]
+						</p>
+					</div>
+				[/#list]
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<!----专题内容 结束--->
+
+	<!--尾部 开始-->
+	[#include "../include/footer.html"/]
+	<!--尾部 开始-->
+
+</body>
+</html>

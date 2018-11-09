@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fxzhj.mapper.TradeMapper">
+	<resultMap id="BaseResultMap" type="com.fxzhj.model.Trade">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="record_id" property="recordId" jdbcType="BIGINT" />
+		<result column="user_account" property="userAccount" jdbcType="VARCHAR" />
+		<result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
+		<result column="order_money" property="orderMoney" jdbcType="REAL" />
+		<result column="pay_way" property="payWay" jdbcType="INTEGER" />
+		<result column="pay_type" property="payType" jdbcType="INTEGER" />
+		<result column="fact_money" property="factMoney" jdbcType="REAL" />
+		<result column="save_money" property="saveMoney" jdbcType="REAL" />
+		<result column="card_no" property="cardNo" jdbcType="VARCHAR" />
+		
+		<!-- 界面显示字段  -->
+		<result column="device_no" property="deviceNo" jdbcType="VARCHAR" />
+		<result column="port_no" property="portNo" jdbcType="VARCHAR" />
+		<result column="cTimeStr" property="cTimeStr" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		id, record_id, user_account, ctime, order_money, pay_way, pay_type,
+		fact_money, save_money, card_no
+	</sql>
+	
+	<!-- 根据条件查询小区中充电交易流水 -->
+	<select id="queryByCId" resultMap="BaseResultMap" parameterType="com.fxzhj.model.Trade">
+		SELECT c.device_no,f.port_no,a.*,date_format(a.ctime,'%Y-%m-%d %H:%i:%S') cTimeStr 
+		FROM t_trade a 
+		LEFT JOIN t_record b ON a.record_id=b.id
+		LEFT JOIN t_device c ON b.device_id = c.id 
+		LEFT JOIN t_community d ON c.community_id=d.community_id 
+		LEFT JOIN t_range_device e ON b.device_id=e.device_id
+		LEFT JOIN t_port f ON b.device_id=f.device_id and b.port_id=f.id
+		where d.community_id=#{comOrareId} 
+		<if test="deviceNo !=null and deviceNo != '' ">
+        	and c.device_no = #{deviceNo}
+		</if>
+		<if test="userAccount !=null and userAccount != '' ">
+        	and a.user_account = #{userAccount}
+		</if>
+		<if test="payWay !=null">
+        	and a.pay_way = #{payWay}
+		</if>
+		<if test="payType !=null">
+        	and a.pay_type = #{payType}
+		</if>
+		<if test="qStartTime !=null and qStartTime !=''">
+			<![CDATA[ 
+        		and a.ctime >= #{qStartTime}
+           	]]>
+		</if>
+		<if test="qEndTime !=null and qEndTime !=''">
+			<![CDATA[ 
+        		and a.ctime <= #{qEndTime}
+           	]]>
+		</if>
+		order by a.ctime desc
+	</select>
+	
+	<!-- 根据条件查询区域中充电交易流水 -->
+	<select id="queryByAId" resultMap="BaseResultMap" parameterType="com.fxzhj.model.Trade">
+		SELECT c.device_no,f.port_no,a.*,date_format(a.ctime,'%Y-%m-%d %H:%i:%S') cTimeStr 
+		FROM t_trade a 
+		LEFT JOIN t_record b ON a.record_id=b.id
+		LEFT JOIN t_device c ON b.device_id = c.id 
+		LEFT JOIN t_area d ON c.area_id=d.id 
+		LEFT JOIN t_range_device e ON b.device_id=e.device_id
+		LEFT JOIN t_port f ON b.device_id=f.device_id and b.port_id=f.id
+		where d.id=#{comOrareId} 
+		<if test="deviceNo !=null and deviceNo != '' ">
+        	and c.device_no = #{deviceNo}
+		</if>
+		<if test="userAccount !=null and userAccount != '' ">
+        	and a.user_account = #{userAccount}
+		</if>
+		<if test="payWay !=null">
+        	and a.pay_way = #{payWay}
+		</if>
+		<if test="payType !=null">
+        	and a.pay_type = #{payType}
+		</if>
+		<if test="qStartTime !=null and qStartTime !=''">
+			<![CDATA[ 
+        		and a.ctime >= #{qStartTime}
+           	]]>
+		</if>
+		<if test="qEndTime !=null and qEndTime !=''">
+			<![CDATA[ 
+        		and a.ctime <= #{qEndTime}
+           	]]>
+		</if>
+		order by a.ctime desc
+	</select>
+	
+	<cache />
+</mapper>

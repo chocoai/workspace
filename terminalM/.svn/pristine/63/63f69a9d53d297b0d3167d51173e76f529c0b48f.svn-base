@@ -1,0 +1,529 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.sysres.dao.TaManageUserInfoMapper">
+  <resultMap id="BaseResultMap" type="com.whty.assis.sysres.model.TaManageUserInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="account" jdbcType="VARCHAR" property="account" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="role_id" jdbcType="VARCHAR" property="roleId" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="login_count" jdbcType="INTEGER" property="loginCount" />
+    <result column="last_time" jdbcType="TIMESTAMP" property="lastTime" />
+    <result column="user_type" jdbcType="VARCHAR" property="userType" />
+    <result column="platform_code_id" jdbcType="INTEGER" property="platformCodeId" />
+    <result column="school_id" jdbcType="INTEGER" property="schoolId" />
+    <result column="province_code" jdbcType="VARCHAR" property="provinceCode" />
+    <result column="city_code" jdbcType="VARCHAR" property="cityCode" />
+    <result column="area_code" jdbcType="VARCHAR" property="areaCode" />
+    <result column="department" jdbcType="VARCHAR" property="department" />
+    <result column="effective_time" jdbcType="TIMESTAMP" property="effectiveTime" />
+    <result column="expiring_time" jdbcType="TIMESTAMP" property="expiringTime" />
+    <association property="provinceName" column="province_code" javaType="com.whty.assis.basicdata.model.Area" autoMapping="true" >
+    	<result property="id" column="province_code" />
+		<result property="areaCode" column="area_code" />
+		<result property="parentId" column="parent_id" />
+		<result property="sortNum" column="sort_num" />
+		<result property="levelName" column="level_name" />
+		<result property="areaName" column="province_name" />
+		<result property="levelId" column="level_id" />
+		<result property="status" column="status" />
+    </association>
+    <association property="cityName" column="city_code" javaType="com.whty.assis.basicdata.model.Area" autoMapping="true" >
+    	<result property="id" column="city_code" />
+		<result property="areaCode" column="area_code" />
+		<result property="parentId" column="parent_id" />
+		<result property="sortNum" column="sort_num" />
+		<result property="levelName" column="level_name" />
+		<result property="areaName" column="city_name" />
+		<result property="levelId" column="level_id" />
+		<result property="status" column="status" />
+    </association>
+    <association property="areaName" column="area_code" javaType="com.whty.assis.basicdata.model.Area" autoMapping="true" >
+    	<result property="id" column="area_code" />
+		<result property="areaCode" column="area_code" />
+		<result property="parentId" column="parent_id" />
+		<result property="sortNum" column="sort_num" />
+		<result property="levelName" column="level_name" />
+		<result property="areaName" column="area_name" />
+		<result property="levelId" column="level_id" />
+		<result property="status" column="status" />
+    </association>
+    <association property="school" column="school_id" javaType="com.whty.assis.basicdata.model.School" autoMapping="true" >
+    	<result property="id" column="school_id" />
+		<result property="name" column="name" />
+		<result property="address"  column="address" />
+		<result property="mobile" column="mobile" />
+		<result property="provinceCode" column="province_code" />
+		<result property="cityCode" column="city_code" />
+		<result property="contacts" column="contacts" />
+		<result property="schoolType" column="school_type" />
+		<result property="orgType" column="org_type" />
+		<result property="aamOrgaId" column="aam_orga_id" />
+		<result property="webUrl" column="web_url" />
+		<result property="orgaPic" column="orga_pic" />
+		<result property="creator" column="creator" />
+		<result property="creatorName" column="creator_name" />
+		
+		<result property="provinceName" column="province_name" />
+		<result property="cityName" column="city_name" />
+		<result property="areaName" column="area_name" />
+    </association>
+    <association property="role" column="role_id" javaType="com.whty.assis.sysres.model.SysRole" autoMapping="true" >
+    	<result column="role_id" jdbcType="VARCHAR" property="id" />
+	    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+        <result column="role_level" jdbcType="INTEGER" property="roleLevel" />
+	    <result column="role_comment" jdbcType="VARCHAR" property="roleComment" />
+	    <result column="role_sort" jdbcType="INTEGER" property="roleSort" />
+	    <result column="status" jdbcType="INTEGER" property="status" />
+	    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+	    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    </association>
+  </resultMap>
+  
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, account, user_name, password, status, role_id, create_time, update_time, login_count, 
+    last_time, user_type, platform_code_id, school_id, province_code, city_code, area_code, 
+    department, effective_time, expiring_time
+  </sql>
+  <select id="selectByExample" parameterType="com.whty.assis.sysres.model.TaManageUserInfoExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+   <include refid="Base_Column_List" />
+    FROM ta_manage_user_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+     select
+    u.id, account, u.user_name, u.password, u.status, u.role_id, u.create_time, u.update_time, u.login_count, 
+    u.last_time, u.user_type, u.platform_code_id, u.school_id, u.province_code, u.city_code, u.area_code, 
+    u.department, u.effective_time, u.expiring_time,a.id province_code,b.id city_code,c.id area_code
+    ,a.area_name province_name,b.area_name city_name,c.area_name area_name,s.name,r.role_name
+    FROM ta_manage_user_info u
+	LEFT JOIN ta_area a on u.province_code = a.id
+	LEFT JOIN ta_area b on u.city_code = b.id
+	LEFT JOIN ta_area c on u.area_code = c.id
+	LEFT JOIN t_school s on u.school_id = s.id
+	LEFT JOIN sys_role r on u.role_id = r.id
+    where u.id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from ta_manage_user_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.whty.assis.sysres.model.TaManageUserInfoExample">
+    delete from ta_manage_user_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.whty.assis.sysres.model.TaManageUserInfo">
+    insert into ta_manage_user_info (id, account, user_name, 
+      password, status, role_id, 
+      create_time, update_time, login_count, 
+      last_time, user_type, platform_code_id, 
+      school_id, province_code, city_code, 
+      area_code, department, effective_time, 
+      expiring_time)
+    values (#{id,jdbcType=INTEGER}, #{account,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, 
+      #{password,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{roleId,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{loginCount,jdbcType=INTEGER}, 
+      #{lastTime,jdbcType=TIMESTAMP}, #{userType,jdbcType=VARCHAR}, #{platformCodeId,jdbcType=INTEGER}, 
+      #{schoolId,jdbcType=INTEGER}, #{provinceCode,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, 
+      #{areaCode,jdbcType=VARCHAR}, #{department,jdbcType=VARCHAR}, #{effectiveTime,jdbcType=TIMESTAMP}, 
+      #{expiringTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.whty.assis.sysres.model.TaManageUserInfo">
+    insert into ta_manage_user_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="account != null">
+        account,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="password != null">
+        password,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="roleId != null">
+        role_id,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="loginCount != null">
+        login_count,
+      </if>
+      <if test="lastTime != null">
+        last_time,
+      </if>
+      <if test="userType != null">
+        user_type,
+      </if>
+      <if test="platformCodeId != null">
+        platform_code_id,
+      </if>
+      <if test="schoolId != null">
+        school_id,
+      </if>
+      <if test="provinceCode != null">
+        province_code,
+      </if>
+      <if test="cityCode != null">
+        city_code,
+      </if>
+      <if test="areaCode != null">
+        area_code,
+      </if>
+      <if test="department != null">
+        department,
+      </if>
+      <if test="effectiveTime != null">
+        effective_time,
+      </if>
+      <if test="expiringTime != null">
+        expiring_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="account != null">
+        #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null">
+        #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginCount != null">
+        #{loginCount,jdbcType=INTEGER},
+      </if>
+      <if test="lastTime != null">
+        #{lastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userType != null">
+        #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="platformCodeId != null">
+        #{platformCodeId,jdbcType=INTEGER},
+      </if>
+      <if test="schoolId != null">
+        #{schoolId,jdbcType=INTEGER},
+      </if>
+      <if test="provinceCode != null">
+        #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null">
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="effectiveTime != null">
+        #{effectiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expiringTime != null">
+        #{expiringTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.whty.assis.sysres.model.TaManageUserInfoExample" resultType="java.lang.Long">
+    select count(*) from ta_manage_user_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update ta_manage_user_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.account != null">
+        account = #{record.account,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null">
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.password != null">
+        password = #{record.password,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.roleId != null">
+        role_id = #{record.roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.loginCount != null">
+        login_count = #{record.loginCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastTime != null">
+        last_time = #{record.lastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userType != null">
+        user_type = #{record.userType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.platformCodeId != null">
+        platform_code_id = #{record.platformCodeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.schoolId != null">
+        school_id = #{record.schoolId,jdbcType=INTEGER},
+      </if>
+      <if test="record.provinceCode != null">
+        province_code = #{record.provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityCode != null">
+        city_code = #{record.cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaCode != null">
+        area_code = #{record.areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.department != null">
+        department = #{record.department,jdbcType=VARCHAR},
+      </if>
+      <if test="record.effectiveTime != null">
+        effective_time = #{record.effectiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.expiringTime != null">
+        expiring_time = #{record.expiringTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update ta_manage_user_info
+    set id = #{record.id,jdbcType=INTEGER},
+      account = #{record.account,jdbcType=VARCHAR},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      password = #{record.password,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      role_id = #{record.roleId,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      login_count = #{record.loginCount,jdbcType=INTEGER},
+      last_time = #{record.lastTime,jdbcType=TIMESTAMP},
+      user_type = #{record.userType,jdbcType=VARCHAR},
+      platform_code_id = #{record.platformCodeId,jdbcType=INTEGER},
+      school_id = #{record.schoolId,jdbcType=INTEGER},
+      province_code = #{record.provinceCode,jdbcType=VARCHAR},
+      city_code = #{record.cityCode,jdbcType=VARCHAR},
+      area_code = #{record.areaCode,jdbcType=VARCHAR},
+      department = #{record.department,jdbcType=VARCHAR},
+      effective_time = #{record.effectiveTime,jdbcType=TIMESTAMP},
+      expiring_time = #{record.expiringTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.whty.assis.sysres.model.TaManageUserInfo">
+    update ta_manage_user_info
+    <set>
+      <if test="account != null">
+        account = #{account,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null">
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="roleId != null">
+        role_id = #{roleId,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="loginCount != null">
+        login_count = #{loginCount,jdbcType=INTEGER},
+      </if>
+      <if test="lastTime != null">
+        last_time = #{lastTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userType != null">
+        user_type = #{userType,jdbcType=VARCHAR},
+      </if>
+      <if test="platformCodeId != null">
+        platform_code_id = #{platformCodeId,jdbcType=INTEGER},
+      </if>
+      <if test="schoolId != null">
+        school_id = #{schoolId,jdbcType=INTEGER},
+      </if>
+      <if test="provinceCode != null">
+        province_code = #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null">
+        city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null">
+        area_code = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="department != null">
+        department = #{department,jdbcType=VARCHAR},
+      </if>
+      <if test="effectiveTime != null">
+        effective_time = #{effectiveTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="expiringTime != null">
+        expiring_time = #{expiringTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.whty.assis.sysres.model.TaManageUserInfo">
+    update ta_manage_user_info
+    set account = #{account,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      role_id = #{roleId,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      login_count = #{loginCount,jdbcType=INTEGER},
+      last_time = #{lastTime,jdbcType=TIMESTAMP},
+      user_type = #{userType,jdbcType=VARCHAR},
+      platform_code_id = #{platformCodeId,jdbcType=INTEGER},
+      school_id = #{schoolId,jdbcType=INTEGER},
+      province_code = #{provinceCode,jdbcType=VARCHAR},
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      area_code = #{areaCode,jdbcType=VARCHAR},
+      department = #{department,jdbcType=VARCHAR},
+      effective_time = #{effectiveTime,jdbcType=TIMESTAMP},
+      expiring_time = #{expiringTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectAlluser"  resultMap="BaseResultMap">
+    select
+    u.id, account, u.user_name, u.password, u.status, u.role_id, u.create_time, u.update_time, u.login_count, 
+    u.last_time, u.user_type, u.platform_code_id, u.school_id, u.province_code, u.city_code, u.area_code, 
+    u.department, u.effective_time, u.expiring_time,a.id province_code,b.id city_code,c.id area_code
+    ,a.area_name province_name,b.area_name city_name,c.area_name area_name,s.name,r.role_name
+    FROM ta_manage_user_info u
+	LEFT JOIN ta_area a on u.province_code = a.id
+	LEFT JOIN ta_area b on u.city_code = b.id
+	LEFT JOIN ta_area c on u.area_code = c.id
+	LEFT JOIN t_school s on u.school_id = s.id
+	LEFT JOIN sys_role r on u.role_id = r.id
+  </select>
+  <select id="selectByAccount" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    u.id, account, u.user_name, u.password, u.status, u.role_id, u.create_time, u.update_time, u.login_count, 
+    u.last_time, u.user_type, u.platform_code_id, u.school_id, u.province_code, u.city_code, u.area_code, 
+    u.department, u.effective_time, u.expiring_time,a.id province_code,b.id city_code,c.id area_code
+    ,a.area_name province_name,b.area_name city_name,c.area_name area_name,s.name,r.role_name,r.role_level
+    FROM ta_manage_user_info u
+	LEFT JOIN ta_area a on u.province_code = a.id
+	LEFT JOIN ta_area b on u.city_code = b.id
+	LEFT JOIN ta_area c on u.area_code = c.id
+	LEFT JOIN t_school s on u.school_id = s.id
+	LEFT JOIN sys_role r on u.role_id = r.id
+	where u.account =#{account} limit 0,1
+  </select>
+</mapper>

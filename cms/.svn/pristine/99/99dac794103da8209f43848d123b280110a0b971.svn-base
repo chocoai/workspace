@@ -1,0 +1,204 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="keywords" content="${site.keywords!}" />
+<meta http-equiv="description" content="${site.description!}" />
+<title>${channel.title!channel.name} - ${site.name}</title>
+
+<link rel="stylesheet" type="text/css" href="/${res}/css/global.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/public_all.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/sh.css" />
+
+</head>
+<body class="sh_body">
+	[#include "../include/life_nav.html"/] 
+
+	<!---中间内容部分 开始---->
+	<div class="sh_bigbox" style="margin-bottom: 30px;">
+		<div class="sh_center">
+			<p class="location_text">
+				<i></i>
+				您现在的位置：&nbsp;
+				<a href="${base}">首页</a> >
+				[#list channel.nodeList as n]
+				<a target="_self" href="${n.url}">${n.name}</a>
+					[#if n_has_next] > [/#if]
+				[/#list] >
+				<a href="" class="shpage_here">正文</a>
+			</p>
+
+			<!----中间内容——左 开始--->
+			<div class="sh_left">
+				<!----正文 开始----->
+				<div class="sh_article">
+					<div class="sh_article_hd">
+						<h3 class="sh_article_tit">${content.title}</h3>
+						<p class="sh_article_titother">
+							<span class="sh_article_date">发布时间：${content.releaseDate}</span>
+							<span class="sh_article_editor"> 编辑：${content.author!'本站编辑'} </span>
+							&nbsp;&nbsp;来源： ${content.origin!'本站原创'} &nbsp;&nbsp; 浏览次数：
+							<span id="views"></span>
+						</p>
+					</div>
+					
+					<div class="sh_article_bd">
+						${txt!}
+					</div>
+
+
+					<!-- JiaThis Button BEGIN -->
+					<div class="jiathis_style_24x24">
+						<a class="jiathis_button_qzone"></a>
+						<a class="jiathis_button_tsina"></a>
+						<a class="jiathis_button_tqq"></a>
+						<a class="jiathis_button_weixin"></a>
+						<a class="jiathis_button_renren"></a>
+						<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+						<a class="jiathis_counter_style"></a>
+					</div>
+					<!-- JiaThis Button END -->
+					<div class="sh_article_share">
+						
+					</div>
+					<div class="prenex_art">
+						<p>
+							<i>上一篇</i>
+							：
+							<a href="#">[@cms_content id=content.id next='1' channelId=channel.id][#if tag_bean??]<a href="${tag_bean.url}">${tag_bean.title}</a>[#else]没有了[/#if][/@cms_content]</a>
+						</p>
+						<p>
+							<i>下一篇</i>
+							：
+							<a href="#">[@cms_content id=content.id next='0' channelId=channel.id][#if tag_bean??]<a href="${tag_bean.url}">${tag_bean.title}</a>[#else]没有了[/#if][/@cms_content]</a>
+						</p>
+					</div>
+				</div>
+
+			</div>
+			<!----中间内容——左 结束--->
+
+			<!----中间内容——右 开始----->
+			[#include "../include/life_right.html"/]
+			<!----中间内容——右 结束----->
+		</div>
+	</div>
+	<!---中间内容部分 结束---->
+
+	<!--尾部 开始-->
+	[#include "../include/footer.html"/] 
+
+	<script type="text/javascript" src="/${res}/js/dc/jquery-2.2.4.min.js"></script>
+	<script type="text/javascript" src="${resSys}/front.js"></script>
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+	<script type="text/javascript" src="/${res}/js/face/jquery.sinaEmotion.js"></script>
+	<script type="text/javascript">
+	
+		$(function() {
+			Cms.checkPerm("${base}", "${content.id}");
+			Cms.collectCsi("${base}", "collectCsiDiv", "collect_csi", "${content.id}");
+			Cms.attachment("${base}", "${content.id}", "${content.attachments?size}", "attach");
+			Cms.viewCount("${base}", "${content.id}");
+			Cms.siteFlow("${base}", location.href, document.referrer, "${site.config.flowSwitch?string}");
+			
+			Cms.siteFlow("${base}", location.href, document.referrer);
+		});
+		
+		
+		$(document).ready(function() {
+			$(".sh_search01").on("click", function(e) {
+				if ($(".sh_search02").is(":hidden")) {
+					$(".sh_search02").show();
+				} else {
+					$(".sh_search02").hide();
+				}
+
+				$(document).one("click", function() {
+					$(".sh_search02").hide();
+				});
+
+				e.stopPropagation();
+			});
+			$(".sh_search02").on("click", function(e) {
+				e.stopPropagation();
+			});
+		});
+		
+		$(function() {
+			
+		});
+		
+		function showList(id, text) {
+			//iframe层
+			layer.open({
+				type: 2,
+				title: "评论“" + text + "”回复:",
+				shadeClose: true,
+				shade: 0.8,
+				area: ['780px', '80%'],
+				content: '${base}/comment_list.jspx?commentId=' + id //iframe的url
+			});
+		}
+		
+		function showReply(obj) {
+			// 绑定表情
+			$('#face' + obj).SinaEmotion($("#re_content" + obj));
+			if (document.getElementById("reply" + obj).style.display == "none") {
+				$('div[id=reply' + obj + '][title=]').show();
+			} else {
+				$('div[id=reply' + obj + '][title=]').hide();
+			}
+		
+			$('div[id!=reply' + obj + '][title=]').hide();
+		}
+		
+		function addReply(pid) {
+			var text = $("#re_content" + pid).val();
+			if (text) {
+		
+			}
+			$.ajax({
+				url: "${base}/comment_reply.jspx",
+				type: "post",
+				data: "pid=" + pid + "&text=" + text + "&contentId=" + ${content.id},
+				dataType: 'json',
+				success: function(data) {
+					if (data.status == 0) {
+						alert("评论成功");
+						location.href = location.href;
+					} else {
+						alert("评论失败");
+					}
+				}
+			});
+		}
+		/**
+		 * 点赞
+		 * @param id
+		 * @return
+		 */
+		function addUPs(id) {
+		
+			$.ajax({
+				type: "post",
+				url: "${base}/comment_up.jspx?commentId=" + id,
+				asyn: true, //false为同步提交
+				dataType: 'text', //返回文本
+				success: function(d) {
+					//支持+1
+					var ups = $('#ups_' + id).html();
+					$('#agree' + id).removeClass("zan").addClass("support");
+					$('#agree' + id).html('赞(' + parseInt(parseInt(ups) + 1) + ')');
+					//点击失效
+					$('#agree' + id).attr("onclick", "").click(function() {
+		
+					});
+		
+				}
+			});
+		}
+
+	</script>
+</body>
+</html>

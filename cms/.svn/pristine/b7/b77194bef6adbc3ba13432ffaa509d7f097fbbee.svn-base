@@ -1,0 +1,211 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="keywords" content="${site.keywords!}" />
+<meta http-equiv="description" content="${site.description!}" />
+<title>${channel.title!channel.name} - ${site.name}</title>
+
+<link rel="stylesheet" type="text/css" href="/${res}/css/index_fc.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/public_all.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/global.css" />
+
+<script type="text/javascript" src="/${res}/js/dc/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="/${res}/js/dc/settitle.js"></script>
+<script type="text/javascript" src="/${res}/js/dc/jquery.select.js"></script>
+
+<script type="text/javascript">
+
+var area = '${queryArea!}';
+var price = '${queryPrice!}';
+var acreage = '${queryAcreage!}';
+
+function getArea(value){
+	area = value;
+	search();
+}
+
+function removeArea(){
+	area = '';
+	search();
+}
+
+function getPrice(value){
+	price = value;
+	search();
+}
+
+function removePrice(){
+	price = '';
+	search();
+}
+
+function getAcreage(value){
+	
+	acreage = value;
+	search();
+}
+
+function removeAcreage(){
+	acreage = '';
+	search();
+}
+
+function removeAll(){
+	area = '';
+	price = '';
+	acreage = '';
+	search();
+}
+
+function search(){
+	var url = "${base}/searchHouse.jspx";
+	url += "?channelId=${channel.id}";
+	if(price != ''){
+		url += "&price=" + price;
+	}
+	if(acreage != ''){
+		url += "&acreage=" + acreage;
+	}
+	if(area != ''){
+		url += "&area=" + area;
+	}
+	
+	window.location.href = url;
+}
+
+</script>
+
+</head>
+
+<body>
+
+	[#include "../include/fc_nav.html"/]
+
+	<!--内容 开始-->
+	<div class="content">
+		<div class="box mt10 mb10">
+			<div class="map">
+				<img src="/${res}/images/home.png" width="20" height="18">
+				<a href="${base}/">首页</a> > 
+				[#list channel.nodeList as n]
+				<a target="_self" href="${n.url}">${n.name}</a>
+					[#if n_has_next] > [/#if]
+				[/#list]
+			</div>
+
+			<div class="details">
+				<!--左边 开始-->
+				<div class="house_wt_left">
+					<ul class="search_tag">
+						[@cms_model id="17"]
+					    [#list tag_bean.items as item]
+						    [#if item.field=="area"]
+						        [#assign area=item.optValue/]
+						    [#elseif item.field=="acreage"]
+						        [#assign acreage=item.optValue/]
+						    [#elseif item.field=="priceRange"]
+						        [#assign priceRange=item.optValue/]
+						    [/#if]
+					    [/#list]
+					    
+						<li>
+							<b class="search_tit">区域：</b>
+							<a class="fc_select" href="javascript:;" onclick="removeArea()">不限</a>
+							[#list area!?split(",") as opt]
+							<a href="javascript:;" onclick="getArea('${opt!}')">${opt!}</a>
+							[/#list]
+						</li>
+						<li>
+							<b class="search_tit">价格：</b>
+							<a class="fc_select" href="javascript:;" onclick="removePrice()">不限</a>
+							[#list priceRange!?split(",") as opt]
+							<a href="javascript:;" onclick="getPrice('${opt!}')">${opt!}</a>
+							[/#list]
+						</li>
+						<li>
+							<b class="search_tit">面积：</b>
+							<a class="fc_select" href="javascript:;" onclick="removeAcreage()">不限</a>
+							[#list acreage!?split(",") as opt]
+							<a href="javascript:;" onclick="getAcreage('${opt!}')" >${opt!}</a>
+							[/#list]
+						</li>
+						[#if queryArea?? || queryPrice?? || queryAcreage?? ]
+						<li>
+							[#if queryArea?? || queryPrice?? || queryAcreage?? ]
+							<span class="search_tit" style="color: red;">条件：</span>
+							<a class="dele" href="javascript:;" onclick="removeAll()"><em></em>清空筛选</a>
+							[/#if]
+							[#if queryArea?? ]
+							<a class="tjcell" href="javascript:;" onclick="removeArea()">${queryArea!}<em></em></a>
+							[/#if]
+							[#if queryPrice?? ]
+							<a class="tjcell" href="javascript:;" onclick="removePrice()">${queryPrice!}<em></em></a>
+							[/#if]
+							[#if queryAcreage?? ]
+							<a class="tjcell" href="javascript:;" onclick="removeAcreage()">${queryAcreage!}<em></em></a>
+							[/#if]
+							
+						</li>
+						[/#if]
+						[/@cms_model]
+					</ul>
+					[@cms_content_page count='6' orderBy='4' s_area=queryArea s_priceRange=queryPrice s_acreage=queryAcreage o_acreage='like' titLen='22' channelOption='1' channelPath='lptj,zxkp,ppk' ] 
+					[#if tag_pagination.list?size > 0]
+					<ul class="house_wt">
+						[#list tag_pagination.list as content]
+						<li>
+							<div class="title">
+								<a href="${content.url}">[@text_cut s=content.title len=titLen /]</a>
+								[#if content.attr.price ?? && content.attr.price != '' ] 
+									<strong>均价：${content.attr.price}元/㎡</strong>
+								[#else]
+									<strong>均价：待定</strong>
+								[/#if]
+							</div>
+							<div class="cont">
+								<a href="${content.url}"><img src="${content.titleImg!content.typeImg!}" /></a>
+								<div class="content">
+									<a href="${content.url}">
+										<p>[@text_cut s=content.desc! len='200' append='...'/]</p>
+									</a>
+								</div>
+							</div>
+						</li>
+						[/#list]
+					</ul>
+					<div style="clear: both;"></div>
+					<div class="list_dis">
+						<div class="jogger">[@cms_pagination sysPage='1'/]</div>
+					</div>
+
+					
+					[#else]
+					<ul class="house_wt">
+						<li>暂无相关楼盘</li>
+					</ul>
+					[/#if] 
+					[/@cms_content_page]
+					
+				</div>
+				<!--左边 结束-->
+
+				<!--右边 开始-->
+				[#include "../include/right.html"/]
+				<!--右边 结束-->
+
+			</div>
+
+		</div>
+
+	</div>
+
+	<!--内容 end-->
+
+	<!--尾部 开始-->
+	[#include "../include/footer.html"/]
+	<!--尾部 开始-->
+	
+</body>
+</html>

@@ -1,0 +1,377 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>换客--东楚网</title>
+<link rel="stylesheet" type="text/css" href="/${res}/css/hkkj.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/public_all.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/global.css" />
+<!--左边产品图片切换 开始-->
+<script src="/${res}/js/dc/jquery-1.8.3.min.js"></script>
+<SCRIPT src="/${res}/js/dc/jquery-1.2.6.pack.js" type=text/javascript></SCRIPT>
+<SCRIPT src="/${res}/js/dc/base.js" type=text/javascript></SCRIPT>
+<!--左边产品图片切换 结束-->
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=&amp;pophcol=2&amp;lang=zh"></script>
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+<script src="${resSys}/front.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(function() {
+		Cms.checkPerm("${base}","${content.id}");
+		Cms.collectCsi("${base}","collectCsiDiv","collect_csi","${content.id}");
+		Cms.attachment("${base}","${content.id}","${content.attachments?size}","attach");
+		Cms.viewCount("${base}","${content.id}");
+		Cms.siteFlow("${base}", location.href, document.referrer,"${site.config.flowSwitch?string}");
+		});
+</script>
+</head>
+
+<body>
+
+<!--top 开始-->
+[#include "../include/hk_navi.html"/]
+<div id="nav">
+   <div class="box">
+      <ul class="nav_box">
+			<li>
+				<a href="${base}/">首 页</a>
+			</li>
+			<li>
+				<a href="${base}/tops.jhtml">头条</a>
+			</li>
+			<li>
+				<a href="${base}/jds.jhtml">焦点新闻</a>
+			</li>
+			<li>
+				<a href="${base}/xsq/index.jhtml">县市区新闻</a>
+			</li>
+			<li>
+				<a href="/bbs" target="_blank">东楚论坛</a>
+			</li>
+			<li>
+				<a href="${base}/vedio/index.jhtml" target="_self">东楚视频</a>
+			</li>
+			<li>
+				<a href="${base}/picture/index.jhtml">图轻松</a>
+			</li>
+			<li>
+				<a href="${base}/baoliao.jspx" target="_self">投诉爆料台</a>
+			</li>
+			<li>
+				<a href="${base}/gsgg/index.jhtml">公示公告</a>
+			</li>
+			<li>
+				<a href="${base}/activity/index.jhtml" target="_self">活动</a>
+			</li>
+			<li>
+				<a href="${base}/hk/index.jhtml" target="_self">换客</a>
+			</li>
+			<li>
+				<a href="http://www.07448.com/huangshi" target="_self">秒杀</a>
+			</li>
+			<li>
+				<a href="${base}/fc/index.jhtml" target="_blank">房产</a>
+			</li>
+			<li>
+				<a href="http://auto.hsdcw.com" target="_blank">汽车</a>
+			</li>
+			<li>
+				<a href="${base}/life/index.jhtml" target="_blank">生活</a>
+			</li>
+			<li>
+				<a href="${base}/edu/index.jhtml" target="_self">教育</a>
+			</li>
+			<li>
+				<a href="${base}/cj/index.jhtml" target="_self">财经</a>
+			</li>
+			<li>
+				<a href="${base}/health/index.jhtml" target="_self">健康</a>
+			</li>
+			<li>
+				<a href="${base}/wh/index.jhtml" target="_self">文化</a>
+			</li>
+       </ul>
+   </div>   
+</div>
+<!--nav 开始-->
+<div style=" clear:both;"></div>
+
+
+<!--内容 开始-->
+<div class="box mt10">
+   <div class="map"><img src="/${res}/images/home.png" width="20" height="18"><a href="${base}/">首页</a> >  <a href="${base}/hk/index.jhtml" >换客</a>>  <a href="${channel.url}">${channel.name}</a></div>
+   <div class="hhkj">
+        
+          <div class="left">
+              <div id="preview">
+                        <div class=jqzoom id=spec-n1>
+                                [#if content.pictures?size gt 0]
+                                [#list content.pictures as pic]
+                                [#if pic_index = 0]
+                                  <IMG src="${pic.imgPath!}" jqimg="${pic.imgPath!}" width="350" height="300">
+                                [/#if]
+                                [/#list]
+                                [#else]<IMG src="/${res}/images/detail.png" jqimg="/${res}/images/detail.png" width="350" height="300">
+                                [/#if]
+                        </div>
+                        <div id="spec-n5">
+                            <div id="spec-list">
+                                <ul class="list-h">
+                                [#if content.pictures?size gt 0]
+                                [#list content.pictures as p]
+                                  <li><img src="${p.imgPath!}"> </li>
+                                [/#list]
+                                [#else]<li><img src="/${res}/images/detail.png"> </li>
+                                [/#if]
+                                </ul>
+                            </div>
+                            
+                        </div>
+                  </div>
+            
+					<SCRIPT type=text/javascript>
+                        $(function(){			
+                           $(".jqzoom").jqueryzoom({
+                                xzoom:400,
+                                yzoom:400,
+                                offset:10,
+                                position:"right",
+                                preload:1,
+                                lens:1
+                            });
+                            $("#spec-list").jdMarquee({
+                                deriction:"left",
+                                width:350,
+                                height:56,
+                                step:2,
+                                speed:4,
+                                delay:10,
+                                control:true,
+                                _front:"#spec-right",
+                                _back:"#spec-left"
+                            });
+                            $("#spec-list img").bind("mouseover",function(){
+                                var src=$(this).attr("src");
+                                $("#spec-n1 img").eq(0).attr({
+                                    src:src.replace("\/n5\/","\/n1\/"),
+                                    jqimg:src.replace("\/n5\/","\/n0\/")
+                                });
+                                $(this).css({
+                                    "border":"2px solid #ff6600",
+                                    "padding":"1px"
+                                });
+                            }).bind("mouseout",function(){
+                                $(this).css({
+                                    "border":"1px solid #ccc",
+                                    "padding":"2px"
+                                });
+                            });				
+                        })
+                        </SCRIPT>
+                    
+                    <SCRIPT src="/${res}/js/dc/lib.js" type=text/javascript></SCRIPT>
+                    <SCRIPT src="/${res}/js/dc/97zzw.js" type=text/javascript></SCRIPT>
+            
+                    <div class="cont">
+                        <div class="name"><span>${content.title}</span><img src="/${res}/images/exchange.jpg"/><span>${content.attr.change!}</span>&nbsp;&nbsp;&nbsp;[#if content.changeState ?? && content.changeState == 0]交换中[#else]交换结束[/#if]</div>
+                        <ul class="caozuo">
+                              <li class="time">${content.date?string('yyyy-MM-dd HH:mm')}</li>
+                              <li class="view">浏览(<span id="views"></span>)</li>
+                              <li class="share">
+				              <div class="bshare-custom" style="clear:both;line-height:26px;">
+							   <a title="分享" class="bshare-more" style="height:26px;"><img src="/${res}/images/share.jpg"><span style="font-size:14px;line-height:25px;">分享</span></a>
+							   </div>
+							  </li>
+                              <!-- <li class="collect">收藏<a href="#">(35)</a></li> -->
+                        </ul>
+                        
+                        
+                        <!-- <div class="money"><div class="des">价格：</div><div class="num">0元</div><div class="attention">10成新</div></div>-->  
+                        <div class="money"><div class="des">所在地：</div><div class="attention">${content.attr.address!}</div></div>
+                        <div class="money"><div class="des">有效期：</div><div class="attention">[#if content.attr.dealine??]${content.attr.dealine!}[#else]长期[/#if]</div></div>
+                        <div class="money"><div class="des">描述：</div><div class="about">${txt!}</div></div>
+                        <div class="money"><div class="des">联系电话：</div><div class="num">${content.attr.contact!}</div></div>
+                        <div style=" clear:both;"></div>
+                        <div class="money">
+                        [#if content.changeState ?? && content.changeState == 0]
+							<input type="button" value="我要交换" onclick="change()"/>
+                        [#else]<span class="ex_over">交换结束</span>
+                        [/#if]
+                        
+                        
+                        </div>
+                    
+                    </div>
+            
+                     <div style=" clear:both;"></div>
+                     [#if channel.commentControl!=2]
+                     <div class="send_mess">
+                       <span style="float: left">我要评论</span>
+                       <span style="float: right;">
+							<a href="${base}/comment.jspx?contentId=${content.id}" target="_blank">
+								已有
+								<span id="comments"></span>
+								条评论
+							</a>
+						</span>
+					</div>
+                   <form id="submitForm" action="${base}/comment.jspx" method="post">
+                        <input type="hidden" name="contentId" value="${content.id}" /> 
+						<input type="hidden" name="sessionId" id="sessionId" />
+						<input type="hidden" id="text" name="text"  /> 
+				     <div class="send_mess_box">
+                            <textarea id="cont" name="cont"></textarea>
+                            <!--  <span><a href="#"><img src="${base}/${res}/images/icon_biaoqing.png" alt=""/></a></span>-->
+                           <div class="send_butt"><a href="javascript:void(0);" onclick="submitForm()">评论</a></div>
+                     </div>
+                    </form>
+                     
+			      [#include "../special/comment_list.html"/]
+			      [/#if]
+          </div>
+          <div class="right">
+    
+<!--               <div class="need">
+                            <div class="title"><span>公示公告</span></div>
+                            <div class="hot_article">
+                               <ul>
+                                    <li><span>2016-06-13</span><a href="#">高考前你都做了哪些很ZUO的事情呢？</a></li>
+                                    <li><span>2016-06-13</span><a href="#">高考前你都做了哪些很ZUO的事情呢？</a></li>
+                                    <li><span>2016-06-13</span><a href="#">高考前你都做了哪些很ZUO的事情呢？</a></li>
+                                    <li><span>2016-06-13</span><a href="#">高考前你都做了哪些很ZUO的事情呢？</a></li>
+                                    <li><span>2016-06-13</span><a href="#">高考前你都做了哪些很ZUO的事情呢？</a></li>
+                                    <li><span>2016-06-13</span><a href="#">高考前你都做了哪些很ZUO的事情呢？</a></li>
+                                    <li><span>2016-06-13</span><a href="#">高考前你都做了哪些很ZUO的事情呢？</a></li>
+                                    <li><span>2016-06-13</span><a href="#">高考前你都做了哪些很ZUO的事情呢？</a></li>
+                                    <li><span>2016-06-13</span><a href="#">高考前你都做了哪些很ZUO的事情呢？</a></li>
+                                    <li><span>2016-06-13</span><a href="#">高考前你都做了哪些很ZUO的事情呢？</a></li>
+                                    <li><span>2016-06-13</span><a href="#">高考前你都做了哪些很ZUO的事情呢？</a></li>
+                                    <li><span>2016-06-13</span><a href="#">高考前你都做了哪些很ZUO的事情呢？</a></li>
+        
+                               </ul>
+                               
+                           </div>
+                            
+                             
+               </div>
+ -->                 
+       <div class="need">
+                    <div class="title"><span>供</span></div>
+                    [@cms_content_list count='6' orderBy='4' titLen='20' channelOption='1' channelId=channel.id]
+                    <div class="hot_article">
+                    [#list tag_list as g]
+                    [#if g.title??]
+                       [#if g_index = 0]
+                         [#if g.pictures?size gt 0]
+	                         [#list g.pictures as p]
+	                         [#if p_index = 0]
+	                         <img src="${p.imgPath!}" width="130" height="90"/>
+	                         [/#if]
+	                         [/#list]
+                         [#else]<img src="/${res}/images/detail.png" width="130" height="90" >
+                         
+                         [/#if]
+                       <div class="hot_cont">
+                           <h4><a href="${g.url}" target="_blank">[@text_cut s=g.title! len=titLen/]</a></h4>
+                           <a href="${g.url}" target="_blank">[@text_cut s=g.txt! len='30' append='...'/]</a>
+                       </div>
+                       <div style=" clear:both;"></div>
+                       [#else]
+                       <ul>
+                            <li><span>${g.date?string('yyyy-MM-dd')}</span><a href="${g.url}" target="_blank">[@text_cut s=g.title! len=titLen/]</a></li>
+                            
+                       </ul>
+                       [/#if]
+                      [/#if] 
+                      [/#list] 
+                   </div>
+                    [/@cms_content_list]
+                     
+          </div> 
+          
+          
+          <div class="need">
+                    <div class="title"><span>求</span></div>
+                    [@cms_content_list count='6' orderBy='4' titLen='20' channelOption='1' channelId=channel.id]
+                    <div class="hot_article">
+                    [#list tag_list as q]
+                    [#if q.attr.change??]
+                       [#if q_index = 0]
+                         [#if q.pictures?size gt 0]
+	                         [#list q.pictures as pq]
+	                         [#if pq_index = 0]
+	                         <img src="${pq.imgPath!}" width="130" height="90"/>
+	                         [/#if]
+	                         [/#list]
+                         [#else]<img src="/${res}/images/detail.png" width="130" height="90" >
+                         [/#if]
+                       <div class="hot_cont">
+                           <h4><a href="${q.url}" target="_blank">[@text_cut s=q.attr.change! len=titLen/]</a></h4>
+                           <a href="${q.url}" target="_blank">[@text_cut s=q.txt! len='30' append='...'/]</a>
+                       </div>
+                       <div style=" clear:both;"></div>
+                       [#else]
+                       <ul>
+                            <li><span>${q.date?string('yyyy-MM-dd')}</span><a href="${q.url}" target="_blank">[@text_cut s=q.attr.change! len=titLen/]</a></li>
+                            
+                       </ul>
+                       [/#if]
+                      [/#if] 
+                      [/#list] 
+                   </div>
+                    [/@cms_content_list]
+                    
+                     
+          </div>   
+    
+    </div>
+    
+
+           
+</div>
+</div>
+<!--内容 end-->
+
+<!--尾部 开始-->
+[#include "../include/footer.html"/]
+<!--尾部 开始-->
+	<script type="text/javascript">
+	  function  submitForm(){
+		  [#if user??]
+			if ($('#cont').val() == '') {
+				alert('请先填写留言内容');
+				$('#cont').focus();
+				return;
+			}
+			$('#text').val($('#cont').val());
+			var s = $("#submitForm");
+			var url = s[0].action;
+			var data = s.serialize();
+			var options = {
+	                    url: url,
+	                    type: 'post',
+	                    dataType: 'json',
+	                    data: data,
+	                    success:  function (data) {
+		                	if(data.status==0) {
+			                    alert("提交成功");
+			                    location.href=location.href;
+			                }
+	                    }
+	                };
+	                $.ajax(options);
+	                return false;
+	       [#else]window.location.href="${base}/login.jspx?returnUrl=${content.url}";
+	       [/#if]
+         }
+
+	  function  change(){
+		  [#if user??]
+		    [#if content.user?? && user == content.user]alert("不能交换自己发布的物品");
+		    [#else]window.location.href="${base}/member/exchange_add.jspx?contentId=${content.id}";
+		    [/#if]
+		  [#else]window.location.href="${base}/login.jspx?returnUrl=${location}";
+		  [/#if]
+	  }
+      </script> 
+</body>
+</html>

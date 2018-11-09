@@ -1,0 +1,134 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>爆料台 - ${site.name}</title>
+<meta http-equiv="keywords" content="${site.keywords!}"/>
+<meta http-equiv="description" content="${site.description!}"/>
+<head>
+<link rel="stylesheet" type="text/css" href="${base}/${res}/css/blt.css" />
+<link rel="stylesheet" type="text/css" href="${base}/${res}/css/global.css" />
+<script type="text/javascript" src="${base}/${res}/js/dc/settitle.js"></script>
+
+<script src="${resSys}/jquery.js" type="text/javascript"></script>
+<script src="${resSys}/front.js" type="text/javascript"></script>
+</head>
+
+<body>
+
+[#include "bl_top.html"/]
+
+<!--nav 开始-->
+<div class="nav"></div>
+<!--nav 开始-->
+<div style=" clear:both;"></div>
+
+<!--内容 开始-->
+<div class="box mt10">
+    <div class="map"><img src="${base}/${res}/images/home.png" width="20" height="18"><a href="#">首页</a> >  <a href="${base}/baoliao.jspx">爆料台</a> </div>
+    <div style=" clear:both;"></div>
+    <div class="details">
+                    <div class="article_title">${baoliao.title!}</div>
+                    <div class="time">${baoliao.createTime?string('yyyy-MM-dd HH:mm')}&nbsp;&nbsp;&nbsp;&nbsp;浏览[#if baoliao.readCount ??](${baoliao.readCount})[#else](0)[/#if] 
+                         &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:red;">[#if baoliao.state ??][#if baoliao.state == 0]爆料待处理[/#if][#if baoliao.state == 1]爆料处理中[/#if][#if baoliao.state == 2]爆料已解决[/#if][#else]爆料待处理[/#if] </span>
+                    </div>
+                    <div class="article">                   
+                             <p>${baoliao.content!}
+                            <center><img src="images/bl_01.jpg" /></center>
+                            <div style=" clear:both;"></div>
+                            [#if baoliao.reply??]
+                            <div class="progress">
+                                    <h6>爆料进度回复</h6>
+                                    <div class="progress_cont">
+                                        <h1>[#if baoliao.replyTime??]${baoliao.replyTime?string('yyyy-MM-dd HH:mm')}[/#if]</h1>
+                                        <h2>${baoliao.reply!}</h2>
+                                        <h3>东楚网</h3>
+                                    </div>   
+                            </div>  
+                            [/#if]                      
+                     </div> 
+                     <div class="send_mess">我要评论<span style="float:right;"><a href="${base}/baoliaocommt.jspx?baoliaoId=${baoliao.id}" target="_blank">已有[#if baoliao.commtCount??]${baoliao.commtCount}[#else]0[/#if]条评论</a></span></div>
+                     [#include "bl_comment_input.html"/]
+                     <div style=" clear:both;"></div>
+                     
+
+  </div>
+    
+    <div class="right">
+   <div class="need">
+                    <div class="title"><span>最新热榜</span></div>
+                    
+                    <div class="hot_article">
+                    [@cms_baoliao_list siteId=site.id count='8' orderBy='1' checked='0' recommend='0']
+                       <img src="${base}/${res}/images/culture.jpg" width="130" height="90" />
+                       <div class="hot_cont">
+                           <h4><a href="#">开征房地产税 各方准备好了吗？</a></h4>
+                           <a href="#">对于房地产税的改革，很重要的一环就是房地产税的推出和落地，自2014年国家开始实施不动产登……</a>
+                       </div>
+                       <div style=" clear:both;"></div>
+                       <ul>
+                       
+                            [#list tag_list as h]
+                            <li><span>${h.createTime?string('yyyy-MM-dd')}</span><a href="${base}/baoliao/${h.id}.jspx">[@text_cut s=h.title! len='16' append='...'/]</a></li>
+                            
+                           [/#list]
+                       </ul>
+                     [/@cms_baoliao_list]  
+                   </div>
+                    
+          </div> 
+          
+          
+          <div class="need">
+                    <div class="title"><span>质量汇总</span></div>
+                    <div class="hot_article">
+                    [@cms_baoliao_list siteId=site.id count='8' checked='0' recommend='1']
+                    
+                       <img src="${base}/${res}/images/culture.jpg" width="130" height="90" />
+                       <div class="hot_cont">
+                           <h4><a href="#">开征房地产税 各方准备好了吗？</a></h4>
+                           <a href="#">对于房地产税的改革，很重要的一环就是房地产税的推出和落地，自2014年国家开始实施不动产登……</a>
+                       </div>
+                       <div style=" clear:both;"></div>
+                       <ul>[#list tag_list as z]
+                            <li><span>${z.createTime?string('yyyy-MM-dd')}</span><a href="${base}/baoliao/${z.id}.jspx">[@text_cut s=z.title! len='16' append='...'/]</a></li>
+                            
+                           [/#list]
+                       </ul>
+                      [/@cms_baoliao_list] 
+                   </div>
+                    
+                     
+          </div>
+          
+          <div class="need">
+                    <div class="title"><span>报料公告</span></div>
+                    <div class="hot_article">
+                       <h1>特别声明：</h1><span>任何人在网上的行为，都不是纯粹的个人行为。这就要求每个网民都要有自觉的意识：当你享受在互联网这个公共平台上发布信息、发表言论的自由时，你也同时承担着一份社会责任，应该遵守社会公德和服从网络规矩。东楚网提倡用自己的真实姓名注册，但严禁假冒他人真实姓名，一旦出现侵权责任，概由假冒者自行承担．不得以任何网名在网上发布虚假信息、不良信息和有害言论，更不能进行恶意的人身攻击。</span>
+                       <h1>咨询QQ：</h1><span>207493083（9:00-17:00咨询）</span>
+                    </div>
+                    
+                     
+          </div>   
+    
+    </div>
+    
+
+           
+</div>
+<!--内容 end-->
+
+<!--尾部 开始-->
+<div style=" clear:both;"></div>
+<div id="footer">
+   <div class="copy">
+     Copyright ◎ 2006-2016 黄石市东楚传媒网络科技有限公司 All Rights Reserved <br />
+营业执照 － 组织机构代码证 － 增值电信业务经营许可证 
+
+   </div>
+</div>
+<!--尾部 开始-->
+
+</body>
+
+</html>

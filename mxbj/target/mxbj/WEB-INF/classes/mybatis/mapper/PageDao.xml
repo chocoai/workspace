@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.mxbj.api.dao.PageDao">
+
+	<resultMap type="com.whty.mxbj.api.model.Page" id="PageResult">
+		<result column="note_id" property="noteId" />
+		<result column="page_id" property="pageId" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="last_edit_time" property="lastEditTime" />
+		<result column="media_type" property="mediaType" />
+		<result column="page_file_url" property="pageFileUrl" />
+		<result column="user_id" property="userId" />
+		<result column="user_platform_code" property="userPlatformCode" />
+		
+	</resultMap>
+
+
+	<update id="update" parameterType="com.whty.mxbj.api.model.Page">
+		update T_PAGE
+		set 
+		<trim prefixOverrides=",">
+			<if test="lastEditTime != null ">, last_edit_time=#{lastEditTime}</if>
+			<if test="pageFileUrl != null and pageFileUrl !=''">,page_file_url=#{pageFileUrl}</if>
+			<if test="updateTime != null ">,update_time=#{updateTime}</if>
+		</trim>
+		where media_type= #{mediaType} and  page_id = #{pageId,jdbcType=VARCHAR} and note_Id = #{noteId,jdbcType=VARCHAR} and user_id=#{userId} and user_platform_code = #{userPlatformCode}
+	</update>
+
+	<select id="getPage" parameterType="map" resultMap="PageResult">
+		select * from T_PAGE where 
+		note_id = #{noteId} 
+		and user_id = #{userId} 
+		and page_id = #{pageId} 
+		and user_platform_code = #{userPlatformCode}
+		and media_type = #{mediaType}
+	</select>
+
+	<insert id="save" parameterType="com.whty.mxbj.api.model.Page">
+		insert into T_PAGE (
+			user_id,
+			note_id,
+			page_id,
+			last_edit_time,
+			create_time
+			<if test="pageFileUrl != null and pageFileUrl != ''">,page_file_url</if>
+			<if test="mediaType != null ">,media_type</if>
+			<if test="userPlatformCode != null and userPlatformCode != ''">,user_platform_code</if>
+		) values(
+		    #{userId}
+			,#{noteId}
+			,#{pageId}
+			,#{lastEditTime}
+			,#{createTime}
+			<if test="pageFileUrl != null and pageFileUrl != '' ">,#{pageFileUrl}</if>
+			<if test="mediaType != null ">,#{mediaType}</if>
+			<if test="userPlatformCode != null and userPlatformCode !='' ">,#{userPlatformCode}</if>
+		)
+	</insert>
+	
+	<delete id="deletePage" parameterType="map" >
+		delete FROM T_PAGE where user_id = #{userId} and note_id = #{noteId} and user_platform_code = #{userPlatformCode}
+		<if test="pageId != null  ">and page_id=#{pageId}</if>
+		<if test="list != null  "> 
+			and page_id in <foreach collection="list" item="item" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+		
+	</delete>
+
+    <select id="listByCondition" parameterType="map" resultMap="PageResult">
+    	SELECT * FROM T_PAGE where 1=1
+    	<if test="userId != null and userId !='' ">and user_Id=#{userId}</if>
+    	<if test="noteId != null and noteId !='' ">and note_Id=#{noteId}</if>
+    	<if test="userPlatformCode != null and userPlatformCode !='' ">and user_platform_code=#{userPlatformCode}</if>
+    	<if test="pageId != null  ">and page_Id=#{pageId}</if>
+    	<if test="pageFileUrl != null and pageFileUrl != '' ">and page_file_url=#{pageFileUrl}</if>
+    	<if test="mediaType != null  ">and media_type=#{mediaType}</if>
+    	order by page_id  	
+    </select>
+
+<select id="queryByUserId" resultMap="PageResult">
+	select * from T_PAGE where
+	media_type=1 and user_Id=#{userId} and note_Id=#{noteId} and user_platform_code=#{loginPlatformCode} order by page_id
+</select>
+</mapper>

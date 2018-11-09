@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>孝康通</title>
+    <!-- Bootstrap -->
+    <link th:href="@{/pages/mall/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- FontAwesome 4.7.0字体 -->
+    <link th:href="@{/pages/mall/css/font-awesome.min.css}" rel="stylesheet">
+    <!-- 自定义css -->
+    <link th:href="@{/pages/mall/css/mymall.css}" rel="stylesheet">
+  </head>
+  <body>
+    <!-- 导航 开始 -->
+    <nav class="navbar navbar-default navbar-mall-other">
+      <div class="container-fluid">
+        <div class="navbar-header">注册</div>
+      </div>
+    </nav>
+    <!-- 导航 结束 -->
+
+    <!-- 注册内容 开始 -->
+    <div class="twopage-content">
+      <div class="hereislogo">
+        <a th:href="@{/h5}" ><img th:src="@{/pages/mall/images/logo.png}">孝康通</a>
+      </div>
+      <form class="form-twopage">
+        <div class="form-group">
+          <input type="text" id="usercode" class="form-control input-twopage-gray" placeholder="请输入手机号码"
+				maxlength="11" onblur="checkUsercode()"  onkeyup="this.value=this.value.replace(/\D/g, '')">
+        </div>
+        <div class="form-group twopage-col">
+          <div class="col-xs-9 nopad-l">
+            <input type="text" id="code" onblur="checkCode()"  maxlength="6" onkeyup="this.value=this.value.replace(/\D/g, '')" class="form-control input-twopage-gray" placeholder="请输入短信验证码">
+          </div>
+          <div class="col-xs-3 nopad-lr getcode">
+             <a onclick="getTelCode(this)" id="settime">获取验证码</a>
+          </div>
+        </div>
+        <div class="form-group">
+          <input type="password" id="password" class="form-control input-twopage-gray" placeholder="请输入密码">
+        </div>
+        <p style="margin-bottom: 15px; color:#ff5c5c; font-size: 11px;display:none" id="errorDiv">
+        	<i class="fa fa-exclamation-circle" id="error"></i>
+        </p>
+        <button type="button" class="btn btn-mygreen" id="fmLogin">注册</button>
+        <a th:href="@{/h5/login}" type="button" class="btn btn-mygreenline">登录</a>
+      </form>
+    </div>
+    <!-- 注册内容 结束 -->   
+
+    <script th:src="@{/pages/mall/js/jquery-1.9.1.min.js}"></script>
+    <script th:src="@{/pages/mall/js/bootstrap.min.js}"></script>
+    <script type="text/javascript">
+    var pathName=window.document.location.pathname;
+    var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
+    	load();
+		$("#fmLogin").click(function() {
+			var usercode = $.trim($("#usercode").val());
+			var password = $.trim($("#password").val());
+			var code = $.trim($("#code").val());
+			var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
+			if (usercode == null || usercode == "") {
+				$("#errorDiv").show();
+				$("#error").text("请输入手机号");
+				$("#usercode").focus();
+				return false;
+			} else if (usercode!=null && !myreg.test(usercode)) {
+				$("#errorDiv").show();
+				$("#error").text("请输入正确的手机号");
+				$("#usercode").focus();
+				return false;
+			} else if (code==null || code ==""){
+				$("#errorDiv").show();
+				$("#error").text("请输入验证码");
+				$("#code").focus();
+				return false;
+			}else if (code.length<6){
+				$("#errorDiv").show();
+				$("#error").text("验证码必须输入6位");
+				$("#code").focus();
+				return false;
+			}
+			else if (password == null || password == "") {
+				$("#errorDiv").show();
+				$("#error").text("请输入密码");
+				$("#password").focus();
+				return false;
+			}else if (password.length<6) {
+				$("#errorDiv").show();
+				$("#error").text("密码长度不能小于6位");
+				$("#password").focus();
+				return false;
+			}
+			$.ajax({
+				url : projectName+"/h5/getRegister",
+				data : {
+					usercode : usercode,
+					code:code,
+					password : password
+				},
+				dataType : "json",
+				success : function(result) {
+					if(result.sts==0){
+						$("#errorDiv").show();
+						$("#error").text(result.rmk);
+					}else{
+						window.location.href=projectName+"/h5/mycenter";
+					}
+				}
+			})
+		})
+		
+		function checkUsercode(){
+			var usercode = $.trim($("#usercode").val());
+			var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
+			if (usercode == null || usercode == "") {
+				$("#errorDiv").show();
+				$("#error").text("手机号不能为空");
+				$("#usercode").focus();
+				return false;
+			} else if (usercode!=null && !myreg.test(usercode)) {
+				$("#errorDiv").show();
+				$("#error").text("请输入正确的手机号!");
+				$("#usercode").focus();
+				return false;
+			}else{
+				$("#error").text("");
+				$("#errorDiv").hide();
+				return true;
+			}
+		}
+		
+		function checkCode(){
+			var code = $.trim($("#code").val());
+			if (code==null || code ==""){
+				$("#errorDiv").show();
+				$("#error").text("请输入验证码");
+				$("#code").focus();
+				return false;
+			}else if (code.length<6){
+				$("#errorDiv").show();
+				$("#error").text("验证码必须输入6位");
+				$("#code").focus();
+				return false;
+			}else{
+				$("#error").text("");
+				$("#errorDiv").hide();
+				return true;
+			}
+		}
+		
+		function load(){
+			$("#usercode").val("");
+			$("#password").val("");
+			$("#code").val("");
+		}
+		
+		var countdown=60; 
+		function settime(obj) { 
+			if (countdown == 0) { 
+					$(obj).text("重发验证码");
+					countdown = 60; 
+					$("#settime").attr("onclick","getTelCode(this)");
+					return;
+				} else { 
+					$("#settime").attr("onclick","javascript:void(0)");
+					$(obj).text("重新发送(" + countdown + ")");
+					countdown--; 
+				} 
+				setTimeout(function() { 
+					settime(obj) 
+				},1000) 
+		}
+		
+		function getTelCode(obj){
+			if(checkUsercode()){
+				settime(obj);
+				$.ajax({
+					url : projectName+"/h5/getTelCode",
+					data : {
+						userCode:$.trim($("#usercode").val())
+					},
+					dataType : "json",
+					success : function(result) {
+						if(result.sts==0){
+							$("#errorDiv").show();
+							$("#error").text(result.rmk);
+						}
+					}
+				})
+			}
+		}
+	</script>
+  </body>
+</html>

@@ -1,0 +1,1 @@
+ALTER TABLE `requisition` add COLUMN `contact_on` varchar(50) NULL DEFAULT NULL COMMENT '合同编号' ;

@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>孝康通</title>
+    <!-- Bootstrap -->
+    <link th:href="@{/pages/mall/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- FontAwesome 4.7.0字体 -->
+    <link th:href="@{/pages/mall/css/font-awesome.min.css}" rel="stylesheet">
+    <!-- 自定义css -->
+    <link th:href="@{/pages/mall/css/mymall.css}" rel="stylesheet">
+    <link th:href="@{/pages/mall/css/layer_mobile/need/layer.css}" rel="stylesheet">
+  </head>
+  <body style="background: #f3f3f3;" onload="showTime()">
+  	<input type="hidden" th:value="${orderNo}" id="orderNo" th:if="${orderNo} !=null" >
+  	<input type="hidden" th:value="${orderId}" id="orderId" th:if="${orderId} !=null" >
+    <input type="hidden" th:value="${type}" id="type" th:if="${type} !=null" >
+    <input type="hidden" th:value="${weixinPay}" id="weixinPay" th:if="${weixinPay} !=null" >
+    <!-- 订单剩余有效时长(秒) -->
+    <input type="hidden" th:value="${valid}" id="valid" th:if="${valid} !=null" >
+    <!-- 导航 开始 -->
+    <nav class="navbar navbar-default navbar-mall-other">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          		选择支付方式
+          <div class="othertop-right">
+            <a th:href="@{/h5/mycenter}"><i class="fa fa-user-o"></i></a>
+            <a th:href="@{/h5}"><i class="fa fa-home"></i></a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- 导航 结束 -->
+    
+    <div class="orderdone">
+      <p class="bigdone"><i class="fa fa-check"></i> 订单已提交</p>
+      <p class="datedone">（请在<apan id="currentTime"></apan>内完成支付）</p>
+      <p class="payprice">支付金额：<span>￥</span><span th:text="${totalMoney}"></span></p>
+    </div>
+
+    <div class="payway">
+      <div class="payway-hd">请选择支付方式</div>
+      <div class="payway-bd">
+        <ul>
+          <li>
+            <a href="javascript:void(0)" th:id="${orderNo}" class="alipay">
+                <div class="col-xs-1 nopad-lr">
+                  <img th:src="@{/pages/mall/images/alipay.png}" class="img-responsive">
+                </div>
+                <div class="col-xs-9">支付宝支付</div>
+                <div class="col-xs-2 text-right nopad-l"><i class="fa fa-angle-right"></i></div>
+            </a>
+          </li>
+          <li>
+            <a href="javascript:void(0)" th:id="${orderNo}" class="weixinPay">
+                <div class="col-xs-1 nopad-lr">
+                  <img th:src="@{/pages/mall/images/wechatpay.png}" class="img-responsive">
+                </div>
+                <div class="col-xs-9">微信支付</div>
+                <div class="col-xs-2 text-right nopad-l"><i class="fa fa-angle-right"></i></div>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    
+    <!-- 返回顶部 开始 -->
+    <div class="gototop" style="display: none;">
+      <a href="javascript:void(0)"><i class="glyphicon glyphicon-menu-up"></i></a>
+    </div>
+    <!-- 返回顶部 结束 -->
+
+    <script th:src="@{/pages/mall/js/jquery-1.9.1.min.js}"></script>
+    <script th:src="@{/pages/mall/js/bootstrap.min.js}"></script>
+    <script th:src="@{/pages/mall/css/layer_mobile/layer.js}"></script>
+    <script type="text/javascript">
+      var pathName=window.document.location.pathname;
+      var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
+      // 返回顶部
+      $(window).scroll(function(){
+        if($(window).scrollTop()>=20){
+           $(".gototop").fadeIn(300);
+        }else{
+           $(".gototop").fadeOut(300);
+        }
+      })
+      $(".gototop a").click(function(){
+        $("html,body").animate({scrollTop:"0px"},300)
+      })
+	  var valid = $("#valid").val(); 
+	  function showTime(){
+		var validTime = parseInt(valid -1);
+		if(validTime>0){
+			valid = validTime;
+		    var time = timeout(parseInt(validTime / 60))+"分";
+			time+= timeout(parseInt(validTime % 60))+"秒";
+			document.getElementById("currentTime").innerHTML=time;
+    		setTimeout("showTime()", 1000);
+		}else{
+			var type = $("#type").val();
+			var orderId = $("#orderId").val();
+			$.ajax({
+				   url : projectName+"/h5/admin/myOrdersDel/"+type,
+					data : {
+						cid: orderId
+					},
+					dataType : "json",
+					async : false,
+					traditional : true,
+					cache : true,
+					success : function(data) {
+						if(data.status==202){
+							window.location.href=projectName+"/h5/login";
+						}else if(data.status==1){
+							window.location.href=projectName+"/h5/admin/myOrders/"+type;
+						}
+					}
+			  })
+		}
+	  }
+	  //判断
+	  function timeout(i){
+   		if(i<10){
+   			return "0"+i;
+   		}else{
+   			return i;
+   		}
+	  }
+      var orderNo=$("#orderNo").val();
+      var weixinPay=$("#weixinPay").val();
+      if(weixinPay!=null&&weixinPay==1){
+     		  layer.open({
+		    content: '请在微信内完成支付，如果您已支付成功，请点击“已完成支付”按钮'
+		    ,btn: ['已完成支付', '取消']
+		    ,yes: function(index){
+		      layer.close(index);
+		      weixinH5Query(orderNo);
+		    }
+		  });
+       }
+     	
+      //支付宝支付方法
+      $(".alipay").click(function(){
+      		var orderNo = $(this).attr("id");
+      		var type = $("#type").val();
+      		$.ajax({
+			url : projectName+"/h5/admin/pay/getOrderNoOvertime",
+			data : {
+				orderNo : orderNo,
+				type : type
+			},
+			dataType : "json",
+			success : function(result) {
+				if(result.result==0){
+					layer.open({
+					    content: '操作失败'
+					    ,skin: 'msg'
+					    ,time: 2 //2秒后自动关闭
+					});
+				}else if(result.result==1){
+					if(result.num>30){
+						layer.open({
+					    content: '订单已超过30分钟，请重新下单。'
+					    ,skin: 'msg'
+					    ,time: 2 //2秒后自动关闭
+					  });
+					}else{
+						if(type=="goods"){
+							window.location.href=projectName+"/h5/pay/aliApi/ywOrderPay?cext1="+orderNo;
+						}else{
+							window.location.href=projectName+"/h5/pay/aliApi/workOrderPay?cext1="+orderNo;
+						}
+					}
+				}else if(result.result==3){
+					layer.open({
+					    content: '来晚了，'+result.goodsName+'已没有库存啦。'
+					    ,skin: 'msg'
+					    ,time: 2 //2秒后自动关闭
+					  });
+				}else{
+					layer.open({
+					    content: '此订单状态已完成支付'
+					    ,skin: 'msg'
+					    ,time: 2 //2秒后自动关闭
+					  });
+				}
+			}
+		})
+      		
+      })
+      
+      //微信支付
+      $(".weixinPay").click(function(){
+      		var orderNo = $(this).attr("id");
+      		var type = $("#type").val();
+      		$.ajax({
+			url : projectName+"/h5/admin/pay/getOrderNoOvertime",
+			data : {
+				orderNo : orderNo,
+				type:type
+			},
+			dataType : "json",
+			success : function(result) {
+				if(result.result==0){
+					layer.open({
+					    content: '操作失败'
+					    ,skin: 'msg'
+					    ,time: 2 //2秒后自动关闭
+					  });
+				}else if(result.result==1){
+					if(result.num>30){
+						layer.open({
+					    content: '订单已超过30分钟，请重新下单。'
+					    ,skin: 'msg'
+					    ,time: 2 //2秒后自动关闭
+					  });
+					}else{
+						if(type=="goods"){
+							wxYwOrderWxPay(orderNo);
+						}else{
+							wxWorkOrderWxPay(orderNo);
+						}
+					}
+				}else if(result.result==3){
+					layer.open({
+					    content: '来晚了，'+result.goodsName+'已没有库存啦。'
+					    ,skin: 'msg'
+					    ,time: 2 //2秒后自动关闭
+					  });
+				}else{
+					layer.open({
+					    content: '此订单状态已完成支付'
+					    ,skin: 'msg'
+					    ,time: 2 //2秒后自动关闭
+					  });
+				}
+			}
+		})
+      
+      })
+      
+      //微信支付商品调起
+      function wxYwOrderWxPay(cext1){
+      	$.ajax({
+			url : projectName+"/h5/pay/wx/ywOrderWxPay",
+			data : {
+				cext1 : cext1
+			},
+			dataType : "json",
+			success : function(result) {
+				if(result.map.return_code=="SUCCESS"){
+					window.location.href=result.map.mweb_url;
+				}
+			}
+		});
+      }
+      
+      //微信支付服务预约调起
+      function wxWorkOrderWxPay(cext1){
+      	$.ajax({
+			url : projectName+"/h5/pay/wx/workOrderWxPay",
+			data : {
+				cext1 : cext1
+			},
+			dataType : "json",
+			success : function(result) {
+				if(result.map.return_code=="SUCCESS"){
+					window.location.href=result.map.mweb_url;
+				}
+			}
+		});
+      }
+      
+      //查询微信支付结果
+      function weixinH5Query(cext1){
+      	$.ajax({
+				type:"post",
+				url:projectName+"/h5/pay/api/weixinH5Query",
+				data:{tradeno:cext1},
+				dataType:"json",
+				success : function(result) {
+					if(result.map.trade_state=="SUCCESS"){
+						window.location.href=projectName+"/h5/admin/pay/getPaydone?type=1&result=1&cext1=" +cext1;
+					}else{
+						var content='';
+						if(result.map.trade_state=="NOTPAY"){
+							content='您的订单还未完成支付，请重新支付';
+						}else if(result.map.trade_state=="CLOSED"){
+							content='已关闭';
+						}else if(result.map.trade_state=="REVOKED"){
+							content='已撤销';
+						}else if(result.map.trade_state=="USERPAYING"){
+							content='用户支付中';
+						}else if(result.map.result_code=="FAIL"){
+							content='您的订单还未完成支付，请重新支付';
+						}else{
+							content='支付失败';
+						}
+						layer.open({
+						    content: content
+						    ,skin: 'msg'
+						    ,time: 2 //2秒后自动关闭
+						  });
+					}
+				}
+			});
+      }
+      
+      
+    </script>
+  </body>
+</html>

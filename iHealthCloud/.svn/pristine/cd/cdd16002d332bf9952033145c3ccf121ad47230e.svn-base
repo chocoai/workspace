@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>孝康通</title>
+    <!-- Bootstrap -->
+    <link th:href="@{/pages/mall/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- FontAwesome 4.7.0字体 -->
+    <link th:href="@{/pages/mall/css/font-awesome.min.css}" rel="stylesheet">
+    <!-- 商品图片轮播 -->
+    <link th:href="@{/pages/mall/css/swiper.min.css}" rel="stylesheet">
+    <!-- 自定义css -->
+    <link th:href="@{/pages/mall/css/mymall.css}" rel="stylesheet">
+    
+    <link th:href="@{/pages/mall/css/layer_mobile/need/layer.css}" rel="stylesheet">
+  </head>
+  <body class="other-mall">
+    <input th:if="${a} !=null" id="a" type="hidden" th:value="${a}" />
+  	<input th:if="${u} !=null" id="u" type="hidden" th:value="${u}" />
+  	<input th:if="${session.memberSession} !=null" id="memberId" type="hidden" th:value="${session.memberSession.memberId}" />
+  	<input id="goodsId" type="hidden" th:value="${biz.goodsId}" />
+  	<input th:if="${dto} !=null" id="userCollectId" type="hidden" th:value="${dto.cid}" />
+    <!-- 导航 开始 -->
+    <nav class="navbar navbar-default navbar-fixed-top navbar-mall-other">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a th:if="${a} ==null" href="javascript:history.back();" class="othertop-left"><i class="fa fa-angle-left icon-back"></i></a>
+          <div class="top-tab">
+            <ul>
+              <li class="active"><a href="#goodsimg">商品</a></li>
+              <li><a href="#goodsintroduce">详情</a></li>
+              <li><a href="#goodsremarks">评价</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- 导航 结束 -->
+
+    <!-- 商品 开始 -->
+    <div class="goods-simple" id="goodsimg">
+        <!-- 商品图片轮播 开始 -->
+        <div class="swiper-container">
+          <div class="swiper-wrapper">
+          <div class="swiper-slide" th:each="images:${biz.images}"><img th:src="${images.imgPath}" class="img-responsive"></div> 
+          </div>
+          <!-- Add Pagination -->
+          <div class="swiper-pagination mypager"></div>
+        </div>
+        <!-- 商品图片轮播 结束 -->
+        <div class="things-info">
+          <div class="things-title" th:text="${biz.goodsIntro}"></div>
+          <div class="things-price" >￥<span th:text="${biz.unitPrice}"></span></div>
+        </div>
+        <div class="buy-info">
+          <div class="buy-info-cell">
+            <div class="col-xs-2 buy-info-l">库存量:</div>
+            <div class="col-xs-10 buy-info-r" th:text="${biz.stockAmount}" id="stockAmount">
+            </div>
+           <!-- <div class="col-xs-10 buy-info-r">
+              <ul class="buycolor">
+                <li class="active"><a href="javascript:void(0)">黑色</a></li>
+                <li><a href="javascript:void(0)">棕色</a></li>
+              </ul>
+            </div> --> 
+          </div>
+          <div class="buy-info-cell">
+            <div class="col-xs-2 buy-info-l">数量</div>
+            <div class="col-xs-10 buy-info-r"><input type="text" class="spinnerExample" id="amount"/></div>
+          </div>
+        </div>
+    </div>
+    <!-- 商品 结束 -->
+
+    <!-- 用户评价 开始 -->
+    <div class="goods-remarks" id="goodsremarks" th:if="${biz.moreComments}>0">
+        <div class="goods-remarks-hd" th:if="${a} ==null">
+          <div class="remarks-title pull-left" >评价(<span th:text="${biz.moreComments}"></span>条)</div>
+          <a  th:href="@{'/h5/remarks?type=goods&id='+${biz.goodsId}}" class="remarks-lookall pull-right" th:if="${biz.moreComments}>2">查看全部评价 &gt;</a>
+           </div>
+        <div class="goods-remarks-hd" th:if="${a} !=null">
+          <div class="remarks-title pull-left" >评价(<span th:text="${biz.moreComments}"></span>条)</div>
+          <a th:href="@{'/h5/remarks?type=goods&id='+${biz.goodsId}+'&a=1&u='+${u}}" class="remarks-lookall pull-right" th:if="${biz.moreComments}>2">查看全部评价 &gt;</a>
+        </div>
+        <div class="goods-remarks-bd">
+           <ul class="remarks-list">
+            <li th:each="comments:${biz.comments}">
+               <div class="remarks-top">
+                  <div class="remarks-user">
+                    <img th:src="${comments.userLogo}" class="img-responsive">
+                  </div>
+                  <div class="remarks-name" th:text="${comments.nickName}"></div>
+                  <div class="remarks-date" th:text="${comments.createTimeStr}"></div>
+               </div>
+               <div class="remarks-content">
+                 <p class="remarks-txt" th:text="${comments.content}"></p>
+               </div>
+            </li>
+           </ul>
+        </div>
+    </div>
+    
+    <div class="goods-remarks" id="goodsremarks" th:if="${biz.moreComments}==0">
+        <div class="goods-remarks-hd">
+        <div style="text-align:center;color:#888;font-size:12px">暂无评价</div>
+        </div>
+    </div>
+    <!-- 用户评价 结束 -->
+
+    <!-- 商品详情 开始 -->
+    <div class="goods-show" id="goodsintroduce" th:if="${biz.content}!=''">
+      <div class="goods-show-hd">—— 图文详情 ——</div>
+      <div class="goods-show-bd"  th:utext="${biz.content}"></div>
+    </div>
+    <!-- 商品详情 结束 -->
+
+    <!-- 固定底部的加入购物车 开始 -->
+    <nav class="navbar navbar-default navbar-fixed-bottom mall-parts">
+      <div class="container-fluid nopad-lr">
+        <div class="mall-fixed-bottom">
+          <div class="mall-fixed-bottom-l">
+	            <a th:href="@{/h5}" class="fixed-bottom-l-cell" th:if="${a} ==null">
+	              <span><i class="fa fa-home"></i></span>
+	              <span>首页</span>
+	            </a>
+	            <a th:href="@{'/h5?a=1&u='+${u}}" class="fixed-bottom-l-cell" th:if="${a} !=null">
+	              <span><i class="fa fa-home"></i></span>
+	              <span>首页</span>
+	            </a>
+	            <a href="javascript:void(0);" class="fixed-bottom-l-cell icon-collection">
+	              <span>
+	              <i class="fa fa-star" th:if="${dto} !=null"></i>
+	              <i class="fa fa-star-o" th:if="${dto} ==null"></i>
+	              </span>
+	              <span th:text="${dto} !=null?'已收藏':'收藏'"></span>
+	            </a>
+	            <a href="javascript:void(0)" onclick="getPersonalCart()" class="fixed-bottom-l-cell">
+	              <span><i class="fa fa-shopping-cart"></i></span>
+	              <span>购物车</span>
+	            </a>
+          </div>
+          <div class="mall-fixed-bottom-r">
+            <a href="javascript:void(0)" onclick="addCart()" class="fixed-bottom-r-cell addshappcart">加入购物车</a>
+            <a href="javascript:void(0)" onclick="firmOrder()" class="fixed-bottom-r-cell nowbuy">立即购买</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- 固定底部的加入购物车 结束 -->
+    
+   
+
+    <!-- 返回顶部 开始 -->
+    <div class="gototop" style="display: none;">
+      <a href="javascript:void(0)"><i class="glyphicon glyphicon-menu-up"></i></a>
+    </div>
+    <!-- 返回顶部 结束 -->
+
+    <script th:src="@{/pages/mall/js/jquery-1.9.1.min.js}"></script>
+    <script th:src="@{/pages/mall/js/bootstrap.min.js}"></script>
+    <!-- 商品图片轮播 -->
+    <script th:src="@{/pages/mall/js/swiper.min.js}"></script>
+    <!-- 商品数量选择 -->
+    <script th:src="@{/pages/mall/js/jquery.spinner.js}"></script>
+    
+    <script th:src="@{/pages/mall/css/layer_mobile/layer.js}"></script>
+    <script type="text/javascript">
+    
+   	var a=$("#a").val();
+    var u=$("#u").val();
+    var pathName=window.document.location.pathname;
+    var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
+      // tab
+      $(".mall-list-tab ul li").click(function(){
+        $(this).addClass("active").siblings().removeClass("active");
+        var index = $(".mall-list-tab ul li").index(this);
+        $(".list-cell").eq(index).show().siblings().hide();
+      })
+
+      // 返回顶部
+      $(window).scroll(function(){
+        if($(window).scrollTop()>=20){
+           $(".gototop").fadeIn(300);
+        }else{
+           $(".gototop").fadeOut(300);
+        }
+      })
+      $(".gototop a").click(function(){
+        $("html,body").animate({scrollTop:"0px"},300)
+      })
+
+      // 商品图片轮播
+      var swiper = new Swiper('.swiper-container', {
+        pagination: {
+          el: '.swiper-pagination',
+          type: 'fraction',
+        },
+      });
+
+      //商品数量选择
+      $('.spinnerExample').spinner({});
+
+      //商品、详情、评价Tab
+      $(".top-tab ul li a").click(function(){
+        $(this).parent("li").addClass("active").siblings().removeClass("active");
+      })
+
+      //选择商品颜色
+      $(".buycolor li a").click(function(){
+        $(this).parent("li").addClass("active").siblings().removeClass("active");
+      })
+      
+      //收藏
+      $(".icon-collection").click(function(){
+      	if($("#memberId").val()>0){
+      			doUserCollect();
+      		}else{
+      			layer.open({
+				    content: '您还没登录，请您先登录！'
+				    ,skin: 'msg'
+				    ,time: 2 //2秒后自动关闭
+				  });
+				  setTimeout(function(){
+				  	window.location.href=projectName+"/h5/login?url="+window.location.href
+				  },2000);
+      		}
+      })
+      
+      //加入购物车
+      function addCart(){
+        var url=projectName+"/h5/admin/cart/add";
+        if(a==1){
+        	url+="?a=1&u="+u;
+        }
+      		if($("#memberId").val()>0){
+      			var amount=$.trim($("#amount").val());
+      			var stockAmount= $("#stockAmount").text();
+      			if(parseFloat(amount)<=parseFloat(stockAmount)){
+      				$.ajax({
+						url : url,
+						data : {
+							amount : amount,
+							goodsId : $("#goodsId").val()
+						},
+						dataType : "json",
+						success : function(result) {
+							layer.open({
+							    content: result.rmk
+							    ,skin: 'msg'
+							    ,time: 2 //2秒后自动关闭
+							  });
+						}
+					})
+      			}else{
+      				layer.open({
+							    content: '超出库存量了'
+							    ,skin: 'msg'
+							    ,time: 2 //2秒后自动关闭
+							  });
+      			}
+      		
+      		}else{
+      			layer.open({
+				    content: '您还没登录，请您先登录！'
+				    ,skin: 'msg'
+				    ,time: 2 //2秒后自动关闭
+				  });
+				  setTimeout(function(){
+				  	window.location.href=projectName+"/h5/login?url="+window.location.href
+				  },2000);
+      		}
+      }
+      
+      //立即购买
+      function firmOrder(){
+      	if($("#memberId").val()>0){
+      			var amount=$.trim($("#amount").val());
+      			var stockAmount= $("#stockAmount").text();
+      			var goodsId=$("#goodsId").val();
+      			var url=projectName+"/h5/admin/cart/getSubmitOrder?entrance=2&amount="+amount+"&id="+goodsId;
+		        if(a==1){
+		        	url+="&a=1&u="+u;
+		        }
+      			if(parseFloat(amount)<=parseFloat(stockAmount)){
+      				window.location.href=url;
+      			}else{
+      				layer.open({
+							    content: '超出库存量了'
+							    ,skin: 'msg'
+							    ,time: 2 //2秒后自动关闭
+							  });
+      			}
+      		}else{
+      			layer.open({
+				    content: '您还没登录，请您先登录！'
+				    ,skin: 'msg'
+				    ,time: 2 //2秒后自动关闭
+				  });
+				  setTimeout(function(){
+				  	window.location.href=projectName+"/h5/login?url="+window.location.href
+				  },2000);
+      		}
+      }
+      
+      //查看购物车
+      function getPersonalCart(){
+	        var url=projectName+"/h5/cart/getPersonalCart";
+	        if(a==1){
+	        	url+="?a=1&u="+u;
+	        }
+      		if($("#memberId").val()>0){
+      			window.location.href=url;
+      		}else{
+      			layer.open({
+				    content: '您还没登录，请您先登录！'
+				    ,skin: 'msg'
+				    ,time: 2 //2秒后自动关闭
+				  });
+				  setTimeout(function(){
+				  	window.location.href=projectName+"/h5/login?url="+window.location.href
+				  },2000);
+      		}
+      }
+      
+      //收藏
+      function doUserCollect(){
+        var userCollectId = $("#userCollectId").val();
+        var url=projectName+"/h5/admin/member/doUserCollect";
+        if(a==1){
+        	url+="?a=1&u="+u;
+        }
+	 	$.ajax({
+			url : url,
+			data : {
+				refId : $("#goodsId").val(),
+				type:'goods'
+			},
+			dataType : "json",
+			success : function(result) {
+				if(result.result==0){
+					layer.open({
+					    content: '操作失败'
+					    ,skin: 'msg'
+					    ,time: 2 //2秒后自动关闭
+					  });
+				}else{
+					if ($(".icon-collection").find(".fa").hasClass('fa-star-o')) {
+				          $(".icon-collection").find(".fa").addClass('fa-star').removeClass('fa-star-o');
+				          $(".icon-collection").find("span").eq(1).text("已收藏");
+				    }else{
+				          $(".icon-collection").find(".fa").addClass('fa-star-o').removeClass('fa-star');
+				          $(".icon-collection").find("span").eq(1).text("收藏");
+				    }
+				}
+			}
+		})
+      }
+    </script>
+  </body>
+</html>

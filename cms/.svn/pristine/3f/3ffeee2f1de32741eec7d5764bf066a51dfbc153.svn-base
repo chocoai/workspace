@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd"
+	default-lazy-init="true">
+	
+	<bean id="tplMessageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="cacheSeconds" value="0"/>
+		<property name="basenames" value="#{propertyUtils.getList('messages.tpl.')}"/>
+	</bean>
+	<!--标签-->
+	<bean id="cms_pagination" class="com.yhcrt.weihu.cms.action.directive.PaginationDirective"/>
+	<bean id="cms_channel_list" class="com.yhcrt.weihu.cms.action.directive.ChannelListDirective"/>
+	<bean id="cms_channel_page" class="com.yhcrt.weihu.cms.action.directive.ChannelPageDirective"/>
+	<bean id="cms_channel" class="com.yhcrt.weihu.cms.action.directive.ChannelDirective"/>
+	<bean id="cms_content" class="com.yhcrt.weihu.cms.action.directive.ContentDirective"/>
+	<bean id="cms_content_list" class="com.yhcrt.weihu.cms.action.directive.ContentListDirective"/>
+	<bean id="cms_content_page" class="com.yhcrt.weihu.cms.action.directive.ContentPageDirective"/>
+	<bean id="cms_tag_list" class="com.yhcrt.weihu.cms.action.directive.ContentTagListDirective"/>
+	<bean id="cms_tag_page" class="com.yhcrt.weihu.cms.action.directive.ContentTagPageDirective"/>
+	<bean id="cms_topic_list" class="com.yhcrt.weihu.cms.action.directive.CmsTopicListDirective"/>
+	<bean id="cms_topic_page" class="com.yhcrt.weihu.cms.action.directive.CmsTopicPageDirective"/>
+	<bean id="cms_comment_list" class="com.yhcrt.weihu.cms.action.directive.CmsCommentListDirective"/>
+	<bean id="cms_comment_page" class="com.yhcrt.weihu.cms.action.directive.CmsCommentPageDirective"/>
+	<bean id="cms_blcomment_list" class="com.yhcrt.weihu.cms.action.directive.CmsBLCommentListDirective"/>
+	<bean id="cms_blcomment_page" class="com.yhcrt.weihu.cms.action.directive.CmsBLCommentPageDirective"/>
+	<bean id="cms_guestbook_ctg_list" class="com.yhcrt.weihu.cms.action.directive.CmsGuestbookCtgListDirective"/>
+	<bean id="cms_guestbook_list" class="com.yhcrt.weihu.cms.action.directive.CmsGuestbookListDirective"/>
+	<bean id="cms_guestbook_page" class="com.yhcrt.weihu.cms.action.directive.CmsGuestbookPageDirective"/>
+	<bean id="cms_tt_type_list" class="com.yhcrt.weihu.cms.action.directive.CmsTTypeListDirective"/>
+	<bean id="cms_tt_list" class="com.yhcrt.weihu.cms.action.directive.CmsTTListDirective"/>
+	<bean id="cms_tt_page" class="com.yhcrt.weihu.cms.action.directive.CmsTTPageDirective"/>
+	<bean id="cms_vote" class="com.yhcrt.weihu.cms.action.directive.CmsVoteDirective"/>
+	<bean id="cms_friendlink_ctg_list" class="com.yhcrt.weihu.cms.action.directive.CmsFriendlinkCtgListDirective"/>
+	<bean id="cms_friendlink_list" class="com.yhcrt.weihu.cms.action.directive.CmsFriendlinkListDirective"/>
+	<bean id="cms_lucene_list" class="com.yhcrt.weihu.cms.lucene.LuceneDirectiveList"/>
+	<bean id="cms_lucene_page" class="com.yhcrt.weihu.cms.lucene.LuceneDirectivePage"/>
+	<bean id="cms_advertising" class="com.yhcrt.weihu.cms.action.directive.CmsAdvertisingDirective"/>
+	<bean id="cms_advertising_list" class="com.yhcrt.weihu.cms.action.directive.CmsAdvertisingListDirective"/>
+	<bean id="cms_vote_list" class="com.yhcrt.weihu.cms.action.directive.CmsVoteListDirective"/>
+	<bean id="cms_model" class="com.yhcrt.weihu.cms.action.directive.CmsModelDirective"/>
+	<bean id="cms_score_group" class="com.yhcrt.weihu.cms.action.directive.ScoreGroupDirective"/>
+	
+	<bean id="cms_baoliao_list" class="com.yhcrt.weihu.cms.action.directive.CmsBaoLiaoListDirective"/>
+	<bean id="cms_baoliao_page" class="com.yhcrt.weihu.cms.action.directive.CmsBaoLiaoPageDirective"/>
+
+	<!--后台权限标签-->
+	<bean id="cms_perm" class="com.yhcrt.weihu.cms.web.PermistionDirective"/>
+	
+	<!--SERVICE-->
+	<bean id="contentCountCache" class="com.yhcrt.weihu.cms.service.ContentCountCacheImpl"/>
+	<bean id="channelCountCache" class="com.yhcrt.weihu.cms.service.ChannelCountCacheImpl"/>
+	<bean id="cmsSiteFlowCache" class="com.yhcrt.weihu.cms.service.CmsSiteFlowCacheImpl"/>
+	<bean id="weixinTokenCache" class="com.yhcrt.weihu.cms.service.WeixinTokenCacheImpl"/>
+	<bean id="acquisitionSvc" class="com.yhcrt.weihu.cms.service.AcquisitionSvcImpl"/>
+	<bean id="luceneContentSvc" class="com.yhcrt.weihu.cms.lucene.LuceneContentSvcImpl"/>
+	<bean id="searchWordsCache" class="com.yhcrt.weihu.cms.service.SearchWordsCacheImpl"/>
+	<bean id="imageSvc" class="com.yhcrt.weihu.cms.service.ImageSvcImpl"/>
+	<bean id="staticPageSvc" class="com.yhcrt.weihu.cms.staticpage.StaticPageSvcImpl">
+		<property name="tplMessageSource" ref="tplMessageSource"/>
+		<property name="freeMarkerConfigurer">
+			<bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+				<!--获取标签配置-->
+				<property name="freemarkerVariables" value="#{propertyUtils.getBeanMap('directive.')}"/>
+				<property name="templateLoaderPath" value=""/>
+				<property name="freemarkerSettings">
+					<props>
+						<prop key="tag_syntax">auto_detect</prop>
+						<prop key="template_update_delay">5</prop>
+						<prop key="defaultEncoding">UTF-8</prop>
+						<prop key="url_escaping_charset">UTF-8</prop>
+						<prop key="locale">zh_CN</prop>
+						<prop key="boolean_format">true,false</prop>
+						<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+						<prop key="date_format">yyyy-MM-dd</prop>
+						<prop key="time_format">HH:mm:ss</prop>
+						<prop key="number_format">0.######</prop>
+						<prop key="whitespace_stripping">true</prop>
+						<prop key="auto_import">/WEB-INF/ftl/cms/index.ftl as p,/WEB-INF/ftl/spring.ftl as s</prop>
+					</props>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<bean id="cmsStatistSvc" class="com.yhcrt.weihu.cms.statistic.CmsStatisticSvcImpl"/>
+	
+	<!--LISTENER-->
+	<bean id="contentLuceneListener" class="com.yhcrt.weihu.cms.lucene.ContentLuceneListener"/>
+	<bean id="contentStaticPageListener" class="com.yhcrt.weihu.cms.staticpage.ContentStaticPageListener"/>
+	<bean id="contentDocListener" class="com.yhcrt.weihu.cms.service.ContentDocListener"/>
+	
+	<!--MANAGER-->
+	<bean id="channelMng" class="com.yhcrt.weihu.cms.manager.main.impl.ChannelMngImpl">
+		<property name="deleteCheckerList">
+			<list>
+				<ref bean="contentMng"/>
+				<ref bean="cmsTopicMng"/>
+				<ref bean="cmsAcquisitionMng"/>
+			</list>
+		</property>
+	</bean>
+	<bean id="channelExtMng" class="com.yhcrt.weihu.cms.manager.main.impl.ChannelExtMngImpl"/>
+	<bean id="channelTxtMng" class="com.yhcrt.weihu.cms.manager.main.impl.ChannelTxtMngImpl"/>
+	<bean id="channelCountMng" class="com.yhcrt.weihu.cms.manager.main.impl.ChannelCountMngImpl"/>
+	<bean id="contentMng" class="com.yhcrt.weihu.cms.manager.main.impl.ContentMngImpl">
+		<property name="listenerList">
+			<list>
+				<ref bean="contentLuceneListener"/>
+				<ref bean="contentStaticPageListener"/>
+				<ref bean="contentDocListener"/>
+			</list>
+		</property>
+	</bean>
+	<bean id="contentTagMng" class="com.yhcrt.weihu.cms.manager.main.impl.ContentTagMngImpl"/>
+	<bean id="contentTypeMng" class="com.yhcrt.weihu.cms.manager.main.impl.ContentTypeMngImpl"/>
+	<bean id="contentExtMng" class="com.yhcrt.weihu.cms.manager.main.impl.ContentExtMngImpl"/>
+	<bean id="contentTxtMng" class="com.yhcrt.weihu.cms.manager.main.impl.ContentTxtMngImpl"/>
+	<bean id="contentCountMng" class="com.yhcrt.weihu.cms.manager.main.impl.ContentCountMngImpl"/>
+	<bean id="contentCheckMng" class="com.yhcrt.weihu.cms.manager.main.impl.ContentCheckMngImpl"/>
+	<bean id="contentShareCheckMng" class="com.yhcrt.weihu.cms.manager.main.impl.ContentShareCheckMngImpl"/>
+	<bean id="cmsModelMng" class="com.yhcrt.weihu.cms.manager.main.impl.CmsModelMngImpl"/>
+	<bean id="cmsModelItemMng" class="com.yhcrt.weihu.cms.manager.main.impl.CmsModelItemMngImpl"/>
+	<bean id="cmsTopicMng" class="com.yhcrt.weihu.cms.manager.main.impl.CmsTopicMngImpl"/>
+	<bean id="cmsTopicChannelMng" class="com.yhcrt.weihu.cms.manager.main.impl.CmsTopicChannelMngImpl"/>
+	<bean id="cmsThirdAccountMng" class="com.yhcrt.weihu.cms.manager.main.impl.CmsThirdAccountMngImpl"/>
+	<bean id="weiXinSvc" class="com.yhcrt.weihu.cms.service.WeiXinSvcImpl"/>
+	
+	
+	<bean id="cmsAcquisitionMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsAcquisitionMngImpl"/>
+	<bean id="cmsAcquisitionHistoryMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsAcquisitionHistoryMngImpl"/>
+	<bean id="cmsAcquisitionTempMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsAcquisitionTempMngImpl"/>
+	<bean id="cmsCommentMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsCommentMngImpl"/>
+	<bean id="cmsCommentExtMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsCommentExtMngImpl"/>
+	<bean id="cmsKeywordMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsKeywordMngImpl"/>
+	<bean id="cmsSensitivityMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsSensitivityMngImpl"/>
+	<bean id="cmsResourceMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsResourceMngImpl"/>
+	<bean id="cmsGuestbookCtgMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsGuestbookCtgMngImpl"/>
+	<bean id="cmsGuestbookExtMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsGuestbookExtMngImpl"/>
+	<bean id="cmsGuestbookMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsGuestbookMngImpl"/>	
+	<bean id="cmsVoteTopicMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsVoteTopicMngImpl"/>
+	<bean id="cmsVoteItemMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsVoteItemMngImpl"/>
+	<bean id="cmsVoteRecordMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsVoteRecordMngImpl"/>
+	<bean id="cmsFriendlinkCtgMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsFriendlinkCtgMngImpl"/>
+	<bean id="cmsFriendlinkMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsFriendlinkMngImpl"/>
+	<bean id="cmsAdvertisingSpaceMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsAdvertisingSpaceMngImpl"/>
+	<bean id="cmsAdvertisingMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsAdvertisingMngImpl"/>
+	<bean id="cmsMessageMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsMessageMngImpl"/>
+	<bean id="cmsReceiverMessageMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsReceiverMessageMngImpl"/>
+	
+	<bean id="cmsTTMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsTTMngImpl"/>	
+	<bean id="cmsTTypeMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsTTypeMngImpl"/>	
+	<bean id="cmsChangeMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsChangeMngImpl"/>	
+	
+	<bean id="cmsMysqlDataBackMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsMysqlDataBackMngImpl"/>
+	<bean id="cmsSqlserverDataBackMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsSqlserverDataBackMngImpl"/>
+	<bean id="cmsOracleDataBackMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsOracleDataBackMngImpl"/>
+	<bean id="cmsDb2DataBackMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsDb2DataBackMngImpl"/>
+	
+	<bean id="cmsBaoLiaoMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsBaoLiaoMngImpl"/>
+	<bean id="cmsFileMngImpl" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsFileMngImpl"/>
+	<bean id="cmsWorkLoadStatisticSvc" class="com.yhcrt.weihu.cms.statistic.workload.CmsWorkLoadStatisticSvcImpl"/>
+	<bean id="cmsVoteReplyMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsVoteReplyMngImpl"/>
+	<bean id="cmsVoteSubTopicMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsVoteSubTopicMngImpl"/>
+	<bean id="cmsJobApplyMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsJobApplyMngImpl"/>
+	<bean id="contentDocMng" class="com.yhcrt.weihu.cms.manager.main.impl.ContentDocMngImpl"/>
+	<bean id="cmsTaskMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsTaskMngImpl"/>
+	<bean id="cmsOriginMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsOriginMngImpl"/>
+	<bean id="cmsSearchWordsMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsSearchWordsMngImpl"/>
+	<bean id="cmsPlugMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsPlugMngImpl"/>
+	<bean id="cmsSiteAccessMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsSiteAccessMngImpl"/>
+	<bean id="cmsSiteAccessPagesMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsSiteAccessPagesMngImpl"/>
+	<bean id="cmsSiteAccessStatisticMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsSiteAccessStatisticMngImpl"/>
+	<bean id="cmsSiteAccessCountMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsSiteAccessCountMngImpl"/>
+	<bean id="cmsUserMenuMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsUserMenuMngImpl"/>
+	<bean id="cmsDirectiveTplMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsDirectiveTplMngImpl"/>
+	<bean id="cmsScoreGroupMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsScoreGroupMngImpl"/>
+	<bean id="cmsScoreItemMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsScoreItemMngImpl"/>
+	<bean id="cmsScoreRecordMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsScoreRecordMngImpl"/>
+	<bean id="cmsWebserviceMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsWebserviceMngImpl"/>
+	<bean id="cmsWebserviceAuthMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsWebserviceAuthMngImpl"/>
+	<bean id="cmsWebserviceCallRecordMng" class="com.yhcrt.weihu.cms.manager.assist.impl.CmsWebserviceCallRecordMngImpl"/>
+	<bean id="bbsTopicMng" class="com.yhcrt.weihu.cms.manager.assist.impl.BbsTopicMngImpl"/>
+	<!--DAO-->
+	<bean id="channelDao" class="com.yhcrt.weihu.cms.dao.main.impl.ChannelDaoImpl"/>
+	<bean id="channelExtDao" class="com.yhcrt.weihu.cms.dao.main.impl.ChannelExtDaoImpl"/>
+	<bean id="channelTxtDao" class="com.yhcrt.weihu.cms.dao.main.impl.ChannelTxtDaoImpl"/>
+	<bean id="channelCountDao" class="com.yhcrt.weihu.cms.dao.main.impl.ChannelCountDaoImpl"/>
+	<bean id="contentDao" class="com.yhcrt.weihu.cms.dao.main.impl.ContentDaoImpl"/>
+	<bean id="contentTagDao" class="com.yhcrt.weihu.cms.dao.main.impl.ContentTagDaoImpl"/>
+	<bean id="contentTypeDao" class="com.yhcrt.weihu.cms.dao.main.impl.ContentTypeDaoImpl"/>
+	<bean id="contentExtDao" class="com.yhcrt.weihu.cms.dao.main.impl.ContentExtDaoImpl"/>
+	<bean id="contentTxtDao" class="com.yhcrt.weihu.cms.dao.main.impl.ContentTxtDaoImpl"/>
+	<bean id="contentCountDao" class="com.yhcrt.weihu.cms.dao.main.impl.ContentCountDaoImpl"/>
+	<bean id="contentCheckDao" class="com.yhcrt.weihu.cms.dao.main.impl.ContentCheckDaoImpl"/>
+	<bean id="contentShareCheckDao" class="com.yhcrt.weihu.cms.dao.main.impl.ContentShareCheckDaoImpl"/>
+	
+	<bean id="cmsModelDao" class="com.yhcrt.weihu.cms.dao.main.impl.CmsModelDaoImpl"/>
+	<bean id="cmsModelItemDao" class="com.yhcrt.weihu.cms.dao.main.impl.CmsModelItemDaoImpl"/>
+	<bean id="cmsTopicDao" class="com.yhcrt.weihu.cms.dao.main.impl.CmsTopicDaoImpl"/>
+	<bean id="cmsTopicChannelDao" class="com.yhcrt.weihu.cms.dao.main.impl.CmsTopicChannelDaoImpl"/>
+	<bean id="cmsThirdAccountDao" class="com.yhcrt.weihu.cms.dao.main.impl.CmsThirdAccountDaoImpl"/>
+	
+	
+	<bean id="cmsAcquisitionDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsAcquisitionDaoImpl"/>
+	<bean id="cmsAcquisitionHistoryDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsAcquisitionHistoryDaoImpl"/>
+	<bean id="cmsAcquisitionTempDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsAcquisitionTempDaoImpl"/>
+	<bean id="cmsCommentDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsCommentDaoImpl"/>
+	<bean id="cmsCommentExtDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsCommentExtDaoImpl"/>
+	<bean id="cmsKeywordDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsKeywordDaoImpl"/>
+	<bean id="cmsSensitivityDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsSensitivityDaoImpl"/>
+	<bean id="cmsGuestbookCtgDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsGuestbookCtgDaoImpl"/>
+	<bean id="cmsGuestbookExtDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsGuestbookExtDaoImpl"/>
+	<bean id="cmsGuestbookDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsGuestbookDaoImpl"/>	
+	<bean id="cmsVoteTopicDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsVoteTopicDaoImpl"/>
+	<bean id="cmsVoteItemDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsVoteItemDaoImpl"/>
+	<bean id="cmsVoteRecordDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsVoteRecordDaoImpl"/>
+	<bean id="cmsFriendlinkCtgDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsFriendlinkCtgDaoImpl"/>
+	<bean id="cmsFriendlinkDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsFriendlinkDaoImpl"/>
+	<bean id="cmsAdvertisingSpaceDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsAdvertisingSpaceDaoImpl"/>
+	<bean id="cmsAdvertisingDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsAdvertisingDaoImpl"/>
+	<bean id="cmsMessageDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsMessageDaoImpl"/>
+	<bean id="cmsReceiverMessageDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsReceiverMessageDaoImpl"/>
+	
+	<bean id="cmsTTDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsTTDaoImpl"/>	
+	<bean id="cmsTTypeDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsTTypeDaoImpl"/>
+	<bean id="cmsBaoLiaoDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsBaoLiaoDaoImpl"/>
+	<bean id="cmsChangeDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsChangeDaoImpl"/>
+	<bean id="luceneContentDao" class="com.yhcrt.weihu.cms.lucene.LuceneContentDaoImpl"/>
+	
+	<bean id="staticPageDao" class="com.yhcrt.weihu.cms.staticpage.StaticPageDaoImpl"/>
+	<bean id="cmsStatisticDao" class="com.yhcrt.weihu.cms.statistic.CmsStatisticDaoImpl"/>
+	<bean id="cmsMysqlDataDaoBack" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsMysqlDataBackDaoImpl">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<bean id="cmsSqlserverDataDaoBack" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsSqlserverDataBackDaoImpl">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<bean id="cmsDb2DataDaoBack" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsDb2DataBackDaoImpl">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="lobHandler" ref="defaultLobHandler"/>
+	</bean>
+	<bean id="nativeJdbcExtractor" class="org.springframework.jdbc.support.nativejdbc.CommonsDbcpNativeJdbcExtractor" lazy-init="true"/>
+	<bean id="oracleLobHandler" class="org.springframework.jdbc.support.lob.OracleLobHandler" lazy-init="true">
+		<property name="nativeJdbcExtractor" ref="nativeJdbcExtractor"/> 
+	</bean>
+	<bean id="defaultLobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler" lazy-init="true"/>
+	<bean id="cmsOracleDataDaoBack" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsOracleDataBackDaoImpl">
+		<property name="dataSource" ref="dataSource"></property>
+		<property name="lobHandler" ref="oracleLobHandler"/>
+	</bean>
+	<bean id="cmsFileDaoImpl" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsFileDaoImpl"/>
+	<bean id="cmsWorkLoadStatisticDao" class="com.yhcrt.weihu.cms.statistic.workload.CmsWorkLoadStatisticDaoImpl"/>
+	<bean id="cmsVoteReplyDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsVoteReplyDaoImpl"/>
+	<bean id="cmsVoteSubTopicDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsVoteSubTopicDaoImpl"/>
+	<bean id="cmsJobApplyDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsJobApplyDaoImpl"/>
+	<bean id="contentDocDao" class="com.yhcrt.weihu.cms.dao.main.impl.ContentDocDaoImpl"/>
+	<bean id="cmsTaskDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsTaskDaoImpl"/>
+	<bean id="cmsOriginDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsOriginDaoImpl"/>
+	<bean id="cmsSearchWordsDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsSearchWordsDaoImpl"/>
+	<bean id="cmsPlugDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsPlugDaoImpl"/>
+	<bean id="cmsSiteAccessDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsSiteAccessDaoImpl"/>
+	<bean id="cmsSiteAccessPagesDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsSiteAccessPagesDaoImpl"/>
+	<bean id="cmsSiteAccessStatisticDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsSiteAccessStatisticDaoImpl"/>
+	<bean id="cmsSiteAccessCountDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsSiteAccessCountDaoImpl"/>
+	<bean id="cmsUserMenuDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsUserMenuDaoImpl"/>
+	<bean id="cmsDirectiveTplDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsDirectiveTplDaoImpl"/>
+	<bean id="cmsScoreGroupDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsScoreGroupDaoImpl"/>
+	<bean id="cmsScoreItemDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsScoreItemDaoImpl"/>
+	<bean id="cmsScoreRecordDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsScoreRecordDaoImpl"/>
+	<bean id="cmsWebserviceDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsWebserviceDaoImpl"/>
+	<bean id="cmsWebserviceAuthDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsWebserviceAuthDaoImpl"/>
+	<bean id="cmsWebserviceCallRecordDao" class="com.yhcrt.weihu.cms.dao.assist.impl.CmsWebserviceCallRecordDaoImpl"/>
+	
+	<bean id="openOfficeConverter" class="com.yhcrt.weihu.common.office.OpenOfficeConverter" init-method="init" destroy-method="destroy"/>
+	<!--init-method="init" destroy-method="destroy"-->
+</beans>

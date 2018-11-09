@@ -1,0 +1,321 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.iHealthCloud.mapper.SysInterfaceLogMapper">
+  <resultMap id="BaseResultMap" type="com.yhcrt.iHealthCloud.entity.SysInterfaceLog">
+    <id column="CID" jdbcType="VARCHAR" property="cid" />
+    <result column="CALL_TIME" jdbcType="VARCHAR" property="callTime" />
+    <result column="CALL_IP" jdbcType="VARCHAR" property="callIp" />
+    <result column="SERVICE_NAME" jdbcType="VARCHAR" property="serviceName" />
+    <result column="CALL_URL" jdbcType="VARCHAR" property="callUrl" />
+    <result column="REPLY_TIME" jdbcType="VARCHAR" property="replyTime" />
+    <result column="EXCEPTION_MSG" jdbcType="VARCHAR" property="exceptionMsg" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.yhcrt.iHealthCloud.entity.SysInterfaceLogWithBLOBs">
+    <result column="REQUEST_PARAMS" jdbcType="LONGVARCHAR" property="requestParams" />
+    <result column="RETURN_VALUE" jdbcType="LONGVARCHAR" property="returnValue" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    CID, CALL_TIME, CALL_IP, SERVICE_NAME, CALL_URL, REPLY_TIME, EXCEPTION_MSG
+  </sql>
+  <sql id="Blob_Column_List">
+    REQUEST_PARAMS, RETURN_VALUE
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.yhcrt.iHealthCloud.entity.SysInterfaceLogExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sys_interface_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.yhcrt.iHealthCloud.entity.SysInterfaceLogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_interface_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sys_interface_log
+    where CID = #{cid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_interface_log
+    where CID = #{cid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yhcrt.iHealthCloud.entity.SysInterfaceLogExample">
+    delete from sys_interface_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yhcrt.iHealthCloud.entity.SysInterfaceLogWithBLOBs">
+    insert into sys_interface_log (CID, CALL_TIME, CALL_IP, 
+      SERVICE_NAME, CALL_URL, REPLY_TIME, 
+      EXCEPTION_MSG, REQUEST_PARAMS, RETURN_VALUE
+      )
+    values (#{cid,jdbcType=VARCHAR}, #{callTime,jdbcType=VARCHAR}, #{callIp,jdbcType=VARCHAR}, 
+      #{serviceName,jdbcType=VARCHAR}, #{callUrl,jdbcType=VARCHAR}, #{replyTime,jdbcType=VARCHAR}, 
+      #{exceptionMsg,jdbcType=VARCHAR}, #{requestParams,jdbcType=LONGVARCHAR}, #{returnValue,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yhcrt.iHealthCloud.entity.SysInterfaceLogWithBLOBs">
+    insert into sys_interface_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        CID,
+      </if>
+      <if test="callTime != null">
+        CALL_TIME,
+      </if>
+      <if test="callIp != null">
+        CALL_IP,
+      </if>
+      <if test="serviceName != null">
+        SERVICE_NAME,
+      </if>
+      <if test="callUrl != null">
+        CALL_URL,
+      </if>
+      <if test="replyTime != null">
+        REPLY_TIME,
+      </if>
+      <if test="exceptionMsg != null">
+        EXCEPTION_MSG,
+      </if>
+      <if test="requestParams != null">
+        REQUEST_PARAMS,
+      </if>
+      <if test="returnValue != null">
+        RETURN_VALUE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        #{cid,jdbcType=VARCHAR},
+      </if>
+      <if test="callTime != null">
+        #{callTime,jdbcType=VARCHAR},
+      </if>
+      <if test="callIp != null">
+        #{callIp,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceName != null">
+        #{serviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="callUrl != null">
+        #{callUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="replyTime != null">
+        #{replyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="exceptionMsg != null">
+        #{exceptionMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="requestParams != null">
+        #{requestParams,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="returnValue != null">
+        #{returnValue,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yhcrt.iHealthCloud.entity.SysInterfaceLogExample" resultType="java.lang.Long">
+    select count(*) from sys_interface_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_interface_log
+    <set>
+      <if test="record.cid != null">
+        CID = #{record.cid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.callTime != null">
+        CALL_TIME = #{record.callTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.callIp != null">
+        CALL_IP = #{record.callIp,jdbcType=VARCHAR},
+      </if>
+      <if test="record.serviceName != null">
+        SERVICE_NAME = #{record.serviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.callUrl != null">
+        CALL_URL = #{record.callUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.replyTime != null">
+        REPLY_TIME = #{record.replyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.exceptionMsg != null">
+        EXCEPTION_MSG = #{record.exceptionMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.requestParams != null">
+        REQUEST_PARAMS = #{record.requestParams,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.returnValue != null">
+        RETURN_VALUE = #{record.returnValue,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update sys_interface_log
+    set CID = #{record.cid,jdbcType=VARCHAR},
+      CALL_TIME = #{record.callTime,jdbcType=VARCHAR},
+      CALL_IP = #{record.callIp,jdbcType=VARCHAR},
+      SERVICE_NAME = #{record.serviceName,jdbcType=VARCHAR},
+      CALL_URL = #{record.callUrl,jdbcType=VARCHAR},
+      REPLY_TIME = #{record.replyTime,jdbcType=VARCHAR},
+      EXCEPTION_MSG = #{record.exceptionMsg,jdbcType=VARCHAR},
+      REQUEST_PARAMS = #{record.requestParams,jdbcType=LONGVARCHAR},
+      RETURN_VALUE = #{record.returnValue,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_interface_log
+    set CID = #{record.cid,jdbcType=VARCHAR},
+      CALL_TIME = #{record.callTime,jdbcType=VARCHAR},
+      CALL_IP = #{record.callIp,jdbcType=VARCHAR},
+      SERVICE_NAME = #{record.serviceName,jdbcType=VARCHAR},
+      CALL_URL = #{record.callUrl,jdbcType=VARCHAR},
+      REPLY_TIME = #{record.replyTime,jdbcType=VARCHAR},
+      EXCEPTION_MSG = #{record.exceptionMsg,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.iHealthCloud.entity.SysInterfaceLogWithBLOBs">
+    update sys_interface_log
+    <set>
+      <if test="callTime != null">
+        CALL_TIME = #{callTime,jdbcType=VARCHAR},
+      </if>
+      <if test="callIp != null">
+        CALL_IP = #{callIp,jdbcType=VARCHAR},
+      </if>
+      <if test="serviceName != null">
+        SERVICE_NAME = #{serviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="callUrl != null">
+        CALL_URL = #{callUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="replyTime != null">
+        REPLY_TIME = #{replyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="exceptionMsg != null">
+        EXCEPTION_MSG = #{exceptionMsg,jdbcType=VARCHAR},
+      </if>
+      <if test="requestParams != null">
+        REQUEST_PARAMS = #{requestParams,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="returnValue != null">
+        RETURN_VALUE = #{returnValue,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where CID = #{cid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.yhcrt.iHealthCloud.entity.SysInterfaceLogWithBLOBs">
+    update sys_interface_log
+    set CALL_TIME = #{callTime,jdbcType=VARCHAR},
+      CALL_IP = #{callIp,jdbcType=VARCHAR},
+      SERVICE_NAME = #{serviceName,jdbcType=VARCHAR},
+      CALL_URL = #{callUrl,jdbcType=VARCHAR},
+      REPLY_TIME = #{replyTime,jdbcType=VARCHAR},
+      EXCEPTION_MSG = #{exceptionMsg,jdbcType=VARCHAR},
+      REQUEST_PARAMS = #{requestParams,jdbcType=LONGVARCHAR},
+      RETURN_VALUE = #{returnValue,jdbcType=LONGVARCHAR}
+    where CID = #{cid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yhcrt.iHealthCloud.entity.SysInterfaceLog">
+    update sys_interface_log
+    set CALL_TIME = #{callTime,jdbcType=VARCHAR},
+      CALL_IP = #{callIp,jdbcType=VARCHAR},
+      SERVICE_NAME = #{serviceName,jdbcType=VARCHAR},
+      CALL_URL = #{callUrl,jdbcType=VARCHAR},
+      REPLY_TIME = #{replyTime,jdbcType=VARCHAR},
+      EXCEPTION_MSG = #{exceptionMsg,jdbcType=VARCHAR}
+    where CID = #{cid,jdbcType=VARCHAR}
+  </update>
+</mapper>

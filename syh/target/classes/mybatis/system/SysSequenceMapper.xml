@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SysSequenceMapper">
+	<resultMap id="BaseResultMap" type="com.yhcrt.entity.system.SysSequence">
+		<id column="CID" jdbcType="INTEGER" property="cid" />
+		<result column="SEQU_NAME" jdbcType="VARCHAR" property="sequName" />
+		<result column="SEQU_DESC" jdbcType="VARCHAR" property="sequDesc" />
+		<result column="SEQU_VALUE" jdbcType="INTEGER" property="sequValue" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		CID, SEQU_NAME,SEQU_DESC,SEQU_VALUE
+	</sql>
+
+	<select id="getBySequName" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_sequence  where 
+		SEQU_NAME = #{sequName,jdbcType=VARCHAR}
+	</select>
+	<update id="updateBySequValue" parameterType ="SysSequence">
+		update sys_sequence set SEQU_VALUE =
+		#{sequValue,jdbcType=INTEGER}
+		where SEQU_NAME =
+		#{sequName,jdbcType=VARCHAR}
+	</update>
+</mapper>

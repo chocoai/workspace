@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.iHealthCloud.mapper.MemberMapper">
+	<resultMap id="BaseResultMap" type="com.yhcrt.iHealthCloud.entity.Member">
+		<id column="member_id" jdbcType="INTEGER" property="memberId" />
+		<result column="head_pic" jdbcType="VARCHAR" property="headPic" />
+		<result column="real_name" jdbcType="VARCHAR" property="realName" />
+		<result column="gender" jdbcType="INTEGER" property="gender" />
+		<result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+		<result column="identity_card" jdbcType="VARCHAR" property="identityCard" />
+		<result column="phone_no" jdbcType="VARCHAR" property="phoneNo" />
+		<result column="email" jdbcType="VARCHAR" property="email" />
+		<result column="create_user" jdbcType="VARCHAR" property="createUser" />
+		<result column="create_time" jdbcType="VARCHAR" property="createTime" />
+		<result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+		<result column="member_type" jdbcType="INTEGER" property="memberType" />
+		<result column="org_id" jdbcType="INTEGER" property="orgId" />
+		<result column="user_id" jdbcType="INTEGER" property="userId" />
+		<result column="emp_id" jdbcType="INTEGER" property="empId" />
+		<result column="doc_id" jdbcType="INTEGER" property="docId" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+		<result column="remark" jdbcType="VARCHAR" property="remark" />
+		<association property="org" column="org_id" select="com.yhcrt.iHealthCloud.mapper.OrganizationMapper.selectByPrimaryKey"></association>
+		<association property="emp" column="emp_id" select="com.yhcrt.iHealthCloud.mapper.EmployeeMapper.selectByPrimaryKey"></association>
+		<association property="doctor" column="doc_id" select="com.yhcrt.iHealthCloud.mapper.DoctorMapper.selectByPrimaryKey"></association>
+		<association property="user" column="user_id" select="com.yhcrt.iHealthCloud.mapper.SysUserMapper.selectByPrimaryKey"></association>
+		
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		member_id, head_pic, real_name, gender, nick_name, identity_card, phone_no,
+		email,
+		create_user, create_time, update_time, member_type, org_id, user_id, emp_id,
+		doc_id,
+		status, remark
+	</sql>
+	<select id="selectByExample" parameterType="com.yhcrt.iHealthCloud.entity.MemberExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from member
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	
+	<select id="listMemberByExample" parameterType="com.yhcrt.iHealthCloud.entity.MemberExample" resultType="com.yhcrt.iHealthCloud.pojo.MemberDTO">
+		select member.member_id as memberId, member.real_name as realName, member.nick_name as nickName, member.head_pic as headPic from member
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	
+	<select id="listDeviceMemberByExample" parameterType="com.yhcrt.iHealthCloud.entity.MemberExample" resultType="com.yhcrt.iHealthCloud.pojo.MemberDTO">
+		select member.member_id as memberId, member.real_name as realName, member.nick_name as nickName, member.head_pic as headPic from member
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from member
+		where member_id = #{memberId,jdbcType=INTEGER}
+	</select>
+
+	<select id="selectByUserId" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from member
+		where user_id = #{userId,jdbcType=INTEGER}
+	</select>
+
+	<select id="listOrgServicer" parameterType="java.lang.String" resultType="com.yhcrt.iHealthCloud.pojo.OrgServicer">
+		SELECT employee.emp_id AS id,
+		       employee.nick_name AS nickName,
+		       employee.real_name AS realName,
+		       employee.head_pic AS headPic,
+		       'E' AS userType,
+		       '服务人员' AS specialty
+		  FROM employee LEFT JOIN member ON employee.emp_id = member.emp_id
+		 WHERE member.member_id = #{memberId,jdbcType=VARCHAR}
+		 union all
+		 SELECT doctor.doc_id AS id,
+		       doctor.nick_name AS nickName,
+		       doctor.real_name AS realName,
+		       doctor.head_pic AS headPic,
+		       'D' AS userType,
+		       '医师' AS specialty
+		  FROM doctor LEFT JOIN member ON doctor.doc_id = member.doc_id
+		 WHERE member.member_id = #{memberId,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="listMyFollowing" parameterType="java.lang.String" resultType="com.yhcrt.iHealthCloud.pojo.MemberDTO">
+		SELECT member.member_id as memberId,
+		       member.real_name as realName,
+		       CASE WHEN  ISNULL(member_relationship.relation_desc) || LENGTH(trim(member_relationship.relation_desc))   &lt; 1 THEN  	
+			 	member.nick_name 
+		   	   ELSE
+			    member_relationship.relation_desc
+			   END  as nickName ,
+		       member.head_pic as headPic
+		  FROM member
+		       LEFT JOIN member_relationship
+		          ON member.member_id = member_relationship.member_id
+		 WHERE member_relationship.follower_id = #{memberId,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="listMyFollowers" parameterType="java.lang.String" resultType="com.yhcrt.iHealthCloud.pojo.MemberDTO">
+		SELECT member.member_id as memberId,
+		       member.real_name as realName,
+		       member.nick_name as nickName,
+		       member.head_pic as headPic
+		  FROM member
+		       LEFT JOIN member_relationship
+		          ON member.member_id = member_relationship.follower_id
+		 WHERE member_relationship.member_id = #{memberId,jdbcType=VARCHAR}
+	</select>
+	
+	<select id="listIndexData" parameterType="java.lang.String" resultType="com.yhcrt.iHealthCloud.pojo.IndexData">
+		SELECT member.member_id AS memberId, member.real_name AS realName, member.nick_name AS nickName, member.head_pic AS headPic, '200' AS score, member.user_id as userId, member.nick_name as alias,
+		       ifnull((SELECT hd_pulse.pulse FROM hd_pulse WHERE hd_pulse.member_id = member.member_id ORDER BY hd_pulse.data_date DESC LIMIT 1), '') AS pulse,
+		       ifnull((select member_device.imei from member_device where member_device.member_id = member.member_id and member_device.status = 0 and member_device.is_default = 1),'') as imei,
+           	   ifnull((select member_device.sim from member_device where member_device.member_id = member.member_id and member_device.status = 0 and member_device.is_default = 1),'') as sim,
+		       (SELECT ifnull(sum(hd_step.step_count), 0) AS stepCount FROM hd_step WHERE hd_step.member_id = member.member_id AND substring(hd_step.data_date, 1, 10) = DATE_FORMAT(NOW(), '%Y-%m-%d')) AS stepCount
+		  FROM member 
+		 WHERE member.member_id = #{memberId,jdbcType=VARCHAR}
+		UNION ALL
+		SELECT member.member_id AS memberId, member.real_name AS realName, member.nick_name AS nickName, member.head_pic AS headPic, '200' AS score, member.user_id as userId, member_relationship.relation_desc as alias,
+		       ifnull((SELECT hd_pulse.pulse FROM hd_pulse WHERE hd_pulse.member_id = member.member_id ORDER BY hd_pulse.data_date DESC LIMIT 1), '') AS pulse,
+		       ifnull((select member_device.imei from member_device where member_device.member_id = member.member_id and member_device.status = 0 and member_device.is_default = 1),'') as imei,
+           	   ifnull((select member_device.sim from member_device where member_device.member_id = member.member_id and member_device.status = 0 and member_device.is_default = 1),'') as sim,
+		       (SELECT ifnull(sum(hd_step.step_count), 0) AS stepCount FROM hd_step WHERE hd_step.member_id = member.member_id AND substring(hd_step.data_date, 1, 10) = DATE_FORMAT(NOW(), '%Y-%m-%d')) AS stepCount
+		  FROM member_relationship LEFT JOIN member ON member_relationship.member_id = member.member_id
+		 WHERE member_relationship.follower_id = #{memberId,jdbcType=VARCHAR}
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from member
+		where member_id = #{memberId,jdbcType=INTEGER}
+	</delete>
+	
+	<delete id="deleteByExample" parameterType="com.yhcrt.iHealthCloud.entity.MemberExample">
+		delete from member
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	
+	<insert id="insert" parameterType="com.yhcrt.iHealthCloud.entity.Member">
+		insert into member (member_id, head_pic, real_name,
+		gender, nick_name, identity_card,
+		phone_no, email, create_user,
+		create_time, update_time, member_type,
+		org_id, user_id, emp_id,
+		doc_id, status, remark
+		)
+		values (#{memberId,jdbcType=INTEGER}, #{headPic,jdbcType=VARCHAR},
+		#{realName,jdbcType=VARCHAR},
+		#{gender,jdbcType=INTEGER}, #{nickName,jdbcType=VARCHAR}, #{identityCard,jdbcType=VARCHAR},
+		#{phoneNo,jdbcType=VARCHAR}, #{email,jdbcType=VARCHAR},
+		#{createUser,jdbcType=VARCHAR},
+		#{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, #{memberType,jdbcType=INTEGER},
+		#{orgId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER},
+		#{empId,jdbcType=INTEGER},
+		#{docId,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.yhcrt.iHealthCloud.entity.Member">
+		insert into member
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="memberId != null">
+				member_id,
+			</if>
+			<if test="headPic != null">
+				head_pic,
+			</if>
+			<if test="realName != null">
+				real_name,
+			</if>
+			<if test="gender != null">
+				gender,
+			</if>
+			<if test="nickName != null">
+				nick_name,
+			</if>
+			<if test="identityCard != null">
+				identity_card,
+			</if>
+			<if test="phoneNo != null">
+				phone_no,
+			</if>
+			<if test="email != null">
+				email,
+			</if>
+			<if test="createUser != null">
+				create_user,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="memberType != null">
+				member_type,
+			</if>
+			<if test="orgId != null">
+				org_id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="empId != null">
+				emp_id,
+			</if>
+			<if test="docId != null">
+				doc_id,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="memberId != null">
+				#{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="headPic != null">
+				#{headPic,jdbcType=VARCHAR},
+			</if>
+			<if test="realName != null">
+				#{realName,jdbcType=VARCHAR},
+			</if>
+			<if test="gender != null">
+				#{gender,jdbcType=INTEGER},
+			</if>
+			<if test="nickName != null">
+				#{nickName,jdbcType=VARCHAR},
+			</if>
+			<if test="identityCard != null">
+				#{identityCard,jdbcType=VARCHAR},
+			</if>
+			<if test="phoneNo != null">
+				#{phoneNo,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="createUser != null">
+				#{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=VARCHAR},
+			</if>
+			<if test="memberType != null">
+				#{memberType,jdbcType=INTEGER},
+			</if>
+			<if test="orgId != null">
+				#{orgId,jdbcType=INTEGER},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=INTEGER},
+			</if>
+			<if test="empId != null">
+				#{empId,jdbcType=INTEGER},
+			</if>
+			<if test="docId != null">
+				#{docId,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.yhcrt.iHealthCloud.entity.MemberExample"
+		resultType="java.lang.Long">
+		select count(*) from member
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update member
+		<set>
+			<if test="record.memberId != null">
+				member_id = #{record.memberId,jdbcType=INTEGER},
+			</if>
+			<if test="record.headPic != null">
+				head_pic = #{record.headPic,jdbcType=VARCHAR},
+			</if>
+			<if test="record.realName != null">
+				real_name = #{record.realName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.gender != null">
+				gender = #{record.gender,jdbcType=INTEGER},
+			</if>
+			<if test="record.nickName != null">
+				nick_name = #{record.nickName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.identityCard != null">
+				identity_card = #{record.identityCard,jdbcType=VARCHAR},
+			</if>
+			<if test="record.phoneNo != null">
+				phone_no = #{record.phoneNo,jdbcType=VARCHAR},
+			</if>
+			<if test="record.email != null">
+				email = #{record.email,jdbcType=VARCHAR},
+			</if>
+			<if test="record.createUser != null">
+				create_user = #{record.createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="record.createTime != null">
+				create_time = #{record.createTime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.updateTime != null">
+				update_time = #{record.updateTime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.memberType != null">
+				member_type = #{record.memberType,jdbcType=INTEGER},
+			</if>
+			<if test="record.orgId != null">
+				org_id = #{record.orgId,jdbcType=INTEGER},
+			</if>
+			<if test="record.userId != null">
+				user_id = #{record.userId,jdbcType=INTEGER},
+			</if>
+			<if test="record.empId != null">
+				emp_id = #{record.empId,jdbcType=INTEGER},
+			</if>
+			<if test="record.docId != null">
+				doc_id = #{record.docId,jdbcType=INTEGER},
+			</if>
+			<if test="record.status != null">
+				status = #{record.status,jdbcType=INTEGER},
+			</if>
+			<if test="record.remark != null">
+				remark = #{record.remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update member
+		set member_id = #{record.memberId,jdbcType=INTEGER},
+		head_pic = #{record.headPic,jdbcType=VARCHAR},
+		real_name = #{record.realName,jdbcType=VARCHAR},
+		gender = #{record.gender,jdbcType=INTEGER},
+		nick_name = #{record.nickName,jdbcType=VARCHAR},
+		identity_card = #{record.identityCard,jdbcType=VARCHAR},
+		phone_no = #{record.phoneNo,jdbcType=VARCHAR},
+		email = #{record.email,jdbcType=VARCHAR},
+		create_user = #{record.createUser,jdbcType=VARCHAR},
+		create_time = #{record.createTime,jdbcType=VARCHAR},
+		update_time = #{record.updateTime,jdbcType=VARCHAR},
+		member_type = #{record.memberType,jdbcType=INTEGER},
+		org_id = #{record.orgId,jdbcType=INTEGER},
+		user_id = #{record.userId,jdbcType=INTEGER},
+		emp_id = #{record.empId,jdbcType=INTEGER},
+		doc_id = #{record.docId,jdbcType=INTEGER},
+		status = #{record.status,jdbcType=INTEGER},
+		remark = #{record.remark,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.iHealthCloud.entity.Member">
+		update member
+		<set>
+			<if test="headPic != null">
+				head_pic = #{headPic,jdbcType=VARCHAR},
+			</if>
+			<if test="realName != null">
+				real_name = #{realName,jdbcType=VARCHAR},
+			</if>
+			<if test="gender != null">
+				gender = #{gender,jdbcType=INTEGER},
+			</if>
+			<if test="nickName != null">
+				nick_name = #{nickName,jdbcType=VARCHAR},
+			</if>
+			<if test="identityCard != null">
+				identity_card = #{identityCard,jdbcType=VARCHAR},
+			</if>
+			<if test="phoneNo != null">
+				phone_no = #{phoneNo,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="createUser != null">
+				create_user = #{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=VARCHAR},
+			</if>
+			<if test="memberType != null">
+				member_type = #{memberType,jdbcType=INTEGER},
+			</if>
+			<if test="orgId != null">
+				org_id = #{orgId,jdbcType=INTEGER},
+			</if>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=INTEGER},
+			</if>
+			<if test="empId != null">
+				emp_id = #{empId,jdbcType=INTEGER},
+			</if>
+			<if test="docId != null">
+				doc_id = #{docId,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where member_id = #{memberId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.yhcrt.iHealthCloud.entity.Member">
+		update member
+		set head_pic = #{headPic,jdbcType=VARCHAR},
+		real_name = #{realName,jdbcType=VARCHAR},
+		gender = #{gender,jdbcType=INTEGER},
+		nick_name = #{nickName,jdbcType=VARCHAR},
+		identity_card = #{identityCard,jdbcType=VARCHAR},
+		phone_no = #{phoneNo,jdbcType=VARCHAR},
+		email = #{email,jdbcType=VARCHAR},
+		create_user = #{createUser,jdbcType=VARCHAR},
+		create_time = #{createTime,jdbcType=VARCHAR},
+		update_time = #{updateTime,jdbcType=VARCHAR},
+		member_type = #{memberType,jdbcType=INTEGER},
+		org_id = #{orgId,jdbcType=INTEGER},
+		user_id = #{userId,jdbcType=INTEGER},
+		emp_id = #{empId,jdbcType=INTEGER},
+		doc_id = #{docId,jdbcType=INTEGER},
+		status = #{status,jdbcType=INTEGER},
+		remark = #{remark,jdbcType=VARCHAR}
+		where member_id = #{memberId,jdbcType=INTEGER}
+	</update>
+	
+	<update id="setProfilePhotoByUserId">
+		update member set head_pic = #{profilePhotoUrl,jdbcType=VARCHAR} where user_id = #{userId,jdbcType=VARCHAR}
+	</update>
+</mapper>

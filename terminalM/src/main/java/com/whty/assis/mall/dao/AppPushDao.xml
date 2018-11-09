@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.mall.dao.AppPushDao">
+
+	<resultMap type="com.whty.assis.mall.model.AppPush" id="AppPushResult">
+		<result property="id" column="id" />
+		<result property="appId" column="app_id" />
+		<result property="creator" column="creator" />
+		<result property="creatorName" column="creator_name" />
+		<result property="appName" column="app_name" />
+		<result property="pushTime" column="push_time" />
+		<result property="creatorName" column="creator_name" />
+		<result property="pushDeviceNum" column="push_device_num" />
+		<result property="pushSuccessNum" column="push_success_num" />
+		<result property="pushFailNum" column="push_fail_num" />
+		<result property="provinceCode" column="province_code" />
+		<result property="cityCode" column="city_code" />
+		<result property="areaCode" column="area_code" />
+		<result property="schoolId" column="school_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		
+		<result property="pushDeviceNum" column="push_device_num" />
+		<result property="pushDeviceQuan" column="push_device_quan" />
+		
+		<result property="deleteStatus" column="delete_status" />
+		
+		<result property="schoolName" column="school_name" />
+		<result property="className" column="class_name" />
+		<result property="provinceName" column="province_name" />
+		<result property="cityName" column="city_name" />
+		<result property="areaName" column="area_name" />
+		
+		<result property="appVersion" column="app_version" />
+	</resultMap>
+	
+	<delete id="deleteById" parameterType="int">
+		update t_app_push set delete_status=0 where id=#{_parameter}
+	</delete>
+	
+	<select id="loadById"  parameterType="int" resultMap="AppPushResult">
+		select t7.name as school_name, t8.class_name as class_name,t4.area_name as province_name,t5.area_name as city_name,t6.area_code as area_name, t1.*,t2.user_name as creator_name,t3.name as app_name,(select count(*) from t_app_push_log where app_push_id = t1.id) as push_device_num from 
+		t_app_push t1 left join ta_manage_user_info t2 on t1.creator=t2.id left join t_app_info t3 on t1.app_id = t3.id
+   left join ta_area t4 on t1.province_code = t4.area_code left join ta_area t5 on t1.city_code = t5.area_code left join ta_area t6 on t1.area_code = t6.area_code
+	 left join t_school t7 on t1.school_id = t7.id left join t_school_class t8 on t1.class_id = t8.id	
+    where 1=1 and t1.delete_status=1 and t1.id = #{_parameter}
+	</select>
+	
+	<insert id="save" parameterType="com.whty.assis.mall.model.AppPush">
+		insert into t_app_push(
+			app_id,
+			creator,
+			update_time,
+			<if test="provinceCode != null and provinceCode != ''">province_code,</if>
+			<if test="cityCode != null and cityCode != ''">city_code,</if>
+			<if test="areaCode != null and areaCode != ''">area_code,</if>
+			<if test="schoolId != null and schoolId != ''">school_id,</if>
+			<if test="classId != null and classId != ''">class_id,</if>
+			create_time
+			) values (
+				#{appId},
+				#{creator},
+				#{updateTime},
+				<if test="provinceCode != null and provinceCode != ''">#{provinceCode},</if>
+				<if test="cityCode != null and cityCode != ''">#{cityCode},</if>
+				<if test="areaCode != null and areaCode != ''">#{areaCode},</if>
+				<if test="schoolId != null and schoolId != ''">#{schoolId},</if>
+				<if test="classId != null and classId != ''">#{classId},</if>
+				#{createTime}
+			)
+	</insert>
+	
+	<select id="listByCondition" parameterType="map" resultMap="AppPushResult">
+		select t7.name as school_name, t8.class_name as class_name,t4.area_name as province_name,t5.area_name as city_name,t6.area_code as area_name, t1.*,t2.user_name as creator_name,t3.version as app_version,t3.name as app_name,(select count(*) from t_app_push_log where app_push_id = t1.id) as push_device_num,
+(select count(*) from (select device_id,app_push_id from t_app_push_log group by device_id) app_push_log where app_push_log.app_push_id = t1.id) as push_device_quan from 
+		t_app_push t1 left join ta_manage_user_info t2 on t1.creator=t2.id left join t_app_info t3 on t1.app_id = t3.id
+   left join ta_area t4 on t1.province_code = t4.area_code left join ta_area t5 on t1.city_code = t5.area_code left join ta_area t6 on t1.area_code = t6.area_code
+	 left join t_school t7 on t1.school_id = t7.id left join t_school_class t8 on t1.class_id = t8.id	
+    where 1=1 and t1.delete_status=1
+    <if test="appName != null and appName !='' ">and t3.name like CONCAT(#{appName},'%')</if>
+  	<if test="pushStartTime != null and pushStartTime != ''">and t1.push_time>= #{pushStartTime}</if>
+	<if test="pushEndTime != null and pushEndTime != ''"><![CDATA[and t1.push_time <= #{pushEndTime} ]]></if>
+    order by t1.create_time desc
+	</select>
+	
+	<update id="update" parameterType="com.whty.assis.mall.model.AppInfo">
+		update t_app_push
+		set 
+		<trim prefixOverrides=",">
+			<if test="provinceCode != null and provinceCode !='' ">, province_code=#{provinceCode}</if>
+			<if test="cityCode != null and cityCode != ''">, city_code=#{cityCode}</if>
+			<if test="areaCode != null and areaCode != ''">, area_code=#{areaCode}</if>
+			<if test="pushTime != null ">, push_time= #{pushTime} </if>
+			<if test="updateTime != null ">, update_time= #{updateTime} </if>
+			<if test="status != null ">, status= #{status} </if>
+		</trim>
+		where id=#{id}
+	</update>
+	
+</mapper>

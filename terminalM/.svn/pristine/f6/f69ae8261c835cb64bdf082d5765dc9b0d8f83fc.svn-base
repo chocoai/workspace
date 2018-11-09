@@ -1,0 +1,20 @@
+/**
+ * 
+ */
+package com.whty.assis.devicemanage.dao;
+
+import com.whty.assis.base.dao.IBaseDao;
+import com.whty.assis.devicemanage.model.UrlBlackList;
+
+/**
+ * @author zhangzheng
+ * @date   2018年4月21日
+ */
+public interface UrlBlackListDao extends IBaseDao<UrlBlackList>{
+
+	/**
+	 * @param id
+	 */
+	void deleteByRuleId(Integer id);
+
+}

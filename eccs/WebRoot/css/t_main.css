@@ -1,0 +1,15 @@
+@charset "utf-8";
+
+.t_sub_excel,.t_sub_stamp,.t_sub_cancel,.t_sub_delete,.t_sub_adds{ float: left; width:100px; height:30px; line-height:30px; margin-top:5px; margin-bottom:5px; margin-right:10px;  font-family:"新宋体";color:#000200; text-align: center; text-indent:15px; border:1px solid #ccc; display:block;cursor:pointer;}
+.t_sub_excel:hover,.t_sub_stamp:hover,.t_sub_cancel:hover,.t_sub_delete:hover,.t_sub_adds:hover{ cursor:pointer;border:1px solid #9bcfff;}
+/*导出excel*/
+.t_sub_excel{ background: url(../images/t_excel.png) no-repeat 5px 5px #f8f8f8;}
+/*打印*/
+.t_sub_stamp{ background: url(../images/t_stamp.png) no-repeat 5px 5px #f8f8f8;}
+/*作废*/
+.t_sub_cancel{ background: url(../images/t_cancel.png) no-repeat 5px 5px #f8f8f8;}
+/*删除附件*/
+.t_sub_delete{ background: url(../images/t_delete.png) no-repeat 5px 5px #f8f8f8;}
+/*添加附件*/
+.t_sub_adds{ background: url(../images/t_adds.png) no-repeat 5px 5px #f8f8f8;}
+

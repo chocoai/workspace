@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ComRecordMapper">
+  <resultMap id="BaseResultMap" type="ComRecord">
+    <id column="CID" jdbcType="INTEGER" property="cid" />
+    <result column="PROJECT_CID" jdbcType="INTEGER" property="projectCid" />
+    <result column="RECORD_HOLDER" jdbcType="VARCHAR" property="recordHolder" />
+    <result column="RECORD_SCORE" jdbcType="VARCHAR" property="recordScore" />
+    <result column="RECORD_CREATETIME" jdbcType="VARCHAR" property="recordCreatetime" />
+    <result column="VERSION_NUM" jdbcType="INTEGER" property="versionNum" />
+    <result column="ORDER_NUM" jdbcType="INTEGER" property="orderNum" />
+    <result column="PRE_CID" jdbcType="INTEGER" property="preCid" />
+    <result column="BACKUP" jdbcType="VARCHAR" property="backup" />
+    <result column="CREA_REN" jdbcType="VARCHAR" property="creaRen"/>
+    <result column="CREA_TIME" jdbcType="VARCHAR" property="creaTime"/>
+    <result column="EXP1" jdbcType="INTEGER" property="exp1" />
+    <result column="EXP2" jdbcType="INTEGER" property="exp2" />
+    <result column="EXP3" jdbcType="VARCHAR" property="exp3" />
+    <result column="EXP4" jdbcType="VARCHAR" property="exp4" />
+    <result column="EXP5" jdbcType="VARCHAR" property="exp5" />
+    <result column="EXP6" jdbcType="VARCHAR" property="exp6" />
+    <association property="projectManager" column="PROJECT_CID" javaType="ProjectManager">
+		<id column="CID" property="cid"/>
+		<result column="PROJECT_NAME" property="projectName"/>
+		<result column="RESULT_TYPE" property="resultType"/>
+		<result column="RESULT_UNIT" property="resultUnit"/>
+		<result column="P_CID" property="pCid"/>
+	</association>
+  </resultMap>
+  
+  <!-- 查询数量 -->
+  <select id="queryCountByCid" parameterType="Integer" resultType="Integer">
+    SELECT 
+    	count(0) 
+    FROM 
+		COM_RECORD C 
+	WHERE
+	    c.PROJECT_CID=#{projectCid} 
+	    and C.VERSION_NUM=0 
+  </select>
+  
+  
+  <!-- 查询全部竞赛记录 -->
+  <select id="queryAll" parameterType="ComRecord" resultMap="BaseResultMap">
+    SELECT 
+    	C.CID ,
+    	C.PROJECT_CID,
+    	P.PROJECT_NAME,
+    	P.RESULT_TYPE,
+    	P.RESULT_UNIT,
+    	P.P_CID,
+		C.RECORD_HOLDER,
+		C.RECORD_SCORE,
+		C.RECORD_CREATETIME,
+		C.ORDER_NUM ,
+		C.BACKUP ,
+		C.VERSION_NUM ,
+		C.PRE_CID
+    FROM 
+		COM_RECORD C, 
+		PROJECT_MANAGER P  
+	WHERE
+	    1=1 
+		AND C.PROJECT_CID=p.CID 
+		<if test="projectCid!=null and projectCid!=''">
+			AND c.PROJECT_CID=#{projectCid} 
+		</if>
+		<if test="versionNum!=null">
+			AND	C.VERSION_NUM=#{versionNum} 
+		</if>
+		order by c.CREA_TIME DESC
+  </select>
+  
+  <!-- 查询单条竞赛记录 -->
+  <select id="queryByCid" parameterType="Integer" resultMap="BaseResultMap">
+    SELECT 
+    	C.CID ,
+    	C.PROJECT_CID,
+    	P.PROJECT_NAME,
+    	P.RESULT_TYPE,
+    	P.RESULT_UNIT,
+		C.RECORD_HOLDER,
+		C.RECORD_SCORE,
+		C.RECORD_CREATETIME,
+		C.ORDER_NUM ,
+		C.BACKUP ,
+		C.VERSION_NUM ,
+		C.PRE_CID
+    FROM 
+		COM_RECORD C, 
+		PROJECT_MANAGER P  
+	WHERE
+	    c.cid= #{cid} 
+		AND C.PROJECT_CID=p.CID 
+		AND	C.VERSION_NUM=0
+  </select>
+  
+  <!-- 查询单条竞赛记录 -->
+  <select id="queryByProjectCid" parameterType="Integer" resultMap="BaseResultMap">
+    SELECT 
+    	C.CID ,
+    	C.PROJECT_CID,
+    	P.PROJECT_NAME,
+    	P.RESULT_TYPE,
+    	P.RESULT_UNIT,
+		C.RECORD_HOLDER,
+		C.RECORD_SCORE,
+		C.RECORD_CREATETIME,
+		C.ORDER_NUM ,
+		C.BACKUP ,
+		C.VERSION_NUM ,
+		C.PRE_CID
+    FROM 
+		COM_RECORD C, 
+		PROJECT_MANAGER P  
+	WHERE
+	    c.project_cid= #{projectCid} 
+		AND C.PROJECT_CID=p.CID 
+		AND	C.VERSION_NUM=0
+  </select>
+  
+  <!-- 修改记录信息 -->
+  <update id="updateInfo" parameterType="ComRecord">
+	update COM_RECORD set 
+		RECORD_SCORE		= #{recordScore},
+		RECORD_CREATETIME	= #{recordCreatetime},
+		BACKUP				= #{backup},
+		<if test="versionNum!=null">
+			version_num			= #{versionNum},
+		</if>
+		<if test="preCid!=null">
+			pre_cid				= #{preCid},
+		</if>
+		<if test="creaRen!=null">
+			crea_ren			= #{creaRen},
+		</if>
+		<if test="creaTime!=null">
+			crea_time				= #{creaTime},
+		</if>
+		RECORD_HOLDER		= #{recordHolder}
+	where CID=#{cid}		
+  </update>
+  
+  <!-- 新增记录信息 -->
+  <update id="insertNewInfo" parameterType="ComRecord">
+	INSERT INTO COM_RECORD (
+    	CID,
+		PROJECT_CID,
+		RECORD_HOLDER,
+		RECORD_SCORE,
+		RECORD_CREATETIME,
+		CREA_REN,
+		CREA_TIME,
+		BACKUP,
+		VERSION_NUM,
+		PRE_CID
+    ) VALUES (
+		#{cid},
+		#{projectCid},
+		#{recordHolder},
+		#{recordScore},
+		#{recordCreatetime},
+		#{creaRen},
+		#{creaTime},
+		#{backup},
+		#{versionNum},
+		#{preCid}
+	)		
+  </update>
+  
+  <!-- 删除竞赛记录信息 -->
+  <insert id="deleteInfoByCid"  parameterType="Integer">
+     delete from 
+     	COM_RECORD 
+     where 
+     	cid 
+     in 
+     	<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+  </insert>
+</mapper>

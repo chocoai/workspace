@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ThreeListDetailMapper">
+  <resultMap id="BaseResultMap" type="ThreeListDetail">
+    <result column="CID" jdbcType="VARCHAR" property="unitCid" />
+    <result column="UNIT_NAME" jdbcType="VARCHAR" property="unitName" />
+    <result column="PROJECT_TYPE" jdbcType="VARCHAR" property="classCid" />
+    <result column="CLASSIFY_NAME" jdbcType="VARCHAR" property="className" />
+    <result column="GOLD" jdbcType="VARCHAR" property="gold" />
+    <result column="SILVER" jdbcType="VARCHAR" property="silver" />
+    <result column="COPPER" jdbcType="VARCHAR" property="copper" />
+    <result column="INTRGRAL" jdbcType="VARCHAR" property="intrgral" />
+    <result column="TOTAL" jdbcType="VARCHAR" property="total" />
+  </resultMap>
+  
+  <!-- 参赛明细 -->
+  <sql id="Base_Column_detail">
+		select `v`.`UNIT_CID` AS `CID`,`v`.`UNIT_NAME` AS `UNIT_NAME`,`v`.`PROJECT_TYPE` AS `PROJECT_TYPE`,`v`.`CLASSIFY_NAME` AS `CLASSIFY_NAME`,
+		convert(sum(`v`.`INTRGRAL`) ,decimal(10,2)) AS `INTRGRAL`,
+		convert(sum((case when (`v`.`MEDAL` = '0') then `v`.`MEDAL_NUM` else 0 end)) ,decimal(10,2))  AS `GOLD`,
+		convert(sum((case when (`v`.`MEDAL` = '1') then `v`.`MEDAL_NUM` else 0 end)),decimal(10,2))  AS `SILVER`,
+		convert(sum((case when (`v`.`MEDAL` = '2') then `v`.`MEDAL_NUM` else 0 end)) ,decimal(10,2))  AS `BRONZE` 
+		from (
+		select distinct `v1`.`INTRGRAL` AS `INTRGRAL`,`v1`.`MEDAL` AS `MEDAL`,`v1`.`MEDAL_NUM` AS `MEDAL_NUM`,
+				`v1`.`PROJECT_TYPE` AS `PROJECT_TYPE`,`v1`.`CLASSIFY_NAME` AS `CLASSIFY_NAME`,
+				`v1`.`UNIT_CID` AS `UNIT_CID`,`v1`.`UNIT_NAME` AS `UNIT_NAME`,`v1`.`ISCOMBINATION_TEAM` AS `ISCOMBINATION_TEAM`,
+				`v1`.`ISINDIVIDUAL` AS `ISINDIVIDUAL`,`v1`.`UNIT_NUM` AS `UNIT_NUM`,`v1`.`ATHLETE_NUM` AS `ATHLETE_NUM`,`v1`.`CID` AS `CID` 
+			from `syh`.`view_particpat_basic` `v1`
+			where (`v1`.`ATHLETES_TYPE` = #{type,jdbcType=INTEGER}) AND (`v1`.`ERSION_NUM` = #{ersionNum,jdbcType=INTEGER})
+  </sql>
+  <sql id="order_all">
+   		<!-- 排序：金银铜、奖牌、总分 -->
+   		<if test="order ==0">
+			 ORDER BY f.PROJECT_TYPE, f.`GOLD` DESC,f.`SILVER` DESC,f.`COPPER` DESC,f.`TOTAL` DESC,f.`INTRGRAL` DESC
+		</if>
+   		<!-- 排序：奖牌、金银铜、总分 -->
+   		<if test="order ==1">
+			 ORDER BY f.PROJECT_TYPE, f.`TOTAL` DESC,f.`GOLD` DESC,f.`SILVER` DESC,f.`COPPER` DESC,f.`INTRGRAL` DESC
+		</if>
+   		<!-- 排序：总分、金银铜、奖牌 -->
+   		<if test="order ==2">
+			 ORDER BY f.PROJECT_TYPE, f.`INTRGRAL` DESC,f.`GOLD` DESC,f.`SILVER` DESC,f.`COPPER` DESC,f.`TOTAL` DESC
+		</if>
+  </sql>
+  <!-- 三榜明细  -->
+  <select id="queryThreeListDetail" parameterType="java.lang.Integer" resultMap="BaseResultMap">		
+		select f.* from (
+			select `v`.`CID` AS `CID`,
+			`v`.`UNIT_NAME` AS `UNIT_NAME`,
+			`v`.`PROJECT_TYPE` AS `PROJECT_TYPE`,
+			`v`.`CLASSIFY_NAME` AS `CLASSIFY_NAME`,
+			sum(`v`.`INTRGRAL`) AS `INTRGRAL`,
+			sum(`v`.`GOLD`) AS `GOLD`,
+			sum(`v`.`SILVER`) AS `SILVER`,
+			sum(`v`.`BRONZE`) AS `COPPER`,(sum(`v`.`GOLD`) + sum(`v`.`SILVER`) + sum(`v`.`BRONZE`)) AS `TOTAL` from 
+			(
+			<include refid="Base_Column_detail" />  and `v1`.`ATHLETE_NUM` = 1) `v` group by `v`.`PROJECT_TYPE`,`v`.`UNIT_NAME`
+			union 
+			<include refid="Base_Column_detail" />  and (`v1`.`ATHLETE_NUM` > 1) and (`v1`.`UNIT_NUM` = 1)) `v` group by `v`.`PROJECT_TYPE`,`v`.`UNIT_NAME`
+			union 
+			<include refid="Base_Column_detail" /> and (`v1`.`ATHLETE_NUM` > 1)  and (`v1`.`ATHLETE_NUM` > 1) and (`v1`.`UNIT_NUM` > 1)) `v` group by `v`.`PROJECT_TYPE`,`v`.`UNIT_NAME`
+			) `v` group by  `v`.`PROJECT_TYPE`,`v`.`CID` 
+		) f 
+		<include refid="order_all" />
+   </select>
+</mapper>

@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>富文本编辑器</title>
+<link href="css/style.css" rel="stylesheet" type="text/css"></link>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script charset="utf-8" src="js/kindeditor-4.1.10/kindeditor.js"></script>
+<link rel="stylesheet" href="js/kindeditor-4.1.10/themes/default/default.css" />
+<link rel="stylesheet" href="js/kindeditor-4.1.10/plugins/code/prettify.css" />
+<script charset="utf-8" src="js/kindeditor-4.1.10/lang/zh_CN.js"></script>
+<script charset="utf-8" src="js/kindeditor-4.1.10/plugins/code/prettify.js"></script>
+<script type="text/javascript">
+	
+</script>
+</head>
+<body>
+	<div class="editor">
+      	<textarea name="content1"
+		style="width: 530px; height: 300px; visibility: hidden;"></textarea>
+	</div>
+	
+<script type="text/javascript">
+KindEditor.ready(function(K) {
+	var editor1 = K.create('textarea[name="content1"]', {
+		cssPath : 'js/kindeditor-4.1.10/plugins/code/prettify.css',
+		uploadJson : 'manage/message/fileUpload',
+		fileManagerJson : 'manage/message/fileManager',
+		allowFileManager : true,
+		allowImageUpload : true,
+		resizeType : 1,
+		items : [
+				'source', '|', 'undo', 'redo', '|', 'preview', 'print', 'template', 'cut', 'copy', 'paste',
+		 		'plainpaste', 'wordpaste', '|', 'justifyleft', 'justifycenter', 'justifyright',
+		 		'justifyfull', 'insertorderedlist', 'insertunorderedlist', 'indent', 'outdent', 'subscript',
+		 		'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
+		 		'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
+		 		'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image', 'multiimage',
+		 		 'table', 'hr', 'emoticons', 'baidumap', 'pagebreak',
+		 		'anchor', 'link', 'unlink'
+		 	]
+	});
+	prettyPrint();
+	
+	$("input[name='theme']").blur(function(){
+		if($(this).val().length>30){
+			$.alert("主题长度不能大于30个字！");
+		}
+	});
+	
+	$("#save").click(function(){
+		editor1.sync();
+		if(editor1.html() == ''){
+			$.alert("通知内容不能为空！");
+			return;
+		}
+		
+		var html = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">\n'+
+			'<html xmlns="http://www.w3.org/1999/xhtml">\n'+
+		'<head>\n'+
+		'<meta charset="utf-8" />\n'+
+		'</head>\n';
+		html += '<div style="word-wrap: break-word;word-break : break-all;">';
+		html += editor1.html();
+		html += '</div>';
+		
+		var theme = $("input[name='theme']").val();
+		if(theme=='' || theme==null){
+			$.alert("主题不能为空！");
+			return;
+		}else if(theme.length >30){
+			$.alert("主题长度不能大于30个字！");
+			return;
+		}
+		
+		var receivePlatformId = getCheckId();
+		var receivePlatformName = getCheckValue();
+		if(receivePlatformId == ""){
+			$.alert("请选择平台！");
+			return;
+		}
+		
+		var messageType = $("input[name='messageType']:checked").val();
+		if(messageType=='2'){
+			html += '<script language="javascript" type="text/javascript">\n'+
+			'function GetQueryString(name){\n'+
+			'     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");\n'+
+			'     var r = window.location.search.substr(1).match(reg);\n'+
+			'     if(r!=null)return  unescape(r[2]); return null;\n'+
+			'}\n'+
+			'var usid=GetQueryString("usid");\n'+
+			'var uid=GetQueryString("uid");\n'+
+			'if(usid !=null && usid.toString().length>1 && uid !=null && uid.toString().length>1){\n'+
+			'	var arr = document.getElementsByTagName("a");\n'+
+			'	for(var i=0;i<arr.length;i++){\n'+
+			'		arr[i].href+="&usid="+usid+"&uid="+uid;\n'+
+			'	}\n'+
+			'}\n'+'<\/script>';
+		}
+		
+		$(this).attr("disabled","disabled");
+		$.ajax({
+			url : "${ctx}/manage/message/sendMessage",
+			type : 'post',
+			async: false,
+			data : {
+				"html" : html,
+				"contentPath" : $("#htmlPath").val(),
+				"theme" : theme,
+				"receivePlatformId" : receivePlatformId,
+				"receivePlatformName" : receivePlatformName,
+				"messageType" : messageType
+			},
+			success : function(text) {
+				$.alert("发送成功");
+				
+				//清空内容
+				$("input[name='theme']").val('');
+				editor1.html('');
+				$("#save").removeAttr("disabled");
+				$ckAll.prop("checked",false);
+				$ckItm.prop("checked",false);
+				$("input[name='messageType']:first").attr("checked",true);
+			},
+			error : function() {
+				$.alert("发送失败");
+				$("#save").removeAttr("disabled");
+			}
+		});
+		
+	});
+	
+});
+</script>
+</body>
+</html>

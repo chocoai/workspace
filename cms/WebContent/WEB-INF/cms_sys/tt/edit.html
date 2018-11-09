@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title></title>
+<#include "/cms_sys/head.html"/>
+<script type="text/javascript">
+$(function() {
+	$("#jvForm").validate();
+});
+</script>
+</head>
+<body>
+<div class="box-positon">
+	<div class="rpos"><@s.m "global.position"/>:  <@s.m "cmsTT.function"/> - <@s.m "global.edit"/></div>
+	<form class="ropt">
+		<input type="submit" value="<@s.m "global.backToList"/>" onclick="this.form.action='v_list.do';" class="return-button"/>
+	</form>
+	<div class="clear"></div>
+</div>
+<div class="body-box">
+<@p.form id="jvForm" action="o_update.do"labelWidth="12">
+<@p.select colspan="2" label="cmsTT.type" name="typeId" value=cmsTT.type.id list=typeList listKey="id" listValue="name" required="true"/><@p.tr/>
+<@p.text colspan="2" label="cmsTT.title" name="title" value=cmsTT.title size="70" maxlength="255"/><@p.tr/>
+<@p.textarea colspan="2" label="cmsTT.description" name="description" value=cmsTT.description rows="5" cols="70" maxlength="255"/><@p.tr/>
+<@p.text colspan="1" width="50" label="cmsTT.name" name="name" value=cmsTT.name maxlength="100"/>
+<@p.text colspan="1" width="50" label="cmsTT.contact" name="contact" value=cmsTT.contact maxlength="20"/><@p.tr/>
+<@p.text colspan="2" width="50" label="cmsTT.expTime" name="expTime" value=cmsTT.expTime maxlength="100"/><@p.tr/>
+<@p.radio colspan="1" width="50" label="cmsTT.checked" name="checked" value=cmsTT.checked list={"true":"global.true","false":"global.false"}/>
+<@p.radio colspan="1" width="50" label="cmsTT.recommend" name="recommend" value=cmsTT.recommend list={"true":"global.true","false":"global.false"}/><@p.tr/>
+<@p.td colspan="2">
+<@p.hidden name="id" value=cmsTT.id/>
+<@p.submit code="global.submit"/> &nbsp; <@p.reset code="global.reset"/>
+</@p.td>
+</@p.form>
+</div>
+</body>
+</html>

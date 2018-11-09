@@ -1,0 +1,505 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.iHealthCloud.mapper.HealthRecordMapper">
+  <resultMap id="BaseResultMap" type="com.yhcrt.iHealthCloud.entity.HealthRecord">
+    <id column="record_id" jdbcType="INTEGER" property="recordId" />
+    <result column="member_id" jdbcType="VARCHAR" property="memberId" />
+    <result column="allergic_history" jdbcType="VARCHAR" property="allergicHistory" />
+    <result column="communicable_diseases" jdbcType="VARCHAR" property="communicableDiseases" />
+    <result column="inherited_diseases" jdbcType="VARCHAR" property="inheritedDiseases" />
+    <result column="disability" jdbcType="VARCHAR" property="disability" />
+    <result column="is_hypertension" jdbcType="VARCHAR" property="isHypertension" />
+    <result column="is_dm" jdbcType="VARCHAR" property="isDm" />
+    <result column="is_cahd" jdbcType="VARCHAR" property="isCahd" />
+    <result column="is_cancer" jdbcType="VARCHAR" property="isCancer" />
+    <result column="is_cerebral_apoplexy" jdbcType="VARCHAR" property="isCerebralApoplexy" />
+    <result column="is_copd" jdbcType="VARCHAR" property="isCopd" />
+    <result column="is_tuberculosis" jdbcType="VARCHAR" property="isTuberculosis" />
+    <result column="is_schizophrenia" jdbcType="VARCHAR" property="isSchizophrenia" />
+    <result column="is_hepatitis" jdbcType="VARCHAR" property="isHepatitis" />
+    <result column="is_cholesterol" jdbcType="VARCHAR" property="isCholesterol" />
+    <result column="is_hyperlipoidemia" jdbcType="VARCHAR" property="isHyperlipoidemia" />
+    <result column="is_dermatosis" jdbcType="VARCHAR" property="isDermatosis" />
+    <result column="father_disease" jdbcType="VARCHAR" property="fatherDisease" />
+    <result column="mother_disease" jdbcType="VARCHAR" property="motherDisease" />
+    <result column="sibling_disease" jdbcType="VARCHAR" property="siblingDisease" />
+    <result column="children_disease" jdbcType="VARCHAR" property="childrenDisease" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  
+  <resultMap id="extendResultMap" extends="BaseResultMap" type="com.yhcrt.iHealthCloud.entity.HealthRecord">
+  	<collection property="operations" column="record_id" select="com.yhcrt.iHealthCloud.mapper.HrOperationMapper.listByRecordId"></collection>
+  	<collection property="transfusions" column="record_id" select="com.yhcrt.iHealthCloud.mapper.HrTransfusionMapper.listByRecordId"></collection>
+  	<collection property="traumas" column="record_id" select="com.yhcrt.iHealthCloud.mapper.HrTraumaMapper.listByRecordId"></collection>
+  </resultMap>
+  
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    record_id, member_id, allergic_history, communicable_diseases, inherited_diseases, 
+    disability, is_hypertension, is_dm, is_cahd, is_cancer, is_cerebral_apoplexy, is_copd, 
+    is_tuberculosis, is_schizophrenia, is_hepatitis, is_cholesterol, is_hyperlipoidemia, 
+    is_dermatosis, father_disease, mother_disease, sibling_disease, children_disease, remark
+  </sql>
+  <select id="selectByExample" parameterType="com.yhcrt.iHealthCloud.entity.HealthRecordExample" resultMap="extendResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from health_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from health_record
+    where record_id = #{recordId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from health_record
+    where record_id = #{recordId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yhcrt.iHealthCloud.entity.HealthRecordExample">
+    delete from health_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yhcrt.iHealthCloud.entity.HealthRecord">
+    insert into health_record (record_id, member_id, allergic_history, 
+      communicable_diseases, inherited_diseases, 
+      disability, is_hypertension, is_dm, 
+      is_cahd, is_cancer, is_cerebral_apoplexy, 
+      is_copd, is_tuberculosis, is_schizophrenia, 
+      is_hepatitis, is_cholesterol, is_hyperlipoidemia, 
+      is_dermatosis, father_disease, mother_disease, 
+      sibling_disease, children_disease, remark
+      )
+    values (#{recordId,jdbcType=INTEGER}, #{memberId,jdbcType=VARCHAR}, #{allergicHistory,jdbcType=VARCHAR}, 
+      #{communicableDiseases,jdbcType=VARCHAR}, #{inheritedDiseases,jdbcType=VARCHAR}, 
+      #{disability,jdbcType=VARCHAR}, #{isHypertension,jdbcType=VARCHAR}, #{isDm,jdbcType=VARCHAR}, 
+      #{isCahd,jdbcType=VARCHAR}, #{isCancer,jdbcType=VARCHAR}, #{isCerebralApoplexy,jdbcType=VARCHAR}, 
+      #{isCopd,jdbcType=VARCHAR}, #{isTuberculosis,jdbcType=VARCHAR}, #{isSchizophrenia,jdbcType=VARCHAR}, 
+      #{isHepatitis,jdbcType=VARCHAR}, #{isCholesterol,jdbcType=VARCHAR}, #{isHyperlipoidemia,jdbcType=VARCHAR}, 
+      #{isDermatosis,jdbcType=VARCHAR}, #{fatherDisease,jdbcType=VARCHAR}, #{motherDisease,jdbcType=VARCHAR}, 
+      #{siblingDisease,jdbcType=VARCHAR}, #{childrenDisease,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yhcrt.iHealthCloud.entity.HealthRecord">
+    insert into health_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="recordId != null">
+        record_id,
+      </if>
+      <if test="memberId != null">
+        member_id,
+      </if>
+      <if test="allergicHistory != null">
+        allergic_history,
+      </if>
+      <if test="communicableDiseases != null">
+        communicable_diseases,
+      </if>
+      <if test="inheritedDiseases != null">
+        inherited_diseases,
+      </if>
+      <if test="disability != null">
+        disability,
+      </if>
+      <if test="isHypertension != null">
+        is_hypertension,
+      </if>
+      <if test="isDm != null">
+        is_dm,
+      </if>
+      <if test="isCahd != null">
+        is_cahd,
+      </if>
+      <if test="isCancer != null">
+        is_cancer,
+      </if>
+      <if test="isCerebralApoplexy != null">
+        is_cerebral_apoplexy,
+      </if>
+      <if test="isCopd != null">
+        is_copd,
+      </if>
+      <if test="isTuberculosis != null">
+        is_tuberculosis,
+      </if>
+      <if test="isSchizophrenia != null">
+        is_schizophrenia,
+      </if>
+      <if test="isHepatitis != null">
+        is_hepatitis,
+      </if>
+      <if test="isCholesterol != null">
+        is_cholesterol,
+      </if>
+      <if test="isHyperlipoidemia != null">
+        is_hyperlipoidemia,
+      </if>
+      <if test="isDermatosis != null">
+        is_dermatosis,
+      </if>
+      <if test="fatherDisease != null">
+        father_disease,
+      </if>
+      <if test="motherDisease != null">
+        mother_disease,
+      </if>
+      <if test="siblingDisease != null">
+        sibling_disease,
+      </if>
+      <if test="childrenDisease != null">
+        children_disease,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="recordId != null">
+        #{recordId,jdbcType=INTEGER},
+      </if>
+      <if test="memberId != null">
+        #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="allergicHistory != null">
+        #{allergicHistory,jdbcType=VARCHAR},
+      </if>
+      <if test="communicableDiseases != null">
+        #{communicableDiseases,jdbcType=VARCHAR},
+      </if>
+      <if test="inheritedDiseases != null">
+        #{inheritedDiseases,jdbcType=VARCHAR},
+      </if>
+      <if test="disability != null">
+        #{disability,jdbcType=VARCHAR},
+      </if>
+      <if test="isHypertension != null">
+        #{isHypertension,jdbcType=VARCHAR},
+      </if>
+      <if test="isDm != null">
+        #{isDm,jdbcType=VARCHAR},
+      </if>
+      <if test="isCahd != null">
+        #{isCahd,jdbcType=VARCHAR},
+      </if>
+      <if test="isCancer != null">
+        #{isCancer,jdbcType=VARCHAR},
+      </if>
+      <if test="isCerebralApoplexy != null">
+        #{isCerebralApoplexy,jdbcType=VARCHAR},
+      </if>
+      <if test="isCopd != null">
+        #{isCopd,jdbcType=VARCHAR},
+      </if>
+      <if test="isTuberculosis != null">
+        #{isTuberculosis,jdbcType=VARCHAR},
+      </if>
+      <if test="isSchizophrenia != null">
+        #{isSchizophrenia,jdbcType=VARCHAR},
+      </if>
+      <if test="isHepatitis != null">
+        #{isHepatitis,jdbcType=VARCHAR},
+      </if>
+      <if test="isCholesterol != null">
+        #{isCholesterol,jdbcType=VARCHAR},
+      </if>
+      <if test="isHyperlipoidemia != null">
+        #{isHyperlipoidemia,jdbcType=VARCHAR},
+      </if>
+      <if test="isDermatosis != null">
+        #{isDermatosis,jdbcType=VARCHAR},
+      </if>
+      <if test="fatherDisease != null">
+        #{fatherDisease,jdbcType=VARCHAR},
+      </if>
+      <if test="motherDisease != null">
+        #{motherDisease,jdbcType=VARCHAR},
+      </if>
+      <if test="siblingDisease != null">
+        #{siblingDisease,jdbcType=VARCHAR},
+      </if>
+      <if test="childrenDisease != null">
+        #{childrenDisease,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yhcrt.iHealthCloud.entity.HealthRecordExample" resultType="java.lang.Long">
+    select count(*) from health_record
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update health_record
+    <set>
+      <if test="record.recordId != null">
+        record_id = #{record.recordId,jdbcType=INTEGER},
+      </if>
+      <if test="record.memberId != null">
+        member_id = #{record.memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.allergicHistory != null">
+        allergic_history = #{record.allergicHistory,jdbcType=VARCHAR},
+      </if>
+      <if test="record.communicableDiseases != null">
+        communicable_diseases = #{record.communicableDiseases,jdbcType=VARCHAR},
+      </if>
+      <if test="record.inheritedDiseases != null">
+        inherited_diseases = #{record.inheritedDiseases,jdbcType=VARCHAR},
+      </if>
+      <if test="record.disability != null">
+        disability = #{record.disability,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isHypertension != null">
+        is_hypertension = #{record.isHypertension,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDm != null">
+        is_dm = #{record.isDm,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isCahd != null">
+        is_cahd = #{record.isCahd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isCancer != null">
+        is_cancer = #{record.isCancer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isCerebralApoplexy != null">
+        is_cerebral_apoplexy = #{record.isCerebralApoplexy,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isCopd != null">
+        is_copd = #{record.isCopd,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isTuberculosis != null">
+        is_tuberculosis = #{record.isTuberculosis,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isSchizophrenia != null">
+        is_schizophrenia = #{record.isSchizophrenia,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isHepatitis != null">
+        is_hepatitis = #{record.isHepatitis,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isCholesterol != null">
+        is_cholesterol = #{record.isCholesterol,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isHyperlipoidemia != null">
+        is_hyperlipoidemia = #{record.isHyperlipoidemia,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isDermatosis != null">
+        is_dermatosis = #{record.isDermatosis,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fatherDisease != null">
+        father_disease = #{record.fatherDisease,jdbcType=VARCHAR},
+      </if>
+      <if test="record.motherDisease != null">
+        mother_disease = #{record.motherDisease,jdbcType=VARCHAR},
+      </if>
+      <if test="record.siblingDisease != null">
+        sibling_disease = #{record.siblingDisease,jdbcType=VARCHAR},
+      </if>
+      <if test="record.childrenDisease != null">
+        children_disease = #{record.childrenDisease,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update health_record
+    set record_id = #{record.recordId,jdbcType=INTEGER},
+      member_id = #{record.memberId,jdbcType=VARCHAR},
+      allergic_history = #{record.allergicHistory,jdbcType=VARCHAR},
+      communicable_diseases = #{record.communicableDiseases,jdbcType=VARCHAR},
+      inherited_diseases = #{record.inheritedDiseases,jdbcType=VARCHAR},
+      disability = #{record.disability,jdbcType=VARCHAR},
+      is_hypertension = #{record.isHypertension,jdbcType=VARCHAR},
+      is_dm = #{record.isDm,jdbcType=VARCHAR},
+      is_cahd = #{record.isCahd,jdbcType=VARCHAR},
+      is_cancer = #{record.isCancer,jdbcType=VARCHAR},
+      is_cerebral_apoplexy = #{record.isCerebralApoplexy,jdbcType=VARCHAR},
+      is_copd = #{record.isCopd,jdbcType=VARCHAR},
+      is_tuberculosis = #{record.isTuberculosis,jdbcType=VARCHAR},
+      is_schizophrenia = #{record.isSchizophrenia,jdbcType=VARCHAR},
+      is_hepatitis = #{record.isHepatitis,jdbcType=VARCHAR},
+      is_cholesterol = #{record.isCholesterol,jdbcType=VARCHAR},
+      is_hyperlipoidemia = #{record.isHyperlipoidemia,jdbcType=VARCHAR},
+      is_dermatosis = #{record.isDermatosis,jdbcType=VARCHAR},
+      father_disease = #{record.fatherDisease,jdbcType=VARCHAR},
+      mother_disease = #{record.motherDisease,jdbcType=VARCHAR},
+      sibling_disease = #{record.siblingDisease,jdbcType=VARCHAR},
+      children_disease = #{record.childrenDisease,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.iHealthCloud.entity.HealthRecord">
+    update health_record
+    <set>
+      <if test="memberId != null">
+        member_id = #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="allergicHistory != null">
+        allergic_history = #{allergicHistory,jdbcType=VARCHAR},
+      </if>
+      <if test="communicableDiseases != null">
+        communicable_diseases = #{communicableDiseases,jdbcType=VARCHAR},
+      </if>
+      <if test="inheritedDiseases != null">
+        inherited_diseases = #{inheritedDiseases,jdbcType=VARCHAR},
+      </if>
+      <if test="disability != null">
+        disability = #{disability,jdbcType=VARCHAR},
+      </if>
+      <if test="isHypertension != null">
+        is_hypertension = #{isHypertension,jdbcType=VARCHAR},
+      </if>
+      <if test="isDm != null">
+        is_dm = #{isDm,jdbcType=VARCHAR},
+      </if>
+      <if test="isCahd != null">
+        is_cahd = #{isCahd,jdbcType=VARCHAR},
+      </if>
+      <if test="isCancer != null">
+        is_cancer = #{isCancer,jdbcType=VARCHAR},
+      </if>
+      <if test="isCerebralApoplexy != null">
+        is_cerebral_apoplexy = #{isCerebralApoplexy,jdbcType=VARCHAR},
+      </if>
+      <if test="isCopd != null">
+        is_copd = #{isCopd,jdbcType=VARCHAR},
+      </if>
+      <if test="isTuberculosis != null">
+        is_tuberculosis = #{isTuberculosis,jdbcType=VARCHAR},
+      </if>
+      <if test="isSchizophrenia != null">
+        is_schizophrenia = #{isSchizophrenia,jdbcType=VARCHAR},
+      </if>
+      <if test="isHepatitis != null">
+        is_hepatitis = #{isHepatitis,jdbcType=VARCHAR},
+      </if>
+      <if test="isCholesterol != null">
+        is_cholesterol = #{isCholesterol,jdbcType=VARCHAR},
+      </if>
+      <if test="isHyperlipoidemia != null">
+        is_hyperlipoidemia = #{isHyperlipoidemia,jdbcType=VARCHAR},
+      </if>
+      <if test="isDermatosis != null">
+        is_dermatosis = #{isDermatosis,jdbcType=VARCHAR},
+      </if>
+      <if test="fatherDisease != null">
+        father_disease = #{fatherDisease,jdbcType=VARCHAR},
+      </if>
+      <if test="motherDisease != null">
+        mother_disease = #{motherDisease,jdbcType=VARCHAR},
+      </if>
+      <if test="siblingDisease != null">
+        sibling_disease = #{siblingDisease,jdbcType=VARCHAR},
+      </if>
+      <if test="childrenDisease != null">
+        children_disease = #{childrenDisease,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where record_id = #{recordId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yhcrt.iHealthCloud.entity.HealthRecord">
+    update health_record
+    set member_id = #{memberId,jdbcType=VARCHAR},
+      allergic_history = #{allergicHistory,jdbcType=VARCHAR},
+      communicable_diseases = #{communicableDiseases,jdbcType=VARCHAR},
+      inherited_diseases = #{inheritedDiseases,jdbcType=VARCHAR},
+      disability = #{disability,jdbcType=VARCHAR},
+      is_hypertension = #{isHypertension,jdbcType=VARCHAR},
+      is_dm = #{isDm,jdbcType=VARCHAR},
+      is_cahd = #{isCahd,jdbcType=VARCHAR},
+      is_cancer = #{isCancer,jdbcType=VARCHAR},
+      is_cerebral_apoplexy = #{isCerebralApoplexy,jdbcType=VARCHAR},
+      is_copd = #{isCopd,jdbcType=VARCHAR},
+      is_tuberculosis = #{isTuberculosis,jdbcType=VARCHAR},
+      is_schizophrenia = #{isSchizophrenia,jdbcType=VARCHAR},
+      is_hepatitis = #{isHepatitis,jdbcType=VARCHAR},
+      is_cholesterol = #{isCholesterol,jdbcType=VARCHAR},
+      is_hyperlipoidemia = #{isHyperlipoidemia,jdbcType=VARCHAR},
+      is_dermatosis = #{isDermatosis,jdbcType=VARCHAR},
+      father_disease = #{fatherDisease,jdbcType=VARCHAR},
+      mother_disease = #{motherDisease,jdbcType=VARCHAR},
+      sibling_disease = #{siblingDisease,jdbcType=VARCHAR},
+      children_disease = #{childrenDisease,jdbcType=VARCHAR},
+      remark = #{remark,jdbcType=VARCHAR}
+    where record_id = #{recordId,jdbcType=INTEGER}
+  </update>
+</mapper>

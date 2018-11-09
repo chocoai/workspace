@@ -1,0 +1,235 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title></title>
+<link href="${base}/style/upload.css" rel="stylesheet" type="text/css">
+<#include "/bbs_sys/head.html"/>
+<script src="${base}/js/jquery.js"></script>
+<script type="text/javascript">
+$.ready(function() {
+	$("#jvForm").validate();
+});
+function chkRow(i,b) {
+	$("#right-table input[rgtrow="+i+"]").each(function(){
+		$(this).attr("checked",b);
+	});
+}
+function chkCol(i,b) {
+	$("#right-table input[rgtcol="+i+"]").each(function(){
+		$(this).attr("checked",b);
+	});
+}
+</script>
+<script type="text/javascript">
+/*弹框JS内容*/
+	jQuery(document).ready(
+		function() {
+			//打开窗口
+			$('#forumImg').on('click', function(event) {
+				event.preventDefault();
+				$('#caseHistory').addClass('is-visible3');
+
+			});
+			
+			$('#delCaseHistory').on('click', function(event) {
+				event.preventDefault();
+				toDelete();
+			});
+			//关闭窗口
+			$('#caseHistory').on(
+				'click',
+				function(event) {
+					if ($(event.target).is('.close')
+							|| $(event.target).is('#caseHistory')) {
+						event.preventDefault();
+						$(this).removeClass('is-visible3');
+					}
+				});
+			//打开窗口
+			$('#addContact').on('click', function(event) {
+				event.preventDefault();
+				$('#contacts').addClass('is-visible3');
+			});
+			//关闭窗口
+			$('#contacts').on(
+				'click',
+				function(event) {
+					if ($(event.target).is('.close')
+							|| $(event.target).is('#contacts')) {
+						event.preventDefault();
+						$(this).removeClass('is-visible3');
+					}
+				});
+
+			//ESC关闭
+			$(document).keyup(function(event) {
+				if (event.which == '27') {
+					$('#caseHistory').removeClass('is-visible3');
+					$('#contacts').removeClass('is-visible3');
+				}
+			});
+	});
+		
+	function toDelete() {
+		var cIds = [];
+		$("#tbody td input[type=checkbox]").each(function() {
+			if (this.checked) {
+				cIds.push($(this).val());
+			}
+		});
+
+		$.ajax({
+			data : {
+				'cIds' : cIds.join(",")
+			},
+			type : "POST",
+			asyn : true,
+			cache : false,
+			dataType : 'json',
+			url : "deleteBliFile.htm",
+			success : function(data) {
+				if (data.result) {
+					renderTable(data.data);
+				}
+			}
+		});
+	}
+	
+	function doUpload() {
+		$('#caseHistory').removeClass('is-visible3');
+		var formData = new FormData(document.forms.namedItem("bliFileForm"));
+		var url = "${base}/admin/bbs/forum/o_Upload.do";
+		$.ajax({
+			url : url,
+			type : 'POST',
+			data : formData,
+			async : false,
+			cache : false,
+			dataType : 'json',
+			contentType : false,
+			processData : false,
+			success : function(data) {
+				if(data.status == 1){
+					$("#forumImg").val(data.imgUrl);
+					alert("上传成功");
+				}else{
+					alert("上传失败");
+				}
+				$('#fileName').val('');
+				$('#bliFile').val('');
+			}
+		});
+	}
+</script>
+</head>
+<body>
+<div class="body-box">
+<div class="rhead">
+	<div class="rpos"><@s.m "global.position"/>: 版块 - <@s.m "global.add"/></div>
+	<form class="ropt">
+		<input type="submit" value="<@s.m "global.backToList"/>" onclick="this.form.action='v_list.do';"/>
+	</form>
+	<div class="clear"></div>
+</div>
+<@p.form id="jvForm" action="o_save.do">
+<@p.text colspan="1" width="50" label="板块名称" size="25" name="title" required="true" class="required" maxlength="150"/>
+<@p.select colspan="1" width="50" label="所属分区" name="categoryId" list=categoryList listKey="id" listValue="title"/>
+<@p.tr/>
+<@p.text colspan="1" width="50" label="访问路径" name="path" required="true" class="required" maxlength="20"/>
+<@p.text colspan="1" width="50" label="keywords" name="keywords" maxlength="255" help="关键字，用于搜索引擎优化"/>
+<@p.tr/>
+<@p.textarea colspan="1" width="50" label="板块介绍" rows="4" cols="40" name="description" maxlength="255"/>
+<@p.textarea colspan="1" width="50" label="板块规则" rows="4" cols="40" name="forumRule" maxlength="255"/>
+<@p.tr/>
+<input type="hidden" name="topicLockLimit" value="0"/>
+<!-- <@p.text colspan="2" label="主题锁定时间" size="25" name="topicLockLimit" required="true" class="required digits" maxlength="10" help="单位 (天), 为0不自动锁定"/>
+<@p.tr/> -->
+<@p.td colspan="2" label="积分规则">
+	发主题：<@p.text name="pointTopic" size="10" value="5" class="required digits"/>
+&nbsp; 回复：<@p.text name="pointReply" size="10" value="0" class="required digits"/>
+&nbsp; 加精华：<@p.text name="pointPrime" size="10" value="100" class="required digits"/>
+</@p.td>
+<@p.tr/>
+<input type="hidden" name="prestigeTopic" value="0"/>
+<input type="hidden" name="prestigeReply" value="0"/>
+<input type="hidden" name="prestigePrime0" value="0"/>
+<input type="hidden" name="prestigePrime1" value="0"/>
+<input type="hidden" name="prestigePrime2" value="0"/>
+<input type="hidden" name="prestigePrime3" value="0"/>
+<!-- <@p.td colspan="2" label="威望规则">
+	发主题：<@p.text name="prestigeTopic" size="10" value="1" class="required digits"/>
+&nbsp; 回复：<@p.text name="prestigeReply" size="10" value="0" class="required digits"/>
+&nbsp; 解除精华（减威望）：<@p.text name="prestigePrime0" size="10" value="0" class="required digits"/>
+&nbsp; 加精华1：<@p.text name="prestigePrime1" size="10" value="1" class="required digits"/>
+&nbsp; 加精华2：<@p.text name="prestigePrime2" size="10" value="2" class="required digits"/>
+&nbsp; 加精华3：<@p.text name="prestigePrime3" size="10" value="3" class="required digits"/>
+</@p.td>
+<@p.tr/> -->
+<@p.text colspan="2" label="版主" name="moderators" size="40" help="如果有多个版主，每个版主之间添加英文逗号“,”，如：版主一,版主二"/>
+<@p.tr/>
+<@p.text colspan="2" label="图片" name="forumImg" id="forumImg" size="40" help="请上传板块图片"/>
+<@p.tr/>
+<@p.td colspan="2" label="权限设置">
+<table width="100%" cellspacing="1" cellpadding="1" id="right-table" class="right-table">
+<tr>
+	<td align="left">&nbsp;</td>
+	<td align="left"><input type="checkbox" id="chk-1" onclick="chkCol(1,this.checked);"/><label for="chk-1">浏览版块</label></td>
+	<td align="left"><input type="checkbox" id="chk-2" onclick="chkCol(2,this.checked);"/><label for="chk-2">发新话题</label></td>
+	<td align="left"><input type="checkbox" id="chk-3" onclick="chkCol(3,this.checked);"/><label for="chk-3">发表回复</label></td>
+</tr>
+<#list groupList as group>
+<tr>
+	<td align="left"><input type="checkbox" id="group${group_index}" onclick="chkRow(${group_index},this.checked);"/><label for="group${group_index}">${group.name}</label></td>
+	<td align="left"><input type="checkbox" rgtcol="1" rgtrow="${group_index}" name="views" value="${group.id}"/></td>
+	<td align="left"><input type="checkbox" rgtcol="2" rgtrow="${group_index}" name="topics" value="${group.id}"/></td>
+	<td align="left"><input type="checkbox" rgtcol="3" rgtrow="${group_index}" name="replies" value="${group.id}"/></td>
+</tr>
+</#list>
+</table>
+</@p.td>
+<@p.tr/>
+<@p.text colspan="1" width="50" label="外部链接" size="25" name="outerUrl" maxlength="255" help="指向外部url"/>
+<@p.text colspan="1" width="50" label="排列顺序" name="priority" value="10" required="true" class="required digits"/>
+<@p.tr/>
+<@p.td colspan="2"><@p.submit code="global.submit"/> &nbsp; <@p.reset code="global.reset"/></@p.td>
+</@p.form>
+</div>
+<div id="caseHistory" class="fjsc">
+	<div class="fjsc_box">
+		<div class="fjsc_top"></div>
+		<div class="fjsc_head">
+			<div class="fjsc_tit">栏目图片上传</div>
+			<div class="close icon-cross">X
+				
+			</div>
+		</div>
+		<div class="fjsc_con">
+			<form action="bliFileUpload.htm" method="post" name="bliFileForm" enctype="multipart/form-data">
+				<table width="410" border="0">
+					<tr>
+						<td style="width: 70px; height: 48px; text-align: right; font-size: 12px; color: #434343; padding-right: 10px;">图片名称</td>
+						<td>
+							<input type="text" name="fileName" id="fileName" placeholder="请输入栏目图片名称"
+								style="width: 320px; height: 30px; padding: 0 2px; font-size: 12px;"
+							>
+							<input type="hidden" name="path" value="forumImg"/>
+						</td>
+					</tr>
+					<tr>
+						<td style="width: 70px; height: 48px; text-align: right; font-size: 12px; color: #434343; padding-right: 0px;">图片：</td>
+						<td rowspan="2">
+							<input class="" type="file" id="bliFile" name="bliFile">
+						</td>
+					</tr>
+				</table>
+
+				<div class="qdsc_butt">
+					<a href="javascript:;" onclick="doUpload()">确定上传</a>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+</body>
+</html>

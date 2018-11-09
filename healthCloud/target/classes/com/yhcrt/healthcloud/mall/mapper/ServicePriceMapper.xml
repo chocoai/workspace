@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.healthcloud.mall.mapper.ServicePriceMapper">
+	<resultMap id="BaseResultMap" type="com.yhcrt.healthcloud.mall.entity.ServicePrice">
+		<id column="cid" jdbcType="INTEGER" property="cid" />
+		<result column="service_id" jdbcType="INTEGER" property="serviceId" />
+		<result column="price" jdbcType="DOUBLE" property="price" />
+		<result column="ori_price" jdbcType="DOUBLE" property="oriPrice" />
+		<result column="level" jdbcType="VARCHAR" property="level" />
+		<result column="unit" jdbcType="VARCHAR" property="unit" />
+		<result column="type" jdbcType="INTEGER" property="type" />
+		<result column="service_num" jdbcType="INTEGER" property="serviceNum" />
+		<result column="service_unit" jdbcType="INTEGER" property="serviceUnit" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+		<result column="desct" jdbcType="LONGVARCHAR" property="desct" />
+		
+		<result column="dict_key" jdbcType="VARCHAR" property="dictKey" />
+	</resultMap>
+	
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" separator="," close=")" >
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	
+	<sql id="Base_Column_List">
+		cid, service_id, price, ori_price, level, unit, type, service_num, service_unit, status, desct
+	</sql>
+	
+	<select id="selectByExample" parameterType="com.yhcrt.healthcloud.mall.entity.ServicePriceExample" resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from service_price
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	
+	<!-- 根据cid查询数据 -->
+	<select id="queryByServicePrice" parameterType="com.yhcrt.healthcloud.mall.entity.ServicePrice" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from service_price
+		where cid = #{cid,jdbcType=INTEGER}
+	</select>
+	
+	<!-- 根据serviceId查询价格列表 -->
+	<select id="queryPriceByServiceId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select a.*, b.dict_key
+		from service_price a 
+		left join sys_dictionary b on a.unit=b.dict_value
+		where a.service_id = #{0} and a.status = '0' and b.status = '0' 
+		order by price 
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from service_price where cid = #{cid,jdbcType=INTEGER}
+	</delete>
+	
+	<!-- 逻辑删除 -->
+	<update id="updateByCid" parameterType="com.yhcrt.healthcloud.mall.entity.ServicePrice">
+		update service_price set status = #{status} where cid = #{cid}
+	</update>
+
+	<!-- 根据cid查询需要修改的数据 -->
+	<select id="queryByCid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from service_price
+		where cid = #{0} 
+	</select>
+	
+	<!-- 修改数据 -->
+	<update id="update" parameterType="com.yhcrt.healthcloud.mall.entity.ServicePrice">
+		update service_price
+		set service_id = #{serviceId,jdbcType=INTEGER},
+		price = #{price,jdbcType=DOUBLE},
+		ori_price = #{oriPrice,jdbcType=DOUBLE},
+		level = #{level,jdbcType=VARCHAR},
+		unit = #{unit,jdbcType=VARCHAR},
+		type = #{type,jdbcType=INTEGER},
+		service_num = #{serviceNum,jdbcType=INTEGER},
+		service_unit = #{serviceUnit,jdbcType=INTEGER},
+		status = #{status,jdbcType=INTEGER},
+		desct = #{desct,jdbcType=LONGVARCHAR}
+		where cid = #{cid,jdbcType=INTEGER}
+	</update>
+	
+	<!-- 新增数据 -->
+	<insert id="insert" parameterType="com.yhcrt.healthcloud.mall.entity.ServicePrice">
+		insert into service_price (cid, service_id, price, ori_price, level, unit, type, 
+		service_num, service_unit, status, desct)
+		values (#{cid,jdbcType=INTEGER}, #{serviceId,jdbcType=INTEGER},
+		#{price,jdbcType=DOUBLE}, #{oriPrice,jdbcType=DOUBLE}, #{level,jdbcType=VARCHAR}, 
+		#{unit,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER},	#{serviceNum,jdbcType=INTEGER}, 
+		#{serviceUnit,jdbcType=INTEGER}, #{status,jdbcType=INTEGER}, #{desct,jdbcType=LONGVARCHAR})
+	</insert>
+	
+</mapper>

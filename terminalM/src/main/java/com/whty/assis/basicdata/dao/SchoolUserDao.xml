@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.basicdata.dao.SchoolUserDao">
+
+	<!-- 这里的Demo是别名，需要在mybatis-config.xml中定义，或者写类全名 -->
+	<resultMap type="com.whty.assis.basicdata.model.SchoolUser" id="SchoolUserResult">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="account"  column="account" />
+		<result property="gender" column="gender" />
+		<result property="schoolId" column="school_id" />
+		<result property="schoolName" column="school_name" />
+		<result property="userType" column="user_type" />
+		<result property="grade" column="grade" />
+		<result property="classes" column="classes" />
+		<result property="stNumber" column="st_number" />
+		<result property="areaCode" column="area_code" />
+		<result property="aamPersonId" column="aamPersonId" />		
+		<result property="provinceName" column="province_name" />
+		<result property="cityName" column="city_name" />
+		<result property="areaName" column="area_name" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	
+	<insert id="save" parameterType="com.whty.assis.basicdata.model.SchoolUser">
+		insert into t_school_user (
+			name
+			<if test="schoolId != null ">,school_id</if>
+			<if test="userType != null ">,user_type</if>
+			<if test="aamPersonId != null and aamPersonId != ''">,aam_person_id</if>
+
+			<if test="account != null and account != ''">,account</if>
+			<if test="gender != null and gender != '' ">,gender</if>
+			<if test="grade != null and grade != '' ">,grade</if>
+			<if test="stNumber != null ">,st_number</if>
+			<if test="areaCode != null and cityCode != '' " >,area_code</if>
+			<if test="createTime != null ">,create_time</if>
+			<if test="updateTime != null ">,update_time</if>
+		) values (
+			#{name}
+			<if test="schoolId != null ">,#{schoolId}</if>
+			<if test="userType != null ">,#{userType}</if>
+			<if test="aamPersonId != null and aamPersonId != ''">,#{aamPersonId}</if>
+			
+			<if test="account != null and account != ''">,#{account}</if>
+			<if test="gender != null and gender != ''">,#{gender}</if>
+			<if test="grade != null and grade != ''">,#{grade}</if>
+			<if test="stNumber != null  ">,#{stNumber}</if>
+			<if test="areaCode != null and areaCode != ''">,#{areaCode}</if>
+			<if test="createTime != null">,#{createTime}</if>
+			<if test="updateTime != null">,#{updateTime}</if>
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.whty.assis.basicdata.model.SchoolUser">
+		update t_school_user
+		set 
+		<trim prefixOverrides=",">
+			<if test="name != null ">, name=#{name}</if>
+			<if test="address != null ">, address=#{address}</if>
+			<if test="mobile != null ">, mobile=#{mobile}</if>
+			<if test="email != null ">, email=#{email}</if>
+			<if test="provinceCode != null and provinceCode != ''">, province_code=#{provinceCode}</if>
+			<if test="cityCode != null and cityCode != ''">, city_code=#{cityCode}</if>
+			<if test="areaCode != null and areaCode != ''">, area_code=#{areaCode}</if>
+			<if test="updateTime != null ">, update_time=#{updateTime}</if>
+		</trim>
+		where id=#{id}
+	</update>
+	
+	<select id="loadById" parameterType="map" resultMap="SchoolUserResult">
+	  select t1.*,t2.user_name,t3.area_name as province_name,t4.area_name as city_name,t5.area_name as area_name from t_school_user t1 left join ta_manage_user_info t2 on t1.creator=t2.id 
+  left join ta_area t3 on t1.province_code = t3.area_code 
+  left join ta_area t4 on t1.city_code = t4.area_code left join ta_area t5 on t1.area_code = t5.area_code
+  where 1=1
+		and t1.id= #{_parameter}
+	</select>
+	
+	<select id="listByCondition" parameterType="map" resultMap="SchoolUserResult">
+		select t2.name as school_name,t1.* from t_school_user t1 join t_school t2 on t2.id = t1.school_id where user_type = 0
+		<if test="areaCode!= null  and areaCode!=''">and t1.area_code=#{areaCode}</if>
+		order by t1.create_time desc
+	</select>
+	
+	<delete id="deleteById" parameterType="int" >
+		delete from t_school_user where id = #{_parameter}
+	</delete>
+	
+	<delete id="deleteBySchoolId" parameterType="int" >
+		delete from t_school_user where school_id = #{_parameter}
+	</delete>
+	
+	
+	
+	
+</mapper>

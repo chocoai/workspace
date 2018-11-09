@@ -1,0 +1,1314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="mxbj:war" />
+    </artifacts-to-build>
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" readonly="true" id="0d0a6a52-9f36-4f74-b92c-ee0e95f1c2ae" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" afterPath="$PROJECT_DIR$/target/classes/application.properties" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/comparator/ArchiveNotePageComparator.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/comparator/ArchiveNotePageComparator.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/comparator/BasePropertyComparator.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/comparator/BasePropertyComparator.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/comparator/NoteComparator.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/comparator/NoteComparator.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/controller/ApiAppDownloadController.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/controller/ApiAppDownloadController.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/controller/AppController$1.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/controller/AppController$1.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/controller/AppController.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/controller/AppController.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/controller/NoteController$1.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/controller/NoteController$1.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/controller/NoteController.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/controller/NoteController.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/controller/NoteGuidController.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/controller/NoteGuidController.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/controller/PenController.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/controller/PenController.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/controller/SubjectController.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/controller/SubjectController.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/controller/TestController.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/controller/TestController.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/controller/UserController.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/controller/UserController.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/dao/ArchiveNoteDao.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/dao/ArchiveNoteDao.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/dao/ArchiveNotePageDao.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/dao/ArchiveNotePageDao.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/dao/BasePropertyDao.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/dao/BasePropertyDao.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/dao/NoteDao.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/dao/NoteDao.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/dao/NoteGuidKeyDao.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/dao/NoteGuidKeyDao.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/dao/NoteTemplateDao.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/dao/NoteTemplateDao.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/dao/PageDao.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/dao/PageDao.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/dao/PenDao.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/dao/PenDao.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/dao/SubjectDao.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/dao/SubjectDao.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/dao/UpgradeDao.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/dao/UpgradeDao.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/dao/UserDao.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/dao/UserDao.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/model/ArchiveNote.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/model/ArchiveNote.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/model/ArchiveNotePage.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/model/ArchiveNotePage.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/model/BaseProperty.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/model/BaseProperty.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/model/Note.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/model/Note.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/model/NoteGuidKey.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/model/NoteGuidKey.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/model/NoteTemplate.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/model/NoteTemplate.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/model/Page.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/model/Page.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/model/Pen.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/model/Pen.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/model/Subject.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/model/Subject.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/model/Upgrade.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/model/Upgrade.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/model/User.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/model/User.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/model/UserConfig.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/model/UserConfig.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/model/UserPen.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/model/UserPen.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/ArchiveNoteService.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/ArchiveNoteService.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/BasePropertyService.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/BasePropertyService.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/NoteGuidKeyService.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/NoteGuidKeyService.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/NoteService.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/NoteService.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/NoteTemplateService.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/NoteTemplateService.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/PageService.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/PageService.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/PenService.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/PenService.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/SubjectService.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/SubjectService.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/UpgradeService.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/UpgradeService.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/UserService.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/UserService.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/YnoteService.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/YnoteService.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/impl/ArchiveNoteServiceImpl.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/impl/ArchiveNoteServiceImpl.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/impl/BasePropertyServiceImpl.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/impl/BasePropertyServiceImpl.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/impl/NoteGuidKeyServiceImpl.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/impl/NoteGuidKeyServiceImpl.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/impl/NoteServiceImpl$1.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/impl/NoteServiceImpl$1.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/impl/NoteServiceImpl.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/impl/NoteServiceImpl.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/impl/NoteTemplateServiceImpl.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/impl/NoteTemplateServiceImpl.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/impl/PageServiceImpl.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/impl/PageServiceImpl.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/impl/PenServiceImpl.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/impl/PenServiceImpl.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/impl/SubjectServiceImpl.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/impl/SubjectServiceImpl.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/impl/UpgradeServiceImpl.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/impl/UpgradeServiceImpl.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/impl/UserServiceImpl.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/impl/UserServiceImpl.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/impl/YnoteServiceImpl.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/service/impl/YnoteServiceImpl.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/thread/ShareToCloudThread.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/thread/ShareToCloudThread.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/thread/SpringContextUtil.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/api/thread/SpringContextUtil.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/base/controller/BaseController.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/base/controller/BaseController.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/base/dao/IBaseDao.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/base/dao/IBaseDao.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/base/exception/BusinessException.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/base/exception/BusinessException.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/base/model/BaseModel.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/base/model/BaseModel.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/base/service/BaseService.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/base/service/BaseService.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/base/service/IRedisService.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/base/service/IRedisService.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/base/service/impl/RedisServiceImpl$1.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/base/service/impl/RedisServiceImpl$1.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/base/service/impl/RedisServiceImpl$2.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/base/service/impl/RedisServiceImpl$2.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/base/service/impl/RedisServiceImpl$3.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/base/service/impl/RedisServiceImpl$3.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/base/service/impl/RedisServiceImpl$4.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/base/service/impl/RedisServiceImpl$4.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/base/service/impl/RedisServiceImpl$5.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/base/service/impl/RedisServiceImpl$5.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/base/service/impl/RedisServiceImpl.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/base/service/impl/RedisServiceImpl.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/base/utils/SysConfigUtils.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/base/utils/SysConfigUtils.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/cache/CacheBeanPostProcessor.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/cache/CacheBeanPostProcessor.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/cache/CacheInit.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/cache/CacheInit.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/constants/ActionRect.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/constants/ActionRect.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/constants/ResultConstants.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/constants/ResultConstants.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/constants/SysConstants.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/constants/SysConstants.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/constants/WebConstants.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/constants/WebConstants.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/thread/ThreadPoolFactory.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/thread/ThreadPoolFactory.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/thread/ThreadPoolManager.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/thread/ThreadPoolManager.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/thread/ThreadPoolUtils.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/thread/ThreadPoolUtils.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/BaiduBosUtils.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/BaiduBosUtils.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/BeanUtils.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/BeanUtils.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/BigDecimalUtils.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/BigDecimalUtils.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/CommonFunction.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/CommonFunction.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/CryptoServer.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/CryptoServer.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/FileUtils.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/FileUtils.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/GUIDGenerator.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/GUIDGenerator.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/HttpUtils.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/HttpUtils.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/HttpsUtil$1.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/HttpsUtil$1.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/HttpsUtil.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/HttpsUtil.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/JSONUtil$1.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/JSONUtil$1.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/JSONUtil$2.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/JSONUtil$2.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/JSONUtil.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/JSONUtil.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/JsonUtils.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/JsonUtils.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/MapUtils.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/MapUtils.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/Plupload.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/Plupload.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/RC4Utils.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/RC4Utils.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/ServiceLocator.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/ServiceLocator.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/Sha1.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/Sha1.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/SysConfigUtils.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/SysConfigUtils.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/TimeUtils.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/common/utils/TimeUtils.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/main/Application.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/main/Application.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/main/ApplicationConfig.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/main/ApplicationConfig.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/main/RedisConfig.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/main/RedisConfig.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/main/ServletInitializer.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/main/ServletInitializer.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/mxbj/page/controller/StaticPageController.class" afterPath="$PROJECT_DIR$/target/classes/com/whty/mxbj/page/controller/StaticPageController.class" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mybatis/mapper/ArchiveNoteDao.xml" afterPath="$PROJECT_DIR$/target/classes/mybatis/mapper/ArchiveNoteDao.xml" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mybatis/mapper/ArchiveNotePageDao.xml" afterPath="$PROJECT_DIR$/target/classes/mybatis/mapper/ArchiveNotePageDao.xml" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mybatis/mapper/NoteDao.xml" afterPath="$PROJECT_DIR$/target/classes/mybatis/mapper/NoteDao.xml" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mybatis/mapper/PageDao.xml" afterPath="$PROJECT_DIR$/target/classes/mybatis/mapper/PageDao.xml" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mybatis/mapper/UpgradeDao.xml" afterPath="$PROJECT_DIR$/target/classes/mybatis/mapper/UpgradeDao.xml" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mybatis/mybatis-config.xml" afterPath="$PROJECT_DIR$/target/classes/mybatis/mybatis-config.xml" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/css/public.css" afterPath="$PROJECT_DIR$/target/classes/static/css/public.css" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/jquery.artDialog.js" afterPath="$PROJECT_DIR$/target/classes/static/js/jquery.artDialog.js" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/jquery.artDialog.plugins.js" afterPath="$PROJECT_DIR$/target/classes/static/js/jquery.artDialog.plugins.js" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/down.ftl" afterPath="$PROJECT_DIR$/target/classes/templates/down.ftl" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj.war" afterPath="$PROJECT_DIR$/target/mxbj.war" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/application.properties" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/application.properties" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/comparator/ArchiveNotePageComparator.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/comparator/ArchiveNotePageComparator.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/comparator/BasePropertyComparator.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/comparator/BasePropertyComparator.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/comparator/NoteComparator.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/comparator/NoteComparator.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/controller/ApiAppDownloadController.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/controller/ApiAppDownloadController.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/controller/AppController$1.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/controller/AppController$1.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/controller/AppController.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/controller/AppController.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/controller/NoteController$1.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/controller/NoteController$1.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/controller/NoteController.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/controller/NoteController.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/controller/NoteGuidController.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/controller/NoteGuidController.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/controller/PenController.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/controller/PenController.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/controller/SubjectController.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/controller/SubjectController.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/controller/TestController.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/controller/TestController.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/controller/UserController.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/controller/UserController.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/dao/ArchiveNoteDao.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/dao/ArchiveNoteDao.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/dao/ArchiveNotePageDao.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/dao/ArchiveNotePageDao.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/dao/BasePropertyDao.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/dao/BasePropertyDao.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/dao/NoteDao.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/dao/NoteDao.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/dao/NoteGuidKeyDao.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/dao/NoteGuidKeyDao.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/dao/NoteTemplateDao.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/dao/NoteTemplateDao.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/dao/PageDao.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/dao/PageDao.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/dao/PenDao.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/dao/PenDao.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/dao/SubjectDao.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/dao/SubjectDao.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/dao/UpgradeDao.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/dao/UpgradeDao.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/dao/UserDao.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/dao/UserDao.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/model/ArchiveNote.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/model/ArchiveNote.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/model/ArchiveNotePage.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/model/ArchiveNotePage.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/model/BaseProperty.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/model/BaseProperty.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/model/Note.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/model/Note.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/model/NoteGuidKey.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/model/NoteGuidKey.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/model/NoteTemplate.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/model/NoteTemplate.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/model/Page.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/model/Page.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/model/Pen.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/model/Pen.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/model/Subject.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/model/Subject.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/model/Upgrade.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/model/Upgrade.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/model/User.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/model/User.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/model/UserConfig.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/model/UserConfig.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/model/UserPen.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/model/UserPen.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/ArchiveNoteService.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/ArchiveNoteService.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/BasePropertyService.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/BasePropertyService.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/NoteGuidKeyService.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/NoteGuidKeyService.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/NoteService.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/NoteService.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/NoteTemplateService.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/NoteTemplateService.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/PageService.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/PageService.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/PenService.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/PenService.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/SubjectService.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/SubjectService.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/UpgradeService.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/UpgradeService.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/UserService.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/UserService.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/YnoteService.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/YnoteService.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/impl/ArchiveNoteServiceImpl.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/impl/ArchiveNoteServiceImpl.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/impl/BasePropertyServiceImpl.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/impl/BasePropertyServiceImpl.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/impl/NoteGuidKeyServiceImpl.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/impl/NoteGuidKeyServiceImpl.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/impl/NoteServiceImpl$1.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/impl/NoteServiceImpl$1.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/impl/NoteServiceImpl.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/impl/NoteServiceImpl.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/impl/NoteTemplateServiceImpl.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/impl/NoteTemplateServiceImpl.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/impl/PageServiceImpl.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/impl/PageServiceImpl.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/impl/PenServiceImpl.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/impl/PenServiceImpl.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/impl/SubjectServiceImpl.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/impl/SubjectServiceImpl.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/impl/UpgradeServiceImpl.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/impl/UpgradeServiceImpl.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/impl/UserServiceImpl.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/impl/UserServiceImpl.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/impl/YnoteServiceImpl.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/service/impl/YnoteServiceImpl.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/thread/ShareToCloudThread.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/thread/ShareToCloudThread.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/thread/SpringContextUtil.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/api/thread/SpringContextUtil.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/base/controller/BaseController.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/base/controller/BaseController.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/base/dao/IBaseDao.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/base/dao/IBaseDao.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/base/exception/BusinessException.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/base/exception/BusinessException.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/base/model/BaseModel.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/base/model/BaseModel.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/base/service/BaseService.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/base/service/BaseService.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/base/service/IRedisService.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/base/service/IRedisService.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/base/service/impl/RedisServiceImpl$1.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/base/service/impl/RedisServiceImpl$1.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/base/service/impl/RedisServiceImpl$2.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/base/service/impl/RedisServiceImpl$2.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/base/service/impl/RedisServiceImpl$3.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/base/service/impl/RedisServiceImpl$3.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/base/service/impl/RedisServiceImpl$4.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/base/service/impl/RedisServiceImpl$4.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/base/service/impl/RedisServiceImpl$5.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/base/service/impl/RedisServiceImpl$5.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/base/service/impl/RedisServiceImpl.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/base/service/impl/RedisServiceImpl.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/base/utils/SysConfigUtils.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/base/utils/SysConfigUtils.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/cache/CacheBeanPostProcessor.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/cache/CacheBeanPostProcessor.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/cache/CacheInit.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/cache/CacheInit.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/constants/ActionRect.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/constants/ActionRect.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/constants/ResultConstants.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/constants/ResultConstants.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/constants/SysConstants.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/constants/SysConstants.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/constants/WebConstants.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/constants/WebConstants.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/thread/ThreadPoolFactory.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/thread/ThreadPoolFactory.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/thread/ThreadPoolManager.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/thread/ThreadPoolManager.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/thread/ThreadPoolUtils.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/thread/ThreadPoolUtils.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/BaiduBosUtils.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/BaiduBosUtils.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/BeanUtils.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/BeanUtils.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/BigDecimalUtils.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/BigDecimalUtils.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/CommonFunction.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/CommonFunction.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/CryptoServer.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/CryptoServer.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/FileUtils.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/FileUtils.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/GUIDGenerator.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/GUIDGenerator.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/HttpUtils.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/HttpUtils.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/HttpsUtil$1.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/HttpsUtil$1.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/HttpsUtil.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/HttpsUtil.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/JSONUtil$1.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/JSONUtil$1.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/JSONUtil$2.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/JSONUtil$2.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/JSONUtil.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/JSONUtil.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/JsonUtils.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/JsonUtils.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/MapUtils.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/MapUtils.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/Plupload.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/Plupload.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/RC4Utils.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/RC4Utils.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/ServiceLocator.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/ServiceLocator.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/Sha1.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/Sha1.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/SysConfigUtils.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/SysConfigUtils.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/TimeUtils.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/common/utils/TimeUtils.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/main/Application.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/main/Application.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/main/ApplicationConfig.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/main/ApplicationConfig.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/main/RedisConfig.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/main/RedisConfig.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/main/ServletInitializer.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/main/ServletInitializer.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/page/controller/StaticPageController.class" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/com/whty/mxbj/page/controller/StaticPageController.class" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/mybatis/mapper/ArchiveNoteDao.xml" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/mybatis/mapper/ArchiveNoteDao.xml" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/mybatis/mapper/ArchiveNotePageDao.xml" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/mybatis/mapper/ArchiveNotePageDao.xml" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/mybatis/mapper/NoteDao.xml" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/mybatis/mapper/NoteDao.xml" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/mybatis/mapper/PageDao.xml" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/mybatis/mapper/PageDao.xml" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/mybatis/mapper/UpgradeDao.xml" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/mybatis/mapper/UpgradeDao.xml" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/mybatis/mybatis-config.xml" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/mybatis/mybatis-config.xml" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/static/css/public.css" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/static/css/public.css" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/static/js/jquery.artDialog.js" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/static/js/jquery.artDialog.js" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/static/js/jquery.artDialog.plugins.js" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/static/js/jquery.artDialog.plugins.js" />
+      <change beforePath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/templates/down.ftl" afterPath="$PROJECT_DIR$/target/mxbj/WEB-INF/classes/templates/down.ftl" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/whty/mxbj/YnoteTest.class" afterPath="$PROJECT_DIR$/target/test-classes/com/whty/mxbj/YnoteTest.class" />
+    </list>
+    <ignored path="$PROJECT_DIR$/target/" />
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="HttpUtils.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/common/utils/HttpUtils.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="18600">
+              <caret line="769" column="0" lean-forward="false" selection-start-line="769" selection-start-column="0" selection-end-line="769" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MyMnoteController.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/page/controller/MyMnoteController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="542">
+              <caret line="620" column="7" lean-forward="false" selection-start-line="620" selection-start-column="7" selection-end-line="620" selection-end-column="7" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mnote.ftl" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/templates/myMnote/mnote.ftl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="20250">
+              <caret line="810" column="45" lean-forward="false" selection-start-line="808" selection-start-column="20" selection-end-line="810" selection-end-column="45" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>icon_checkbox</find>
+      <find>list.h</find>
+      <find>mnote.html</find>
+      <find>list.html</find>
+      <find>usesessionId</find>
+      <find>share</find>
+      <find>.html</find>
+      <find>resultPageList</find>
+      <find>maxHttpHeaderSize</find>
+      <find>8080</find>
+      <find>port</find>
+      <find>listByCondition</find>
+      <find>httputil</find>
+      <find>httpPost</find>
+      <find>httpPost(</find>
+      <find>utf-8</find>
+      <find>InputStreamReader</find>
+      <find>HttpUtils.getInstance().httpPost</find>
+      <find>JSONObject jsonObject = new JSONObject();</find>
+      <find>HttpUtils.getInstance()</find>
+      <find>response</find>
+      <find>gs_selectDropList</find>
+      <find>termList</find>
+      <find>gettaskmodel</find>
+      <find>taskList</find>
+      <find>\n</find>
+      <find>开始</find>
+      <find>input</find>
+      <find>hidden</find>
+      <find>termid</find>
+    </findStrings>
+  </component>
+  <component name="GradleLocalSettings">
+    <option name="externalProjectsViewState">
+      <projects_view />
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/mxbj/api/controller/EmailController.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/mxbj/api/vo/NoteVo.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/mxbj/api/dao/ArchiveNoteDao.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/mxbj/api/dao/NoteDao.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/mxbj/api/dao/PageDao.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/mybatis/mapper/ArchiveNoteDao.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/mybatis/mapper/NoteDao.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/mxbj/base/service/impl/RedisServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/mxbj/api/controller/NoteController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/mxbj/api/service/NoteService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/mxbj/api/dao/ArchiveNotePageDao.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/mxbj/api/service/impl/NoteServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/mybatis/mapper/ArchiveNotePageDao.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/mybatis/mapper/PageDao.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/src/main/resources/static/css/docs.css" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/mxbj/common/utils/HttpUtils.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/myMnote/mnote.ftl" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/mxbj/page/controller/MyMnoteController.java" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="localRepository" value="E:\repository" />
+        <option name="mavenHome" value="E:/apache-maven-3.5.0" />
+        <option name="userSettingsFile" value="E:\apache-maven-3.5.0\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="mxbj" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="mxbj" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Plugins" type="7aea1407:MavenProjectsStructure$PluginsNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="mxbj" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Dependencies" type="f4be9f2a:MavenProjectsStructure$DependenciesNode" />
+        </path>
+      </expand>
+      <select />
+    </treeState>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="120" />
+    <option name="y" value="27" />
+    <option name="width" value="1400" />
+    <option name="height" value="820" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="AndroidView" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="mxbj" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mxbj" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mxbj" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mxbj" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mxbj" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mxbj" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mxbj" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mxbj" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mxbj" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mxbj" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="mxbj" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mxbj" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mxbj" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="mxbj" type="462c0819:PsiDirectoryNode" />
+              <item name="api" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mxbj" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mxbj" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="mxbj" type="462c0819:PsiDirectoryNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mxbj" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mxbj" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="mxbj" type="b2602c69:ProjectViewProjectNode" />
+              <item name="mxbj" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="settings.editor.selected.configurable" value="project.propCompiler" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.15332031" />
+    <property name="project.structure.side.proportion" value="0.36732328" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\workspace\mxbj\src\main\resources\static\images\pics" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Application.Application">
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <module />
+    </configuration>
+    <configuration name="Application" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.whty.mxbj.main.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="com.whty.mxbj.main.Application" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="mxbj" />
+      <envs />
+    </configuration>
+    <configuration name="GUIDGenerator" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.whty.mxbj.common.utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="com.whty.mxbj.common.utils.GUIDGenerator" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="mxbj" />
+      <envs />
+    </configuration>
+    <configuration name="HttpUtils" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.whty.mxbj.common.utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="com.whty.mxbj.common.utils.HttpUtils" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="mxbj" />
+      <envs />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <predefined_log_file id="idea.log" enabled="true" />
+    </configuration>
+    <list size="3">
+      <item index="0" class="java.lang.String" itemvalue="Application.Application" />
+      <item index="1" class="java.lang.String" itemvalue="Application.GUIDGenerator" />
+      <item index="2" class="java.lang.String" itemvalue="Application.HttpUtils" />
+    </list>
+    <recent_temporary>
+      <list size="3">
+        <item index="0" class="java.lang.String" itemvalue="Application.Application" />
+        <item index="1" class="java.lang.String" itemvalue="Application.HttpUtils" />
+        <item index="2" class="java.lang.String" itemvalue="Application.GUIDGenerator" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration" cleanupOnStartRun="true">
+    <configuration>C:\Users\lx\AppData\Roaming\Subversion</configuration>
+    <supportedVersion>125</supportedVersion>
+  </component>
+  <component name="SvnFileUrlMappingImpl">
+    <option name="myMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="E:\workspace\mxbj" />
+          <option name="myCopyRoot" value="E:\workspace\mxbj" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+    <option name="myMoreRealMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="E:\workspace\mxbj" />
+          <option name="myCopyRoot" value="E:\workspace\mxbj" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0d0a6a52-9f36-4f74-b92c-ee0e95f1c2ae" name="Default" comment="" />
+      <created>1540803022624</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1540803022624</updated>
+      <workItem from="1540803026775" duration="4111000" />
+      <workItem from="1540860504034" duration="19418000" />
+      <workItem from="1540947980937" duration="15479000" />
+      <workItem from="1541121701615" duration="5359000" />
+      <workItem from="1541396952702" duration="3487000" />
+      <workItem from="1541466483045" duration="4323000" />
+      <workItem from="1541551379378" duration="7775000" />
+      <workItem from="1541638450448" duration="3822000" />
+      <workItem from="1541643212247" duration="17608000" />
+      <workItem from="1541725542906" duration="568000" />
+    </task>
+    <task id="LOCAL-00001" summary="添加墨香笔记和归档笔记查询">
+      <created>1540891407858</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1540891407858</updated>
+    </task>
+    <task id="LOCAL-00002" summary="添加墨香笔记和归档笔记查询">
+      <created>1541552292915</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1541552292925</updated>
+    </task>
+    <task id="LOCAL-00003" summary="添加墨香笔记和归档笔记查询">
+      <created>1541556152964</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1541556152964</updated>
+    </task>
+    <task id="LOCAL-00004" summary="添加墨香笔记和归档笔记查询">
+      <created>1541726172007</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1541726172007</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
+    <servers />
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="81950000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
+    <layout>
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32969153" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.41283125" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31241283" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.26799485" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="combo" />
+      <window_info id="设计师" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="JSF" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="调试" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="运行" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
+      <window_info id="控制板" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+    </layout>
+    <layout-to-restore>
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="true" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32969153" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="设计师" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="JSF" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.43375173" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="调试" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.31241283" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="运行" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
+      <window_info id="控制板" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.26799485" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="添加墨香笔记和归档笔记查询" />
+    <option name="LAST_COMMIT_MESSAGE" value="添加墨香笔记和归档笔记查询" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="16" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/base/exception/BusinessException.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="50">
+          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis/mapper/NoteTemplateDao.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="67">
+          <caret line="98" column="37" lean-forward="false" selection-start-line="98" selection-start-column="22" selection-end-line="98" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/api/vo/NoteVo.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/api/model/NoteTemplate.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="975">
+          <caret line="51" column="19" lean-forward="false" selection-start-line="51" selection-start-column="19" selection-end-line="51" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/base/model/BaseModel.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="10" column="29" lean-forward="false" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/com/google/code/gson/gson/2.8.0/gson-2.8.0.jar!/com/google/gson/JsonArray.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="13" column="19" lean-forward="false" selection-start-line="13" selection-start-column="19" selection-end-line="13" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/api/model/ArchiveNote.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="775">
+          <caret line="31" column="32" lean-forward="false" selection-start-line="31" selection-start-column="19" selection-end-line="31" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/api/model/Note.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5">
+          <caret line="16" column="13" lean-forward="false" selection-start-line="16" selection-start-column="13" selection-end-line="16" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/api/dao/ArchiveNoteDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="169">
+          <caret line="12" column="22" lean-forward="false" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/common/utils/CommonFunction.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="131">
+          <caret line="47" column="23" lean-forward="false" selection-start-line="47" selection-start-column="23" selection-end-line="47" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis/mapper/ArchiveNoteDao.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="391">
+          <caret line="83" column="4" lean-forward="false" selection-start-line="83" selection-start-column="4" selection-end-line="83" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/api/controller/NoteGuidController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="47" column="39" lean-forward="false" selection-start-line="47" selection-start-column="37" selection-end-line="47" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/main/RedisConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="38" column="24" lean-forward="false" selection-start-line="38" selection-start-column="11" selection-end-line="38" selection-end-column="24" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/base/service/impl/RedisServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="117">
+          <caret line="67" column="18" lean-forward="false" selection-start-line="67" selection-start-column="18" selection-end-line="67" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/base/service/IRedisService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="15" column="21" lean-forward="false" selection-start-line="15" selection-start-column="16" selection-end-line="15" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/common/cache/CacheBeanPostProcessor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/common/cache/CacheInit.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1008">
+          <caret line="18" column="13" lean-forward="false" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/common/constants/ActionRect.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="50">
+          <caret line="2" column="13" lean-forward="false" selection-start-line="2" selection-start-column="13" selection-end-line="2" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/common/constants/ResultConstants.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="230">
+          <caret line="13" column="90" lean-forward="true" selection-start-line="13" selection-start-column="90" selection-end-line="13" selection-end-column="90" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/common/thread/ThreadPoolFactory.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="6" column="13" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/common/thread/ThreadPoolManager.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-575">
+          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/common/thread/ThreadPoolUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-133">
+          <caret line="5" column="19" lean-forward="false" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/static/images/pics/edu.ico">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/static/css/index/index.scss">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/static/js/docs.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1001">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/down.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1725">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/static/css/public.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="141">
+          <caret line="299" column="14" lean-forward="false" selection-start-line="299" selection-start-column="14" selection-end-line="299" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/static/images/pics/share.png">
+      <provider selected="true" editor-type-id="images">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/api/model/BaseNote.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-125">
+          <caret line="8" column="13" lean-forward="false" selection-start-line="8" selection-start-column="13" selection-end-line="8" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/myMnote/list.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="98" column="143" lean-forward="false" selection-start-line="98" selection-start-column="48" selection-end-line="98" selection-end-column="143" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/common/utils/GUIDGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="235" column="56" lean-forward="true" selection-start-line="235" selection-start-column="33" selection-end-line="235" selection-end-column="56" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/api/dao/NoteDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="18" column="15" lean-forward="false" selection-start-line="18" selection-start-column="15" selection-end-line="18" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis/mapper/NoteDao.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="226">
+          <caret line="105" column="81" lean-forward="true" selection-start-line="103" selection-start-column="8" selection-end-line="105" selection-end-column="81" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/common/utils/NoteType.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="4" column="18" lean-forward="false" selection-start-line="4" selection-start-column="18" selection-end-line="4" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/base/dao/IBaseDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="53" column="34" lean-forward="false" selection-start-line="53" selection-start-column="19" selection-end-line="53" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/target/classes/mybatis/mapper/ArchiveNoteDao.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2051">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/target/classes/mybatis/mapper/ArchiveNotePageDao.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1408">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/api/dao/ArchiveNotePageDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="123">
+          <caret line="14" column="26" lean-forward="false" selection-start-line="14" selection-start-column="26" selection-end-line="14" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis/mapper/ArchiveNotePageDao.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="75" column="71" lean-forward="true" selection-start-line="75" selection-start-column="71" selection-end-line="75" selection-end-column="71" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/api/service/NoteService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="162">
+          <caret line="130" column="14" lean-forward="false" selection-start-line="130" selection-start-column="14" selection-end-line="130" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/api/controller/NoteController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="376">
+          <caret line="202" column="50" lean-forward="false" selection-start-line="202" selection-start-column="50" selection-end-line="202" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/api/service/impl/NoteServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="1931" column="43" lean-forward="true" selection-start-line="1931" selection-start-column="43" selection-end-line="1931" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/api/dao/PageDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="16" column="15" lean-forward="false" selection-start-line="16" selection-start-column="15" selection-end-line="16" selection-end-column="15" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis/mapper/PageDao.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="248">
+          <caret line="82" column="121" lean-forward="false" selection-start-line="82" selection-start-column="121" selection-end-line="82" selection-end-column="121" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/base/controller/BaseController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="200">
+          <caret line="15" column="28" lean-forward="false" selection-start-line="15" selection-start-column="19" selection-end-line="15" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/static/css/docs.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-11">
+          <caret line="180" column="105" lean-forward="false" selection-start-line="180" selection-start-column="105" selection-end-line="180" selection-end-column="105" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="302">
+          <caret line="53" column="31" lean-forward="true" selection-start-line="53" selection-start-column="31" selection-end-line="53" selection-end-column="31" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/common/utils/HttpUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="18600">
+          <caret line="769" column="0" lean-forward="false" selection-start-line="769" selection-start-column="0" selection-end-line="769" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/myMnote/mnote.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="20250">
+          <caret line="810" column="45" lean-forward="false" selection-start-line="808" selection-start-column="20" selection-end-line="810" selection-end-column="45" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/4.3.7.RELEASE/spring-web-4.3.7.RELEASE-sources.jar!/org/springframework/web/method/support/InvocableHandlerMethod.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="131">
+          <caret line="213" column="0" lean-forward="false" selection-start-line="213" selection-start-column="0" selection-end-line="213" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/mxbj/page/controller/MyMnoteController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="542">
+          <caret line="620" column="7" lean-forward="false" selection-start-line="620" selection-start-column="7" selection-end-line="620" selection-end-column="7" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <last-edited>mxbj:war</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>Spring</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.7</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>mxbj</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.36732328" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Maven: javax.validation:validation-api:1.1.0.Final</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.36732328" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

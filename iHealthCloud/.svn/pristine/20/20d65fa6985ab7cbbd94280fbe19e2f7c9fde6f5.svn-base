@@ -1,0 +1,445 @@
+package com.yhcrt.iHealthCloud.controller;
+
+import java.io.IOException;
+import java.util.Date;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.alibaba.fastjson.JSONObject;
+import com.yhcrt.iHealthCloud.common.Constants;
+import com.yhcrt.iHealthCloud.entity.Member;
+import com.yhcrt.iHealthCloud.entity.MemberExample;
+import com.yhcrt.iHealthCloud.entity.MemberExample.Criteria;
+import com.yhcrt.iHealthCloud.entity.MerBloodGlucose;
+import com.yhcrt.iHealthCloud.entity.MerBloodOxygen;
+import com.yhcrt.iHealthCloud.entity.MerBloodPressure;
+import com.yhcrt.iHealthCloud.entity.MerBmi;
+import com.yhcrt.iHealthCloud.entity.MerBodyFat;
+import com.yhcrt.iHealthCloud.entity.MerCholesterol;
+import com.yhcrt.iHealthCloud.entity.MerElectrocardiogram;
+import com.yhcrt.iHealthCloud.entity.MerTemperature;
+import com.yhcrt.iHealthCloud.entity.MerUricAcid;
+import com.yhcrt.iHealthCloud.entity.MerWaistHipRatio;
+import com.yhcrt.iHealthCloud.mapper.MemberMapper;
+import com.yhcrt.iHealthCloud.mapper.MerBloodGlucoseMapper;
+import com.yhcrt.iHealthCloud.mapper.MerBloodOxygenMapper;
+import com.yhcrt.iHealthCloud.mapper.MerBloodPressureMapper;
+import com.yhcrt.iHealthCloud.mapper.MerBmiMapper;
+import com.yhcrt.iHealthCloud.mapper.MerBodyFatMapper;
+import com.yhcrt.iHealthCloud.mapper.MerCholesterolMapper;
+import com.yhcrt.iHealthCloud.mapper.MerElectrocardiogramMapper;
+import com.yhcrt.iHealthCloud.mapper.MerTemperatureMapper;
+import com.yhcrt.iHealthCloud.mapper.MerUricAcidMapper;
+import com.yhcrt.iHealthCloud.mapper.MerWaistHipRatioMapper;
+import com.yhcrt.iHealthCloud.service.SysSequenceService;
+import com.yhcrt.iHealthCloud.util.Const;
+import com.yhcrt.iHealthCloud.util.DateUtils;
+
+@Controller
+public class MerController {
+	
+	@Autowired
+	private MemberMapper memberMapper;
+	@Autowired
+	private SysSequenceService sysSequenceService;
+	@Autowired
+	private MerBmiMapper merBmiMapper;	
+	@Autowired
+	private MerBodyFatMapper merBodyFatMapper ;
+	@Autowired
+	private MerBloodPressureMapper merBloodPressureMapper;
+	@Autowired
+	private MerBloodGlucoseMapper merBloodGlucoseMapper;
+	@Autowired
+	private MerUricAcidMapper merUricAcidMapper;
+	@Autowired
+	private MerCholesterolMapper merCholesterolMapper;
+	@Autowired
+	private MerBloodOxygenMapper merBloodOxygenMapper;
+	@Autowired
+	private MerTemperatureMapper merTemperatureMapper;
+	@Autowired
+	private MerElectrocardiogramMapper merElectrocardiogramMapper;
+	@Autowired
+	private MerWaistHipRatioMapper merWaistHipRatioMapper;
+	
+	@RequestMapping(value = "/member/getMemberId", method = RequestMethod.POST)
+	public void getMemberId(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) throws IOException {
+		String realName = request.getParameter("real_name");
+		String identityCard = request.getParameter("identity_card");
+		String phoneNo = request.getParameter("phoneNo");
+		JSONObject jsonObj = new JSONObject();
+		MemberExample example = new MemberExample();
+		Criteria criteria = example.createCriteria();
+		criteria.andRealNameEqualTo(realName);
+		criteria.andIdentityCardEqualTo(identityCard);
+		criteria.andPhoneNoEqualTo(phoneNo);
+		List<Member> members = memberMapper.selectByExample(example);
+		if (members.size()>0) {
+			jsonObj.put(Const.TAG_RESULT, Const.TAG_SUCCESS);
+			jsonObj.put("member_id", members.get(0).getMemberId());
+			jsonObj.put(Const.ERROR_DESC, "");
+		}else{
+			jsonObj.put(Const.TAG_RESULT, Const.TAG_FAIL);
+			jsonObj.put(Const.ERROR_DESC,  Constants.ExceptionMsg.INVALID_IMEI);
+		}
+		response.setContentType("application/json; charset=UTF-8");
+		response.getWriter().write(jsonObj.toString());
+		
+	}
+	
+	@RequestMapping(value = "/bmi/upload", method = RequestMethod.POST)
+	public void uploadBMIData(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) throws IOException{
+		String merId = request.getParameter("mer_id");
+		String height = request.getParameter("height");
+		String weight = request.getParameter("weight");
+		String bmi = request.getParameter("bmi");
+		String idealWeight = request.getParameter("ideal_weight");
+		String conclusion = request.getParameter("conclusion");
+		String advice = request.getParameter("advice");
+		JSONObject jsonObj = new JSONObject();
+		try {
+			MerBmi merBmi = new MerBmi();
+			merBmi.setCid(sysSequenceService.getSequenceValue(Constants.SequenceName.MER_BMI));
+			merBmi.setMerId(merId);
+			merBmi.setHeight(Double.parseDouble(height));
+			merBmi.setWeight(Double.parseDouble(weight));
+			merBmi.setBmi(Double.parseDouble(bmi));
+			merBmi.setIdealWeight(Double.parseDouble(idealWeight));
+			merBmi.setConclusion(conclusion);
+			merBmi.setAdvice(advice);
+			merBmi.setUploadTime(DateUtils.getCurrentTime());
+			merBmiMapper.insert(merBmi);
+			jsonObj.put(Const.TAG_RESULT, Const.TAG_SUCCESS);
+			jsonObj.put(Const.ERROR_DESC, "");
+		}catch(Exception e){
+			e.printStackTrace();
+			jsonObj.put(Const.TAG_RESULT, Const.TAG_FAIL);
+			jsonObj.put(Const.ERROR_DESC, Constants.ExceptionMsg.SERVER_ERROR);
+		} 
+		finally {
+			response.setContentType("application/json; charset=UTF-8");
+			response.getWriter().write(jsonObj.toString());
+		}
+	}
+	
+	@RequestMapping(value = "/bodyfat/upload", method = RequestMethod.POST)
+	public void uploadBodyFatData(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) throws IOException{
+		JSONObject jsonObj = new JSONObject();
+		try {
+			MerBodyFat merBodyFat = getMerBodyFat(request);
+			merBodyFatMapper.insert(merBodyFat);
+			jsonObj.put(Const.TAG_RESULT, Const.TAG_SUCCESS);
+			jsonObj.put(Const.ERROR_DESC, "");
+		}catch(Exception e){
+			e.printStackTrace();
+			jsonObj.put(Const.TAG_RESULT, Const.TAG_FAIL);
+			jsonObj.put(Const.ERROR_DESC, Constants.ExceptionMsg.SERVER_ERROR);
+		} 
+		finally {
+			response.setContentType("application/json; charset=UTF-8");
+			response.getWriter().write(jsonObj.toString());
+		}
+	}
+	
+	@RequestMapping(value = "/bp/upload", method = RequestMethod.POST)
+	public void uploadBPData(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) throws IOException{
+		JSONObject jsonObj = new JSONObject();
+		try {
+			MerBloodPressure merBloodPressure = new MerBloodPressure();
+			merBloodPressure.setCid(sysSequenceService.getSequenceValue(Constants.SequenceName.MER_BLOOD_PRESSURE));
+			merBloodPressure.setMerId(Integer.parseInt(request.getParameter("mer_id")));
+			merBloodPressure.setUploadTime(DateUtils.getCurrentTime());
+			merBloodPressure.setDataDate(new Date());
+			merBloodPressure.setSbp(Integer.parseInt(request.getParameter("sbp")));
+			merBloodPressure.setDbp(Integer.parseInt(request.getParameter("dbp")));
+			merBloodPressure.setSphygmus(Integer.parseInt(request.getParameter("sphygmus")));
+			merBloodPressure.setAdvice(request.getParameter("advice"));
+			merBloodPressure.setConclusion(request.getParameter("conclusion"));
+			merBloodPressureMapper.insert(merBloodPressure);
+			jsonObj.put(Const.TAG_RESULT, Const.TAG_SUCCESS);
+			jsonObj.put(Const.ERROR_DESC, "");
+		}catch(Exception e){
+			e.printStackTrace();
+			jsonObj.put(Const.TAG_RESULT, Const.TAG_FAIL);
+			jsonObj.put(Const.ERROR_DESC, Constants.ExceptionMsg.SERVER_ERROR);
+		} 
+		finally {
+			response.setContentType("application/json; charset=UTF-8");
+			response.getWriter().write(jsonObj.toString());
+		}
+	}
+	
+	@RequestMapping(value = "/bg/upload", method = RequestMethod.POST)
+	public void uploadBGData(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) throws IOException{
+		JSONObject jsonObj = new JSONObject();
+		try {
+			MerBloodGlucose merBloodGlucose = new MerBloodGlucose();
+			merBloodGlucose.setCid(sysSequenceService.getSequenceValue(Constants.SequenceName.MER_BLOOD_GLUCOSE));
+			merBloodGlucose.setMerId(request.getParameter("mer_id"));
+			merBloodGlucose.setDataTime(DateUtils.getCurrentDayString());
+			merBloodGlucose.setUploadTime(DateUtils.getCurrentTime());
+			merBloodGlucose.setBgType(Integer.parseInt(request.getParameter("bg_type")));
+			merBloodGlucose.setGlucoseValue(Double.parseDouble(request.getParameter("bg_value")));
+			merBloodGlucose.setAdvice(request.getParameter("advice"));
+			merBloodGlucose.setConclusion(request.getParameter("conclusion"));
+			merBloodGlucoseMapper.insert(merBloodGlucose);
+			jsonObj.put(Const.TAG_RESULT, Const.TAG_SUCCESS);
+			jsonObj.put(Const.ERROR_DESC, "");
+		}catch(Exception e){
+			e.printStackTrace();
+			jsonObj.put(Const.TAG_RESULT, Const.TAG_FAIL);
+			jsonObj.put(Const.ERROR_DESC, Constants.ExceptionMsg.SERVER_ERROR);
+		} 
+		finally {
+			response.setContentType("application/json; charset=UTF-8");
+			response.getWriter().write(jsonObj.toString());
+		}
+	}
+	
+	@RequestMapping(value = "/uricacid/upload", method = RequestMethod.POST)
+	public void uploadUricAcidData(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) throws IOException{
+		JSONObject jsonObj = new JSONObject();
+		try {
+			MerUricAcid merUricAcid = new MerUricAcid();
+			merUricAcid.setCid(sysSequenceService.getSequenceValue(Constants.SequenceName.MER_URIC_ACID));
+			merUricAcid.setMerId(request.getParameter("mer_id"));
+			merUricAcid.setUploadTime(DateUtils.getCurrentTime());
+			merUricAcid.setUaValue(Double.parseDouble(request.getParameter("ua_value")));
+			merUricAcid.setAdvice(request.getParameter("advice"));
+			merUricAcid.setConclusion(request.getParameter("conclusion"));
+			merUricAcidMapper.insert(merUricAcid);
+			jsonObj.put(Const.TAG_RESULT, Const.TAG_SUCCESS);
+			jsonObj.put(Const.ERROR_DESC, "");
+		}catch(Exception e){
+			e.printStackTrace();
+			jsonObj.put(Const.TAG_RESULT, Const.TAG_FAIL);
+			jsonObj.put(Const.ERROR_DESC, Constants.ExceptionMsg.SERVER_ERROR);
+		} 
+		finally {
+			response.setContentType("application/json; charset=UTF-8");
+			response.getWriter().write(jsonObj.toString());
+		}
+	}
+	
+	/**
+	 * 胆固醇体检数据上传
+	 * @param request
+	 * @param response
+	 * @param modelMap
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/cholesterol/upload", method = RequestMethod.POST)
+	public void uploadCholesterolData(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) throws IOException{
+		JSONObject jsonObj = new JSONObject();
+		try {
+			MerCholesterol merCholesterol = new MerCholesterol();
+			merCholesterol.setCid(sysSequenceService.getSequenceValue(Constants.SequenceName.MER_URIC_ACID));
+			merCholesterol.setMerId(request.getParameter("mer_id"));
+			merCholesterol.setUploadTime(DateUtils.getCurrentTime());
+			merCholesterol.setCholesterol(Double.parseDouble(request.getParameter("cholesterol")));
+			merCholesterol.setAdvice(request.getParameter("advice"));
+			merCholesterol.setConclusion(request.getParameter("conclusion"));
+			merCholesterolMapper.insert(merCholesterol);
+			jsonObj.put(Const.TAG_RESULT, Const.TAG_SUCCESS);
+			jsonObj.put(Const.ERROR_DESC, "");
+		}catch(Exception e){
+			e.printStackTrace();
+			jsonObj.put(Const.TAG_RESULT, Const.TAG_FAIL);
+			jsonObj.put(Const.ERROR_DESC, Constants.ExceptionMsg.SERVER_ERROR);
+		} 
+		finally {
+			response.setContentType("application/json; charset=UTF-8");
+			response.getWriter().write(jsonObj.toString());
+		}
+	}
+	
+	/**
+	 * 血氧体检数据上传
+	 * @param request
+	 * @param response
+	 * @param modelMap
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/bloodoxygen/upload", method = RequestMethod.POST)
+	public void uploadBloodOxygenData(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) throws IOException{
+		JSONObject jsonObj = new JSONObject();
+		try {
+			MerBloodOxygen merBloodOxygen = new MerBloodOxygen();
+			merBloodOxygen.setCid(sysSequenceService.getSequenceValue(Constants.SequenceName.MER_URIC_ACID));
+			merBloodOxygen.setMerId(Integer.parseInt(request.getParameter("mer_id")));
+			merBloodOxygen.setUploadTime(DateUtils.getCurrentTime());
+			merBloodOxygen.setDataTime(DateUtils.getCurrentDayString());
+			merBloodOxygen.setBoValue(Double.parseDouble(request.getParameter("bo_value")));
+			merBloodOxygen.setAdvice(request.getParameter("advice"));
+			merBloodOxygen.setConclusion(request.getParameter("conclusion"));
+			merBloodOxygenMapper.insert(merBloodOxygen);
+			jsonObj.put(Const.TAG_RESULT, Const.TAG_SUCCESS);
+			jsonObj.put(Const.ERROR_DESC, "");
+		}catch(Exception e){
+			e.printStackTrace();
+			jsonObj.put(Const.TAG_RESULT, Const.TAG_FAIL);
+			jsonObj.put(Const.ERROR_DESC, Constants.ExceptionMsg.SERVER_ERROR);
+		} 
+		finally {
+			response.setContentType("application/json; charset=UTF-8");
+			response.getWriter().write(jsonObj.toString());
+		}
+	}
+	
+	/**
+	 * 体温测量体检数据上传
+	 * @param request
+	 * @param response
+	 * @param modelMap
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/temperature/upload", method = RequestMethod.POST)
+	public void uploadTemperatureData(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) throws IOException{
+		JSONObject jsonObj = new JSONObject();
+		try {
+			MerTemperature merTemperature = new MerTemperature();
+			merTemperature.setCid(sysSequenceService.getSequenceValue(Constants.SequenceName.MER_URIC_ACID));
+			merTemperature.setMerId(Integer.parseInt(request.getParameter("mer_id")));
+			merTemperature.setUploadTime(DateUtils.getCurrentTime());
+			merTemperature.setTemperature(Double.parseDouble(request.getParameter("temperature")));;
+			merTemperature.setAdvice(request.getParameter("advice"));
+			merTemperature.setConclusion(request.getParameter("conclusion"));
+			merTemperatureMapper.insert(merTemperature);
+			jsonObj.put(Const.TAG_RESULT, Const.TAG_SUCCESS);
+			jsonObj.put(Const.ERROR_DESC, "");
+		}catch(Exception e){
+			e.printStackTrace();
+			jsonObj.put(Const.TAG_RESULT, Const.TAG_FAIL);
+			jsonObj.put(Const.ERROR_DESC, Constants.ExceptionMsg.SERVER_ERROR);
+		} 
+		finally {
+			response.setContentType("application/json; charset=UTF-8");
+			response.getWriter().write(jsonObj.toString());
+		}
+	}
+	
+	/**
+	 * 心电测量体检数据上传
+	 * @param request
+	 * @param response
+	 * @param modelMap
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/ecg/upload", method = RequestMethod.POST)
+	public void uploadEcgData(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) throws IOException{
+		JSONObject jsonObj = new JSONObject();
+		try {
+			MerElectrocardiogram merElectrocardiogram = new MerElectrocardiogram();
+			merElectrocardiogram.setCid(sysSequenceService.getSequenceValue(Constants.SequenceName.MER_URIC_ACID));
+			merElectrocardiogram.setMerId(request.getParameter("mer_id"));
+			merElectrocardiogram.setUploadTime(DateUtils.getCurrentTime());
+			merElectrocardiogram.setRateValue(Integer.parseInt(request.getParameter("rate_value")));
+			merElectrocardiogram.setElectrocardiogram(request.getParameter("electrocardiogram"));
+			merElectrocardiogram.setAdvice(request.getParameter("advice"));
+			merElectrocardiogram.setConclusion(request.getParameter("conclusion"));
+			merElectrocardiogramMapper.insert(merElectrocardiogram);
+			jsonObj.put(Const.TAG_RESULT, Const.TAG_SUCCESS);
+			jsonObj.put(Const.ERROR_DESC, "");
+		}catch(Exception e){
+			e.printStackTrace();
+			jsonObj.put(Const.TAG_RESULT, Const.TAG_FAIL);
+			jsonObj.put(Const.ERROR_DESC, Constants.ExceptionMsg.SERVER_ERROR);
+		} 
+		finally {
+			response.setContentType("application/json; charset=UTF-8");
+			response.getWriter().write(jsonObj.toString());
+		}
+	}
+	
+	/**
+	 * 腰臀比测量体检数据上传
+	 * @param request
+	 * @param response
+	 * @param modelMap
+	 * @throws IOException
+	 */
+	@RequestMapping(value = "/waisthipratio/upload", method = RequestMethod.POST)
+	public void uploadWaistHipRatioData(HttpServletRequest request, HttpServletResponse response, ModelMap modelMap) throws IOException{
+		JSONObject jsonObj = new JSONObject();
+		try {
+			MerWaistHipRatio merWaistHipRatio = new MerWaistHipRatio();
+			merWaistHipRatio.setCid(sysSequenceService.getSequenceValue(Constants.SequenceName.MER_URIC_ACID));
+			merWaistHipRatio.setMerId(Integer.parseInt(request.getParameter("mer_id")));
+			merWaistHipRatio.setUploadTime(DateUtils.getCurrentTime());
+			merWaistHipRatio.setDataDate(DateUtils.getCurrentDayString());
+			merWaistHipRatio.setWaistline(Double.parseDouble(request.getParameter("waistline")));
+			merWaistHipRatio.setHipline(Double.parseDouble(request.getParameter("hipline")));
+			merWaistHipRatio.setWaistHipRatio(Double.parseDouble(request.getParameter("waist_hip_ratio")));
+			merWaistHipRatio.setAdvice(request.getParameter("advice"));
+			merWaistHipRatio.setConclusion(request.getParameter("conclusion"));
+			merWaistHipRatioMapper.insert(merWaistHipRatio);
+			jsonObj.put(Const.TAG_RESULT, Const.TAG_SUCCESS);
+			jsonObj.put(Const.ERROR_DESC, "");
+		}catch(Exception e){
+			e.printStackTrace();
+			jsonObj.put(Const.TAG_RESULT, Const.TAG_FAIL);
+			jsonObj.put(Const.ERROR_DESC, Constants.ExceptionMsg.SERVER_ERROR);
+		} 
+		finally {
+			response.setContentType("application/json; charset=UTF-8");
+			response.getWriter().write(jsonObj.toString());
+		}
+	}
+	
+	
+	public MerBodyFat getMerBodyFat(HttpServletRequest request) throws Exception{
+		MerBodyFat merBodyFat = new MerBodyFat();
+		try {
+			merBodyFat.setCid(sysSequenceService.getSequenceValue(Constants.SequenceName.MER_BODY_FAT));
+			merBodyFat.setUploadTime(DateUtils.getCurrentTime());
+			merBodyFat.setMerId(request.getParameter("mer_id"));
+			merBodyFat.setBfp(Double.parseDouble(request.getParameter("bfp")));
+			merBodyFat.setBf(Double.parseDouble(request.getParameter("bf")));
+			merBodyFat.setNonFat(Double.parseDouble(request.getParameter("non_fat")));
+			merBodyFat.setBwp(Double.parseDouble(request.getParameter("bwp")));
+			merBodyFat.setBw(Double.parseDouble(request.getParameter("bw")));
+			merBodyFat.setMineral(Double.parseDouble(request.getParameter("mineral")));
+			merBodyFat.setProtein(Double.parseDouble(request.getParameter("protein")));
+			merBodyFat.setEcw(Double.parseDouble(request.getParameter("ecw")));
+			merBodyFat.setIcw(Double.parseDouble(request.getParameter("icw")));
+			merBodyFat.setMuscleMass(Double.parseDouble(request.getParameter("muscle_mass")));
+			merBodyFat.setFatRegulation(Double.parseDouble(request.getParameter("fat_regulation")));
+			merBodyFat.setWeightRegulation(Double.parseDouble(request.getParameter("weight_regulation")));
+			merBodyFat.setMuscleRegulation(Double.parseDouble(request.getParameter("muscle_regulation")));
+			merBodyFat.setBmr(Double.parseDouble(request.getParameter("bmr")));
+			merBodyFat.setVisceralFatLevel(Double.parseDouble(request.getParameter("visceral_fat_level")));
+			merBodyFat.setSkeletalMass(Double.parseDouble(request.getParameter("skeletal_mass")));
+			merBodyFat.setMusclePercent(Double.parseDouble(request.getParameter("muscle_percent")));
+			merBodyFat.setTrunkFat(Double.parseDouble(request.getParameter("trunk_fat")));
+			merBodyFat.setTrunkMuscle(Double.parseDouble(request.getParameter("trunk_muscle")));
+			
+			merBodyFat.setLeftArmMuscle(Double.parseDouble(request.getParameter("left_arm_muscle")));
+			merBodyFat.setRightArmMuscle(Double.parseDouble(request.getParameter("right_arm_muscle")));
+			merBodyFat.setLeftLegMuscle(Double.parseDouble(request.getParameter("left_leg_muscle")));
+			merBodyFat.setRightLegMuscle(Double.parseDouble(request.getParameter("right_leg_muscle")));
+			
+			merBodyFat.setLeftArmFat(Double.parseDouble(request.getParameter("left_arm_fat")));
+			merBodyFat.setRightArmFat(Double.parseDouble(request.getParameter("right_arm_fat")));
+			merBodyFat.setLeftLegFat(Double.parseDouble(request.getParameter("left_leg_fat")));
+			merBodyFat.setRightLegFat(Double.parseDouble(request.getParameter("right_leg_fat")));
+			
+			merBodyFat.setAdvice(request.getParameter("advice"));
+			merBodyFat.setConclusion(request.getParameter("conclusion"));
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e ;
+		}
+		return merBodyFat; 
+	}
+
+
+}

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.iHealthCloud.mapper.AlarmMsgDetailMapper">
+	<resultMap id="BaseResultMap" type="com.yhcrt.iHealthCloud.entity.AlarmMsgDetail">
+		<id column="cid" jdbcType="VARCHAR" property="cid" />
+		<result column="member_id" jdbcType="INTEGER" property="memberId" />
+		<result column="alarm_msg_id" jdbcType="INTEGER" property="alarmMsgId" />
+		<result column="is_read" jdbcType="INTEGER" property="isRead" />
+		<association property="alarmMsg" column="alarm_msg_id" select="com.yhcrt.iHealthCloud.mapper.AlarmMsgMapper.selectByPrimaryKey"></association>
+	</resultMap>
+	<sql id="Base_Column_List">
+		cid, member_id, alarm_msg_id,is_read
+	</sql>
+	
+   <select id="selectByMemberId" parameterType="INTEGER" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from alarm_msg_detail
+    where member_id = #{memberId,jdbcType=INTEGER}
+  </select>  
+	
+	<delete id="deleteAll" parameterType="map">
+		delete from alarm_msg_detail
+		where member_id = #{followId,jdbcType=INTEGER}
+		 and alarm_msg_id in (select cid from alarm_msg where member_id=#{memberId,jdbcType=INTEGER} )
+	</delete>
+	
+   <select id="getAlarmMsgsByMemberId" parameterType="map"
+		resultMap="BaseResultMap">
+		select 
+		 detail.cid, detail.member_id, detail.alarm_msg_id,detail.is_read
+    	  from alarm_msg_detail detail left join alarm_msg msg on detail.alarm_msg_id = msg.cid 
+        where msg.member_id = #{memberId,jdbcType=INTEGER}  
+              and detail.member_id = #{followId,jdbcType=INTEGER}  
+              order by msg.create_time desc
+    </select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+		delete from alarm_msg_detail
+		where cid = #{cid,jdbcType=VARCHAR}
+	</delete>
+
+	<insert id="insert" parameterType="com.yhcrt.iHealthCloud.entity.AlarmMsgDetail">
+		insert into alarm_msg_detail (cid, member_id,alarm_msg_id,is_read)
+		values (#{cid,jdbcType=VARCHAR}, #{memberId,jdbcType=INTEGER},#{alarmMsgId,jdbcType=INTEGER},#{isRead,jdbcType=INTEGER})
+	</insert>
+
+</mapper>

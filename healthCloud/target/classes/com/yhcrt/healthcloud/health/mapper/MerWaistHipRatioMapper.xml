@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.healthcloud.health.mapper.MerWaistHipRatioMapper">
+  <resultMap id="BaseResultMap" type="com.yhcrt.healthcloud.health.entity.MerWaistHipRatio">
+    <id column="cid" jdbcType="INTEGER" property="cid" />
+    <result column="mer_id" jdbcType="INTEGER" property="merId" />
+    <result column="upload_time" jdbcType="VARCHAR" property="uploadTime" />
+    <result column="waist_hip_ratio" jdbcType="DOUBLE" property="waistHipRatio" />
+    <result column="waistline" jdbcType="DOUBLE" property="waistline" />
+    <result column="hipline" jdbcType="DOUBLE" property="hipline" />
+    <result column="conclusion" jdbcType="VARCHAR" property="conclusion" />
+    <result column="advice" jdbcType="VARCHAR" property="advice" />
+    <result column="data_date" jdbcType="VARCHAR" property="dataDate" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    cid, mer_id, upload_time, waist_hip_ratio, waistline, hipline, conclusion, advice, 
+    data_date
+  </sql>
+  <select id="selectByExample" parameterType="com.yhcrt.healthcloud.health.entity.MerWaistHipRatioExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mer_waist_hip_ratio
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mer_waist_hip_ratio
+    where cid = #{cid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from mer_waist_hip_ratio
+    where cid = #{cid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yhcrt.healthcloud.health.entity.MerWaistHipRatioExample">
+    delete from mer_waist_hip_ratio
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yhcrt.healthcloud.health.entity.MerWaistHipRatio">
+    insert into mer_waist_hip_ratio (cid, mer_id, upload_time, 
+      waist_hip_ratio, waistline, hipline, 
+      conclusion, advice, data_date
+      )
+    values (#{cid,jdbcType=INTEGER}, #{merId,jdbcType=INTEGER}, #{uploadTime,jdbcType=VARCHAR}, 
+      #{waistHipRatio,jdbcType=DOUBLE}, #{waistline,jdbcType=DOUBLE}, #{hipline,jdbcType=DOUBLE}, 
+      #{conclusion,jdbcType=VARCHAR}, #{advice,jdbcType=VARCHAR}, #{dataDate,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yhcrt.healthcloud.health.entity.MerWaistHipRatio">
+    insert into mer_waist_hip_ratio
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="merId != null">
+        mer_id,
+      </if>
+      <if test="uploadTime != null">
+        upload_time,
+      </if>
+      <if test="waistHipRatio != null">
+        waist_hip_ratio,
+      </if>
+      <if test="waistline != null">
+        waistline,
+      </if>
+      <if test="hipline != null">
+        hipline,
+      </if>
+      <if test="conclusion != null">
+        conclusion,
+      </if>
+      <if test="advice != null">
+        advice,
+      </if>
+      <if test="dataDate != null">
+        data_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="merId != null">
+        #{merId,jdbcType=INTEGER},
+      </if>
+      <if test="uploadTime != null">
+        #{uploadTime,jdbcType=VARCHAR},
+      </if>
+      <if test="waistHipRatio != null">
+        #{waistHipRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="waistline != null">
+        #{waistline,jdbcType=DOUBLE},
+      </if>
+      <if test="hipline != null">
+        #{hipline,jdbcType=DOUBLE},
+      </if>
+      <if test="conclusion != null">
+        #{conclusion,jdbcType=VARCHAR},
+      </if>
+      <if test="advice != null">
+        #{advice,jdbcType=VARCHAR},
+      </if>
+      <if test="dataDate != null">
+        #{dataDate,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yhcrt.healthcloud.health.entity.MerWaistHipRatioExample" resultType="java.lang.Long">
+    select count(*) from mer_waist_hip_ratio
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update mer_waist_hip_ratio
+    <set>
+      <if test="record.cid != null">
+        cid = #{record.cid,jdbcType=INTEGER},
+      </if>
+      <if test="record.merId != null">
+        mer_id = #{record.merId,jdbcType=INTEGER},
+      </if>
+      <if test="record.uploadTime != null">
+        upload_time = #{record.uploadTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.waistHipRatio != null">
+        waist_hip_ratio = #{record.waistHipRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="record.waistline != null">
+        waistline = #{record.waistline,jdbcType=DOUBLE},
+      </if>
+      <if test="record.hipline != null">
+        hipline = #{record.hipline,jdbcType=DOUBLE},
+      </if>
+      <if test="record.conclusion != null">
+        conclusion = #{record.conclusion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.advice != null">
+        advice = #{record.advice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dataDate != null">
+        data_date = #{record.dataDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update mer_waist_hip_ratio
+    set cid = #{record.cid,jdbcType=INTEGER},
+      mer_id = #{record.merId,jdbcType=INTEGER},
+      upload_time = #{record.uploadTime,jdbcType=VARCHAR},
+      waist_hip_ratio = #{record.waistHipRatio,jdbcType=DOUBLE},
+      waistline = #{record.waistline,jdbcType=DOUBLE},
+      hipline = #{record.hipline,jdbcType=DOUBLE},
+      conclusion = #{record.conclusion,jdbcType=VARCHAR},
+      advice = #{record.advice,jdbcType=VARCHAR},
+      data_date = #{record.dataDate,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.healthcloud.health.entity.MerWaistHipRatio">
+    update mer_waist_hip_ratio
+    <set>
+      <if test="merId != null">
+        mer_id = #{merId,jdbcType=INTEGER},
+      </if>
+      <if test="uploadTime != null">
+        upload_time = #{uploadTime,jdbcType=VARCHAR},
+      </if>
+      <if test="waistHipRatio != null">
+        waist_hip_ratio = #{waistHipRatio,jdbcType=DOUBLE},
+      </if>
+      <if test="waistline != null">
+        waistline = #{waistline,jdbcType=DOUBLE},
+      </if>
+      <if test="hipline != null">
+        hipline = #{hipline,jdbcType=DOUBLE},
+      </if>
+      <if test="conclusion != null">
+        conclusion = #{conclusion,jdbcType=VARCHAR},
+      </if>
+      <if test="advice != null">
+        advice = #{advice,jdbcType=VARCHAR},
+      </if>
+      <if test="dataDate != null">
+        data_date = #{dataDate,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yhcrt.healthcloud.health.entity.MerWaistHipRatio">
+    update mer_waist_hip_ratio
+    set mer_id = #{merId,jdbcType=INTEGER},
+      upload_time = #{uploadTime,jdbcType=VARCHAR},
+      waist_hip_ratio = #{waistHipRatio,jdbcType=DOUBLE},
+      waistline = #{waistline,jdbcType=DOUBLE},
+      hipline = #{hipline,jdbcType=DOUBLE},
+      conclusion = #{conclusion,jdbcType=VARCHAR},
+      advice = #{advice,jdbcType=VARCHAR},
+      data_date = #{dataDate,jdbcType=VARCHAR}
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+    <select id="selectBymerId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mer_waist_hip_ratio
+    where mer_id = #{merId,jdbcType=INTEGER}
+  </select>
+</mapper>

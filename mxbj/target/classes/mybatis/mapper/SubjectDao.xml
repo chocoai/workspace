@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.mxbj.api.dao.SubjectDao">
+	<resultMap type="com.whty.mxbj.api.model.Subject" id="SubjectResult">
+		<result column="subject_id" property="subjectId" />
+		<result column="subject_name" property="subjectName" />
+	</resultMap>
+
+	<select id="getSubject"  parameterType="map" resultMap="SubjectResult">
+		select * from T_SUBJECT WHERE 1=1
+		<if test="subjectId !=null and subjectId !='' ">and subject_id = #{subjectId}</if>
+	</select>
+
+	<select id="listAll" resultMap="SubjectResult">
+		select * from T_SUBJECT
+	</select>
+
+	<delete id="deleteById" parameterType="com.whty.mxbj.api.model.Subject">
+		delete from T_SUBJECT where subject_id=#{subjectId} 
+	</delete>
+	
+	<update id="update">
+		update T_SUBJECT
+		set
+		<trim prefixOverrides=",">
+			<if test="subjectName != null and subjectName !='' ">,subject_name=#{subjectName}</if>
+		</trim>
+		where subject_id = #{subjectId}
+	</update>
+	
+	<insert id="save" parameterType="com.whty.mxbj.api.model.Subject">
+		insert into T_SUBJECT (
+			subject_id
+			,subject_name
+			) values(
+			#{subjectId}
+			,#{subjectName}
+			)
+	</insert>
+
+</mapper>

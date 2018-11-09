@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:util="http://www.springframework.org/schema/util"
+    xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:task="http://www.springframework.org/schema/task"
+    xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+			http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd
+			http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+            http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+            http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+            http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+	 <!-- 共用配置 -->
+	 
+	 <aop:aspectj-autoproxy/>
+	
+	<context:component-scan base-package ="com.bigdata"/>  
+	
+	<context:property-placeholder location="classpath*:*.properties" />
+	
+
+	<bean id="oracleDataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource"
+		destroy-method="close">
+		<property name="driverClass">
+			<value>${oracle.driverClassName}</value>
+		</property>
+		<property name="jdbcUrl">
+			<value>${oracle.url}</value>
+		</property>
+		<property name="user">
+			<value>${oracle.datasourceUsername}</value>
+		</property>
+		<property name="password">
+			<value>${oracle.datasourcePassword}</value>
+		</property>
+		<property name="maxIdleTime">
+			<value>${oracle.maxIdleTime}</value>
+		</property>
+		<property name="preferredTestQuery">
+			<value>${oracle.preferredTestQuery}</value>
+		</property>
+		<property name="idleConnectionTestPeriod">
+			<value>${oracle.idleConnectionTestPeriod}</value>
+		</property>
+		<property name="testConnectionOnCheckin">
+			<value>${oracle.testConnectionOnCheckin}</value>
+		</property>
+		<property name="testConnectionOnCheckout">
+			<value>${oracle.testConnectionOnCheckout}</value>
+		</property>
+		<property name="initialPoolSize">
+			<value>${oracle.initialSize}</value>
+		</property>
+		<property name="minPoolSize">
+			<value>${oracle.minPoolSize}</value>
+		</property>
+		<property name="maxPoolSize">
+			<value>${oracle.maxPoolSize}</value>
+		</property>
+		<property name="acquireIncrement">
+			<value>${oracle.acquireIncrement}</value>
+		</property>
+		
+		 <property name="acquireRetryAttempts">  
+            <value>${oracle.acquireRetryAttempts}</value>  
+    	</property>  
+    	<property name="acquireRetryDelay">  
+            <value>${oracle.acquireRetryDelay}</value>  
+    	</property>  
+    	<property name="breakAfterAcquireFailure">  
+            <value>${oracle.breakAfterAcquireFailure}</value>  
+    	</property>  
+	</bean>
+	
+	<tx:annotation-driven transaction-manager="oracleTxManager"/> 
+	
+
+	
+	<!-- <context:annotation-config /> -->
+	
+	<!-- 自动扫描组件，这里要把controler下面的 controller去除，他们是在spring3-servlet.xml中配置的，如果不去除会影响事务管理的。   -->
+	 <context:component-scan base-package="com.bigdata">
+	      <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller" /> 
+	 </context:component-scan>
+	<!-- transaction manager, use DataSourceTransactionManager -->
+	<bean id="oracleTxManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="oracleDataSource" />
+	</bean>
+	
+	<tx:annotation-driven /> 
+	
+	<!-- spring declarative transaction management -->
+	<aop:config>
+		<aop:pointcut id="serviceMethods"
+			expression="execution(* com.bigdata..service.impl.*.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceMethods" />
+	</aop:config>
+	<tx:advice id="oracleTxAdvice" transaction-manager="oracleTxManager">
+		<tx:attributes>
+			<tx:method name="find*" read-only="true" />
+			<tx:method name="query*" read-only="true" />
+			<tx:method name="get*" read-only="true" />
+			<tx:method name="load*" read-only="true" />
+			<tx:method name="*" rollback-for="Exception" />
+		</tx:attributes>
+	</tx:advice>
+	
+
+	 <bean id="oracleSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation" value="classpath:oracle-mybatis-config.xml"/>
+        <property name="dataSource" ref="oracleDataSource"/>
+        
+    </bean>
+
+    <bean  class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.bigdata.**.dao"/>
+        <property name="sqlSessionFactoryBeanName" value="oracleSqlSessionFactory"/>
+    </bean>
+	
+	
+</beans>

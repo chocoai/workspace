@@ -1,0 +1,2381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="wfd:war" />
+    </artifacts-to-build>
+  </component>
+  <component name="ChangeListManager">
+    <list id="a3d8cdfa-abf1-4ba8-9b90-1ccedb524b30" name="忽略" comment="忽略">
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/artifacts" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/artifacts/wfd_war.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/artifacts/wfd_war_exploded.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/compiler.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_classic_1_1_11.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__ch_qos_logback_logback_core_1_1_11.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_baidubce_bce_java_sdk_0_10_3.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_classmate_1_3_3.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_annotations_2_8_0.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_core_2_8_7.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_fasterxml_jackson_core_jackson_databind_2_8_7.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_code_gson_gson_2_8_0.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_google_guava_guava_17_0.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_googlecode_xmemcached_xmemcached_2_0_0.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_jayway_jsonpath_json_path_2_2_0.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_vaadin_external_google_android_json_0_0_20131108_vaadin1.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_beanutils_commons_beanutils_1_9_3.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_codec_commons_codec_1_10.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_collections_commons_collections_3_2_2.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_fileupload_commons_fileupload_1_3_1.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_httpclient_commons_httpclient_3_1.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_io_commons_io_2_5.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_lang_commons_lang_2_5.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__commons_logging_commons_logging_1_1_1.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__dom4j_dom4j_1_6_1.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_validation_validation_api_1_1_0_Final.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__joda_time_joda_time_2_9_7.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__junit_junit_4_12.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__mysql_mysql_connector_java_5_1_41.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_minidev_accessors_smart_1_1.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_minidev_json_smart_2_2_1.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_sf_ezmorph_ezmorph_1_0_6.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__net_sf_json_lib_json_lib_jdk15_2_4.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_ant_ant_1_8_2.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_ant_ant_launcher_1_8_2.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_lang3_3_4.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_commons_commons_pool2_2_4_2.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpasyncclient_4_1_3.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpclient_4_5_3.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpcore_4_4_6.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpcore_nio_4_3_3.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_httpcomponents_httpmime_4_5_3.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_poi_poi_3_9.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_poi_poi_examples_3_9.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_poi_poi_excelant_3_9.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_poi_poi_ooxml_3_9.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_poi_poi_ooxml_schemas_3_9.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_poi_poi_scratchpad_3_9.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_core_8_5_11.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_el_8_5_11.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_embed_tomcat_embed_websocket_8_5_11.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_tomcat_jdbc_8_5_11.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_tomcat_tomcat_juli_8_5_11.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_apache_xmlbeans_xmlbeans_2_3_0.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_assertj_assertj_core_2_6_0.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_jackson_jackson_core_asl_1_9_4.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_codehaus_jackson_jackson_mapper_asl_1_9_4.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_freemarker_freemarker_2_3_25_incubating.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_core_1_3.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hamcrest_hamcrest_library_1_3.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_hibernate_validator_5_3_4_Final.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_jboss_logging_jboss_logging_3_3_0_Final.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mockito_mockito_core_1_10_19.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_mybatis_3_4_0.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_mybatis_spring_1_3_0.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_spring_boot_mybatis_spring_boot_autoconfigure_1_1_1.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_mybatis_spring_boot_mybatis_spring_boot_starter_1_1_1.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_objenesis_objenesis_2_1.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_ow2_asm_asm_5_0_3.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_skyscreamer_jsonassert_1_4_0.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_jcl_over_slf4j_1_7_24.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_jul_to_slf4j_1_7_24.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_log4j_over_slf4j_1_7_24.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_slf4j_slf4j_api_1_7_24.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_1_5_2_RELEASE.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_autoconfigure_1_5_2_RELEASE.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_devtools_1_5_2_RELEASE.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_1_5_2_RELEASE.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_freemarker_1_5_2_RELEASE.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_jdbc_1_5_2_RELEASE.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_logging_1_5_2_RELEASE.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_redis_1_3_2_RELEASE.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_test_1_5_2_RELEASE.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_tomcat_1_5_2_RELEASE.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_starter_web_1_5_2_RELEASE.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_test_1_5_2_RELEASE.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_boot_spring_boot_test_autoconfigure_1_5_2_RELEASE.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_data_spring_data_commons_1_13_1_RELEASE.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_data_spring_data_keyvalue_1_2_1_RELEASE.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_data_spring_data_redis_1_8_1_RELEASE.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_aop_4_3_7_RELEASE.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_beans_4_3_7_RELEASE.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_4_3_7_RELEASE.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_context_support_4_3_7_RELEASE.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_core_4_3_7_RELEASE.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_expression_4_3_7_RELEASE.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_jdbc_4_3_7_RELEASE.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_oxm_4_3_7_RELEASE.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_test_4_3_9_RELEASE.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_tx_4_3_7_RELEASE.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_web_4_3_7_RELEASE.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_springframework_spring_webmvc_4_3_7_RELEASE.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_yaml_snakeyaml_1_17.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__redis_clients_jedis_2_9_0.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__stax_stax_api_1_0_1.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__xml_apis_xml_apis_1_4_01.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/modules.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/wfd.iml" />
+      <change beforePath="$PROJECT_DIR$" afterPath="$PROJECT_DIR$" />
+      <change beforePath="$PROJECT_DIR$/LOG_PATH_IS_UNDEFINED/info.log" afterPath="$PROJECT_DIR$/LOG_PATH_IS_UNDEFINED/info.log" />
+      <change beforePath="$PROJECT_DIR$/target" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application-bean.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/application.properties" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/base" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/base/controller" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/base/controller/BaseController.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/base/dao" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/base/dao/IBaseDao.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/base/exception" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/base/exception/BusinessException.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/base/model" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/base/model/BaseModel.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/base/service" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/base/service/BaseService.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/base/utils" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/base/utils/SysConfigUtils.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/SessionInfo.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/cache" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/cache/CacheBeanPostProcessor.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/cache/CacheInit.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/constants" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/constants/ResultConstants.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/constants/SysConstants.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/constants/WebConstants.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/excel" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/excel/ConstantParam.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/excel/DeviceUseLog.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/excel/FileVo.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/excel/PoiExcelUtils.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/excel/PoiUtil.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/excel/ReflectUtils.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/excel/TeacherUseLog.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/flter" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/flter/UserAccessFlter.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/interceptor" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/thread" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/thread/ThreadPoolFactory.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/thread/ThreadPoolManager.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/thread/ThreadPoolUtils.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/BaiduBosUtils.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/Base64.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/BeanUtils.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/BigDecimalUtils.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/CommonFunction.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/CryptoServer.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/FileUtils.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/GUIDGenerator.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/HMACSHA1.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/HttpUtils.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/HttpsUtil$1.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/HttpsUtil.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/JSONUtil$1.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/JSONUtil$2.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/JSONUtil.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/JsonUtils.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/MapUtils.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/NoteType.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/NumberChangeToChinese.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/PadPwdUtils.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/Plupload.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/RC4Utils.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/ServiceLocator.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/Sha1.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/SysConfigUtils.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/TimeUtils.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/Tool.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/freemarker" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/freemarker/AppNameMethod.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/freemarker/FormatDuring.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/freemarker/FormatMacMethod.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/common/utils/freemarker/NumberChangeToChineseMethod.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/main" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/main/Application.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/main/ApplicationConfig.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/main/RedisConfig.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/main/ServletInitializer.class" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/page" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/page/controller" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/page/dao" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/page/model" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/page/service" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/page/service/impl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/page/util" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/logback.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mybatis" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mybatis/mapper" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/mybatis/mybatis-config.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/css/w_public.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/css/zhxy_ytj.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/32x32.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/581x318.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/581x318_1.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/700x400.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/70x40.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/a_close.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/add_icon.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/adminMenu.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/btn_ico2.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/checkbox.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/close.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/closeBtn.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/del.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/del1.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/gou.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/help-ico1.gif" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/help-ico2.gif" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/logo.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/lr_jt.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/minus_sign9x9.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/needle_ico.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/ni_bar_ico.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/ni_bar_ico1.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/ni_g_ct.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/ni_g_ct_1.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/ni_g_pm_ico.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/ni_g_right.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/ni_line_ico.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/ni_line_ico1.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/ni_lock.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/ni_lock_unlock.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/ni_pie_ico.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/ni_pie_ico1.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/ni_res_off.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/ni_tj_ico.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/ni_unlock.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/ni_unlogin.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/openBtn.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/page_ico.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/plus9x9.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/popupBg.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/publish.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/radio.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/sqicon.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/timg.gif" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/tips.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/tit_ico.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/updown.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/updown_noice.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/wd_ico.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/wd_list_ico.gif" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/wd_navbg.gif" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/wd_off.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/wd_point.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/wd_smile.gif" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/yz_icon.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/zTreeStandard.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images/zixun.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/My97DatePicker" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/My97DatePicker/My97DatePicker.htm" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/My97DatePicker/WdatePicker.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/My97DatePicker/calendar.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/My97DatePicker/config.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/My97DatePicker/index.htm" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/My97DatePicker/lang" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/My97DatePicker/lang/en.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/My97DatePicker/lang/zh-cn.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/My97DatePicker/lang/zh-tw.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/My97DatePicker/skin" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/My97DatePicker/skin/WdatePicker.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/My97DatePicker/skin/data.png" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/My97DatePicker/skin/datePicker.gif" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/My97DatePicker/skin/default" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/My97DatePicker/skin/default/datepicker.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/My97DatePicker/skin/default/img.gif" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/My97DatePicker/skin/whyGreen" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/My97DatePicker/skin/whyGreen/bg.jpg" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/My97DatePicker/skin/whyGreen/datepicker.css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/My97DatePicker/skin/whyGreen/img.gif" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/echarts.common.min.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/echarts.min.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/fun.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/global.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/jquery.artDialog.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/jquery.artDialog.plugins.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/jquery.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/jquery.ztree.core-3.5.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/jquery.ztree.excheck-3.5.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/login.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/page.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/school" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/school/device.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/school/deviceDetail.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/school/index.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/school/queryDeviceUseCount.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/school/queryTeacherUseLogDetail.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/school/report.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/js/utils.js" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/down.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/errorpage" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/errorpage/404.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/errorpage/500.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/inc" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/inc/_iclass_footer.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/inc/_layout.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/inc/_m_nav.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/inc/_page.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/inc/_public_meta.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/inc/_public_scripts.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/inc/_public_styles.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/inc/school" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/inc/school/_device.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/inc/school/_deviceAppMonitor.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/inc/school/_deviceDetail.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/inc/school/_index.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/inc/school/_pageTest.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/inc/school/_queryDeviceUseCount.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/inc/school/_queryTeacherUseLogDetail.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/inc/school/_report.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/leader/index.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/leader/report.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/leader/school.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/login.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/school" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/school/device.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/school/deviceAppMonitor.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/school/deviceDetail.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/school/index.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/school/pageTest.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/school/queryDeviceUseCount.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/school/queryTeacherUseLogDetail.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/school/report.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/school/test.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/school/test2.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/test.ftl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/m2e-wtp/web-resources/META-INF/MANIFEST.MF" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/m2e-wtp/web-resources/META-INF/maven/com.whty/wfd/pom.properties" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/m2e-wtp/web-resources/META-INF/maven/com.whty/wfd/pom.xml" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/whty" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/whty/wfd" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/whty/wfd/AppTest.class" afterPath="" />
+    </list>
+    <list default="true" readonly="true" id="a8c4e2d5-8565-4261-adca-2b8cac6288c9" name="Default" comment="发帖和评论 发布名！">
+      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/api" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/whty/wfd/base/service/impl" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/css" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/fonts" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/static/images" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/inc/leader" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/classes/templates/leader" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/m2e-wtp" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/m2e-wtp/web-resources" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/m2e-wtp/web-resources/META-INF" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/m2e-wtp/web-resources/META-INF/maven" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/m2e-wtp/web-resources/META-INF/maven/com.whty" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/target/m2e-wtp/web-resources/META-INF/maven/com.whty/wfd" afterPath="" />
+    </list>
+    <ignored path="target/" />
+    <ignored path=".idea/" />
+    <ignored path=".settings/" />
+    <ignored path="log/" />
+    <ignored path="LOG_PATH_IS_UNDEFINED/" />
+    <ignored path="$PROJECT_DIR$/target/classes/" />
+    <ignored path="$PROJECT_DIR$/target/imgFile/" />
+    <ignored path="$PROJECT_DIR$/target/LOG_PATH_IS_UNDEFINED/" />
+    <ignored path="$PROJECT_DIR$/target/m2e-wtp/" />
+    <ignored path="$PROJECT_DIR$/target/maven-archiver/" />
+    <ignored path="$PROJECT_DIR$/target/maven-status/" />
+    <ignored path="$PROJECT_DIR$/target/surefire-reports/" />
+    <ignored path="$PROJECT_DIR$/target/test-classes/" />
+    <ignored path="$PROJECT_DIR$/target/wfd/" />
+    <ignored path="$PROJECT_DIR$/target/surefire/" />
+    <manually-removed-from-ignored>
+      <directory path="$PROJECT_DIR$/target/" />
+      <directory path="target/classes/" />
+      <directory path="E:\workspace\wfd\.idea\shelf/" />
+    </manually-removed-from-ignored>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <file path="$PROJECT_DIR$/target/classes/application.properties" ignored="false" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" show_ignored="true" />
+  <component name="CompilerWorkspaceConfiguration">
+    <option name="MAKE_PROJECT_ON_SAVE" value="true" />
+  </component>
+  <component name="CoverageDataManager">
+    <SUITE FILE_PATH="coverage/wfd$AppTest_testApp.coverage" NAME="AppTest.testApp Coverage Results" MODIFIED="1534497193300" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
+      <FILTER>com.whty.wfd.main.*</FILTER>
+    </SUITE>
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="application.properties" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1075">
+              <caret line="43" column="27" lean-forward="false" selection-start-line="43" selection-start-column="27" selection-end-line="43" selection-end-column="27" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AppTest.java" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/test/java/com/whty/wfd/AppTest.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="25">
+              <caret line="36" column="21" lean-forward="false" selection-start-line="36" selection-start-column="21" selection-end-line="36" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="DruidConfig.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/wfd/common/aliDruid/DruidConfig.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="400">
+              <caret line="29" column="43" lean-forward="false" selection-start-line="29" selection-start-column="43" selection-end-line="29" selection-end-column="43" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Tag Library Descriptor" />
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>sendEntrance</find>
+      <find>getPostDetailTurn</find>
+      <find>getIndexPost2</find>
+      <find>like_count+message_count</find>
+      <find>实时</find>
+      <find>type</find>
+      <find>照片</find>
+      <find>tpp.create_time desc,id</find>
+      <find>Integer orderByClause</find>
+      <find>getPostRealTime</find>
+      <find>addItems</find>
+      <find>typeNum</find>
+      <find>orderByClause</find>
+      <find>getIndexPost</find>
+      <find>tabType</find>
+      <find>mysql</find>
+      <find>connector</find>
+      <find>info</find>
+      <find>content</find>
+      <find>getTest</find>
+      <find>$(&quot;#content&quot;).</find>
+      <find>$(&quot;#content&quot;)</find>
+      <find>needsclick</find>
+      <find>setSelectionRange</find>
+      <find>mult_line_ellipsis</find>
+      <find>data.list[i].content</find>
+      <find>tpm.is_delete</find>
+      <find>read</find>
+      <find>druidConfig</find>
+      <find>debug</find>
+    </findStrings>
+    <replaceStrings>
+      <replace>Id,jdbcType=VARCHAR</replace>
+      <replace>..</replace>
+      <replace>getPostMessageList</replace>
+      <replace>list[i].</replace>
+      <replace>is_delete</replace>
+      <replace>window.history.go(-1);</replace>
+      <replace>getUserPost.html</replace>
+      <replace>getPostMessage.html</replace>
+      <replace>getLike.html</replace>
+      <replace>getReply.html</replace>
+      <replace>getCollection.html</replace>
+      <replace>index.html</replace>
+      <replace>href=&quot;${base}/</replace>
+      <replace />
+      <replace>total</replace>
+      <replace>TUser tUser = (TUser) request.getSession().getAttribute(&quot;userObj&quot;);</replace>
+      <replace>${user.id?c}</replace>
+      <replace>&quot;</replace>
+      <replace>'</replace>
+      <replace>?string('yyyy-MM-dd HH:mm:ss')</replace>
+      <replace>zxf_des_wp mgt05 mult_line_ellipsis</replace>
+      <replace>txt_ellipsis w60 con fl</replace>
+      <replace>sendMessageTurn</replace>
+      <replace>getPostDetailTurn</replace>
+      <replace>&quot;touchend&quot;</replace>
+      <replace>'touchend'</replace>
+      <replace>addForm</replace>
+      <replace>f085 pdtb035 c_normal pdl075 pdr075 bgf0f0f0</replace>
+      <replace>.zxf_content</replace>
+      <replace>startView</replace>
+    </replaceStrings>
+    <dirStrings>
+      <dir>E:\workspace\wfd\src\main\webapp</dir>
+      <dir>E:\workspace\wfd\src\main\java\com\whty\wfd\common</dir>
+      <dir>E:\workspace\wfd\src\main\resources\static\js</dir>
+      <dir>E:\workspace\wfd\src\main\resources\templates</dir>
+      <dir>E:\workspace\wfd\src\main\java\com\whty\wfd\base</dir>
+    </dirStrings>
+  </component>
+  <component name="GradleLocalSettings">
+    <option name="externalProjectsViewState">
+      <projects_view />
+    </option>
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/wfd/page/model/TPostMessage.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/wfd/page/vo/Like.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/mybatis/mapper/LikeMapper.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/wfd/page/vo/Collection.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/mybatis/mapper/CollectionMapper.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/wfd/page/service/LikeService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/wfd/page/service/impl/LikeServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/wfd/page/controller/LikeController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/wfd/common/utils/SendMessageUtils.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/wfd/page/controller/CollectionController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/wfd/common/utils/CookiesUtil.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/wfd/common/interceptor/MyInterceptor.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/errorpage/404.ftl" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/errorpage/500.ftl" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/wfd/main/Application.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/message/post_message.ftl" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/wfd/page/controller/MessageController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/wfd/page/controller/PostController.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/like/like.ftl" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/post/post_list.ftl" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/wfd/page/dao/TUserMapper.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/mybatis/mapper/TUserMapper.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/wfd/page/controller/ManagerController.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/manager/atPage.ftl" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/wfd/page/dao/TPostMessageMapper.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/wfd/page/service/impl/PlateServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/collection/collection.ftl" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/noUse.ftl" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/count/studentPost.ftl" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/count/teacherLikeCount.ftl" />
+        <option value="$PROJECT_DIR$/src/main/resources/mybatis/mapper/CountMapper.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/post/post_detail.ftl" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/count/hotQeustion.ftl" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/wfd/page/controller/IndexController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/wfd/page/service/PostService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/wfd/page/service/impl/PostServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/wfd/page/dao/TPlatePostMapper.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/mybatis/mapper/TPlatePostMapper.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/wfd/page/controller/CountController.java" />
+        <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/message/atPageMessage.ftl" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/message/add_message.ftl" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/post/add_post.ftl" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/index.ftl" />
+        <option value="$PROJECT_DIR$/src/main/resources/mybatis/mapper/MessageMapper.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/mybatis/mapper/TPostMessageMapper.xml" />
+        <option value="$PROJECT_DIR$/src/main/resources/templates/message/reply_message.ftl" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/wfd/page/controller/TestController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/com/whty/wfd/main/ApplicationConfig.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/application.properties" />
+        <option value="$PROJECT_DIR$/src/test/java/com/whty/wfd/AppTest.java" />
+      </list>
+    </option>
+  </component>
+  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
+  <component name="JsGulpfileManager">
+    <detection-done>true</detection-done>
+    <sorting>DEFINITION_ORDER</sorting>
+  </component>
+  <component name="LogFilters">
+    <option name="FILTER_ERRORS" value="false" />
+    <option name="FILTER_WARNINGS" value="false" />
+    <option name="FILTER_INFO" value="true" />
+    <option name="FILTER_DEBUG" value="true" />
+    <option name="CUSTOM_FILTER" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="localRepository" value="E:\repository" />
+        <option name="mavenHome" value="E:/apache-maven-3.5.0" />
+        <option name="userSettingsFile" value="E:\apache-maven-3.5.0\conf\settings.xml" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="MavenProjectNavigator">
+    <treeState>
+      <expand>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="wfd" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="wfd" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Lifecycle" type="58874e2:MavenProjectsStructure$LifecycleNode" />
+        </path>
+        <path>
+          <item name="" type="16c1761:MavenProjectsStructure$RootNode" />
+          <item name="wfd" type="9519ce18:MavenProjectsStructure$ProjectNode" />
+          <item name="Dependencies" type="f4be9f2a:MavenProjectsStructure$DependenciesNode" />
+        </path>
+      </expand>
+      <select />
+    </treeState>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="120" />
+    <option name="y" value="27" />
+    <option name="width" value="1400" />
+    <option name="height" value="820" />
+  </component>
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="1" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="PackagesPane" />
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="wfd" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wfd" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="wfd" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wfd" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="wfd" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wfd" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="wfd" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wfd" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="wfd" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wfd" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="auto" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="wfd" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wfd" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="wfd" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="wfd" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wfd" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="wfd" type="462c0819:PsiDirectoryNode" />
+              <item name="page" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="wfd" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wfd" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="wfd" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wfd" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="wfd" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wfd" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="wfd" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wfd" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="wfd" type="b2602c69:ProjectViewProjectNode" />
+              <item name="wfd" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="wfd" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="AndroidView" />
+      <pane id="Scope" />
+      <pane id="Scratches" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
+    <property name="settings.editor.selected.configurable" value="project.propCompiler" />
+    <property name="last_opened_file_path" value="F:/公司项目/天喻教育项目/ebookpackage" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="project.structure.last.edited" value="Libraries" />
+    <property name="project.structure.proportion" value="0.15332031" />
+    <property name="project.structure.side.proportion" value="0.36732328" />
+    <property name="RequestMappingsPanelWidth0" value="75" />
+    <property name="RequestMappingsPanelOrder0" value="0" />
+    <property name="RequestMappingsPanelWidth1" value="75" />
+    <property name="RequestMappingsPanelOrder1" value="1" />
+    <property name="RequestMappingsPanelWidth2" value="75" />
+    <property name="RequestMappingsPanelOrder2" value="2" />
+    <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
+    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://E:/workspace/wfd/src/main/resources/templates/message/add_message.ftl" />
+    <property name="GenerateAntBuildDialog.enableUiFormCompile" value="true" />
+    <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
+    <property name="GenerateAntBuildDialog.backupFiles" value="true" />
+    <property name="GenerateAntBuildDialog.outputFileNameProperty" value="wfd" />
+  </component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\workspace\wfd\src\main\resources\static\js" />
+      <recent name="E:\workspace\wfd\src\main\resources\static\js\page" />
+      <recent name="E:\workspace\wfd\src\main\resources\static\js\plupload-2.1.8" />
+      <recent name="E:\workspace\wfd\src\main\resources\templates" />
+      <recent name="E:\workspace\wfd\src\main\webapp\WEB-INF\views" />
+    </key>
+    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
+      <recent name="com.whty.wfd" />
+      <recent name="com.whty.wfd.page.service" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.whty.wfd.page.dao" />
+      <recent name="com.whty.wfd.page.service" />
+      <recent name="com.whty.wfd.page.util" />
+      <recent name="com.whty.wfd.main" />
+      <recent name="com.whty.wfd.base.utils" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\workspace\wfd\src\main\resources\templates\message" />
+      <recent name="E:\workspace\wfd\src\main\resources\templates\post" />
+      <recent name="E:\workspace\wfd\src\main\resources\mybatis\mapper" />
+      <recent name="E:\workspace\wfd\src\main\resources\templates\errorpage" />
+      <recent name="E:\workspace\wfd\src\main\resources\static\js\MP3" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Spring Boot.Application">
+    <configuration default="true" type="Applet" factoryName="Applet">
+      <option name="HTML_USED" value="false" />
+      <option name="WIDTH" value="400" />
+      <option name="HEIGHT" value="300" />
+      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
+      <module />
+    </configuration>
+    <configuration name="MyBatisGeneratorTool" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="auto.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="auto.MyBatisGeneratorTool" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="wfd" />
+      <envs />
+    </configuration>
+    <configuration name="Test" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.whty.wfd.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="com.whty.wfd.Test" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="wfd" />
+      <envs />
+    </configuration>
+    <configuration name="Test2" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.whty.wfd.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="MAIN_CLASS_NAME" value="com.whty.wfd.Test2" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="wfd" />
+      <envs />
+    </configuration>
+    <configuration default="true" type="Application" factoryName="Application">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="VM_PARAMETERS" />
+      <option name="PROGRAM_PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ENABLE_SWING_INSPECTOR" value="false" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <module name="" />
+      <envs />
+    </configuration>
+    <configuration name="AppTest.testApp" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.whty.wfd.main.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <module name="wfd" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" value="com.whty.wfd" />
+      <option name="MAIN_CLASS_NAME" value="com.whty.wfd.AppTest" />
+      <option name="METHOD_NAME" value="testApp" />
+      <option name="TEST_OBJECT" value="method" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+    </configuration>
+    <configuration default="true" type="JUnit" factoryName="JUnit">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="TEST_OBJECT" value="class" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <envs />
+      <patterns />
+    </configuration>
+    <configuration default="true" type="Remote" factoryName="Remote">
+      <option name="USE_SOCKET_TRANSPORT" value="true" />
+      <option name="SERVER_MODE" value="false" />
+      <option name="SHMEM_ADDRESS" value="javadebug" />
+      <option name="HOST" value="localhost" />
+      <option name="PORT" value="5005" />
+    </configuration>
+    <configuration name="Application" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
+        <pattern>
+          <option name="PATTERN" value="com.whty.wfd.main.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.whty.wfd.main.Application" />
+      <module name="wfd" />
+      <envs />
+    </configuration>
+    <configuration default="true" type="TestNG" factoryName="TestNG">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <module name="" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
+      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="SUITE_NAME" />
+      <option name="PACKAGE_NAME" />
+      <option name="MAIN_CLASS_NAME" />
+      <option name="METHOD_NAME" />
+      <option name="GROUP_NAME" />
+      <option name="TEST_OBJECT" value="CLASS" />
+      <option name="VM_PARAMETERS" value="-ea" />
+      <option name="PARAMETERS" />
+      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
+      <option name="OUTPUT_DIRECTORY" />
+      <option name="ANNOTATION_TYPE" />
+      <option name="ENV_VARIABLES" />
+      <option name="PASS_PARENT_ENVS" value="true" />
+      <option name="TEST_SEARCH_SCOPE">
+        <value defaultName="singleModule" />
+      </option>
+      <option name="USE_DEFAULT_REPORTERS" value="false" />
+      <option name="PROPERTIES_FILE" />
+      <envs />
+      <properties />
+      <listeners />
+    </configuration>
+    <configuration name="tomcat8.0.30" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 8.0.30" ALTERNATIVE_JRE_ENABLED="false">
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8087/wfd/" />
+      <option name="UPDATE_ON_FRAME_DEACTIVATION" value="true" />
+      <option name="UPDATE_CLASSES_ON_FRAME_DEACTIVATION" value="true" />
+      <deployment>
+        <artifact name="wfd:war exploded">
+          <settings>
+            <option name="CONTEXT_PATH" value="/wfd" />
+          </settings>
+        </artifact>
+      </deployment>
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="Unnamed_wfd" />
+        <option name="DEPLOY_TOMCAT_APPS" value="true" />
+        <option name="HTTP_PORT" value="8087" />
+      </server-settings>
+      <predefined_log_file id="Tomcat" enabled="true" />
+      <predefined_log_file id="Tomcat Catalina" enabled="true" />
+      <predefined_log_file id="Tomcat Manager" enabled="false" />
+      <predefined_log_file id="Tomcat Host Manager" enabled="false" />
+      <predefined_log_file id="Tomcat Localhost Access" enabled="false" />
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="58351" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <method>
+        <option name="Make" enabled="false" />
+      </method>
+    </configuration>
+    <configuration name="tomcat8.0.41" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 8.0.41" ALTERNATIVE_JRE_ENABLED="true" ALTERNATIVE_JRE_PATH="1.8">
+      <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8983/" />
+      <option name="UPDATING_POLICY" value="restart-server" />
+      <deployment />
+      <server-settings>
+        <option name="BASE_DIRECTORY_NAME" value="Unnamed_wfd_2" />
+        <option name="DEPLOY_TOMCAT_APPS" value="true" />
+        <option name="HTTP_PORT" value="8983" />
+      </server-settings>
+      <predefined_log_file id="Tomcat" enabled="true" />
+      <predefined_log_file id="Tomcat Catalina" enabled="true" />
+      <predefined_log_file id="Tomcat Manager" enabled="false" />
+      <predefined_log_file id="Tomcat Host Manager" enabled="false" />
+      <predefined_log_file id="Tomcat Localhost Access" enabled="false" />
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="51658" />
+      </RunnerSettings>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Cover">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Debug">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+      <ConfigurationWrapper VM_VAR="JAVA_OPTS" RunnerId="Run">
+        <option name="USE_ENV_VARIABLES" value="true" />
+        <STARTUP>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </STARTUP>
+        <SHUTDOWN>
+          <option name="USE_DEFAULT" value="true" />
+          <option name="SCRIPT" value="" />
+          <option name="VM_PARAMETERS" value="" />
+          <option name="PROGRAM_PARAMETERS" value="" />
+        </SHUTDOWN>
+      </ConfigurationWrapper>
+    </configuration>
+    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
+      <module name="" />
+      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
+      <option name="PROGRAM_PARAMETERS" />
+      <predefined_log_file id="idea.log" enabled="true" />
+    </configuration>
+    <list size="7">
+      <item index="0" class="java.lang.String" itemvalue="Tomcat Server.tomcat8.0.30" />
+      <item index="1" class="java.lang.String" itemvalue="Tomcat Server.tomcat8.0.41" />
+      <item index="2" class="java.lang.String" itemvalue="JUnit.AppTest.testApp" />
+      <item index="3" class="java.lang.String" itemvalue="Spring Boot.Application" />
+      <item index="4" class="java.lang.String" itemvalue="Application.Test2" />
+      <item index="5" class="java.lang.String" itemvalue="Application.MyBatisGeneratorTool" />
+      <item index="6" class="java.lang.String" itemvalue="Application.Test" />
+    </list>
+    <recent_temporary>
+      <list size="5">
+        <item index="0" class="java.lang.String" itemvalue="Spring Boot.Application" />
+        <item index="1" class="java.lang.String" itemvalue="Application.MyBatisGeneratorTool" />
+        <item index="2" class="java.lang.String" itemvalue="Application.Test2" />
+        <item index="3" class="java.lang.String" itemvalue="JUnit.AppTest.testApp" />
+        <item index="4" class="java.lang.String" itemvalue="Application.Test" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
+  </component>
+  <component name="SvnConfiguration" cleanupOnStartRun="true">
+    <configuration>C:\Users\lx\AppData\Roaming\Subversion</configuration>
+    <supportedVersion>125</supportedVersion>
+  </component>
+  <component name="SvnFileUrlMappingImpl">
+    <option name="myMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="E:\workspace\wfd" />
+          <option name="myCopyRoot" value="E:\workspace\wfd" />
+        </SvnCopyRootSimple>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="E:\workspace\wfd\.idea" />
+          <option name="myCopyRoot" value="E:\workspace\wfd\.idea" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+    <option name="myMoreRealMappingRoots">
+      <list>
+        <SvnCopyRootSimple>
+          <option name="myVcsRoot" value="E:\workspace\wfd" />
+          <option name="myCopyRoot" value="E:\workspace\wfd" />
+        </SvnCopyRootSimple>
+      </list>
+    </option>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a8c4e2d5-8565-4261-adca-2b8cac6288c9" name="Default" comment="" />
+      <changelist id="a3d8cdfa-abf1-4ba8-9b90-1ccedb524b30" name="忽略" comment="" />
+      <created>1534144176008</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1534144176008</updated>
+      <workItem from="1534144179740" duration="198000" />
+      <workItem from="1534144739296" duration="3887000" />
+      <workItem from="1534207645584" duration="12354000" />
+      <workItem from="1534293110062" duration="13209000" />
+      <workItem from="1534380048887" duration="56579000" />
+      <workItem from="1534499475405" duration="1164000" />
+      <workItem from="1534555813767" duration="7447000" />
+      <workItem from="1534812270610" duration="10511000" />
+      <workItem from="1534826374400" duration="18662000" />
+      <workItem from="1534849135535" duration="1179000" />
+      <workItem from="1534898966059" duration="26836000" />
+      <workItem from="1534984898767" duration="30334000" />
+      <workItem from="1535070517030" duration="26067000" />
+      <workItem from="1535157396409" duration="24336000" />
+      <workItem from="1535330593280" duration="19834000" />
+      <workItem from="1535417183171" duration="38791000" />
+      <workItem from="1535519469304" duration="16637000" />
+      <workItem from="1535591232894" duration="16885000" />
+      <workItem from="1535613891797" duration="12924000" />
+      <workItem from="1535676408000" duration="29118000" />
+      <workItem from="1535766025331" duration="22428000" />
+      <workItem from="1535853113973" duration="2745000" />
+      <workItem from="1535856157161" duration="2359000" />
+      <workItem from="1535935580529" duration="22695000" />
+      <workItem from="1535966410686" duration="489000" />
+      <workItem from="1536022110765" duration="15642000" />
+      <workItem from="1536046896210" duration="20999000" />
+      <workItem from="1536146407965" duration="6739000" />
+      <workItem from="1536194418905" duration="22311000" />
+      <workItem from="1536280261542" duration="18475000" />
+      <workItem from="1536540268521" duration="40770000" />
+      <workItem from="1536806355741" duration="873000" />
+      <workItem from="1536809974028" duration="24629000" />
+      <workItem from="1536885771327" duration="20143000" />
+      <workItem from="1537009390354" duration="327000" />
+      <workItem from="1537011052776" duration="8930000" />
+      <workItem from="1537144998485" duration="23136000" />
+      <workItem from="1537230359152" duration="24054000" />
+      <workItem from="1537264899525" duration="168000" />
+      <workItem from="1537317653827" duration="49876000" />
+      <workItem from="1537490666946" duration="11318000" />
+      <workItem from="1537836660657" duration="2531000" />
+      <workItem from="1537843173571" duration="2120000" />
+      <workItem from="1537860655375" duration="112000" />
+      <workItem from="1537860774101" duration="3336000" />
+      <workItem from="1537866488121" duration="964000" />
+      <workItem from="1537922844977" duration="18771000" />
+      <workItem from="1538008821949" duration="34682000" />
+      <workItem from="1538095473537" duration="23855000" />
+      <workItem from="1538181487521" duration="20207000" />
+      <workItem from="1538267972620" duration="13019000" />
+      <workItem from="1538959954310" duration="14200000" />
+      <workItem from="1539044810220" duration="26278000" />
+      <workItem from="1539132070358" duration="22556000" />
+      <workItem from="1539219375457" duration="15132000" />
+      <workItem from="1539305825178" duration="18965000" />
+      <workItem from="1539346446895" duration="2098000" />
+      <workItem from="1539414615830" duration="1020000" />
+      <workItem from="1539564574027" duration="16592000" />
+      <workItem from="1539591548118" duration="1913000" />
+      <workItem from="1539651072292" duration="18024000" />
+      <workItem from="1539738111366" duration="7232000" />
+      <workItem from="1539747489963" duration="11974000" />
+      <workItem from="1539823492943" duration="17778000" />
+      <workItem from="1539911265724" duration="5376000" />
+      <workItem from="1539939883505" duration="848000" />
+      <workItem from="1540169560795" duration="4642000" />
+      <workItem from="1540266887262" duration="8740000" />
+      <workItem from="1540342890043" duration="12202000" />
+      <workItem from="1540515242930" duration="11562000" />
+      <workItem from="1540774048747" duration="2062000" />
+      <workItem from="1540806392848" duration="151000" />
+      <workItem from="1540806694358" duration="475000" />
+      <workItem from="1540860768219" duration="1937000" />
+      <workItem from="1540868248673" duration="1354000" />
+      <workItem from="1540949555411" duration="408000" />
+      <workItem from="1540950139967" duration="2267000" />
+      <workItem from="1540971986295" duration="2088000" />
+      <workItem from="1541038516873" duration="14587000" />
+      <workItem from="1541120682297" duration="1188000" />
+      <workItem from="1541127095809" duration="7209000" />
+      <workItem from="1541482288843" duration="4114000" />
+      <workItem from="1541646200766" duration="60000" />
+      <workItem from="1541730660793" duration="68000" />
+    </task>
+    <task id="LOCAL-00086" summary="首页显示">
+      <created>1537953495452</created>
+      <option name="number" value="00086" />
+      <option name="presentableId" value="LOCAL-00086" />
+      <option name="project" value="LOCAL" />
+      <updated>1537953495452</updated>
+    </task>
+    <task id="LOCAL-00087" summary="帖子图片bug修复">
+      <created>1538016459427</created>
+      <option name="number" value="00087" />
+      <option name="presentableId" value="LOCAL-00087" />
+      <option name="project" value="LOCAL" />
+      <updated>1538016459428</updated>
+    </task>
+    <task id="LOCAL-00088" summary="首页显示">
+      <created>1538025790904</created>
+      <option name="number" value="00088" />
+      <option name="presentableId" value="LOCAL-00088" />
+      <option name="project" value="LOCAL" />
+      <updated>1538025790904</updated>
+    </task>
+    <task id="LOCAL-00089" summary="收藏bug">
+      <created>1538048026112</created>
+      <option name="number" value="00089" />
+      <option name="presentableId" value="LOCAL-00089" />
+      <option name="project" value="LOCAL" />
+      <updated>1538048026112</updated>
+    </task>
+    <task id="LOCAL-00090" summary="置顶、权限">
+      <created>1538051866856</created>
+      <option name="number" value="00090" />
+      <option name="presentableId" value="LOCAL-00090" />
+      <option name="project" value="LOCAL" />
+      <updated>1538051866856</updated>
+    </task>
+    <task id="LOCAL-00091" summary="收藏">
+      <created>1538052801335</created>
+      <option name="number" value="00091" />
+      <option name="presentableId" value="LOCAL-00091" />
+      <option name="project" value="LOCAL" />
+      <updated>1538052801335</updated>
+    </task>
+    <task id="LOCAL-00092" summary="收藏bug处理、置顶">
+      <created>1538104492076</created>
+      <option name="number" value="00092" />
+      <option name="presentableId" value="LOCAL-00092" />
+      <option name="project" value="LOCAL" />
+      <updated>1538104492077</updated>
+    </task>
+    <task id="LOCAL-00093" summary="帖子分页问题">
+      <created>1538123145743</created>
+      <option name="number" value="00093" />
+      <option name="presentableId" value="LOCAL-00093" />
+      <option name="project" value="LOCAL" />
+      <updated>1538123145743</updated>
+    </task>
+    <task id="LOCAL-00094" summary="图片">
+      <created>1538188659140</created>
+      <option name="number" value="00094" />
+      <option name="presentableId" value="LOCAL-00094" />
+      <option name="project" value="LOCAL" />
+      <updated>1538188659141</updated>
+    </task>
+    <task id="LOCAL-00095" summary="首页显示">
+      <created>1538189638232</created>
+      <option name="number" value="00095" />
+      <option name="presentableId" value="LOCAL-00095" />
+      <option name="project" value="LOCAL" />
+      <updated>1538189638232</updated>
+    </task>
+    <task id="LOCAL-00096" summary="图片上传崩溃后续处理！">
+      <created>1538205155471</created>
+      <option name="number" value="00096" />
+      <option name="presentableId" value="LOCAL-00096" />
+      <option name="project" value="LOCAL" />
+      <updated>1538205155471</updated>
+    </task>
+    <task id="LOCAL-00097" summary="语音">
+      <created>1538208337967</created>
+      <option name="number" value="00097" />
+      <option name="presentableId" value="LOCAL-00097" />
+      <option name="project" value="LOCAL" />
+      <updated>1538208337967</updated>
+    </task>
+    <task id="LOCAL-00098" summary="bug修改完！">
+      <created>1538288359091</created>
+      <option name="number" value="00098" />
+      <option name="presentableId" value="LOCAL-00098" />
+      <option name="project" value="LOCAL" />
+      <updated>1538288359092</updated>
+    </task>
+    <task id="LOCAL-00099" summary="css">
+      <created>1538965441494</created>
+      <option name="number" value="00099" />
+      <option name="presentableId" value="LOCAL-00099" />
+      <option name="project" value="LOCAL" />
+      <updated>1538965441497</updated>
+    </task>
+    <task id="LOCAL-00100" summary="跳转显示">
+      <created>1538979824084</created>
+      <option name="number" value="00100" />
+      <option name="presentableId" value="LOCAL-00100" />
+      <option name="project" value="LOCAL" />
+      <updated>1538979824084</updated>
+    </task>
+    <task id="LOCAL-00101" summary="红点调整">
+      <created>1539046288420</created>
+      <option name="number" value="00101" />
+      <option name="presentableId" value="LOCAL-00101" />
+      <option name="project" value="LOCAL" />
+      <updated>1539046288420</updated>
+    </task>
+    <task id="LOCAL-00102" summary="首页回调显示">
+      <created>1539071438271</created>
+      <option name="number" value="00102" />
+      <option name="presentableId" value="LOCAL-00102" />
+      <option name="project" value="LOCAL" />
+      <updated>1539071438271</updated>
+    </task>
+    <task id="LOCAL-00103" summary="首页显示">
+      <created>1539138155965</created>
+      <option name="number" value="00103" />
+      <option name="presentableId" value="LOCAL-00103" />
+      <option name="project" value="LOCAL" />
+      <updated>1539138155965</updated>
+    </task>
+    <task id="LOCAL-00104" summary="实时显示、帖子、点赞、回复数量">
+      <created>1539142530667</created>
+      <option name="number" value="00104" />
+      <option name="presentableId" value="LOCAL-00104" />
+      <option name="project" value="LOCAL" />
+      <updated>1539142530667</updated>
+    </task>
+    <task id="LOCAL-00105" summary="单个删除红点">
+      <created>1539152618510</created>
+      <option name="number" value="00105" />
+      <option name="presentableId" value="LOCAL-00105" />
+      <option name="project" value="LOCAL" />
+      <updated>1539152618510</updated>
+    </task>
+    <task id="LOCAL-00106" summary="首页ajax并发问题">
+      <created>1539160744488</created>
+      <option name="number" value="00106" />
+      <option name="presentableId" value="LOCAL-00106" />
+      <option name="project" value="LOCAL" />
+      <updated>1539160744489</updated>
+    </task>
+    <task id="LOCAL-00107" summary="页面css">
+      <created>1539162416309</created>
+      <option name="number" value="00107" />
+      <option name="presentableId" value="LOCAL-00107" />
+      <option name="project" value="LOCAL" />
+      <updated>1539162416309</updated>
+    </task>
+    <task id="LOCAL-00108" summary="首页回显BUG">
+      <created>1539223726752</created>
+      <option name="number" value="00108" />
+      <option name="presentableId" value="LOCAL-00108" />
+      <option name="project" value="LOCAL" />
+      <updated>1539223726752</updated>
+    </task>
+    <task id="LOCAL-00109" summary="评论，跳转到指定评论">
+      <created>1539237122917</created>
+      <option name="number" value="00109" />
+      <option name="presentableId" value="LOCAL-00109" />
+      <option name="project" value="LOCAL" />
+      <updated>1539237122917</updated>
+    </task>
+    <task id="LOCAL-00110" summary="回调显示">
+      <created>1539329915684</created>
+      <option name="number" value="00110" />
+      <option name="presentableId" value="LOCAL-00110" />
+      <option name="project" value="LOCAL" />
+      <updated>1539329915684</updated>
+    </task>
+    <task id="LOCAL-00111" summary="首页显示">
+      <created>1539336138324</created>
+      <option name="number" value="00111" />
+      <option name="presentableId" value="LOCAL-00111" />
+      <option name="project" value="LOCAL" />
+      <updated>1539336138324</updated>
+    </task>
+    <task id="LOCAL-00112" summary="首页显示">
+      <created>1539414812497</created>
+      <option name="number" value="00112" />
+      <option name="presentableId" value="LOCAL-00112" />
+      <option name="project" value="LOCAL" />
+      <updated>1539414812498</updated>
+    </task>
+    <task id="LOCAL-00113" summary="jdk1.8 语音监听">
+      <created>1539573258764</created>
+      <option name="number" value="00113" />
+      <option name="presentableId" value="LOCAL-00113" />
+      <option name="project" value="LOCAL" />
+      <updated>1539573258764</updated>
+    </task>
+    <task id="LOCAL-00114" summary="异常提示">
+      <created>1539579659381</created>
+      <option name="number" value="00114" />
+      <option name="presentableId" value="LOCAL-00114" />
+      <option name="project" value="LOCAL" />
+      <updated>1539579659381</updated>
+    </task>
+    <task id="LOCAL-00115" summary="@css">
+      <created>1539591696992</created>
+      <option name="number" value="00115" />
+      <option name="presentableId" value="LOCAL-00115" />
+      <option name="project" value="LOCAL" />
+      <updated>1539591696993</updated>
+    </task>
+    <task id="LOCAL-00116" summary="首页显示">
+      <created>1539665723022</created>
+      <option name="number" value="00116" />
+      <option name="presentableId" value="LOCAL-00116" />
+      <option name="project" value="LOCAL" />
+      <updated>1539665723022</updated>
+    </task>
+    <task id="LOCAL-00117" summary="首页显示">
+      <created>1539675496930</created>
+      <option name="number" value="00117" />
+      <option name="presentableId" value="LOCAL-00117" />
+      <option name="project" value="LOCAL" />
+      <updated>1539675496930</updated>
+    </task>
+    <task id="LOCAL-00118" summary="图片修改">
+      <created>1539678097384</created>
+      <option name="number" value="00118" />
+      <option name="presentableId" value="LOCAL-00118" />
+      <option name="project" value="LOCAL" />
+      <updated>1539678097384</updated>
+    </task>
+    <task id="LOCAL-00119" summary="首页显示">
+      <created>1539741493708</created>
+      <option name="number" value="00119" />
+      <option name="presentableId" value="LOCAL-00119" />
+      <option name="project" value="LOCAL" />
+      <updated>1539741493708</updated>
+    </task>
+    <task id="LOCAL-00120" summary="首页显示">
+      <created>1539748442565</created>
+      <option name="number" value="00120" />
+      <option name="presentableId" value="LOCAL-00120" />
+      <option name="project" value="LOCAL" />
+      <updated>1539748442566</updated>
+    </task>
+    <task id="LOCAL-00121" summary="页面进度显示">
+      <created>1539752372508</created>
+      <option name="number" value="00121" />
+      <option name="presentableId" value="LOCAL-00121" />
+      <option name="project" value="LOCAL" />
+      <updated>1539752372508</updated>
+    </task>
+    <task id="LOCAL-00122" summary="发帖和评论">
+      <created>1539757804832</created>
+      <option name="number" value="00122" />
+      <option name="presentableId" value="LOCAL-00122" />
+      <option name="project" value="LOCAL" />
+      <updated>1539757804832</updated>
+    </task>
+    <task id="LOCAL-00123" summary="@人名 优化">
+      <created>1539851592907</created>
+      <option name="number" value="00123" />
+      <option name="presentableId" value="LOCAL-00123" />
+      <option name="project" value="LOCAL" />
+      <updated>1539851592908</updated>
+    </task>
+    <task id="LOCAL-00124" summary="@人名 优化">
+      <created>1539856773976</created>
+      <option name="number" value="00124" />
+      <option name="presentableId" value="LOCAL-00124" />
+      <option name="project" value="LOCAL" />
+      <updated>1539856773977</updated>
+    </task>
+    <task id="LOCAL-00125" summary="发帖和评论 发布名！">
+      <created>1539863037033</created>
+      <option name="number" value="00125" />
+      <option name="presentableId" value="LOCAL-00125" />
+      <option name="project" value="LOCAL" />
+      <updated>1539863037033</updated>
+    </task>
+    <task id="LOCAL-00126" summary="发布名！">
+      <created>1539940637685</created>
+      <option name="number" value="00126" />
+      <option name="presentableId" value="LOCAL-00126" />
+      <option name="project" value="LOCAL" />
+      <updated>1539940637686</updated>
+    </task>
+    <task id="LOCAL-00127" summary="css">
+      <created>1540270695460</created>
+      <option name="number" value="00127" />
+      <option name="presentableId" value="LOCAL-00127" />
+      <option name="project" value="LOCAL" />
+      <updated>1540270695460</updated>
+    </task>
+    <task id="LOCAL-00128" summary="发帖和评论 发布名！">
+      <created>1540281217000</created>
+      <option name="number" value="00128" />
+      <option name="presentableId" value="LOCAL-00128" />
+      <option name="project" value="LOCAL" />
+      <updated>1540281217000</updated>
+    </task>
+    <task id="LOCAL-00129" summary="删除版块，标识删除下的帖子和评论">
+      <created>1540351887192</created>
+      <option name="number" value="00129" />
+      <option name="presentableId" value="LOCAL-00129" />
+      <option name="project" value="LOCAL" />
+      <updated>1540351887192</updated>
+    </task>
+    <task id="LOCAL-00130" summary="无权限，返回无权限页面！">
+      <created>1540518240270</created>
+      <option name="number" value="00130" />
+      <option name="presentableId" value="LOCAL-00130" />
+      <option name="project" value="LOCAL" />
+      <updated>1540518240270</updated>
+    </task>
+    <task id="LOCAL-00131" summary="语音控制bug">
+      <created>1540524008216</created>
+      <option name="number" value="00131" />
+      <option name="presentableId" value="LOCAL-00131" />
+      <option name="project" value="LOCAL" />
+      <updated>1540524008216</updated>
+    </task>
+    <task id="LOCAL-00132" summary="部分页面修改">
+      <created>1540952680252</created>
+      <option name="number" value="00132" />
+      <option name="presentableId" value="LOCAL-00132" />
+      <option name="project" value="LOCAL" />
+      <updated>1540952680254</updated>
+    </task>
+    <task id="LOCAL-00133" summary="修改bug">
+      <created>1541061111755</created>
+      <option name="number" value="00133" />
+      <option name="presentableId" value="LOCAL-00133" />
+      <option name="project" value="LOCAL" />
+      <updated>1541061111758</updated>
+    </task>
+    <task id="LOCAL-00134" summary="去掉没用的jar包，优化编辑框！">
+      <created>1541484079155</created>
+      <option name="number" value="00134" />
+      <option name="presentableId" value="LOCAL-00134" />
+      <option name="project" value="LOCAL" />
+      <updated>1541484079158</updated>
+    </task>
+    <option name="localTasksCounter" value="135" />
+    <servers />
+  </component>
+  <component name="TestHistory">
+    <history-entry file="AppTest_testApp - 2018.09.29 at 08h 56m 50s.xml">
+      <configuration name="AppTest.testApp" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="AppTest_testApp - 2018.09.29 at 08h 58m 37s.xml">
+      <configuration name="AppTest.testApp" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="AppTest_testApp - 2018.09.29 at 08h 59m 41s.xml">
+      <configuration name="AppTest.testApp" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="AppTest_testApp - 2018.09.29 at 09h 01m 06s.xml">
+      <configuration name="AppTest.testApp" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="AppTest_testApp - 2018.09.29 at 09h 02m 15s.xml">
+      <configuration name="AppTest.testApp" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="AppTest_testApp - 2018.09.29 at 09h 03m 33s.xml">
+      <configuration name="AppTest.testApp" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="AppTest_testApp - 2018.09.29 at 09h 07m 08s.xml">
+      <configuration name="AppTest.testApp" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="AppTest_testApp - 2018.09.29 at 09h 10m 48s.xml">
+      <configuration name="AppTest.testApp" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="AppTest_testApp - 2018.09.29 at 09h 16m 31s.xml">
+      <configuration name="AppTest.testApp" configurationId="JUnit" />
+    </history-entry>
+    <history-entry file="AppTest_testApp - 2018.09.29 at 09h 23m 19s.xml">
+      <configuration name="AppTest.testApp" configurationId="JUnit" />
+    </history-entry>
+  </component>
+  <component name="TimeTrackingManager">
+    <option name="totallyTimeSpent" value="1080755000" />
+  </component>
+  <component name="TodoView">
+    <todo-panel id="selected-file">
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+    <todo-panel id="all">
+      <are-packages-shown value="true" />
+      <is-autoscroll-to-source value="true" />
+    </todo-panel>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
+    <layout>
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44769874" sideWeight="0.50771207" order="11" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32969153" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.38493723" sideWeight="0.4922879" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.47140864" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.37238494" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.69316596" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.2570694" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32969153" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="combo" />
+      <window_info id="设计师" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="JSF" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="调试" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32969153" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="运行" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
+      <window_info id="控制板" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+    </layout>
+    <layout-to-restore>
+      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.44769874" sideWeight="0.50771207" order="11" side_tool="true" content_ui="tabs" />
+      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32969153" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="CDI" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="7" side_tool="false" content_ui="combo" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="设计师" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="JSF" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.35425383" sideWeight="0.4922879" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="调试" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.37238494" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.47140864" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32969153" sideWeight="0.5" order="0" side_tool="true" content_ui="tabs" />
+      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.69316596" sideWeight="0.5" order="16" side_tool="false" content_ui="tabs" />
+      <window_info id="运行" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
+      <window_info id="控制板" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.24742931" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Problems" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Bean Validation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32969153" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32914925" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="true" content_ui="tabs" />
+    </layout-to-restore>
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="首页回调显示" />
+    <MESSAGE value="实时显示、帖子、点赞、回复数量" />
+    <MESSAGE value="单个删除红点" />
+    <MESSAGE value="首页ajax并发问题" />
+    <MESSAGE value="页面css" />
+    <MESSAGE value="首页回显BUG" />
+    <MESSAGE value="评论，跳转到指定评论" />
+    <MESSAGE value="回调显示" />
+    <MESSAGE value="jdk1.8 语音监听" />
+    <MESSAGE value="异常提示" />
+    <MESSAGE value="@css" />
+    <MESSAGE value="图片修改" />
+    <MESSAGE value="首页显示" />
+    <MESSAGE value="页面进度显示" />
+    <MESSAGE value="发帖和评论" />
+    <MESSAGE value="@人名 优化" />
+    <MESSAGE value="发布名！" />
+    <MESSAGE value="css" />
+    <MESSAGE value="发帖和评论 发布名！" />
+    <MESSAGE value="删除版块，标识删除下的帖子和评论" />
+    <MESSAGE value="无权限，返回无权限页面！" />
+    <MESSAGE value="语音控制bug" />
+    <MESSAGE value="部分页面修改" />
+    <MESSAGE value="修改bug" />
+    <MESSAGE value="去掉没用的jar包，优化编辑框！" />
+    <option name="LAST_COMMIT_MESSAGE" value="去掉没用的jar包，优化编辑框！" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <option name="time" value="350" />
+    </breakpoint-manager>
+    <watches-manager />
+  </component>
+  <component name="antWorkspaceConfiguration">
+    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
+    <option name="FILTER_TARGETS" value="false" />
+  </component>
+  <component name="debuggerHistoryManager">
+    <expressions id="evaluateExpression">
+      <expression>
+        <expression-string>plateId</expression-string>
+        <language-id>JAVA</language-id>
+        <evaluation-mode>EXPRESSION</evaluation-mode>
+      </expression>
+    </expressions>
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/wfd/page/vo/Count.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="5" column="18" lean-forward="false" selection-start-line="5" selection-start-column="13" selection-end-line="5" selection-end-column="18" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/wfd/page/controller/CollectionController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-550">
+          <caret line="32" column="24" lean-forward="true" selection-start-line="32" selection-start-column="24" selection-end-line="32" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis/mapper/CountMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="402">
+          <caret line="35" column="104" lean-forward="false" selection-start-line="35" selection-start-column="104" selection-end-line="35" selection-end-column="104" />
+          <folding>
+            <marker date="1541042364023" expanded="true" signature="727:1015" ph="SELECT tu.na... t_post_message" />
+            <marker date="1541042364023" expanded="true" signature="903:955" ph="select id fr... t_user" />
+            <marker date="1541042364023" expanded="true" signature="1115:1472" ph="select tu.na... t_post_message_like" />
+            <marker date="1541042364023" expanded="true" signature="1362:1415" ph="select id fr... t_user" />
+            <marker date="1541042364023" expanded="true" signature="1565:1826" ph="SELECT tu.na... t_plate_post" />
+            <marker date="1541042364023" expanded="true" signature="1724:1776" ph="select id fr... t_plate" />
+            <marker date="1541042364023" expanded="true" signature="1919:2070" ph="SELECT tpm.p... t_post_message" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/wfd/page/dao/CountMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="475">
+          <caret line="22" column="16" lean-forward="false" selection-start-line="22" selection-start-column="16" selection-end-line="22" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/wfd/page/service/impl/CountServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="491">
+          <caret line="36" column="37" lean-forward="false" selection-start-line="36" selection-start-column="37" selection-end-line="36" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/wfd/page/service/CountService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="18" column="16" lean-forward="false" selection-start-line="18" selection-start-column="16" selection-end-line="18" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/post/post_detail.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="9">
+          <caret line="766" column="43" lean-forward="false" selection-start-line="766" selection-start-column="43" selection-end-line="766" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/wfd/page/controller/PostController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="134">
+          <caret line="86" column="48" lean-forward="false" selection-start-line="86" selection-start-column="36" selection-end-line="86" selection-end-column="48" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-web/4.3.7.RELEASE/spring-web-4.3.7.RELEASE-sources.jar!/org/springframework/web/method/support/InvocableHandlerMethod.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="127">
+          <caret line="211" column="0" lean-forward="false" selection-start-line="211" selection-start-column="0" selection-end-line="211" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_131/src.zip!/java/lang/Runnable.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="491">
+          <caret line="67" column="25" lean-forward="false" selection-start-line="67" selection-start-column="25" selection-end-line="67" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/count/hotQeustion.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="103" column="184" lean-forward="false" selection-start-line="103" selection-start-column="184" selection-end-line="103" selection-end-column="184" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/spring-aop/4.3.7.RELEASE/spring-aop-4.3.7.RELEASE-sources.jar!/org/springframework/aop/support/AopUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="332" column="0" lean-forward="false" selection-start-line="332" selection-start-column="0" selection-end-line="332" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/wfd/page/dao/TPlatePostMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="125">
+          <caret line="124" column="75" lean-forward="false" selection-start-line="124" selection-start-column="67" selection-end-line="124" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis/mapper/TPlatePostMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="584" column="53" lean-forward="false" selection-start-line="584" selection-start-column="40" selection-end-line="584" selection-end-column="53" />
+          <folding>
+            <marker date="1541057570771" expanded="true" signature="4565:5701" ph="select t1.*,... t_plate_post" />
+            <marker date="1541057570771" expanded="true" signature="4578:4642" ph="select count... t_post_view_log" />
+            <marker date="1541057570771" expanded="true" signature="4683:4748" ph="select count... t_plate_post_img" />
+            <marker date="1541057570771" expanded="true" signature="4766:4829" ph="select count... t_post_message" />
+            <marker date="1541057570771" expanded="true" signature="4851:4911" ph="select count... t_post_like" />
+            <marker date="1541057570771" expanded="true" signature="5198:5257" ph="select plate... t_plate_user" />
+            <marker date="1541057570771" expanded="true" signature="6729:6884" ph="select , fro... " />
+            <marker date="1541057570771" expanded="true" signature="6969:7031" ph="delete from t_plate_post... " />
+            <marker date="1541057570771" expanded="true" signature="7138:7162" ph="delete from t_plate_post... " />
+            <marker date="1541057570771" expanded="true" signature="7345:7718" ph="insert into t_plate_post... " />
+            <marker date="1541057570771" expanded="true" signature="9286:9319" ph="select count... t_plate_post" />
+            <marker date="1541057570771" expanded="true" signature="10570:11011" ph="update t_plate_post... " />
+            <marker date="1541057570771" expanded="true" signature="11182:11567" ph="update t_plate_post... " />
+            <marker date="1541057570771" expanded="true" signature="11781:12530" ph="update t_plate_post... " />
+            <marker date="1541057570771" expanded="true" signature="12642:13030" ph="update t_plate_post... " />
+            <marker date="1541057570771" expanded="true" signature="13133:13472" ph="update t_plate_post... " />
+            <marker date="1541057570771" expanded="true" signature="13552:14663" ph="SELECT tpp.m... pnum" />
+            <marker date="1541057570771" expanded="true" signature="13787:14590" ph="select tpmg.... t_plate_post" />
+            <marker date="1541057570771" expanded="true" signature="14082:14197" ph="SELECT count... t_post_message" />
+            <marker date="1541057570771" expanded="true" signature="14250:14351" ph="SELECT count... t_post_like" />
+            <marker date="1541057570771" expanded="true" signature="15084:15199" ph="SELECT count... t_post_message" />
+            <marker date="1541057570771" expanded="true" signature="15252:15353" ph="SELECT count... t_post_like" />
+            <marker date="1541057570771" expanded="true" signature="15934:18085" ph="select tpp.i... id" />
+            <marker date="1541057570771" expanded="true" signature="16267:18013" ph="select tpp.i... t_plate_post" />
+            <marker date="1541057570771" expanded="true" signature="16772:16887" ph="SELECT count... t_post_message" />
+            <marker date="1541057570771" expanded="true" signature="16940:17041" ph="SELECT count... t_post_like" />
+            <marker date="1541057570771" expanded="true" signature="17208:17273" ph="select tpl2.... t_post_like" />
+            <marker date="1541057570771" expanded="true" signature="17325:17437" ph="select count... t_post_view_log" />
+            <marker date="1541057570771" expanded="true" signature="18178:20265" ph="select tpp.i... id" />
+            <marker date="1541057570771" expanded="true" signature="18510:20193" ph="select tpp .... t_plate_post" />
+            <marker date="1541057570771" expanded="true" signature="18952:19067" ph="SELECT count... t_post_message" />
+            <marker date="1541057570771" expanded="true" signature="19120:19221" ph="SELECT count... t_post_like" />
+            <marker date="1541057570771" expanded="true" signature="19388:19453" ph="select tpl2.... t_post_like" />
+            <marker date="1541057570771" expanded="true" signature="19505:19617" ph="select count... t_post_view_log" />
+            <marker date="1541057570771" expanded="true" signature="20352:22451" ph="select tpp.i... user_type" />
+            <marker date="1541057570771" expanded="true" signature="20684:22379" ph="select tu.us... t_plate_post" />
+            <marker date="1541057570771" expanded="true" signature="21180:21295" ph="SELECT count... t_post_message" />
+            <marker date="1541057570771" expanded="true" signature="21348:21449" ph="SELECT count... t_post_like" />
+            <marker date="1541057570771" expanded="true" signature="21570:21635" ph="select tpl2.... t_post_like" />
+            <marker date="1541057570771" expanded="true" signature="21687:21799" ph="select count... t_post_view_log" />
+            <marker date="1541057570771" expanded="true" signature="22536:24704" ph="select tpp.i... id" />
+            <marker date="1541057570771" expanded="true" signature="22869:24632" ph="select tpp.i... t_plate_post" />
+            <marker date="1541057570771" expanded="true" signature="23374:23489" ph="SELECT count... t_post_message" />
+            <marker date="1541057570771" expanded="true" signature="23542:23643" ph="SELECT count... t_post_like" />
+            <marker date="1541057570771" expanded="true" signature="23810:23875" ph="select tpl2.... t_post_like" />
+            <marker date="1541057570771" expanded="true" signature="23927:24039" ph="select count... t_post_view_log" />
+            <marker date="1541057570771" expanded="true" signature="24799:26903" ph="select tpp.i... id" />
+            <marker date="1541057570771" expanded="true" signature="25131:26831" ph="select tpp .... t_plate_post" />
+            <marker date="1541057570771" expanded="true" signature="25573:25688" ph="SELECT count... t_post_message" />
+            <marker date="1541057570771" expanded="true" signature="25741:25842" ph="SELECT count... t_post_like" />
+            <marker date="1541057570771" expanded="true" signature="26009:26074" ph="select tpl2.... t_post_like" />
+            <marker date="1541057570771" expanded="true" signature="26126:26238" ph="select count... t_post_view_log" />
+            <marker date="1541057570771" expanded="true" signature="26991:29105" ph="select tpp.i... user_type" />
+            <marker date="1541057570771" expanded="true" signature="27323:29033" ph="select tu.us... t_plate_post" />
+            <marker date="1541057570771" expanded="true" signature="27819:27934" ph="SELECT count... t_post_message" />
+            <marker date="1541057570771" expanded="true" signature="27987:28088" ph="SELECT count... t_post_like" />
+            <marker date="1541057570771" expanded="true" signature="28208:28273" ph="select tpl2.... t_post_like" />
+            <marker date="1541057570771" expanded="true" signature="28325:28437" ph="select count... t_post_view_log" />
+            <marker date="1541057570771" expanded="true" signature="29195:29839" ph="select disti... t_plate_post" />
+            <marker date="1541057570771" expanded="true" signature="29937:30518" ph="select disti... t_plate_post" />
+            <marker date="1541057570771" expanded="true" signature="30609:31107" ph="select disti... t_plate_post" />
+            <marker date="1541057570771" expanded="true" signature="31189:31908" ph="select tpvl2... t_plate_post" />
+            <marker date="1541057570771" expanded="true" signature="31363:31460" ph="select count... t_post_view_log" />
+            <marker date="1541057570771" expanded="true" signature="31515:31611" ph="select count... t_post_like" />
+            <marker date="1541057570771" expanded="true" signature="31756:31821" ph="select tpl2.... t_post_like" />
+            <marker date="1541057570771" expanded="true" signature="31991:32082" ph="update t_plate_post... " />
+            <marker date="1541057570771" expanded="true" signature="32188:32260" ph="select id fr... t_plate_post" />
+            <marker date="1541057570771" expanded="true" signature="32337:34048" ph="select tpp.i... user_type" />
+            <marker date="1541057570771" expanded="true" signature="32669:33976" ph="select tu.us... t_plate_post" />
+            <marker date="1541057570771" expanded="true" signature="33165:33280" ph="SELECT count... t_post_message" />
+            <marker date="1541057570771" expanded="true" signature="33333:33434" ph="SELECT count... t_post_like" />
+            <marker date="1541057570771" expanded="true" signature="33554:33619" ph="select tpl2.... t_post_like" />
+            <marker date="1541057570771" expanded="true" signature="33671:33783" ph="select count... t_post_view_log" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/wfd/page/service/impl/PostServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="147" column="57" lean-forward="false" selection-start-line="147" selection-start-column="57" selection-end-line="147" selection-end-column="57" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/wfd/page/service/PostService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="36" column="21" lean-forward="false" selection-start-line="36" selection-start-column="21" selection-end-line="36" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/wfd/common/utils/TimeUtils.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="826">
+          <caret line="279" column="11" lean-forward="false" selection-start-line="279" selection-start-column="11" selection-end-line="279" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="248" column="0" lean-forward="false" selection-start-line="248" selection-start-column="0" selection-end-line="248" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/whty/wfd/Test.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3325">
+          <caret line="23" column="24" lean-forward="false" selection-start-line="23" selection-start-column="12" selection-end-line="23" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/whty/wfd/Test2.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="275">
+          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external/lib.dom.d.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="137">
+          <caret line="5511" column="4" lean-forward="false" selection-start-line="5511" selection-start-column="4" selection-end-line="5511" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/message/atPageMessage.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="88">
+          <caret line="543" column="32" lean-forward="true" selection-start-line="543" selection-start-column="32" selection-end-line="543" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/message/add_message.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="213">
+          <caret line="84" column="0" lean-forward="true" selection-start-line="84" selection-start-column="0" selection-end-line="84" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/post/add_post.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="412">
+          <caret line="116" column="10" lean-forward="true" selection-start-line="116" selection-start-column="10" selection-end-line="116" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/wfd/page/service/PersonCenterService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="250">
+          <caret line="10" column="12" lean-forward="false" selection-start-line="10" selection-start-column="12" selection-end-line="10" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/wfd/page/vo/Message.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="447">
+          <caret line="23" column="16" lean-forward="false" selection-start-line="23" selection-start-column="16" selection-end-line="23" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/wfd/page/dao/MessageMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="11" column="12" lean-forward="false" selection-start-line="11" selection-start-column="12" selection-end-line="11" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis/mapper/MessageMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="17" column="17" lean-forward="true" selection-start-line="17" selection-start-column="17" selection-end-line="17" selection-end-column="17" />
+          <folding>
+            <marker date="1541149837939" expanded="true" signature="1023:1871" ph="select * fro... count" />
+            <marker date="1541149837939" expanded="true" signature="1042:1229" ph="select count... t_post_message_alt" />
+            <marker date="1541149837939" expanded="true" signature="1239:1498" ph="select count... t_post_message_like" />
+            <marker date="1541149837939" expanded="true" signature="1507:1682" ph="select count... t_post_like" />
+            <marker date="1541149837939" expanded="true" signature="1691:1869" ph="select count... t_post_message" />
+            <marker date="1541149837939" expanded="true" signature="1992:2806" ph="select * fro... count" />
+            <marker date="1541149837939" expanded="true" signature="2011:2110" ph="select count... t_plate_post" />
+            <marker date="1541149837939" expanded="true" signature="2119:2281" ph="select count... t_post_message" />
+            <marker date="1541149837939" expanded="true" signature="2290:2384" ph="select count... t_post_message_reply" />
+            <marker date="1541149837939" expanded="true" signature="2393:2547" ph="select count... t_post_like" />
+            <marker date="1541149837939" expanded="true" signature="2556:2804" ph="select count... t_post_message_like" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/wfd/page/service/impl/PersonCenterServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="137">
+          <caret line="19" column="0" lean-forward="false" selection-start-line="19" selection-start-column="0" selection-end-line="19" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/like/like.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="77" column="63" lean-forward="false" selection-start-line="77" selection-start-column="57" selection-end-line="77" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/wfd/page/model/TPostMessage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="28" column="26" lean-forward="false" selection-start-line="28" selection-start-column="20" selection-end-line="28" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/wfd/page/service/MessageService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="190">
+          <caret line="38" column="23" lean-forward="false" selection-start-line="38" selection-start-column="23" selection-end-line="38" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/wfd/page/service/impl/MessageServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="176" column="36" lean-forward="true" selection-start-line="176" selection-start-column="36" selection-end-line="176" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/wfd/page/dao/TPostMessageMapper.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="290">
+          <caret line="117" column="23" lean-forward="false" selection-start-line="117" selection-start-column="23" selection-end-line="117" selection-end-column="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis/mapper/TPostMessageMapper.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="403" column="110" lean-forward="false" selection-start-line="403" selection-start-column="110" selection-end-line="403" selection-end-column="110" />
+          <folding>
+            <marker date="1541150600407" expanded="true" signature="5686:6001" ph="select t1.*,... t_post_message" />
+            <marker date="1541150600407" expanded="true" signature="5734:5802" ph="select count... t_post_message_like" />
+            <marker date="1541150600407" expanded="true" signature="6548:6705" ph="select , fro... " />
+            <marker date="1541150600407" expanded="true" signature="6791:6855" ph="delete from t_post_message... " />
+            <marker date="1541150600407" expanded="true" signature="6964:6990" ph="delete from t_post_message... " />
+            <marker date="1541150600407" expanded="true" signature="7175:7627" ph="insert into t_post_message... " />
+            <marker date="1541150600407" expanded="true" signature="9207:9242" ph="select count... t_post_message" />
+            <marker date="1541150600407" expanded="true" signature="10500:10930" ph="update t_post_message... " />
+            <marker date="1541150600407" expanded="true" signature="11101:11475" ph="update t_post_message... " />
+            <marker date="1541150600407" expanded="true" signature="11691:12430" ph="update t_post_message... " />
+            <marker date="1541150600407" expanded="true" signature="12544:12921" ph="update t_post_message... " />
+            <marker date="1541150600407" expanded="true" signature="13026:13354" ph="update t_post_message... " />
+            <marker date="1541150600407" expanded="true" signature="13969:14092" ph="select tpml.... t_post_message_like" />
+            <marker date="1541150600407" expanded="true" signature="14245:14315" ph="select * fro... t_post_message_like" />
+            <marker date="1541150600407" expanded="true" signature="14733:15257" ph="SELECT tm.*,... t_post_message" />
+            <marker date="1541150600407" expanded="true" signature="15338:15435" ph="update t_post_message... " />
+            <marker date="1541150600407" expanded="true" signature="15787:15876" ph="update t_post_message... " />
+            <marker date="1541150600407" expanded="true" signature="15963:16102" ph="update t_post_message... " />
+            <marker date="1541150600407" expanded="true" signature="16209:16867" ph="select tufm.... t_post_message" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/message/reply_message.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="500">
+          <caret line="126" column="31" lean-forward="false" selection-start-line="126" selection-start-column="31" selection-end-line="126" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/wfd/page/controller/ReplyController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="30" column="55" lean-forward="false" selection-start-line="30" selection-start-column="55" selection-end-line="30" selection-end-column="55" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/wfd/page/controller/CountController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2149">
+          <caret line="60" column="0" lean-forward="true" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/test2.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/wfd/page/controller/MessageController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-3670">
+          <caret line="48" column="13" lean-forward="false" selection-start-line="48" selection-start-column="13" selection-end-line="48" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/wfd/common/interceptor/MyInterceptor.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="350">
+          <caret line="36" column="85" lean-forward="false" selection-start-line="36" selection-start-column="20" selection-end-line="36" selection-end-column="85" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/wfd/page/controller/IndexController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="278">
+          <caret line="474" column="51" lean-forward="true" selection-start-line="472" selection-start-column="12" selection-end-line="474" selection-end-column="51" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/wfd/main/ApplicationConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="166">
+          <caret line="19" column="32" lean-forward="false" selection-start-line="19" selection-start-column="32" selection-end-line="19" selection-end-column="32" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/wfd/page/controller/TestController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="175">
+          <caret line="48" column="0" lean-forward="false" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$MAVEN_REPOSITORY$/org/springframework/boot/spring-boot-autoconfigure/1.5.2.RELEASE/spring-boot-autoconfigure-1.5.2.RELEASE.jar!/org/springframework/boot/autoconfigure/jdbc/DataSourceProperties.class">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="155">
+          <caret line="144" column="16" lean-forward="false" selection-start-line="144" selection-start-column="16" selection-end-line="144" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/target/classes/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-875">
+          <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/com/whty/wfd/common/aliDruid/DruidConfig.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="29" column="43" lean-forward="false" selection-start-line="29" selection-start-column="43" selection-end-line="29" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/logback.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-683">
+          <caret line="4" column="18" lean-forward="false" selection-start-line="4" selection-start-column="10" selection-end-line="4" selection-end-column="18" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/application.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1075">
+          <caret line="43" column="27" lean-forward="false" selection-start-line="43" selection-start-column="27" selection-end-line="43" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/templates/index.ftl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="27">
+          <caret line="420" column="35" lean-forward="false" selection-start-line="420" selection-start-column="30" selection-end-line="420" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/com/whty/wfd/AppTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="25">
+          <caret line="36" column="21" lean-forward="false" selection-start-line="36" selection-start-column="21" selection-end-line="36" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+  </component>
+  <component name="masterDetails">
+    <states>
+      <state key="ArtifactsStructureConfigurable.UI">
+        <settings>
+          <artifact-editor />
+          <last-edited>wfd:war</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+                <option value="0.5" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="FacetStructureConfigurable.UI">
+        <settings>
+          <last-edited>Spring</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="GlobalLibrariesConfigurable.UI">
+        <settings>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="JdkListConfigurable.UI">
+        <settings>
+          <last-edited>1.7</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ModuleStructureConfigurable.UI">
+        <settings>
+          <last-edited>wfd</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.36732328" />
+                <option value="0.6" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectJDKs.UI">
+        <settings>
+          <last-edited>1.7</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.2" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+      <state key="ProjectLibrariesConfigurable.UI">
+        <settings>
+          <last-edited>Maven: com.alibaba:druid:1.1.8</last-edited>
+          <splitter-proportions>
+            <option name="proportions">
+              <list>
+                <option value="0.36732328" />
+              </list>
+            </option>
+          </splitter-proportions>
+        </settings>
+      </state>
+    </states>
+  </component>
+</project>

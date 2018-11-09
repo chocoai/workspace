@@ -1,0 +1,28 @@
+.browser { position: relative; width: 100%; height: 460px; overflow: hidden; }
+@media (max-width: 720px) {
+	.iphone { width: 100%; height: 100%; padding: 0; background: none; }
+	.browser { width: 100%; height: 100%; }
+}
+/*选择地区*/
+.express-area { border-bottom: 1px solid #f3f3f3; height: 46px; line-height: 46px;}
+.express-area a { display: block; background: url(../images/link-arrow.png) no-repeat 95% 50%; line-height: 46px; height: 46px; float: left; width: 100%; background-size: 1rem 1rem; }
+.express-area dl { position: relative; margin-bottom: 0; height: 46px; line-height: 46px;} 
+.express-area dl dt { position: absolute; top: 0; left: 0; font-size: 14px; color: #666; height: 46px; line-height: 46px; font-weight: normal; }
+.express-area dl dd {  text-align: justify; height: 46px; line-height: 46px; right: 0; position: absolute; padding-right: 0; padding-left: 12px; }
+/*选择地区弹层*/
+.express-area-box { position: absolute; bottom: -100%; left: 50%; z-index: 15; width: 320px; margin-left: -160px; background-color: #fff; color: #4d525d; }
+.express-area-box header { position: relative; border-top: 1px solid #e2e2e2; border-bottom: 1px solid #e2e2e2; }
+.express-area-box header h3 { text-align: center; font-size: 15px; line-height: 40px; height: 40px; margin-top: 0; margin-bottom: 0; }
+.express-area-box header .back,.express-area-box header .close { position: absolute; top: 0; line-height: 40px; color: #666; font-size: 20px; padding-left: 15px; padding-right: 15px; height: 40px; align-items:center; display: -webkit-flex;}
+.express-area-box header .back { display: none; left: 0;}
+.express-area-box header .close { right: 0; color: #000;}
+.express-area-box article { height: 250px; overflow-y: scroll; }
+.area-list li { padding: 10px 15px; border-bottom: 1px solid #f3f3f3; text-align: justify; font-size: 14px; }
+@media (max-width: 720px) {
+	.express-area-box { position: fixed; left: 0; width: 100%; margin-left: 0; }
+}
+/*遮罩层*/
+.mask { display: none; position: absolute; top: 0; left: 0; z-index: 12; width: 100%; height: 100%; background-color: rgba(0,0,0,.5); }
+@media (max-width: 720px) {
+	.mask { position: fixed; }
+}

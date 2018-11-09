@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.demo.dao.UseCountDao">
+
+	<resultMap type="com.whty.assis.demo.model.AreaMonthUsageCount" id="AreaMonthUsageCountResult">		
+		<result property="orgName" column="org_name" />
+		<result property="createTime" column="create_time" />
+		<result property="areaCode" column="area_code" />
+		<result property="areaName" column="area_name" />
+		<result property="rate" column="rate" />
+		<result property="previousUseCount" column="previous_use_count" />
+		<result property="useCount" column="use_count" />
+		<result property="updateTime" column="update_time" />
+		<result property="year" column="year" />
+		<result property="month" column="month" />
+		<result property="platformCode" column="platform_code" />
+		<result property="platformName" column="platform_name"/>
+		<result property="orgUseRanking" column="org_use_ranking"/>
+		<result property="areaPercent" column="area_percent"/>
+	</resultMap>
+
+	<resultMap type="com.whty.assis.demo.model.OrgMonthUsageCount" id="OrgMonthUsageCountResult">		
+		<result property="orgId" column="org_id" />
+		<result property="orgName" column="org_name" />
+		<result property="createTime" column="create_time" />
+		<result property="areaCode" column="area_code" />
+		<result property="areaName" column="area_name" />
+		<result property="rate" column="rate" />
+		<result property="previousUseCount" column="previous_use_count" />
+		<result property="useCount" column="use_count" />
+		<result property="updateTime" column="update_time" />
+		<result property="year" column="year" />
+		<result property="month" column="month" />
+		<result property="platformCode" column="platform_code" />
+		<result property="platformName" column="platform_name"/>
+		<result property="classRanking" column="class_ranking"/>
+		<result property="orgPercent" column="org_percent"/>
+		<result property="classId" column="class_id"/>
+		<result property="className" column="class_name"/>
+	</resultMap>
+
+
+	<resultMap type="com.whty.assis.demo.model.UserMonthUsageCount" id="UserMonthUsageCountResult">		
+		<result property="orgId" column="org_id" />
+		<result property="userId" column="user_id" />
+		<result property="userName" column="user_name" />
+		<result property="orgName" column="org_name" />
+		<result property="createTime" column="create_time" />
+		<result property="areaCode" column="area_code" />
+		<result property="areaName" column="area_name" />
+		<result property="rate" column="rate" />
+		<result property="previousUseCount" column="previous_use_count" />
+		<result property="useCount" column="use_count" />
+		<result property="updateTime" column="update_time" />
+		<result property="year" column="year" />
+		<result property="month" column="month" />
+		<result property="platformCode" column="platform_code" />
+		<result property="platformName" column="platform_name"/>
+		<result property="classRanking" column="class_ranking"/>
+		<result property="orgPercent" column="org_percent"/>
+		<result property="classId" column="class_id"/>
+		<result property="className" column="class_name"/>
+		<result property="classPercent" column="class_percent"/>
+	</resultMap>
+
+
+	<select id="getAreaMonthUsageCountData" parameterType="map" resultMap="AreaMonthUsageCountResult">
+		select sum(t1.use_count) as use_count,t1.area_code,t2.area_name
+            from TA_AREA_MONTH_USAGE_COUNT t1 left join TA_AREA t2 on t1.area_code = t2.area_code left join TA_BASE_PROPERTY t3 on t1.platform_code = t3.platform_code and t3.property_key='platform_url'
+          where 1=1
+			<if test="year != null ">and t1.year = #{year}</if>
+			<if test="month != null">and t1.month = #{month}</if>
+			<if test="platformCode != null">and t1.platform_code = #{platformCode}</if>
+			<if test="areaid != null and areaid != ''">and t1.area_code like #{areaid}||'%'</if>
+			<if test="orgName !=null and orgName!=''">and t1.org_name like '%'||#{orgName}||'%'</if>
+			<if test="provinceCode !=null and provinceCode !=''"> and t1.area_code in(select area_code from TA_AREA where parent_id=#{provinceCode} and level_id='2')</if>
+	 	group by t1.area_code,t2.area_name
+	</select>
+
+
+	<select id="getAreaCountDataGroupByArea" parameterType="map" resultMap="AreaMonthUsageCountResult">
+		select t1.area_code,t2.area_name,sum(use_count) as use_count,count(*) as orgUseRanking from TA_AREA_MONTH_USAGE_COUNT as t1 left join TA_AREA as t2 on t1.area_code = t2.area_code
+		where 1=1
+			<if test="year !=null">and t1.year=#{year}</if>
+			<if test="month !=null">and t1.month=#{month}</if>
+			<if test="areaCode !=null and areaCode !=''">and t1.area_code = #{areaCode}</if>
+			<if test="provinceCode !=null and provinceCode !=''"> and t1.area_code in(select area_code from TA_AREA where parent_id=#{provinceCode} and level_id='2')</if>
+			group by t1.area_code,t2.area_name order by use_count desc
+	</select>
+
+
+	<select id="getOrgCountDataGroupByOrg" parameterType="map" resultMap="OrgMonthUsageCountResult">
+		select t2.area_name,t1.area_code, t1.org_id,t1.org_name,sum(use_count) as use_count from TA_ORG_MONTH_USAGE_COUNT t1 left join TA_AREA t2 on t1.area_code = t2.area_code
+		where 1=1
+		<if test="year !=null">and t1.year=#{year}</if>
+		<if test="month !=null">and t1.month=#{month}</if>
+		<if test="areaCode !=null and areaCode !=''">and t1.area_code = #{areaCode}</if>
+		<if test="cityCode !=null and cityCode !=''">and t1.area_code = #{cityCode}</if>
+		<if test="orgName !=null and orgName!=''">and t1.org_name like '%'||#{orgName}||'%'</if>
+		<if test="provinceCode !=null and provinceCode !=''"> and t1.area_code in(select area_code from TA_AREA where parent_id=#{provinceCode} and level_id='2')</if>	
+		group by t1.org_id,t1.org_name,t1.area_code,t2.area_name order by use_count desc
+	</select>
+
+		
+	<select id="getTaUserInfo" parameterType="map" resultType="java.util.HashMap">
+		select user_name,user_account,org_name,login_count,last_time from TA_USER where 1=1
+		<if test="orgId !=null and orgId !='' ">and org_Id=#{orgId}</if>
+		<if test="userId !=null and userId !='' ">and user_Id=#{userId}</if>
+		<if test="platformCode !=null and platformCode !='' ">and platform_id=#{platformCode}</if>
+	</select>
+
+	<select id="getPlatformCodeByUserAndOrgId" parameterType="map" resultType="java.util.HashMap">
+		select platform_code from TA_USER_MONTH_USAGE_COUNT
+		where 1=1 
+		<if test="orgId !=null and orgId !='' ">and org_Id=#{orgId}</if>
+		<if test="userId !=null and userId !='' ">and user_Id=#{userId}</if>
+		group by platform_code
+	</select>
+
+	<select id="getUserCountDataGroupByUser" parameterType="map" resultMap="UserMonthUsageCountResult">
+		select t1.user_id,t1.user_name,t1.area_code,t1.org_name,t2.area_name,sum(use_count) as use_count,t1.org_id from TA_USER_MONTH_USAGE_COUNT t1 left join TA_AREA t2 on t1.area_code = t2.area_code
+  		where 1=1
+  		<if test="year !=null">and t1.year=#{year}</if>
+		<if test="month !=null">and t1.month=#{month}</if>
+		<if test="cityCode !=null and cityCode !=''">and t1.area_code = #{cityCode}</if>
+		<if test="orgId !=null and orgId !='' ">and t1.org_Id=#{orgId}</if>
+		<if test="orgName !=null and orgName!=''">and t1.org_name like '%'||#{orgName}||'%'</if>
+		<if test="provinceCode !=null and provinceCode !=''"> and t1.area_code in(select area_code from TA_AREA where parent_id=#{provinceCode} and level_id='2')</if>
+  		group by t1.user_id,t1.user_name,t1.area_code,t1.org_id,t2.area_name,t1.org_name order by use_count desc
+	</select>
+	
+
+	<!-- 区域月统计 -->
+	<select id="getAreaMonthUsageCount" parameterType="map" resultMap="AreaMonthUsageCountResult">
+		select t1.area_percent,t1.org_use_ranking,t1.org_id,t1.org_name,t3.platform_name,t1.platform_code,t1.use_count,t1.year,t1.month,t1.create_time,t1.update_time,t1.rate,t1.previous_use_count,t1.area_code,t2.area_name
+			from TA_AREA_MONTH_USAGE_COUNT t1 left join TA_AREA t2 on t1.area_code = t2.area_code left join TA_BASE_PROPERTY t3 on t1.platform_code = t3.platform_code and t3.property_key='platform_url'
+		where 1=1
+			<if test="year != null ">and t1.year = #{year}</if>
+			<if test="month != null">and t1.month = #{month}</if>
+			<if test="platformCode != null">and t1.platform_code = #{platformCode}</if>
+			<if test="areaid != null and areaid != ''">and t1.area_code like #{areaid}||'%'</if>
+			<if test="orgName !=null and orgName!=''">and t1.org_name like '%'||#{orgName}||'%'</if>
+			<if test="provinceCode !=null and provinceCode !=''"> and t1.area_code in(select area_code from ta_area where parent_id=#{provinceCode} and level_id='2')</if>
+			order by create_time desc
+	</select>
+
+
+	<!-- 机构月统计，统计学校总数 -->
+	<select id="getOrgMonthUsageCountEcharts" parameterType="map" resultMap="OrgMonthUsageCountResult">
+	select t1.org_id,t1.org_name,sum(use_count) as use_count
+	from TA_ORG_MONTH_USAGE_COUNT t1 left join TA_AREA t2 on t1.area_code = t2.area_code left join TA_BASE_PROPERTY t3 on t1.platform_code = t3.platform_code and t3.property_key='platform_url'
+    where 1=1
+			<if test="orgId != null and orgId != ''">and t1.org_id=#{orgId}</if>
+			<if test="userId != null and userId != ''">and t1.user_id=#{userId}</if>
+			<if test="year != null ">and t1.year = #{year}</if>
+			<if test="month != null">and t1.month = #{month}</if>
+			<if test="platformCode != null and orgId != ''">and t1.platform_code = #{platformCode}</if>
+			<if test="areaid != null and areaid != ''">and t1.area_code like #{areaid}||'%'</if>
+			<if test="orgName !=null and orgName!=''">and t1.org_name like '%'||#{orgName}||'%'</if>
+			<if test="provinceCode !=null and provinceCode !=''"> and t1.area_code in(select area_code from TA_AREA where parent_id=#{provinceCode} and level_id='2')</if>
+			<if test="cityCode !=null and cityCode!=''">and t1.area_code =#{cityCode}</if>
+			group by org_id,org_name 
+	</select>
+
+	<!-- 机构月统计 -->
+	<select id="getOrgMonthUsageCount" parameterType="map" resultMap="OrgMonthUsageCountResult">
+	select t1.class_ranking,t1.org_percent,t1.class_name,t1.class_id, t3.platform_name,t1.platform_code,t1.org_id,t1.org_name,t1.use_count,t1.year,t1.month,t1.create_time,t1.update_time,t1.rate,t1.previous_use_count,t1.area_code,t2.area_name
+            from TA_ORG_MONTH_USAGE_COUNT t1 left join TA_AREA t2 on t1.area_code = t2.area_code left join TA_BASE_PROPERTY t3 on t1.platform_code = t3.platform_code and t3.property_key='platform_url'
+    where 1=1
+			<if test="orgId != null and orgId != ''">and t1.org_id=#{orgId}</if>
+			<if test="userId != null and userId != ''">and t1.user_id=#{userId}</if>
+			<if test="year != null ">and t1.year = #{year}</if>
+			<if test="month != null">and t1.month = #{month}</if>
+			<if test="platformCode != null and orgId != ''">and t1.platform_code = #{platformCode}</if>
+			<if test="areaid != null and areaid != ''">and t1.area_code like #{areaid}||'%'</if>
+			<if test="orgName !=null and orgName!=''">and t1.org_name like '%'||#{orgName}||'%'</if> 
+			<if test="provinceCode !=null and provinceCode !=''"> and t1.area_code in(select area_code from ta_area where parent_id=#{provinceCode} and level_id='2')</if>
+			<if test="cityCode !=null and cityCode!=''">and t1.area_code =#{cityCode}</if>
+			order by create_time desc
+	</select>
+
+	<resultMap type="java.util.HashMap" id="OrgResult">
+		<result column="org_Id" property="orgId"/>
+		<result column="org_name" property="orgName"/>
+	</resultMap>
+	
+	<select id="getOrgListByAreaCode" parameterType="string" resultMap="OrgResult">
+		select org_id,org_name from TA_USER_MONTH_USAGE_COUNT where area_code = #{_parameter} and org_name is not null group by org_id,org_name
+	</select>
+
+
+	<select id="getUserMonthUsageCountChartsData" parameterType="map" resultMap="UserMonthUsageCountResult">
+		select t1.user_name,t1.org_name,sum(use_count) as use_count
+            from TA_USER_MONTH_USAGE_COUNT t1 left join TA_AREA t2 on t1.area_code = t2.area_code left join TA_BASE_PROPERTY t3 on t1.platform_code = t3.platform_code and t3.property_key='platform_url'
+		where 1=1  
+		<if test="orgId != null and orgId != ''">and t1.org_id=#{orgId}</if>
+		<if test="userId != null and userId != ''">and t1.user_id=#{userId}</if>
+		<if test="year != null ">and t1.year = #{year}</if>
+		<if test="month != null">and t1.month = #{month}</if>
+		<if test="areaid != null and areaid != ''">and t1.area_code like #{areaid}||'%'</if>
+		<if test="orgName !=null and orgName!=''">and t1.org_name like '%'||#{orgName}||'%'</if>
+		<if test="provinceCode !=null and provinceCode !=''"> and t1.area_code in(select area_code from ta_area where parent_id=#{provinceCode} and level_id='2')</if>
+		<if test="cityCode !=null and cityCode!=''">and t1.area_code =#{cityCode}</if>
+		group by t1.user_id,t1.org_id,t1.org_name,t1.user_name
+	</select>
+
+	<!-- 用户月统计 -->
+	<select id="getUserMonthUsageCount" parameterType="map" resultMap="UserMonthUsageCountResult">
+	select t1.class_ranking,t1.class_percent,t3.platform_name,t1.platform_code,t1.class_id,t1.class_name,t1.user_id,t1.user_name,t1.org_id,t1.org_name,t1.use_count,t1.year,t1.month,t1.create_time,t1.update_time,t1.rate,t1.previous_use_count,t1.area_code,t2.area_name
+            from TA_USER_MONTH_USAGE_COUNT t1 left join TA_AREA t2 on t1.area_code = t2.area_code left join TA_BASE_PROPERTY t3 on t1.platform_code = t3.platform_code and t3.property_key='platform_url'
+    where 1=1
+			<if test="orgId != null and orgId != ''">and t1.org_id=#{orgId}</if>
+			<if test="userId != null and userId != ''">and t1.user_id=#{userId}</if>
+			<if test="year != null ">and t1.year = #{year}</if>
+			<if test="month != null">and t1.month = #{month}</if>
+			<if test="platformCode != null and orgId != ''">and t1.platform_code = #{platformCode}</if>
+			<if test="areaid != null and areaid != ''">and t1.area_code like #{areaid}||'%'</if>
+			<if test="orgName !=null and orgName!=''">and t1.org_name like '%'||#{orgName}||'%'</if>
+			<if test="provinceCode !=null and provinceCode !=''"> and t1.area_code in(select area_code from ta_area where parent_id=#{provinceCode} and level_id='2')</if>
+			<if test="cityCode !=null and cityCode!=''">and t1.area_code =#{cityCode}</if>
+			order by t1.create_time desc  
+	</select>
+
+
+	<select id="getCountData" resultMap="AreaMonthUsageCountResult" >
+		(select count(*) as use_count from 
+	(select count(*) from TA_AREA_MONTH_USAGE_COUNT group by area_code) as t1)
+	union all
+	(select count(*) as use_count from
+	(select count(*) from TA_ORG_MONTH_USAGE_COUNT group by org_id) as t2)
+	union all
+	(select count(*) as use_count from
+	(select count(*) from TA_USER_MONTH_USAGE_COUNT group by user_id) as t3)
+	</select>
+
+	<select id="getAreaCountData" resultMap="AreaMonthUsageCountResult" parameterType="map">
+		 select count(*) as use_count from
+	    (select count(*) as use_count from TA_AREA_MONTH_USAGE_COUNT where 1=1 
+	    <if test="provinceCode !=null and provinceCode !=''"> and area_code in(select area_code from TA_AREA where parent_id=#{provinceCode} and level_id='2')</if>
+	    <if test="year !=null"> and year=#{year}</if>
+	    <if test="month !=null"> and month=#{month}</if>
+	    group by area_code) as t1
+	union all 
+		select sum(use_count) as use_count from
+    	(select sum(use_count) as use_count from TA_AREA_MONTH_USAGE_COUNT where 1=1 
+   		<if test="provinceCode !=null and provinceCode !=''"> and area_code in(select area_code from TA_AREA where parent_id=#{provinceCode} and level_id='2')</if>
+	    <if test="year !=null"> and year=#{year}</if>
+	    <if test="month !=null"> and month=#{month}</if>
+    	group by area_code)  as t2
+    union all 
+		select count(*) as use_count from
+	    (select count(org_id) from TA_AREA_MONTH_USAGE_COUNT where 1=1 
+	    <if test="provinceCode !=null and provinceCode !=''"> and area_code in(select area_code from TA_AREA where parent_id=#{provinceCode} and level_id='2')</if>
+	   	<if test="year !=null"> and year=#{year}</if>
+	    <if test="month !=null"> and month=#{month}</if>
+	    group by area_code,org_id) as t3
+	</select>
+	
+	<select id="getOrgCountData" resultMap="OrgMonthUsageCountResult" parameterType="map">
+	select count(*) as use_count from
+	    (select count(*) as use_count from TA_ORG_MONTH_USAGE_COUNT where 1=1 
+	    <if test="provinceCode !=null and provinceCode !=''"> and area_code in(select area_code from TA_AREA where parent_id=#{provinceCode} and level_id='2')</if>
+	    <if test="areaCode !=null and areaCode !=''"> and area_code=#{areaCode}</if>
+	    <if test="year !=null"> and year=#{year}</if>
+	    <if test="month !=null"> and month=#{month}</if>
+	    <if test="orgName !=null and orgName!=''">and org_name like '%'||#{orgName}||'%'</if>
+	    group by org_id)  as t1
+	union all 
+		select sum(use_count) as use_count from
+    	(select sum(use_count) as use_count from TA_ORG_MONTH_USAGE_COUNT where 1=1 
+   		<if test="provinceCode !=null and provinceCode !=''"> and area_code in(select area_code from TA_AREA where parent_id=#{provinceCode} and level_id='2')</if>
+	    <if test="areaCode !=null and areaCode !=''"> and area_code=#{areaCode}</if>
+	    <if test="year !=null"> and year=#{year}</if>
+	    <if test="month !=null"> and month=#{month}</if>
+	    <if test="orgName !=null and orgName!=''">and org_name like '%'||#{orgName}||'%'</if>
+    	group by org_id)  as t2
+	</select>
+	
+	
+	<select id="getUserCountData" resultMap="UserMonthUsageCountResult" parameterType="map">
+		select count(*) as use_count from
+	    (select count(*) as use_count from TA_USER_MONTH_USAGE_COUNT where 1=1 
+	    <if test="provinceCode !=null and provinceCode !=''"> and area_code in(select area_code from TA_AREA where parent_id=#{provinceCode} and level_id='2')</if>
+	    <if test="areaCode !=null and areaCode !=''"> and area_code=#{areaCode}</if>
+	    <if test="year !=null"> and year=#{year}</if>
+	    <if test="month !=null"> and month=#{month}</if>
+	    <if test="orgName !=null and orgName!=''">and org_name like '%'||#{orgName}||'%'</if>
+	    group by user_id) t1
+	union all 
+		select sum(use_count) as use_count from
+    	(select sum(use_count) as use_count from TA_USER_MONTH_USAGE_COUNT where 1=1 
+   		<if test="provinceCode !=null and provinceCode !=''"> and area_code in(select area_code from TA_AREA where parent_id=#{provinceCode} and level_id='2')</if>
+	    <if test="areaCode !=null and areaCode !=''"> and area_code=#{areaCode}</if>
+	    <if test="year !=null"> and year=#{year}</if>
+	    <if test="month !=null"> and month=#{month}</if>
+	    <if test="orgName !=null and orgName!=''">and org_name like '%'||#{orgName}||'%'</if>
+    	group by user_id) t2
+	</select>
+
+</mapper>

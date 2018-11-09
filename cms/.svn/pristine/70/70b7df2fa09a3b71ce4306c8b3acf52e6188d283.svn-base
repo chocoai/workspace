@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="keywords" content="${site.keywords!}" />
+<meta http-equiv="description" content="${site.description!}" />
+<title>${channel.title!channel.name} - ${site.name}</title>
+
+<link rel="stylesheet" type="text/css" href="/${res}/css/global.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/sh.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/index.css"/>
+
+</head>
+
+<body class="sh_body">
+
+	[#include "../include/life_nav.html"/] 
+
+	<!---中间内容部分 开始---->
+	<div class="sh_bigbox">
+		<div class="sh_center" style="margin-bottom: 30px;">
+			<p class="location_text">
+				<i></i>
+				您现在的位置：&nbsp;
+				<a href="${base}">首页</a> >
+				[#list channel.nodeList as n]
+				<a target="_self" href="${n.url}">${n.name}</a>
+					[#if n_has_next] > [/#if]
+				[/#list]
+				
+			</p>
+
+			<!----中间内容——左 开始--->
+			<div class="sh_left">
+				<!---焦点图 开始--->
+				<div class="life_ban" id="skin_ban">
+					<ul class="items">
+					[@cms_content_list count='3' orderBy='4' titLen='20' typeId="3" channelOption='1' channelId=channel.id] 
+					[#list tag_list as content] 
+						<li>
+							<a href="${content.url}" title="[@text_cut s=content.title! len='18' append='...'/]">
+								<img src="${content.contentImg!content.typeImg!}">
+							</a>
+						</li>	
+					[/#list]
+					[/@cms_content_list]
+					</ul>
+				</div>
+				<!---焦点图 结束--->
+
+				<!----列表 开始---->
+				<div class="sh_list">
+				[@cms_content_page count='6' orderBy='4' titLen='22' channelOption='1' channelId=channel.id] 
+					<ul>
+					[#list tag_list as content] 
+						<li>
+							<span class="shlist_pic">
+								<a href="${content.url}">
+									<img src="${content.titleImg!site.defImg}">
+								</a>
+							</span>
+							<span class="shlist_text">
+								<h3 class="shlist_tit">
+									<a href="${content.url}">[@text_cut s=content.title! len='26' append='...'/]</a>
+								</h3>
+								<p class="shlist_pra">
+									<a href="${content.url}">[@text_cut s=content.desc! len='80' append='...'/]</a>
+								</p>
+								<p class="shlist_date">发布时间：${content.date?string('yyyy-MM-dd HH:mm:ss')}</p>
+							</span>
+						</li>	
+					[/#list]
+					</ul>
+					<div class="list_page">
+						<div class="jogger">
+							[@cms_pagination sysPage='1'/]
+						</div>
+					</div>
+				[/@cms_content_page]
+				</div>
+				<!----列表 结束---->
+
+			</div>
+			<!----中间内容——左 结束--->
+
+			<!----中间内容——右 开始----->
+			[#include "../include/life_right.html"/]
+			<!----中间内容——右 结束----->
+		</div>
+	</div>
+	<!---中间内容部分 结束---->
+
+	<!--尾部 开始-->
+	[#include "../include/footer.html"/]
+	<!--尾部 结束-->
+
+	<script type="text/javascript" src="/${res}/js/dc/jquery-2.2.4.min.js"></script>
+	<script type="text/javascript" src="/${res}/js/dc/jquery.slideBox.min.js"></script>
+
+	<script type="text/javascript">
+		<!------搜索------>
+		$(document).ready(function() {
+			$(".sh_search01").on("click", function(e) {
+				if ($(".sh_search02").is(":hidden")) {
+					$(".sh_search02").show();
+				} else {
+					$(".sh_search02").hide();
+				}
+
+				$(document).one("click", function() {
+					$(".sh_search02").hide();
+				});
+
+				e.stopPropagation();
+			});
+			$(".sh_search02").on("click", function(e) {
+				e.stopPropagation();
+			});
+		});
+		
+		<!---焦点图--->
+		jQuery(function($) {
+
+			$('#fashion_ban').slideBox({
+				duration : 0.3,//滚动持续时间，单位：秒
+				easing : 'linear',//swing,linear//滚动特效
+				delay : 5,//滚动延迟时间，单位：秒
+				hideClickBar : false,//不自动隐藏点选按键
+				clickBarRadius : 10
+			});
+
+			$('#food_ban').slideBox({
+				duration : 0.3,//滚动持续时间，单位：秒
+				easing : 'linear',//swing,linear//滚动特效
+				delay : 5,//滚动延迟时间，单位：秒
+				hideClickBar : false,//不自动隐藏点选按键
+				clickBarRadius : 10
+			});
+
+			$('#skin_ban').slideBox({
+				duration : 0.3,//滚动持续时间，单位：秒
+				easing : 'linear',//swing,linear//滚动特效
+				delay : 5,//滚动延迟时间，单位：秒
+				hideClickBar : false,//不自动隐藏点选按键
+				clickBarRadius : 10
+			});
+
+			$('#space_ban').slideBox({
+				duration : 0.3,//滚动持续时间，单位：秒
+				easing : 'linear',//swing,linear//滚动特效
+				delay : 5,//滚动延迟时间，单位：秒
+				hideClickBar : false,//不自动隐藏点选按键
+				clickBarRadius : 10
+			});
+		});
+	</script>
+
+</body>
+</html>

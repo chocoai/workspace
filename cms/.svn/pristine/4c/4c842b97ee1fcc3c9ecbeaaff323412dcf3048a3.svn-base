@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title></title>
+<#include "/cms_sys/head.html"/>
+<script type="text/javascript">
+$(function() {
+	$("#jvForm").validate();
+});
+</script>
+</head>
+<body>
+<div class="box-positon">
+	<div class="rpos"><@s.m "global.position"/>: <@s.m "cmsBaoLiao.function"/> - <@s.m "global.add"/></div>
+	<form class="ropt">
+		<input type="submit" value="<@s.m "global.backToList"/>" onclick="this.form.action='v_list.do';" class="return-button"/>
+	</form>
+	<div class="clear"></div>
+</div>
+<div class="body-box">
+<@p.form id="jvForm" action="o_save.do" labelWidth="12">
+<@p.text colspan="2" label="cmsBaoLiao.title" name="title"  size="70" maxlength="255"/><@p.tr/>
+<@p.textarea colspan="2" label="cmsBaoLiao.content" name="content"  rows="5" cols="70" /><@p.tr/><@p.tr/>
+
+<@p.textarea colspan="2" label="cmsBaoLiao.reply" name="reply" rows="5" cols="70" /><@p.tr/>
+<@p.radio colspan="1" width="50" label="cmsBaoLiao.checked" name="checked"  list={"true":"global.true","false":"global.false"}/>
+<@p.radio colspan="1" width="50" label="cmsBaoLiao.recommend" name="recommend"   list={"true":"global.true","false":"global.false"}/><@p.tr/>
+<@p.radio colspan="2" width="50" label="cmsBaoLiao.state" name="state"   list={"0":"cmsBaoLiao.state.0","1":"cmsBaoLiao.state.1","2":"cmsBaoLiao.state.2"}/><@p.tr/>
+<@p.td colspan="2">
+	<@p.submit code="global.submit"/> &nbsp; <@p.reset code="global.reset"/>
+</@p.td>
+</@p.form>
+</div>
+</body>
+</html>

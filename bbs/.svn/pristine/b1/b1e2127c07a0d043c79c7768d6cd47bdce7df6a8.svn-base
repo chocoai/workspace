@@ -1,0 +1,252 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>东楚论坛</title>
+<link href="${base}/style/main.css" rel="stylesheet" type="text/css">
+<link href="${base}/style/lanmu.css" rel="stylesheet" type="text/css">
+<link href="${base}/style/personal.css" rel="stylesheet" type="text/css">
+<link href="${base}/style/page.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${base}/js/jquery.js"></script>
+<script type="text/javascript" src="${base}/js/popwin.js"></script>
+<script type="text/javascript" src="${base}/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".shezhi").click(function() {
+			if ($(".setup_list").css('display') == 'none') {
+				$(".setup_list").slideDown(200);
+				$(".sev b").removeClass('slidedown');
+				$(".sev b").addClass('slideup');
+			} else {
+				$(".setup_list").slideUp(200);
+				$(".sev b").removeClass('slideup');
+				$(".sev b").addClass('slidedown');
+
+			}
+		});
+		
+		$(".edit_list").mouseleave(function(){
+			$(".edit_list").hide();
+		});
+	});
+	
+	function sign(userId){
+		//alert(userId);
+		if(userId == ''){
+			location.href = "${base}/login.jspx";
+			return ;
+		}
+		$.ajax({
+			url:"${base}/member/point_sign.jspx",
+			type:"post",
+			dataType:"text",
+			success:function(data){
+				if(data == -1){
+					alert("打卡失败");
+				}else if(data == 1){
+					location.reload();
+				}
+			}
+		});
+	}
+	
+	function subAlbumImg(id){
+		if(!window.confirm('你确定要删除吗？')){
+			return ;
+		}
+		$.ajax({
+			url:'${base}/member/sub_album_img.jspx',
+			data:{"id":id},
+			type:'post',
+			dataType:'json',
+			success:function(data){
+				if(data.status == 1){
+					location.reload();
+				}else{
+					alert("删除失败");
+				}
+			}
+		});
+	}
+	
+	function showDel(imgId){
+		$("#edit_list_"+imgId).slideToggle("100"); 
+	}
+	
+	function setAlbumImg(id){
+		if('${user!}'==''){
+			location.href = "${base}/login.jspx";
+			return ;
+		}
+		if(!window.confirm('你确定要此图片设置为本相册封面吗？')){
+			return ;
+		}
+		$.ajax({
+			url:'${base}/member/set_album_img.jspx',
+			data:{"albumImgId":id},
+			type:'post',
+			dataType:'json',
+			success:function(data){
+				if(data.status == 1){
+					alert(data.msg);
+				}else if(data.status == -1){
+					alert(data.msg);
+				}
+			}
+		});
+	}
+</script>
+</head>
+
+<body class="body">
+	<!---------顶部----------->
+	<div class="p_top">
+		<div class="p_top_center">
+			<div class="p_top_l">
+				<h1>
+					<a href="${base}/"><img src="${base}/images/logo.png" alt="" /></a>
+				</h1>
+				<ul>
+					<li class="one"><a href="/">东楚网首页</a></li>
+					<li class="two"><a href="${base}/">论坛</a></li>
+					<li class="thr now"><a href="${base}/member/index.jhtml">个人中心</a></li>
+				</ul>
+			</div>
+			<div class="p_top_r">
+				<span class="p_user"><a href="${base}/member/index.jhtml"><i></i>${user.username}</a></span>
+				<span class="p_exit"><a
+					href="${base}/logout.jspx?returnUrl=/">退出</a></span>
+				<div class="here_but">
+					[#if isSign?? && isSign]
+					<a href="javascript:void(0);">已打卡</a>
+					[#else]
+					<a href="javascript:void(0);" onclick="sign('${user.id}')">每日打卡</a>
+					[/#if]
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-------用户信息-------->
+	<div class="inf_box">
+		<div class="inf">
+			<div class="inf_l">
+				<a href="${base}/member/information.jhtml">
+					[#if user.avatar??]
+					<img src="${user.avatar}" alt="" />
+					[#else]
+					<img src="${base}/images/default_user.jpg" alt="" />
+					[/#if]
+				</a>
+			</div>
+			<div class="inf_r">
+				<p class="inf_user_name">
+					<a href="${base}/member/information.jhtml">${user.username}</a>
+				</p>
+				<p class="inf_user_d">
+					<span class="inf_tz"><a href="${base}/member/mytopic.jhtml">帖子：<b>${user.topicCount}</b></a></span>
+					<span class="inf_tb"><a href="${base}/member/creditManager.jhtml"><i></i>铜币：<b>${user.point}</b></a></span>
+					<span class="inf_dj"><a href="${base}/member/level_list.jspx"><i></i>等级：<b>${user.group.name}</b></a></span>
+				</p>
+			</div>
+		</div>
+	</div>
+
+
+	<!------------------中间内容部分------------------------>
+	<div class="center">
+		<div class="content">
+			<!------菜单------->
+			<div class="menu">
+				<ul class="menu_list">
+					<li><a href="${base}/topic/collectionTopic.jspx" class="fir"><i></i>我的收藏</a></li>
+					<li class="now"><a href="${base}/member/album.jspx" class="sec"><i></i>我的相册</a></li>
+					<li><a href="${base}/member/mytopic.jhtml" class="thi"><i></i>我的帖子</a></li>
+					<li><a href="${base}/member/myfriend.jhtml" class="fou"><i></i>我的好友</a></li>
+					<li><a href="${base}/member/personal_message.jspx" class="fif"><i></i>我的消息</a></li>
+					<li><a href="${base}/member/concern_list.jspx" class="six"><i></i>我的关注</a></li>
+					<li><a href="${base}/member/creditManager.jhtml" class="sev"><i></i>我的铜币</a></li>
+					<li><a href="${base}/member/task_list.jspx" class="eig"><i></i>我的任务</a></li>
+					<li class="shezhi"><a class="nin"><i></i>设置<b class="slidedown"></b></a></li>
+					<ul class="setup_list" style="display: none;">
+						<li><a href="${base}/member/information.jhtml" class="ten"><i></i>账号</a></li>
+						<li><a href="${base}/member/personal_confirm.jspx" class="ele"><i></i>认证</a></li>
+						<li><a href="${base}/member/level_list.jspx" class="twe"><i></i>等级</a></li>
+						<li><a href="${base}/member/personal_binding.jspx" class="thir"><i></i>账号通</a></li>
+					</ul>
+				</ul>
+			</div>
+
+
+			<!--------右侧内容部分——我的相册--------->
+			<div class="content_r">
+				<div class="content_r_hd">我的相册</div>
+				<!---相册图片平铺 开始--->
+				<div class="content_r_hbd02" id="img_box" style="display:block;">
+					<div class="album_but">
+						<div class="upload_but">
+							<a class="abl_upload baccol" href="${base}/member/album_img_upload${album.id!}.jspx"><i></i>上传照片</a>
+						</div>
+					</div>
+					[#if pageBean.list?size gt 0]
+					<div class="album_pic">
+						<ul>
+							[#list pageBean.list as albumImg]
+							<li  class="album_picli">
+								<a href="${albumImg.imgUrl!}"  class="album_note">
+									<img src="${albumImg.imgUrl!}">
+								</a>
+								<span class="edit_but" onclick="showDel('${albumImg.id!}')"></span>
+				               	<ul class="edit_list" id="edit_list_${albumImg.id!}" style="display:none;">
+				           			<li onclick="setAlbumImg('${albumImg.id!}')" class="swfm" style=" cursor:pointer;"><i></i>设为封面</li>
+				           			<li onclick="subAlbumImg('${albumImg.id!}')" class="delete" style=" cursor:pointer;"><i></i>删除</li>
+				               	</ul>
+							</li>
+							[/#list]
+						</ul>
+						<div class="clear"></div>
+					</div>
+					[#else]
+					
+					[/#if]
+					[#if pageBean.pageCount gt 1]
+					<div class="page">
+						<div style="clear: left;">
+							[#import "/WEB-INF/t/cms/www/blue/tld/page.ftl" as tt]
+							[@tt.page pageBean=pageBean url="${base}/member/album_img${album.id!}.jspx" /]
+						</div>
+					</div>
+					[/#if]
+				</div>
+				<!----相册图片平铺 结束--->
+			</div>
+
+
+			<!------页脚------>
+			<div class="footer">
+				<div class="footer_listbox">
+					<div class="footer_list">
+						
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+
+	<!------------------返回顶部-------------------->
+	<div id="before">
+		<a href="http://bbs.hsdcw.com/" target="_blank" title="东楚论坛"
+			class='before'></a>
+	</div>
+	<div id="wechat" class="wechat">
+		<a href="javascript:void(0)"><div class="wechath"></div></a>
+	</div>
+	<a id="moquu_top" href="javascript:void(0)"></a>
+	
+	<script type="text/javascript" src="${base}/js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="${base}/js/zoom.min.js"></script>
+
+</body>
+</html>

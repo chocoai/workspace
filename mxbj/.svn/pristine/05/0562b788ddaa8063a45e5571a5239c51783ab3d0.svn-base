@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.mxbj.api.dao.UpgradeDao">
+
+	<resultMap type="com.whty.mxbj.api.model.Upgrade" id="Upgrade">
+		<id property="id" column="id" />
+		<result property="downLoadUrl" column="down_load_url" />
+		<result property="softVersion" column="soft_version" />
+		<result property="description" column="description" />
+	</resultMap>
+
+	<select id="queryUpgrade" parameterType="map" resultMap="Upgrade">
+		select *
+		from T_UPGRADE where 1=1
+	</select>
+
+	
+
+	<update id="update" parameterType="com.whty.mxbj.api.model.Upgrade">
+		update T_UPGRADE
+		<trim prefix="set" suffixOverrides=",">
+			<if test="downLoadUrl != null and downLoadUrl != '' ">down_load_url=#{downLoadUrl},</if>
+			<if test="softVersion != null and softVersion !='' ">soft_version=#{softVersion},</if>
+			<if test="description != null and description !='' ">description=#{description},</if>
+			<if test="status != null and status !='' ">status=#{status},</if>
+			<if test="updateTime != null ">update_time=#{updateTime},</if>
+		</trim>
+		where id=#{id}
+	</update>
+
+</mapper>

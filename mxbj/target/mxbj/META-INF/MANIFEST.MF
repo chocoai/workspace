@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Implementation-Title: mxbj
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: lx
+Implementation-Vendor-Id: com.whty
+Created-By: IntelliJ IDEA
+Build-Jdk: 1.8.0_131
+Main-Class: ${start-class}
+

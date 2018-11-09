@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.demo.dao.WidgetHistoryDao">
+	<resultMap type="com.whty.assis.demo.model.WidgetHistory" id="widgetHistoryResult">
+		<id property="id" column="id" />
+		<result property="useCount" column="use_count" />
+		<result property="userId" column="user_id" />
+		<result property="orgId" column="org_Id" />
+		<result property="platformCode" column="platform_code" />
+		<result property="machineInfo" column="machine_info" />
+		<result property="widgetId" column="widget_id" />
+		<result property="memory" column="memory" />
+		<result property="classId" column="class_id" />
+		<result property="cpuInfo" column="cpu_info" />
+		<result property="isTransfer" column="is_transfer" />
+		<result property="createTime" column="create_time" />
+		<result property="operationSystemInfo" column="operation_system_info" />
+		<result property="operationSystemType" column="operation_system_type" />
+		<result property="classType" column="class_type" />	
+		<result property="orgName" column="org_name" />
+		<result property="userName" column="user_name" />
+		<result property="areaCode" column="area_code" />
+		<result property="widgetName" column="widget_name"/>
+		<result property="description" column="description"/>
+		<result property="areaName" column="area_name"/>
+		<result property="year" column="year"/>
+		<result property="month" column="month"/>
+	</resultMap>
+
+
+	<insert id="saveWidgetHistory" parameterType ="com.whty.assis.demo.model.WidgetHistory">
+		insert into TA_WIDGET_HISTORY(
+			id,
+			<if test="userId != null">user_id,</if>
+			<if test="orgId != null">org_id,</if>
+			<if test="platformCode != null">platform_code,</if>
+			<if test="classId != null">class_id,</if>
+			<if test="cpuInfo != null">cpu_info,</if>
+			<if test="memory != null">memory,</if>
+			<if test="operationSystemType != null">operation_system_type,</if>
+			<if test="terminalVersion != null">terminal_version,</if>
+			<if test="classType != null">class_type,</if>			
+			<if test="courseNum != null">course_num,</if>
+			<if test="orgName != null">org_name,</if>
+			<if test="userName != null">user_name,</if>
+			<if test="areaCode != null">area_code,</if>
+			
+			<if test="year != null">year,</if>
+			<if test="month != null">month,</if>
+			use_Count,
+			widget_Id,
+			machine_Info,
+			operation_System_Info
+		)
+		values (
+			#{id,jdbcType=VARCHAR}
+			<if test="userId != null">,#{userId,jdbcType=VARCHAR}</if>
+			<if test="orgId != null">,#{orgId,jdbcType=VARCHAR}</if>
+			<if test="platformCode != null">,#{platformCode,jdbcType=VARCHAR}</if>
+			<if test="classId != null">,#{classId,jdbcType=VARCHAR}</if>
+			<if test="cpuInfo != null">,#{cpuInfo,jdbcType=VARCHAR}</if>
+			<if test="memory != null">,#{memory,jdbcType=VARCHAR}</if>
+			<if test="operationSystemType != null">,#{operationSystemType,jdbcType=VARCHAR}</if>
+			<if test="terminalVersion != null">,#{terminalVersion,jdbcType=VARCHAR}</if>
+			<if test="classType != null">,#{classType,jdbcType=VARCHAR}</if>
+			<if test="courseNum != null">,#{courseNum,jdbcType=VARCHAR}</if>
+			<if test="orgName != null">,#{orgName,jdbcType=VARCHAR}</if>
+			<if test="userName != null">,#{userName,jdbcType=VARCHAR}</if>
+			<if test="areaCode != null">,#{areaCode,jdbcType=VARCHAR}</if>
+			
+			<if test="year != null">,#{year,jdbcType=VARCHAR}</if>
+			<if test="month != null">,#{month,jdbcType=VARCHAR}</if>
+			
+			,#{useCount,jdbcType=INTEGER}
+			,#{widgetId,jdbcType=INTEGER}
+			,#{machineInfo,jdbcType=VARCHAR}
+			,#{operationSystemInfo,jdbcType=VARCHAR}
+		)
+	</insert>
+
+
+	<resultMap type="java.util.HashMap" id="OrgResult">
+		<result column="org_Id" property="orgId"/>
+		<result column="org_name" property="orgName"/>
+	</resultMap>
+	
+	<select id="getOrgListByAreaCode" parameterType="string" resultMap="OrgResult">
+		select org_id,org_name from TA_WIDGET_HISTORY where area_code = #{_parameter} and org_name is not null group by org_id,org_name
+	</select>
+
+
+	<select id="getWidgetHistory" parameterType="java.util.HashMap" resultMap="widgetHistoryResult">
+		select id,org_id,platform_code,machine_info,memory,cpu_info,operation_system_info,operation_system_type,create_time,
+		user_id,class_id,widget_id,use_count from TA_WIDGET_HISTORY where 1=1
+		<if test="id != null">and id=#{id}</if>
+		<if test="widgetId != null">and widget_id=#{widgetId}</if>
+		<if test="startTime != null and startTime != ''"> and date_format(create_time,'yyyy-mm-dd')>=#{startTime}</if>
+		<if test="endTime != null and endTime != ''"><![CDATA[ and date_format(create_time,'yyyy-mm-dd')<=#{endTime}]]></if>
+		<if test="widgetIds != null and widgetIds != ''">
+			and widget_id in <foreach collection="idList" item="id" separator="," open="(" close=")">#{id}</foreach>
+		</if>
+	</select> 
+	
+	<select id="getAllRanking"  resultMap="widgetHistoryResult" parameterType="java.util.HashMap">
+		select t1.area_code,t2.area_name,t1.use_count from
+(select area_code,sum(use_count) as use_count from TA_WIDGET_HISTORY where area_code is not null and year=#{year} and month=#{month}
+	<if test="startTime != null and startTime != ''"> and date_format(create_time,'yyyy-mm-dd')>=#{startTime}</if>
+	<if test="endTime != null and endTime != ''"><![CDATA[ and date_format(create_time,'yyyy-mm-dd')<=#{endTime}]]></if>
+group by area_code) t1 left join TA_AREA t2 on t1.area_code = t2.area_code
+	</select>
+	
+	<!-- 找到省份下的所有区域统计 -->
+	<select id="getAreaCodeRankingByProvinceCode" resultMap="widgetHistoryResult" parameterType="java.util.HashMap">
+		select t1.area_code,t2.area_name,t1.use_count from
+(select area_code,sum(use_count) as use_count from TA_WIDGET_HISTORY where area_code in
+(select area_code from TA_AREA where parent_id=#{parentId} and level_id='2' and year=#{year} and month=#{month}) 
+<if test="startTime != null and startTime != ''"> and date_format(create_time,'yyyy-mm-dd')>=#{startTime}</if>
+<if test="endTime != null and endTime != ''"><![CDATA[ and date_format(create_time,'yyyy-mm-dd')<=#{endTime}]]></if>
+group by area_code) t1 left join TA_AREA t2 on t1.area_code = t2.area_code
+	</select>
+	
+	<select id="getOrgRankingByAreaCode" resultMap="widgetHistoryResult" parameterType="string">
+		select org_id,sum(use_count) as use_count,org_name as area_name from TA_WIDGET_HISTORY where area_code =#{cityCode} and year=#{year} and month=#{month}
+		<if test="startTime != null and startTime != ''"> and date_format(create_time,'yyyy-mm-dd')>=#{startTime}</if>
+		<if test="endTime != null and endTime != ''"><![CDATA[ and date_format(create_time,'yyyy-mm-dd')<=#{endTime}]]></if>
+		group by org_id,org_name
+	</select>
+	
+	<select id="getUserRankingByOrg" resultMap="widgetHistoryResult" parameterType="string">
+	select user_id,sum(use_count) as use_count,user_name as area_name from TA_WIDGET_HISTORY where org_id=#{orgId} and year=#{year} and month=#{month}
+	<if test="startTime != null and startTime != ''"> and date_format(create_time,'yyyy-mm-dd')>=#{startTime}</if>
+	<if test="endTime != null and endTime != ''"><![CDATA[ and date_format(create_time,'yyyy-mm-dd')<=#{endTime}]]></if>
+	  group by user_id,user_name
+	</select>
+	
+	<!-- 统计控件使用次数 -->
+	<select id="getWidgetHistoryCount" parameterType="java.util.HashMap" resultMap="widgetHistoryResult">
+		select t1.*,t2.WIDGET_NAME,t2.DESCRIPTION from 
+		(select widget_id,sum(use_count) as use_count from TA_WIDGET_HISTORY 
+		where 1=1
+		<if test="year != null">and year=#{year}</if>
+		<if test="month != null">and month=#{month}</if>
+		<if test="areaCode != null">and area_Code=#{areaCode}</if>
+		<if test="provinceCode != null">and area_code in(select area_code from TA_AREA where parent_id=#{provinceCode} and level_id='2')</if>
+		<if test="orgId != null">and org_id=#{orgId}</if>
+		<if test="startTime != null and startTime != ''"> and create_time>=date_format(#{startTime},'yyyy-mm-dd')</if>
+		<if test="endTime != null and endTime != ''"><![CDATA[ and create_time<=date_format(#{endTime},'yyyy-mm-dd')]]></if>
+		group by widget_id) as t1 right join TA_WIDGET t2 on t1.widget_id=t2.id
+	</select>
+
+</mapper>

@@ -1,0 +1,239 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>东楚论坛</title>
+<link href="${base}/style/main.css" rel="stylesheet" type="text/css">
+<link href="${base}/style/lanmu.css" rel="stylesheet" type="text/css">
+<link href="${base}/style/personal.css" rel="stylesheet" type="text/css">
+<link href="${base}/style/page.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${base}/js/jquery.js"></script>
+<script type="text/javascript" src="${base}/js/popwin.js"></script>
+<script type="text/javascript" src="${base}/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".shezhi").click(function() {
+			if ($(".setup_list").css('display') == 'none') {
+				$(".setup_list").slideDown(200);
+				$(".sev b").removeClass('slidedown');
+				$(".sev b").addClass('slideup');
+			} else {
+				$(".setup_list").slideUp(200);
+				$(".sev b").removeClass('slideup');
+				$(".sev b").addClass('slidedown');
+
+			}
+		});
+	});
+	
+	function sign(userId){
+		//alert(userId);
+		if(userId == ''){
+			location.href = "${base}/login.jspx";
+			return ;
+		}
+		$.ajax({
+			url:"${base}/member/point_sign.jspx",
+			type:"post",
+			dataType:"text",
+			success:function(data){
+				if(data == -1){
+					alert("打卡失败");
+				}else if(data == 1){
+					location.reload();
+				}
+			}
+		});
+	}
+	
+	function sub_friend(friendId, friendName){
+		if(friendId == ''){
+			return ;
+		}
+		var user = '${user!}';
+		if(user == ''){
+			location.href = '${base}/login.jspx';
+			return ;
+		}
+		if(!confirm("确认删除好友："+friendName+"?")){
+			return ;
+		}
+		$.ajax({
+			url:"${base}/personal/friend_sub.jspx",
+			data:{"friendId":friendId},
+			type:"post",
+			dataType:"json",
+			success:function(data){
+				if(data.status == -1){
+					alert(data.msg);
+				}else if(data.status == 1){
+					alert(data.msg);
+					location.reload();
+				}
+			}
+		});
+	}
+</script>
+</head>
+
+<body class="body">
+	<!---------顶部----------->
+	<div class="p_top">
+		<div class="p_top_center">
+			<div class="p_top_l">
+				<h1>
+					<a href="${base}/"><img src="${base}/images/logo.png" alt="" /></a>
+				</h1>
+				<ul>
+					<li class="one"><a href="/">东楚网首页</a></li>
+					<li class="two"><a href="${base}/">论坛</a></li>
+					<li class="thr now"><a href="${base}/member/index.jhtml">个人中心</a></li>
+				</ul>
+			</div>
+			<div class="p_top_r">
+				<span class="p_user"><a href="${base}/member/index.jhtml"><i></i>${user.username}</a></span>
+				<span class="p_exit"><a
+					href="${base}/logout.jspx?returnUrl=/">退出</a></span>
+				<div class="here_but">
+					[#if isSign?? && isSign]
+					<a href="javascript:void(0);">已打卡</a>
+					[#else]
+					<a href="javascript:void(0);" onclick="sign('${user.id}')">每日打卡</a>
+					[/#if]
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-------用户信息-------->
+	<div class="inf_box">
+		<div class="inf">
+			<div class="inf_l">
+				<a href="${base}/member/information.jhtml">
+					[#if user.avatar??]
+					<img src="${user.avatar}" alt="" />
+					[#else]
+					<img src="${base}/images/default_user.jpg" alt="" />
+					[/#if]
+				</a>
+			</div>
+			<div class="inf_r">
+				<p class="inf_user_name">
+					<a href="${base}/member/information.jhtml">${user.username}</a>
+				</p>
+				<p class="inf_user_d">
+					<span class="inf_tz"><a href="${base}/member/mytopic.jhtml">帖子：<b>${user.topicCount}</b></a></span>
+					<span class="inf_tb"><a href="${base}/member/creditManager.jhtml"><i></i>铜币：<b>${user.point}</b></a></span>
+					<span class="inf_dj"><a href="${base}/member/level_list.jspx"><i></i>等级：<b>${user.group.name}</b></a></span>
+				</p>
+			</div>
+		</div>
+	</div>
+
+
+	<!------------------中间内容部分------------------------>
+	<div class="center">
+		<div class="content">
+			<!------菜单------->
+			<div class="menu">
+				<ul class="menu_list">
+					<li><a href="${base}/topic/collectionTopic.jspx" class="fir"><i></i>我的收藏</a></li>
+					<li><a href="${base}/member/album.jspx" class="sec"><i></i>我的相册</a></li>
+					<li><a href="${base}/member/mytopic.jhtml" class="thi"><i></i>我的帖子</a></li>
+					<li class="now"><a href="${base}/member/myfriend.jhtml" class="fou"><i></i>我的好友</a></li>
+					<li><a href="${base}/member/personal_message.jspx" class="fif"><i></i>我的消息</a></li>
+					<li><a href="${base}/member/concern_list.jspx" class="six"><i></i>我的关注</a></li>
+					<li><a href="${base}/member/creditManager.jhtml" class="sev"><i></i>我的铜币</a></li>
+					<li><a href="${base}/member/task_list.jspx" class="eig"><i></i>我的任务</a></li>
+					<li class="shezhi"><a class="nin"><i></i>设置<b class="slidedown"></b></a></li>
+					<ul class="setup_list" style="display: none;">
+						<li><a href="${base}/member/information.jhtml" class="ten"><i></i>账号</a></li>
+						<li><a href="${base}/member/personal_confirm.jspx" class="ele"><i></i>认证</a></li>
+						<li><a href="${base}/member/level_list.jspx" class="twe"><i></i>等级</a></li>
+						<li><a href="${base}/member/personal_binding.jspx" class="thir"><i></i>账号通</a></li>
+					</ul>
+				</ul>
+			</div>
+
+			<!--------右侧内容部分——我的好友--------->
+			<div class="content_r">
+				<div class="content_r_hd">我的好友</div>
+				<div class="friends">
+					[#if pageBean.list?size gt 0]
+					<ul class="friends_list">
+						[#list pageBean.list as friend]
+						<li>
+							<div class="friends_pic">
+								<a target="_blank" href="${base}/personal/other_information${friend.friend.id!}.jspx">
+									[#if friend.friend.avatar??]
+									<img src="${friend.friend.avatar!}" alt="" />
+									[#else]
+									<img src="${base}/images/default_user.jpg" alt="" />
+									[/#if]
+								</a>
+							</div>
+							<div class="friends_text">
+								<div class="friends_lh24">
+									<span class="friend_name"><a target="_blank" href="${base}/personal/other_information${friend.friend.id!}.jspx">${friend.friend.username}</a></span>
+									<span class="friend_level"><b>${friend.friend.group.name!}</b><img src="/${res}/bbs_forum/img/level/${friend.friend.group.imgPath!}.png" alt="" /></span>
+									<a href="javascript:void(0);" onclick="sub_friend('${friend.friend.id!}','${friend.friend.username!}')"><span style="float:right;">删除</span></a>
+								</div>
+								<div class="friends_lh24">
+									发帖：<span>${friend.friend.topicCount!}</span> &nbsp;&nbsp;
+									| &nbsp;&nbsp; 精华：<span>${friend.friend.primeCount!}</span>
+								</div>
+								<div class="friends_lh24">
+									<span class="from">来自：<b class="from_add">[#if friend.friend.comefrom??]${friend.friend.comefrom!}[#else]保密[/#if]</b></span>
+									<span class="from">现居地：<b class="nowlive_add">[#if friend.friend.address??]${friend.friend.address!}[#else]保密[/#if]</b></span>
+									<span class="from">性别：<b class="femmal">[#if friend.friend.gender??][#if friend.friend.gender]男[#else]女[/#if][#else]保密[/#if]</b></span>
+								</div>
+								<div class="friends_lh24 littercol">
+									注册时间：<span class="regtime">${friend.friend.registerTime?string("yyyy-MM-dd")!}</span>&nbsp;&nbsp;&nbsp;
+									登录时间：<span class="logtime">${friend.friend.lastLoginTime?string("yyyy-MM-dd")!}</span>
+								</div>
+							</div>
+						</li>
+						[/#list]
+					</ul>
+					<!--分页--->
+					<div style="clear: left;height:8px;"></div>
+					[#if pageBean.pageCount gt 1]
+					<div class="page_box">
+						<div style="clear: left;">
+							[#import "/WEB-INF/t/cms/www/blue/tld/page.ftl" as tt]
+							[@tt.page pageBean=pageBean url="${base}/member/myfriend.jhtml" /]
+						</div>
+					</div>
+					[/#if]
+					[#else]
+					<div style="clear: left;height:8px;"></div>
+					<p style="height:20px;text-align:center;">您暂时没有好友</p>
+					[/#if]
+				</div>
+			</div>
+
+
+			<!------页脚------>
+			<div class="footer">
+				<div class="footer_listbox">
+					<div class="footer_list">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!------------------返回顶部-------------------->
+	<div id="before">
+		<a href="http://bbs.hsdcw.com/" target="_blank" title="东楚论坛"
+			class='before'></a>
+	</div>
+	<div id="wechat" class="wechat">
+		<a href="javascript:void(0)"><div class="wechath"></div></a>
+	</div>
+	<a id="moquu_top" href="javascript:void(0)"></a>
+
+</body>
+</html>

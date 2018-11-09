@@ -1,0 +1,142 @@
+<script type="text/javascript" src="/${res}/js/dc/settitle.js"></script>
+<div class="details_right">
+	<div class="notice">
+		<div class="title">
+			<span>公示公告</span>
+		</div>
+		<ul class="com_list">
+			[@cms_content_list count='7' orderBy='4' titLen='18' channelOption='1' channelId='13'] 
+			[#list tag_list as gs]
+			<li>
+				<a href="${gs.url}" title="${gs.title}" target="_blank">[@text_cut s=gs.title len=titLen /]</a>
+			</li>
+			[/#list] 
+			[/@cms_content_list]
+
+		</ul>
+	</div>
+
+
+	<div class="vedio_right mt10">
+		<div class="title">
+			<span>东楚视频</span>
+		</div>
+		<div style="clear: both;"></div>
+		<div id="vedio_right">
+			<div class="Videobox">
+				<ul>
+				     [@cms_channel_list parentId='46']
+                      [#list tag_list as v]
+                      [#if v_index = 0]
+                      <li id="menuf${v_index+1}" onmouseover="setTab('menuf',${v_index+1},${tag_list?size})" class="hover">${v.name}</li>
+	                  [#else]
+	                  <li id="menuf${v_index+1}" onmouseover="setTab('menuf',${v_index+1},${tag_list?size})">${v.name}</li>
+	                  [/#if] 
+                     [/#list] 
+                     [/@cms_channel_list]
+				</ul>
+			</div>
+
+			<div class="Content_pic">
+			   [@cms_channel_list parentId='46']
+		       [#list tag_list as vedio]
+		       [#if vedio_index+1 = 1]
+				<div id="con_menuf_1" class="hover">
+				   	[@cms_content_list count='2' orderBy='4' titLen='9' channelOption='1' channelId=vedio.id]
+	                [#list tag_list as sp]
+	                [#if sp_index = 0]
+	                <div class="vedio_list">
+	                      <div class="hd_titel"><a href="${sp.url}" target="_blank">[@text_cut s=sp.title! len=titLen /]</a></div>
+	                          <img src="${sp.titleImg!sp.typeImg!site.defImg}" width="165" height="140">      
+	                </div> 
+	                [#else]
+	                <div class="vedio_list ml10">
+	                      <div class="hd_titel"><a href="${sp.url}" target="_blank">[@text_cut s=sp.title! len=titLen /]</a></div>
+	                          <img src="${sp.titleImg!sp.typeImg!site.defImg}" width="165" height="140">      
+	                </div> 
+			        [/#if]
+			                                                                  
+	                [/#list]
+	                [/@cms_content_list]    
+				</div>
+				[#else]
+				<div id="con_menuf_${vedio_index+1}" style="display: none">
+					[@cms_content_list count='2' orderBy='4' titLen='9' channelOption='1' channelId=vedio.id]
+	                [#list tag_list as sp1]
+	                [#if sp1_index = 0]
+	                <div class="vedio_list">
+	                      <div class="hd_titel"><a href="${sp1.url}" target="_blank">[@text_cut s=sp1.title! len=titLen /]</a></div>
+	                      <img src="${sp1.titleImg!sp1.typeImg!site.defImg}" width="165" height="140">      
+	                </div> 
+	                [#else]
+	                <div class="vedio_list ml10">
+	                      <div class="hd_titel"><a href="${sp1.url}" target="_blank">[@text_cut s=sp1.title! len=titLen /]</a></div>
+	                      <img src="${sp1.titleImg!sp1.typeImg!site.defImg}" width="165" height="140">      
+	                </div> 
+			        [/#if]
+			                                                                  
+	                [/#list]
+	                [/@cms_content_list]  
+				</div>
+				[/#if] 
+		        [/#list]
+		        [/@cms_channel_list]
+			</div>
+
+		</div>
+
+
+	</div>
+
+	<div class="ads_img">
+	 [@cms_advertising_list spaceId ='2']
+        [#if tag_list?size gt 0]
+          [#list tag_list as ad]
+          [#if ad_index = 0]
+         <a href="${ad.attr.image_link!}" target="_blank"><img src="${(ad.attr.image_url)!?html}" width="374" height="281" /></a>
+		
+	      [/#if]
+          [/#list]  
+        [#else]<img src="/${res}/images/adds.jpg" width="374" height="281" />
+        [/#if]
+        [/@cms_advertising_list]
+	</div>
+
+	<div class="pic_right">
+		<div class="title">
+			<span>读图</span>
+		</div>
+		<div style="clear: both;"></div>
+
+		<div class="Read_pic">
+			<div id="con_menuf_1" class="hover">
+				[@cms_content_list count='2' titLen='20' channelOption='1' channelId='42' orderBy='4'] 
+				[#list tag_list as p] 
+				[#if p_index == 0]
+				<div class="vedio_list">
+					<div class="hd_titel">
+						<a href="${p.url}" title="${p.title}">${p.title}</a>
+					</div>
+					<a href="${p.url}" title="${p.title}">
+						<img src="${p.titleImg!p.typeImg!site.defImg}" width="165" height="140">
+					</a>
+				</div>
+				[#else]
+				<div class="vedio_list ml10">
+					<div class="hd_titel">
+						<a href="${p.url}" title="${p.title}">${p.title}</a>
+					</div>
+					<a href="${p.url}" title="${p.title}">
+						<img src="${p.titleImg!p.typeImg!site.defImg}" width="165" height="140">
+					</a>
+				</div>
+				[/#if] 
+				[/#list] 
+				[/@cms_content_list]
+			</div>
+
+		</div>
+
+	</div>
+
+</div>

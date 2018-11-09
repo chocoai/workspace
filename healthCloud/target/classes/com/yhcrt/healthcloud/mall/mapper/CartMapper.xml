@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.healthcloud.mall.mapper.CartMapper">
+  <resultMap id="BaseResultMap" type="com.yhcrt.healthcloud.mall.entity.Cart">
+    <id column="cid" jdbcType="INTEGER" property="cid" />
+    <result column="member_id" jdbcType="INTEGER" property="memberId" />
+    <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="amount" jdbcType="INTEGER" property="amount" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="cext1" jdbcType="VARCHAR" property="cext1" />
+    <result column="cext2" jdbcType="VARCHAR" property="cext2" />
+    <result column="cext3" jdbcType="VARCHAR" property="cext3" />
+    <result column="iext1" jdbcType="INTEGER" property="iext1" />
+    <result column="iext2" jdbcType="INTEGER" property="iext2" />
+    <result column="dext1" jdbcType="DATE" property="dext1" />
+    <result column="dext2" jdbcType="DATE" property="dext2" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    cid, member_id, goods_id, amount, create_time, status, cext1, cext2, cext3, iext1, 
+    iext2, dext1, dext2
+  </sql>
+  <select id="selectByExample" parameterType="com.yhcrt.healthcloud.mall.entity.CartExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from cart
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from cart
+    where cid = #{cid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from cart
+    where cid = #{cid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yhcrt.healthcloud.mall.entity.CartExample">
+    delete from cart
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yhcrt.healthcloud.mall.entity.Cart">
+    insert into cart (cid, member_id, goods_id, 
+      amount, create_time, status, 
+      cext1, cext2, cext3, 
+      iext1, iext2, dext1, dext2
+      )
+    values (#{cid,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, 
+      #{amount,jdbcType=INTEGER}, #{createTime,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, 
+      #{cext1,jdbcType=VARCHAR}, #{cext2,jdbcType=VARCHAR}, #{cext3,jdbcType=VARCHAR}, 
+      #{iext1,jdbcType=INTEGER}, #{iext2,jdbcType=INTEGER}, #{dext1,jdbcType=DATE}, #{dext2,jdbcType=DATE}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yhcrt.healthcloud.mall.entity.Cart">
+    insert into cart
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="memberId != null">
+        member_id,
+      </if>
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="amount != null">
+        amount,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="cext1 != null">
+        cext1,
+      </if>
+      <if test="cext2 != null">
+        cext2,
+      </if>
+      <if test="cext3 != null">
+        cext3,
+      </if>
+      <if test="iext1 != null">
+        iext1,
+      </if>
+      <if test="iext2 != null">
+        iext2,
+      </if>
+      <if test="dext1 != null">
+        dext1,
+      </if>
+      <if test="dext2 != null">
+        dext2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="memberId != null">
+        #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+        #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="cext1 != null">
+        #{cext1,jdbcType=VARCHAR},
+      </if>
+      <if test="cext2 != null">
+        #{cext2,jdbcType=VARCHAR},
+      </if>
+      <if test="cext3 != null">
+        #{cext3,jdbcType=VARCHAR},
+      </if>
+      <if test="iext1 != null">
+        #{iext1,jdbcType=INTEGER},
+      </if>
+      <if test="iext2 != null">
+        #{iext2,jdbcType=INTEGER},
+      </if>
+      <if test="dext1 != null">
+        #{dext1,jdbcType=DATE},
+      </if>
+      <if test="dext2 != null">
+        #{dext2,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yhcrt.healthcloud.mall.entity.CartExample" resultType="java.lang.Long">
+    select count(*) from cart
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cart
+    <set>
+      <if test="record.cid != null">
+        cid = #{record.cid,jdbcType=INTEGER},
+      </if>
+      <if test="record.memberId != null">
+        member_id = #{record.memberId,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsId != null">
+        goods_id = #{record.goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.amount != null">
+        amount = #{record.amount,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.cext1 != null">
+        cext1 = #{record.cext1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cext2 != null">
+        cext2 = #{record.cext2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cext3 != null">
+        cext3 = #{record.cext3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iext1 != null">
+        iext1 = #{record.iext1,jdbcType=INTEGER},
+      </if>
+      <if test="record.iext2 != null">
+        iext2 = #{record.iext2,jdbcType=INTEGER},
+      </if>
+      <if test="record.dext1 != null">
+        dext1 = #{record.dext1,jdbcType=DATE},
+      </if>
+      <if test="record.dext2 != null">
+        dext2 = #{record.dext2,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cart
+    set cid = #{record.cid,jdbcType=INTEGER},
+      member_id = #{record.memberId,jdbcType=INTEGER},
+      goods_id = #{record.goodsId,jdbcType=INTEGER},
+      amount = #{record.amount,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      cext1 = #{record.cext1,jdbcType=VARCHAR},
+      cext2 = #{record.cext2,jdbcType=VARCHAR},
+      cext3 = #{record.cext3,jdbcType=VARCHAR},
+      iext1 = #{record.iext1,jdbcType=INTEGER},
+      iext2 = #{record.iext2,jdbcType=INTEGER},
+      dext1 = #{record.dext1,jdbcType=DATE},
+      dext2 = #{record.dext2,jdbcType=DATE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.healthcloud.mall.entity.Cart">
+    update cart
+    <set>
+      <if test="memberId != null">
+        member_id = #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null">
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="amount != null">
+        amount = #{amount,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="cext1 != null">
+        cext1 = #{cext1,jdbcType=VARCHAR},
+      </if>
+      <if test="cext2 != null">
+        cext2 = #{cext2,jdbcType=VARCHAR},
+      </if>
+      <if test="cext3 != null">
+        cext3 = #{cext3,jdbcType=VARCHAR},
+      </if>
+      <if test="iext1 != null">
+        iext1 = #{iext1,jdbcType=INTEGER},
+      </if>
+      <if test="iext2 != null">
+        iext2 = #{iext2,jdbcType=INTEGER},
+      </if>
+      <if test="dext1 != null">
+        dext1 = #{dext1,jdbcType=DATE},
+      </if>
+      <if test="dext2 != null">
+        dext2 = #{dext2,jdbcType=DATE},
+      </if>
+    </set>
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yhcrt.healthcloud.mall.entity.Cart">
+    update cart
+    set member_id = #{memberId,jdbcType=INTEGER},
+      goods_id = #{goodsId,jdbcType=INTEGER},
+      amount = #{amount,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      cext1 = #{cext1,jdbcType=VARCHAR},
+      cext2 = #{cext2,jdbcType=VARCHAR},
+      cext3 = #{cext3,jdbcType=VARCHAR},
+      iext1 = #{iext1,jdbcType=INTEGER},
+      iext2 = #{iext2,jdbcType=INTEGER},
+      dext1 = #{dext1,jdbcType=DATE},
+      dext2 = #{dext2,jdbcType=DATE}
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+</mapper>

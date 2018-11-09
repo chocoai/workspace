@@ -1,0 +1,11 @@
+package #package#;
+
+import #baseDao#;
+import #model#;
+
+/**
+ * #daoName#. @author Auto Tools by 充满智慧的威哥
+ */
+public interface #daoName# extends BaseDao<#entityName#, #idType#> {
+
+}

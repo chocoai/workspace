@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.ebp.api.dao.NoteDataDao">
+	<resultMap type="com.whty.ebp.api.model.NoteData" id="NoteDataResultBean">
+		<result column="id" property="id" />
+		<result column="userId" property="user_Id" />
+		<result column="userName" property="user_name" />
+		<result column="orgId" property="org_Id" />
+		<result column="orgName" property="org_Name" />
+		<result column="chapterId" property="chapter_id" />
+		<result column="chapterName" property="chapter_name" />
+		<result column="platformCode" property="platform_code" />
+		<result column="login_platform_code" property="login_platform_code" />
+		<result column="teacherId" property="teacher_id" />
+		<result column="teacherName" property="teacher_name" />
+		<result column="subjectId" property="subject_id" />
+		<result column="subjectName" property="subject_name" />
+		<result column="classId" property="class_id" />
+		<result column="className" property="class_name" />
+		<result column="data_file_url" property="dataFileUrl" />
+		<result column="interactive_id" property="interactiveId" />
+	</resultMap>
+
+
+	<insert id="save" parameterType="com.whty.ebp.api.model.NoteData">
+		insert into EBP_NOTE_DATA (
+		id
+		<if test="userId != null">,user_id</if>
+		<if test="userName != null">,user_name</if>
+		<if test="platformCode != null">,platform_code</if>
+		<if test="loginPlatformCode != null">,login_platform_code</if>
+		<if test="classId != null">,class_id</if>
+		<if test="className != null">,class_name</if>
+		<if test="teacherId != null">,teacher_id</if>
+		<if test="teacherName != null">,teacher_name</if>
+		<if test="subjectId != null">,subject_id</if>
+		<if test="subjectName != null">,subject_name</if>
+		<if test="chapterId != null">,chapter_id</if>
+		<if test="chapterName != null">,chapter_name</if>
+		<if test="orgId != null">,org_id</if>
+		<if test="orgName != null">,org_name</if>
+		<if test="dataFileUrl != null">,data_file_url</if>
+		<if test="interactiveId != null">,interactive_Id</if>
+		) values(
+		#{id}
+		<if test="userId != null">,#{userId}</if>
+		<if test="userName != null">,#{userName}</if>
+		<if test="platformCode != null">,#{platformCode}</if>
+		<if test="loginPlatformCode != null">,#{loginPlatformCode}</if>
+		<if test="classId != null">,#{classId}</if>
+		<if test="className != null">,#{className}</if>
+		<if test="teacherId != null">,#{teacherId}</if>
+		<if test="teacherName != null">,#{teacherName}</if>
+		<if test="subjectId != null">,#{subjectId}</if>
+		<if test="subjectName != null">,#{subjectName}</if>
+		<if test="chapterId != null">,#{chapterId}</if>
+		<if test="chapterName != null">,${chapterName}</if>
+		<if test="orgId != null">,#{orgId}</if>
+		<if test="orgName != null">,#{orgName}</if>
+		<if test="dataFileUrl != null">,#{dataFileUrl}</if>
+		<if test="interactiveId != null">,#{interactiveId}</if>
+		)
+	</insert>
+
+	
+	<insert id="saveOutSideNoteData" parameterType="com.whty.ebp.api.model.OutSideNoteData">
+		insert into EBP_OUT_SIDE_NOTE_DATA (
+		id
+		<if test="userId != null">,user_id</if>
+		<if test="userName != null">,user_name</if>
+		<if test="platformCode != null">,platform_code</if>
+		<if test="loginPlatformCode != null">,login_platform_code</if>
+		<if test="orgId != null">,org_id</if>
+		<if test="orgName != null">,org_name</if>
+		<if test="dataFileUrl != null">,data_file_url</if>
+		) values(
+		#{id}
+		<if test="userId != null">,#{userId}</if>
+		<if test="userName != null">,#{userName}</if>
+		<if test="platformCode != null">,#{platformCode}</if>
+		<if test="loginPlatformCode != null">,#{loginPlatformCode}</if>
+		<if test="orgId != null">,#{orgId}</if>
+		<if test="orgName != null">,#{orgName}</if>
+		<if test="dataFileUrl != null">,#{dataFileUrl}</if>
+		)
+	
+	</insert>
+
+
+
+</mapper>

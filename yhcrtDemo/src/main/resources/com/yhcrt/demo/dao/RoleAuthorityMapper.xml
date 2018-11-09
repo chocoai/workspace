@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.demo.dao.RoleAuthorityDao">
+    <resultMap id="baseMap" type="com.yhcrt.demo.model.RoleAuthority">
+        <result property="id" column="id"/>
+        <result property="role" column="role"/>
+        <result property="authorityId" column="authority_id"/>           
+    </resultMap>
+
+    <sql id="column">
+        id,role,authority_id
+    </sql>
+
+    <select id="queryByRole" resultMap="baseMap" parameterType="_short">
+        SELECT  <include refid="column"/>
+        FROM role_authority 
+        WHERE role = #{role,jdbcType=INTEGER}
+    </select>
+    
+    <insert id="insert"  parameterType="com.yhcrt.demo.model.Authority">
+        INSERT INTO role_authority
+        <set>
+            <if test="role != null and role != ''">
+                role = #{role},
+            </if>
+            <if test="authorityId != null and authorityId != ''">
+                authority_id = #{authorityId},
+            </if>
+        </set>
+    </insert>
+
+    <delete id="deleteByRole" parameterType="_short">
+        DELETE FROM role_authority
+        WHERE  role = #{role,jdbcType=INTEGER}
+    </delete>
+
+</mapper>

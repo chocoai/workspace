@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>- Powered by CMS</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="/${mobileRes!}/css/pic/public.css" rel="stylesheet" type="text/css"/>
+<link href="/${mobileRes!}/css/pic/share.css" rel="stylesheet" type="text/css"/>
+<script src="/${mobileRes!}/js/focus/TouchSlide.1.1.js"></script>
+
+<link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
+<link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css"/>
+<script src="${resSys}/jquery.js" type="text/javascript"></script>
+<script src="${resSys}/jqueryUI/jquery-ui.js" type="text/javascript"></script>
+<script src="${resSys}/front.js" type="text/javascript"></script>
+<script src="${resSys}/ckplayer/ckplayer.js" type="text/javascript"></script>
+<script src="${resSys}/ckplayer/offlights.js" type="text/javascript"></script>
+<script type="text/javascript">
+</script>
+</head>
+<body>
+<div id="wrap" class="clearfix overflow mg-auto" style="background:#ffffff"> 
+	[#include "../include/header_lanmu.html"/] 
+	
+        <div class="newsTex">
+        	<h1>${baoliao.title!}</h1>
+            <div class="msgbar">发布时间： ${baoliao.createTime?string('yyyy-MM-dd HH:mm')} &nbsp; 
+            作者：[#if baoliao.user??]${baoliao.user.username!}[#else]匿名网友[/#if] &nbsp; 
+            来源：[#if baoliao.user??]${baoliao.user.username!}[#else]匿名网友[/#if] &nbsp; 
+            浏览次数：<span id="views">${baoliao.readCount!}</span>次
+            <span id="collectCsiDiv"></span>
+            </div>
+            
+            <div class="newsCon">
+            	<p style="margin: 5px auto; text-align: center">
+        		${baoliao.content!}
+        		</p>
+        	</div>
+        </div>
+    [#include "../include/footer.html"/]
+</div>  
+<script src="/${mobileRes!}/js/focus/foot.js"></script>
+</body>
+</html>

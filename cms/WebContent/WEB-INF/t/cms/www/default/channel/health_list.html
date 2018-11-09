@@ -1,0 +1,77 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="keywords" content="${channel.keywords!}" />
+<meta http-equiv="description" content="${channel.description!}" />
+<title>${channel.title!channel.name} - ${site.name}</title>
+
+<link rel="stylesheet" type="text/css" href="/${res}/css/public_all.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/global.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/index_con.css" />
+
+<!-- <link rel="stylesheet" type="text/css" href="/${res}/css/index.css"/>
+<link rel="stylesheet" type="text/css" href="/${res}/css/index_con.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/global.css"/> -->
+
+<script type="text/javascript" src="/${res}/js/dc/settitle.js"></script>
+
+<script type="text/javascript">
+	$(function() {
+		Cms.channelViewCount("${base}", "${channel.id}");
+		Cms.siteFlow("${base}", location.href, document.referrer,
+				"${site.config.flowSwitch?string}");
+	});
+</script>
+</head>
+<body>
+	[#include "../include/header.html"/]
+	[#include "../include/navi.html"/]
+	<!--内容 开始-->
+	<!--内容 开始-->
+	<div class="content">
+		<div class="box mt10">
+			<div class="map">
+				<img src="/${res}/images/home.png" width="20" height="18">
+				<a href="#">首页</a> > 
+				[#list channel.nodeList as n]
+				<a target="_blank" href="${n.url}">${n.name}</a>
+					[#if n_has_next] > [/#if]
+				[/#list]
+			</div>
+
+			<div class="details">
+
+				<div class="details_left">
+					[@cms_content_page count='35' orderBy='4' titLen='22' channelOption='1' channelId=channel.id] 
+					<ul class="article_list">
+						[#list tag_pagination.list as a]
+						<li>
+							<span>${a.date?string('yyyy-MM-dd')}</span>
+							<a href="${a.url}" title="${a.title}" target="_blank">[@text_cut s=a.title len=titLen /]</a>
+						</li>
+						[/#list]
+					</ul>
+
+					<div style="clear: both;"></div>
+					<div class="list_dis">
+						<div class="jogger">[@cms_pagination sysPage='1'/]</div>
+						
+					</div>
+					[/@cms_content_page]
+
+				</div>
+
+				[#include "../include/right.html"/]
+
+			</div>
+
+		</div>
+
+	</div>
+	<!--内容 end-->
+	<!-- [#include "../include/friend_link.html"/] -->
+	[#include "../include/footer.html"/]
+</body>
+</html>

@@ -1,0 +1,28 @@
+		[#include "../include/header.html"/]
+		
+		<!--nav 开始-->
+		<div class="nav">
+			<div class="box">
+				<ul class="nav_box">
+					<li>
+						<a href="${base}/fc/index.jhtml">首 页</a>
+					</li>
+					<li>
+						<a href="${base}/fcxw/index.jhtml">新闻</a>
+					</li>
+					<li>
+						<a href="${base}/house/index.jhtml">新房</a>
+					</li>
+					<li>
+						<a href="${base}/jiaju/index.jhtml">家居</a>
+					</li>
+					<li>
+						<a href="${base}/bbs" target="_blank">论坛</a>
+					</li>
+					<li>
+						<a href="${base}/ppk/index.jhtml">品牌库</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<!--nav 开始-->

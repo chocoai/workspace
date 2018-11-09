@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.devicemanage.dao.AppNetBlacklistDao">
+	
+	<resultMap type="com.whty.assis.devicemanage.model.AppNetBlacklist" id="AppNetBlacklistResult">
+		<result property="id" column="id" />
+		<result property="pkg" column="pkg" />
+		<result property="name" column="name" />
+		<result property="memo" column="memo" />
+		<result property="version" column="version" />
+		<result property="versionCode" column="version_code" />
+		<result property="creator" column="creator" />
+		<result property="icon" column="icon" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	
+	
+	<insert id="save" parameterType="com.whty.assis.devicemanage.model.AppNetBlacklist">
+		insert into t_app_net_blacklist(
+		pkg
+		 ,name
+		 <if test="memo != null ">,memo</if>
+		 ,icon
+		 ,memo
+		 ,version
+		 ,version_code
+		 ,create_time
+		 ,update_time
+		 ,creator
+			) values (
+				#{pkg}
+				,#{name}
+				<if test="memo != null and memo != ''">,#{memo}</if>
+				,#{icon}
+				,#{memo}
+				,#{version}
+				,#{versionCode}
+				,#{createTime}
+				,#{updateTime}
+				,#{creator}
+			)
+	</insert>
+
+	<delete id="deleteById" parameterType="int" >
+		delete from t_app_net_blacklist where id=#{_parameter}
+	</delete>
+
+
+	<select id="loadById" parameterType="int" resultMap="AppNetBlacklistResult">
+		select * from t_app_net_blacklist where id = #{_parameter}
+	</select>
+
+	<select id="listByCondition" parameterType="map" resultMap="AppNetBlacklistResult">
+		select * from t_app_net_blacklist where 1=1
+	</select>
+	
+	
+	<select id="listBySchoolClassRule" parameterType="int" resultMap="AppNetBlacklistResult">
+		select * from t_app_net_blacklist where id in(select app_net_blacklist_id 
+		from t_school_class_app_net_blacklist where school_class_id=#{_parameter})
+	</select>
+
+
+	
+</mapper>

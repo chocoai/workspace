@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ProjectManagerMapper">
+  <resultMap id="BaseResultMap" type="ProjectManager">
+    <id column="CID" jdbcType="INTEGER" property="cid" />
+    <result column="PROJECT_NAME" jdbcType="VARCHAR" property="projectName" />
+    <result column="ABBREVIATION" jdbcType="VARCHAR" property="abbreviation" />
+    <result column="ALIAS" jdbcType="VARCHAR" property="alias" />
+    <result column="IS_TEAM" jdbcType="INTEGER" property="isTeam" />
+    <result column="P_CID" jdbcType="INTEGER" property="pCid" />
+    <result column="SCORE_CARD" jdbcType="INTEGER" property="scoreCard" />
+    <result column="RESULT_TYPE" jdbcType="INTEGER" property="resultType" />
+    <result column="RESULT_UNIT" jdbcType="VARCHAR" property="resultUnit" />
+    <result column="FINALISTS_NUM" jdbcType="INTEGER" property="finalistsNum" />
+    <result column="FINAL_ADMISSION" jdbcType="INTEGER" property="finalAdmission" />
+    <result column="GENDER" jdbcType="INTEGER" property="gender" />
+    <result column="MASTERS_LEVEL" jdbcType="VARCHAR" property="mastersLevel" />
+    <result column="FIRST_LEVEL" jdbcType="VARCHAR" property="firstLevel" />
+    <result column="SECOND_LEVEL" jdbcType="VARCHAR" property="secondLevel" />
+    <result column="THREE_LEVEL" jdbcType="VARCHAR" property="threeLevel" />
+    <result column="PROJECT_TYPE" jdbcType="INTEGER" property="projectType" />
+    <result column="CREA_REN" jdbcType="VARCHAR" property="creaRen" />
+    <result column="CREA_TIME" jdbcType="VARCHAR" property="creaTime" />
+    <result column="ORDER_NUM" jdbcType="INTEGER" property="orderNum" />
+    <result column="BACKUP" jdbcType="VARCHAR" property="backup" />
+    <result column="EXP1" jdbcType="INTEGER" property="exp1" />
+    <result column="EXP2" jdbcType="INTEGER" property="exp2" />
+    <result column="EXP3" jdbcType="VARCHAR" property="exp3" />
+    <result column="EXP4" jdbcType="VARCHAR" property="exp4" />
+    <result column="EXP5" jdbcType="VARCHAR" property="exp5" />
+    <result column="EXP6" jdbcType="VARCHAR" property="exp6" />
+    <association property="scoreRecord" column="SCORE_CARD" javaType="ScoreRecord">
+		<id column="CID" property="cid"/>
+		<result column="RULE_NAME"  property="ruleName" />
+	    <result column="TROPHY"  property="trophy" />
+	    <result column="CERTIFICATE"  property="certificate" />
+	    <result column="GOLD_MEDAL" property="goldMedal" />
+	    <result column="SILVER_MEDAL"  property="silverMedal" />
+	    <result column="BRONZE_MEDAL"  property="bronzeMedal" />
+	    <result column="FIRST_SCORE"  property="firstScore" />
+	    <result column="SECOND_SCORE"  property="secondScore" />
+	    <result column="THIRD_SCORE"  property="thirdScore" />
+	    <result column="FOURTH_SCORE"  property="fourthScore" />
+	    <result column="FIFTH_SCORE"  property="fifthScore" />
+	    <result column="SIXTH_SCORE"  property="sixthScore" />
+	    <result column="SEVENTH_SCORE"  property="seventhScore" />
+	    <result column="EIGHT_SCORE" property="eightScore" />
+	</association>
+	<association property="classManager" column="P_CID" javaType="ClassManager">
+		<id column="CID" property="cid"/>
+		<result column="CLASSIFY_NAME" property="classifyName"/>
+	</association>
+  </resultMap>
+  <sql id="Base_Column_List">
+    PM.CID, PM.PROJECT_NAME, PM.ABBREVIATION, PM.ALIAS, PM.IS_TEAM, PM.P_CID, PM.SCORE_CARD, PM.RESULT_TYPE, 
+    PM.RESULT_UNIT, PM.FINALISTS_NUM, PM.FINAL_ADMISSION, PM.GENDER, PM.MASTERS_LEVEL, PM.FIRST_LEVEL, 
+    PM.SECOND_LEVEL, PM.THREE_LEVEL,PM.PROJECT_TYPE, PM.CREA_REN, PM.CREA_TIME, PM.ORDER_NUM, PM.BACKUP,PM.EXP1, 
+    PM.EXP2, PM.EXP3, PM.EXP4, PM.EXP5, PM.EXP6
+  </sql>
+  
+  <!-- 查询 某分类下是否含有竞赛项目-->	
+  <select id="countByClassCid" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select count(*) from project_manager
+		where
+		P_CID =  #{pid,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 查询某计分记牌方式是否被竞赛项目使用-->	
+  <select id="countByScoreCid" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select count(*) from project_manager
+		where
+		SCORE_CARD =  #{cid,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 查询分类名称去查询是否重复输入-->	
+  <select id="countByNameAndPCid" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select count(*) from project_manager
+		where
+	 	P_CID = #{pCid}
+	    and PROJECT_NAME = #{projectName}
+  </select>
+  
+  
+  <select id="selectByExample" parameterType="ProjectManager" resultMap="BaseResultMap">
+	SELECT 
+		<include refid="Base_Column_List" />,
+		SR.RULE_NAME,
+		CM.CLASSIFY_NAME
+	 FROM 
+		project_manager PM 
+	 LEFT JOIN 
+	 	SCORE_RECORD  SR ON PM.SCORE_CARD =SR.CID 
+	 LEFT JOIN 
+	 	CLASS_MANAGER CM ON CM.CID = PM.P_CID
+	 WHERE
+    	1=1
+		<if test="cid != null and cid !=''">
+	    	and PM.CID = #{cid} 
+	    </if>
+	    <if test="pCid != null and pCid !=''">
+	    	and PM.P_CID = #{pCid}
+	    </if>
+	    <if test="scoreCard != null and scoreCard!=''">
+	    	and PM.SCORE_CARD = #{scoreCard}
+	    </if>
+	    <if test="projectName != null and projectName !=''">
+	    	and PM.PROJECT_NAME LIKE "%"#{projectName}"%"
+	    </if>
+	    <if test="abbreviation != null and abbreviation !=''">
+	    	and PM.ABBREVIATION LIKE "%"#{abbreviation}"%"
+	    </if>
+    ORDER BY PM.ORDER_NUM,PM.CREA_TIME DESC
+  </select>
+  <select id="searchObjectByCid" parameterType="Integer" resultMap="BaseResultMap">
+		SELECT 
+		<include refid="Base_Column_List" />,
+		SR.CID,
+		SR.RULE_NAME,
+		CM.CLASSIFY_NAME
+	 FROM 
+		project_manager PM 
+	 LEFT JOIN 
+	 	SCORE_RECORD  SR ON PM.SCORE_CARD =SR.CID 
+	 LEFT JOIN 
+	 	CLASS_MANAGER CM ON CM.CID = PM.P_CID
+	 WHERE
+	 	PM.CID = #{cid} 
+  </select>
+  <delete id="delete" parameterType="java.lang.Integer">
+    DELETE FROM 
+    	PROJECT_MANAGER
+    WHERE 
+    	CID = #{cid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="ProjectManager">
+    insert into project_manager (CID, PROJECT_NAME, ABBREVIATION, 
+      ALIAS, IS_TEAM, P_CID, 
+      SCORE_CARD, RESULT_TYPE, RESULT_UNIT, 
+      FINALISTS_NUM, FINAL_ADMISSION, GENDER, 
+      MASTERS_LEVEL, FIRST_LEVEL, SECOND_LEVEL, 
+      THREE_LEVEL, CREA_REN, PROJECT_TYPE, 
+      CREA_TIME, ORDER_NUM, BACKUP, 
+      EXP1, EXP2, EXP3, EXP4, 
+      EXP5, EXP6)
+    values (#{cid,jdbcType=INTEGER}, #{projectName,jdbcType=VARCHAR}, #{abbreviation,jdbcType=VARCHAR}, 
+      #{alias,jdbcType=VARCHAR}, #{isTeam,jdbcType=INTEGER}, #{pCid,jdbcType=INTEGER}, 
+      #{scoreCard,jdbcType=INTEGER}, #{resultType,jdbcType=INTEGER}, #{resultUnit,jdbcType=VARCHAR}, 
+      #{finalistsNum,jdbcType=INTEGER}, #{finalAdmission,jdbcType=INTEGER}, #{gender,jdbcType=INTEGER}, 
+      #{mastersLevel,jdbcType=VARCHAR}, #{firstLevel,jdbcType=VARCHAR}, #{secondLevel,jdbcType=VARCHAR}, 
+      #{threeLevel,jdbcType=VARCHAR}, #{creaRen,jdbcType=VARCHAR}, #{projectType,jdbcType=INTEGER}, 
+      #{creaTime,jdbcType=VARCHAR}, #{orderNum,jdbcType=INTEGER}, #{backup,jdbcType=VARCHAR}, 
+      #{exp1,jdbcType=INTEGER}, #{exp2,jdbcType=INTEGER}, #{exp3,jdbcType=VARCHAR}, #{exp4,jdbcType=VARCHAR}, 
+      #{exp5,jdbcType=VARCHAR}, #{exp6,jdbcType=VARCHAR})
+  </insert>
+  <update id="update" parameterType="ProjectManager">
+   	update 
+   		  project_manager
+    set 
+    	  PROJECT_NAME = #{projectName,jdbcType=VARCHAR},
+	      ABBREVIATION = #{abbreviation,jdbcType=VARCHAR},
+	      ALIAS = #{alias,jdbcType=VARCHAR},
+	      IS_TEAM = #{isTeam,jdbcType=INTEGER},
+	      P_CID = #{pCid,jdbcType=INTEGER},
+	      SCORE_CARD = #{scoreCard,jdbcType=INTEGER},
+	      RESULT_TYPE = #{resultType,jdbcType=INTEGER},
+	      RESULT_UNIT = #{resultUnit,jdbcType=VARCHAR},
+	      FINALISTS_NUM = #{finalistsNum,jdbcType=INTEGER},
+	      FINAL_ADMISSION = #{finalAdmission,jdbcType=INTEGER},
+	      GENDER = #{gender,jdbcType=INTEGER},
+	      MASTERS_LEVEL = #{mastersLevel,jdbcType=VARCHAR},
+	      FIRST_LEVEL = #{firstLevel,jdbcType=VARCHAR},
+	      SECOND_LEVEL = #{secondLevel,jdbcType=VARCHAR},
+	      THREE_LEVEL = #{threeLevel,jdbcType=VARCHAR},
+	      CREA_REN = #{creaRen,jdbcType=VARCHAR},
+	      PROJECT_TYPE = #{projectType,jdbcType=INTEGER},
+	      CREA_TIME = #{creaTime,jdbcType=VARCHAR},
+	      ORDER_NUM = #{orderNum,jdbcType=INTEGER},
+	      BACKUP = #{backup,jdbcType=VARCHAR},
+	      EXP1 = #{exp1,jdbcType=INTEGER},
+	      EXP2 = #{exp2,jdbcType=INTEGER},
+	      EXP3 = #{exp3,jdbcType=VARCHAR},
+	      EXP4 = #{exp4,jdbcType=VARCHAR},
+	      EXP5 = #{exp5,jdbcType=VARCHAR},
+	      EXP6 = #{exp6,jdbcType=VARCHAR}
+    where 
+          CID = #{cid,jdbcType=INTEGER}
+  </update>
+  
+  <!-- 查询项目CID -->
+  <select id="queryProjectByCid"  parameterType="Integer" resultMap="BaseResultMap">
+    select 
+	<include refid="Base_Column_List" />
+	from 
+		project_manager PM
+	where
+		PM.CID=#{cid}
+  </select>
+    <!-- 查询分类集合的项目 -->
+  <select id="queryTree" resultMap="BaseResultMap">
+    select 
+		cid,
+		p_cid,
+		project_name,
+		IS_TEAM,
+		GENDER
+	from 
+		project_manager 
+	where P_CID in 
+	  <foreach item="item" index="index" collection="array"  open="(" separator="," close=")">  
+          #{item}  
+      </foreach>  
+	order by ORDER_NUM DESC,CREA_TIME DESC	
+  </select>
+
+  
+  <!-- 通过项目CID得到计分计排规则 -->
+  <select id="queryScoreRecordByProjectCid"  parameterType="Integer" resultMap="BaseResultMap">
+    SELECT
+		P.CID,
+		P.SCORE_CARD,
+		S.RULE_NAME,
+    	S.TROPHY,
+    	S.CERTIFICATE,
+    	S.GOLD_MEDAL,
+    	S.SILVER_MEDAL,
+    	S.BRONZE_MEDAL,
+    	S.FIRST_SCORE,
+    	S.SECOND_SCORE,
+    	S.THIRD_SCORE,
+    	S.FOURTH_SCORE,
+    	S.FIFTH_SCORE,
+    	S.SIXTH_SCORE,
+    	S.SEVENTH_SCORE,
+    	S.EIGHT_SCORE
+	FROM
+		PROJECT_MANAGER P,
+		SCORE_RECORD S
+	WHERE
+		P.CID=#{cid} AND P.SCORE_CARD=S.CID
+	order by P.ORDER_NUM DESC,P.CREA_TIME DESC	
+  </select>
+</mapper>

@@ -1,0 +1,302 @@
+
+
+/** ===================================== 文字颜色 ============================================= **/
+.cr0{color:#fff;}
+.cr1{color:#AAAAAA;}
+.cr2{color:#666666;}
+.cr3{color:#333333;}
+.cr4{color:#759DD8;}
+.cr5{color:#008BF2;}
+.cr6{color:#447AB8;}
+.cr7{color:#7BDA18;}
+.cr8{color:#5DC118;}
+.cr9{color:#6DB82B;}
+.cr10{color:#F89428;}
+.cr11{color:#FC8100;}
+.cr12{color:#BA7538;}
+
+.bgcr1{background-color:#0066cc ;}
+.bgcr2{background-color:#cc9966 ;}
+.bgcr3{background-color:#666699 ;}
+.bgcr4{background-color:#ff9900 ;}
+.bgcr5{background-color:#cc9999 ;}
+.bgcr6{background-color:#66cccc ;}
+
+/** ===================================== 背景颜色 ============================================= **/
+.bgc0{background-color:#fff;}
+.bgc1{background-color:#AAAAAA;}
+.bgc2{background-color:#666666;}
+.bgc3{background-color:#333333;}
+.bgc4{background-color:#759DD8;}
+.bgc5{background-color:#008BF2;}
+.bgc6{background-color:#447AB8;}
+.bgc7{background-color:#7BDA18;}
+.bgc8{background-color:#5DC118;}
+.bgc9{background-color:#6DB82B;}
+.bgc10{background-color:#F89428;}
+.bgc11{background-color:#FC8100;}
+.bgc12{background-color:#BA7538;}
+
+/** ===================================== 边框样式 ============================================= **/
+.bd1{border: 1px solid #E5E5E5;}
+
+/** ===================================== 链接样式 ============================================= **/
+.a1:link,.a1:visited{color:#333333;text-decoration:none;}
+.a1:hover{color:#666666;text-decoration:underline;}
+
+.a1:link,.a1:visited{color:#333333;text-decoration:none;}
+.a1:hover{color:#666666;text-decoration:underline;}
+
+.a2:link,.a2:visited{color:#008BF2;text-decoration:none;}
+.a2:hover{color:#759DD8;text-decoration:underline;}
+
+.a3:link,.a3:visited{color:#5DC118;text-decoration:none;}
+.a3:hover{color:#7BDA18;text-decoration:underline;}
+
+.a4:link,.a4:visited{color:#FC8100;text-decoration:none;}
+.a4:hover{color:#F89428;text-decoration:underline;}
+
+/** ===================================== 按钮样式 ============================================= **/
+.btn1,.btn2,.btn3,.btn4{
+	color:#FFFFFF;border:0px solid #D8D8D8;border-radius:2px;cursor:pointer;letter-spacing:1px;padding:7px 22px; padding:6px 22px\9;
+}
+.btn1{background-color:#333333;}
+.btn1:hover{background-color:#666666;}
+.btn1:visited{color:#FFFFFF;}
+
+.btn2{background-color:#32A5E7;}
+.btn2:hover{background-color:#447AB8;}
+.btn2:visited{color:#FFFFFF;}
+
+.btn3{background-color:#7BDA18;}
+.btn3:hover{background-color:#5DC118;}
+.btn3:visited{color:#FFFFFF;}
+
+.btn4{background-color:#FC8100;}
+.btn4:hover{background-color:#BA7538;}
+.btn4:visited{color:#FFFFFF;}
+
+/** ===================================== 色块样式block ============================================= **/
+.bk1 a, .bk2 a, .bk3 a, .bk4 a, .bk5 a, .bk6 a, .bk7 a, .bk8 a, .bk9 a, .bk10 a, .bk11 a, .bk12 a {
+	font-size:12px; color:#9E9E9E; line-height:28px; text-align:center; height:30px; padding: 2px 10px 3px;
+}
+.bk1 a:hover, .bk2 a:hover, .bk3 a:hover, .bk4 a:hover, .bk5 a:hover, .bk6 a:hover, .bk7 a:hover, 
+.bk8 a:hover, .bk9 a:hover, .bk10 a:hover, .bk11 a:hover, .bk12 a:hover {
+	color:#ffffff; padding: 2px 10px 3px;
+}
+.bk1-cur a, .bk2-cur a, .bk3-cur a, .bk4-cur a, .bk5-cur a, .bk6-cur a, 
+.bk7-cur a, .bk8-cur a, .bk9-cur a, .bk10-cur a, .bk11-cur a, .bk12-cur a {
+	font-size:12px; color:#ffffff; line-height:28px; text-align:center; height:30px; padding: 2px 10px 3px;
+}
+.bk1-cur a:hover, .bk2-cur a:hover, .bk3-cur a:hover, .bk4-cur a:hover, .bk5-cur a:hover, 
+.bk6-cur a:hover, .bk7-cur a:hover, .bk8-cur a:hover, .bk9-cur a:hover, .bk10-cur a:hover, 
+.bk11-cur a:hover, .bk12-cur a:hover {
+	color:#ffffff; padding: 2px 10px 3px;
+}
+
+.bk1 a:hover,.bk1-cur a,.bk1-cur a:hover{background-color:#AAAAAA;}
+.bk2 a:hover,.bk2-cur a,.bk2-cur a:hover{background-color:#666666;}
+.bk3 a:hover,.bk3-cur a,.bk3-cur a:hover{background-color:#333333;}
+.bk4 a:hover,.bk4-cur a,.bk4-cur a:hover{background-color:#759DD8;}
+.bk5 a:hover,.bk5-cur a,.bk5-cur a:hover{background-color:#32A5E7;}
+.bk6 a:hover,.bk6-cur a,.bk6-cur a:hover{background-color:#447AB8;}
+.bk7 a:hover,.bk7-cur a,.bk7-cur a:hover{background-color:#7BDA18;}
+.bk8 a:hover,.bk8-cur a,.bk8-cur a:hover{background-color:#5DC118;}
+.bk9 a:hover,.bk9-cur a,.bk9-cur a:hover{background-color:#6DB82B;}
+.bk10 a:hover,.bk10-cur a,.bk10-cur a:hover{background-color:#F89428;}
+.bk11 a:hover,.bk11-cur a,.bk11-cur a:hover{background-color:#FC8100;}
+.bk12 a:hover,.bk12-cur a,.bk12-cur a:hover{background-color:#BA7538;}
+
+/** ================================ 字体样式 ================================== **/
+.zt1{font-family:'Arial';}
+.zt2{font-family:'Microsoft YaHei','微软雅黑';}
+.zt3{font-family:"黑体";}
+.ztzc{font-weight:normal;}			/* 字体正常 */
+.ztc{font-weight:bold;}				/* 粗体 */
+.ztx{font-style:italic;}			/* 斜体 */
+.zjc{text-align:center;}			/* 文字居中 */
+.zjy{text-align:right;}				/* 文字居右 */
+.zjz{text-align:left;}				/* 文字居左 */
+.xhx{text-decoration:underline;}	/* 下划线 */
+.shx{text-decoration:overline;}		/* 上划线 */
+.scx{text-decoration:line-through;} /* 删除线 */
+.zmdx{text-transform:uppercase;}	/* 所有字母大写 */
+.zmxx{text-transform:lowercase;}	/* 所有字母小写 */
+.zmkt{text-transform:capitalize;}	/* 单词首字母大写 */
+
+/** ===================================== 其他  ================================= **/
+.zfd{float:left;}		/* 左浮动 */
+.yfd{float:right;}		/* 右浮动 */
+.clear{clear:both;}		/* div换行 */
+.zdhh{overflow:hidden;} /* 文字自动换行 */
+.show{display:block;}	/* 显示 */
+.hide{display:none;}	/* 隐藏 */
+.inline{display:inline;}
+
+/** ================================= 字号大小  =============================== **/
+.zh0{font-size:0px;}
+.zh10{font-size:10px;}
+.zh12{font-size:12px;}
+.zh14{font-size:14px;}
+.zh16{font-size:16px;}
+.zh18{font-size:18px;}
+.zh20{font-size:20px;}
+.zh22{font-size:22px;}
+.zh24{font-size:24px;}
+.zh26{font-size:26px;}
+.zh28{font-size:28px;}
+.zh30{font-size:30px;}
+.zh40{font-size:40px;}
+.zh50{font-size:50px;}
+
+/** ================================ 字高  ================================ **/
+.zg0{line-height:0px;}
+.zg14{line-height:14px;}
+.zg16{line-height:16px;}
+.zg18{line-height:18px;}
+.zg20{line-height:20px;}
+.zg22{line-height:22px;}
+.zg24{line-height:24px;}
+.zg26{line-height:26px;}
+.zg28{line-height:28px;}
+.zg30{line-height:30px;}
+.zg32{line-height:32px;}
+.zg40{line-height:40px;}
+
+/** ========================== padding and margin ========================== **/
+/* ------------------ padding-top ------------------ */
+.ns1{padding-top:1px;}
+.ns2{padding-top:2px;}
+.ns3{padding-top:3px;}
+.ns5{padding-top:5px;}
+.ns10{padding-top:10px;}
+/* ------------------ padding-bottom ------------------ */
+.nx5{padding-bottom:5px;}
+.nx10{padding-bottom:10px;}
+.nx20{padding-bottom:20px;}
+/* ------------------ padding-left ------------------ */
+.nz5{padding-left:5px;}
+.nz10{padding-left:10px;}
+.nz20{padding-left:20px;}
+.nz100{padding-left:100px;}
+.nz200{padding-left:200px;}
+.nz300{padding-left:300px;}
+/* ------------------ padding-right ------------------ */
+.ny5{padding-right:5px;}
+.ny10{padding-right:10px;}
+.ny20{padding-right:20px;}
+/* ------------------ margin-top ------------------ */
+.ys1{margin-top:1px;}
+.ys2{margin-top:2px;}
+.ys3{margin-top:3px;}
+.ys5{margin-top:5px;}
+.ys10{margin-top:10px;}
+.ys15{margin-top:15px;}
+.ys20{margin-top:20px;}
+.ys25{margin-top:25px;}
+.ys40{margin-top:40px;}
+.ys50{margin-top:50px;}
+.ys100{margin-top:100px;}
+/* ------------------ margin-bottom ----------------- */
+.yx5{margin-bottom:5px;}
+.yx10{margin-bottom:10px;}
+.yx20{margin-bottom:20px;}
+/* ------------------ margin-left ------------------ */
+.yz3{margin-left:3px;}
+.yz5{margin-left:5px;}
+.yz10{margin-left:10px;}
+.yz20{margin-left:20px;}
+.yz30{margin-left:30px;}
+.yz50{margin-left:50px;}
+.yz100{margin-left:100px;}
+.yz200{margin-left:200px;}
+/* ------------------ margin-right ------------------ */
+.yy5 {margin-right:5px;}
+.yy10 {margin-right:10px;}
+.yy20{margin-right:20px;}
+
+/** ========================== 宽度 ========================== **/
+.kdzd{margin:auto;}
+.kd30{width:30px;}
+.kd40{width:40px;}
+.kd50{width:50px;}
+.kd60{width:60px;}
+.kd70{width:70px;}
+.kd80{width:80px;}
+.kd100{width:100px;}
+.kd130{width:130px;}
+.kd150{width:150px;}
+.kd180{width:180px;}
+.kd200{width:200px;}
+.kd240{width:240px;}
+.kd260{width:260px;}
+.kd300{width:300px;}
+.kd420{width:420px;}
+.kd440{width:440px;}
+.kj450{width:450px;}
+.kd500{width:500px;}
+.kd700{width:700px;}
+.kd800{width:800px;}
+.kd900{width:900px;}
+.kd1000{width:1000px;}
+
+.kd620{width:620px;}
+.kd730{width:730px;}
+.kd820{width:820px;}
+
+/** ========================== 高度 ========================== **/
+.gd20{height:20px;}
+.gd25{height:25px;}
+.gd30{height:30px;}
+.gd50{height:50px;}
+.gd100{height:100px;}
+.gd200{height:200px;}
+.gd300{height:300px;}
+.gd500{height:500px;}
+
+/** ========================== 控件 ========================== **/
+.txt1{ 
+	background:none repeat scroll 0 0 #FFFFFF;
+	border:1px solid #C8C8C8;
+	color:#555555;
+	font-size:14px;
+	height:20px;
+	padding:4px 3px 1px;
+}
+.txt2{
+	background:none repeat scroll 0 0 #FFFFFF;
+	border:none;
+	border-bottom:1px solid #C8C8C8;
+	color:#555555;
+	font-size:14px;
+	height:20px;
+	padding:4px 3px 1px;
+}
+
+.select1{
+	background:none repeat scroll 0 0 #FFFFFF;
+	border:1px solid #C8C8C8;
+	color:#555555;
+	font-size:14px;
+	padding:3px 4px;
+	height:32px;
+}
+
+.textarea1 {
+    border:1px solid #CCCCCC;
+    color:#555555;
+    font:12px/1.5 Arial,Helvetica,sans-serif;
+    overflow:auto;
+    padding:10px;
+    text-align:left;
+}
+
+.textarea2 {
+    border:1px solid #CCCCCC;
+    color:#555555;
+    font:12px/1.5 Arial,Helvetica,sans-serif;
+    overflow:auto;
+    padding:10px;
+    text-align:left;
+    background: url("/images/textarea-img.png") no-repeat scroll center center #FFFFFF;
+}

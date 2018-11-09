@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.sysrole.dao.SysModularDao">
+
+	<!-- 这里的ManageUserInfo是别名，需要在mybatis-config.xml中定义，或者写类全名 -->
+	<resultMap type="SysModular" id="SysModularResult">
+		<id property="id" column="id" />
+		<result property="modular_name" column="modular_name" />
+		<result property="modular_path" column="modular_path" />
+		<result property="modular_sort" column="modular_sort" />
+		<result property="parent_id" column="parent_id" />
+		<result property="is_parent" column="is_parent" />
+		<result property="status" column="status" />
+		<result property="imgcss" column="imgcss" />
+	</resultMap>
+	
+	<!-- 根据条件查询 -->
+	<select id="listByCondition" parameterType="map" resultMap="SysModularResult">
+		select m.id,m.modular_name,m.modular_path,m.modular_sort,
+			m.parent_id,m.is_parent,m.status,m.imgcss 
+		from SYS_MODULAR m,SYS_ROLE_MODULAR r,SYS_USER_ROLE s
+		where m.status = 0
+		     and m.id = r.modular_id
+		     and r.role_id = s.role_id
+		     and s.user_id = #{user_id}
+		order by m.modular_sort
+	</select>
+	
+</mapper>

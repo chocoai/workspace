@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.demo.dao.StudentCardPropertyDao">
+
+	
+	<!-- 这里的EbpSoftLicence是别名，需要在mybatis-config.xml中定义，或者写类全名 -->
+	<resultMap type="com.whty.assis.demo.model.StudentCardProperty" id="StudentCardPropertyResult">
+		<id property="id" column="id" />
+		<result property="url" column="url" />
+		<result property="platformCode" column="platform_code" />
+		<result property="orgId" column="org_id" />
+		<result property="createTime" column="create_time" />
+	</resultMap>
+	
+	<select id="getStudentCardConfig" parameterType="map" resultType="string">
+		select url from TA_STUDENT_CARD_PROPERTY WHERE 1=1
+		<if test="platformCode != null and platformCode != ''">and platform_code=#{platformCode}</if>
+		<if test="orgId != null and orgId != ''">and org_id=#{orgId}</if>
+	</select>
+	
+	
+	
+</mapper>

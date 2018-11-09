@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>电子书包后台管理</title>
+<link href="css/style.css" rel="stylesheet" type="text/css"></link>
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/action.js"></script>
+<script type="text/javascript">
+	function Userlogin(){
+		if($("#account").val()=='请输入您的用户名'){
+			 var str ='<em><img src="images/login_error.jpg" /></em><i>请您输入账号后再登录。</i>';
+			 $("#date").html(str);
+			 return false;
+		}
+		if($("#account").val()!='请输入您的用户名'&&$("#password").val()==''){
+			 var str ='<em><img src="images/login_error.jpg" /></em><i>请您输入密码后再登录。</i>';
+			 $("#date").html(str);
+			 return false;
+		}
+		if($("#account").val()!='请输入您的用户名'&&$("#password").val()!=''){
+			$(".btn").val('登录中...');
+			$(".btn").attr("disabled","disabled");
+		$.ajax({
+			   type: "POST",
+			   url: "/ebookpackage/sys/user/login",
+			   data: {"account":$("#account").val(),"password":$("#password").val()},
+			   async: true,
+			   dataType:'json',
+			   success: function(msg){
+				   //console.log(msg);
+				   if(msg.code =='2'){
+					   var str ='<em><img src="images/login_error.jpg" /></em><i>您输入的密码不正确，请确认后重新输入。</i>';
+					   $("#date").html(str);
+					   $(".btn").val('登录');
+					   $(".btn").removeAttr("disabled");
+				   }else if(msg.code =='1'){
+					   var str ='<em><img src="images/login_error.jpg" /></em><i>您输入的账号不存在，请确认后重新输入。</i>';
+					   $("#date").html(str);
+					   $(".btn").val('登录');
+					   $(".btn").removeAttr("disabled");
+				   }
+				   else if(msg.code=='3'){
+				   		var str ='<em><img src="images/login_error.jpg" /></em><i>您的账号被禁用，请联系管理员。</i>';
+					   	$("#date").html(str);
+					   	$(".btn").val('登录');
+					   	$(".btn").removeAttr("disabled");
+				   }
+				   else{
+					   window.location="index.html";
+				   }
+			   }
+		});		   
+		}
+	}
+
+function clickEnt(e){
+	var keynum;
+		
+	if(window.event) // IE
+	  {
+	  keynum = e.keyCode;
+	  if(keynum==13){
+		  Userlogin();
+		  }
+	  }
+	else if(e.which) // Netscape/Firefox/Opera
+	  {
+	  keynum = e.which;
+	  if(keynum==13){
+		  Userlogin();
+		  }
+	  }
+
+
+}
+</script>
+</head>
+<body>
+	<div class="lfy_wheader">
+        <div class="lfy_lheader">
+            <a href="#"><img src="images/login_bg.png" alt="logo" /></a>
+        </div>
+    </div>
+    
+    <div class="lfy_wcontent">
+        <div class="lfy_lcontent" id="lfy_lcontent">
+            <img src="images/login_img.png" class="img" />
+            
+            <div class="login">
+                <div class="title">
+                    <span class="hint">请登录</span>
+                    <span class="txt" id="date"></span>
+                </div>
+                
+                <p>用户名</p>
+                <input type="text" class="text"  value="请输入您的用户名" id="account" name="account"/>
+                
+                <p>密码</p> 
+                <input type="text" class="text" value="请输入您的密码" />
+                <input type="password" class="text" value="" style="display:none" id="password" name="password" onkeydown="clickEnt(event)" />
+                
+                <input type="button" class="btn" value="登录" onclick="Userlogin();"/>
+            </div>
+        </div>
+    </div>
+    
+    <div class="lfy_wfooter">
+    	<div class="lfy_lfooter">
+    	<span class="left">Copyright &copy; 2015 All Rights Reserved</span>
+		<span class="right">技术支撑：<em>武汉天喻信息产业股份有限公司</em></span>
+    </div>
+	</div>
+</body>
+</html>

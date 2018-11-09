@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+	default-lazy-init="true">
+	
+	<bean id="imageUploadAct" class="com.yhcrt.weihu.bbs.action.ImageUploadAct"/>
+	<bean id="welcomeAct" class="com.yhcrt.weihu.bbs.action.WelcomeAct"/>
+	<bean id="bbsCategoryAct" class="com.yhcrt.weihu.bbs.action.BbsCategoryAct"/>
+	<bean id="bbsForumAct" class="com.yhcrt.weihu.bbs.action.BbsForumAct"/>
+	<bean id="bbsUserGroupAct" class="com.yhcrt.weihu.bbs.action.BbsUserGroupAct"/>
+	<bean id="resourceAct" class="com.yhcrt.weihu.bbs.action.template.ResourceAct"/>
+	<bean id="frameAct" class="com.yhcrt.weihu.bbs.action.FrameAct"/>
+	<bean id="bbsUserAct" class="com.yhcrt.weihu.bbs.action.BbsUserAct"/>
+	<bean id="cmsSiteConfigAct" class="com.yhcrt.weihu.bbs.action.CmsSiteConfigAct"/>
+	<bean id="cmsLoginAct" class="com.yhcrt.weihu.bbs.action.login.CmsLoginAct"/>
+	<bean id="personalAct" class="com.yhcrt.weihu.bbs.action.PersonalAct"/>
+	<bean id="cmsSensitivtyAct" class="com.yhcrt.weihu.bbs.action.CmsSensitivityAct"/>
+	<bean id="cmsFriendlinkCtgAct" class="com.yhcrt.weihu.bbs.action.CmsFriendlinkCtgAct"/>
+	<bean id="cmsFriendlinkAct" class="com.yhcrt.weihu.bbs.action.CmsFriendlinkAct"/>
+	<bean id="bbsPostTypeAct" class="com.yhcrt.weihu.bbs.action.BbsPostTypeAct"/>
+	<bean id="bbsCommonMagicAct" class="com.yhcrt.weihu.bbs.action.BbsCommonMagicAct"/>
+	<bean id="templateAct" class="com.yhcrt.weihu.bbs.action.template.TemplateAct">
+		<property name="tplManager" ref="tplManager"/>
+	</bean>
+	<bean id="bbsReportAct" class="com.yhcrt.weihu.bbs.action.BbsReportAct"/>
+	<bean id="bbsLimitAct" class="com.yhcrt.weihu.bbs.action.BbsLimitAct"/>
+	<bean id="bbsThirdAccountAct" class="com.yhcrt.weihu.bbs.action.BbsThirdAccountAct"/>
+	<bean id="bbsMessageAct" class="com.yhcrt.weihu.bbs.action.BbsMessageAct"/>
+	<bean id="bbsUserActiveLevelAct" class="com.yhcrt.weihu.bbs.action.BbsUserActiveLevelAct"/>
+	<bean id="bbsWebserviceAct" class="com.yhcrt.weihu.bbs.action.BbsWebserviceAct"/>
+	<bean id="bbsWebserviceAuthAct" class="com.yhcrt.weihu.bbs.action.BbsWebserviceAuthAct"/>
+	<bean id="bbsWebserviceCallRecordAct" class="com.yhcrt.weihu.bbs.action.BbsWebserviceCallRecordAct"/>
+</beans>

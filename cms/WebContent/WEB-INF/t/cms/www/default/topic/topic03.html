@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="keywords" content="${site.keywords!}" />
+<meta http-equiv="description" content="${site.description!}" />
+<title>${topic.name} - 专题 - ${site.name}</title>
+
+<link rel="stylesheet" type="text/css" href="/${res}/css/global.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/zt.css" />
+
+</head>
+
+<body class="zt_body03">
+	<!---专题top 开始--->
+	<div class="zt_top">
+		<div class="zt_top_center">
+			<div class="zt_logo">
+				<a href="${base}/">
+					<img src="/${res}/images/logo.png">
+				</a>
+			</div>
+		</div>
+	</div>
+	<!---专题top 结束--->
+
+	<!----专题内容 开始--->
+	<div class="zt_con">
+		<div class="zt_con_center">
+			<div class="zt_banner03">
+				<img src="${topic.titleImg!site.defImg}" width="1000" height="450" alt="" />
+				<span class="jchg">
+					<a href="#">
+						<img src="/${res}/images/zt_bg04.png">
+					</a>
+				</span>
+			</div>
+			<div class="zt_pricon">
+				<div class="hdjj">
+					<span class="hdjj_pic">
+						<img src="${topic.contentImg!site.defImg}">
+					</span>
+					<span class="hdjj_text">
+						<h4>活动简介</h4>
+						<p>${topic.description!}</p>
+					</span>
+				</div>
+			[#list topicChannels as topicChannel]
+			[#if topicChannel_index = 0]
+				<div class="tyjb">
+					<div class="tyjb_hd">
+						<div class="tyjb_hd_l">${topicChannel.channelName}</div>
+						<div class="tyjb_hd_r">
+							<a href="${base}/topic/getList.jsp?topicId=${topic.id}&topicChannelId=${topicChannel.channelId}">更多>></a>
+						</div>
+					</div>
+					<div class="tyjb_bd">
+						<ul>
+						[@cms_content_list count='2' orderBy='4' typeId='1,2,3,4' titLen='18' channelOption='1' topicId=topic.id topicChannelId=topicChannel.channelId ]
+                    	[#list tag_list as content]
+                    		<li>
+								<span class="tyjb_pic">
+									<a href="${content.url}" title="${content.title}"><img src="${content.titleImg!content.typeImg!}"></a>
+								</span>
+								<span class="tyjb_text">
+									<p class="tyjb_name"><a href="${content.url}" title="${content.title}">[@text_cut s=content.title! len='12' append='...'/]</a></p>
+									<p class="tyjb_pra"><a href="${content.url}" >[@text_cut s=content.description! len='70' append='...'/]</a></p>
+								</span>
+							</li>
+                    	[/#list]
+                    	[/@cms_content_list]
+						</ul>
+					</div>
+				</div>			
+			[#elseif !topicChannel_has_next]
+				<div class="xwzx">
+					<div class="tyjb_hd">
+						<div class="tyjb_hd_l">${topicChannel.channelName}</div>
+						<div class="tyjb_hd_r">
+							<a href="${base}/topic/getList.jsp?topicId=${topic.id}&topicChannelId=${topicChannel.channelId}">更多>></a>
+						</div>
+					</div>
+					<div class="xwzx_bd">
+						<ul class="xwzx_list01">
+							<li class="bigli">
+							[@cms_content_list count='6' orderBy='4' typeId='1,2,3,4' titLen='18' channelOption='1' topicId=topic.id topicChannelId=topicChannel.channelId ]
+                    		[#list tag_list as content]
+	                    		[#if content_index == 0]
+	                    		<span class="xwzx01_pic">
+									<a href="${content.url}" title="${content.title}"><img src="${content.titleImg!content.typeImg!site.defImg}"></a>
+								</span>
+	                    		[/#if]
+	                    		[#if content_index == 1]
+	                    		<ul class="xwzx_list02">
+									<li>
+										<a href="${content.url}" title="${content.title}">[@text_cut s=content.title! len='26' append='...'/]</a>
+									</li>
+	                    		[/#if]
+	                    		[#if content_index > 1]
+	                    			<li>
+										<a href="${content.url}" title="${content.title}">[@text_cut s=content.title! len='26' append='...'/]</a>
+									</li>
+	                    		[/#if]
+                    			[#if content_index > 0 && !content_has_next]
+                    			</ul>
+                    			[/#if]
+                    		[/#list]
+                    		[/@cms_content_list]
+							</li>
+
+							<li class="bigli">
+							[@cms_content_list count='6' first='7' orderBy='4' typeId='1,2,3,4' titLen='18' channelOption='1' topicId=topic.id topicChannelId=topicChannel.channelId ]
+                    		[#list tag_list as content]
+	                    		[#if content_index == 0]
+	                    		<span class="xwzx01_pic">
+									<a href="${content.url}" title="${content.title}"><img src="${content.titleImg!content.typeImg!site.defImg}"></a>
+								</span>
+	                    		[/#if]
+	                    		[#if content_index == 1]
+	                    		<ul class="xwzx_list02">
+									<li>
+										<a href="${content.url}" title="${content.title}">[@text_cut s=content.title! len='26' append='...'/]</a>
+									</li>
+	                    		[/#if]
+	                    		[#if content_index > 1]
+	                    			<li>
+										<a href="${content.url}" title="${content.title}">[@text_cut s=content.title! len='26' append='...'/]</a>
+									</li>
+	                    		[/#if]
+                    			[#if content_index > 0 && !content_has_next]
+                    			</ul>
+                    			[/#if]
+                    		[/#list]
+                    		[/@cms_content_list]
+							</li>
+
+							<li class="bigli">
+							[@cms_content_list count='6' first='13' orderBy='4' typeId='1,2,3,4' titLen='18' channelOption='1' topicId=topic.id topicChannelId=topicChannel.channelId ]
+                    		[#list tag_list as content]
+	                    		[#if content_index == 0]
+	                    		<span class="xwzx01_pic">
+									<a href="${content.url}" title="${content.title}"><img src="${content.titleImg!content.typeImg!site.defImg}"></a>
+								</span>
+	                    		[/#if]
+	                    		[#if content_index == 1]
+	                    		<ul class="xwzx_list02">
+									<li>
+										<a href="${content.url}" title="${content.title}">[@text_cut s=content.title! len='26' append='...'/]</a>
+									</li>
+	                    		[/#if]
+	                    		[#if content_index > 1]
+	                    			<li>
+										<a href="${content.url}" title="${content.title}">[@text_cut s=content.title! len='26' append='...'/]</a>
+									</li>
+	                    		[/#if]
+                    			[#if content_index > 0 && !content_has_next]
+                    			</ul>
+                    			[/#if]
+                    		[/#list]
+                    		[/@cms_content_list]
+							</li>
+						</ul>
+					</div>
+				</div>			
+			[#else]
+				<div class="hdxc">
+					<div class="tyjb_hd">
+						<div class="tyjb_hd_l">${topicChannel.channelName}</div>
+						<div class="tyjb_hd_r">
+							<a href="${base}/topic/getList.jsp?topicId=${topic.id}&topicChannelId=${topicChannel.channelId}">更多>></a>
+						</div>
+					</div>
+					<div class="hdxc_bd">
+					[@cms_content_list count='5' orderBy='4' typeId='1,2,3,4' titLen='18' channelOption='1' topicId=topic.id topicChannelId=topicChannel.channelId ]
+                    [#list tag_list as content]
+                    	[#if content_index == 0]
+                    	<div class="hdxc_big">
+							<span class="hdxc_bigpic">
+								<a href="${content.url}" title="${content.title}">
+									<img src="${content.titleImg!content.typeImg!site.defImg}">
+								</a>
+							</span>
+							<span class="hdxc_bigtit">
+								<a href="${content.url}" title="${content.title}">[@text_cut s=content.title! len='26' append='...'/]</a>
+							</span>
+						</div>
+                    	[/#if]
+                    	[#if content_index == 1]
+                    	<ul>
+							<li>
+								<span class="hdxc_pic">
+									<a href="${content.url}" title="${content.title}">
+										<img src="${content.titleImg!content.typeImg!site.defImg}">
+									</a>
+								</span>
+								<span class="hdxc_tit">
+									<a href="${content.url}" title="${content.title}">[@text_cut s=content.title! len='26' append='...'/]</a>
+								</span>
+							</li>
+                    	[/#if]
+                    	[#if content_index > 1]
+							<li>
+								<span class="hdxc_pic">
+									<a href="${content.url}" title="${content.title}">
+										<img src="${content.titleImg!content.typeImg!site.defImg}">
+									</a>
+								</span>
+								<span class="hdxc_tit">
+									<a href="${content.url}" title="${content.title}">[@text_cut s=content.title! len='26' append='...'/]</a>
+								</span>
+							</li>
+                    	[/#if]
+                    	[#if content_index > 0 && !content_has_next]
+						</ul>
+                    	[/#if]
+                    	
+                    [/#list]
+                    [/@cms_content_list]
+					</div>
+				</div>			
+			[/#if]
+			[/#list]
+
+			</div>
+		</div>
+	</div>
+	<!----专题内容 结束--->
+
+	<!--尾部 开始-->
+	[#include "../include/footer.html"/]
+	<!--尾部 开始-->
+
+</body>
+</html>

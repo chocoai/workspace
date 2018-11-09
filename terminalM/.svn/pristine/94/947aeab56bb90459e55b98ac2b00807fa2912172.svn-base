@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.manage.dao.SysErrorLogDao">
+	
+	<resultMap type="com.whty.assis.manage.model.SysErrorLog" id="SysErrorLogResult">
+		<result column="id" property="id" />
+		<result column="description" property="description" />
+		<result column="create_time" property="createTime" />
+		<result column="class_name" property="className" />
+		<result column="method_name" property="methodName" />
+		<result column="parameter" property="parameter" />
+		<result column="memo" property="memo" />
+	</resultMap>
+	
+	
+	<select id="listByCondition" parameterType="map" resultMap="SysErrorLogResult">
+		select * from t_sys_error_log where 1=1 
+		<if test="startTime != null and startTime != ''">and create_time >=#{startTime}</if>
+		<if test="endTime != null and endTime != ''"><![CDATA[and create_time <=#{endTime}]]></if>
+	</select>
+	
+	<insert id="save" parameterType="com.whty.assis.manage.model.SysErrorLog" >
+		insert into t_sys_error_log (
+		description,
+		create_time,
+		class_name,
+		method_name,
+		parameter
+		) values(
+		#{description}
+		,#{createTime}
+		,#{className}
+		,#{methodName}
+		,#{parameter}
+		)
+	</insert>
+
+	
+	
+
+</mapper>

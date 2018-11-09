@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.yhcrt.weihu.bbs.entity">
+	<class
+		name="BbsAlbum"
+		table="bbs_album"
+		>
+		<meta attribute="sync-DAO">false</meta>
+		<cache usage="read-write"/>
+		<id
+			name="id"
+			type="java.lang.Integer"
+			column="ALBUM_ID"
+			>
+			<generator class="native"/>
+		</id>
+		<property
+			name="createTime"
+			column="CREATE_TIME"
+			type="timestamp"
+			not-null="true"
+			/>
+		<property
+			name="name"
+			column="ALBUM_NAME"
+			type="string"
+			not-null="true"
+			length="32"
+		/>
+		<property
+			name="description"
+			column="ALBUM_DESCRIPTION"
+			type="string"
+			not-null="false"
+			length="256"
+		/>
+		<property
+			name="visitAuth"
+			column="VISIT_AUTH"
+			type="integer"
+			not-null="true"
+			length="1"
+		/>
+		<property
+			name="status"
+			column="STATUS"
+			type="integer"
+			not-null="true"
+			length="1"
+		/>
+		<property
+			name="imgUrl"
+			column="IMG_URL"
+			type="string"
+			not-null="false"
+			length="256"
+		/>
+		<property
+			name="count"
+			column="COUNT"
+			type="integer"
+			not-null="true"
+			length="11"
+		/>
+		<property
+			name="primeCount"
+			column="PRIME_COUNT"
+			type="integer"
+			not-null="true"
+			length="11"
+		/>
+		<property
+			name="commentCount"
+			column="COMMENT_COUNT"
+			type="integer"
+			not-null="true"
+			length="11"
+		/>
+		<property
+			name="viewCount"
+			column="VIEW_COUNT"
+			type="integer"
+			not-null="true"
+			length="11"
+		/>
+		<many-to-one
+			name="creater"
+			column="creater_id"
+			class="BbsUser"
+			not-null="true"
+			>
+		</many-to-one>
+	</class>	
+</hibernate-mapping>

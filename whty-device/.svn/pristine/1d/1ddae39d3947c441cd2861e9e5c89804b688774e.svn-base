@@ -1,0 +1,23 @@
+package com.whty.util;
+
+public interface Constants {
+
+    /**
+     * 开机状态0表示开机，1表示关机
+     */
+    public static final Integer DEVICE_STATUS_OPEN = 0;
+    /**
+     * 开机状态0表示开机，1表示关机
+     */
+    public static final Integer DEVICE_STATUS_CLOSE = 1;
+    /**
+     * 一体机ProductKey
+     */
+    public static final String AIO_PRODUCT_KEY = "a1dMRuabwK9";
+    /**
+     *平板ProductKey
+     */
+    public static final String EBOOK_PRODUCT_KEY = "a1rPQHVWDju";
+
+    public static final  String TOPIC = "IOT_MQ_GW2";
+}

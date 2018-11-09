@@ -1,0 +1,400 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.healthcloud.system.mapper.SysResMapper">
+	<resultMap id="BaseResultMap" type="com.yhcrt.healthcloud.system.entity.SysRes" >
+		<id column="res_id" jdbcType="INTEGER" property="resId" />
+		<result column="res_name" jdbcType="VARCHAR" property="resName" />
+		<result column="res_code" jdbcType="VARCHAR" property="resCode" />
+		<result column="permission" jdbcType="VARCHAR" property="permission" />
+		<result column="parent_res_id" jdbcType="VARCHAR" property="parentResId" />
+		<result column="res_url" jdbcType="VARCHAR" property="resUrl" />
+		<result column="res_type" jdbcType="VARCHAR" property="resType" />
+		<result column="order_num" jdbcType="INTEGER" property="orderNum" />
+		<result column="is_global" jdbcType="INTEGER" property="isGlobal" />
+		<result column="icon" jdbcType="INTEGER" property="icon" />
+		<result column="create_time" jdbcType="VARCHAR" property="createTime" />
+		<result column="create_user" jdbcType="VARCHAR" property="createUser" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+		<result column="remark" jdbcType="VARCHAR" property="remark" />
+		<association property="parentSysRes" column="parent_res_id" select="selectByPrimaryKey"></association>
+	</resultMap>
+	
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	
+	<sql id="Base_Column_List">
+		res_id, res_name, res_code, permission, parent_res_id, res_url, res_type, order_num,
+		is_global,icon, create_time, create_user, status, remark
+	</sql>
+	
+	<select id="selectByExample" parameterType="com.yhcrt.healthcloud.system.entity.SysResExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from sys_res
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+
+	<select id="getChildResByParentId" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_res
+		where parent_res_id = #{parentId,jdbcType=VARCHAR} and status = 0 order by order_num asc
+	</select>
+	
+	<select id="getLastResCodeByParentId" parameterType="java.lang.String" resultType="java.lang.String">
+		select max(res_code) from sys_res
+		where parent_res_id = #{parentId,jdbcType=VARCHAR} and status = 0 order by order_num asc
+	</select>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_res
+		where res_id = #{resId,jdbcType=INTEGER}
+	</select>
+
+	<select id="getSysResRootNode" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_res where parent_res_id is null 
+	</select>
+	
+	<select id="findPermissionsByUserId" parameterType="java.lang.String" resultType="java.lang.String">
+		SELECT sys_res.permission
+		  FROM user_role, res_role, sys_res
+		 WHERE user_role.user_id = #{userId,jdbcType=VARCHAR}
+		       AND res_role.role_id = user_role.role_id
+		       AND res_role.res_id = sys_res.res_id;	
+	</select>
+	
+	<select id="countByExample" parameterType="com.yhcrt.healthcloud.system.entity.SysResExample"
+		resultType="java.lang.Long">
+		select count(*) from sys_res
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from sys_res
+		where res_id = #{resId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.yhcrt.healthcloud.system.entity.SysResExample">
+		delete from sys_res
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	
+	<insert id="insert" parameterType="com.yhcrt.healthcloud.system.entity.SysRes">
+		insert into sys_res (res_id, res_name, res_code, permission
+		parent_res_id, res_url, res_type,
+		order_num, is_global,icon, create_time,
+		create_user, status, remark
+		)
+		values (#{resId,jdbcType=INTEGER}, #{resName,jdbcType=VARCHAR},
+		#{resCode,jdbcType=VARCHAR}, #{permission,jdbcType=VARCHAR},
+		#{parentResId,jdbcType=VARCHAR}, #{resUrl,jdbcType=VARCHAR}, #{resType,jdbcType=VARCHAR},
+		#{orderNum,jdbcType=INTEGER}, #{isGlobal,jdbcType=INTEGER}, #{icon,jdbcType=INTEGER},
+		#{createTime,jdbcType=VARCHAR},
+		#{createUser,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.yhcrt.healthcloud.system.entity.SysRes">
+		insert into sys_res
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="resId != null">
+				res_id,
+			</if>
+			<if test="resName != null">
+				res_name,
+			</if>
+			<if test="resCode != null">
+				res_code,
+			</if>
+			<if test="permission != null">
+				permission,
+			</if>
+			<if test="parentResId != null">
+				parent_res_id,
+			</if>
+			<if test="resUrl != null">
+				res_url,
+			</if>
+			<if test="resType != null">
+				res_type,
+			</if>
+			<if test="orderNum != null">
+				order_num,
+			</if>
+			<if test="isGlobal != null">
+				is_global,
+			</if>
+			<if test="icon != null">
+				icon,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="createUser != null">
+				create_user,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="resId != null">
+				#{resId,jdbcType=INTEGER},
+			</if>
+			<if test="resName != null">
+				#{resName,jdbcType=VARCHAR},
+			</if>
+			<if test="resCode != null">
+				#{resCode,jdbcType=VARCHAR},
+			</if>
+			<if test="permission != null">
+				#{permission,jdbcType=VARCHAR},
+			</if>
+			<if test="parentResId != null">
+				#{parentResId,jdbcType=VARCHAR},
+			</if>
+			<if test="resUrl != null">
+				#{resUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="resType != null">
+				#{resType,jdbcType=VARCHAR},
+			</if>
+			<if test="orderNum != null">
+				#{orderNum,jdbcType=INTEGER},
+			</if>
+			<if test="isGlobal != null">
+				#{isGlobal,jdbcType=INTEGER},
+			</if>
+			<if test="icon != null">
+				#{icon,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=VARCHAR},
+			</if>
+			<if test="createUser != null">
+				#{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	
+	<update id="updateByExampleSelective" parameterType="map">
+		update sys_res
+		<set>
+			<if test="record.resId != null">
+				res_id = #{record.resId,jdbcType=INTEGER},
+			</if>
+			<if test="record.resName != null">
+				res_name = #{record.resName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.resCode != null">
+				res_code = #{record.resCode,jdbcType=VARCHAR},
+			</if>
+			<if test="record.permission != null">
+				permission = #{record.permission,jdbcType=VARCHAR},
+			</if>
+			<if test="record.parentResId != null">
+				parent_res_id = #{record.parentResId,jdbcType=VARCHAR},
+			</if>
+			<if test="record.resUrl != null">
+				res_url = #{record.resUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="record.resType != null">
+				res_type = #{record.resType,jdbcType=VARCHAR},
+			</if>
+			<if test="record.orderNum != null">
+				order_num = #{record.orderNum,jdbcType=INTEGER},
+			</if>
+			<if test="record.isGlobal != null">
+				is_global = #{record.isGlobal,jdbcType=INTEGER},
+			</if>
+			<if test="record.icon != null">
+				icon = #{record.icon,jdbcType=INTEGER},
+			</if>
+			<if test="record.createTime != null">
+				create_time = #{record.createTime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.createUser != null">
+				create_user = #{record.createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="record.status != null">
+				status = #{record.status,jdbcType=INTEGER},
+			</if>
+			<if test="record.remark != null">
+				remark = #{record.remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update sys_res
+		set res_id = #{record.resId,jdbcType=INTEGER},
+		res_name = #{record.resName,jdbcType=VARCHAR},
+		res_code = #{record.resCode,jdbcType=VARCHAR},
+		permission = #{record.permission,jdbcType=VARCHAR},
+		parent_res_id = #{record.parentResId,jdbcType=VARCHAR},
+		res_url = #{record.resUrl,jdbcType=VARCHAR},
+		res_type = #{record.resType,jdbcType=VARCHAR},
+		order_num = #{record.orderNum,jdbcType=INTEGER},
+		is_global = #{record.isGlobal,jdbcType=INTEGER},
+		icon = #{record.icon,jdbcType=INTEGER},
+		create_time = #{record.createTime,jdbcType=VARCHAR},
+		create_user = #{record.createUser,jdbcType=VARCHAR},
+		status = #{record.status,jdbcType=INTEGER},
+		remark = #{record.remark,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.healthcloud.system.entity.SysRes">
+		update sys_res
+		<set>
+			<if test="resName != null">
+				res_name = #{resName,jdbcType=VARCHAR},
+			</if>
+			<if test="resCode != null">
+				res_code = #{resCode,jdbcType=VARCHAR},
+			</if>
+			<if test="permission != null">
+				permission = #{permission,jdbcType=VARCHAR},
+			</if>
+			<if test="parentResId != null">
+				parent_res_id = #{parentResId,jdbcType=VARCHAR},
+			</if>
+			<if test="resUrl != null">
+				res_url = #{resUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="resType != null">
+				res_type = #{resType,jdbcType=VARCHAR},
+			</if>
+			<if test="orderNum != null">
+				order_num = #{orderNum,jdbcType=INTEGER},
+			</if>
+			<if test="isGlobal != null">
+				is_global = #{isGlobal,jdbcType=INTEGER},
+			</if>
+			<if test="icon != null">
+				icon = #{icon,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=VARCHAR},
+			</if>
+			<if test="createUser != null">
+				create_user = #{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where res_id = #{resId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.yhcrt.healthcloud.system.entity.SysRes">
+		update sys_res
+		set res_name = #{resName,jdbcType=VARCHAR},
+		res_code = #{resCode,jdbcType=VARCHAR},
+		permission = #{permission,jdbcType=VARCHAR},
+		parent_res_id = #{parentResId,jdbcType=VARCHAR},
+		res_url = #{resUrl,jdbcType=VARCHAR},
+		res_type = #{resType,jdbcType=VARCHAR},
+		order_num = #{orderNum,jdbcType=INTEGER},
+		is_global = #{isGlobal,jdbcType=INTEGER},
+		icon = #{icon,jdbcType=INTEGER},
+		create_time = #{createTime,jdbcType=VARCHAR},
+		create_user = #{createUser,jdbcType=VARCHAR},
+		status = #{status,jdbcType=INTEGER},
+		remark = #{remark,jdbcType=VARCHAR}
+		where res_id = #{resId,jdbcType=INTEGER}
+	</update>
+
+</mapper>

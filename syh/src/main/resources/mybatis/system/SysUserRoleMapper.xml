@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SysUserRoleMapper">
+  <resultMap id="BaseResultMap" type="com.yhcrt.entity.system.SysUserRole">
+    <id column="USER_ID" jdbcType="INTEGER" property="userId" />
+    <id column="ROLE_CID" jdbcType="INTEGER" property="roleCid" />
+  </resultMap>
+   <sql id="Base_Column_List">
+    USER_ID, ROLE_CID
+  </sql>
+  <!-- 单条记录插入 -->
+	<insert id="saveSelective">
+		insert into sys_user_role (USER_ID,ROLE_CID)
+		values (#{userCid,jdbcType=INTEGER}, #{roleCid,jdbcType=INTEGER})
+	</insert>
+	<!-- 批量插入 -->
+	<insert id="saveSelectives">
+		insert into sys_user_role (USER_ID,ROLE_CID)
+		values
+		<foreach collection="roleCids" item="item" index="index"
+			separator=",">
+			(#{userCid,jdbcType=INTEGER}, #{item,jdbcType=INTEGER})
+		</foreach>
+	</insert>
+	<!-- 删除用户的所有角色 -->
+	<delete id="removeByUserCid" parameterType="java.lang.Integer">
+		delete from
+		sys_user_role
+		where USER_ID = #{userCid,jdbcType=INTEGER}
+	</delete>
+	<!-- 删除所有用户的某个角色-->
+	<delete id="removeByRoleCid" parameterType="java.lang.Integer">
+		delete from
+		sys_user_role
+		where ROLE_CID = #{roleCid,jdbcType=INTEGER}
+	</delete>
+	<!-- 删除用户的集合 -->
+	<delete id="removeByUserCids" parameterType="java.lang.Integer">
+		delete from
+		sys_user_role
+		where USER_ID in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<!-- 根据基本信息表用户ID获取角色ID-->
+	<select id="getByUserCid" parameterType="java.lang.Integer"
+		resultType="java.lang.Integer">
+		SELECT ROLE_CID FROM sys_user_role where USER_ID = #{userCid,jdbcType=INTEGER}
+	</select>
+	<!-- 根据账号信息表用户ID获取角色ID-->
+	<select id="getByMUserCid" parameterType="java.lang.Integer"
+		resultType="java.lang.Integer">
+		SELECT um.ROLE_CID FROM(
+		SELECT
+		u.CID AS UCID,
+		m.CID AS MCID,
+		r.ROLE_CID
+		FROM
+		sys_user AS u
+		INNER JOIN sys_muser_info AS m ON u.CID = m.USER_ID
+		INNER JOIN sys_user_role AS r ON m.CID = r.USER_ID ) um
+		WHERE um.UCID= #{userCid,jdbcType=INTEGER}
+	</select>
+</mapper>

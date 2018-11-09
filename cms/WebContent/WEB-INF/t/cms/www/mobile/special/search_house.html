@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>东楚网</title>
+    <!-- Bootstrap -->
+    <link href="/${mobileRes!}/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/${mobileRes!}/css/mycss.css" rel="stylesheet">
+    <link href="/${mobileRes!}/css/pic/public.css" rel="stylesheet" type="text/css"/>
+    <link href="/${mobileRes!}/css/pic/share.css" rel="stylesheet" type="text/css"/>
+    <script src="/${mobileRes!}/js/focus/TouchSlide.1.1.js"></script>
+    
+    <link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
+    <link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css"/>
+    <script src="${resSys}/jquery.js" type="text/javascript"></script>
+    <script src="${resSys}/jqueryUI/jquery-ui.js" type="text/javascript"></script>
+    <script src="${resSys}/front.js" type="text/javascript"></script>
+    <script src="/${res}/js/common.js" type="text/javascript"></script>
+  </head>
+  <script type="text/javascript">
+
+  var area = '${queryArea!}';
+  var price = '${queryPrice!}';
+  var acreage = '${queryAcreage!}';
+
+  function getArea(value){
+      area = value;
+      search();
+  }
+
+  function removeArea(){
+      area = '';
+      search();
+  }
+
+  function getPrice(value){
+      price = value;
+      search();
+  }
+
+  function removePrice(){
+      price = '';
+      search();
+  }
+
+  function getAcreage(value){
+      
+      acreage = value;
+      search();
+  }
+
+  function removeAcreage(){
+      acreage = '';
+      search();
+  }
+
+  function removeAll(){
+      area = '';
+      price = '';
+      acreage = '';
+      search();
+  }
+
+  function search(){
+      var url = "${base}/searchHouse.jspx";
+      url += "?channelId=${channel.id}";
+      if(price != ''){
+          url += "&price=" + price;
+      }
+      if(acreage != ''){
+          url += "&acreage=" + acreage;
+      }
+      if(area != ''){
+          url += "&area=" + area;
+      }
+      
+      window.location.href = url;
+  }
+  </script>
+  <body>
+    [#include "../include/header.html"/]  
+      <section class="cell-body">
+        <div class="container-fluid">
+          <div class="row">
+            <div class="col-xs-12 padd-lr0">
+                <div class="btn-group btn-group-justified bor-b mybtn-group" role="group" aria-label="Justified button group with nested dropdown">
+                    [@cms_model id="17"]
+                        [#list tag_bean.items as item]
+                            [#if item.field=="area"]
+                                [#assign area=item.optValue/]
+                            [#elseif item.field=="acreage"]
+                                [#assign acreage=item.optValue/]
+                            [#elseif item.field=="priceRange"]
+                                [#assign priceRange=item.optValue/]
+                            [/#if]
+                        [/#list]
+                    <div class="btn-group" role="group">
+                       <a href="#" class="btn btn-default btn-nothing dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                         区域 <span class="caret"></span>
+                       </a>
+                       <ul class="dropdown-menu">
+                         <li><a class="fc_select" href="javascript:;" onclick="removeArea()">不限</a></li>
+                         <li role="separator" class="divider"></li>
+                        [#list area!?split(",") as opt]
+                         <li>
+                            <a href="javascript:;" onclick="getArea('${opt!}')">${opt!}</a>
+                         </li>
+                         <li role="separator" class="divider"></li>
+                        [/#list]
+                       </ul>
+                    </div>
+                    <div class="btn-group" role="group">
+                       <a href="#" class="btn btn-default btn-nothing dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                         价格 <span class="caret"></span>
+                       </a>
+                       <ul class="dropdown-menu">
+                         <li><a class="fc_select" href="javascript:;" onclick="removeArea()">不限</a></li>
+                         <li role="separator" class="divider"></li>
+                        [#list priceRange!?split(",") as opt]
+                         <li>
+                            <a href="javascript:;" onclick="getPrice('${opt!}')">${opt!}</a>
+                         </li>
+                         <li role="separator" class="divider"></li>
+                        [/#list]
+                       </ul>
+                    </div>
+                    <div class="btn-group" role="group">
+                       <a href="#" class="btn btn-default btn-nothing dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                         面积 <span class="caret"></span>
+                       </a>
+                       <ul class="dropdown-menu">
+                         <li><a class="fc_select" href="javascript:;" onclick="removeArea()">不限</a></li>
+                         <li role="separator" class="divider"></li>
+                        [#list acreage!?split(",") as opt]
+                             <li>
+                                <a href="javascript:;" onclick="getAcreage('${opt!}')" >${opt!}</a>
+                             </li>
+                             <li role="separator" class="divider"></li>
+                        [/#list]
+                       </ul>
+                    </div>
+                    [/@cms_model]
+                </div>
+
+                <div class="mymedia" data-example-id="media-list">
+                    <ul class="media-list">
+                    [@cms_content_page count='5' orderBy='4' s_area=queryArea s_priceRange=queryPrice s_acreage=queryAcreage o_acreage='like' titLen='22' channelOption='1' channelPath='lptj,zxkp,ppk' ] 
+                            [#list tag_pagination.list as content]
+                      <li class="media">
+                        <a href="${content.url}">
+                          <div class="media-left col-xs-5">
+                              <img class="media-object img-responsive" src="${content.titleImg!content.typeImg!}" data-holder-rendered="true">
+                          </div>
+                          <div class="media-body col-xs-7 nopad-l">
+                            <h4 class="media-heading">[@text_cut s=content.title! len='10' append='...'/]</h4>
+                            <p>${content.attr.houseAddress}</p>
+                            <p class="red">￥${content.attr.price}元/㎡</p>
+                          </div>
+                        </a>
+                      </li>
+                       [/#list] 
+                    </ul>
+                  </div>
+                    <div style="clear: both;"></div>
+                    <div class="list_dis">
+                        <div class="jogger">[@cms_pagination sysPage='1'/]</div>
+                    </div>
+               [/@cms_content_page]
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <script src="/${mobileRes!}/js/jquery-1.12.3.min.js"></script>
+      <script src="/${mobileRes!}/js/bootstrap.min.js"></script>
+  </body>
+</html>

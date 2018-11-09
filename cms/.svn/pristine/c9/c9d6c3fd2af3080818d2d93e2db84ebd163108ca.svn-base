@@ -1,0 +1,68 @@
+		<!--top 开始-->
+		<div class="top fc_top">
+			<div class="box">
+				<a href="${base}/fc/index.jhtml">
+					<div class="logo">东楚房产</div>
+				</a>
+				<!--搜索框 开始-->
+				<div class="search">
+					<!-- <form action="/houseSearch.jspx" method="get"> -->
+			<input class="inp_srh" name="keyword" value="${keyword!'请输入您要搜索的内容关键字'}" id="keyword" placeholder="请输入您要搜索的内容关键字"
+				onfocus="if(this.value=='请输入您要搜索的内容关键字')this.value=''" onkeypress="qkeypress()"
+				onblur="if(this.value=='')this.value='请输入您要搜索的内容关键字'" >
+			<div class="search_submit">
+							<input class="btn_srh" style="color: white;" onclick="searchHouse()" type="button" value="搜索">
+						</div>
+					<!-- </form> -->
+				</div>
+				<!--搜索框结束-->
+		
+				<!---二维码 开始--->
+				<div class="code">
+					<ul>
+						<li>
+							<span class="code_tit" style="color: black;">我的黄石(微信)</span>
+							<img src="${base}/r/cms/www/default/images/code.png">
+						</li>
+						<li>
+							<span class="code_tit" style="color: black;">我的黄石(微信)</span>
+							<img src="${base}/r/cms/www/default/images/code.png">
+						</li>
+						<li>
+							<span class="code_tit" style="color: black;">我的黄石(APP)</span>
+							<img src="${base}/r/cms/www/default/images/code.png">
+						</li>
+					</ul>
+				</div>
+				<!---二维码结束--->
+			</div>
+		</div>
+		<!--top end-->
+		<div style="clear: both;"></div>
+		
+		<script>
+		
+		document.onkeydown=function(event){ 
+			e = event ? event :(window.event ? window.event : null); 
+			if(e.keyCode==13){   //回车
+				searchHouse();
+			} 
+		};
+		
+		function qkeypress(){
+			var q=$("input[name=keyword]");
+			if(q.val().trim()!=""){
+				$("input[name=keyword]").autocomplete("enable");
+			}else{
+				$("input[name=keyword]").autocomplete("disable");
+			}
+		}
+		
+		function searchHouse(){
+			var keyword = $('#keyword').val();
+			var url = "${base}/houseSearch.jspx";
+			url += "?keyword=" + keyword ;
+			window.location.href = url;
+		}
+		
+		</script>

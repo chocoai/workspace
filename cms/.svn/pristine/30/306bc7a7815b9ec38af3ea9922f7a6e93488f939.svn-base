@@ -1,0 +1,11 @@
+
+<div class="nav">
+		<div class="box">
+			<ul class="nav_box">
+			<li><a id="index" href="${base}/tt.jspx" [#if typeId ==  null]class="current"[/#if]>首 页</a></li>
+		   [#list typeList as t]
+		    <li><a id="${t.id}" href="${base}/tt.jspx?typeId=${t.id}" [#if typeId ?? && t.id== typeId ]class="current"[/#if]>${type.name}</a></li>
+		   [/#list]
+			</ul>
+		</div>
+	</div>

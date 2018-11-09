@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>孝康通</title>
+    <!-- Bootstrap -->
+    <link th:href="@{/pages/mall/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- FontAwesome 4.7.0字体 -->
+    <link th:href="@{/pages/mall/css/font-awesome.min.css}" rel="stylesheet">
+    <!-- 商品图片轮播 -->
+    <link th:href="@{/pages/mall/css/swiper.min.css}" rel="stylesheet">
+    <!-- 服务机构图片轮播 -->
+    <link th:href="@{css/swiper.min.css}" rel="stylesheet">              
+    <!-- 自定义css -->
+    <link th:href="@{/pages/mall/css/mymall.css}" rel="stylesheet">
+  </head>
+  <body class="other-mall nopad-b">
+    <!-- 导航 开始 -->
+    <nav class="navbar navbar-default navbar-fixed-top navbar-mall-other">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a href="javascript:history.back();" class="othertop-left"><i class="fa fa-angle-left icon-back"></i></a>
+         		 健康养老公寓
+        </div>
+      </div>
+    </nav>
+    <!-- 导航 结束 -->
+
+    <div class="facilitator-box">
+      <!-- 服务机构图片轮播 开始 -->
+      <div class="swiper-container">
+          <div class="swiper-slide" th:each="images:${listi}"><img th:src="${images.imgPath}" class="img-responsive"></div>
+          <div class="swiper-wrapper" th:if="${listj} !=null">
+          	<div class="swiper-slide" th:each="images:${listj}"><img th:src="@{'/'+${images.imgPath}}" class="img-responsive"></div>
+          </div>
+        <!-- Add Pagination -->
+        <div class="swiper-pagination mypager"></div>
+      </div>
+      <!-- 服务机构图片轮播 结束 -->
+      <div class="facilitator-basic">
+        <p class="facilitator-title" th:text="${org.orgName}">左岭街道朝阳社区宜居养老服务中心</p>
+        <p class="facilitator-address">地址：<span th:text="${org.address}">湖北省武汉市洪山区九峰街道花山大道九峰德欣里社区</span></p>
+        <p class="facilitator-phone">电话：<span th:text="${org.tel}" th:if="${org.tel}!=null">027-85965656</span><span th:text="${org.phoneNumber}" th:if="${org.tel}==null">027-85965656</span></p>
+      </div>
+      <!-- 简介 开始 -->
+      <div class="facilitator-cell">
+          <div class="facilitator-cell-hd">
+            <i class="fa fa-file-text-o"></i> 简介
+          </div>
+          <div class="facilitator-cell-bd">
+            <p class="facilitator-brief" th:if="${org.orgIntro}!=null" th:text="${org.orgIntro}">老年宜居社区建设将对老旧社区老年人公共服务设施进行改造，完善社区居家支持和邻里互助服务，推进养老服务“医养融合”，加大养老服务人才培育力度，探索建立老年人长期护理保险制度，全面落实老年优待政策，充分发挥市、区老年大学的示范引领作用，突出社区和乡村重点，建立健全全市四级老年教育体系。</p>
+            <p class="facilitator-brief" th:if="${org.orgIntro}==null">该服务机构尚未简介</p>
+          </div>
+      </div>
+      <!-- 简介 结束 -->
+
+      <!-- 服务预约 开始 -->
+      <div class="facilitator-cell">
+          <div class="facilitator-cell-hd">
+            <i class="fa fa-sun-o"></i> 服务预约
+          </div>
+          <div class="facilitator-cell-bd">
+            <ul class="goods-list service-list">
+                  <li class="col-xs-6 col-md-3" th:each="service:${lists}">
+	                    <a th:href="@{'/h5/service/detail/'+${service.serviceId}}">
+	                    	<img th:if="${service.titleImg} ==null" th:src="@{/pages/mall/images/good01.png}" class="img-responsive">
+	                  	 	<img th:if="${service.titleImg} !=null" th:src="${service.titleImg}" class="img-responsive">
+	                        <p class="mallcell-title" th:text="${service.serviceName}">上门理发</p>
+	                        <p class="mallcell-price nomar-b">￥<lable th:text="${service.unitPrice}">799</lable></p>
+	                        <p class="nowfix"><span>立即预约</span></p>
+	                    </a>
+                  </li>
+            </ul>
+          </div>
+      </div>
+      <!-- 服务预约 结束 -->
+
+      <!-- 服务设施 开始 -->
+      <div class="facilitator-cell">
+          <div class="facilitator-cell-hd">
+            <i class="fa fa-server"></i> 服务设施
+          </div>
+          <div class="facilitator-cell-bd">
+            <table class="table-device">
+              <tbody>
+                <tr>
+                  <th class="col-xs-4">按摩椅</th>
+                  <td class="col-xs-8">2台</td>
+                </tr>
+                <tr>
+                  <th class="col-xs-4">麻将桌</th>
+                  <td class="col-xs-8">5台</td>
+                </tr>
+                <tr>
+                  <th class="col-xs-4">老人食堂</th>
+                  <td class="col-xs-8">1间</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+      </div>
+      <!-- 服务设施 结束 -->
+    </div>
+   
+    <!-- 返回顶部 开始 -->
+    <div class="gototop" style="display: none;">
+      <a href="javascript:void(0)"><i class="glyphicon glyphicon-menu-up"></i></a>
+    </div>
+    <!-- 返回顶部 结束 -->
+
+    <script th:src="@{/pages/mall/js/jquery-1.9.1.min.js}"></script>
+    <script th:src="@{/pages/mall/js/bootstrap.min.js}"></script>
+    <!-- 商品图片轮播 -->
+    <script th:src="@{/pages/mall/js/swiper.min.js}"></script>
+    <script type="text/javascript">
+      // 返回顶部
+      $(window).scroll(function(){
+        if($(window).scrollTop()>=20){
+           $(".gototop").fadeIn(300);
+        }else{
+           $(".gototop").fadeOut(300);
+        }
+      })
+      $(".gototop a").click(function(){
+        $("html,body").animate({scrollTop:"0px"},300)
+      })
+
+      //服务机构图片轮播
+      var swiper = new Swiper('.swiper-container', {
+        pagination: {
+          el: '.swiper-pagination',
+          type: 'fraction',
+        },
+      });
+    </script>
+  </body>
+</html>

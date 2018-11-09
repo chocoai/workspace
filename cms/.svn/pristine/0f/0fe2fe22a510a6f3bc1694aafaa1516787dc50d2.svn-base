@@ -1,0 +1,539 @@
+<!DOCTYPE HTML>
+<html>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>${title} - ${site.name} </title>
+<meta http-equiv="keywords" content="${content.tagStr!}"/>
+<meta http-equiv="description" content="${content.description!}"/>
+<link rel="stylesheet" type="text/css" href="/${res}/css/pics.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/public_all.css" />
+<link href="/${res}/css/global.css" rel="stylesheet" type="text/css"/>
+
+<script src="/${res}/js/dc/jquery-1.8.3.min.js" type="text/javascript"></script>
+<script src="/${res}/js/dc/piccontent.min.js" type="text/javascript"></script>
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=&amp;pophcol=2&amp;lang=zh"></script>
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+<script src="${resSys}/jquery.js"></script>
+<script src="${resSys}/front.js" type="text/javascript"></script>
+<script src="/${res}/js/common.js" type="text/javascript"></script>
+<script src="/${res}/js/layer/layer.js"></script>
+<script type="text/javascript">
+function showList(id,text) {
+    //iframe层
+    layer.open({
+        type: 2,
+        title: "评论“"+text+"”回复:",
+        shadeClose: true,
+        shade: 0.8,
+        area: ['780px', '80%'],
+        content: '/comment_list.jspx?commentId='+id //iframe的url
+    }); 
+}
+$(function() {
+  Cms.checkPerm("${base}","${content.id}");
+  Cms.collectCsi("${base}","collectCsiDiv","collect_csi","${content.id}");
+  Cms.attachment("${base}","${content.id}","${content.attachments?size}","attach");
+  Cms.viewCount("${base}","${content.id}");
+  Cms.siteFlow("${base}", location.href, document.referrer,"${site.config.flowSwitch?string}");
+});
+</script>
+
+</head>
+<body>
+[#include "../include/header.html"/]
+
+
+<!--nav 开始-->
+[#include "../include/navi.html"/]
+<!--nav 开始-->
+
+<div style=" clear:both;"></div>
+
+<!--map 开始-->
+<div class="box mt10">
+<div class="map"><img src="/${res}/images/home.png" width="20" height="18"><a href="${base}/">首页</a> ><a href="${base}/picture/index.jhtml">图轻松</a> > ${content.title}</div>
+</div>
+<div style=" clear:both;"></div>
+
+<!--map end-->
+
+<!--内容 开始-->
+<div class="box">
+  
+      <div class="main"> 
+          <!--弹出层开始-->
+          <div class="bodymodal"></div>
+          <!--播放到第一张图的提示-->
+          <div class="firsttop">
+            <div class="firsttop_right">
+              <div class="close2"> <a class="closebtn1" title="关闭" href="javascript:void(0)"></a> </div>
+              <div class="replay">
+                <h2 id="div-end-h2"> 已到第一张图片了。 </h2>
+                <p> <a class="replaybtn1" href="javascript:;">重新播放</a> </p>
+              </div>
+              <div class="pictwo">
+                <ul>
+                  
+                  [@cms_content id=content.id next='1' channelId=channel.id]
+                  [#if tag_bean??]
+                   <li>   <a href="${tag_bean.url}" title="${tag_bean.title}" ><img src="${tag_bean.titleImg!tag_bean.typeImg!site.defImg}" alt="${tag_bean.title}" /></a>
+                      <div class="imgdivtext"> <a href="${tag_bean.url}" title="${tag_bean.title}" ><font color="#fff">上一图集</font></a> </div>
+                  </li>
+                  [#else]<li style="line-height:88px">已是第一图集了！</li>[/#if][/@cms_content]   
+                          
+                  [@cms_content id=content.id next='0' channelId=channel.id][#if tag_bean??]
+                   <li>   <a href="${tag_bean.url}" title="${tag_bean.title}" ><img src="${tag_bean.titleImg!tag_bean.typeImg!site.defImg}" alt="${tag_bean.title}" /></a>
+                      <div class="imgdivtext"> <a href="${tag_bean.url}" title="${tag_bean.title}" ><font color="#fff">下一图集</font></a> </div>
+                   </li>  
+                     [#else]<li style="line-height:88px">已是最后图集了！</li>[/#if][/@cms_content]
+                 
+                </ul>
+              </div>
+              <div class="returnbtn"> <a href="${base}/picture/index.jhtml"><font color="#fff">返回图库首页</font></a> </div>
+            </div>
+          </div>
+          <!--播放到最后一张图的提示-->
+          <div class="endtop">
+ 
+            <div class="firsttop_right">
+              <div class="close2"> <a class="closebtn2" title="关闭" href="javascript:void(0)"></a> </div>
+              <div class="replay">
+                <h2 id="H1"> 已到最后一张图片了。 </h2>
+                <p> <a class="replaybtn2" href="javascript:;">重新播放</a> </p>
+              </div>
+              <div class="pictwo">
+                <ul>
+                  [@cms_content id=content.id next='1' channelId=channel.id]
+                  [#if tag_bean??]
+                   <li>   <a href="${tag_bean.url}" title="${tag_bean.title}" ><img src="${tag_bean.titleImg!tag_bean.typeImg!site.defImg}" alt="${tag_bean.title}" /></a>
+                      <div class="imgdivtext"> <a href="${tag_bean.url}" title="${tag_bean.title}" ><font color="#fff">上一图集</font></a> </div>
+                   </li>
+                  [#else]<li style="line-height:88px">已是第一图集了!</li>[/#if][/@cms_content]          
+                  [@cms_content id=content.id next='0' channelId=channel.id][#if tag_bean??]
+                   <li>   <a href="${tag_bean.url}" title="${tag_bean.title}" ><img src="${tag_bean.titleImg!tag_bean.typeImg!site.defImg}" alt="${tag_bean.title}" /></a>
+                      <div class="imgdivtext"> <a href="${tag_bean.url}" title="${tag_bean.title}" ><font color="#fff">下一图集</font></a> </div>
+                   </li>
+                   [#else]<li style="line-height:88px">已是最后图集了!</li>[/#if][/@cms_content]
+                  
+                </ul>
+              </div>
+              <div class="returnbtn"> <a href="${base}/picture/index.jhtml"><font color="#fff">返回图库首页</font></a> </div>
+            </div>
+          </div>
+          <!--弹出层结束--> 
+          <!--图片特效内容开始-->
+          <div class="piccontext">
+            <h2> ${content.title} </h2>
+            <div class="source">
+              <div class="source_left"><span>${content.releaseDate}</span> </div>
+              <div class="source_right">
+                     <div class="comment">
+                       <a href="${base}/comment.jspx?contentId=${content.id}" ><img alt="" src="/${res}/images/comment.jpg"> 评论<span id="comments"></span><span>&nbsp;|&nbsp;</span></a>
+                     </div>
+                     <div class="view">
+                       <a href="javascript:void(0);" ><img alt="" src="/${res}/images/Collection.jpg">浏览<span id="views"></span><span>&nbsp;|&nbsp;</span></a>
+                     </div>
+                     <!-- 
+                      <a href="${base}/comment.jspx?contentId=${content.id}" class="comment">评论<span id="comments"></span></a>
+                     <span>|</span>
+                     <a href="#" class="collection">浏览<span id="views"></span></a>
+                     <span>|</span> -->
+                     <div class="share">
+				         <div class="bshare-custom" style="clear:both;line-height:26px;">
+							 <a title="分享" class="bshare-more" style="height:26px;"><img src="/${res}/images/share.jpg"><span style="font-size:14px;line-height:25px;">分享</span></a>
+								
+						 </div>
+					 </div>
+                        
+              </div>
+            </div>
+          <!--大图展示-->
+          <div class="picshow">
+              <div class="picshowtop">
+                  [#list content.pictures as p]
+                  <a href="#"><img src="" alt="" id="pic1" curindex="0" /></a>
+                  [/#list]
+                  <a id="preArrow" href="javascript:void(0)" class="contextDiv" title="上一张"><span id="preArrow_A"></span></a>
+                  <a id="nextArrow" href="javascript:void(0)" class="contextDiv" title="下一张"><span id="nextArrow_A"></span></a>
+              </div>
+              <div class="picshowtxt">
+                <div class="picshowtxt_left"><span>1</span>/<i>${content.pictures?size}</i></div>
+                <div class="picshowtxt_right"></div>
+              </div>
+              <div class="picshowlist"> 
+                <!--上一条图库-->
+                <div class="picshowlist_left">
+                [@cms_content id=content.id next='1' channelId=channel.id]
+                [#if tag_bean??]
+                   <div class="picleftimg"> 
+                      <a href="${tag_bean.url}" ><img src="${tag_bean.titleImg!tag_bean.typeImg!site.defImg}" /></a> 
+                   </div>
+                   <div class="piclefttxt"> <a href="${tag_bean.url}" >${tag_bean.title}</a> </div>
+                 [#else]
+                  <div class="picleftimg"> 
+                     <img src="/${res}/images/no-pic.png" />
+                   </div>
+                   <div class="piclefttxt"> 已是第一图集了</div>
+                 [/#if][/@cms_content]
+                </div>
+                <div class="picshowlist_mid">
+                  <div class="picmidleft"> <a href="javascript:void(0)" id="preArrow_B"><img src="/${res}/images/left1.jpg" alt="上一个" /></a> </div>
+                  <div class="picmidmid">
+                    <ul>
+                       [#list content.pictures as p]
+                          <li><a href="javascript:void(0);"><img src="${p.imgPath!}" alt="" bigimg="${p.imgPath!}" text="${p.description!}" /></a></li>
+                         
+                       [/#list]
+                    </ul>
+                  </div>
+                  <div class="picmidright"> <a href="javascript:void(0)" id="nextArrow_B"><img src="/${res}/images/right1.jpg" alt="下一个" /></a> </div>
+                </div>
+                <!--下一张图库新闻-->
+                <div class="picshowlist_right">
+                [@cms_content id=content.id next='0' channelId=channel.id]
+                [#if tag_bean??]
+                   <div class="picleftimg"> 
+                      <a href="${tag_bean.url}" ><img src="${tag_bean.titleImg!tag_bean.typeImg!site.defImg}" /></a> 
+                   </div>
+                   <div class="piclefttxt"> <a href="${tag_bean.url}" >${tag_bean.title}</a> </div>
+                 [#else]
+                  <div class="picleftimg"> 
+                     <img src="/${res}/images/no-pic.png" />
+                   </div>
+                   <div class="piclefttxt">已是最后图集了</div>
+                 [/#if][/@cms_content]
+                  
+                </div>
+              </div>
+            </div>
+            
+            <div style=" clear:both;"></div>
+            [#if channel.commentControl!=2]
+             <div class="describe_pic">
+					<div class="pic_send_mess">
+						<span style="float: left">我要评论</span>
+						<!--  <span style="float: right;">
+							<a href="${base}/comment.jspx?contentId=${content.id}" target="_blank">
+								已有
+								<span id="comments"></span>
+								条评论
+							</a>
+						</span>-->
+					</div>
+					<div class="pic_send_mess_box">
+						<form id="submitForm" action="${base}/comment.jspx" method="post">
+							<input type="hidden" name="contentId" value="${content.id}" />
+							<input type="hidden" name="sessionId" id="sessionId" />
+							<input type="hidden" id="text" name="text" />
+							<textarea id="cont" name="cont"></textarea>
+							<span id="facect" >
+								<img src="/${res}/images/icon_biaoqing.png" alt="" />
+							</span> 
+							<div class="send_butt">
+								<!-- <input type="button" name="Submit" value="评论" class="published" onclick="submitForm()"/>-->
+								<a href="javascript:void(0);" onclick="submitForm()">评论</a>
+							</div>
+						</form>
+					</div>
+					
+					<div class="pic_send_mess2">
+						最新评论<!--  全部评论（ <span id="comments"></span> ）-->
+					</div>
+					<div class="review_all">
+					
+						<ul>
+							[@cms_comment_list contentId=content.id ] 
+							[#if tag_list?size = 0]
+							<li>暂无相关评论！ </span>
+							</li> 
+							[#else] 
+							[#assign x = 0]
+							[#list tag_list as c]
+					        <input type="hidden" id="content${c.id}" name="text" />
+					    	[#if c_index+1 < 5]
+							<li>
+								<div class="review_all_l">
+									<a href="#"> 
+									[#if c.user??]
+	          	   	                   [#if c.user.userImg??]<img src="${c.user.userImg!}" width="60" height="60"/>
+	                                   [#else]<img src="/${res}/images/people.png" width="60" height="60"/>
+                                       [/#if]
+                                    [#else]<img src="/${res}/images/people.png" width="60" height="60"/>
+                                    [/#if]
+									</a>
+								</div>
+								<div class="review_all_r">
+					
+									<div class="reviewer">
+										<span>${(c.commentUser.username)!"匿名网友"}</span> <u>${c.createTime!string("yyyy-MM-dd
+											HH:mm")}</u>
+									</div>
+					
+									<div class="review_cont">${c.text!}</div>
+					
+									<ul class="reply">
+										<li class="zan" onclick="addUPs(${c.id})" id="agree${c.id}">
+											赞（ <span id="ups_${c.id}">${c.ups}</span> ） </span>
+										</li>
+										<li class="reversion" onclick="showReply('${c.id}')">回复</li>
+										[@cms_comment_list parentId= c.id] [#if tag_list?size gt 0]
+										<li class="search_reply"
+											onclick="showList('${c.id}','${(c.commentUser.username)!'匿名网友'}:${c.textHtml!}')">${tag_list?size}条回复</li>
+										[/#if] [/@cms_comment_list]
+									</ul>
+					
+									<div id="reply${c.id}" title="" class="pic_send_mess_box2"
+										style="display: none">
+										<textarea id="re_content${c.id}" name="text"></textarea>
+										<span id="face${c.id}"> <img
+											src="/${res}/images/icon_biaoqing.png" alt="" />
+										</span>
+										<div class="send_butt">
+											<a href="javascript:addReply('${c.id}');">确认</a>
+										</div>
+									</div>
+								</div>
+							</li> 
+							[/#if]
+							[#if (c_index+1)=5][#assign x = x+1]
+							 <li>
+								<div class="review_all_l">
+									<a href="#"> 
+								    [#if c.user??]
+	          	   	                   [#if c.user.userImg??]<img src="${c.user.userImg!}" width="60" height="60"/>
+	                                   [#else]<img src="/${res}/images/people.png" width="60" height="60"/>
+                                       [/#if]
+                                    [#else]<img src="/${res}/images/people.png" width="60" height="60"/>
+                                    [/#if]
+									</a>
+								</div>
+								<div class="review_all_r">
+					
+									<div class="reviewer">
+										<span>${(c.commentUser.username)!"匿名网友"}</span> <u>${c.createTime!string("yyyy-MM-dd
+											HH:mm")}</u>
+									</div>
+					
+									<div class="review_cont">${c.text!}</div>
+					
+									<ul class="reply">
+										<li class="zan" onclick="addUPs(${c.id})" id="agree${c.id}">
+											赞（ <span id="ups_${c.id}">${c.ups}</span> ） </span>
+										</li>
+										<li class="reversion" onclick="showReply('${c.id}')">回复</li>
+										[@cms_comment_list parentId= c.id] [#if tag_list?size gt 0]
+										<li class="search_reply"
+											onclick="showList('${c.id}','${(c.commentUser.username)!'匿名网友'}:${c.textHtml!}')">${tag_list?size}条回复</li>
+										[/#if] [/@cms_comment_list]
+									</ul>
+					
+									<div id="reply${c.id}" title="" class="send_mess_box2"
+										style="display: none">
+										<textarea id="re_content${c.id}" name="text"></textarea>
+										<span id="face${c.id}"> <img
+											src="/${res}/images/icon_biaoqing.png" alt="" />
+										</span>
+										<div class="send_butt">
+											<a href="javascript:addReply('${c.id}');">确认</a>
+										</div>
+									</div>
+								</div>
+							</li> 
+							[#if c_has_next]
+							<li id="load1" style="text-align:center"><a href="javascript:void(0);" onclick="more()">加载更多……</a></li>[/#if]
+							[/#if]
+							[#if (c_index+1)>5]
+							<li id="more${c_index+1}" title="" style="display:none">
+								<div class="review_all_l">
+									<a href="#"> 
+                                    [#if c.user??]
+	          	   	                   [#if c.user.userImg??]<img src="${c.user.userImg!}" width="60" height="60"/>
+	                                   [#else]<img src="/${res}/images/people.png" width="60" height="60"/>
+                                       [/#if]
+                                    [#else]<img src="/${res}/images/people.png" width="60" height="60"/>
+                                    [/#if]
+									</a>
+								</div>
+								<div class="review_all_r">
+					
+									<div class="reviewer">
+										<span>${(c.commentUser.username)!"匿名网友"}</span> <u>${c.createTime!string("yyyy-MM-dd
+											HH:mm")}</u>
+									</div>
+					
+									<div class="review_cont">${c.text!}</div>
+					
+									<ul class="reply">
+										<li class="zan" onclick="addUPs(${c.id})" id="agree${c.id}">
+											赞（ <span id="ups_${c.id}">${c.ups}</span> ） </span>
+										</li>
+										<li class="reversion" onclick="showReply('${c.id}')">回复</li>
+										[@cms_comment_list parentId= c.id] [#if tag_list?size gt 0]
+										<li class="search_reply"
+											onclick="showList('${c.id}','${(c.commentUser.username)!'匿名网友'}:${c.textHtml!}')">${tag_list?size}条回复</li>
+										[/#if] [/@cms_comment_list]
+									</ul>
+					
+									<div id="reply${c.id}" title="" class="send_mess_box2"
+										style="display: none">
+										<textarea id="re_content${c.id}" name="text"></textarea>
+										<span id="face${c.id}"> <img
+											src="/${res}/images/icon_biaoqing.png" alt="" />
+										</span>
+										<div class="send_butt">
+											<a href="javascript:addReply('${c.id}');">确认</a>
+										</div>
+									</div>
+								</div>
+							</li> 
+							[/#if]
+							
+							[/#list]
+							
+							[/#if] [/@cms_comment_list]
+					
+						</ul>
+					</div>
+					
+				</div>
+				[/#if]
+               </div>
+            </div>
+      </div>
+</div>
+
+          
+</div>
+<!--内容 end-->
+
+[#include "../include/footer.html"/]
+</div>
+
+
+<script type="text/javascript" src="/${res}/js/face/jquery-1.8.0.min.js"></script> 
+<link href="/${res}/js/face/jquery.sinaEmotion.css" rel="stylesheet" type="text/css"/>
+<script src="/${res}/js/face/jquery.sinaEmotion.js" type="text/javascript"></script>
+<script type="text/javascript" src="/${res}/js/layer/layer.js"></script>
+	<script type="text/javascript">
+	$('#facect').SinaEmotion($('#cont'));
+					function submitForm() {
+						[#if user??]
+						var cont = $("#cont").val();
+						if (cont.trim() == '') {
+							alert('请先填写评论内容');
+							$('#cont').focus();
+							return;
+						}
+						if (cont.length > 140) {
+							alert('评论最多140个字');
+							return;
+						}
+						$('#text').val(AnalyticEmotion(cont));
+						//$('#text').val($('#cont').val());
+						var s = $("#submitForm");
+						var url = s[0].action;
+						var data = s.serialize();
+						var options = {
+							url : url,
+							type : 'post',
+							dataType : 'json',
+							data : data,
+							success : function(data) {
+								if (data.status == 0) {
+									//alert("提交成功");
+									location.href = location.href;
+								}
+							}
+						};
+						$.ajax(options);
+						return false;
+						[#else]window.location.href="${base}/login.jspx?returnUrl=${content.url}";
+						[/#if]
+					}
+						function more() {
+							$('#load1').hide();
+							$('li[title=]').show();
+							
+						}
+						function showList(id, text) {
+							//iframe层
+							layer.open({
+								type: 2,
+								title: "回复:" + text,
+								shadeClose: true,
+								shade: 0.8,
+								area: ['780px', '80%'],
+								content: '${base}/comment_list.jspx?commentId=' + id //iframe的url
+							});
+						}
+						
+						function showReply(obj) {
+							// 绑定表情
+							$('#face' + obj).SinaEmotion($("#re_content" + obj));
+							if (document.getElementById("reply" + obj).style.display == "none") {
+								$('div[id=reply' + obj + '][title=]').show();
+							} else {
+								$('div[id=reply' + obj + '][title=]').hide();
+							}
+						
+							$('div[id!=reply' + obj + '][title=]').hide();
+						}
+						
+						function addReply(pid) {
+							[#if user??]
+							var text = $("#re_content" + pid).val();
+							if (text == '') {
+								alert('请输入回复内容！');
+								$("#re_content" + pid).focus();
+								return;
+							}
+							$("#content" + pid).val(AnalyticEmotion(text));
+							var content = $("#content" + pid).val();
+							$.ajax({
+								url: "${base}/comment_reply.jspx",
+								type: "post",
+								data: "pid=" + pid + "&text=" + content + "&contentId=" + ${content.id},
+								dataType: 'json',
+								success: function(data) {
+									if (data.status == 0) {
+										alert("回复成功");
+										location.href = location.href;
+									} else {
+										alert("回复失败");
+									}
+								}
+							});
+							[#else]window.location.href="${base}/login.jspx?returnUrl=${content.url}";
+							[/#if]
+						}
+						/**
+						 * 点赞
+						 * @param id
+						 * @return
+						 */
+						function addUPs(id) {
+						
+							$.ajax({
+								type: "post",
+								url: "${base}/comment_up.jspx?commentId=" + id,
+								asyn: true, //false为同步提交
+								dataType: 'text', //返回文本
+								success: function(d) {
+									//支持+1
+									var ups = $('#ups_' + id).html();
+									$('#agree' + id).removeClass("zan").addClass("support");
+									$('#agree' + id).html('赞（' + parseInt(parseInt(ups) + 1) + '）');
+									//点击失效
+									$('#agree' + id).attr("onclick", "").click(function() {
+						
+									});
+						
+								}
+							});
+						}
+					
+					</script>
+</body>
+
+</html>

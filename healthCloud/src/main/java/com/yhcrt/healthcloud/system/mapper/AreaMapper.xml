@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.healthcloud.system.mapper.AreaMapper">
+	<resultMap id="BaseResultMap" type="com.yhcrt.healthcloud.system.entity.Area">
+		<id column="area_id" jdbcType="INTEGER" property="areaId" />
+		<result column="parent_id" jdbcType="INTEGER" property="parentId" />
+		<result column="area_name" jdbcType="VARCHAR" property="areaName" />
+		<result column="full_name" jdbcType="VARCHAR" property="fullName" />
+		<result column="area_type" jdbcType="VARCHAR" property="areaType" />
+		<result column="area_code" jdbcType="VARCHAR" property="areaCode" />
+		<result column="area_desc" jdbcType="VARCHAR" property="areaDesc" />
+		<result column="region" jdbcType="VARCHAR" property="region" />
+		<result column="order_num" jdbcType="INTEGER" property="orderNum" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+		<result column="create_time" jdbcType="VARCHAR" property="createTime" />
+		<association property="parentArea" column="parent_id" select="selectByPrimaryKey"></association>
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	
+	<sql id="Base_Column_List">
+		area_id, parent_id, area_name, full_name, area_type,
+		area_code, area_desc,
+		region,
+		order_num, status, create_time
+	</sql>
+	
+	<select id="selectByExample" parameterType="com.yhcrt.healthcloud.system.entity.AreaExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from area
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from area
+		where area_id = #{areaId,jdbcType=INTEGER}
+	</select>
+
+	<select id="getAreaRootNode" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from area where parent_id is null
+	</select>
+	
+	<select id="getChildAreaByParentId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from area
+		where parent_id = #{parentId,jdbcType=INTEGER} and status = 0 order by order_num,create_time asc
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from area
+		where area_id = #{areaId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.yhcrt.healthcloud.system.entity.AreaExample">
+		delete from area
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.yhcrt.healthcloud.system.entity.Area">
+		insert into area (area_id,
+		parent_id, area_name,
+		full_name, area_type, area_code,
+		area_desc,
+		region, order_num,
+		status, create_time)
+		values
+		(#{areaId,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER},
+		#{areaName,jdbcType=VARCHAR},
+		#{fullName,jdbcType=VARCHAR},
+		#{areaType,jdbcType=VARCHAR}, #{areaCode,jdbcType=VARCHAR},
+		#{areaDesc,jdbcType=VARCHAR}, #{region,jdbcType=VARCHAR},
+		#{orderNum,jdbcType=INTEGER},
+		#{status,jdbcType=INTEGER},
+		#{createTime,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.yhcrt.healthcloud.system.entity.Area">
+		insert into area
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="areaId != null">
+				area_id,
+			</if>
+			<if test="parentId != null">
+				parent_id,
+			</if>
+			<if test="areaName != null">
+				area_name,
+			</if>
+			<if test="fullName != null">
+				full_name,
+			</if>
+			<if test="areaType != null">
+				area_type,
+			</if>
+			<if test="areaCode != null">
+				area_code,
+			</if>
+			<if test="areaDesc != null">
+				area_desc,
+			</if>
+			<if test="region != null">
+				region,
+			</if>
+			<if test="orderNum != null">
+				order_num,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="areaId != null">
+				#{areaId,jdbcType=INTEGER},
+			</if>
+			<if test="parentId != null">
+				#{parentId,jdbcType=INTEGER},
+			</if>
+			<if test="areaName != null">
+				#{areaName,jdbcType=VARCHAR},
+			</if>
+			<if test="fullName != null">
+				#{fullName,jdbcType=VARCHAR},
+			</if>
+			<if test="areaType != null">
+				#{areaType,jdbcType=VARCHAR},
+			</if>
+			<if test="areaCode != null">
+				#{areaCode,jdbcType=VARCHAR},
+			</if>
+			<if test="areaDesc != null">
+				#{areaDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="region != null">
+				#{region,jdbcType=VARCHAR},
+			</if>
+			<if test="orderNum != null">
+				#{orderNum,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.yhcrt.healthcloud.system.entity.AreaExample"
+		resultType="java.lang.Long">
+		select count(*) from area
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update area
+		<set>
+			<if test="record.areaId != null">
+				area_id = #{record.areaId,jdbcType=INTEGER},
+			</if>
+			<if test="record.parentId != null">
+				parent_id = #{record.parentId,jdbcType=INTEGER},
+			</if>
+			<if test="record.areaName != null">
+				area_name = #{record.areaName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.fullName != null">
+				full_name = #{record.fullName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.areaType != null">
+				area_type = #{record.areaType,jdbcType=VARCHAR},
+			</if>
+			<if test="record.areaCode != null">
+				area_code = #{record.areaCode,jdbcType=VARCHAR},
+			</if>
+			<if test="record.areaDesc != null">
+				area_desc = #{record.areaDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="record.region != null">
+				region = #{record.region,jdbcType=VARCHAR},
+			</if>
+			<if test="record.orderNum != null">
+				order_num = #{record.orderNum,jdbcType=INTEGER},
+			</if>
+			<if test="record.status != null">
+				status = #{record.status,jdbcType=INTEGER},
+			</if>
+			<if test="record.createTime != null">
+				create_time = #{record.createTime,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update area
+		set area_id = #{record.areaId,jdbcType=INTEGER},
+		parent_id =
+		#{record.parentId,jdbcType=INTEGER},
+		area_name =
+		#{record.areaName,jdbcType=VARCHAR},
+		full_name =
+		#{record.fullName,jdbcType=VARCHAR},
+		area_type =
+		#{record.areaType,jdbcType=VARCHAR},
+		area_code =
+		#{record.areaCode,jdbcType=VARCHAR},
+		area_desc =
+		#{record.areaDesc,jdbcType=VARCHAR},
+		region =
+		#{record.region,jdbcType=VARCHAR},
+		order_num =
+		#{record.orderNum,jdbcType=INTEGER},
+		status =
+		#{record.status,jdbcType=INTEGER},
+		create_time =
+		#{record.createTime,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.healthcloud.system.entity.Area">
+		update area
+		<set>
+			<if test="parentId != null">
+				parent_id = #{parentId,jdbcType=INTEGER},
+			</if>
+			<if test="areaName != null">
+				area_name = #{areaName,jdbcType=VARCHAR},
+			</if>
+			<if test="fullName != null">
+				full_name = #{fullName,jdbcType=VARCHAR},
+			</if>
+			<if test="areaType != null">
+				area_type = #{areaType,jdbcType=VARCHAR},
+			</if>
+			<if test="areaCode != null">
+				area_code = #{areaCode,jdbcType=VARCHAR},
+			</if>
+			<if test="areaDesc != null">
+				area_desc = #{areaDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="region != null">
+				region = #{region,jdbcType=VARCHAR},
+			</if>
+			<if test="orderNum != null">
+				order_num = #{orderNum,jdbcType=INTEGER},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where area_id = #{areaId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.yhcrt.healthcloud.system.entity.Area">
+		update area
+		set
+		parent_id = #{parentId,jdbcType=INTEGER},
+		area_name =
+		#{areaName,jdbcType=VARCHAR},
+		full_name = #{fullName,jdbcType=VARCHAR},
+		area_type = #{areaType,jdbcType=VARCHAR},
+		area_code =
+		#{areaCode,jdbcType=VARCHAR},
+		area_desc = #{areaDesc,jdbcType=VARCHAR},
+		region = #{region,jdbcType=VARCHAR},
+		order_num =
+		#{orderNum,jdbcType=INTEGER},
+		status = #{status,jdbcType=INTEGER},
+		create_time = #{createTime,jdbcType=VARCHAR}
+		where area_id =
+		#{areaId,jdbcType=INTEGER}
+	</update>
+</mapper>

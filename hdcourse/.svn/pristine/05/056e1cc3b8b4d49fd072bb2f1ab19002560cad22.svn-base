@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.demo.dao.ClassGroupDao">
+
+
+	<insert id="saveTeacher" parameterType="com.whty.assis.api.virtualclassmodel.Teacher">
+		insert into
+		T_CLASS_GROUP_TEACHER (
+		id,user_id,platform_code,name,type,school_id,school_name,cloud_loaded,cache_loaded,create_time
+		) values (
+		#{id},#{userId},#{platformCode},#{name},#{type},#{schoolId},#{schoolName},#{cloudLoaded},#{cacheLoaded},#{createTime}
+		)
+	</insert>
+
+	<insert id="saveGroupClass" parameterType="com.whty.assis.api.virtualclassmodel.ClassModel">
+		insert into
+		T_CLASS_GROUP_CLASS (
+		id,class_group_teacher_id,class_id,class_name,teacher_card_number,cloud_loaded,cache_loaded,card_number_start,source,create_time
+		) values (
+		#{id},#{classGroupTeacherId},#{classId},#{className},#{teacherCardNumber},#{cloudLoaded},#{cacheLoaded},#{cardNumberStart},#{source},#{createTime}
+		)
+	</insert>
+
+	<insert id="saveGroupType" parameterType="com.whty.assis.api.virtualclassmodel.GroupType">
+		insert into
+		T_CLASS_GROUP_TYPE (
+		type_id,class_group_class_id,type_name,sort_num,create_time
+		) values (
+		#{typeId},#{classGroupClassId},#{typeName},#{sortNum},#{createTime}
+		)
+	</insert>
+	
+	<insert id="saveGroup" parameterType="com.whty.assis.api.virtualclassmodel.Group">
+		insert into T_CLASS_GROUP (
+		group_id,class_group_type_id,group_name,sort_num
+		) values (
+		#{groupId},#{classGroupTypeId},#{groupName},#{sortNum}
+		)
+	</insert>
+	
+	<insert id="saveStudent" parameterType="com.whty.assis.api.virtualclassmodel.Student">
+		insert into T_CLASS_GROUP_STUDENT (
+			id,group_id,student_id,student_name,source,platform_code,card_number,pen_number,sex_type,class_id
+		) values (
+		#{id},#{groupId},#{studentId},#{studentName},#{source},#{platformCode},#{cardNumber},#{penNumber},#{sexType},#{classId}
+		)
+	</insert>
+	
+	
+	
+	
+</mapper>

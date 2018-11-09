@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.api.dao.UserBackGroundDao">
+
+	<resultMap type="com.whty.assis.api.model.UserBackGround" id="UserBackGroundResult">
+		<result column="id" property="id" jdbcType="VARCHAR" />
+		<result column="user_id" property="userId" jdbcType="VARCHAR" />
+		<result column="platform_code" property="platformCode" jdbcType="VARCHAR" />
+		<result column="login_platform_code" property="loginPlatformCode" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="VARCHAR" />
+		<result column="back_ground_id" property="backGroundId" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<select id="listByCondition" parameterType="map" resultMap="UserBackGroundResult">
+		select * from T_USER_BACKGROUND_LOG WHERE 1=1 
+		<if test="userId != null and userId != ''">and user_id=#{userId}</if>
+		<if test="platformCode != null and platformCode != ''">and platform_code=#{platformCode}</if>
+	</select>
+	
+	<insert id="save" parameterType="com.whty.assis.api.model.UserBackGround">
+		insert into T_USER_BACKGROUND_LOG(
+			user_id,
+			platform_code,
+			login_platform_code,
+			back_ground_id
+			) values (
+				#{userId},
+				#{platformCode},
+				#{loginPlatformCode},
+				#{backGroundId}
+			)
+	</insert>
+	
+	<update id="update" parameterType="com.whty.assis.api.model.UserBackGround">
+		update T_USER_BACKGROUND_LOG 
+		set 
+		<trim prefixOverrides=",">
+			<if test="userId != null and userId != ''">, user_id=#{userId}</if>
+			<if test="platformCode != null and platformCode != ''">, platform_code=#{platformCode}</if>
+			<if test="loginPlatformCode != null and loginPlatformCode != ''">, login_platform_code=#{loginPlatformCode}</if>
+			, back_ground_id=#{backGroundId}
+		</trim>
+		where id=#{id}
+	</update>
+</mapper>
+

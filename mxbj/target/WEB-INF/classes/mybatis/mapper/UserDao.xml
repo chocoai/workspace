@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.mxbj.api.dao.UserDao">
+
+	<resultMap type="com.whty.mxbj.api.model.User" id="UserResult">
+		<result column="user_id" property="userId" />
+		<result column="account_type" property="accountType" />
+		<result column="pwd" property="pwd" />
+
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="last_login_time" property="lastLoginTime" />
+		<result column="login_count" property="loginCount" />
+		<result column="email" property="email" />
+		<result column="device_id" property="deviceId" />
+		<result column="device_type" property="deviceType" />
+		<result column="user_type" property="userType" />
+
+		<result column="user_platform_code" property="userPlatformCode" />
+		<result column="login_platform_code" property="loginPlatformCode" />
+		<result column="phone_number" property="phoneNumber" />
+		
+		<result column="user_name" property="userName" />
+		<result column="account" property="account"/>
+		
+		
+		
+	</resultMap>
+	
+	<resultMap type="com.whty.mxbj.api.model.UserConfig" id="UserConfigResult">
+		<result column="user_id" property="userId" />
+		<result column="user_platform_code" property="userPlatformCode" />
+		
+		<result column="is_syn_error_note" property="isSynErrorNote" />
+		<result column="is_syn_cloud" property="isSynCloud" />
+		
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="syn_error_note_last_time" property="synErrorNoteLastTime" />
+		<result column="syn_cloud_last_time" property="synCloudLastTime" />
+		
+		<result column="platform_name" property="platformName"/>
+		
+	</resultMap>
+
+
+	<resultMap type="com.whty.mxbj.api.model.UserPen" id="UserPenResult">
+		<result column="user_id" property="userId" />
+
+		<result column="mac" property="mac" />
+		<result column="status" property="status" />
+
+	</resultMap>
+
+
+	<insert id="saveVerifyCodeLog" parameterType="map" >
+		insert into T_VERIFY_CODE_LOG
+		(
+		id
+		,phone_number
+		,verify_code
+		,create_time
+		)
+		values
+		(
+		#{id}
+		,#{phoneNumber}
+		,#{verifyCode}
+		,#{createTime}
+		)
+	</insert>
+	
+	<select id="getVerifyCodeCount" parameterType="map"  resultType="Integer">
+		select count(*) from T_VERIFY_CODE_LOG WHERE 1=1
+		<if test="dateTime != null ">and date_format(create_time,'%Y-%m-%d') =#{dateTime}</if>
+		<if test="startTime != null ">and date_format(create_time,'%Y-%m-%d') >=#{startTime}</if>
+		<if test="endTime != null "><![CDATA[and date_format(create_time,'%Y-%m-%d')<=#{endTime}]]></if>
+		<if test="phoneNumber != null "><![CDATA[and phone_number =#{phoneNumber}]]></if>
+	</select>
+
+	<!-- 如果插入的字段可能为空，则要设置jdbcType parameterType="User", 这个是别名，已经在mybatis-config.xml中匹配了 -->
+	<insert id="save" parameterType="com.whty.mxbj.api.model.User">
+		insert into T_USER
+		(
+		user_id
+		,account_type
+		,create_time
+		,update_time
+		,last_login_time
+		,login_count
+		,email
+		,device_id
+		,device_type
+		,user_type
+		<if test="pwd != null and pwd !='' ">,pwd</if>
+		<if test="loginPlatformCode != null and loginPlatformCode !='' ">,login_platform_code</if>
+		<if test="userPlatformCode != null and userPlatformCode !='' ">,user_platform_code</if>
+		<if test="phoneNumber != null and phoneNumber !='' ">,phone_number</if>
+		<if test="userName != null and userName !='' ">,user_name</if>
+		<if test="account != null and account !='' ">,account</if>
+		)
+		values
+		(
+		#{userId}
+		,#{accountType}
+		,#{createTime}
+		,#{updateTime}
+		,#{lastLoginTime}
+		,#{loginCount}
+		,#{email}
+		,#{deviceId}
+		,#{deviceType}
+		,#{userType}
+		<if test="pwd != null and pwd !='' ">,#{pwd}</if>
+		<if test="loginPlatformCode != null and loginPlatformCode !='' ">,#{loginPlatformCode}</if>
+		<if test="userPlatformCode != null and userPlatformCode !='' ">,#{userPlatformCode}</if>
+		<if test="phoneNumber != null and phoneNumber !='' ">,#{phoneNumber}</if>
+		<if test="userName != null and userName !='' ">,#{userName}</if>
+		<if test="account != null and account !='' ">,#{account}</if>
+		)
+	</insert>
+
+	<select id="getSynCloudSchool" parameterType="map"  resultType="map">
+		select t2.platform_name from T_USER t1 left join T_SYN_CLOUD_SCHOOL t2 on t1.user_platform_code=t2.platform_code where 1=1
+		<if test=" userId != null and userId != ''"> and t1.user_Id = #{userId}</if>
+		<if test=" userPlatformCode != null and userPlatformCode != ''"> and t1.user_platform_code = #{userPlatformCode}</if>
+	</select>
+
+	<select id="getUserConfig" parameterType="map" resultMap="UserConfigResult">
+		select * from T_USER_CONFIG WHERE 1=1
+		<if test=" userId != null and userId != ''"> and user_Id = #{userId}</if>
+		<if test=" userPlatformCode != null and userPlatformCode != ''"> and user_Platform_Code = #{userPlatformCode}</if>
+	</select>
+
+	<update id="updateUserConfig" parameterType="map">
+		update T_USER_CONFIG
+		set
+		<trim prefixOverrides=",">
+			<if test="isSynErrorNote != null ">,is_syn_error_note=#{isSynErrorNote}</if>
+			<if test="isSynCloud != null ">,is_Syn_Cloud=#{isSynCloud}</if>
+			<if test="synCloudLastTime != null ">,syn_cloud_last_time=#{synCloudLastTime}</if>
+			<if test="synErrorNoteLastTime != null ">,syn_error_note_last_time=#{synErrorNoteLastTime}</if>
+			<if test="updateTime != null ">,update_time=#{updateTime}</if>
+		</trim>
+		where user_id = #{userId} and user_platform_code=#{userPlatformCode}
+	</update>
+
+	<insert id="saveUserConfig" parameterType="map">
+		insert into T_USER_CONFIG
+		(
+		user_id
+		,user_platform_code
+		,is_syn_error_note
+		,is_syn_cloud
+		,create_time
+		<if test="synErrorNoteLastTime != null ">,syn_error_note_last_time</if>
+		<if test="synCloudLastTime != null ">,syn_cloud_last_time</if>
+		)
+		values
+		(
+		#{userId}
+		,#{userPlatformCode}
+		,#{isSynErrorNote}
+		,#{isSynCloud}
+		,#{createTime}
+		<if test="synErrorNoteLastTime != null ">,#{synErrorNoteLastTime}</if>
+		<if test="synCloudLastTime != null ">,#{synCloudLastTime}</if>
+		)
+	</insert>
+
+	
+
+	<select id="findUserByPhoneNumber" parameterType="string"
+		resultMap="UserResult">
+		select * from T_USER where 1=1
+		<if test=" _parameter != null and _parameter != ''"> and phone_number = #{_parameter}
+		</if>
+	</select>
+
+	<select id="loadUserByUserIdAndPlatform" parameterType="map"
+		resultMap="UserResult">
+		select * from T_USER
+		where 1=1
+		<if test="userId != null and userId != '' "> and user_id=#{userId}</if>
+		<if test="userPlatformCode != null and userPlatformCode != '' "> and user_platform_code=#{userPlatformCode}</if>
+	</select>
+
+	<select id="listByCondition" parameterType="map" resultMap="UserResult">
+		select * from T_USER
+		where 1=1
+		<if test="userId != null and userId != '' "> and user_id=#{userId}</if>
+		<if test="userPlatformCode != null and userPlatformCode != '' "> and user_platform_code=#{userPlatformCode}</if>
+	</select>
+
+
+
+	<select id="findUserPenByUserIdAndPlatform" parameterType="map"
+		resultMap="UserPenResult">
+		select * from T_PEN WHERE 1=1
+		<if test="mac != null and mac != ''"> and mac = #{mac} </if>
+		<if test="userId != null and userId != ''"> and user_id = #{userId} </if>
+		<if test="userPlatformCode != null and userPlatformCode != ''"> and user_platform_Code = #{userPlatformCode} </if>
+	</select>
+
+	<update id="update" parameterType="com.whty.mxbj.api.model.User">
+		update T_USER
+		set
+		<trim prefixOverrides=",">
+			<if test="accountType != null and accountType !='' ">,account_type=#{accountType}</if>
+			<if test="pwd != null and pwd!='' ">,pwd=#{pwd}</if>
+			<if test="createTime != null ">,create_time=#{createTime}</if>
+			<if test="updateTime != null ">,update_time=#{updateTime}</if>
+			<if test="lastLoginTime != null ">,last_login_time=#{lastLoginTime}</if>
+			<if test="loginCount != null ">,login_count=#{loginCount}</if>
+			<if test="email != null and email !='' ">,email=#{email}</if>
+			<if test="deviceId != null and deviceId !='' ">,device_id=#{deviceId}</if>
+			<if test="deviceType != null and deviceType !='' ">,device_type=#{deviceType}</if>
+			<if test="loginPlatformCode != null and loginPlatformCode != ''">,login_platform_code = #{loginPlatformCode}</if>
+			<if test="phoneNumber != null and phoneNumber != ''">,phone_number = #{phoneNumber}</if>
+			<if test="userName != null and userName != ''">,user_name = #{userName}</if>
+			<if test="account != null and account != ''">,account = #{account}</if>
+		</trim>
+		where user_id = #{userId} and user_platform_code=#{userPlatformCode}
+	</update>
+
+</mapper>

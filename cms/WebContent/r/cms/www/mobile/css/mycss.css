@@ -1,0 +1,155 @@
+.mar-t10 {
+	margin-top: 10px;
+}
+
+.myform input,.myform textarea {
+	border: none;
+	box-shadow: none;
+	border-radius: 0;
+	border-bottom: 1px solid #ddd;
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.myform input:focus,.myform textarea:focus {
+	box-shadow: none;
+	border-bottom-color: #ddd;
+}
+
+.mar-lr0 {
+	margin-left: 0px !important;
+	margin-right: 0px !important;
+}
+
+.myform textarea {
+	height: 100px;
+	border-bottom: none;
+}
+
+.padd-lr0 {
+	padding-left: 0;
+	padding-right: 0;
+}
+
+.bor-b {
+	border-bottom: 1px solid #ddd;
+}
+
+.pad-b5 {
+	padding-bottom: 5px;
+}
+
+.btn-red {
+	background-color: #dc251f;
+	color: #fff;
+	border: none;
+}
+
+.btn-red:hover,.btn-red:active,.btn-red:visited {
+    color: #fff !important;
+    background-color: #cd201b !important;
+    border: none !important;
+}
+
+.btn-red.focus, .btn-red:focus, .btn-red:hover {
+    color: #fff;
+    border: none !important;
+}
+
+.btn-nothing {
+	border: none;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.btn-nothing.active.focus, .btn-nothing.active:focus, .btn-nothing.active:hover, .btn-nothing:active.focus, .btn-nothing:active:focus, .btn-nothing:active:hover, .open>.dropdown-toggle.btn-nothing.focus, .open>.dropdown-toggle.btn-nothing:focus, .open>.dropdown-toggle.btn-nothing:hover {
+    color: #dc251f;
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+}
+
+.bor-b {
+	border-bottom: 1px solid #ddd;
+}
+
+.mybtn-group {
+	position: relative;
+}
+
+.mybtn-group .btn-group {
+	 position: static;
+}
+
+.mybtn-group>.btn-group .dropdown-menu {
+    left: 0;
+    width: 100%;
+    border: none;
+    -webkit-box-shadow: 0 1px 2px rgba(0,0,0,.175);
+    box-shadow: 0 1px 2px rgba(0,0,0,.175);
+    border-radius: 0;
+}
+
+.mybtn-group>.btn-group .dropdown-menu .divider {
+	margin-right: 15px;
+	margin-left: 15px;
+}
+
+.mybtn-group>.btn-group .dropdown-menu li a {
+	padding-left: 15px;
+	padding-right: 15px;
+	padding-top: 0;
+	padding-bottom: 0;
+}
+
+.mymedia .media-body {
+    width: 58.33333333%;
+}
+
+.nopad-l {
+	padding-left: 0;
+}
+
+.mymedia .media-list li {
+	border-bottom: 1px solid #eee;
+	padding-top: 15px;
+	padding-bottom: 15px;
+	margin-top: 0;
+}
+
+.mymedia .media-list li a h4 {
+	color: #333;
+	font-size: 18px;
+	margin-bottom: 5px;
+	margin-top: 5px;
+}
+
+.mymedia .media-list li a p {
+	color: #666;
+	margin-bottom: 5px;
+}
+
+.red {
+	color: #dc251f !important;
+	font-size: 18px;
+}
+
+.house-infomation {
+	padding-bottom: 10px;
+}
+
+.house-infomation-hd {
+	padding: 5px 15px;
+	border-bottom: 1px solid #dc251f;
+	color: #dc251f;
+	font-size: 16px;
+}
+
+.house-infomation-bd {
+	padding: 5px 15px;
+}
+
+.house-infomation-bd .control-label {
+	font-weight: normal;
+	color: #666;
+}

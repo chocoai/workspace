@@ -1,0 +1,918 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>首页 - ${site.name}</title>
+    <!-- Bootstrap -->
+    <link href="/${res}/css/headandfooter.css" rel="stylesheet">
+    <link href="/${res}/css/home.css" rel="stylesheet">
+<script type="text/javascript" src="/${res}/js/dc/settitle.js"></script>
+    <script src="/${res}/js/jquery-1.12.3.min.js"></script>
+    <!-- banner轮播滚动 -->
+    <script src="/${res}/js/myjs.js"></script>
+    <script type="text/javascript">
+        $(function() {
+        
+            $("input[name=q]").autocomplete({
+                 source: "${base}/search/v_ajax_list.jspx",
+                 minLength: 2,
+                 max:5,
+                 delay:400,
+                 autoFocus: true,
+                 select: function(e, ui) {
+                     $("input[name='q']").val(ui.item.value);
+                     $("#searchForm").submit();
+                 }
+            });
+        })
+        function qkeypress(){
+            var q=$("input[name=q]");
+            if(q.val().trim()!=""){
+                $("input[name=q]").autocomplete("enable");
+            }else{
+                $("input[name=q]").autocomplete("disable");
+            }
+        }
+       //加入收藏
+       function AddFavorite(sURL, sTitle) {
+           sURL =encodeURI(sURL); 
+           try{   
+              window.external.addFavorite(sURL, sTitle);   
+           }catch(e) {   
+              try{   
+                  window.sidebar.addPanel(sTitle, sURL, "");   
+               }catch (e){   
+                  alert("您的浏览器不支持自动加入收藏功能，请使用Ctrl+D进行添加，或手动在浏览器里进行设置！");
+              }   
+           }
+       }
+       
+       //设为首页
+       function SetHome(url){
+           if (document.all) {
+              document.body.style.behavior='url(#default#homepage)';
+                 document.body.setHomePage(url);
+           }else{
+               alert("您的浏览器不支持自动设置页面为首页功能，请您手动在浏览器里设置该页面为首页！");
+           }
+       }
+    </script>
+  </head>
+  <body class="home-bg">
+    <!-- top strat -->
+    <div class="top">
+      <div class="top-center">
+        <div class="top-left">
+          <div id="date"></div>
+          <div class="weather">
+            <iframe name="sinaWeatherTool"   src="http://weather.news.sina.com.cn/chajian/iframe/weatherStyle0.html?city=%E9%BB%84%E7%9F%B3" width="160" height="30" marginwidth="0" marginheight="0" hspace="0" vspace="0" frameborder="0" scrolling="no"></iframe>
+          </div>
+        </div>
+        <div class="top-right">
+          <a  onclick="SetHome(window.location)" href="javascript:void(0)" class="mar-r15">设为首页</a>
+          <a  onclick="AddFavorite(window.location,document.title)" href="javascript:void(0)">收藏本站</a>          
+        </div>
+      </div>
+    </div>
+    <!-- top end -->
+
+    <!-- logo、搜索 strat -->
+    <div class="logo-box">
+      <div class="logo-center">
+        <div class="newlogo">
+          <a href="home.html"><img src="/${res}/images/index/newlogo.png"></a>
+        </div>
+        <form action="${base}/searchCont.jspx" target="_blank" id="searchForm">
+            <div class="newsearch">
+              <input type="text"  name="q" value="${oldq!''}" placeholder="请输入关键字" maxlength="50" autocomplete="off" onkeypress="qkeypress()" class="search-input">
+              <input type="submit" value="搜索" class="search-btn">
+            </div>
+        </form>
+      </div>
+    </div>
+    <!-- logo、搜索 end -->
+
+    <!-- nav strat -->
+    <div class="nav">
+      <div class="nav-center">
+        <ul class="nav-list">
+            <li class="active">
+                <a href="${base}/">首 页</a>
+            </li>
+            <li>
+                <a href="${base}/tops.jhtml">头条</a>
+            </li>
+            <li>
+                <a href="${base}/jds.jhtml">焦点</a>
+            </li>
+            <li>
+                <a href="${base}/topic.jspx">专题</a>
+            </li>
+            <li>
+                <a href="${base}/xsq/index.jhtml">县市区新闻</a>
+            </li>
+            <li>
+                <a href="/bbs" target="_blank">论坛</a>
+            </li>
+            <li>
+                <a href="${base}/vedio/index.jhtml" target="_self">视频</a>
+            </li>
+            <li>
+                <a href="${base}/picture/index.jhtml">图轻松</a>
+            </li>
+            <li>
+                <a href="${base}/baoliao.jspx" target="_self">投诉爆料台</a>
+            </li>
+            <li>
+                <a href="${base}/gsgg/index.jhtml">公告</a>
+            </li>
+            <li>
+                <a href="${base}/activity/index.jhtml" target="_self">活动</a>
+            </li>
+            <li>
+                <a href="${base}/fc/index.jhtml" target="_blank">房产</a>
+            </li>
+            <li>
+                <a href="http://auto.hsdcw.com" target="_blank">汽车</a>
+            </li>
+            <li>
+                <a href="${base}/life/index.jhtml" target="_blank">生活</a>
+            </li>
+            <li>
+                <a href="${base}/edu/index.jhtml" target="_self">教育</a>
+            </li>
+            <li>
+                <a href="${base}/wh/index.jhtml" target="_self">文化</a>
+            </li>
+        </ul>
+      </div>
+    </div>
+    <!-- nav end -->
+
+    <!-- 内容部分 strat -->
+    <div class="home-content">
+      <div class="home-content-center">
+        <!-- 头条 strat -->
+        <div class="hotnews">
+          <div class="hotnews-txt">
+            [@cms_content_list count='1' orderBy='4' titLen='30' typeId="4" channelOption='1']
+             [#list tag_list as a]
+                <h3><a href="${a.url}" target="_blank">[@text_cut s=a.title len=titLen /]</a></h3>
+                <p><a href="${a.url}" target="_blank">[#if a.desc??][@text_cut s=a.desc! len='80' append='...'/][#else][@text_cut s=a.txt! len='80' append='...'/][/#if]</a></p>
+             [/#list]
+            [/@cms_content_list]
+          </div>
+        </div>
+        <!-- 头条 end -->
+
+        <div class="small-left">
+          <!-- 焦点 strat -->
+          <div class="newcell">
+            <div class="newcell-hd">
+              <h3>焦点</h3>
+            </div>
+            <div class="newcell-bd">
+              <ul class="news-list">
+                   [@cms_content_list count='7' orderBy='4' titLen='22' typeId="3" channelOption='1']
+                   [#list tag_list as a] 
+                        <li>
+                          <a href="${a.url}">[@text_cut s=a.title len=titLen /]</a>
+                          <span class="date">${a.date?string('yyyy-MM-dd')}</span>
+                        </li>
+                  [/#list]
+                  [/@cms_content_list]    
+              </ul>
+            </div>
+          </div>
+          <!-- 焦点 end -->
+
+          <!-- 县市区 strat -->
+          <div class="newcell">
+            <div class="newcell-hd">
+              <h3>县市区</h3>
+            </div>
+            <div class="newcell-bd">
+              <ul class="news-list">
+                [@cms_channel_list parentId='74']
+                  [#assign num = 0]
+                  [#list tag_list as ch]
+                   [@cms_content_list count='6' orderBy='4' titLen='22' channelOption='1' channelId=ch.id]
+                   [#assign num = num+tag_list?size]
+                   [#if num lt 7]
+                       [#list tag_list as ct]
+                        <li>
+                          <a href="${ct.url}" target="_blank">[@text_cut s=ct.title len=titLen /]</a>
+                          <span class="date">${ct.date?string('yyyy-MM-dd')}</span>
+                        </li>
+                       [/#list]
+                   [/#if]
+                   [/@cms_content_list]    
+                  [/#list]
+                  [/@cms_channel_list]
+              </ul>
+            </div>
+          </div>
+          <!-- 县市区 end -->
+
+          <!-- 社会 strat -->
+          <div class="newcell">
+            <div class="newcell-hd">
+              <h3>社会</h3>
+            </div>
+            <div class="newcell-bd">
+              <ul class="news-list">
+                [@cms_channel_list parentId='82']
+                  [#assign num = 0]
+                  [#list tag_list as ch]
+                   [@cms_content_list count='6' orderBy='4' titLen='22' channelOption='1' channelId=ch.id]
+                   [#assign num = num+tag_list?size]
+                   [#if num lt 7]
+                       [#list tag_list as ct]
+                        <li>
+                          <a href="${ct.url}" target="_blank">[@text_cut s=ct.title len=titLen /]</a>
+                          <span class="date">${ct.date?string('yyyy-MM-dd')}</span>
+                        </li>
+                       [/#list]
+                   [/#if]
+                   [/@cms_content_list]    
+                  [/#list]
+                  [/@cms_channel_list]
+              </ul>
+            </div>
+          </div>
+          <!-- 社会 end -->
+
+          <!-- 活动 strat -->
+          <div class="newcell">
+            <div class="newcell-hd">
+              <h3>活动</h3>
+            </div>
+            <div class="newcell-bd">
+              <ul class="news-list">
+                [@cms_content_list count='5' orderBy='4' channelOption='1' channelId=86]
+                [#list tag_list as active]
+                <li>
+                  <a href="${active.url}">${active.title!}</a>
+                  <span class="date">${active.date?string('yyyy-MM-dd')}</span>
+                </li>
+                [/#list]
+                [/@cms_content_list]
+              </ul>
+            </div>
+          </div>
+          <!-- 活动 end -->
+        </div>
+
+        <div class="big-right">
+          <!-- banner strat -->
+          <div id="slide" class="newbanner slideBox">
+            <ul class="items">
+                [@cms_content_list count='5' orderBy='4' titLen='20' typeId="2,3,4" recommend="1" channelOption="1" channelId='75,76,77,78,79,80,81,11,12,83,86']
+                [#list tag_list as tw]
+              <li><a href="${tw.url}" target="_blank" title="[@text_cut s=tw.title len=titLen /]"><img src="${tw.titleImg!tw.typeImg!}"></a></li>
+                [/#list] 
+                [/@cms_content_list]
+            </ul>
+          </div>
+
+          <!-- banner end -->
+
+          <!-- 专题 strat -->
+          <div class="newcell">
+            <div class="newcell-hd">
+              <h3>专题</h3>
+            </div>
+            <div class="newcell-bd">
+              <ul class="topic-list">
+                [@cms_topic_list count='3' descLen='50' append='...']
+                  [#list tag_list as topic]
+                    <li><a href="${base}/topic/${topic.id}.jspx" target="_blank"><img src="${topic.titleImg!site.defImg}"></a></li>
+                [/#list]
+                [/@cms_topic_list]
+              </ul>
+            </div>
+          </div>
+          <!-- 专题 end -->
+
+          <!-- 爆料 strat -->
+          <div class="newcell mar-l40">
+            <div class="newcell-hd">
+              <h3>爆料</h3>
+            </div>
+            <div class="newcell-bd" style="height:320px; overflow:hidden">
+              <ul class="news-list pad-t8">
+               [@cms_baoliao_list siteId=site.id count='9' titLen='18' checked='0' recommend='0']
+               [#list tag_list as m]
+                        <li>
+                          <a href="${base}/baoliao/${m.id}.jspx">[@text_cut s=m.title len=20 /]</a>
+                          <span class="date">${m.createTime?string('yyyy-MM-dd')}</span>
+                        </li>
+                    [/#list]  
+                    [/@cms_baoliao_list]
+              </ul>
+            </div>
+          </div>
+          <!-- 爆料 end -->
+
+          <!-- 视频 strat -->
+          <div class="newcell">
+            <div class="newcell-hd">
+              <h3>视频</h3>
+            </div>
+            <div class="newcell-bd" style="height:247px; overflow:hidden;">
+              <div class="newtab-box">
+                <ul class="tab-list">
+                      [@cms_channel_list parentId='46']
+                      [#list tag_list as v]
+                      [#if v_index = 0]
+                      <li id="menub${v_index+1}" onmouseover="setTab('menub',${v_index+1},${tag_list?size})" class="active">${v.name}</li>
+                      [#else]
+                      <li id="menub${v_index+1}" onmouseover="setTab('menub',${v_index+1},${tag_list?size})">${v.name}</li>
+                      [/#if] 
+                     [/#list] 
+                     [/@cms_channel_list]
+                </ul>
+                <div class="tab-content home-video usually-tabcontent">
+                [@cms_channel_list parentId='46']
+                          [#list tag_list as vedio]
+                          [#if vedio_index+1 = 1]
+                            <div id="con_menub_1" class="tab-cell">
+                               [@cms_content_list count='2' orderBy='4' titLen='9' channelOption='1' channelId=vedio.id]
+                                    <ul class="home-video-list">
+                                   [#list tag_list as sp]
+                                      <li>
+                                        <a target="_blank" href="${sp.url}">
+                                           <img src="${sp.titleImg!sp.typeImg!site.defImg}">
+                                           <span>[@text_cut s=sp.title! len=titLen /]</span>
+                                        </a>
+                                      </li>
+                                   [/#list]
+                                    </ul>
+                               [/@cms_content_list] 
+                               [@cms_content_list count='6' orderBy='4' titLen='9' channelOption='1' channelId=vedio.id]
+                                    <ul class="news-list nopad-t">
+                                   [#list tag_list as sp]
+                                    [#if sp_index lt 2]
+                                    [#else]
+                                      <li>
+                                        <a href="${sp.url}">[@text_cut s=sp.title! len=titLen /]</a>
+                                        <span class="date">${sp.date?string('yyyy-MM-dd')}</span>
+                                      </li>
+                                    [/#if]
+                                   [/#list]
+                                    </ul>
+                               [/@cms_content_list] 
+                          </div>
+                          [#else]
+                          <div id="con_menub_${vedio_index+1}" class="tab-cell" style="display:none">
+                               [@cms_content_list count='2' orderBy='4' titLen='9' channelOption='1' channelId=vedio.id]
+                                    <ul class="home-video-list">
+                                   [#list tag_list as sp]
+                                      <li>
+                                        <a target="_blank" href="${sp.url}">
+                                           <img src="${sp.titleImg!sp.typeImg!site.defImg}">
+                                           <span>[@text_cut s=sp.title! len=titLen /]</span>
+                                        </a>
+                                      </li>
+                                   [/#list]
+                                    </ul>
+                               [/@cms_content_list] 
+                               [@cms_content_list count='6' orderBy='4' titLen='9' channelOption='1' channelId=vedio.id]
+                                    <ul class="news-list nopad-t">
+                                   [#list tag_list as sp]
+                                    [#if sp_index lt 2]
+                                    [#else]
+                                      <li>
+                                        <a href="${sp.url}">[@text_cut s=sp.title! len=titLen /]</a>
+                                        <span class="date">${sp.date?string('yyyy-MM-dd')}</span>
+                                      </li>
+                                    [/#if]
+                                   [/#list]
+                                    </ul>
+                               [/@cms_content_list] 
+                          </div>
+                          [/#if] 
+                          [/#list]
+                          [/@cms_channel_list]
+                    
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- 视频 end -->
+            
+            <!-- 电子报 strat -->
+          <div class="newcell mar-l40">
+            <div class="newcell-hd">
+              <h3>电子报</h3>
+            </div>
+            <div class="newcell-bd">
+              <div class="newtab-box">
+                <div class="tab-content home-epaper">
+                  <div id="con_menua_1" class="tab-cell">
+                    <a href="http://www.hsdcw.com/daymap/"><img src="/${res}/images/newspaper02.jpg"></a>
+                  </div>
+                  <div id="con_menua_2" class="tab-cell" style="display: none;">
+                    <a href="http://www.hsdcw.com/daymap/" target="_blank"><img src="/${res}/images/newspaper01.jpg"></a>
+                  </div>
+                  <div id="con_menua_3" class="tab-cell" style="display: none;">
+                    <a href="http://www.hsdcw.com/daymap/" target="_blank"><img src="/${res}/images/newspaper03.jpg"></a>
+                  </div>
+                  <div id="con_menua_4" class="tab-cell" style="display: none;">
+                    <a href="http://www.hsdcw.com/daymap/" target="_blank"><img src="/${res}/images/newspaper04.jpg"></a>
+                  </div>
+                </div>
+                <ul class="epapertab-list">
+                   <li id="menua1" onmouseover="setTab('menua',1,4)" class="active">黄石日报</li>
+                   <li id="menua2" onmouseover="setTab('menua',2,4)">东楚晚报</li>
+                   <li id="menua3" onmouseover="setTab('menua',3,4)">今日大冶</li>
+                   <li id="menua4" onmouseover="setTab('menua',4,4)">今日阳新</li>
+                </ul>
+              </div>
+              
+            </div>
+          </div>
+          <!-- 电子报 end -->
+          </div>
+          
+          <!-- 黄石宣传语 start-->
+        <div class="yellow">
+          <ul>
+        [@cms_advertising_list spaceId ='1']
+        [#if tag_list?size gt 0]
+         [#list tag_list as ad]
+         [#if ad_index lt 3]
+            <li><a href="${ad.attr.image_link!}" target="_blank"><img src="${(ad.attr.image_url)!?html}"></a></li>
+        [/#if]
+        [/#list]  
+        [#else]
+        [/#if]
+        [/@cms_advertising_list]
+          </ul>
+        </div>
+        <!-- 黄石宣传语 end-->
+  
+        <div class="big-left">
+          <!-- 论坛 strat -->
+          <div class="newcell">
+            <div class="newcell-hd">
+              <h3>论坛</h3>
+            </div>
+            <div class="newcell-bd" style="height:380px; overflow:hidden">
+              <span class="unite"><img src="/${res}/images/index/bbs.jpg"></span>
+              <ul class="news-list">
+                    [#if bbsTopics??]
+                    [#list bbsTopics as topic]
+                    [#if topic_index lt 5]
+                    <li><a href="${topic.url!}">[@text_cut s=topic.title! len=20 append="..." /]</a>
+                    <span class="date">2017-08-18</span></li>
+                    [/#if]
+                    [/#list]
+                    [/#if]
+              </ul>
+            </div>
+          </div>
+          <!-- 论坛 end -->
+
+          <!-- 文化 strat -->
+          <div class="newcell mar-l40">
+            <div class="newcell-hd">
+              <h3>文化</h3>
+            </div>
+            <div class="newcell-bd" style="height:380px; overflow:hidden">
+              <span class="unite"><img src="/${res}/images/index/culture.jpg"></span>
+              <ul class="news-list">
+                [@cms_content_list typeId="1,3,4" count='5' titLen='20' channelOption='1' channelId='90' orderBy='4']
+                [#list tag_list as w1]
+                    <li>
+                      <a href="${w1.url}">[@text_cut s=w1.title! len=titLen/]</a>
+                      <span class="date">${w1.date?string('yyyy-MM-dd')}</span>
+                    </li>
+                [/#list]  
+                [/@cms_content_list]
+              </ul>
+            </div>
+          </div>
+          <!-- 文化 end -->
+
+          <!-- 生活 strat -->
+          <div class="newcell">
+            <div class="newcell-hd">
+              <h3>生活</h3>
+            </div>
+            <div class="newcell-bd" style="height:380px; overflow:hidden">
+              <span class="unite"><img src="/${res}/images/index/life.jpg"></span>
+              <ul class="news-list">
+              [@cms_content_list typeId="1,3,4" count='5' titLen='20' channelOption='1' channelId='85' orderBy='4']
+                [#list tag_list as s1]
+                    <li>
+                      <a href="${s1.url}">[@text_cut s=s1.title! len=titLen/]</a>
+                      <span class="date">${s1.date?string('yyyy-MM-dd')}</span>
+                    </li>
+                [/#list]  
+              [/@cms_content_list]   
+              </ul>
+            </div>
+          </div>
+          <!-- 生活 end -->
+
+          <!-- 教育 strat -->
+          <div class="newcell mar-l40">
+            <div class="newcell-hd">
+              <h3>教育</h3>
+            </div>
+            <div class="newcell-bd" style="height:380px; overflow:hidden">
+              <span class="unite"><img src="/${res}/images/index/education.jpg"></span>
+              <ul class="news-list">
+              [@cms_content_list typeId="1" count='5' titLen='20' channelOption='1' channelId='87' orderBy='4']
+                [#list tag_list as e1]
+                    <li>
+                      <a href="${e1.url}">[@text_cut s=e1.title! len=titLen/]</a>
+                      <span class="date">${e1.date?string('yyyy-MM-dd')}</span>
+                    </li>
+                [/#list]  
+              [/@cms_content_list] 
+              </ul>
+            </div>
+          </div>
+          <!-- 教育 end -->
+
+          <!-- 房产 strat -->
+          <div class="newcell">
+            <div class="newcell-hd">
+              <h3>房产</h3>
+            </div>
+            <div class="newcell-bd" style="height:380px; overflow:hidden">
+              <span class="unite"><img src="/${res}/images/index/house.jpg"></span>
+              <ul class="news-list">
+               [@cms_content_list typeId="1" count='5' titLen='20' channelOption='1' channelId='84' orderBy='4']
+               [#list tag_list as h1]
+                    <li>
+                      <a href="${h1.url}">[@text_cut s=h1.title! len=titLen/]</a>
+                      <span class="date">${h1.date?string('yyyy-MM-dd')}</span>
+                    </li>
+                [/#list]  
+               [/@cms_content_list]
+              </ul>
+            </div>
+          </div>
+          <!-- 房产 end -->
+
+          <!-- 天天信息 strat -->
+          <div class="newcell mar-l40">
+            <div class="newcell-hd">
+              <h3>天天信息</h3>
+            </div>
+            <div class="newcell-bd" style="height:380px; overflow:hidden">
+              <span class="unite"><img src="/${res}/images/index/everyday.jpg"></span>
+              <ul class="news-list">
+               [@cms_content_list count='5' orderBy='4' titLen='18' channelOption='1' channelId='146']
+                [#list tag_list as tt]
+                    <li>
+                      <a href="${tt.url}">[@text_cut s=tt.title! len=titLen/]</a>
+                      <span class="date">${tt.date?string('yyyy-MM-dd')}</span>
+                    </li>
+                [/#list]  
+               [/@cms_content_list] 
+              </ul>
+            </div>
+          </div>
+          <!-- 天天信息 end -->
+        </div>
+
+        <div class="small-right">
+          <!-- 二维码 strat -->
+          <div class="code-box">
+            <ul>
+              <li>
+                <img src="/${res}/images/index/code01.jpg">
+                <p>东楚网微博</p>
+              </li>
+              <li>
+                <img src="/${res}/images/index/code01.jpg">
+                <p>黄石发布微博</p>
+              </li>
+              <li>
+                <img src="/${res}/images/index/code01.jpg">
+                <p>我的黄石微信</p>
+              </li>
+              <li>
+                <img src="/${res}/images/index/code01.jpg">
+                <p>黄石发布微信</p>
+              </li>
+            </ul>
+          </div>
+          <!-- 二维码 end -->
+
+          <!-- 公告 strat -->
+          <div class="newcell">
+            <div class="newcell-hd">
+              <h3>公告</h3>
+            </div>
+            <div class="newcell-bd" style="height:242px; overflow:hidden">
+              <ul class="news-list">
+               [@cms_content_list count='7' orderBy='4' titLen='20' channelOption='1' channelId='13']
+                [#list tag_list as gs]
+                    <li>
+                      <a href="${gs.url}">[@text_cut s=gs.title! len=titLen/]</a>
+                      <span class="date">${gs.date?string('yyyy-MM-dd')}</span>
+                    </li>
+                [/#list]  
+               [/@cms_content_list] 
+              </ul>
+            </div>
+          </div>
+          <!-- 公告 end -->
+
+          <!-- 便民信息 strat -->
+          <div class="newcell">
+            <div class="newcell-hd">
+              <h3>便民信息</h3>
+            </div>
+            <div class="newcell-bd people-box">
+              <ul class="people-list">
+                <li>
+                  <a href="http://huangshi.tianqi.com/" target="_blank">
+                    <img src="/${res}/images/index/people01.jpg">
+                    <p>黄石天气</p>
+                  </a>
+                </li>
+                <li>
+                  <a href="http://www.hscsgj.com/xl.asp" target="_blank">
+                    <img src="/${res}/images/index/people02.jpg">
+                    <p>公交路线</p>
+                  </a>
+                </li>
+                <li>
+                  <a href="http://www.huangshi.gov.cn/smpd/bmtz/" target="_blank">
+                    <img src="/${res}/images/index/people03.jpg">
+                    <p>便民信息</p>
+                  </a>
+                </li>
+                <li>
+                  <a href="http://wsfw.hs12333.gov.cn/login.jsp" target="_blank">
+                    <img src="/${res}/images/index/people04.jpg">
+                    <p>社保查询</p>
+                  </a>
+                </li>
+                <li>
+                  <a href="http://www.hsgjj.com/searchPersonLogon.do" target="_blank">
+                    <img src="/${res}/images/index/people05.jpg">
+                    <p>公积金</p>
+                  </a>
+                </li>
+                <li>
+                  <a href="http://www.hbsjg.gov.cn/hubeijiaoguan_lukuangxinxi" target="_blank">
+                    <img src="/${res}/images/index/people06.jpg">
+                    <p>全省路况</p>
+                  </a>
+                </li>
+                <li>
+                  <a href="http://www.hbsjg.gov.cn/hubeijiaoguan_weizhangxinxichaxun" target="_blank">
+                    <img src="/${res}/images/index/people07.jpg">
+                    <p>交通违章</p>
+                  </a>
+                </li>
+                <li>
+                  <a target="_blank">
+                    <img src="/${res}/images/index/people08.jpg">
+                    <p>展示更多</p>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- 便民信息 end -->
+
+          <!-- 网刊 strat -->
+          <div class="newcell">
+            <div class="newcell-hd">
+              <h3>网刊</h3>
+            </div>
+            <div class="newcell-bd network-box">
+              <ul class="network-list">
+                <li>
+                  <a href="http://www.hsdcw.com/wk/" target="_blank">
+                    <img src="/${res}/images/index/network01.jpg">
+                  </a>
+                </li>
+                <li>
+                  <a href="http://www.hsdcw.com/wk/" target="_blank">
+                    <img src="/${res}/images/index/network02.jpg">
+                  </a>
+                </li>
+                <li>
+                  <a href="http://www.hsdcw.com/wk/" target="_blank">
+                    <img src="/${res}/images/online_01.jpg">
+                  </a>
+                </li>
+                <li>
+                  <a href="http://www.hsdcw.com/wk/" target="_blank">
+                    <img src="/${res}/images/online_02.jpg">
+                  </a>
+                </li>
+                <li>
+                  <a href="http://www.hsdcw.com/wk/" target="_blank">
+                    <img src="/${res}/images/online_03.jpg">
+                  </a>
+                </li>
+                <li>
+                  <a href="http://www.hsdcw.com/wk/" target="_blank">
+                    <img src="/${res}/images/online_04.jpg">
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <!-- 网刊 end -->
+        </div>
+
+        <!-- 图轻松 strat -->
+        <div class="newcell picture-box">
+          <div class="newcell-hd">
+            <h3>图轻松</h3>
+          </div>
+          <div class="newcell-bd">
+             [@cms_content_list count='10' titLen='18' channelOption='1' channelId='42' orderBy='4']
+                   [#list tag_list as p]
+                   [#if (p_index+1) == 1]
+                        <div class="picture picture-big nomar-l">
+                          <a href="${p.url}" target="_blank">
+                            <img src="${p.titleImg!p.typeImg!site.defImg}">
+                            <span>[@text_cut s=p.stit len=titLen append='...'/]</span>
+                          </a>
+                        </div>
+                   [/#if]
+                   
+                   [#if (p_index+1) gt 1 &&(p_index+1) lt 6]
+                        <div class="picture">
+                          <a href="${p.url}" target="_blank">
+                            <img src="${p.titleImg!p.typeImg!site.defImg}">
+                            <span>[@text_cut s=p.stit len=titLen append='...'/]</span>
+                          </a>
+                        </div>
+                   [/#if]
+                   
+                   [#if (p_index+1) == 6]
+                        <div class="picture nomar-l">
+                          <a href="${p.url}" target="_blank">
+                            <img src="${p.titleImg!p.typeImg!site.defImg}">
+                            <span>[@text_cut s=p.stit len=titLen append='...'/]</span>
+                          </a>
+                        </div>
+                   [/#if]
+                   
+                   [#if (p_index+1) == 7]
+                        <div class="picture">
+                          <a href="${p.url}" target="_blank">
+                            <img src="${p.titleImg!p.typeImg!site.defImg}">
+                            <span>[@text_cut s=p.stit len=titLen append='...'/]</span>
+                          </a>
+                        </div>
+                   [/#if]
+                   
+                   [#if (p_index+1) == 8]
+                        <div class="picture picture-big">
+                          <a href="${p.url}" target="_blank">
+                            <img src="${p.titleImg!p.typeImg!site.defImg}">
+                            <span>[@text_cut s=p.stit len=titLen append='...'/]</span>
+                          </a>
+                        </div>
+                   [/#if]
+                   
+                   [#if (p_index+1) gt 8]
+                        <div class="picture">
+                          <a href="${p.url}" target="_blank">
+                            <img src="${p.titleImg!p.typeImg!site.defImg}">
+                            <span>[@text_cut s=p.stit len=titLen append='...'/]</span>
+                          </a>
+                        </div>
+                   [/#if]
+              [/#list]
+              [/@cms_content_list]
+          </div>
+        </div>
+        <!-- 图轻松 end -->
+
+        <!-- 友情链接 strat -->
+        <div class="link-box">
+          <div class="newtab-box linktab-box">
+            <ul class="tab-list">
+              <li class="active">本地链接</li>
+              <li>友情链接</li>
+              <li>地市网盟</li>
+              <li>其他链接</li>
+            </ul>
+            <div class="tab-content usually-tabcontent">
+              <div class="tab-cell">
+                <ul class="link-list">
+                 [@cms_friendlink_list ctgId="1"]
+                  [#if tag_list?size gt 0]
+                  [#list tag_list as link]
+                  <li><a href="${link.domain}" onclick="$.get('${base}/friendlink_view.jspx?id=${link.id}')" target="_blank">${link.name}</a></li>
+                  [/#list]
+                  [#else]<li>&nbsp;</li>
+                  [/#if]
+                 [/@cms_friendlink_list]
+                </ul>
+              </div> 
+              <div class="tab-cell" style="display: none;">
+                <ul class="link-list">
+                  [@cms_friendlink_list ctgId="2"]
+                   [#if tag_list?size gt 0]
+                   [#list tag_list as link]
+                   <li><a href="${link.domain}" onclick="$.get('${base}/friendlink_view.jspx?id=${link.id}')" target="_blank">${link.name}</a></li>
+                   [/#list]
+                   [#else]<li>&nbsp;</li>
+                   [/#if]
+                   [/@cms_friendlink_list]
+                </ul>
+              </div> 
+              <div class="tab-cell" style="display: none;">
+                <ul class="link-list">
+                 [@cms_friendlink_list ctgId="3"]
+                 [#if tag_list?size gt 0]
+                  [#list tag_list as link]
+                  <li><a href="${link.domain}" onclick="$.get('${base}/friendlink_view.jspx?id=${link.id}')" target="_blank">${link.name}</a></li>
+                  [/#list]
+                 [#else]<li>&nbsp;</li>
+                  [/#if]
+                  [/@cms_friendlink_list]
+                </ul>
+              </div>    
+              <div class="tab-cell" style="display: none;">
+                <ul class="link-list">
+                  [@cms_friendlink_list ctgId="4"]
+                  [#if tag_list?size gt 0]
+                  [#list tag_list as link]
+                  <li><a href="${link.domain}" onclick="$.get('${base}/friendlink_view.jspx?id=${link.id}')" target="_blank">${link.name}</a></li>
+                   [/#list]
+                  [#else]<li>&nbsp;</li>
+                  [/#if]
+                  [/@cms_friendlink_list]
+                </ul>
+              </div>                  
+            </div>
+          </div>
+        </div>
+        <!-- 友情链接 end -->
+        
+      </div>
+    </div>
+    <!-- 内容部分 end -->
+
+    <!-- footer strat -->
+    <div class="footer">
+      <div class="footer-center">
+        Copyright ◎ 2006-2016 黄石市东楚传媒网络科技有限公司 All Rights Reserved<br>
+        营业执照 － 组织机构代码证 － 增值电信业务经营许可证 
+      </div>
+    </div>    
+    <!-- footer end -->
+    <script type="text/javascript">
+    // top显示当前年月日
+    function today(){
+      var str='';
+      var d=new Date();
+      str+=d.getFullYear()+'年';
+      str+=(d.getMonth()+1)+'月';
+      str+=d.getDate()+'日';
+      return str;
+    }
+    $("#date").append(today());
+
+    // banner轮播滚动
+    $('#slide').slideBox({
+      duration : 0.3,//滚动持续时间，单位：秒
+      easing : 'linear',//swing,linear//滚动特效
+      delay : 3,//滚动延迟时间，单位：秒
+      hideClickBar : false,//不自动隐藏点选按键
+      clickBarRadius : 10
+    });
+
+
+    // 视频tab
+    var $tabli=$(".tab-list li");
+    $tabli.mouseover(function(){
+        $(this).addClass("active").siblings().removeClass("active");
+        var index = $(".tab-list li").index(this);
+        $(".usually-tabcontent .tab-cell").eq(index).show().siblings().hide();
+    })
+
+    // 电子报tab
+    var $epapertabli=$(".epapertab-list li");
+    $epapertabli.mouseover(function(){
+        $(this).addClass("active").siblings().removeClass("active");
+        var index = $(".epapertab-list li").index(this);
+        $(".home-epaper .tab-cell").eq(index).show().siblings().hide();
+    })
+
+    // nav
+    $(".nav-list li.active a").parent().next().find('a').css({'background':'url(../images/myicon.png) no-repeat 0 -250px'});
+
+  </script>
+  </body>
+</html>
+

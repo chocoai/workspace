@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>孝康通</title>
+<!-- Bootstrap -->
+<link th:href="@{/pages/mall/css/bootstrap.min.css}" rel="stylesheet">
+<!-- FontAwesome 4.7.0字体 -->
+<link th:href="@{/pages/mall/css/font-awesome.min.css}" rel="stylesheet">
+<!-- 自定义css -->
+<link th:href="@{/pages/mall/css/mymall.css}" rel="stylesheet">
+</head>
+<body>
+	<input th:if="${url} !=null" id="url" type="hidden" th:value="${url}" />
+	<!-- 导航 开始 -->
+	<nav class="navbar navbar-default navbar-mall-other">
+		<div class="container-fluid">
+			<div class="navbar-header">登录</div>
+		</div>
+	</nav>
+	<!-- 导航 结束 -->
+
+	<!-- 登录内容 开始 -->
+	<div class="twopage-content">
+		<div class="hereislogo">
+			<a th:href="@{/h5}" ><img th:src="@{/pages/mall/images/logo.png}">孝康通</a>
+		</div>
+		<form class="form-twopage" >
+		<div class="form-group">
+			<input type="text" id="usercode"
+				class="form-control input-twopage-gray" placeholder="手机号"
+				maxlength="11" onblur="checkUsercode()" onkeyup="this.value=this.value.replace(/\D/g, '')">
+		</div>
+		<div class="form-group">
+			<input type="password" id="password"
+				class="form-control input-twopage-gray" placeholder="密码" maxlength="20">
+		</div>
+		<p style="margin-bottom: 15px; color:#ff5c5c; font-size: 11px;display:none" id="errorDiv">
+        	<i class="fa fa-exclamation-circle" id="error"></i>
+        </p>
+		<button class="btn btn-mygreen" type="button" id="fmLogin">登录</button>
+		<a th:href="@{/h5/register}" type="button" class="btn btn-mygreenline">注册</a>
+		</form>
+	</div>
+	<!-- 登录内容 结束 -->
+
+	<script th:src="@{/pages/mall/js/jquery-1.9.1.min.js}"></script>
+	<script th:src="@{/pages/mall/js/bootstrap.min.js}"></script>
+	<script type="text/javascript">
+	var pathName=window.document.location.pathname;
+    var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
+		$("#fmLogin").click(function() {
+			var usercode = $.trim($("#usercode").val());
+			var password = $.trim($("#password").val());
+			var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
+			if (usercode == null || usercode == "") {
+				$("#errorDiv").show();
+				$("#error").text("请输入手机号");
+				return false;
+			} else if (usercode!=null && !myreg.test(usercode)) {
+				$("#errorDiv").show();
+				$("#error").text("请输入正确的手机号");
+				return false;
+			} else if (password == null || password == "") {
+				$("#errorDiv").show();
+				$("#error").text("请输入密码");
+				return false;
+			}
+			$.ajax({
+				url : projectName+"/h5/getLogin",
+				data : {
+					usercode : usercode,
+					password : password
+				},
+				dataType : "json",
+				success : function(result) {
+					if(result.status==0){
+						$("#errorDiv").show();
+						$("#error").text(result.error);
+					}else{
+						var url=$("#url").val();
+						if(url!=null && url!=""){
+							window.location.href=url;
+						}else{
+							window.location.href=projectName+"/h5/mycenter";
+						}
+					}
+				}
+			})
+		})
+		
+		function checkUsercode(){
+			var usercode = $.trim($("#usercode").val());
+			var myreg = /^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1})|(17[0-9]{1}))+\d{8})$/;
+			if (usercode == null || usercode == "") {
+				$("#errorDiv").show();
+				$("#error").text("手机号不能为空");
+				return false;
+			} else if (usercode!=null && !myreg.test(usercode)) {
+				$("#errorDiv").show();
+				$("#error").text("请输入正确的手机号!");
+				return false;
+			}else{
+				$("#error").text("");
+				$("#errorDiv").hide();
+			}
+		}
+	</script>
+</body>
+</html>

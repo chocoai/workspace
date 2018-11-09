@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.healthcloud.health.mapper.MerBloodPressureMapper">
+  <resultMap id="BaseResultMap" type="com.yhcrt.healthcloud.health.entity.MerBloodPressure">
+    <id column="cid" jdbcType="INTEGER" property="cid" />
+    <result column="mer_id" jdbcType="INTEGER" property="merId" />
+    <result column="data_date" jdbcType="DATE" property="dataDate" />
+    <result column="upload_time" jdbcType="VARCHAR" property="uploadTime" />
+    <result column="dbp" jdbcType="INTEGER" property="dbp" />
+    <result column="sbp" jdbcType="INTEGER" property="sbp" />
+    <result column="sphygmus" jdbcType="INTEGER" property="sphygmus" />
+    <result column="conclusion" jdbcType="VARCHAR" property="conclusion" />
+    <result column="advice" jdbcType="VARCHAR" property="advice" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    cid, mer_id, data_date, upload_time, dbp, sbp, sphygmus, conclusion, advice
+  </sql>
+  <select id="selectByExample" parameterType="com.yhcrt.healthcloud.health.entity.MerBloodPressureExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mer_blood_pressure
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mer_blood_pressure
+    where cid = #{cid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from mer_blood_pressure
+    where cid = #{cid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yhcrt.healthcloud.health.entity.MerBloodPressureExample">
+    delete from mer_blood_pressure
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yhcrt.healthcloud.health.entity.MerBloodPressure">
+    insert into mer_blood_pressure (cid, mer_id, data_date, 
+      upload_time, dbp, sbp, 
+      sphygmus, conclusion, advice
+      )
+    values (#{cid,jdbcType=INTEGER}, #{merId,jdbcType=INTEGER}, #{dataDate,jdbcType=DATE}, 
+      #{uploadTime,jdbcType=VARCHAR}, #{dbp,jdbcType=INTEGER}, #{sbp,jdbcType=INTEGER}, 
+      #{sphygmus,jdbcType=INTEGER}, #{conclusion,jdbcType=VARCHAR}, #{advice,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yhcrt.healthcloud.health.entity.MerBloodPressure">
+    insert into mer_blood_pressure
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="merId != null">
+        mer_id,
+      </if>
+      <if test="dataDate != null">
+        data_date,
+      </if>
+      <if test="uploadTime != null">
+        upload_time,
+      </if>
+      <if test="dbp != null">
+        dbp,
+      </if>
+      <if test="sbp != null">
+        sbp,
+      </if>
+      <if test="sphygmus != null">
+        sphygmus,
+      </if>
+      <if test="conclusion != null">
+        conclusion,
+      </if>
+      <if test="advice != null">
+        advice,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="merId != null">
+        #{merId,jdbcType=INTEGER},
+      </if>
+      <if test="dataDate != null">
+        #{dataDate,jdbcType=DATE},
+      </if>
+      <if test="uploadTime != null">
+        #{uploadTime,jdbcType=VARCHAR},
+      </if>
+      <if test="dbp != null">
+        #{dbp,jdbcType=INTEGER},
+      </if>
+      <if test="sbp != null">
+        #{sbp,jdbcType=INTEGER},
+      </if>
+      <if test="sphygmus != null">
+        #{sphygmus,jdbcType=INTEGER},
+      </if>
+      <if test="conclusion != null">
+        #{conclusion,jdbcType=VARCHAR},
+      </if>
+      <if test="advice != null">
+        #{advice,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yhcrt.healthcloud.health.entity.MerBloodPressureExample" resultType="java.lang.Long">
+    select count(*) from mer_blood_pressure
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update mer_blood_pressure
+    <set>
+      <if test="record.cid != null">
+        cid = #{record.cid,jdbcType=INTEGER},
+      </if>
+      <if test="record.merId != null">
+        mer_id = #{record.merId,jdbcType=INTEGER},
+      </if>
+      <if test="record.dataDate != null">
+        data_date = #{record.dataDate,jdbcType=DATE},
+      </if>
+      <if test="record.uploadTime != null">
+        upload_time = #{record.uploadTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dbp != null">
+        dbp = #{record.dbp,jdbcType=INTEGER},
+      </if>
+      <if test="record.sbp != null">
+        sbp = #{record.sbp,jdbcType=INTEGER},
+      </if>
+      <if test="record.sphygmus != null">
+        sphygmus = #{record.sphygmus,jdbcType=INTEGER},
+      </if>
+      <if test="record.conclusion != null">
+        conclusion = #{record.conclusion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.advice != null">
+        advice = #{record.advice,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update mer_blood_pressure
+    set cid = #{record.cid,jdbcType=INTEGER},
+      mer_id = #{record.merId,jdbcType=INTEGER},
+      data_date = #{record.dataDate,jdbcType=DATE},
+      upload_time = #{record.uploadTime,jdbcType=VARCHAR},
+      dbp = #{record.dbp,jdbcType=INTEGER},
+      sbp = #{record.sbp,jdbcType=INTEGER},
+      sphygmus = #{record.sphygmus,jdbcType=INTEGER},
+      conclusion = #{record.conclusion,jdbcType=VARCHAR},
+      advice = #{record.advice,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.healthcloud.health.entity.MerBloodPressure">
+    update mer_blood_pressure
+    <set>
+      <if test="merId != null">
+        mer_id = #{merId,jdbcType=INTEGER},
+      </if>
+      <if test="dataDate != null">
+        data_date = #{dataDate,jdbcType=DATE},
+      </if>
+      <if test="uploadTime != null">
+        upload_time = #{uploadTime,jdbcType=VARCHAR},
+      </if>
+      <if test="dbp != null">
+        dbp = #{dbp,jdbcType=INTEGER},
+      </if>
+      <if test="sbp != null">
+        sbp = #{sbp,jdbcType=INTEGER},
+      </if>
+      <if test="sphygmus != null">
+        sphygmus = #{sphygmus,jdbcType=INTEGER},
+      </if>
+      <if test="conclusion != null">
+        conclusion = #{conclusion,jdbcType=VARCHAR},
+      </if>
+      <if test="advice != null">
+        advice = #{advice,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yhcrt.healthcloud.health.entity.MerBloodPressure">
+    update mer_blood_pressure
+    set mer_id = #{merId,jdbcType=INTEGER},
+      data_date = #{dataDate,jdbcType=DATE},
+      upload_time = #{uploadTime,jdbcType=VARCHAR},
+      dbp = #{dbp,jdbcType=INTEGER},
+      sbp = #{sbp,jdbcType=INTEGER},
+      sphygmus = #{sphygmus,jdbcType=INTEGER},
+      conclusion = #{conclusion,jdbcType=VARCHAR},
+      advice = #{advice,jdbcType=VARCHAR}
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <select id="selectBymerId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mer_blood_pressure
+    where mer_id = #{merId,jdbcType=INTEGER}
+  </select>
+</mapper>

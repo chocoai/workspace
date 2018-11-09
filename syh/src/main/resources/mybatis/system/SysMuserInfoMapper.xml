@@ -1,0 +1,304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SysMuserInfoMapper">
+	<resultMap id="BaseResultMap" type="com.yhcrt.entity.system.SysMuserInfo">
+		<id column="CID" jdbcType="INTEGER" property="cid" />
+		<id column="USER_ID" jdbcType="INTEGER" property="userId" />
+		<result column="USER_SNAME" jdbcType="VARCHAR" property="userSname" />
+		<result column="USER_ENAME" jdbcType="VARCHAR" property="userEname" />
+		<result column="PET_NAME" jdbcType="VARCHAR" property="petName" />
+		<result column="USER_SEX" jdbcType="INTEGER" property="userSex" />
+		<result column="BIRTHDAY" jdbcType="VARCHAR" property="birthday" />
+		<result column="LAST_UPDATE_TIME" jdbcType="VARCHAR" property="lastUpdateTime" />
+		<result column="LAST_UPDATE_IP" jdbcType="VARCHAR" property="lastUpdateIp" />
+		<result column="ORDER_NUM" jdbcType="INTEGER" property="orderNum" />
+		<result column="STATE" jdbcType="INTEGER" property="state" />
+		<result column="BACKUP" jdbcType="VARCHAR" property="backup" />
+		<result column="EXP1" jdbcType="INTEGER" property="exp1" />
+		<result column="EXP2" jdbcType="INTEGER" property="exp2" />
+		<result column="EXP3" jdbcType="VARCHAR" property="exp3" />
+		<result column="EXP4" jdbcType="VARCHAR" property="exp4" />
+		<result column="EXP5" jdbcType="VARCHAR" property="exp5" />
+		<result column="EXP6" jdbcType="VARCHAR" property="exp6" />
+		<association property="sysUser" column="USER_ID"  select="SysUserMapper.getByCid" />
+		<association property="sysRole" column="CID"  select="SysRoleMapper.getByUserCid" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		CID, USER_ID, USER_SNAME,USER_ENAME, PET_NAME, USER_SEX,
+		BIRTHDAY,LAST_UPDATE_TIME,
+		LAST_UPDATE_IP, ORDER_NUM,STATE, BACKUP,
+		EXP1,EXP2, EXP3, EXP4, EXP5, EXP6
+	</sql>
+	<!-- 插入用户信息 -->
+	<insert id="saveSelective" parameterType="com.yhcrt.entity.system.SysMuserInfo">
+		insert into sys_muser_info
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="cid != null">
+				CID,
+			</if>
+			<if test="userId != null">
+				USER_ID,
+			</if>
+			<if test="userSname != null">
+				USER_SNAME,
+			</if>
+			<if test="userEname != null">
+				USER_ENAME,
+			</if>
+			<if test="petName != null">
+				PET_NAME,
+			</if>
+			<if test="userSex != null">
+				USER_SEX,
+			</if>
+			<if test="birthday != null">
+				BIRTHDAY,
+			</if>
+			<if test="lastUpdateTime != null">
+				LAST_UPDATE_TIME,
+			</if>
+			<if test="lastUpdateIp != null">
+				LAST_UPDATE_IP,
+			</if>
+			<if test="orderNum != null">
+				ORDER_NUM,
+			</if>
+			<if test="state != null">
+				STATE,
+			</if>
+			<if test="backup != null">
+				BACKUP,
+			</if>
+			<if test="exp1 != null">
+				EXP1,
+			</if>
+			<if test="exp2 != null">
+				EXP2,
+			</if>
+			<if test="exp3 != null">
+				EXP3,
+			</if>
+			<if test="exp4 != null">
+				EXP4,
+			</if>
+			<if test="exp5 != null">
+				EXP5,
+			</if>
+			<if test="exp6 != null">
+				EXP6,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="cid != null">
+				#{cid,jdbcType=INTEGER},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=INTEGER},
+			</if>
+			<if test="userSname != null">
+				#{userSname,jdbcType=VARCHAR},
+			</if>
+			<if test="userEname != null">
+				#{userEname,jdbcType=VARCHAR},
+			</if>
+			<if test="petName != null">
+				#{petName,jdbcType=VARCHAR},
+			</if>
+			<if test="userSex != null">
+				#{userSex,jdbcType=INTEGER},
+			</if>
+			<if test="birthday != null">
+				#{birthday,jdbcType=VARCHAR},
+			</if>
+			<if test="lastUpdateTime != null">
+				#{lastUpdateTime,jdbcType=VARCHAR},
+			</if>
+			<if test="lastUpdateIp != null">
+				#{lastUpdateIp,jdbcType=VARCHAR},
+			</if>
+			<if test="orderNum != null">
+				#{orderNum,jdbcType=INTEGER},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=INTEGER},
+			</if>
+			<if test="backup != null">
+				#{backup,jdbcType=VARCHAR},
+			</if>
+			<if test="exp1 != null">
+				#{exp1,jdbcType=INTEGER},
+			</if>
+			<if test="exp2 != null">
+				#{exp2,jdbcType=INTEGER},
+			</if>
+			<if test="exp3 != null">
+				#{exp3,jdbcType=VARCHAR},
+			</if>
+			<if test="exp4 != null">
+				#{exp4,jdbcType=VARCHAR},
+			</if>
+			<if test="exp5 != null">
+				#{exp5,jdbcType=VARCHAR},
+			</if>
+			<if test="exp6 != null">
+				#{exp6,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<!-- 更新用户非空信息 -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.entity.system.SysMuserInfo">
+		update sys_muser_info
+		<set>
+			<if test="userId != null">
+				USER_ID = #{userId,jdbcType=INTEGER},
+			</if>
+			<if test="userSname != null">
+				USER_SNAME = #{userSname,jdbcType=VARCHAR},
+			</if>
+			<if test="userEname != null">
+				USER_ENAME = #{userEname,jdbcType=VARCHAR},
+			</if>
+			<if test="petName != null">
+				PET_NAME = #{petName,jdbcType=VARCHAR},
+			</if>
+			<if test="userSex != null">
+				USER_SEX = #{userSex,jdbcType=INTEGER},
+			</if>
+			<if test="birthday != null">
+				BIRTHDAY = #{birthday,jdbcType=VARCHAR},
+			</if>
+			<if test="lastUpdateTime != null">
+				LAST_UPDATE_TIME = #{lastUpdateTime,jdbcType=VARCHAR},
+			</if>
+			<if test="lastUpdateIp != null">
+				LAST_UPDATE_IP = #{lastUpdateIp,jdbcType=VARCHAR},
+			</if>
+			<if test="orderNum != null">
+				ORDER_NUM = #{orderNum,jdbcType=INTEGER},
+			</if>
+			<if test="state != null">
+				STATE = #{state,jdbcType=INTEGER},
+			</if>
+			<if test="backup != null">
+				BACKUP = #{backup,jdbcType=VARCHAR},
+			</if>
+			<if test="exp1 != null">
+				EXP1 = #{exp1,jdbcType=INTEGER},
+			</if>
+			<if test="exp2 != null">
+				EXP2 = #{exp2,jdbcType=INTEGER},
+			</if>
+			<if test="exp3 != null">
+				EXP3 = #{exp3,jdbcType=VARCHAR},
+			</if>
+			<if test="exp4 != null">
+				EXP4 = #{exp4,jdbcType=VARCHAR},
+			</if>
+			<if test="exp5 != null">
+				EXP5 = #{exp5,jdbcType=VARCHAR},
+			</if>
+			<if test="exp6 != null">
+				EXP6 = #{exp6,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where CID = #{cid,jdbcType=INTEGER}
+	</update>
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="java.lang.Integer"
+		flushCache="false">
+		delete
+		from sys_muser_info
+		where
+		CID in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	<!-- 更新用户状态 -->
+	<update id="updateByCidSates" parameterType="Map">
+		update
+		sys_muser_info set STATE = #{state,jdbcType=INTEGER}
+		where CID =
+		#{id,jdbcType=INTEGER}
+	</update>
+	
+	<!-- 根据ID查询 -->
+	<select id="getByCid" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List"/>
+		from sys_muser_info 
+		where CID = #{cid,jdbcType=INTEGER}
+	</select>
+	<!-- 根据账号信息表用户ID查询 -->
+	<select id="getByUserCid" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List"/>
+		from sys_muser_info 
+		where USER_ID = #{cid,jdbcType=INTEGER}
+	</select>
+	
+	<!-- 多条件查询 -->
+	<select id="quertByParam" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"/>
+		from sys_muser_info 
+		where STATE  &gt; -2
+		<include refid="Base_findContent" />
+		order by ORDER_NUM  DESC, CID desc
+	</select>
+	<sql id="Base_findContent">
+		<if test="findContent != null and findContent!='' ">
+			and ((USER_SNAME) like CONCAT("%",#{findContent},"%") or
+			LOWER(USER_ENAME) like CONCAT("%",#{findContent},"%") or
+			LOWER(PET_NAME) like CONCAT("%",#{findContent},"%"))
+		</if>
+	</sql>
+	<!-- 查询部门下的用户的ID集合 -->
+ 	<select id="getByDeptUserCid" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select md.CID from(
+		SELECT
+			m.*,du.DEPT_CID
+			FROM
+			sys_dept_user AS du
+			INNER JOIN sys_muser_info AS m 
+			ON du.USER_ID = m.CID
+		) md
+		where md.STATE  &gt; -2
+		<if test="deptCid != null and deptCid!='' ">
+			and md.DEPT_CID = #{deptCid,jdbcType=INTEGER}
+		</if>
+	</select>
+	<!-- 查询部门下的用户 -->
+ 	<select id="getByDeptCid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select md.* from(
+		SELECT
+			m.*,du.DEPT_CID
+			FROM
+			sys_dept_user AS du
+			INNER JOIN sys_muser_info AS m 
+			ON du.USER_ID = m.CID
+		) md
+		where md.STATE   &gt; -2
+		<if test="deptCid != null and deptCid!='' ">
+			and md.DEPT_CID = #{deptCid,jdbcType=INTEGER}
+		</if>
+		order by md.ORDER_NUM DESC, md.CID desc
+	</select>
+	<!-- 查询不在某部门下的用户 -->
+ 	<select id="getByNotDeptCid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List"/>
+		from sys_muser_info 
+		where STATE   &gt; -2
+		and CID not in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+		order by ORDER_NUM  DESC, CID desc
+	</select>
+	
+</mapper>

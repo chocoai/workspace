@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.basicdata.dao.BrandDao">
+
+	<resultMap type="com.whty.assis.basicdata.model.Brand" id="BrandResult">
+		<result property="id" column="id" />
+		<result property="terminalDeviceTypeId" column="terminal_device_type_id" />
+		<result property="brandName" column="brand_name" />
+		<result property="modelName" column="model_name" />
+		<result property="vendor" column="vendor" />
+		<result property="creator" column="creator" />
+		<result property="creatorName" column="creator_name" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="memo" column="memo" />
+	</resultMap>
+	
+	<insert id="save" parameterType="com.whty.assis.basicdata.model.Brand">
+		insert into t_brand(
+			terminal_device_type_id,
+			brand_name,
+			model_name,
+			vendor,
+			creator,
+			create_time,
+			<if test="memo != null and memo != ''">memo,</if>
+			update_time
+			) values (
+				#{terminalDeviceTypeId},
+				#{brandName},
+				#{modelName},
+				#{vendor},
+				#{creator},
+				#{createTime},
+				<if test="memo != null and memo != ''">#{memo},</if>
+				#{updateTime}
+			)
+	</insert>
+
+	<delete id="deleteById" parameterType="int" >
+		delete from t_brand where id=#{_parameter}
+	</delete>
+
+
+	<update id="update" parameterType="com.whty.assis.basicdata.model.SupplierInfo">
+		update t_brand
+		set 
+		<trim prefixOverrides=",">
+			<if test="updateTime != null ">, update_time=#{updateTime}</if>
+			<if test="brandName != null and brandName != '' ">, brand_name=#{brandName}</if>
+			<if test="vendor != null and vendor != '' ">, vendor=#{vendor}</if>
+			<if test="modelName != null and modelName != '' ">, model_name=#{modelName}</if>
+			<if test="memo != null and memo != '' ">, memo=#{memo}</if>
+		</trim>
+		where id=#{id}
+	</update>
+
+	<select id="loadById" parameterType="int" resultMap="BrandResult">
+		select t1.*,t2.user_name as creator_name from t_brand t1 left join ta_manage_user_info t2 on t1.creator=t2.id 
+		where 1=1 and t1.id = #{id}
+	</select>
+
+	<select id="listByCondition" parameterType="map" resultMap="BrandResult">
+		select t1.*,t2.user_name as creator_name from t_brand t1 left join ta_manage_user_info t2 on t1.creator=t2.id 
+		where 1=1
+		<if test="id != null ">and t1.id=#{id}</if>
+		<if test="terminalDeviceTypeId != null and terminalDeviceTypeId != '' ">and t1.terminal_device_type_id=#{terminalDeviceTypeId}</if>
+		<if test="brandName != null and brandName !='' ">and t1.brand_name = #{brandName} </if>
+		<if test="modelName != null and modelName !='' ">and t1.model_name = #{modelName} </if>
+		order by t1.create_time desc
+	</select>
+	
+</mapper>

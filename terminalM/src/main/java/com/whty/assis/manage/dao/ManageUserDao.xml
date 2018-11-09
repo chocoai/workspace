@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.manage.dao.ManageUserDao">
+	
+<resultMap type="com.whty.assis.manage.model.ManageUserInfo" id="ManageUserInfoResult">
+		<id property="id" column="id" />
+		<result property="account" column="account" />
+		<result property="password" column="password" />
+		<result property="status" column="status" />
+		<result property="create_time" column="create_time" />
+		<result property="update_time" column="update_time" />
+		<result property="effective_time" column="effective_time" />
+		<result property="expiring_time" column="expiring_time" />
+		<result property="login_count" column="login_count" />
+		<result property="user_name" column="user_name" />
+		<result property="last_time" column="last_time" />
+		<result property="role_name" column="role_name" />
+		<result property="role_id" column="role_id" />
+		<result property="user_type" column="user_type" />
+		
+		<result property="province_code" column="province_code" />
+		<result property="province_name" column="province_name" />
+		<result property="city_code" column="city_code" />
+		<result property="city_name" column="city_name" />
+		<result property="area_code" column="area_code" />
+		<result property="area_name" column="area_name" />
+		<result property="school_id" column="school_id" />
+		<result property="school_name" column="school_name" />
+		<result property="department" column="department" />
+	</resultMap> 
+
+
+	<!-- 更新后台用户信息-->
+	<update id="updateManageUser" parameterType="ManageUserInfo">
+		update ta_manage_user_info 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="account != null">account=#{account},</if>
+			<if test="password != null">password=#{password},</if>
+			<if test="status != null">status=#{status},</if>
+			<if test="update_time != null">update_time=#{update_time},</if>
+			<if test="last_time != null">last_time=#{last_time},</if>
+			<if test="user_name != null">user_name=#{user_name},</if>
+			<if test="login_count != null">login_count=login_count+1,</if>
+			<if test="department != null">,department=#{department}</if>
+		</trim>
+		where id=#{id}
+	</update>
+	
+	<!-- 查询后台用户信息 -->
+	<select id="loadByAccount" parameterType="string" resultType="ManageUserInfo">
+		select id,account,password,status,create_time,update_time,
+			login_count,user_name,last_time
+		from ta_manage_user_info
+		where account=#{_parameter}
+	</select>
+	
+	<!-- 查询后台用户信息 -->
+	<select id="queryManageUser"  resultType="ManageUserInfo">
+		SELECT u.id,u.account,u.password,u.status,u.create_time,u.update_time,u.effective_time,
+			u.expiring_time,u.department,u.login_count,u.user_name,u.last_time,u.user_type,r.role_name,
+			(select area_name from ta_area where area_code = u.province_code) as province_name,
+    		(select area_name from ta_area where area_code = u.city_code) as city_name,
+    		(select area_name from ta_area where area_code = u.area_code) as area_name,
+    		(select name from t_school where id = u.school_id) as school_name
+		FROM ta_manage_user_info u left join sys_user_role ur on u.id=ur.user_id left join sys_role r on ur.role_id= r.id
+	</select>
+	
+	<select id="listByCondition" parameterType="map" resultType="ManageUserInfo">
+		SELECT u.id,u.account,u.password,u.status,u.create_time,u.update_time,u.effective_time,
+			u.expiring_time,u.department,u.login_count,u.user_name,u.last_time,u.user_type,r.role_name,
+			(select area_name from ta_area where area_code = u.province_code) as province_name,
+    		(select area_name from ta_area where area_code = u.city_code) as city_name,
+    		(select area_name from ta_area where area_code = u.area_code) as area_name,
+    		(select name from t_school where id = u.school_id) as school_name
+		FROM ta_manage_user_info u left join sys_user_role ur on u.id=ur.user_id left join sys_role r on ur.role_id= r.id
+		where 1=1
+		<if test="areaCode != null and areaCode != '' ">and u.area_code=#{areaCode}</if>
+	</select>
+	
+	<insert id="addManageUser" parameterType="ManageUserInfo">
+		insert into ta_manage_user_info (
+			id
+			<if test="account != null">,account</if>
+			<if test="password != null">,password</if>
+			<if test="status != null">,status</if>
+			<if test="create_time != null">,create_time</if>
+			<if test="update_time != null">,update_time</if>
+			<if test="last_time != null">,last_time</if>
+			<if test="user_name != null">,user_name</if>
+			<if test="login_count != null">,login_count</if> 
+			<if test="user_type != null">,user_type</if>
+			<if test="department != null">,department</if>
+		) values (
+			#{id}
+			<if test="account != null">,#{account}</if>
+			<if test="password != null">,#{password}</if>
+			<if test="status != null">,#{status}</if>
+			<if test="create_time != null">,#{create_time}</if>
+			<if test="update_time != null">,#{update_time}</if>
+			<if test="last_time != null">,#{last_time}</if>
+			<if test="user_name != null">,#{user_name}</if>
+			<if test="login_count != null">,#{login_count}</if>
+			<if test="user_type != null">,#{user_type}</if> 
+			<if test="department != null">,#{department}</if>
+		)
+	</insert>
+	
+	<!-- 更新后台用户信息-->
+	<update id="updateManageUserStatus" parameterType="map">
+		update ta_manage_user_info 
+		set status=#{status}
+		where id in <foreach collection="idList" item="id" separator="," open="(" close=")">#{id}</foreach>
+	</update>
+	
+	<delete id="deleteManageUser" parameterType="map">
+		delete from ta_manage_user_info
+		where id in <foreach collection="idList" item="id" separator="," open="(" close=")">#{id}</foreach>
+	</delete>
+	
+	<select id="getUsers" resultMap="ManageUserInfoResult">
+		select t.* from ta_manage_user_info t
+	</select>
+</mapper>

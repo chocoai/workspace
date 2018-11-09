@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>孝康通</title>
+    <!-- Bootstrap -->
+    <link th:href="@{/pages/mall/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- FontAwesome 4.7.0字体 -->
+    <link th:href="@{/pages/mall/css/font-awesome.min.css}" rel="stylesheet">
+	<!-- 自定义css -->
+    <link th:href="@{/pages/mall/css/mymall.css}" rel="stylesheet">
+    
+    <link rel="stylesheet" href="http://jqweui.com/dist/lib/jquery-weui.min.css">
+  </head>
+  <body class="other-mall" style="background: #fff;padding-bottom: 0px;" ontouchstart>
+    <input type="hidden" id="pageNum" value="1" >
+  	<input type="hidden" id="pages" value="0" >
+  	<input type="hidden" id="type" th:value="${type}">
+  	<input type="hidden" id="id" th:value="${id}" >
+    <!-- 导航 开始 -->
+    <nav class="navbar navbar-default navbar-fixed-top navbar-mall-other">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a href="javascript:history.back();" class="othertop-left"><i class="fa fa-angle-left icon-back"></i></a>
+          		全部评价
+        </div>
+      </div>
+    </nav>
+    <!-- 导航 结束 -->
+
+    <!-- 全部评价 开始 -->
+    <div class="all-remarks">
+        <div class="goods-remarks-bd">
+          <ul class="remarks-list" id="orderNum"></ul>
+        </div>
+    </div>
+    <!-- 全部评价 结束 -->
+
+   
+	<!-- 加载开始 -->
+ 	<div class="weui-loadmore">  
+	    <i class="weui-loading"></i>  
+	    <span class="weui-loadmore__tips" id="loading">正在加载</span>  
+	</div>
+    <!-- 返回顶部 开始 -->
+    <div class="gototop" style="display: none;">
+      <a href="javascript:void(0)"><i class="glyphicon glyphicon-menu-up"></i></a>
+    </div>
+    <!-- 返回顶部 结束 -->
+
+    <script th:src="@{/pages/mall/js/jquery-1.9.1.min.js}"></script>
+    <script th:src="@{/pages/mall/js/bootstrap.min.js}"></script>
+    
+    <script src="http://jqweui.com/dist/lib/fastclick.js"></script>
+    <script src="http://jqweui.com/dist/js/jquery-weui.js"></script>
+    <script type="text/javascript">
+ 	var pathName=window.document.location.pathname;
+    var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
+      $('html').on('click',function(){ });  
+      // 返回顶部
+      $(window).scroll(function(){
+        if($(window).scrollTop()>=20){
+           $(".gototop").fadeIn(300);
+        }else{
+           $(".gototop").fadeOut(300);
+        }
+      })
+      $(".gototop a").click(function(){
+        $("html,body").animate({scrollTop:"0px"},300)
+      })
+	  $(document).ready(function(){
+	        $(document.body).destroyInfinite();
+	        $(".weui-loadmore").hide();
+  			load(1);
+	  });
+      //下一页
+	  var loading = false;
+      $(document.body).infinite().on("infinite", function() {
+	        if(loading) return;
+	        loading = true;
+		    var pageNum = $("#pageNum").val();
+		    var pages = $("#pages").val();
+	        if(pageNum >=pages){
+	        	loading = false;
+	        	$("loading").val("已为最后一页");
+	        	$(document.body).destroyInfinite();
+	        	$(".weui-loadmore").css('display','none');
+	        	return;
+	        }else{
+	        	pageNum = parseInt(pageNum)+1;
+	        	load(pageNum);
+	        	loading = false;
+	        }
+      })
+      var type = $("#type").val()
+      var id = $("#id").val()
+	  function load(pageNum){
+		  $.ajax({
+				url : projectName+"/h5/remarks",
+				data :{
+					id:id,
+					type:type,
+					pageNum:pageNum
+		        },
+		        type:'post',
+		        contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+		        dataType:"json",
+				async : false,
+				traditional : true,
+				cache : true,
+				success : function(result) {
+					 //将从后台接收的json字符串转换成json对象
+			         var json = eval(result);
+			    	 var list = new Array();
+			    	 list=json.list;
+			         var listHtml="" ;
+			         if(list.length>0){
+			         	for(var i =0;i<list.length;i++){
+				         	listHtml+="<li><div class='remarks-top'><div class='remarks-user'>";
+				         	if(list[i].userLogo!=""){
+				         		listHtml+="<img src='"+list[i].userLogo+"' class='img-responsive headphoto' />";
+				         	}else{
+				         		listHtml+="<img src='"+projectName+"/pages/mall/images/user-photo.png' class='img-responsive headphoto' />";
+				         	}
+				         	listHtml+="</div><div class='remarks-name'>"+list[i].nickName+"</div>";
+				         	listHtml+="<div class='remarks-date'>"+list[i].createTimeStr+"</div></div><div class='remarks-content'>";
+				         	if(!list[i].content){
+				         		listHtml+="<p class='remarks-txt remarks-alltxt'>此用户未发表评价！</p></div></li>";
+				         	}else{
+				         		listHtml+="<p class='remarks-txt remarks-alltxt'>"+list[i].content+"</p></div></li>";
+				         	}
+				         }
+			         }
+					 var pageNum = json.pageNum;
+					 var pages = json.pages;
+					 $("#pageNum").val(pageNum);
+				     $("#pages").val(pages);
+			         if(pageNum==1){
+				         $("#orderNum").html(listHtml);
+			         }else{
+			        	 $("#orderNum").append(listHtml);
+					 	 loading = false;
+			         }
+			         if(pageNum<pages){
+					     $(document.body).infinite();
+		 				 $(".weui-loadmore").show();
+					 }else{
+						 $(document.body).destroyInfinite();
+		 				 $(".weui-loadmore").hide();
+					 }
+				}
+			}) 
+		}
+    </script>
+  </body>
+</html>

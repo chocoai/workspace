@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.ebp.manage.dao.ProductDao">
+
+	<resultMap type="product" id="productMap">
+		<id property="id" column="ID"/>
+		<result property="productName" column="PRODUCT_NAME"/>
+		<result property="productType" column="PRODUCT_TYPE"/>
+		<result property="description" column="DESCRIPTION"/>
+		<result property="qrCodePath" column="QR_CODE_PATH"/>
+		<result property="createTime" column="CREATE_TIME"/>
+		<result property="status" column="STATUS"/>
+		<result property="updateTime" column="UPDATE_TIME"/>
+		<result property="icoPath" column="ICO_PATH"/>
+		<result property="icoOldName" column="ICO_OLD_NAME"/>
+		<result property="icoNewName" column="ICO_NEW_NAME"/>
+		<result property="productCode" column="PRODUCT_CODE"/>
+		
+		<result property="ebookpackageCode" column="EBOOKPACKAGE_CODE"/>
+		
+	</resultMap>
+	<update id="deleteById" parameterType="string">
+		update EBP_PRODUCT set status = 1 where id = #{id}
+	</update>
+	
+	<update id="updateByCondition" parameterType="map">
+		update EBP_PRODUCT set 
+			<if test="productName!=null and productName!=''">
+				product_name =#{productName},
+			</if>
+			<if test="description!=null and description!=''">
+				description = #{description},
+			</if>
+			product_code= #{productCode},
+			ico_path = #{icoPath},
+			ico_old_name = #{icoOldName},
+			ico_new_name = #{icoNewName},
+			update_time = #{updateTime} 
+			where id = #{id}
+	</update>
+	
+	<select id="loadById" resultMap="productMap" parameterType="string">
+		select ID,
+			PRODUCT_NAME,
+			PRODUCT_TYPE,
+			DESCRIPTION,
+			QR_CODE_PATH,
+			CREATE_TIME,
+			STATUS,
+			UPDATE_TIME,
+			ICO_PATH,
+			ICO_OLD_NAME,
+			ICO_NEW_NAME,
+			PRODUCT_CODE,
+			EBOOKPACKAGE_CODE
+		from EBP_PRODUCT where id = #{id}
+	</select>
+	
+	<insert id="save" parameterType="product">
+		insert into EBP_PRODUCT(id,PRODUCT_NAME,PRODUCT_TYPE,DESCRIPTION,QR_CODE_PATH,CREATE_TIME,UPDATE_TIME,ICO_PATH,ICO_OLD_NAME,ICO_NEW_NAME,PRODUCT_CODE,EBOOKPACKAGE_CODE)
+		values(#{id},#{productName},#{productType},#{description},#{qrCodePath},#{createTime},#{updateTime},#{icoPath},#{icoOldName},#{icoNewName},#{productCode},#{ebookpackageCode})
+	</insert>
+	
+	<select id="listByCondition" parameterType="map" resultMap="productMap">
+		select ID,
+			PRODUCT_NAME,
+			PRODUCT_TYPE,
+			DESCRIPTION,
+			QR_CODE_PATH,
+			CREATE_TIME,
+			STATUS,
+			UPDATE_TIME,
+			ICO_PATH,
+			ICO_OLD_NAME,
+			ICO_NEW_NAME,
+			PRODUCT_CODE,
+			EBOOKPACKAGE_CODE
+		from EBP_PRODUCT where status = 0
+		<if test="productName!=null and productName!=''">
+			 and product_name like '%'||#{productName}||'%'	
+		</if>
+		<if test="productType">
+		  	 and product_type=#{productType}
+		</if>
+		<if test="ebookpackageCode!=null and ebookpackageCode!=''">
+		  	 and ebookpackage_code=#{ebookpackageCode}
+		</if>
+		order by create_time desc
+	</select>
+	
+	<select id="queryAllProduct" resultType="java.util.HashMap">
+		select id,product_name from EBP_PRODUCT where status=0
+		
+		<if test="ebookpackageCode!=null and ebookpackageCode!=''">
+		  	 and ebookpackage_code=#{ebookpackageCode}
+		</if>
+		
+		order by update_time desc
+	</select>
+	
+	<select id="queryProductByType" resultType="java.util.HashMap" parameterType="map">
+		select id,product_name from EBP_PRODUCT 
+		where status=0 
+		<if test="productType != '' and productType != null">
+			and PRODUCT_TYPE=#{productType}
+		</if>
+		
+		<if test="ebookpackageCode!=null and ebookpackageCode!=''">
+		  	 and EBOOKPACKAGE_CODE=#{ebookpackageCode}
+		</if>
+		
+		order by update_time desc
+	</select>
+	
+</mapper>

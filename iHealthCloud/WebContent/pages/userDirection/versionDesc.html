@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>功能介绍</title>
+    <!-- Bootstrap core CSS -->
+    <link href="res/css/bootstrap.min.css" rel="stylesheet">
+    <link href="res/css/mycss.css" rel="stylesheet">
+    <script src="res/js/jquery-3.2.1.min.js"></script>
+  </head>
+  <body>
+     <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12">
+              <ul class="update-detail-list">
+                 <li>
+                   <p id="cUpdateDesc"></p>
+                 </li>
+<!--                  <li>
+                   <p>中国人自古以来就是聪明勤劳，善于发现，善于思考，随着时代的进步，对于工业产品尤其是汽车，国人又开动脑筋，发明了新的质检绝招：</p>
+                   <div class="col-xs-6 nopad-l pad-r8">
+                     <img src="images/update01.jpg" class="img-responsive">
+                   </div>
+                   <div class="col-xs-6 nopad-r pad-l8">
+                     <img src="images/update01.jpg" class="img-responsive">
+                   </div>
+                 </li> -->
+              </ul>
+            </div>
+        </div>
+     </div>
+  </body>
+      <script type="text/javascript">
+  	$(function(){
+  		var versionid = GetQueryString("version_id");
+     	$.ajax({
+	    	type: "get",
+            url: '/api/services?pdata={"sid":"healthCloud.app.getVersionDesc","biz":{"version_id":"'+versionid+'"}}',
+            dataType: "json",
+            success: function(data){
+            	var biz = data.biz;
+            	var cUpdateDesc = biz.cUpdateDesc;
+            	$("#cUpdateDesc").text(cUpdateDesc);
+           	}
+        }); 
+	})
+	
+	function GetQueryString(name)
+	{
+	     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+	     var r = window.location.search.substr(1).match(reg);
+	     if(r!=null)return  unescape(r[2]); return null;
+	}
+	</script>
+</html>

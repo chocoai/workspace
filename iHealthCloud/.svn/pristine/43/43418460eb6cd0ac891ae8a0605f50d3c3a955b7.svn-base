@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>孝康通</title>
+    <!-- Bootstrap -->
+    <link th:href="@{/pages/mall/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- FontAwesome 4.7.0字体 -->
+    <link th:href="@{/pages/mall/css/font-awesome.min.css}" rel="stylesheet">
+    <!-- 自定义css -->
+    <link th:href="@{/pages/mall/css/mymall.css}" rel="stylesheet">
+    <link th:href="@{/pages/mall/css/layer_mobile/need/layer.css}" rel="stylesheet">
+  </head>
+  <body class="other-mall">
+  	<input th:if="${a} !=null" id="a" type="hidden" th:value="${a}" />
+    <input th:if="${u} !=null" id="u" type="hidden" th:value="${u}" />
+    <!-- 导航 开始 -->
+    <nav class="navbar navbar-default navbar-fixed-top navbar-mall-other">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          购物车
+          <div class="othertop-right">
+            <span class="shoppcart-edit" th:if="${cartsList}!=null">编辑</span>
+            <a th:href="@{/h5}" th:if="${a} ==null"><i class="fa fa-home"></i></a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- 导航 结束 -->
+    
+    <div class="no" th:if="${cartsList}==null">
+      <p><img th:src="@{/pages/mall/images/nothing.png}"><br>暂无数据，赶紧选购吧！<br>
+      <a th:if="${a}!=null" th:href="@{'/h5/goods?a=1&u='+${u}}" class="goshopping">去逛逛</a>
+       <a th:if="${a}==null" th:href="@{'/h5/goods'}" class="goshopping">去逛逛</a>
+      </p>
+    </div>
+    <div class="con" th:if="${cartsList}!=null"> 
+    <div class="content">
+      <div class="list">
+        <div class="pull-left">
+          <label>
+            <input type="checkbox" checked="checked"/>
+            <img th:src="@{/pages/mall/images/c_checkbox_on.png}"/>
+          </label>
+        </div>
+        <p>商品</p>
+      </div>
+      <ul>
+        <li th:each="cart:${cartsList}">
+          <div class="label pull-left col-xs-1">
+            <label>
+              <input type="checkbox" checked="checked" th:id="${cart.cid}" class="cartIdChecked"/>
+              <img th:src="@{/pages/mall/images/c_checkbox_on.png}"/>
+            </label>
+          </div>
+          <div class="img pull-left col-xs-3 nopad-lr">
+            <img th:src="${cart.goods.titleImg}" class="img-responsive" />
+          </div>
+          <div class="text pull-right col-xs-8">
+            <p class="name" th:text="${cart.goods.goodsName}"></p>
+            <p class="numandprice">
+              <span class="pull-left" th:text="${cart.goods.unitPrice}"></span>
+              <span class="pull-right">
+                <input type="button" value="-" class="btn1" />
+                <span class="number" th:id="${cart.cid}" th:text="${cart.amount}"></span>
+                <input type="button" value="+"  class="btn2"/>
+                <input th:id="cartId_+(${cart.cid})" class="goodsStockAmount" type="hidden" th:value="${cart.goods.stockAmount}" />
+              </span>
+            </p>
+          </div>
+        </li>
+      </ul>
+      <p class="total totalNumber">一共<number></number>件商品：<span></span></p>
+    </div>
+    <!-- <div class="content">
+      <div class="list">
+        <div class="pull-left">
+          <label>
+            <input type="checkbox" checked="checked"/>
+            <img src="/pages/mall/images/c_checkbox_on.png"/>
+          </label>
+        </div>
+        <p>服务</p>
+      </div>
+      <ul>
+        <li>
+          <div class="label pull-left col-xs-1">
+            <label>
+              <input type="checkbox" checked="checked"/>
+              <img src="/pages/mall/images/c_checkbox_on.png"/>
+            </label>
+          </div>
+          <div class="img pull-left col-xs-3 nopad-lr">
+            <img src="/pages/mall/images/service01.jpg" class="img-responsive" />
+          </div>
+          <div class="text pull-right col-xs-8">
+            <p class="name">上门理发</p>
+            <p class="numandprice">
+              <span class="pull-left">￥15</span>
+              <span class="pull-right">
+                <input type="button" value="-" class="btn1" />
+                <span class="number">1</span>
+                <input type="button" value="+"  class="btn2"/>
+              </span>
+            </p>
+          </div>
+        </li>
+        <li>
+          <div class="label pull-left col-xs-1">
+            <label>
+              <input type="checkbox" checked="checked"/>
+              <img src="/pages/mall/images/c_checkbox_on.png"/>
+            </label>
+          </div>
+          <div class="img pull-left col-xs-3 nopad-lr">
+            <img src="/pages/mall/images/service02.jpg" class="img-responsive" />
+          </div>
+          <div class="text pull-right col-xs-8">
+            <p class="name">送餐上门</p>
+            <p class="numandprice">
+              <span class="pull-left">￥20</span>
+              <span class="pull-right">
+                <input type="button" value="-" class="btn1" />
+                <span class="number">1</span>
+                <input type="button" value="+"  class="btn2"/>
+              </span>
+            </p>
+          </div>
+        </li>
+      </ul>
+      <p class="total">一共<number></number>件商品：<span></span></p>
+    </div> -->
+    </div>
+    <!--主题-->
+    <!--结算-->
+    <div class="bottom fixed">
+      <div class="pull-left bottom-label">
+        <label>
+          <input type="checkbox" checked="checked"/>
+          <img th:src="@{/pages/mall/images/c_checkbox_on.png}" class="fl" />
+          全选
+        </label>
+      </div>
+      <div class="pull-right total">
+        合计：￥<span></span>
+        <button class="sett" id="entrance1">结算</button>
+        <input id="total" type="hidden" />
+        <input id="amount" type="hidden" />
+        <input id="idSub" type="hidden" />
+      </div>
+    </div>
+     <!--结算-->
+     <!--删除-->
+    <div class="bottom fixed" style="display: none;">
+      <div class="pull-right">
+        <button class="delete">删除</button>
+      </div>
+    </div>
+     <!--删除-->
+     <!--弹框-->
+    <div class="text1 fixed">
+      <form>
+        <input type="number"/>
+        <input type="button"  value="确定"/>
+      </form>
+    </div>
+     <!--弹框-->
+    <!--弹框2-->
+    <div class="alert fixed"></div>
+     <!--弹框2-->
+    
+    <!-- 返回顶部 开始 -->
+    <div class="gototop" style="display: none;">
+      <a href="javascript:void(0)"><i class="glyphicon glyphicon-menu-up"></i></a>
+    </div>
+    <!-- 返回顶部 结束 -->
+
+    <script th:src="@{/pages/mall/js/jquery-1.9.1.min.js}"></script>
+    <script th:src="@{/pages/mall/js/bootstrap.min.js}"></script>
+    <!-- 购物车 -->
+    <script th:src="@{/pages/mall/js/zepto.js}"></script>
+    <script th:src="@{/pages/mall/js/shoppcart.js}"></script>
+    <script th:src="@{/pages/mall/css/layer_mobile/layer.js}"></script>
+    <script type="text/javascript">
+    var a=$("#a").val();
+    var u=$("#u").val();
+    var pathName=window.document.location.pathname;
+    var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
+      // 返回顶部
+      $(window).scroll(function(){
+        if($(window).scrollTop()>=20){
+           $(".gototop").fadeIn(300);
+        }else{
+           $(".gototop").fadeOut(300);
+        }
+      })
+      $(".gototop a").click(function(){
+        $("html,body").animate({scrollTop:"0px"},300)
+      })
+      
+      //删除
+      function deleteCartIdSub(cartIdSub){
+      	var url=projectName+"/h5/admin/cart/delete?cartIdSub="+cartIdSub;
+      	if(a==1){
+      		url+="&a=1&u="+u;
+      	}
+      	$.ajax({
+			url : url,
+			dataType : "json",
+			success : function(result) {
+				layer.open({
+				    content: result.rmk
+				    ,skin: 'msg'
+				    ,time: 2 //2秒后自动关闭
+				  });
+			}
+		})
+      }
+      
+      //修改购物车
+       function updateCart(cid,amount){
+        var url=projectName+"/h5/admin/cart/update?cid="+cid+"&amount="+amount;
+      	if(a==1){
+      		url+="&a=1&u="+u;
+      	}
+      	$.ajax({
+			url : url,
+			dataType : "json",
+			success : function(result) {
+			}
+		})
+      }
+    </script>
+  </body>
+</html>

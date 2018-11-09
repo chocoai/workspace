@@ -1,0 +1,9 @@
+package com.whty.mxbj.api.dao;
+
+import com.whty.mxbj.api.model.ArchiveNote;
+import com.whty.mxbj.base.dao.IBaseDao;
+
+public interface ArchiveNoteDao extends IBaseDao<ArchiveNote> {
+
+	public void updateArchiveTime(ArchiveNote bean);
+}

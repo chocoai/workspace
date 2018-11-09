@@ -1,0 +1,401 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="keywords" content="${site.keywords!}" />
+<meta http-equiv="description" content="${site.description!}" />
+<title>${channel.title!channel.name} - ${site.name}</title>
+
+<link rel="stylesheet" type="text/css" href="/${res}/css/global.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/public_all.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/index_jr.css" />
+
+</head>
+
+<body>
+	[#include "../include/header.html"/] 
+	[#include "../include/navi.html"/]
+
+	<!--内容 开始-->
+	<div class="box">
+		<div class="left">
+			<!--图片切换 开始-->
+			<div class="ban" id="demo1">
+				<div class="ban2" id="ban_pic1">
+					<div class="prev1" id="prev1">
+						<img src="/${res}/images/index_tab_l.png" width="28" height="51" alt="">
+					</div>
+					<div class="next1" id="next1">
+						<img src="/${res}/images/index_tab_r.png" width="28" height="51" alt="">
+					</div>
+					<ul>
+						[@cms_content_list count='5' orderBy='4' titLen='20' typeId="3" channelOption='1' channelId=channel.id] 
+						[#list tag_list as tw]
+						<li>
+							<a href="${tw.url}" target="_blank">
+								<img src="${tw.titleImg!tw.typeImg!}">
+							</a>
+						</li>
+						[/#list] 
+						[/@cms_content_list]
+					</ul>
+				</div>
+			</div>
+
+			<!--头条 开始-->
+			<div class="hot_box">
+				[@cms_content_list count='1' orderBy='4' titLen='20' typeId="4" channelOption='1' channelId=channel.id] 
+				[#if tag_list?size gt 0] 
+				[#list tag_list as tw]
+				<div class="title">
+					<a href="${tw.url}" target="_blank">[@text_cut s=tw.title! len='20' append='...'/]</a>
+				</div>
+				<div class="title_detail">
+					<a href="${tw.url}" target="_blank">[@text_cut s=tw.description! len='50' append='...'/]</a>
+				</div>
+				[/#list] 
+				[#else]
+				<div class="title">&nbsp;</div>
+				<div class="title_detail">&nbsp;</div>
+				[/#if] 
+				[/@cms_content_list]
+				<ul class="list">
+					[@cms_content_list count='6' orderBy='4' titLen='20' typeId="1,2" channelOption='1' channelId=channel.id] 
+					[#list tag_list as tw1]
+					<li>
+						<span>${tw1.date?string('yyyy-MM-dd')}</span>
+						<a href="${tw1.url}" target="_blank">[@text_cut s=tw1.title! len='15' append='...'/]</a>
+					</li>
+					[/#list] 
+					[/@cms_content_list]
+				</ul>
+			</div>
+			<!--头条 结束-->
+			<div style="clear: both;"></div>
+
+			<!--国内财经 开始-->
+			<div class="finance">
+				<div class="cj_hd">
+					<h3 class="cj_tit">国内财经</h3>
+					<a class="cj_more" href="${base}/gncj/index.jhtml">更多></a>
+				</div>
+				<div class="cj_bd">
+					[@cms_content_list count='9' orderBy='4' titLen='22' channelOption='1' channelId='135'] 
+					[#list tag_list as content]
+					[#if content_index == 0]
+						<div class="cj_bigpic">
+							<a class="cj_img" title="${content.title}" href="${content.url}">
+								<img src="${content.typeImg!content.titleImg!site.defImg}">
+							</a>
+							<a class="cj_tex" title="${content.title}" href="${content.url}">[@text_cut s=content.title! len='26' append='...'/]</a>
+						</div>
+					[/#if]
+	                [#if content_index == 1]
+	                	<ul class="cjindex_list">
+							<li>
+								<a title="${content.title}" href="${content.url}">[@text_cut s=content.title! len='26' append='...'/]</a>
+							</li>
+	                [/#if]
+	                [#if content_index > 1]
+	                		<li>
+								<a title="${content.title}" href="${content.url}">[@text_cut s=content.title! len='26' append='...'/]</a>
+							</li>
+	                [/#if]
+                   	[#if content_index > 0 && !content_has_next]
+                   		</ul>
+                   	[/#if]
+					
+					[/#list] 
+					[/@cms_content_list]				
+					
+				</div>
+			</div>
+			<!--国内财经 结束-->
+
+			<!--国际财经 开始-->
+			<div class="finance">
+				<div class="cj_hd">
+					<h3 class="cj_tit">国际财经</h3>
+					<a class="cj_more" href="${base}/gjcj/index.jhtml">更多></a>
+				</div>
+				<div class="cj_bd">
+					[@cms_content_list count='9' orderBy='4' titLen='22' channelOption='1' channelId='136'] 
+					[#list tag_list as content]
+					[#if content_index == 0]
+						<div class="cj_bigpic">
+							<a class="cj_img" title="${content.title}" href="${content.url}">
+								<img src="${content.titleImg!content.typeImg!site.defImg}">
+							</a>
+							<a class="cj_tex" title="${content.title}" href="${content.url}">[@text_cut s=content.title! len='26' append='...'/]</a>
+						</div>
+					[/#if]
+	                [#if content_index == 1]
+	                	<ul class="cjindex_list">
+							<li>
+								<a title="${content.title}" href="${content.url}">[@text_cut s=content.title! len='26' append='...'/]</a>
+							</li>
+	                [/#if]
+	                [#if content_index > 1]
+	                		<li>
+								<a title="${content.title}" href="${content.url}">[@text_cut s=content.title! len='26' append='...'/]</a>
+							</li>
+	                [/#if]
+                   	[#if content_index > 0 && !content_has_next]
+                   		</ul>
+                   	[/#if]
+					
+					[/#list] 
+					[/@cms_content_list]				
+				
+				</div>
+			</div>
+			<!--国际财经 结束-->
+		</div>
+
+
+		<div class="right">
+			<div class="bank">
+				<div class="title">
+					<a href="${base}/bank/index.jhtml">
+						<span>银行</span>
+					</a>
+				</div>
+				<div class=" hot_article">
+					[@cms_content_list count='4' orderBy='2' titLen='16' channelOption='1' channelId='137'] 
+					[#list tag_list as tw] 
+					[#if tw_index+1 = 1]
+					<a href="${tw.url}">
+						[#if tw.typeImg?? || tw.titleImg??]
+						<img src="${tw.titleImg!tw.typeImg!}" width="130" height="90" />
+						[#else]
+						<img src="/${res}/images/caijing.png" width="130" height="90" />
+						[/#if]
+					</a>
+					<div class="hot_cont">
+						<h4>
+							<a href="${tw.url}" target="_blank">[@text_cut s=tw.title! len=titLen/]</a>
+						</h4>
+						<a href="${tw.url}" target="_blank">[@text_cut s=tw.description! len='36' /]</a>
+					</div>
+					<div style="clear: both;"></div>
+
+					[/#if] 
+					[/#list] 
+					[/@cms_content_list]
+					<ul>
+						[@cms_content_list count='4' orderBy='2' titLen='16' channelOption='1' channelId='137'] 
+						[#list tag_list as tw]
+						[#if tw_index+1 > 1]
+						<li>
+							<span>${tw.date?string('yyyy-MM-dd')}</span>
+							<a href="${tw.url}" target="_blank">[@text_cut s=tw.title! len='16' append='...'/]</a>
+						</li>
+
+						[/#if] 
+						[/#list] 
+						[/@cms_content_list]
+					</ul>
+				</div>
+			</div>
+
+			<div style="clear: both;"></div>
+			<div class="bank">
+				<div class="title">
+					<a href="${base}/securities/index.jhtml">
+						<span>证券</span>
+					</a>
+				</div>
+				<div class=" hot_article">
+					[@cms_content_list count='4' orderBy='2' titLen='16' channelOption='1' channelId='138'] 
+					[#list tag_list as tw] 
+					[#if tw_index+1 = 1]
+					<a href="${tw.url}">
+						[#if tw.typeImg?? || tw.titleImg??]
+						<img src="${tw.titleImg!tw.typeImg!}" width="130" height="90" />
+						[#else]
+						<img src="/${res}/images/caijing.png" width="130" height="90" />
+						[/#if]
+					</a>
+					<div class="hot_cont">
+						<h4>
+							<a href="${tw.url}" target="_blank">[@text_cut s=tw.title! len=titLen/]</a>
+						</h4>
+						<a href="${tw.url}" target="_blank">[@text_cut s=tw.description! len='36'/]</a>
+					</div>
+					<div style="clear: both;"></div>
+
+					[/#if] 
+					[/#list] 
+					[/@cms_content_list]
+					<ul>
+						[@cms_content_list count='4' orderBy='2' titLen='16' channelOption='1' channelId='138'] 
+						[#list tag_list as tw]
+						[#if tw_index+1 > 1]
+						<li>
+							<span>${tw.date?string('yyyy-MM-dd')}</span>
+							<a href="${tw.url}" target="_blank">[@text_cut s=tw.title! len='16' /]</a>
+						</li>
+
+						[/#if] 
+						[/#list] 
+						[/@cms_content_list]
+					</ul>
+				</div>
+			</div>
+
+			<div style="clear: both;"></div>
+			<div class="bank">
+				<div class="title">
+					<a href="${base}/insurance/index.jhtml">
+						<span>保险</span>
+					</a>
+				</div>
+				<div class=" hot_article">
+					[@cms_content_list count='4' orderBy='2' titLen='16' channelOption='1' channelId='139'] 
+					[#list tag_list as tw] 
+					[#if tw_index+1 = 1]
+					<a href="${tw.url}" target="_blank">
+						[#if tw.typeImg?? || tw.titleImg??]
+						<img src="${tw.titleImg!tw.typeImg!}" width="130" height="90" />
+						[#else]
+						<img src="/${res}/images/caijing.png" width="130" height="90" />
+						[/#if]
+					</a>
+					<div class="hot_cont">
+						<h4>
+							<a href="${tw.url}" target="_blank">[@text_cut s=tw.title! len='16' /]</a>
+						</h4>
+						<a href="${tw.url}" target="_blank">[@text_cut s=tw.description! len='36' /]</a>
+					</div>
+					<div style="clear: both;"></div>
+
+					[/#if] 
+					[/#list] 
+					[/@cms_content_list]
+					<ul>
+						[@cms_content_list count='4' orderBy='2' titLen='16' channelOption='1' channelId='139'] 
+						[#list tag_list as tw]
+						[#if tw_index+1 > 1]
+						<li>
+							<span>${tw.date?string('yyyy-MM-dd')}</span>
+							<a href="${tw.url}" target="_blank">[@text_cut s=tw.title! len='16' /]</a>
+						</li>
+						[/#if] 
+						[/#list] 
+						[/@cms_content_list]
+					</ul>
+				</div>
+
+			</div>
+			
+			<div style="clear: both;"></div>
+			<div class="bank">
+				<div class="title">
+					<a href="${base}/lc/index.jhtml">
+						<span>理财</span>
+					</a>
+				</div>
+				<div class=" hot_article">
+					[@cms_content_list count='4' orderBy='2' titLen='20' channelOption='1' channelId='140'] 
+					[#list tag_list as tw] 
+					[#if tw_index+1 = 1]
+					<a href="${tw.url}" target="_blank">
+						[#if tw.typeImg?? || tw.titleImg??]
+						<img src="${tw.titleImg!tw.typeImg!}" width="130" height="90" />
+						[#else]
+						<img src="/${res}/images/caijing.png" width="130" height="90" />
+						[/#if]
+					</a>
+					<div class="hot_cont">
+						<h4>
+							<a href="${tw.url}" target="_blank">[@text_cut s=tw.title! len='16' append='...'/]</a>
+						</h4>
+						<a href="${tw.url}" target="_blank">[@text_cut s=tw.description! len='36' /]</a>
+					</div>
+					<div style="clear: both;"></div>
+					[/#if] [/#list] [/@cms_content_list]
+					<ul>
+						[@cms_content_list count='4' orderBy='2' titLen='20' channelOption='1' channelId='140'] 
+						[#list tag_list as tw]
+						[#if tw_index+1 > 1]
+						<li>
+							<span>${tw.date?string('yyyy-MM-dd')}</span>
+							<a href="${tw.url}" target="_blank">[@text_cut s=tw.title! len='16' /]</a>
+						</li>
+						[/#if] [/#list] [/@cms_content_list]
+					</ul>
+				</div>
+
+			</div>
+			<!--金融产品推荐 结束-->
+
+
+			<!--理财工具 开始-->
+			<div class="top_title mt20">理财工具</div>
+			<div style="clear: both;"></div>
+			<div class="tool">
+				<ul>
+					<li>
+						<a href="http://www.hsdcw.com/data/search.htm#stock" target="_blank">
+							<img src="/${res}/images/jr_01.png" width="68" height="68" />
+							股票信息
+						</a>
+					</li>
+					<li>
+						<a href="http://www.hsdcw.com/html/2009-11-11/226543.htm" target="_blank">
+							<img src="/${res}/images/jr_02.png" width="68" height="68" />
+							个人所得税
+						</a>
+					</li>
+					<li>
+						<a href="http://bj.house.sina.com.cn/bxjsq/" target="_blank">
+							<img src="/${res}/images/jr_03.png" width="68" height="68" />
+							按揭计算器
+						</a>
+					</li>
+
+				</ul>
+
+			</div>
+			<!--理财工具 结束-->
+		</div>
+	</div>
+	<!--内容 end-->
+
+	<!--尾部 开始-->
+	[#include "../include/footer.html"/]
+	<!--尾部 结束-->
+
+	<script type="text/javascript" src="/${res}/js/dc/jquery-2.2.4.min.js"></script>
+	<script type="text/javascript" src="/${res}/js/dc/settitle.js"></script>
+	<script type="text/javascript" src="/${res}/js/dc/pic_tab.js"></script>
+	<script type="text/javascript">
+		jq('#demo1').banqh({
+			box : "#demo1",//总框架
+			pic : "#ban_pic1",//大图框架
+			pnum : "#ban_num1",//小图框架
+			prev_btn : "#prev_btn1",//小图左箭头
+			next_btn : "#next_btn1",//小图右箭头
+			pop_prev : "#prev2",//弹出框左箭头
+			pop_next : "#next2",//弹出框右箭头
+			prev : "#prev1",//大图左箭头
+			next : "#next1",//大图右箭头
+			pop_div : "#demo2",//弹出框框架
+			pop_pic : "#ban_pic2",//弹出框图片框架
+			pop_xx : ".pop_up_xx",//关闭弹出框按钮	
+			autoplay : true,//是否自动播放
+			interTime : 3000,//图片自动切换间隔
+			delayTime : 400,//切换一张图片时间
+			pop_delayTime : 400,//弹出框切换一张图片时间
+			order : 0,//当前显示的图片（从0开始）
+			picdire : true,//大图滚动方向（true为水平方向滚动）
+			mindire : true,//小图滚动方向（true为水平方向滚动）
+			min_picnum : 5,//小图显示数量
+
+		})
+	</script>
+
+</body>
+
+</html>

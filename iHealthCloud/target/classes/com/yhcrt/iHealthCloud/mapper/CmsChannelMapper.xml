@@ -1,0 +1,447 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.iHealthCloud.mapper.CmsChannelMapper">
+	<resultMap id="BaseResultMap" type="com.yhcrt.iHealthCloud.entity.CmsChannel">
+		<id column="channel_id" jdbcType="INTEGER" property="channelId" />
+		<result column="parent_id" jdbcType="INTEGER" property="parentId" />
+		<result column="channel_name" jdbcType="VARCHAR" property="channelName" />
+		<result column="channel_desc" jdbcType="VARCHAR" property="channelDesc" />
+		<result column="channel_url" jdbcType="VARCHAR" property="channelUrl" />
+		<result column="open_type" jdbcType="VARCHAR" property="openType" />
+		<result column="title_img" jdbcType="VARCHAR" property="titleImg" />
+		<result column="channel_tpl" jdbcType="VARCHAR" property="channelTpl" />
+		<result column="channel_mobile_tpl" jdbcType="VARCHAR" property="channelMobileTpl" />
+		<result column="content_tpl" jdbcType="VARCHAR" property="contentTpl" />
+		<result column="content_mobile_tpl" jdbcType="VARCHAR" property="contentMobileTpl" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+		<result column="allow_comment" jdbcType="VARCHAR" property="allowComment" />
+		<result column="create_time" jdbcType="VARCHAR" property="createTime" />
+		<result column="order_num" jdbcType="INTEGER" property="orderNum" />
+		<association property="parentChannel" column="parent_id" select="selectByPrimaryKey"></association>
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value}
+									and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		channel_id, parent_id, channel_name, channel_desc,
+		channel_url, open_type,
+		title_img,
+		channel_tpl, channel_mobile_tpl,
+		content_tpl, content_mobile_tpl, status,
+		allow_comment,
+		create_time,
+		order_num
+	</sql>
+	<select id="selectByExample" parameterType="com.yhcrt.iHealthCloud.entity.CmsChannelExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from cms_channel
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from cms_channel
+		where channel_id = #{channelId,jdbcType=INTEGER}
+	</select>
+	
+	<select id="getRootChannel" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from cms_channel where parent_id is null
+	</select>
+
+	<select id="getChildChannelByParentId" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from cms_channel
+		where parent_id = #{parentId,jdbcType=INTEGER}
+		and
+		status != 1 order by
+		channel_id desc
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		cms_channel
+		where channel_id = #{channelId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.yhcrt.iHealthCloud.entity.CmsChannelExample">
+		delete from cms_channel
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.yhcrt.iHealthCloud.entity.CmsChannel">
+		insert into cms_channel
+		(channel_id, parent_id, channel_name,
+		channel_desc, channel_url,
+		open_type,
+		title_img, channel_tpl, channel_mobile_tpl,
+		content_tpl,
+		content_mobile_tpl, status,
+		allow_comment, create_time, order_num
+		)
+		values (#{channelId,jdbcType=INTEGER}, #{parentId,jdbcType=INTEGER},
+		#{channelName,jdbcType=VARCHAR},
+		#{channelDesc,jdbcType=VARCHAR},
+		#{channelUrl,jdbcType=VARCHAR}, #{openType,jdbcType=VARCHAR},
+		#{titleImg,jdbcType=VARCHAR}, #{channelTpl,jdbcType=VARCHAR},
+		#{channelMobileTpl,jdbcType=VARCHAR},
+		#{contentTpl,jdbcType=VARCHAR},
+		#{contentMobileTpl,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+		#{allowComment,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR},
+		#{orderNum,jdbcType=INTEGER}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.yhcrt.iHealthCloud.entity.CmsChannel">
+		insert into cms_channel
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="channelId != null">
+				channel_id,
+			</if>
+			<if test="parentId != null">
+				parent_id,
+			</if>
+			<if test="channelName != null">
+				channel_name,
+			</if>
+			<if test="channelDesc != null">
+				channel_desc,
+			</if>
+			<if test="channelUrl != null">
+				channel_url,
+			</if>
+			<if test="openType != null">
+				open_type,
+			</if>
+			<if test="titleImg != null">
+				title_img,
+			</if>
+			<if test="channelTpl != null">
+				channel_tpl,
+			</if>
+			<if test="channelMobileTpl != null">
+				channel_mobile_tpl,
+			</if>
+			<if test="contentTpl != null">
+				content_tpl,
+			</if>
+			<if test="contentMobileTpl != null">
+				content_mobile_tpl,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="allowComment != null">
+				allow_comment,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="orderNum != null">
+				order_num,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="channelId != null">
+				#{channelId,jdbcType=INTEGER},
+			</if>
+			<if test="parentId != null">
+				#{parentId,jdbcType=INTEGER},
+			</if>
+			<if test="channelName != null">
+				#{channelName,jdbcType=VARCHAR},
+			</if>
+			<if test="channelDesc != null">
+				#{channelDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="channelUrl != null">
+				#{channelUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="openType != null">
+				#{openType,jdbcType=VARCHAR},
+			</if>
+			<if test="titleImg != null">
+				#{titleImg,jdbcType=VARCHAR},
+			</if>
+			<if test="channelTpl != null">
+				#{channelTpl,jdbcType=VARCHAR},
+			</if>
+			<if test="channelMobileTpl != null">
+				#{channelMobileTpl,jdbcType=VARCHAR},
+			</if>
+			<if test="contentTpl != null">
+				#{contentTpl,jdbcType=VARCHAR},
+			</if>
+			<if test="contentMobileTpl != null">
+				#{contentMobileTpl,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="allowComment != null">
+				#{allowComment,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=VARCHAR},
+			</if>
+			<if test="orderNum != null">
+				#{orderNum,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.yhcrt.iHealthCloud.entity.CmsChannelExample"
+		resultType="java.lang.Long">
+		select count(*) from cms_channel
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update cms_channel
+		<set>
+			<if test="record.channelId != null">
+				channel_id = #{record.channelId,jdbcType=INTEGER},
+			</if>
+			<if test="record.parentId != null">
+				parent_id = #{record.parentId,jdbcType=INTEGER},
+			</if>
+			<if test="record.channelName != null">
+				channel_name = #{record.channelName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.channelDesc != null">
+				channel_desc = #{record.channelDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="record.channelUrl != null">
+				channel_url = #{record.channelUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="record.openType != null">
+				open_type = #{record.openType,jdbcType=VARCHAR},
+			</if>
+			<if test="record.titleImg != null">
+				title_img = #{record.titleImg,jdbcType=VARCHAR},
+			</if>
+			<if test="record.channelTpl != null">
+				channel_tpl = #{record.channelTpl,jdbcType=VARCHAR},
+			</if>
+			<if test="record.channelMobileTpl != null">
+				channel_mobile_tpl =
+				#{record.channelMobileTpl,jdbcType=VARCHAR},
+			</if>
+			<if test="record.contentTpl != null">
+				content_tpl = #{record.contentTpl,jdbcType=VARCHAR},
+			</if>
+			<if test="record.contentMobileTpl != null">
+				content_mobile_tpl =
+				#{record.contentMobileTpl,jdbcType=VARCHAR},
+			</if>
+			<if test="record.status != null">
+				status = #{record.status,jdbcType=INTEGER},
+			</if>
+			<if test="record.allowComment != null">
+				allow_comment = #{record.allowComment,jdbcType=VARCHAR},
+			</if>
+			<if test="record.createTime != null">
+				create_time = #{record.createTime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.orderNum != null">
+				order_num = #{record.orderNum,jdbcType=INTEGER},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update cms_channel
+		set channel_id =
+		#{record.channelId,jdbcType=INTEGER},
+		parent_id =
+		#{record.parentId,jdbcType=INTEGER},
+		channel_name =
+		#{record.channelName,jdbcType=VARCHAR},
+		channel_desc =
+		#{record.channelDesc,jdbcType=VARCHAR},
+		channel_url =
+		#{record.channelUrl,jdbcType=VARCHAR},
+		open_type =
+		#{record.openType,jdbcType=VARCHAR},
+		title_img =
+		#{record.titleImg,jdbcType=VARCHAR},
+		channel_tpl =
+		#{record.channelTpl,jdbcType=VARCHAR},
+		channel_mobile_tpl =
+		#{record.channelMobileTpl,jdbcType=VARCHAR},
+		content_tpl =
+		#{record.contentTpl,jdbcType=VARCHAR},
+		content_mobile_tpl =
+		#{record.contentMobileTpl,jdbcType=VARCHAR},
+		status =
+		#{record.status,jdbcType=INTEGER},
+		allow_comment =
+		#{record.allowComment,jdbcType=VARCHAR},
+		create_time =
+		#{record.createTime,jdbcType=VARCHAR},
+		order_num =
+		#{record.orderNum,jdbcType=INTEGER}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.iHealthCloud.entity.CmsChannel">
+		update cms_channel
+		<set>
+			<if test="parentId != null">
+				parent_id = #{parentId,jdbcType=INTEGER},
+			</if>
+			<if test="channelName != null">
+				channel_name = #{channelName,jdbcType=VARCHAR},
+			</if>
+			<if test="channelDesc != null">
+				channel_desc = #{channelDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="channelUrl != null">
+				channel_url = #{channelUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="openType != null">
+				open_type = #{openType,jdbcType=VARCHAR},
+			</if>
+			<if test="titleImg != null">
+				title_img = #{titleImg,jdbcType=VARCHAR},
+			</if>
+			<if test="channelTpl != null">
+				channel_tpl = #{channelTpl,jdbcType=VARCHAR},
+			</if>
+			<if test="channelMobileTpl != null">
+				channel_mobile_tpl =
+				#{channelMobileTpl,jdbcType=VARCHAR},
+			</if>
+			<if test="contentTpl != null">
+				content_tpl = #{contentTpl,jdbcType=VARCHAR},
+			</if>
+			<if test="contentMobileTpl != null">
+				content_mobile_tpl =
+				#{contentMobileTpl,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="allowComment != null">
+				allow_comment = #{allowComment,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=VARCHAR},
+			</if>
+			<if test="orderNum != null">
+				order_num = #{orderNum,jdbcType=INTEGER},
+			</if>
+		</set>
+		where channel_id = #{channelId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.yhcrt.iHealthCloud.entity.CmsChannel">
+		update cms_channel
+		set parent_id = #{parentId,jdbcType=INTEGER},
+		channel_name =
+		#{channelName,jdbcType=VARCHAR},
+		channel_desc =
+		#{channelDesc,jdbcType=VARCHAR},
+		channel_url =
+		#{channelUrl,jdbcType=VARCHAR},
+		open_type =
+		#{openType,jdbcType=VARCHAR},
+		title_img = #{titleImg,jdbcType=VARCHAR},
+		channel_tpl = #{channelTpl,jdbcType=VARCHAR},
+		channel_mobile_tpl =
+		#{channelMobileTpl,jdbcType=VARCHAR},
+		content_tpl =
+		#{contentTpl,jdbcType=VARCHAR},
+		content_mobile_tpl =
+		#{contentMobileTpl,jdbcType=VARCHAR},
+		status =
+		#{status,jdbcType=INTEGER},
+		allow_comment =
+		#{allowComment,jdbcType=VARCHAR},
+		create_time =
+		#{createTime,jdbcType=VARCHAR},
+		order_num =
+		#{orderNum,jdbcType=INTEGER}
+		where channel_id =
+		#{channelId,jdbcType=INTEGER}
+	</update>
+</mapper>

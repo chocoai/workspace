@@ -1,0 +1,327 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>东楚论坛</title>
+<link href="${base}/style/main.css" rel="stylesheet" type="text/css">
+<link href="${base}/style/lanmu.css" rel="stylesheet" type="text/css">
+<link href="${base}/style/personal.css" rel="stylesheet" type="text/css">
+<link href="${base}/style/upload.css" rel="stylesheet" type="text/css">
+<link href="${base}/style/page.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${base}/js/jquery.js"></script>
+<script type="text/javascript" src="${base}/js/popwin.js"></script>
+<script type="text/javascript" src="${base}/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".shezhi").click(function() {
+			if ($(".setup_list").css('display') == 'none') {
+				$(".setup_list").slideDown(200);
+				$(".sev b").removeClass('slidedown');
+				$(".sev b").addClass('slideup');
+			} else {
+				$(".setup_list").slideUp(200);
+				$(".sev b").removeClass('slideup');
+				$(".sev b").addClass('slidedown');
+
+			}
+		});
+	});
+	
+	function concern(concernUserId,userId){
+ 		if(concernUserId == userId){
+ 			return ;
+ 		}
+ 		if(userId == ""){
+ 			location.href = "${base}/login.jspx";
+ 			return ;
+ 		}
+		$.ajax({
+ 			url:"${base}/member/concern_add.jspx",
+ 			type:"post",
+ 			data:{"concernUserId":concernUserId,"userId":userId},
+ 			dataType:"text",
+ 			success:function(data){
+ 				if(data == -1){
+ 					location.href = "${base}/login.jspx";
+ 				}else if(data == 1){
+ 					$("#add_concern").hide();
+ 					$("#delete_concern").show();
+ 					alert("关注成功");
+ 				}else if(data == 2){
+ 					$("#delete_concern").hide();
+ 					$("#add_concern").show();
+ 					alert("取消关注成功");
+ 				}
+ 			}
+ 		});
+ 	}
+	
+	function applyFriend(bbsUserId,userId){
+		if(userId == ''){
+			location.href = "${base}/login.jspx";
+			return ;
+		}
+		$('#caseHistory').addClass('is-visible3');
+		$("#apply_user_id").val(bbsUserId);
+		return ;
+	}
+</script>
+</head>
+
+<body class="body">
+	<!---------顶部----------->
+	<div class="p_top">
+		<div class="p_top_center">
+			<div class="p_top_l">
+				<h1>
+					<a href="${base}/"><img src="${base}/images/logo.png" alt="" /></a>
+				</h1>
+				<ul>
+					<li class="one"><a href="/">东楚网首页</a></li>
+					<li class="two"><a href="${base}/">论坛</a></li>
+					<li class="thr now"><a href="${base}/member/index.jhtml">个人中心</a></li>
+				</ul>
+			</div>
+			[#if user??]
+			<div class="p_top_r">
+				<span class="p_user"><a href="${base}/member/index.jhtml"><i></i>${user.username}</a></span>
+				<span class="p_exit"><a
+					href="${base}/logout.jspx?returnUrl=/">退出</a></span>
+				<div class="here_but">
+					[#if isSign?? && isSign]
+					<a href="javascript:void(0);">已打卡</a>
+					[#else]
+					<a href="javascript:void(0);" onclick="sign('${user.id}')">每日打卡</a>
+					[/#if]
+				</div>
+			</div>
+			[#else]
+			<div class="top_r">
+				<ul>
+					<li><a href="#"><img src="${base}/images/icon_signin_01.png"
+							alt="" /></a></li>
+					<li><a href="#"><img src="${base}/images/icon_signin_02.png"
+							alt="" /></a></li>
+					<li><a href="#"><img src="${base}/images/icon_signin_03.png"
+							alt="" /></a></li>
+				</ul>
+				<div class="dlzc">
+					<span><a href="${base}/login.jspx">登录</a></span>
+					<span class="register"><a href="${base}/register.jspx">注册</a></span>
+				</div>
+			</div>
+			[/#if]
+		</div>
+	</div>
+
+	<!-------用户信息-------->
+	<div class="inf_box">
+		<div class="inf">
+			<div class="inf_l">
+				<a href="${base}/personal/other_information${otherUser.id}.jspx">
+					<img src="${base}/images/default_user.jpg" alt="" />
+				</a>
+			</div>
+			<div class="inf_r">
+				<p class="inf_user_name">
+					<a class="othername" href="${base}/personal/other_information${otherUser.id}.jspx">${otherUser.username}</a>
+					[#if isConcern?? && isConcern]
+					<a href="javascript:void(0);" class="inf_user_care" id="add_concern" style="display: none;" onclick="concern('${otherUser.id}','${user.id}')"><i></i>加关注</a>
+					<a href="javascript:void(0);" class="inf_user_nocare" id="delete_concern" onclick="concern('${otherUser.id}','${user.id}')"><i></i>已关注 | 取消</a>
+					[#else]
+						[#if user??]
+						<a href="javascript:void(0);" class="inf_user_care" id="add_concern" onclick="concern('${otherUser.id!}','${user.id!}')"><i></i>加关注</a>
+						<a href="javascript:void(0);" class="inf_user_nocare" id="delete_concern" style="display: none;" onclick="concern('${otherUser.id}','${user.id!}')"><i></i>已关注 | 取消</a>
+						[#else]
+						<a href="javascript:void(0);" class="inf_user_care" id="add_concern" onclick="concern('${otherUser.id!}','')"><i></i>加关注</a>
+						<a href="javascript:void(0);" class="inf_user_nocare" id="delete_concern" style="display: none;" onclick="concern('${otherUser.id}','')"><i></i>已关注 | 取消</a>
+						[/#if]
+					[/#if]
+					[#if isFriend?? && isFriend]
+					<a href="javascript:void(0);" class="inf_user_nofriend"><i></i>我的好友</a>
+					[#else]
+						[#if user??]
+						<a href="javascript:void(0);" onclick="applyFriend('${otherUser.id!}','${user.id!}')" class="inf_user_friend"><i></i>加好友</a>
+						[#else]
+						<a href="javascript:void(0);" onclick="applyFriend('${otherUser.id!}','')" class="inf_user_friend"><i></i>加好友</a>
+						[/#if]
+					[/#if]
+				</p>
+				<p class="inf_user_d">
+					<span class="inf_tz"><i></i>帖子：<b>${otherUser.topicCount}</b></span>
+					<span class="inf_tb"><i></i>铜币：<b>${otherUser.point}</b></span>
+					<span class="inf_dj"><i></i>等级：<b>${otherUser.group.name}</b></span>
+				</p>
+			</div>
+		</div>
+	</div>
+
+	<!------------------中间内容部分------------------------>
+
+	<!------------------中间内容部分------------------------>
+	<div class="center">
+		<div class="content">
+			<!------菜单------->
+			<div class="menu othermenu">
+				<ul class="menu_list othermenu_list">
+					<li class="othermenu_top">个人资料</li>
+					<li class="othermenuli">
+						<a href="${base}/personal/other_information${otherUser.id}.jspx">资料</a>
+					</li>
+					<li class="othermenuli now">
+						<a href="${base}/personal/other_topic${otherUser.id}.jspx">帖子</a>
+					</li>
+				</ul>
+			</div>
+
+			<!--------右侧内容部分——她回复的帖子--------->
+			<div class="content_r">
+				<div class="content_r_hd">TA的帖子</div>
+				<div class="xxk">
+					<span><a href="${base}/personal/other_topic${otherUser.id}.jspx">TA发起的帖子</a></span>
+					<span class="now"><a href="${base}/personal/other_reply_post${otherUser.id}.jspx">TA回复的帖子</a></span>
+				</div>
+				<div class="mypost">
+					<div class="mypost_hd">
+						<div class="mypost_hd_title">话题</div>
+						<div class="mypost_hd_write">作者</div>
+						<div class="mypost_hd_count">回复/点击</div>
+						<div class="mypost_hd_from">所在栏目</div>
+					</div>
+					[#if pageBean.list?size gt 0]
+					<ul class="tie_list">
+						[#list pageBean.list as post]
+						<li>
+							<p class="tie_title reply">
+								<a target="_blank" href="${post.topic.url}">${post.topic.title}</a>
+							</p>
+							<p class="tie_write">
+								<a href="${base}/personal/other_information${post.topic.creater.id}.jspx">${post.topic.creater.username}</a>
+								<span class="date">${post.topic.createTime?string("yyyy-MM-dd")}</span>
+							</p>
+							<p class="tie_count">${post.topic.replyCount}/${post.topic.viewCount}</p>
+							<p class="tie_from">
+								<a target="_blank" href="${post.topic.forum.url}">${post.topic.forum.title}</a>
+							</p>
+						</li>
+						[/#list]
+					</ul>
+					<div style="clear: left;height:8px;"></div>
+					<!--分页--->
+					<div class="page_box">
+						<div style="clear: left;">
+							[#import "/WEB-INF/t/cms/www/blue/tld/page.ftl" as tt]
+							[@tt.page pageBean=pageBean url="${base}/personal/other_reply_post${otherUser.id}.jspx" /]
+						</div>
+					</div>
+					[#else]
+					<div style="clear: left;height:8px;"></div>
+					<p style="height:20px;text-align:center;">TA还没有自己回复的帖子</p>
+					[/#if]
+				</div>
+			</div>
+
+
+			<!------页脚------>
+			<div class="footer">
+				<div class="footer_listbox">
+					<div class="footer_list">
+						
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<div id="caseHistory" class="fjsc">
+		<div class="fjsc_box">
+			<div class="fjsc_top"></div>
+			<div class="fjsc_head">
+				<div class="fjsc_tit">申请好友</div>
+				<div class="close icon-cross"><a href="javascript:void(0);"></a>X</div>
+			</div>
+			<div class="fjsc_con">
+				<form action="" method="post" name="applyForm" enctype="multipart/form-data">
+					<table width="410" border="0">
+						<tr>
+							<td style="width: 90px; height: 48px; text-align: right; font-size: 12px; color: #434343; padding-right: 10px;">申请理由：</td>
+							<td>
+								<input type="text" name="applyDesc" id="applyDesc" placeholder="您最多可以输入30个字..."
+									style="width: 310px; height: 30px; padding: 0 5px; font-size: 12px;" maxlength="30">
+							</td>
+						</tr>
+					</table>
+					<input type="hidden" value="" id="apply_user_id" name="id"/>
+					<div class="qdsc_butt">
+						<a href="javascript:;" onclick="doUpload()">确定申请</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!------------------返回顶部-------------------->
+	<div id="before">
+		<a href="http://bbs.hsdcw.com/" target="_blank" title="东楚论坛"
+			class='before'></a>
+	</div>
+	<div id="wechat" class="wechat">
+		<a href="javascript:void(0)"><div class="wechath"></div></a>
+	</div>
+	<a id="moquu_top" href="javascript:void(0)"></a>
+
+</body>
+<script type="text/javascript">
+/*弹框JS内容*/
+	jQuery(document).ready(
+		function() {
+			//关闭窗口
+			$('#caseHistory').on(
+				'click',
+				function(event) {
+					if ($(event.target).is('.close')
+							|| $(event.target).is('#caseHistory')) {
+						event.preventDefault();
+						$(this).removeClass('is-visible3');
+						$("#apply_user_id").val("");
+					}
+				});
+
+			//ESC关闭
+			$(document).keyup(function(event) {
+				if (event.which == '27') {
+					$('#caseHistory').removeClass('is-visible3');
+					$('#contacts').removeClass('is-visible3');
+					$("#apply_user_id").val("");
+				}
+			});
+	});
+	
+	function doUpload() {
+		$('#caseHistory').removeClass('is-visible3');
+		var formData = new FormData(document.forms.namedItem("applyForm"));
+		var url = "${base}/member/applyJson.jhtml";
+		$.ajax({
+			url : url,
+			type : 'POST',
+			data : formData,
+			async : false,
+			cache : false,
+			dataType : 'json',
+			contentType : false,
+			processData : false,
+			success : function(data) {
+				if(data.status == 1){
+					alert(data.msg);
+					location.reload();
+				}else{
+					alert(data.msg);
+				}
+				$('#applyDesc').val('');
+				$("#apply_user_id").val("");
+			}
+		});
+	}
+</script>
+</html>

@@ -1,0 +1,222 @@
+@charset "utf-8";
+body{background: #f2f2f2;}
+.w1200{width: 1200px;}
+.ni_mglr_auto{margin-left: auto;margin-right: auto;}
+.ni_g_bg_fff{background: #fff;}
+.ni_g_header{background: #fff;}
+.ni_g_header .ni_menu{font-size: 20px;}
+.ni_g_header .ni_menu a{color: #555555;margin:0 15px;padding:0 5px;line-height: 45px;border-bottom: 3px solid #fff;display: inline-block;}
+.ni_g_header .ni_menu a:hover,.ni_g_header .ni_menu a.hover{color: #00a0e9;text-decoration: none;border-bottom-color: #0e9cf6;}
+
+.ni_g_header .ni_unlogin{background: url('../images/ni_unlogin.png') no-repeat left center; padding-left: 27px;color: #888;font-size: 16px;line-height: 32px;}
+.ni_g_header .ni_unlogin:hover{text-decoration: none;}
+.ni_g_header .ni_img_hd{width: 32px;height: 32px;position: relative;}
+.ni_g_header .ni_img_hd img{width:100%;height: 100%;border-radius: 50%;}
+.ni_g_header .ni_txt_hd {font-size: 16px;line-height: 32px;color: #01a0e9;}
+
+/*统计列表 S*/
+.ni_g_tj .ni_ul .ni_li{float: left;width: 25%;padding:50px 0;}
+
+.ni_g_tj_lst .ni_img{width: 96px;	height: 96px;background: url('../images/ni_tj_ico.png') no-repeat center 0 #38adff;border-radius: 40px;}
+.ni_g_tj_lst.ni_i01 .ni_img{background-position: center 24px;}
+.ni_g_tj_lst.ni_i02 .ni_img{background-position: center -85px;}
+.ni_g_tj_lst.ni_i03 .ni_img{background-position: center -193px;}
+.ni_g_tj_lst.ni_i04 .ni_img{background-position: center -305px;}
+.ni_g_tj_lst.ni_i05 .ni_img{background-position: center -414px;}
+
+.ni_g_tj_lst .ni_txt{font-size: 20px;color: #888;line-height: 20px;}
+.ni_g_tj_lst .ni_num{font-size: 30px;color: #38adff;line-height: 30px;}
+/*统计列表 E*/
+
+/*标题 S*/
+.ni_g_tit{height: 60px;line-height: 60px;border-bottom: 1px solid #f2f2f2;}
+.ni_g_tit .ni_tit a{height: 60px;color: #555;font-size: 18px;display: inline-block;position: relative;margin-right: 100px;}
+.ni_g_tit .ni_tit a:hover,.ni_g_tit .ni_tit a.hover{text-decoration: none;color: #00a0e9;border-bottom: 1px solid #0e9cf6;}
+.ni_g_tit .ni_tit a:after{content:" ";position: absolute;width: 1px;height: 16px;margin-top: -8px;top: 50%;right: -50px;background: #dedede;}
+.ni_g_tit .ni_tit a:last-child:after{content:none;}
+.ni_g_time_area a{padding:0 10px;color: #555555;font-size: 14px;line-height: 22px;display: inline-block;border-radius: 11px;margin-right: 15px;}
+.ni_g_time_area a:hover,.ni_g_time_area a.hover{background: #309aeb;text-decoration: none;color: #fff;}
+/*标题 E*/
+
+/*table切换 S*/
+.ni_g_tab .ni_g_cont .ni_tab{display: none;}
+.ni_g_tab .ni_g_cont .ni_tab.hover{display: block;}
+/*table切换 E*/
+/*图表 S*/
+.ni_g_echarts_tips{font-size: 12px;color: #888888;margin:15px 45px;}
+.ni_g_echarts_tips em{color: #ec6060;}
+/*图表 E*/
+
+/*table表格 S*/
+.ni_g_table01 table{width: 100%;border-collapse: collapse;}
+.ni_g_table01 table td,.ni_g_table01 table th{border: 1px solid #e9e9e9;height: 40px;}
+.ni_g_table01 table th{background: #edeff5;font-weight: 500;font-size: 16px;color: #222222;}
+.ni_g_table01 table td{color: #555;font-size: 14px;}
+/*table表格 E*/
+
+
+/*排名图标 S*/
+.ni_g_pm_tit{background: url('../images/ni_g_pm_ico.png') no-repeat left 0;line-height: 25px;color: #288add;font-size: 18px;padding-left: 35px;}
+.ni_g_pm_tit.ni_i01{background-position: left 0;}
+.ni_g_pm_tit.ni_i02{background-position: left -47px;}
+.ni_g_pm_tit.ni_i03{background-position: left -90px;}
+.ni_g_pm_tit.ni_i04{background-position: left -139px;}
+.ni_g_pm_tit.ni_i05{background-position: left -185px;}
+/*排名图标 E*/
+
+/*教师使用排名 S*/
+.ni_g_pm_list01 .ni_li .ni_dd{background: #f8f8f8;height: 40px;line-height: 40px;margin-bottom: 8px;}
+.ni_g_pm_list01 .ni_li .ni_dd .ni_num{height: 24px;margin-top: 8px;background: #c5efff;color: #fff;font-size: 14px;width: 34px;border-radius: 0 12px 12px 0;line-height: 24px;}
+.ni_g_pm_list01 .ni_li .ni_dd .ni_name{font-size: 16px;color: #555;}
+.ni_g_pm_list01 .ni_li .ni_dd .ni_st{font-size: 12px;background: url('../images/updown.png') no-repeat left 0;padding-left: 11px;}
+.ni_g_pm_list01 .ni_li .ni_dd .ni_st.ni_up{background-position: left 14px;}
+.ni_g_pm_list01 .ni_li .ni_dd .ni_st.ni_down{background-position: left -23px;}
+.ni_g_pm_list01 .ni_li .ni_dd .ni_time{color: #288add;font-size: 16px;}
+.ni_g_pm_list01 .ni_li .ni_dd.ni_dd01 .ni_num{background: #ef9296;}
+.ni_g_pm_list01 .ni_li .ni_dd.ni_dd01 .ni_name{color: #ec6c72;}
+.ni_g_pm_list01 .ni_li .ni_dd.ni_dd02 .ni_num{background: #fbc248;}
+.ni_g_pm_list01 .ni_li .ni_dd.ni_dd03 .ni_num{background: #59b1fc;}
+
+.ni_g_pm_tear .ni_li{width: 29%;margin:0 2.16666666%;float: left;}
+.ni_g_pm_tear .ni_li.ni_li02 .ni_st{color: #288add;font-size: 16px;padding-left: 15px;}
+
+/*教师使用排名 S*/
+
+.ni_g_c_888888{color: #888;}
+
+/*应用使用情况 S*/
+.ni_g_app_user .ni_li{float: left;}
+.ni_g_app_user .ni_li.ni_li01{width: 334px;}
+.ni_g_app_user .ni_li.ni_li02{margin-left: 50px;width: 738px;}
+.ni_g_black_a a{color: #555;width: 30%;height: 60px;display: block;float:left;background: #f8f8f8;line-height: 60px;text-align: center;font-size: 18px;margin-bottom: 26px;margin-right: 3%;}
+.ni_g_black_a a:hover{text-decoration: none;}
+/*应用使用情况 E*/
+
+/*底部 S*/
+.ni_g_footer{background: #ebebeb;border-top:1px solid #dddddd;margin-top: 50px;padding:40px 0;line-height: 30px;}
+/*底部 E*/
+
+.mglr40{margin-left: 40px;margin-right: 40px;}
+
+/*设备列表 S*/
+.ni_g_tab_lt a{color: #555555;font-size: 12px;display: inline-block;line-height: 30px;margin-right: 50px;padding:0 15px;border-radius: 2px;position: relative;}
+.ni_g_tab_lt a:hover,.ni_g_tab_lt a.hover{background: #38adff;color: #fff;text-decoration: none;}
+.ni_g_tab_lt a:after{content:" ";width:1px;height: 16px;right: -25px;margin-top: -8px;top: 50%;background: #dddddd;position: absolute;}
+.ni_g_tab_lt a:last-child:after{content: none;}
+.ni_g_lt_btn a{line-height: 30px;display: inline-block;border: 1px solid #38adff;font-size: 12px;padding:0 15px;color: #38adff;border-radius: 2px;margin-left: 8px;}
+.ni_g_lt_btn a:hover{text-decoration: none;}
+
+.ni_g_dev_table .ni_on{color: #05be24;}
+.ni_g_dev_table .ni_off{color: #999999;}
+.ni_is_lock.on{background: url('../images/ni_unlock.png') no-repeat center center;}
+.ni_is_lock.off{background: url('../images/ni_lock.png') no-repeat center center;}
+.ni_g_dev_table a{margin:0 5px;}
+.ni_g_dev_table a.ni_un{color: #999999;}
+.ni_g_dev_table a:hover{text-decoration: none;color: #fa791a;}
+/*设备列表 E*/
+
+/*终端管控 S*/
+.ni_g_pop_zdgk .ni_lb{font-size: 12px;	color: #555555;width: 90px;}
+.ni_g_pop_zdgk .ni_lb span{line-height: 36px;color: #555555;display: block;text-align: center;cursor: pointer;}
+.ni_g_pop_zdgk .ni_lb span.hover,.ni_g_pop_zdgk .ni_lb span:hover{color: #53a9ff;background: #e3effd;}
+
+.ni_g_pop_zdgk .ni_cont .ni_d1 a{width: 118px;height: 38px;border: 1px solid #f6acac;display: inline-block;line-height: 38px;text-align: center;font-size: 16px;border-radius: 4px;color: #f6acac;}
+.ni_g_pop_zdgk .ni_cont .ni_d1 a:hover{text-decoration: none;}
+.ni_g_pop_zdgk .ni_cont .ni_d1 a.ni_res{color: #555555;border-color: #dddddd;}
+.ni_g_pop_zdgk .ni_cont .ni_d1 a span{background: url('../images/ni_res_off.png') no-repeat 0 0;padding-left: 25px;}
+.ni_g_pop_zdgk .ni_cont .ni_d1 a.ni_res span{background-position:  0 -34px;}
+.ni_g_pop_zdgk .ni_cont .ni_d1 a.ni_off{background: url('../images/ni_g_right.png') no-repeat right bottom;}
+.ni_g_pop_zdgk .ni_cont .ni_d_lr{line-height: 32px;color: #555;font-size: 14px;}
+.ni_g_pop_zdgk .ni_cont .ni_d_lr .ni_name{width:70px;}
+
+.ni_g_pop_txt_udp .ni_tit{color: #555555;font-size: 14px;line-height: 40px;width: 80%;margin:0 auto;}
+.ni_g_pop_txt_udp .ni_d_lr{width:80%;margin-left:auto;margin-right: auto;line-height: 30px;}
+.ni_g_pop_txt_udp .ni_d_lr .inp{vertical-align: top;}
+
+.ni_g_tit .ni_g_tit a{color: #222;font-size: 14px;}
+.ni_g_tit .ni_g_tit a.hover{color: #555555;}
+.ni_g_tit .ni_g_tit a:hover{text-decoration: none;}
+.ni_g_tit .ni_g_tit em{font-family: "宋体";color: #c1c1c1;}
+
+.ni_g_btn{border: 1px solid #38adff;color: #38adff;font-size: 14px;line-height: 28px;display: inline-block;padding:0 15px;border-radius: 2px;vertical-align: middle;}
+.ni_g_btn:hover{text-decoration: none;border-color: #ef3b6a;}
+
+/*终端管控 E*/
+.ni_g_c_888888{color: #888;}
+
+
+/*设备列表 S*/
+.ni_g_kz_lr .ni_screen .ni_img{border: 1px solid #d7e8ec;height: 318px;}
+.ni_g_kz_lr .ni_screen .ni_img img{height: 100%;}
+.ni_g_kz_lr .ni_screen .ni_btn a {font-size: 14px;border: 1px solid #fff;padding:0 10px;display: inline-block;border-radius: 2px;display: block;float: left;margin-right: 10px;}
+.ni_g_kz_lr .ni_screen .ni_btn a.ni_last{margin-right: 0;}
+.ni_g_kz_lr .ni_screen .ni_btn a span{background: url('../images/ni_g_ct.png') no-repeat left 0;padding-left: 20px;line-height: 28px;display: inline-block;}
+.ni_g_kz_lr .ni_screen .ni_btn a.ni_i01{border-color: #f6acac;}
+.ni_g_kz_lr .ni_screen .ni_btn a.ni_i01 span{background-position: 0 5px;color: #f6acac;}
+.ni_g_kz_lr .ni_screen .ni_btn a.ni_i02{border-color: #97e99d;}
+.ni_g_kz_lr .ni_screen .ni_btn a.ni_i02 span{background-position: 0 -28px;color: #97e99d;}
+.ni_g_kz_lr .ni_screen .ni_btn a.ni_i03{border-color: #ffab67;}
+.ni_g_kz_lr .ni_screen .ni_btn a.ni_i03 span{background-position: 0 -61px;color: #ffab67;}
+.ni_g_kz_lr .ni_screen .ni_btn a.ni_i04{border-color: #a3a7f4;}
+.ni_g_kz_lr .ni_screen .ni_btn a.ni_i04 span{background-position: 0 -92px;color: #a3a7f4;}
+.ni_g_kz_lr .ni_screen .ni_btn a.ni_i05{border-color: #2ec7c9;}
+.ni_g_kz_lr .ni_screen .ni_btn a.ni_i05 span{background-position: 0 -123px;color: #2ec7c9;}
+.ni_g_kz_lr .ni_screen .ni_btn a.ni_i06{border-color: #9bb4da;}
+.ni_g_kz_lr .ni_screen .ni_btn a.ni_i06 span{background-position: 0 -154px;color: #9bb4da;}
+
+.ni_g_kz_lr .ni_screen .ni_btn a.ni_no_at span{background-image: url('../images/ni_g_ct_1.png');}
+.ni_g_kz_lr .ni_screen .ni_btn a.ni_no_at{border-color: #c0c0c0;}
+.ni_g_kz_lr .ni_screen .ni_btn a.ni_no_at span{color: #c0c0c0;}
+
+.ni_g_kz_lr .ni_connect{width: 510px;border: 1px solid #ececec;background: #fcfcfc;height:309px;}
+.ni_g_kz_lr .ni_connect .ni_tit{background: #f2f2f2;color: #555;height: 40px;line-height: 40px;font-size: 14px;padding:0 30px;}
+.ni_g_kz_lr .ni_connect .ni_p{font-size: 16px;color: #555;margin-left: 30px;margin-right: 30px;margin-bottom: 13px;line-height: 34px;}
+.ni_g_kz_lr .ni_connect .ni_p .ni_n{color: #888888;}
+.ni_g_kz_lr .ni_connect .ni_p .inp{font-size: 16px;padding:0 5px;height: 30px;vertical-align: top;color: #999999;}
+.ni_g_kz_lr .ni_connect .ni_p .inp.ni_un{border-color: #fcfcfc;background: #fcfcfc;}
+.ni_fun_undisabled{cursor: pointer;}
+.ni_g_dev_list_tb td,ni_g_dev_list_th{padding:10px 0;}
+.ni_g_tab_img img{margin-right: 10px;width: 70px;height: 40px;cursor: pointer;}
+.ni_g_pop_app_jk .ni_g_black_a a{height: 40px;line-height: 40px;border-radius: 4px;width:23%;margin-right: 2%;margin-bottom: 15px;}
+
+/*设备列表 E*/
+.ni_g_c_38adff{color: #38adff;}
+.ni_g_c_555555{color: #555;}
+
+/*统计报表 S*/
+.ni_g_tjbb.ni_g_tj .ni_ul .ni_li{width: 33.3333%;}
+/*统计报表 E*/
+
+.lh30{line-height: 30px;}
+
+.ni_g_pop_show_imgs_list .ni_img_box{padding:35px 85px;position: relative;}
+.ni_g_pop_show_imgs_list .ni_list{width: 700px;height: 400px;overflow: hidden;}
+.ni_g_pop_show_imgs_list .ni_list .ni_ul{width: 10000%;}
+.ni_g_pop_show_imgs_list .ni_list .ni_ul .ni_li{float: left;}
+.ni_g_pop_show_imgs_list .ni_list img{width: 700px;height: 400px;}
+.ni_g_pop_show_imgs_list .ni_img_box .ni_prev,.ni_g_pop_show_imgs_list .ni_img_box .ni_next{width: 45px;height: 90px;background: url('../images/lr_jt.png') no-repeat center 0 #dddddd;position: absolute;top: 50%;margin-top: -45px;border-radius: 4px;cursor: pointer;}
+.ni_g_pop_show_imgs_list .ni_img_box .ni_prev{left: 20px;background-position: center 0;}
+.ni_g_pop_show_imgs_list .ni_img_box .ni_next{right: 20px;background-position: center bottom;}
+.ni_g_pop_show_imgs_list .ni_img_box .ni_prev:hover,.ni_g_pop_show_imgs_list .ni_img_box .ni_next:hover{background-color: #b2afaf;}
+.ni_g_pop_show_imgs_list .ni_img_box .ni_prev.no_hover:hover,.ni_g_pop_show_imgs_list .ni_img_box .ni_next.no_hover:hover{background-color: #dddddd;}
+.ni_g_pop_show_imgs_list .ni_del{font-size: 16px;	color: #555555;}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

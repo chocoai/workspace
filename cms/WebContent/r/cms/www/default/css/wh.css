@@ -1,0 +1,193 @@
+/**   header  **/
+.set ul.login{ float:left; width:600px; height:36px; line-height:36px;}
+.set ul.login li{ float:left; width:auto; padding-right:30px;text-align:left;}
+.set ul.login li .text{ width:100px; height:24px; line-height:24px; border:1px solid #e6e6e6; padding:0px 5px;}
+.set ul.login li .sure{ float:left; width:60px; height:24px; background-color:#fdd000; color:#987d00; border:0px; margin-top:6px;}
+
+.logo{ float:left;font-size:30px; height:50px; font-family:"Microsoft YaHei"; font-weight:bold; margin-top:40px;}
+
+
+/*******************************************  左  *****************************************/
+.left{float:left; width:896px; margin-top:10px;}
+
+/**  图片切换  **/
+.left .ban{ float:left; width:420px; height:294px; position:relative; overflow:hidden;margin:0px auto;}
+.left .ban .ban2{ width:420px; height:294px; position:relative; overflow:hidden;}
+.left .ban .ban2 ul{ position:absolute; left:0; top:0;}
+.left .ban .ban2 ul li{ width:420px; height:294px;}
+.left .ban .ban2 ul li img{ width:420px; height:294px;}
+.prev1{ position:absolute; top:120px; left:20px; width:28px; height:51px;z-index:9;cursor:pointer;}
+.next1{ position:absolute; top:120px; right:20px; width:28px; height:51px;z-index:9;cursor:pointer;}
+
+/**  头条  **/
+.left .hot_box{ float:left; width:435px; height:274px; padding:10px 15px; margin-left:10px; background: #fff url("../images/hot.png") no-repeat scroll left top}
+.left .hot_box .title {float:left;width:430px; height:40px; line-height:40px; font-size:16px; font-weight:bold; text-align:center; background:none; border:0px;}
+.left .hot_box .title a { font-size:15px;}
+.left .hot_box .title_detail{ margin:0 auto; width:430px; height:90px; line-height:24px; text-indent:2em;}
+.left .hot_box ul.list{ margin:10px auto;width:430px; border-top:1px solid #d3d3d3; padding-top:10px;}
+.left .hot_box ul.list li{ float:left; width:430px; height:26px; line-height:26px;background: url(../images/dics.png) no-repeat 3px center;text-indent:15px;}
+.left .hot_box ul.list li span{ float:right; color:#b8b6b6;}
+
+/**  菜单切换  **/
+.left .culture{ float:left; width:896px; margin:10px 0px;background-color:#fff; height:auto; overflow:hidden;!important}
+#Tab_link{ margin:10px auto;width:876px;}
+#Tab_link .Menubox{ float:left; width:876px;height:45px;} 
+#Tab_link .Menubox ul{ float:left; width:876px;height:45px;list-style:none;padding:0;position:absolute; border-bottom:1px solid #eee;} 
+#Tab_link .Menubox ul li{float:left;width:auto;padding-left:12px;padding-right:12px; height:45px;line-height:45px;display:block;cursor:pointer;text-align:center;color:#999;font-size:18px; color:#272727; font-weight:bold;}
+#Tab_link .Menubox ul li.hover{ background-color:#cc0303;cursor:pointer;color:#fff;}
+#Tab_link .Contentbox{ float:left;width:876px; padding-top:20px;padding-bottom:20px; height:auto; overflow:hidden;!important} 
+#Tab_link .Contentbox ul{float:left;width:856px; margin-left:10px;} 
+#Tab_link .Contentbox ul li{ float:left; width:856px; height:150px;line-height:24px; text-align:left; }
+#Tab_link .Contentbox ul li .title{ float:left; width:856px; height:30px; line-height:30px;}
+#Tab_link .Contentbox ul li .title a{ font-size:16px; font-weight:bold;}
+#Tab_link .Contentbox ul li .title a:hover{ text-decoration:underline;}
+#Tab_link .Contentbox ul li .cont{float:left;width:856px;height:90px;text-align:left;line-height:24px;padding-top:5px;padding-bottom:10px;overflow:hidden;border-bottom:1px solid #f5f5f5;}
+#Tab_link .Contentbox ul li .cont .content{ float:left; width:726px; height:70px; text-align:left; line-height:24px;text-align:Justify;text-justify:inter-ideograph;}
+#Tab_link .Contentbox ul li .cont .content a{ font-size:13px;}
+#Tab_link .Contentbox ul li .cont .content a:hover{ text-decoration:underline;}
+#Tab_link .Contentbox ul li .cont .content p{ text-indent:2em;}
+#Tab_link .Contentbox ul li .cont img{ float:left; padding-right:10px;}
+
+
+/*******************************************  右  *****************************************/
+.right{float: right; width:374px; margin-top:10px; margin-bottom:10px; padding-bottom:10px; background:#fff;height:auto; overflow:hidden;!important}
+.right .title{ margin:0 auto;width:354px; height:40px; border-bottom:1px solid #f3f3f3;}
+.right .title span{float:left;width:auto;padding-left:6px;padding-right:6px;height:39px;line-height:45px; border-bottom:2px solid #cc0303; font-size:18px; color:#272727; font-weight:bold;}
+.right .read{ float:left; padding:0px 10px;width:354px;background-color:#fff; height:230px;}
+.right .read .hot_article{ float:left; width:354px; height:90px; margin:10px 0px;}
+* .right .read .hot_article img{ float:left; width:130px; height:90px; margin-right:10px; }
+.right .read .hot_article .hot_cont{widows:200px; height:90px; font-size:12px; line-height:24px;text-align:Justify; text-justify:inter-ideograph;}
+.right .read .hot_article .hot_cont a{font-size:12px;}
+.right .read .hot_article ul{ margin:10px auto 0px;width:350px;}
+.right .read .hot_article ul li{float:left;width:350px;height:26px;line-height:26px;background: url(../images/dics.png) no-repeat left center;text-indent:10px;}
+.right .read .hot_article ul li span{ float:right; color:#b8b6b6;}
+
+.right .sign ul{ margin:0px auto; width:354px;background-color:#fff; padding: 0px 10px 10px 10px;height:auto; overflow:hidden;!important } 
+.right .sign ul li{ float:left; width:150px; height:110px; margin:15px 15px 10px 10px; text-align:center; line-height:12px; text-indent:8px;}
+.right .sign ul li img{ float:left; margin:5px;}
+
+.right .mail{float:left; padding:0px 10px;width:354px;background-color:#fff; height:100px;}
+.right .mail .mail_box{ float: left; width:354px; height:30px; margin-top:10px; margin-bottom:10px;}
+.right .mail .mail_box input{ border:1px solid #eee; width:352px; height:30px; line-height:30px; text-align:left; text-indent:10px;}
+.right .mail .butt{ float: left; width:354px; height:30px;}
+.right .mail .butt .sure{ float:right; width:80px; height:30px; line-height:30px; text-align:center; background-color:#3cb035; border:0px; color:#fff; margin-left:10px;}
+.right .mail .butt .cancel{ float:right; width:80px; height:30px; line-height:30px; text-align:center; background-color:#ff9900; border:0px; color:#fff;}
+
+
+/*********************************************************************  列表页  ***********************************************/
+/**  文字列表  **/
+.details{ margin:10px auto 0px; width:1280px; height:auto; overflow:hidden;!important}
+.details .details_left{ float:left; width:856px; padding:20px 20px 7px 20px;background-color:#fff;height:auto; overflow:hidden;!important}
+.details .details_left ul.article_list{ margin:0 auto; width:856px; font-size:14px; color:#999; text-align:center; height:auto; overflow:hidden;!important }
+.details .details_left ul.article_list li{float:left;width:856px;height:30px;line-height:30px; text-align:left; background:url(../images/dics.png) no-repeat 3px center; text-indent:15px;}
+.details .details_left ul.article_list li span{ float:right; color:#aaa;}
+/**  图文列表  **/
+.culture_wt_left{ float:left; width:896px;background-color:#fff; margin:0px; height:auto; overflow:hidden;!important}
+.culture_wt_left ul.culture_wt{float:left;width:856px; padding:20px;} 
+.culture_wt_left ul.culture_wt li{ float:left; width:856px; height:150px;line-height:24px; text-align:left; }
+.culture_wt_left ul.culture_wt li .title{ float:left; width:856px; height:30px; line-height:30px;}
+.culture_wt_left ul.culture_wt li .title a{ font-size:16px; font-weight:bold;}
+.culture_wt_left ul.culture_wt li .title a:hover{ text-decoration:underline;}
+.culture_wt_left ul.culture_wt li .cont{ float:left; width:856px; height:90px; text-align:left; line-height:24px; padding-top:5px; padding-bottom:10px; overflow:hidden; border-bottom:1px solid #f5f5f5;}
+.culture_wt_left ul.culture_wt li .cont .content{ float:left; width:724px; height:70px; text-align:left; line-height:24px;text-align:Justify;text-justify:inter-ideograph;}
+.culture_wt_left ul.culture_wt li .cont .content a{ font-size:13px;}
+.culture_wt_left ul.culture_wt li .cont .content a:hover{ text-decoration:underline;}
+.culture_wt_left ul.culture_wt li .cont .content p{ text-indent:2em;}
+.culture_wt_left ul.culture_wt li .cont img{ float:left; padding-right:10px;}
+/**  详细页  **/
+
+
+
+
+
+
+
+
+
+.details .details_left .article_title{ float:left; width:856px; padding:0px 20px; line-height:30px; font-size:20px; color:#333; text-align:center; font-weight:bold;height:auto; overflow:hidden;!important }
+.details .details_left .time{ float:left; width:856px; padding:5px 10px; line-height:30px; font-size:12px; color:#333; text-align:center;}
+.details .details_left .time a{ margin-right:20px; font-size:12px; }
+.details .details_left .article{ margin:20px auto 10px; width:856px;text-align:Justify;text-justify:inter-ideograph; padding-top:20px; padding-bottom:20px; border-top:1px solid #eee;height:auto; overflow:hidden;!important}
+/* .details .details_left .article img{ float:left; margin: 0px 15px 0px 0px;} */
+.details .details_left .article p{text-indent:2em;}
+.details .details_left .article a:link{ color:#999; text-decoration:none; font-size:13px;}
+.details .details_left .article a:hover{ color:#1d9dba; text-decoration: underline;}
+.details .details_left .article .related_news{ float:left;margin-top:20px;}
+.details .details_left .article .related_news h6{ font-size:16px; font-weight:bold; height:40px; line-height:40px; margin-top:20px;}
+.details .details_left .article .related_news ul.relation{ margin:0 auto; width:856px;}
+.details .details_left .article .related_news ul.relation li{ float:left; width:418px; color:#999; background:url(../images/dics.png) no-repeat 3px center; text-indent:15px;}
+.details .details_left .article .related_news ul.relation li.li_right{ float:right;}
+.details .details_left .article .related_news ul.relation li span{ float:right;}
+.details .details_left .article .related_news ul.relation li a:link{ color:#333; text-decoration:none; font-size:14px;}
+.details .details_left .article .related_news ul.relation li a:hover{ color:#1d9dba; text-decoration:none}
+
+
+
+/*********************************************************************  生活图文列表页  ***********************************************/
+.house_wt_left{ float:left; width:896px;background-color:#fff; margin:0px; height:auto; overflow:hidden;!important}
+.house_wt_left ul.house_wt{float:left;width:856px; padding:20px;} 
+.house_wt_left ul.house_wt li{ float:left; width:856px; height:150px;line-height:24px; text-align:left; }
+.house_wt_left ul.house_wt li .title{ float:left; width:856px; height:30px; line-height:30px;}
+.house_wt_left ul.house_wt li .title a{ font-size:16px; font-weight:bold;}
+.house_wt_left ul.house_wt li .title a:hover{ text-decoration:underline;}
+.house_wt_left ul.house_wt li .cont{ float:left; width:856px; height:90px; text-align:left; line-height:24px; padding-top:5px; padding-bottom:10px; overflow:hidden; border-bottom:1px solid #f5f5f5;}
+.house_wt_left ul.house_wt li .cont .content{ float:left; width:724px; height:70px; text-align:left; line-height:24px;text-align:Justify;text-justify:inter-ideograph;}
+.house_wt_left ul.house_wt li .cont .content a{ font-size:13px;}
+.house_wt_left ul.house_wt li .cont .content a:hover{ text-decoration:underline;}
+.house_wt_left ul.house_wt li .cont .content p{ text-indent:2em;}
+.house_wt_left ul.house_wt li .cont img{ float:left; padding-right:10px;}
+.house_wt_right{float: right; width:374px; margin-top:10px; height:auto; overflow:hidden;!important}
+
+/*********************************************************************  页脚  ***********************************************/
+#footer{ margin:0px auto; width:100%; height:102px; background-color: #fff; color: #666; border-top:2px solid #cf0012;min-width:1280px;}
+#footer .copy{ margin:0px auto; width:1280px; height:50px; text-align:center; padding-top:25px;}
+
+ /**  翻页  **/
+.list_dis{ margin:10px auto 30px; width:380px;}
+.list_dis .jogger {padding:2px; margin:7px; font-family:Arial, Helvetica, sans-serif;} 
+.list_dis .jogger a { padding:0.5em 0.64em 0.43em 0.64em; margin:2px; color:#fff; background-color:#ee4e4e; text-decoration:none;} 
+.list_dis .jogger a:hover { padding:0.5em 0.64em 0.43em 0.64em;margin:2px; color:#fff; background-color:#de1818;} 
+.list_dis .jogger a:active { padding:0.5em 0.64em 0.43em 0.64em;margin:2px; color:#fff; background-color:#de1818;} 
+.list_dis .jogger span.current {padding:0.5em 0.64em 0.43em 0.64em;margin:2px; color:#6d643c;  background-color:#f6efcc;} 
+.list_dis .jogger span.disabled { display: none }
+
+
+
+/****************20161116修改*******************/
+.essays { float:left; width:856px; margin-top:10px; background:#fff; padding:0 20px; }
+.culture_hd { float:left; width:856px; height:40px; border-bottom:2px solid #cc0303; padding-top:10px; line-height:40px;}
+.culture_hd .chi_tit { float:left; font-size:22px; font-weight:600; margin-right:5px; text-indent:5px;}
+.culture_hd .eng_tit { float:left; color:#666; font-size:16px; font-style:normal; line-height:50px; }
+.culture_hd .more { float:right; font-style:normal; margin-right:5px; line-height:50px;}
+.culture_bd { float:left; width:856px; padding-top:8px;}
+.culture_bd ul { float:left; width:840px; padding:0 8px;}
+.culture_bd ul li { float:left; width:152px; margin-left:20px; padding:10px 0;}
+.culture_bd ul li:first-child { margin-left:0;}
+.culture_bd ul li .culture_pic { float:left; width:152px; height:214px; overflow:hidden;}
+.culture_bd ul li .culture_pic img { width:100%; height:auto;}
+.culture_bd ul li .culture_text { float:left; width:152px; line-height:30px; text-align:center; height:30px; text-overflow:clip; overflow:hidden;}
+
+.poetry { float:left; width:856px; margin-top:10px; background:#fff; padding:0 20px; }
+.novel { float:left; width:856px; margin-top:10px; background:#fff; padding:0 20px; }
+
+
+
+
+/***********************************东楚教育首页*********************************************************/
+.education { float:left; width:896px; margin-bottom:10px;}
+.jy_box { float:left; width:856px; padding:5px 20px 20px; background:#fff; margin-top:10px;}
+.jy_box .jy_hd {  float:left; width:856px; height:48px; border-bottom:2px solid #cc0303; line-height:48px; margin-bottom:15px;}
+.jy_box .jy_hd .jy_tit { float:left; font-size:20px;}
+.jy_box .jy_hd .jy_more { float:right;}
+.jy_box .jy_bd { float:left; width:856px;}
+.jy_box .jy_bd .jy_bigpic { float:left; width:390px; height:300px; position:relative;}
+.jy_box .jy_bd .jy_bigpic .jy_img { float:left; width:390px; height:300px;}
+.jy_box .jy_bd .jy_bigpic .jy_img img { width:100%; height:100%;}
+.jy_box .jy_bd .jy_bigpic .jy_tex { float:left; width:370px; height:36px; position:absolute; left:0; bottom:0; padding:0 10px; line-height:36px; background:url(../images/jy_bg.png) repeat-x 0 0; color:#fff; text-overflow:clip; overflow:hidden;}
+.jy_box .jy_bd .jy_tex:hover { color:#62CCE4 !important;}
+
+.jy_box .jy_bd .jyindex_list { float:left; width:434px; margin-left:30px;}
+.jy_box .jy_bd .jyindex_list li { float:left; width:414px; padding-right:20px; line-height:36px; text-indent:10px; background:url(../images/dics.png) no-repeat 0 center; height:36px; text-overflow:ellipsis; overflow:hidden; white-space:nowrap;}
+
+
+.sign_list { padding-bottom:24px !important;}

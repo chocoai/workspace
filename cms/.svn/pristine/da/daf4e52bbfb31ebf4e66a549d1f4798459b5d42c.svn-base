@@ -1,0 +1,234 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>天天信息--东楚网</title>
+<link rel="stylesheet" type="text/css" href="/${res}/css/ttxx.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/public_all.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/global.css" />
+<script type="text/javascript" src="/${res}/js/dc/settitle.js"></script>
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/buttonLite.js#style=-1&amp;uuid=&amp;pophcol=2&amp;lang=zh"></script>
+<script type="text/javascript" charset="utf-8" src="http://static.bshare.cn/b/bshareC0.js"></script>
+
+<script src="/${res}/js/dc/jquery-1.8.3.min.js"></script>
+<SCRIPT src="/${res}/js/dc/jquery-1.2.6.pack.js" type=text/javascript></SCRIPT>
+<SCRIPT src="/${res}/js/dc/base.js" type=text/javascript></SCRIPT>
+<script src="${resSys}/front.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(function() {
+		Cms.checkPerm("${base}","${content.id}");
+		Cms.collectCsi("${base}","collectCsiDiv","collect_csi","${content.id}");
+		Cms.viewCount("${base}","${content.id}");
+		Cms.siteFlow("${base}", location.href, document.referrer,"${site.config.flowSwitch?string}");
+		});
+</script>
+</head>
+
+<body>
+
+<!--top 开始-->
+	[#include "../include/header1.html"/] 
+<div id="nav">
+   <div class="box">
+      <ul class="nav_box">
+			<li>
+				<a href="${base}/">首 页</a>
+			</li>
+			<li>
+				<a href="${base}/tops.jhtml">头条</a>
+			</li>
+			<li>
+				<a href="${base}/jds.jhtml">焦点新闻</a>
+			</li>
+			<li>
+				<a href="${base}/xsq/index.jhtml">县市区新闻</a>
+			</li>
+			<li>
+				<a href="/bbs" target="_blank">东楚论坛</a>
+			</li>
+			<li>
+				<a href="${base}/vedio/index.jhtml" target="_self">东楚视频</a>
+			</li>
+			<li>
+				<a href="${base}/picture/index.jhtml">图轻松</a>
+			</li>
+			<li>
+				<a href="${base}/baoliao.jspx" target="_self">投诉爆料台</a>
+			</li>
+			<li>
+				<a href="${base}/gsgg/index.jhtml">公示公告</a>
+			</li>
+			<li>
+				<a href="${base}/activity/index.jhtml" target="_self">活动</a>
+			</li>
+			<li>
+				<a href="${base}/hk/index.jhtml" target="_self">换客</a>
+			</li>
+			<li>
+				<a href="http://www.07448.com/huangshi" target="_self">秒杀</a>
+			</li>
+			<li>
+				<a href="${base}/fc/index.jhtml" target="_blank">房产</a>
+			</li>
+			<li>
+				<a href="http://auto.hsdcw.com" target="_blank">汽车</a>
+			</li>
+			<li>
+				<a href="${base}/life/index.jhtml" target="_blank">生活</a>
+			</li>
+			<li>
+				<a href="${base}/edu/index.jhtml" target="_self">教育</a>
+			</li>
+			<li>
+				<a href="${base}/cj/index.jhtml" target="_self">财经</a>
+			</li>
+			<li>
+				<a href="${base}/health/index.jhtml" target="_self">健康</a>
+			</li>
+			<li>
+				<a href="${base}/wh/index.jhtml" target="_self">文化</a>
+			</li>
+       </ul>
+   </div>   
+</div>
+<!--nav 开始-->
+<div style=" clear:both;"></div>
+
+
+<!--内容 开始-->
+<div class="box mt10">
+   <div class="map"><img src="/${res}/images/home.png" width="20" height="18"><a href="${base}/">首页</a> > <a href="${base}/ttxx/index.jhtml">天天信息</a>>  <a href="${channel.url}">${channel.name}</a>>  ${content.title} </div>
+   <div class="ttxx">
+        <div class="details">
+          <div class="left">
+             
+            <div id="preview">
+	            <div class=jqzoom id=spec-n1 >
+	            [#if content.pictures?size gt 0]
+	            [#list content.pictures as pic]
+                 [#if pic_index = 0]
+                     <IMG src="${pic.imgPath!}" jqimg="${p.imgPath!}" width="350" height="300">
+	             [/#if]
+                [/#list]
+                [#else]<IMG src="/${res}/images/detail.png" jqimg="/${res}/images/detail.png" width="350" height="300">
+                [/#if]
+	            </div>
+                <div id="spec-n5">
+                    <div id="spec-list">
+                        <ul class="list-h">
+                         [#if content.pictures?size gt 0]
+                          [#list content.pictures as p]
+                              <li><img src="${p.imgPath!}"> </li>
+                          [/#list]
+                          [#else]<li><img src="/${res}/images/detail.png" jqimg="/${res}/images/detail.png" ></li>
+                          [/#if]
+                        </ul>
+                    </div>
+                    
+                </div>
+            </div>
+            
+			<SCRIPT type=text/javascript>
+                $(function(){			
+                   $(".jqzoom").jqueryzoom({
+                        xzoom:400,
+                        yzoom:400,
+                        offset:10,
+                        position:"right",
+                        preload:1,
+                        lens:1
+                    });
+                    $("#spec-list").jdMarquee({
+                        deriction:"left",
+                        width:350,
+                        height:56,
+                        step:2,
+                        speed:4,
+                        delay:10,
+                        control:true,
+                        _front:"#spec-right",
+                        _back:"#spec-left"
+                    });
+                    $("#spec-list img").bind("mouseover",function(){
+                        var src=$(this).attr("src");
+                        $("#spec-n1 img").eq(0).attr({
+                            src:src.replace("\/n5\/","\/n1\/"),
+                            jqimg:src.replace("\/n5\/","\/n0\/")
+                        });
+                        $(this).css({
+                            "border":"2px solid #ff6600",
+                            "padding":"1px"
+                        });
+                    }).bind("mouseout",function(){
+                        $(this).css({
+                            "border":"1px solid #ccc",
+                            "padding":"2px"
+                        });
+                    });				
+                })
+                </SCRIPT>
+            
+             <SCRIPT src="/${res}/js/dc/lib.js" type=text/javascript></SCRIPT>
+             <SCRIPT src="/${res}/js/dc/97zzw.js" type=text/javascript></SCRIPT>
+            
+            <div class="cont">
+                <div class="name">${content.title}</div>
+                <ul class="caozuo">
+                      <li class="time">${content.releaseDate?string('yyyy-MM-dd HH:mm')}</li>
+                      <li class="view">浏览<span id="views"></span></li>
+                      <li class="share">
+				          <div class="bshare-custom" style="clear:both;line-height:26px;">
+							   <a title="分享" class="bshare-more" style="height:26px;"><img src="/${res}/images/share.jpg"><span style="font-size:14px;line-height:25px;">分享</span></a>
+						  </div>
+					  </li>
+                </ul>
+                
+                
+                <!--  <div class="money">
+                      <div class="des">价格：</div>
+                      <div class="num price">面谈</div>
+                      <div class="attention">一年一付</div>
+                </div> -->
+                <div class="money">
+                      <div class="des">地址：</div>
+                      <div class="about">${content.attr.address!}</div>
+                </div>
+                <div class="money"><div class="des">有效期：</div><div class="about">[#if content.attr.exp_time??]${content.attr.exp_time!}[#else]长期[/#if]</div></div>
+                <div class="money"><div class="des">描述：</div><div class="about" title="${content.txt!}">[@text_cut s=txt! len=127/]</div></div>
+                <div class="money"><div class="des">联系电话：</div><div class="num price">${content.attr.contact}</div></div>
+            
+            </div>
+			<div style="clear: both;"></div>
+					<!--  ${content.commentsCheckedNum!}-->
+			[#if channel.commentControl!=2]
+			<div class="send_mess">
+			 <span style="float: left">我要评论</span>
+						<!--  <span style="float: right;">
+							<a href="${base}/comment.jspx?contentId=${content.id}" target="_blank">
+								已有
+								<span id="comments"></span>
+								条评论
+							</a>
+						</span>-->
+			</div>
+			[#include "inc_comment_input.html"/] 
+			[#include "../special/comment_list.html"/]
+			[/#if]
+		</div>
+          
+         [#include "../include/right.html"/]
+        
+        </div>
+    
+                                            
+   </div>
+           
+</div>
+<!--内容 end-->
+
+<!--尾部 开始-->
+[#include "../include/footer.html"/]
+<!--尾部 开始-->
+
+</body>
+</html>

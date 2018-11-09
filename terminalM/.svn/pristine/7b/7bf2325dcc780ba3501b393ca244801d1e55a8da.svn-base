@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.basicdata.dao.SchoolLocationDao">
+
+
+	<resultMap type="com.whty.assis.basicdata.model.SchoolLocation" id="SchoolLocationResult">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="creator"     column="creator" />
+		<result property="creatorName" column="creator_name" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="code" column="code" />
+		<result property="memo" column="memo" />
+		<result property="schoolId" column="schoolId" />
+		<result property="layers" column="layers" />
+	</resultMap>
+	
+	
+	<resultMap type="com.whty.assis.basicdata.model.SchoolLocationLayer" id="SchoolLocationLayerResult">
+		<id property="id" column="id" />
+		<result property="schoolLocationId" column="school_location_id" />
+		<result property="layer" column="layer" />
+	</resultMap>
+	
+	
+	<delete id="deleteById" parameterType="int">
+		delete from t_school_location where id=#{_parameter}
+	</delete>
+	
+	<insert id="saveSchoolLocation" parameterType="com.whty.assis.basicdata.model.SchoolLocation">
+		insert into t_school_location(
+			name,
+			creator,
+			create_time,
+			update_time,
+			code,
+			<if test="memo != null and memo != ''">memo,</if>
+			school_id
+			) values (
+				#{name},
+				#{creator},
+				#{createTime},
+				#{updateTime},
+				#{code},
+				<if test="memo != null and memo != ''">#{memo},</if>
+				#{schoolId}
+			)
+	</insert>
+	
+	<insert id="saveSchoolLocationLayer" parameterType="com.whty.assis.basicdata.model.SchoolLocationLayer">
+		insert into t_school_location_layer(
+			school_location_id,
+			layer
+			) values (
+				#{schoolLocationId},
+				#{layer}
+			)
+	</insert>
+	
+	
+	<select id="getAllCode" resultType="string">
+		select GROUP_CONCAT(code) from t_school_location
+	</select>
+	
+	<update id="update" parameterType="com.whty.assis.basicdata.model.SchoolLocation">
+		update t_school_location
+		set 
+		<trim prefixOverrides=",">
+			<if test="updateTime != null ">, update_time=#{updateTime}</if>
+			<if test="name != null and name != ''">, name=#{name}</if>
+			<if test="code != null and code != ''">, code=#{code}</if>
+			<if test="memo != null and memo != ''">, memo=#{memo}</if>
+		</trim>
+		where id=#{id}
+	</update>
+	
+	<select id="listByCondition" parameterType="map" resultMap="SchoolLocationResult">
+		select t1.*,(SELECT GROUP_CONCAT(layer) as layers from t_school_location_layer 
+		where school_location_id=t1.id order by layers desc) as layers,t2.user_name as creator_name
+		 from t_school_location t1 left 
+		join ta_manage_user_info t2 on t1.creator=t2.id
+		<if test="id != null ">and t1.id=#{id}</if>
+		<if test="name != null ">and t1.name=#{name}</if>
+		<if test="code != null ">and t1.code=#{code}</if>
+		<if test="schoolId != null ">and t1.school_id=#{schoolId}</if>
+		order by t1.create_time desc
+	</select>
+	
+	
+	<delete id="deleteSchoolLocationLayer" parameterType="map">
+		delete from t_school_location_layer where 
+		school_location_id=#{schoolLocationId}
+		<if test="layer != null and layer != '' ">and layer=#{layer}</if>
+	</delete>
+	
+	
+	<select id="listLayer" parameterType="map" resultMap="SchoolLocationLayerResult">
+		select * from t_school_location_layer where school_location_id =#{schoolLocationId} and layer =#{layer}
+	</select>
+	
+</mapper>

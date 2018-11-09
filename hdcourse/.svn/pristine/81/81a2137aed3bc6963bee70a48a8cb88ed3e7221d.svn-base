@@ -1,0 +1,142 @@
+package com.whty.assis.manage.service.impl;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.whty.assis.manage.dao.BasePropertyDao;
+import com.whty.assis.manage.model.BaseProperty;
+import com.whty.assis.manage.service.BasePropertyService;
+import com.whty.common.cache.data.CacheDataUtils;
+import com.whty.common.util.CommonFunction;
+import com.whty.page.util.HandlerResult;
+
+@Service
+public class BasePropertyServiceImpl implements BasePropertyService {
+
+	@Autowired
+	private BasePropertyDao basePropertyDao;
+
+	@Override
+	public List<BaseProperty> find(Map<String, Object> params) {
+		return basePropertyDao.listByCondition(params);
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public HandlerResult queryBaseProperty(Map para) {
+		HandlerResult rs = new HandlerResult();
+		List<BaseProperty> resultList = basePropertyDao.queryBaseProperty(para);
+		rs.setResultList(resultList);
+		return rs;
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public List<BaseProperty> queryAllBaseProperty(Map para) {
+		List<BaseProperty> list = basePropertyDao.queryBaseProperty(para);
+		return list;
+	}
+
+	@Override
+	public void addBaseProperty(BaseProperty baseProperty) {
+		basePropertyDao.addBaseProperty(baseProperty);
+	}
+
+	@Override
+	public void updateBaseProperty(BaseProperty baseProperty) {
+		basePropertyDao.updateBaseProperty(baseProperty);
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public void deleteBaseProperty(Map para) {
+		basePropertyDao.deleteBaseProperty(para);
+	}
+
+	@SuppressWarnings({ "rawtypes" })
+	@Override
+	public BaseProperty getPlatformProperty(Map map) throws Exception {
+		BaseProperty bp = null;
+		bp = (BaseProperty) CacheDataUtils.getObjectData("BaseProperty",
+				"getPlatformProperty" + CommonFunction.mapValueToStr(map));
+		if (null == bp) {
+			List<BaseProperty> list = basePropertyDao.getPlatformProperty(map);
+			if (list != null && list.size() > 0) {
+				bp = list.get(0);
+				CacheDataUtils.setObjectData("BaseProperty", "getPlatformProperty" + CommonFunction.mapValueToStr(map),
+						bp);
+			}
+		}
+		return bp;
+	}
+
+	/*
+	 * 根据属性key和平台编码获取属性对象
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
+	public BaseProperty getBasePropertyByKeyAndPlatformCode(String propertyKey, String platformCode) throws Exception {
+		BaseProperty bp = null;
+		Map map = new HashMap();
+		map.put("property_key", propertyKey);
+		map.put("platform_code", platformCode);
+		bp = (BaseProperty) CacheDataUtils.getObjectData("BaseProperty",
+				"getBasePropertyByKeyAndPlatformCode" + CommonFunction.mapValueToStr(map));
+		if (null == bp) {
+			List<BaseProperty> list = basePropertyDao.getBasePropertyByKeyAndPlatformCode(map);
+			if (list != null && list.size() > 0) {
+				bp = list.get(0);
+			}
+		}
+		return bp;
+	}
+
+	/*
+	 * 根据属性key和平台编码获取属性值
+	 */
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@Override
+	public String getPropertyValue(String propertyKey, String platformCode) {
+		String propertyValue = null;
+		try {
+			propertyValue = CacheDataUtils.getData("BaseProperty", propertyKey + "_" + platformCode);
+			if (propertyValue == null || !propertyValue.trim().equals("")) {
+				// 查询数据库
+				Map map = new HashMap();
+				map.put("property_key", propertyKey);
+				map.put("platform_code", platformCode);
+				propertyValue = basePropertyDao.getPropertyValue(map);
+				if (null != propertyValue) {
+					CacheDataUtils.setData("BaseProperty", propertyKey + "_" + platformCode, propertyValue);
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return propertyValue;
+	}
+
+	/*
+	 * 查询所有的配置属性对象
+	 */
+	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@Override
+	public List<BaseProperty> queryBasePropertyList(Map paramMap) {
+		return basePropertyDao.listByCondition(paramMap);
+	}
+
+	@Override
+	public BaseProperty loadBaseProById(String id) {
+		return basePropertyDao.loadById(id);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<BaseProperty> getPlatformList() {
+		return basePropertyDao.getPlatformList();
+	}
+}

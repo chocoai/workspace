@@ -1,0 +1,561 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ParticipatDetailMapper">
+  <resultMap id="BaseResultMap" type="ParticipatDetail">
+    <id column="CID" jdbcType="INTEGER" property="cid" />
+    <result column="PARTICIPAT_ID" jdbcType="INTEGER" property="participatId" />
+    <result column="ATHLETE_ID" jdbcType="INTEGER" property="athleteId" />
+    <result column="CERTIFICATE" jdbcType="INTEGER" property="certificate" />
+    <result column="SCORES" jdbcType="VARCHAR" property="scores" />
+    <result column="RANKING" jdbcType="INTEGER" property="ranking" />
+    <result column="INTRGRAL" jdbcType="DOUBLE" property="intrgral" />
+    <result column="MEDAL" jdbcType="INTEGER" property="medal" />
+    <result column="MEDAL_NUM" jdbcType="DOUBLE" property="medalNum" />
+    <result column="JUDGE_LEVEL" jdbcType="INTEGER" property="judgeLevel" />
+    <result column="JUDGE_RECORD" jdbcType="INTEGER" property="judgeRecord" />
+    <result column="CREA_TIME" jdbcType="VARCHAR" property="creaTime" />
+    <result column="CREA_REN" jdbcType="VARCHAR" property="creaRen" />
+    <result column="ORDER_NUM" jdbcType="INTEGER" property="orderNum" />
+    <result column="BACKUP" jdbcType="VARCHAR" property="backup" />
+    <result column="EXP1" jdbcType="INTEGER" property="exp1" />
+    <result column="EXP2" jdbcType="INTEGER" property="exp2" />
+    <result column="EXP3" jdbcType="VARCHAR" property="exp3" />
+    <result column="EXP4" jdbcType="VARCHAR" property="exp4" />
+    <result column="EXP5" jdbcType="VARCHAR" property="exp5" />
+    <result column="EXP6" jdbcType="VARCHAR" property="exp6" />
+	<!-- 获取运动员信息 -->
+	<association property="athleteBaseInfo" column="ATHLETE_ID"  select="AthleteBaseInfoMapper.getById" />
+  </resultMap>
+ 
+  <sql id="Base_Column_List">
+    CID, PARTICIPAT_ID, ATHLETE_ID, CERTIFICATE, SCORES, RANKING, INTRGRAL, MEDAL, MEDAL_NUM, 
+    JUDGE_LEVEL, JUDGE_RECORD, CREA_TIME, CREA_REN, ORDER_NUM, BACKUP, EXP1, EXP2, EXP3, 
+    EXP4, EXP5, EXP6
+  </sql>
+  <!-- 判断运动员是否参赛 -->
+  <select id="countDetail" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select count(*) from participat_detail_info where 
+		ATHLETE_ID in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item,jdbcType=INTEGER}
+		</foreach>
+		
+  </select>
+  <!-- 判断运动员是否参赛某个项目 -->
+  <select id="countIsProject" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select count(*) from participat_detail_info where 
+		PID = #{pid,jdbcType=INTEGER} and 
+		ATHLETE_ID = #{athlete,jdbcType=INTEGER}
+  </select>
+  <!-- 获取运动员参赛数 -->
+  <select id="counIsAthlete" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select count(*) from participat_detail_info where 
+		ATHLETE_ID = #{athlete,jdbcType=INTEGER} and 
+		<if test="isTeam != null">
+		IS_TEAM = #{isTeam,jdbcType=INTEGER} and
+		</if>
+		PROJECT_TYPE = #{projectType,jdbcType=INTEGER}
+  </select>
+  <!-- 获取单位参赛数  -->
+  <select id="counIsUnit" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select count(*) from participat_detail_info where 
+		UNIT_CID = #{unitCid,jdbcType=INTEGER} and 
+		<if test="isTeam != null">
+		IS_TEAM = #{isTeam,jdbcType=INTEGER} and
+		</if>
+		PROJECT_TYPE = #{projectType,jdbcType=INTEGER}
+  </select>
+  <!-- 获取获取某个竞赛项目对应名次的记录条数  -->
+  <select id="countRanking" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select count(*) from participat_detail_info
+		where 
+		PID = #{pCid,jdbcType=INTEGER} and 
+		PARTICIPAT_ID != #{participatId,jdbcType=INTEGER} and 
+		RANKING = #{ranking,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from participat_detail
+    where CID = #{cid,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getByParticipatCid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from participat_detail
+    where PARTICIPAT_ID = #{participatCid,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByCid" parameterType="java.lang.Integer">
+    delete from participat_detail
+    where CID = #{cid,jdbcType=INTEGER}
+  </delete>
+  <!-- 根据参赛信息ID删除详情 -->  
+  <delete id="deleteByParticipatCids" parameterType="java.lang.Integer" flushCache="false">
+		delete from
+		participat_detail
+		where
+		PARTICIPAT_ID in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+  </delete>
+  <!-- 根据参赛信息的id和运动员 删除详情 -->  
+  <delete id="deleteByParticipatCidAndAthlete" parameterType="java.lang.Integer" flushCache="false">
+		delete from
+		participat_detail
+		where
+		PARTICIPAT_ID = #{participatId,jdbcType=INTEGER}
+		and
+		ATHLETE_ID = #{athlete,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="ParticipatDetail">
+    insert into participat_detail (CID, PARTICIPAT_ID, ATHLETE_ID, 
+      CERTIFICATE, SCORES, RANKING, 
+      INTRGRAL, MEDAL, MEDAL_NUM, 
+      JUDGE_LEVEL, JUDGE_RECORD, CREA_TIME, 
+      CREA_REN, ORDER_NUM, BACKUP, 
+      EXP1, EXP2, EXP3, EXP4, 
+      EXP5, EXP6)
+    values (#{cid,jdbcType=INTEGER}, #{participatId,jdbcType=INTEGER}, #{athleteId,jdbcType=INTEGER}, 
+      #{certificate,jdbcType=INTEGER}, #{scores,jdbcType=VARCHAR}, #{ranking,jdbcType=INTEGER}, 
+      #{intrgral,jdbcType=DOUBLE}, #{medal,jdbcType=INTEGER}, #{medalNum,jdbcType=DOUBLE}, 
+      #{judgeLevel,jdbcType=INTEGER}, #{judgeRecord,jdbcType=INTEGER}, #{creaTime,jdbcType=VARCHAR}, 
+      #{creaRen,jdbcType=VARCHAR}, #{orderNum,jdbcType=INTEGER}, #{backup,jdbcType=VARCHAR}, 
+      #{exp1,jdbcType=INTEGER}, #{exp2,jdbcType=INTEGER}, #{exp3,jdbcType=VARCHAR}, #{exp4,jdbcType=VARCHAR}, 
+      #{exp5,jdbcType=VARCHAR}, #{exp6,jdbcType=VARCHAR})
+  </insert>
+  
+  	<!-- 批量插入 -->
+	<insert id="saveSelectives">
+		insert into participat_detail (CID, PARTICIPAT_ID, ATHLETE_ID, CREA_TIME, CREA_REN)
+		values
+		<foreach collection="list" item="item" index="index"
+			separator=",">
+			(#{item.cid,jdbcType=INTEGER}, #{item.participatId,jdbcType=INTEGER}, #{item.athleteId,jdbcType=INTEGER},
+			#{item.creaTime,jdbcType=VARCHAR}, #{item.creaRen,jdbcType=VARCHAR})
+		</foreach>
+	</insert>
+	
+  <update id="rollbackDetail" parameterType="Map">
+    update participat_detail 
+    <set>
+      <if test="intrgral != null">
+        INTRGRAL = #{intrgral,jdbcType=DOUBLE},
+      </if>
+      <if test="medal != null">
+        MEDAL = #{medal,jdbcType=INTEGER},
+      </if>
+      <if test="medalNum != null">
+        MEDAL_NUM = #{medalNum,jdbcType=DOUBLE},
+      </if>
+      <if test="scores != null">
+        SCORES = #{scores,jdbcType=VARCHAR},
+      </if>
+      <if test="ranking != null">
+        RANKING = #{ranking,jdbcType=INTEGER},
+      </if>
+    </set>
+    where  PARTICIPAT_ID = #{participatId,jdbcType=INTEGER}
+       and ATHLETE_ID in (
+          select CID from athlete_base_info abi  where 1=1 
+          and abi.UNIT_CID = #{unitId,jdbcType=INTEGER}
+       )
+  </update>
+  
+    <update id="allotReward" parameterType="Map">
+    update participat_detail 
+    <set>
+      <if test="intrgral != null">
+        INTRGRAL = #{intrgral,jdbcType=DOUBLE},
+      </if>
+      <if test="medal != null">
+        MEDAL = #{medal,jdbcType=INTEGER},
+      </if>
+      <if test="medalNum != null">
+        MEDAL_NUM = #{medalNum,jdbcType=DOUBLE},
+      </if>
+    </set>
+    where PARTICIPAT_ID = #{participatId,jdbcType=INTEGER}
+    <if test="unitId != null">
+       and ATHLETE_ID in (
+          select CID from athlete_base_info abi  where 1=1 
+          and abi.UNIT_CID = #{unitId,jdbcType=INTEGER}
+       )
+    </if>
+  </update>
+  
+  <update id="updateByPrimaryKeySelective" parameterType="ParticipatDetail">
+    update participat_detail
+    <set>
+      <if test="participatId != null">
+        PARTICIPAT_ID = #{participatId,jdbcType=INTEGER},
+      </if>
+      <if test="athleteId != null">
+        ATHLETE_ID = #{athleteId,jdbcType=INTEGER},
+      </if>
+      <if test="certificate != null">
+        CERTIFICATE = #{certificate,jdbcType=INTEGER},
+      </if>
+      <if test="scores != null">
+        SCORES = #{scores,jdbcType=VARCHAR},
+      </if>
+      <if test="ranking != null">
+        RANKING = #{ranking,jdbcType=INTEGER},
+      </if>
+      <if test="intrgral != null">
+        INTRGRAL = #{intrgral,jdbcType=DOUBLE},
+      </if>
+      <if test="medal != null">
+        MEDAL = #{medal,jdbcType=INTEGER},
+      </if>
+      <if test="medalNum != null">
+        MEDAL_NUM = #{medalNum,jdbcType=DOUBLE},
+      </if>
+      <if test="judgeLevel != null">
+        JUDGE_LEVEL = #{judgeLevel,jdbcType=INTEGER},
+      </if>
+      <if test="judgeRecord != null">
+        JUDGE_RECORD = #{judgeRecord,jdbcType=INTEGER},
+      </if>
+      <if test="creaTime != null">
+        CREA_TIME = #{creaTime,jdbcType=VARCHAR},
+      </if>
+      <if test="creaRen != null">
+        CREA_REN = #{creaRen,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNum != null">
+        ORDER_NUM = #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="backup != null">
+        BACKUP = #{backup,jdbcType=VARCHAR},
+      </if>
+      <if test="exp1 != null">
+        EXP1 = #{exp1,jdbcType=INTEGER},
+      </if>
+      <if test="exp2 != null">
+        EXP2 = #{exp2,jdbcType=INTEGER},
+      </if>
+      <if test="exp3 != null">
+        EXP3 = #{exp3,jdbcType=VARCHAR},
+      </if>
+      <if test="exp4 != null">
+        EXP4 = #{exp4,jdbcType=VARCHAR},
+      </if>
+      <if test="exp5 != null">
+        EXP5 = #{exp5,jdbcType=VARCHAR},
+      </if>
+      <if test="exp6 != null">
+        EXP6 = #{exp6,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where CID = #{cid,jdbcType=INTEGER}
+  </update>
+  
+   <update id="updateByPunishSelective" parameterType="ParticipatDetail">
+    update participat_detail
+    <set>
+        SCORES = #{scores,jdbcType=VARCHAR},
+        RANKING = #{ranking,jdbcType=INTEGER},
+        INTRGRAL = #{intrgral,jdbcType=DOUBLE},
+        MEDAL = #{medal,jdbcType=INTEGER},
+        MEDAL_NUM = #{medalNum,jdbcType=DOUBLE},
+        JUDGE_LEVEL = #{judgeLevel,jdbcType=INTEGER},
+        JUDGE_RECORD = #{judgeRecord,jdbcType=INTEGER},
+        BACKUP = #{backup,jdbcType=VARCHAR}
+    </set>
+    where CID = #{cid,jdbcType=INTEGER}
+  </update>
+  
+  <update id="updateByPunishForOther" parameterType="map">
+    update participat_detail D
+    <set>
+      <if test="isMedal">
+            D.MEDAL=(
+				CASE D.RANKING  WHEN 2  THEN 0
+                 			   WHEN 3  THEN 1
+					   WHEN 4  THEN 2
+					  ELSE NULL END 
+			),
+ 			D.MEDAL_NUM=(( CASE  WHEN D.MEDAL_NUM &gt; 0 THEN D.MEDAL_NUM ELSE 1 END   )*( SELECT CASE 
+                    WHEN D.RANKING=2  THEN T1.GOLD_MEDAL
+					WHEN D.RANKING=3 THEN T1.SILVER_MEDAL
+                     WHEN D.RANKING=4  THEN T1.BRONZE_MEDAL
+					ELSE  NULL END AS MEDALNUM1
+                          FROM  SCORE_RECORD T1 ,PROJECT_MANAGER T2,participat_info T3 
+                          WHERE  T1.CID=T2.SCORE_CARD AND T3.PID=T2.CID and D.PARTICIPAT_ID=T3.CID
+						) /( SELECT CASE 
+                    WHEN D.RANKING=2  THEN T1.SILVER_MEDAL
+					WHEN D.RANKING=3 THEN T1.BRONZE_MEDAL
+                    WHEN D.RANKING=4  THEN 1
+					ELSE  NULL END  AS MEDALNUM2
+                          FROM  SCORE_RECORD T1 ,PROJECT_MANAGER T2,participat_info T3 
+                          WHERE  T1.CID=T2.SCORE_CARD AND T3.PID=T2.CID and D.PARTICIPAT_ID=T3.CID
+						) 
+			),
+      </if>
+           <if test="isIntrgral">
+			D.INTRGRAL=(D.INTRGRAL*( SELECT CASE 
+                              WHEN D.RANKING=2  THEN T1.FIRST_SCORE  
+							  WHEN D.RANKING=3 THEN T1.SECOND_SCORE 
+                              WHEN D.RANKING=4  THEN T1.THIRD_SCORE  
+							  WHEN D.RANKING=5 THEN T1.FOURTH_SCORE 
+                              WHEN D.RANKING=6 THEN T1.FIFTH_SCORE  
+							  WHEN D.RANKING=7 THEN T1.SIXTH_SCORE 
+                              WHEN D.RANKING=8  THEN T1.SEVENTH_SCORE   ELSE  NULL END AS SCORE
+                          FROM  SCORE_RECORD T1 ,PROJECT_MANAGER T2,participat_info T3 
+                          WHERE  T1.CID=T2.SCORE_CARD AND T3.PID=T2.CID and D.PARTICIPAT_ID=T3.CID
+						) /( SELECT CASE 
+                              WHEN D.RANKING=1  THEN T1.FIRST_SCORE  
+							  WHEN D.RANKING=2 THEN T1.SECOND_SCORE 
+                              WHEN D.RANKING=3  THEN T1.THIRD_SCORE  
+							  WHEN D.RANKING=4 THEN T1.FOURTH_SCORE 
+                              WHEN D.RANKING=5 THEN T1.FIFTH_SCORE  
+							  WHEN D.RANKING=6 THEN T1.SIXTH_SCORE 
+ 							  WHEN D.RANKING=8 THEN T1.EIGHT_SCORE 
+                              WHEN D.RANKING=7  THEN T1.SEVENTH_SCORE   ELSE  NULL END AS SCORE
+                           FROM  SCORE_RECORD T1 ,PROJECT_MANAGER T2,participat_info T3 
+                           WHERE  T1.CID=T2.SCORE_CARD AND T3.PID=T2.CID and D.PARTICIPAT_ID=T3.CID
+						) ),
+	        </if>
+	        <if test="isRanking">
+				D.RANKING=(D.RANKING-1)  
+		    </if>
+    </set>
+    where
+     D.RANKING &gt; #{ranking,jdbcType=INTEGER} and
+     D.PARTICIPAT_ID IN (
+         SELECT I.CID FROM  PROJECT_MANAGER P,participat_info I WHERE  P.CID=I.PID AND P.CID=#{projectId,jdbcType=INTEGER}
+    )
+  </update>
+  
+  <update id="deletePunishForOther" parameterType="map">
+    update participat_detail D
+    <set>
+        <if test="isMedal">
+            D.MEDAL=(
+				CASE D.RANKING  WHEN 1  THEN 1
+                 			   WHEN 2  THEN 2
+					  ELSE NULL END 
+			),
+ 			D.MEDAL_NUM=(( CASE  WHEN D.MEDAL_NUM &gt; 0 THEN D.MEDAL_NUM ELSE 1 END   )*( SELECT CASE 
+ 					WHEN D.RANKING=1  THEN T1.SILVER_MEDAL
+                    WHEN D.RANKING=2  THEN T1.BRONZE_MEDAL
+					WHEN D.RANKING=3 THEN 0
+					ELSE  NULL END AS MEDALNUM1
+                          FROM  SCORE_RECORD T1 ,PROJECT_MANAGER T2,participat_info T3 
+                          WHERE  T1.CID=T2.SCORE_CARD AND T3.PID=T2.CID and D.PARTICIPAT_ID=T3.CID
+						) /( SELECT CASE 
+					WHEN D.RANKING=1  THEN T1.GOLD_MEDAL	
+                    WHEN D.RANKING=2  THEN T1.SILVER_MEDAL
+					WHEN D.RANKING=3 THEN T1.BRONZE_MEDAL
+					ELSE  NULL END  AS MEDALNUM2
+                          FROM  SCORE_RECORD T1 ,PROJECT_MANAGER T2,participat_info T3 
+                          WHERE  T1.CID=T2.SCORE_CARD AND T3.PID=T2.CID and D.PARTICIPAT_ID=T3.CID
+						) 
+			),
+      </if>
+           <if test="isIntrgral">
+					D.INTRGRAL=(D.INTRGRAL*( SELECT CASE 
+							 WHEN D.RANKING=1  THEN T1.SECOND_SCORE  
+                             WHEN D.RANKING=2  THEN T1.THIRD_SCORE  
+							  WHEN D.RANKING=3 THEN T1.FOURTH_SCORE 
+                              WHEN D.RANKING=4  THEN T1.FIFTH_SCORE  
+							  WHEN D.RANKING=5 THEN T1.SIXTH_SCORE 
+                              WHEN D.RANKING=6 THEN T1.SEVENTH_SCORE  
+							  WHEN D.RANKING=7 THEN T1.EIGHT_SCORE 
+                             ELSE  NULL END AS SCORE
+                            FROM  SCORE_RECORD T1 ,PROJECT_MANAGER T2,participat_info T3 
+                           WHERE  T1.CID=T2.SCORE_CARD AND T3.PID=T2.CID and D.PARTICIPAT_ID=T3.CID
+						) /( SELECT CASE 
+                              WHEN D.RANKING=1  THEN T1.FIRST_SCORE  
+							  WHEN D.RANKING=2 THEN T1.SECOND_SCORE 
+                              WHEN D.RANKING=3  THEN T1.THIRD_SCORE  
+							  WHEN D.RANKING=4 THEN T1.FOURTH_SCORE 
+                              WHEN D.RANKING=5 THEN T1.FIFTH_SCORE  
+							  WHEN D.RANKING=6 THEN T1.SIXTH_SCORE 
+ 							  WHEN D.RANKING=8 THEN T1.EIGHT_SCORE 
+                             WHEN D.RANKING=7  THEN T1.SEVENTH_SCORE   ELSE  NULL END AS SCORE
+                         FROM  SCORE_RECORD T1 ,PROJECT_MANAGER T2,participat_info T3 
+                          WHERE  T1.CID=T2.SCORE_CARD AND T3.PID=T2.CID and D.PARTICIPAT_ID=T3.CID
+						) ),
+	        </if>
+	        <if test="isRanking">
+				D.RANKING=(D.RANKING+1)  
+		    </if>
+    </set>
+    where
+     D.RANKING &gt;= #{ranking,jdbcType=INTEGER} and
+     D.PARTICIPAT_ID IN (
+         SELECT I.CID FROM  PROJECT_MANAGER P,participat_info I WHERE  P.CID=I.PID AND P.CID=#{projectId,jdbcType=INTEGER}
+    )
+  </update>
+  
+  	<!-- 查询年龄总和预警情况列表 -->
+<select id="selectAgeSumWarn" parameterType="java.util.HashMap" resultType="map">
+SELECT     
+ 		group_concat(b.ATHLETE_NAME) as athleteName,
+		group_concat(b.ID_CARD) as idCard,
+        group_concat( b.age) AS ageStr,
+		sum(b.age) as  ageTotal,
+        (SELECT  MIN(AGE_SUM)  FROM CLASS_MANAGER   WHERE  AGE_SUM IS NOT NULL AND AGE_SUM!='' AND  FIND_IN_SET(CID,getParentList( p.P_CID) )  )  as ageSum,
+		p.PROJECT_NAME as projectName,
+		(SELECT CLASSIFY_NAME  FROM CLASS_MANAGER   WHERE CID= p.P_CID )  as className,
+		group_concat( u.UNIT_NAME) as unitName ,
+		p.P_CID as classId
+FROM 
+	participat_detail  d
+LEFT JOIN 
+	participat_info t ON t.CID = d.PARTICIPAT_ID 
+	LEFT JOIN 
+	   (	select *, (year(now())-year(birthday)-1) + ( DATE_FORMAT(birthday, '%m%d') &lt;= DATE_FORMAT(NOW(), '%m%d') ) as age  from  ATHLETE_BASE_INFO  )  b  ON d.ATHLETE_ID = b.CID
+	LEFT JOIN 
+		PROJECT_MANAGER p ON t.PID = p.CID
+	LEFT JOIN  
+		UNIT_INFO  u ON b.UNIT_CID = u.CID
+	WHERE 1=1 
+	<if test="athleteName!=null and athleteName!=''">
+			and athleteName like "%${athleteName}%"
+	</if>
+GROUP BY p.CID,t.CID
+having ageTotal>ageSum
+</select>
+  
+    	<!-- 查询年龄预警情况列表 -->
+  <select id="selectAgeWarn" parameterType="java.util.HashMap" resultType="map">
+	SELECT 
+		b.ATHLETE_NAME as athleteName,
+		b.ID_CARD as idCard,
+		MIN(b.BIRTHDAY) as birthday ,
+		p.PROJECT_NAME as projectName,
+      	(SELECT CLASSIFY_NAME  FROM CLASS_MANAGER   WHERE CID= p.P_CID )  as className,
+		(SELECT MAX(AGE_START)  FROM CLASS_MANAGER   WHERE  FIND_IN_SET(CID,getParentList( p.P_CID) )  )  as ageStart,
+		(SELECT MIN(AGE_END)  FROM CLASS_MANAGER   WHERE  AGE_END IS NOT NULL AND AGE_END!='' AND FIND_IN_SET(CID,getParentList( p.P_CID) )  )  as ageEnd,
+		u.UNIT_NAME as unitName,
+		p.P_CID as classId
+FROM 
+	participat_detail  d
+LEFT JOIN 
+	participat_info t ON t.CID = d.PARTICIPAT_ID 
+	LEFT JOIN 
+		ATHLETE_BASE_INFO b ON d.ATHLETE_ID = b.CID
+	LEFT JOIN 
+		PROJECT_MANAGER p ON t.PID = p.CID
+	LEFT JOIN  
+		UNIT_INFO  u ON b.UNIT_CID = u.CID
+    WHERE 1=1 
+    <if test="athleteName!=null and athleteName!=''">
+			AND b.ATHLETE_NAME like "%${athleteName}%"
+	</if>
+	GROUP BY d.CID 
+	HAVING 1=1 
+	AND (
+	( birthday IS NOT NULL AND birthday !='' AND   birthday &lt;= ageStart    )
+		OR ( birthday IS NOT NULL AND birthday !='' AND  birthday  &gt;= ageEnd   )
+	)
+  </select>
+  
+ <!-- 查询单位项目个数预警情况列表 -->
+  <select id="selectUnitNumWarn" parameterType="java.util.HashMap" resultType="map">
+SELECT  
+u.cid as unitId,
+p.P_CID as classId, 
+u.unit_name as unitName, 
+p.project_name as projectName, 
+(SELECT CLASSIFY_NAME  FROM CLASS_MANAGER   WHERE CID= p.P_CID )  as className,
+		case when p.is_team=0 then  count(u.cid)  else  0 end as unitSinglenum,
+		(SELECT MIN(UNIT_SINGLENUM)  FROM CLASS_MANAGER   WHERE  UNIT_SINGLENUM IS NOT NULL AND UNIT_SINGLENUM!='' AND   FIND_IN_SET(CID,getParentList( p.P_CID) )  )  as cUnitSinglenum,
+		case when p.is_team=1 then  count(u.cid)  else  0 end as unitTeamnum,
+		(SELECT MIN(UNIT_TEAMNUM)  FROM CLASS_MANAGER   WHERE UNIT_TEAMNUM IS NOT NULL AND UNIT_TEAMNUM!='' AND FIND_IN_SET(CID,getParentList( p.P_CID) )  )  as cUnitTeamnum,
+		count(u.cid) as unitTotnum,
+		(SELECT MIN(UNIT_TOTNUM)  FROM CLASS_MANAGER   WHERE UNIT_TOTNUM IS NOT NULL AND UNIT_TOTNUM!='' AND FIND_IN_SET(CID,getParentList( p.P_CID) )  )  as cUnitTotnum
+ FROM  participat_detail d
+	inner join athlete_base_info b on b.cid=d.ATHLETE_ID
+         inner join unit_info u on b.UNIT_CID=u.cid
+	 inner join participat_info i on d.PARTICIPAT_ID=i.cid
+     	 inner join project_manager p  on i.pid=p.cid
+ WHERE 1=1 
+    <if test="unitName!=null and unitName!=''">
+			AND u.unit_name like "%${unitName}%"
+	</if>
+GROUP BY p.P_CID,u.CID
+HAVING unitSinglenum>cUnitSinglenum
+            or unitTeamnum>cUnitTeamnum
+	   or unitTotnum>cUnitTotnum
+  </select>
+  
+   <!-- 查询个人项目个数预警情况列表 -->
+  <select id="selectPersonNumWarn" parameterType="java.util.HashMap" resultType="map">
+select      
+b.ATHLETE_NAME as athleteName, 
+b.ID_CARD as idCard,  
+u.unit_name as unitName, 
+p.PROJECT_NAME as projectName,
+(SELECT CLASSIFY_NAME  FROM CLASS_MANAGER   WHERE CID= p.P_CID )  as className,
+p.P_CID as classId, 
+	count(d.cid) as  personTotnum,
+	(SELECT MIN(PERSON_TOTNUM)  FROM CLASS_MANAGER   WHERE PERSON_TOTNUM IS NOT NULL AND PERSON_TOTNUM!='' AND FIND_IN_SET(CID,getParentList( p.P_CID) )  )  as cPersonTotnum,
+	case when p.is_team=0 then  count(d.cid)  else  0 end as personSinglenum,
+	(SELECT MIN(PERSON_SINGLENUM)  FROM CLASS_MANAGER   WHERE PERSON_SINGLENUM IS NOT NULL AND PERSON_SINGLENUM!='' AND FIND_IN_SET(CID,getParentList( p.P_CID) )  )  as cPersonSinglenum,
+	case when p.is_team=1 then  count(d.cid)  else  0 end as personTeamnum,
+	(SELECT MIN(PERSON_TEAMNUM)  FROM CLASS_MANAGER   WHERE PERSON_TEAMNUM IS NOT NULL AND PERSON_TEAMNUM!='' AND FIND_IN_SET(CID,getParentList( p.P_CID) )  )  as cPersonTeamnum
+ from  participat_detail d
+		 inner join athlete_base_info b on b.cid=d.ATHLETE_ID
+         inner join unit_info u on b.UNIT_CID=u.cid
+		 inner join participat_info i on d.PARTICIPAT_ID=i.cid
+         inner join project_manager p  on i.pid=p.cid
+		 inner join  class_manager c  on p.P_CID=c.cid
+ where 1=1
+    <if test="athleteName!=null and athleteName!=''">
+			AND b.ATHLETE_NAME like "%${athleteName}%"
+	</if>
+group by c.cid,b.cid 
+having personSinglenum>cPersonSinglenum
+            or personTeamnum>cPersonTeamnum
+	   or personTotnum>cPersonTotnum
+  </select>
+  
+ <!-- 查询重名参赛预警情况列表 -->
+<select id="selectNuptialWarn" parameterType="java.util.HashMap" resultType="map">
+select   b1.ATHLETE_NAME as athleteName,b1.ID_CARD  as idCard,b1.abbreviation as abbreviation ,p1.project_name as projectName,c1.CLASSIFY_NAME as className , p1.CID as projectId,  p1.P_CID as classId,u1.unit_Name as unitName
+ from participat_info i1 inner join  participat_detail d1 on d1.PARTICIPAT_ID=i1.cid
+         inner join athlete_base_info b1 on b1.cid=d1.ATHLETE_ID
+		 inner join unit_info u1 on b1.UNIT_CID=u1.cid
+     	 inner join project_manager p1  on i1.pid=p1.cid     
+		 inner join  class_manager c1  on p1.P_CID=c1.cid
+	     inner join 
+(select   b.ATHLETE_NAME as athleteName
+from participat_detail d
+		 inner join athlete_base_info b on b.cid=d.ATHLETE_ID 
+ where 1=1
+     <if test="athleteName!=null and athleteName!=''">
+			AND b.ATHLETE_NAME like "%${athleteName}%"
+	</if>
+group by b.ATHLETE_NAME
+having count(0)>1)  v on b1.ATHLETE_NAME = v.athleteName
+order by  b1.ATHLETE_NAME desc
+</select>
+
+ <!-- 查询跨单位赛预警情况列表 -->
+<select id="selectAcrossUnitWarn" parameterType="java.util.HashMap" resultType="map">
+select  group_concat(b1.ATHLETE_NAME) as athleteName,group_concat(b1.ID_CARD) as idCard,  group_concat(u1.unit_Name) as  unitName,p1.PROJECT_NAME as projectName,c1.CLASSIFY_NAME as className,c1.CID as classId
+ from participat_info i1
+	 inner join  participat_detail d1 on d1.PARTICIPAT_ID=i1.cid
+	 inner join athlete_base_info b1 on b1.cid=d1.ATHLETE_ID
+	 inner join unit_info u1 on b1.UNIT_CID=u1.cid
+	 inner join project_manager p1  on i1.pid=p1.cid     
+	 inner join  class_manager c1  on p1.P_CID=c1.cid
+WHERE i1.ISCOMBINATION_TEAM=1
+group by i1.CID
+     <if test="athleteName!=null and athleteName!=''">
+			HAVING group_concat(b1.ATHLETE_NAME) like "%${athleteName}%"
+	</if>
+</select>
+ 
+
+</mapper>

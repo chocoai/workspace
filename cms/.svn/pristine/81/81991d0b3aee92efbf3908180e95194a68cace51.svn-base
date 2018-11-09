@@ -1,0 +1,93 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>焦点新闻 - ${site.name}</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="/${mobileRes!}/css/pic/public.css" rel="stylesheet" type="text/css"/>
+<link href="/${mobileRes!}/css/pic/share.css" rel="stylesheet" type="text/css"/>
+<script src="/${mobileRes!}/js/focus/TouchSlide.1.1.js"></script>
+
+<link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
+<link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css"/>
+
+
+<script type="text/javascript">
+$(function() {
+	Cms.siteFlow("${base}", location.href, document.referrer,"${site.config.flowSwitch?string}");
+});
+</script>
+</head>
+
+<body>
+<div id="wrap" class="clearfix overflow mg-auto"> 
+	<div class="apply-nav overflow mg-auto area" style="background:#fff;">
+    <div class="overflow clearfix apply-top border-bom">
+        <a href="${base!}/" class="apply-return">返回</a>
+        <h2>焦点新闻</h2>
+        <a href="${base}/search.jspx" class="apply-sou">搜索</a>
+        <a href="#" class="apply-pup">导航</a>
+    </div>
+    <div class="i-icon mg-auto overflow area clearfix" id="apply-pup-icon">
+        <nav id="menu2" class="nd-nav">
+            <ul class="first">
+            <li class="menu1"><a href="${base}/">首页</a></li>
+            <li class="menu2">[@cms_channel id='1']<a href="${tag_bean.url}">新闻</a>[/@cms_channel]</li>
+            <li class="menu3">[@cms_channel id='42']<a href="${tag_bean.url}">图轻松</a>[/@cms_channel]</li>
+            <li class="menu4">[@cms_channel id='46']<a href="${tag_bean.url}">视频</a>[/@cms_channel]</li>
+            <li class="menu5">[@cms_channel id='86']<a href="${tag_bean.url}">活动</a>[/@cms_channel]</li>
+            </ul>
+            
+            <ul>
+                <li class="menu1">[@cms_channel id='84']<a href="${tag_bean.url}">房产</a>[/@cms_channel]</li>
+                <li class="menu2">[@cms_channel id='85']<a href="${tag_bean.url}">生活</a>[/@cms_channel]</li>
+                <li class="menu3">[@cms_channel id='88']<a href="${tag_bean.url}">财经</a>[/@cms_channel]</li>
+                <li class="menu4">[@cms_channel id='89']<a href="${tag_bean.url}">健康</a>[/@cms_channel]</li>
+                <li class="menu5">[@cms_channel id='90']<a href="${tag_bean.url}">文化</a>[/@cms_channel]</li>
+                
+            </ul>
+        </nav>
+    </div>
+</div>
+<script type="text/javascript" src="/${mobileRes!}/js/navi/com.js"></script> 
+	<div class="i-title clearfix area border">
+        <h2>焦点新闻</h2>
+    </div>
+    <div class="clearfix">
+        <div class="clearfix tab-con2">
+            <ul class="clearfix">
+            	[@cms_content_page count='20' orderBy='4' typeId="3" channelOption='1' dateFormat='yyyy-MM-dd']
+            	[#list tag_pagination.list as a]
+                <li>
+                    
+                    <a href="${a.url}" class="tab-con-href2 clearfix">
+                        [#if a.typeImg??]
+                        <div class="img3"><img src="${a.typeImg!site.typeImg}" /></div>
+                        <h4>[@text_cut s=a.title /]</h4>
+                        <p><i>(${a.date?string(dateFormat)})</i></p>
+                        [#else]
+                        <h4 style="width:100%;">[@text_cut s=a.title /]</h4>
+                        <p style="width:100%;"><i>(${a.date?string(dateFormat)})</i></p>
+                        [/#if]
+                    </a>     
+                                  
+            	</li>
+                [/#list]
+                <div style="clear:both; height:20px;"></div>
+                <div class="pagesite">
+                [@cms_pagination sysPage='1'/]
+                </div>
+                [/@cms_content_page]
+            </ul>
+        </div>       
+    <!-- <div class="i-more">
+    <a href="#">查看更多分类</a>
+    </div>-->
+    </div>
+
+ 	[#include "../include/footer.html"/] 
+</div>
+<script src="/${mobileRes!}/js/focus/foot.js"></script>
+</body>
+</html>

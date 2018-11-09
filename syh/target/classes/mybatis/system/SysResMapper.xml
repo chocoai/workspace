@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SysResMapper">
+	<resultMap id="BaseResultMap" type="com.yhcrt.entity.system.SysRes">
+		<id column="CID" jdbcType="INTEGER" property="cid" />
+		<id column="PARE_ID" jdbcType="INTEGER" property="pareId" />
+		<result column="RES_NAME" jdbcType="VARCHAR" property="resName" />
+		<result column="RES_URL" jdbcType="VARCHAR" property="resUrl" />
+		<result column="STATE" jdbcType="INTEGER" property="state" />
+		<result column="ORDER_NUM" jdbcType="VARCHAR" property="orderNum" />
+		<result column="BACKUP" jdbcType="VARCHAR" property="backup" />
+		<result column="EXP1" jdbcType="INTEGER" property="exp1" />
+		<result column="EXP2" jdbcType="INTEGER" property="exp2" />
+		<result column="EXP3" jdbcType="VARCHAR" property="exp3" />
+		<result column="EXP4" jdbcType="VARCHAR" property="exp4" />
+		<result column="EXP5" jdbcType="VARCHAR" property="exp5" />
+		<result column="EXP6" jdbcType="VARCHAR" property="exp6" />
+		<association property="pareSysRes" column="PARE_ID"  select="getByCid" />
+		
+	</resultMap>
+	<sql id="Base_Column_List">
+		CID, PARE_ID,RES_NAME, RES_URL, STATE, ORDER_NUM, BACKUP,
+		EXP1, EXP2,
+		EXP3, EXP4, EXP5, EXP6
+	</sql>
+	<!-- 单个插入 -->
+	<insert id="saveSelective" parameterType="com.yhcrt.entity.system.SysRes">
+		insert into sys_res
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="cid != null">
+				CID,
+			</if>
+			<if test="pareId != null">
+				PARE_ID,
+			</if>
+			<if test="resName != null">
+				RES_NAME,
+			</if>
+			<if test="resUrl != null">
+				RES_URL,
+			</if>
+			<if test="state != null">
+				STATE,
+			</if>
+			<if test="orderNum != null">
+				ORDER_NUM,
+			</if>
+			<if test="backup != null">
+				BACKUP,
+			</if>
+			<if test="exp1 != null">
+				EXP1,
+			</if>
+			<if test="exp2 != null">
+				EXP2,
+			</if>
+			<if test="exp3 != null">
+				EXP3,
+			</if>
+			<if test="exp4 != null">
+				EXP4,
+			</if>
+			<if test="exp5 != null">
+				EXP5,
+			</if>
+			<if test="exp6 != null">
+				EXP6,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="cid != null">
+				#{cid,jdbcType=INTEGER},
+			</if>
+			<if test="pareId != null">
+				#{pareId,jdbcType=INTEGER},
+			</if>
+			<if test="resName != null">
+				#{resName,jdbcType=VARCHAR},
+			</if>
+			<if test="resUrl != null">
+				#{resUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=INTEGER},
+			</if>
+			<if test="orderNum != null">
+				#{orderNum,jdbcType=VARCHAR},
+			</if>
+			<if test="backup != null">
+				#{backup,jdbcType=VARCHAR},
+			</if>
+			<if test="exp1 != null">
+				#{exp1,jdbcType=INTEGER},
+			</if>
+			<if test="exp2 != null">
+				#{exp2,jdbcType=INTEGER},
+			</if>
+			<if test="exp3 != null">
+				#{exp3,jdbcType=VARCHAR},
+			</if>
+			<if test="exp4 != null">
+				#{exp4,jdbcType=VARCHAR},
+			</if>
+			<if test="exp5 != null">
+				#{exp5,jdbcType=VARCHAR},
+			</if>
+			<if test="exp6 != null">
+				#{exp6,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+
+	<!-- 查询 是否有下级节点-->	
+	<select id="countByPid" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select count(*) from sys_res where 
+		PARE_ID in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+	<!-- 单个删除信息 -->
+	<delete id="removeByCid" parameterType="java.lang.Integer">
+		delete from
+		sys_res
+		where
+		CID = #{cid,jdbcType=INTEGER}
+	</delete>
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="java.lang.Integer"
+		flushCache="false">
+		delete
+		from sys_res
+		where
+		CID in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	<!-- 更新信息 -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.entity.system.SysRes">
+		update sys_res
+		<set>
+			<if test="resName != null">
+				RES_NAME = #{resName,jdbcType=VARCHAR},
+			</if>
+			<if test="resUrl != null">
+				RES_URL = #{resUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				STATE = #{state,jdbcType=INTEGER},
+			</if>
+			<if test="orderNum != null">
+				ORDER_NUM = #{orderNum,jdbcType=VARCHAR},
+			</if>
+			<if test="backup != null">
+				BACKUP = #{backup,jdbcType=VARCHAR},
+			</if>
+			<if test="exp1 != null">
+				EXP1 = #{exp1,jdbcType=INTEGER},
+			</if>
+			<if test="exp2 != null">
+				EXP2 = #{exp2,jdbcType=INTEGER},
+			</if>
+			<if test="exp3 != null">
+				EXP3 = #{exp3,jdbcType=VARCHAR},
+			</if>
+			<if test="exp4 != null">
+				EXP4 = #{exp4,jdbcType=VARCHAR},
+			</if>
+			<if test="exp5 != null">
+				EXP5 = #{exp5,jdbcType=VARCHAR},
+			</if>
+			<if test="exp6 != null">
+				EXP6 = #{exp6,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where CID = #{cid,jdbcType=INTEGER}
+	</update>
+	<!-- 根据ID查询 -->
+	<select id="getByCid" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_res
+		where CID = #{cid,jdbcType=INTEGER}
+	</select>
+	<!--多条件查询 -->
+	<select id="quertByParam" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_res
+		<include refid="where_all" />
+		order by ORDER_NUM  DESC,RES_URL,CID
+	</select>
+
+	<sql id="where_all">
+		where 1 = 1
+		<if test="findContent != null and findContent!='' ">
+			and (LOWER(RES_NAME) like CONCAT("%",#{findContent},"%")
+			or
+			LOWER(RES_URL) like CONCAT("%",#{findContent},"%"))
+		</if>
+	</sql>
+ 	<!-- 查询权限资源构成分类树 -->
+  	<select id="queryToTree" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List" />
+		from 
+			sys_res
+		where 
+		    1 = 1 
+		<if test="pid != null">
+			and PARE_ID = #{pid,jdbcType=INTEGER}
+		</if>	
+  	</select>
+	
+	
+</mapper>

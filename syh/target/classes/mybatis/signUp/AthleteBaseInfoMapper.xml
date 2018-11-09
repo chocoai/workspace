@@ -1,0 +1,296 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="AthleteBaseInfoMapper">
+	<resultMap id="BaseResultMap" type="AthleteBaseInfo">
+		<id column="CID" jdbcType="INTEGER" property="cid" />
+		<result column="ATHLETE_NAME" jdbcType="VARCHAR" property="athleteName" />
+		<result column="ABBREVIATION" jdbcType="VARCHAR" property="abbreviation" />
+		<result column="ALIAS" jdbcType="VARCHAR" property="alias" />
+		<result column="UNIT_CID" jdbcType="INTEGER" property="unitCid" />
+		<result column="SEX" jdbcType="INTEGER" property="sex" />
+		<result column="NATION" jdbcType="VARCHAR" property="nation" />
+		<result column="BIRTHDAY" jdbcType="VARCHAR" property="birthday" />
+		<result column="ID_CARD" jdbcType="VARCHAR" property="idCard" />
+		<result column="IS_EXAMINE" jdbcType="INTEGER" property="isExamine" />
+		<result column="ATHLETES_TYPE" jdbcType="INTEGER" property="athletesType" />
+		<result column="ERSION_NUM" jdbcType="INTEGER" property="ersionNum" />
+		<result column="ORDER_NUM" jdbcType="INTEGER" property="orderNum" />
+		<result column="CREA_REN" jdbcType="VARCHAR" property="creaRen" />
+		<result column="CREA_TIME" jdbcType="VARCHAR" property="creaTime" />
+		<result column="BACKUP" jdbcType="VARCHAR" property="backup" />
+		<result column="EXP1" jdbcType="INTEGER" property="exp1" />
+		<result column="EXP2" jdbcType="INTEGER" property="exp2" />
+		<result column="EXP3" jdbcType="VARCHAR" property="exp3" />
+		<result column="EXP4" jdbcType="VARCHAR" property="exp4" />
+		<result column="EXP5" jdbcType="VARCHAR" property="exp5" />
+		<result column="EXP6" jdbcType="VARCHAR" property="exp6" />
+		<!-- 单位信息 -->
+		<association property="unitInfo" column="UNIT_CID"  select="UnitInfoMapper.getById" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		CID, ATHLETE_NAME, ABBREVIATION, ALIAS, UNIT_CID, SEX,
+		NATION, BIRTHDAY,
+		ID_CARD,IS_EXAMINE,ATHLETES_TYPE,ERSION_NUM, ORDER_NUM, CREA_REN, CREA_TIME,
+		BACKUP,EXP1, EXP2, EXP3, EXP4, EXP5,
+		EXP6
+	</sql>
+	<!--统计运动员总数量 -->
+	<select id="countByExample" parameterType="AthleteBaseInfo"
+		resultType="java.lang.Long">
+		select count(*) from athlete_base_info
+	</select>
+	<!--查询重名运动员个数  -->
+	<select id="countByName" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select count(*) from athlete_base_info where ATHLETE_NAME = #{unitName} AND ERSION_NUM = #{ersionNum}
+		
+	</select>
+	<!--查询相同身份证号的个数  -->
+	<select id="countByIDcard" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select count(*) from athlete_base_info where ID_CARD = #{IDcard} AND ERSION_NUM = #{ersionNum}
+	</select>
+	<!--查询相同身份证号和相同单位的个数  -->
+	<select id="countByIDcardAndUnit" parameterType="java.lang.String" resultType="java.lang.Integer">
+		select count(*) from athlete_base_info where ID_CARD = #{IDcard} AND UNIT_CID = #{unitCid} AND ERSION_NUM = #{ersionNum}
+	</select>
+	<!--查询集合中规定性别的数量  -->
+	<select id="countByCidsAndSex" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select count(*) from athlete_base_info 
+		where SEX = #{sex} AND ERSION_NUM = #{ersionNum}
+		AND CID in
+		<foreach item="item" index="index" collection="cids" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+	<!-- 多条件查询运动员 -->
+	<select id="selectByExample" parameterType="AthleteBaseInfo"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from
+		athlete_base_info
+		where
+		1=1
+		<if test="unitCid != null">
+			and UNIT_CID = #{unitCid,jdbcType=INTEGER}
+		</if>
+		<if test="ersionNum!= null">
+			and ERSION_NUM = #{ersionNum,jdbcType=INTEGER}
+		</if>
+		<if test="abbreviation != null and abbreviation != ''">
+			and ABBREVIATION LIKE #{abbreviation,jdbcType=VARCHAR}
+		</if>
+		<if test="athleteName != null athleteName != ''">
+			and ATHLETE_NAME LIKE #{athleteName,jdbcType=VARCHAR}
+		</if>
+		<if test="orderNum != null">
+			order by #{orderNum,jdbcType=INTEGER}
+		</if>
+	</select>
+	<!-- 单个删除运动员信息 -->
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from
+		athlete_base_info
+		where
+		CID = #{cid,jdbcType=INTEGER}
+	</delete>
+	<!-- 批量删除运动员信息 -->
+	<delete id="deleteAll" parameterType="java.lang.Integer"
+		flushCache="false">
+		delete from
+		athlete_base_info
+		
+		where
+		CID in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	<!-- 切换运动员的单位 -->
+	<delete id="updateAthlete" parameterType="java.lang.Integer"
+		flushCache="false">
+		update
+		athlete_base_info
+		set
+		UNIT_CID = #{unitCid,jdbcType=INTEGER}
+		where
+		CID in
+		<foreach item="item" index="index" collection="ahtleteCids" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	<!-- 插入一条运动员记录 -->
+	<insert id="insert" parameterType="AthleteBaseInfo">
+		insert into athlete_base_info
+		(CID, ATHLETE_NAME, ABBREVIATION,
+		ALIAS, UNIT_CID, SEX,
+		NATION,
+		BIRTHDAY, ID_CARD,
+		IS_EXAMINE,ATHLETES_TYPE, ERSION_NUM, ORDER_NUM, CREA_REN,
+		CREA_TIME, BACKUP,
+		EXP1,
+		EXP2, EXP3, EXP4, EXP5,
+		EXP6)
+		values (#{cid,jdbcType=INTEGER},
+		#{athleteName,jdbcType=VARCHAR},
+		#{abbreviation,jdbcType=VARCHAR},
+		#{alias,jdbcType=VARCHAR}, #{unitCid,jdbcType=INTEGER},
+		#{sex,jdbcType=INTEGER},
+		#{nation,jdbcType=VARCHAR},
+		#{birthday,jdbcType=VARCHAR},
+		#{idCard,jdbcType=VARCHAR},
+		#{isExamine,jdbcType=INTEGER}, 
+		#{athletesType,jdbcType=INTEGER}, 
+		#{ersionNum,jdbcType=INTEGER},
+		#{orderNum,jdbcType=INTEGER},
+		#{creaRen,jdbcType=VARCHAR},
+		#{creaTime,jdbcType=VARCHAR},
+		#{backup,jdbcType=VARCHAR},
+		#{exp1,jdbcType=INTEGER},
+		#{exp2,jdbcType=INTEGER}, #{exp3,jdbcType=VARCHAR},
+		#{exp4,jdbcType=VARCHAR},
+		#{exp5,jdbcType=VARCHAR},
+		#{exp6,jdbcType=VARCHAR})
+	</insert>
+	<!--统计某几个单位下的运动员数量 -->
+	<select id="countByUnitCids" parameterType="java.lang.Integer"
+		resultType="java.lang.Long">
+		SELECT count(*) FROM athlete_base_info where UNIT_CID in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item,jdbcType=INTEGER}
+		</foreach>
+	</select>
+	<!--根据运动员ID查询运动员信息 -->
+	<select id="getById" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from
+		athlete_base_info
+		where
+		CID = #{cid,jdbcType=INTEGER}
+	</select>
+	<!--根据运动员ID批量查询运动员信息 -->
+	<select id="getByIds" parameterType="java.util.HashMap"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from
+		athlete_base_info
+		where 1= 1
+		<if test="cids != null and cids != ''" >
+			AND CID in
+			<foreach collection="cids"  item="item" index="index"  open="("
+				separator="," close=")">
+				#{item,jdbcType=INTEGER}
+			</foreach>
+		</if>
+		order by ORDER_NUM  DESC,CREA_TIME DESC
+	</select>
+
+	<!-- 多条件查询运动员记录 -->
+	<select id="queryAll" parameterType="AthleteBaseInfo" resultMap="BaseResultMap">
+		SELECT abui.* FROM (
+		SELECT
+		ab.*,
+		ui.UNIT_NAME
+		FROM
+		athlete_base_info ab
+		LEFT JOIN
+		unit_info ui
+		ON
+		ab.UNIT_CID = ui.CID
+		) abui
+		WHERE
+		1 = 1
+		<if test="ersionNum != null and ersionNum !=''">
+			and  abui.ERSION_NUM = #{ersionNum}
+		</if>
+		<if test="athleteName != null and athleteName != '' ">
+			and (abui.ATHLETE_NAME LIKE "%"#{athleteName}"%"
+			or
+			abui.ABBREVIATION LIKE "%"#{athleteName}"%")
+		</if>
+		<if test="unitInfo != null and unitInfo.cid != null">
+			and abui.UNIT_CID = #{unitInfo.cid,jdbcType=INTEGER}
+		</if>
+		order by ORDER_NUM  DESC,CREA_TIME DESC
+	</select>
+	<!--更新运动员信息 -->
+	<update id="updateByPrimaryKey" parameterType="AthleteBaseInfo">
+		update
+		athlete_base_info
+		set
+		ATHLETE_NAME = #{athleteName,jdbcType=VARCHAR},
+		ABBREVIATION = #{abbreviation,jdbcType=VARCHAR},
+		ALIAS =#{alias,jdbcType=VARCHAR},
+		UNIT_CID = #{unitCid,jdbcType=INTEGER},
+		SEX =#{sex,jdbcType=INTEGER},
+		NATION = #{nation,jdbcType=VARCHAR},
+		BIRTHDAY =#{birthday,jdbcType=VARCHAR},
+		ID_CARD = #{idCard,jdbcType=VARCHAR},
+		IS_EXAMINE = #{isExamine,jdbcType=INTEGER},
+		ATHLETES_TYPE = #{athletesType,jdbcType=INTEGER},
+		ERSION_NUM =#{ersionNum,jdbcType=INTEGER},
+		ORDER_NUM =#{orderNum,jdbcType=INTEGER},
+		CREA_REN = #{creaRen,jdbcType=VARCHAR},
+		CREA_TIME = #{creaTime,jdbcType=VARCHAR},
+		BACKUP =#{backup,jdbcType=VARCHAR},
+		EXP1 = #{exp1,jdbcType=INTEGER},
+		EXP2 =#{exp2,jdbcType=INTEGER},
+		EXP3 = #{exp3,jdbcType=VARCHAR},
+		EXP4 =#{exp4,jdbcType=VARCHAR},
+		EXP5 = #{exp5,jdbcType=VARCHAR},
+		EXP6 =#{exp6,jdbcType=VARCHAR}
+		where
+		CID = #{cid,jdbcType=INTEGER}
+	</update>
+	<!-- 通过单位id查询运动员 -->
+	<select id="selectALLAthlete" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from
+		athlete_base_info
+		where
+		1 = 1
+		<if test="isSex ==0 || isSex == 1">
+			and SEX =#{isSex,jdbcType=INTEGER}
+		</if>
+		<if test="athletesType != null">
+			and ATHLETES_TYPE = #{athletesType,jdbcType=INTEGER}
+		</if>
+		<if test="unitCids != null and unitCids != ''" >
+			AND UNIT_CID IN
+			<foreach collection="unitCids"  item="item" index="index"  open="("
+				separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		<if test="athleteCids != null and athleteCids != ''" >
+			AND CID  NOT IN
+			<foreach collection="athleteCids"  item="item" index="index"  open="("
+				separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		order by ORDER_NUM  DESC,CREA_TIME DESC
+	</select>
+	<!--根据运动员名字查询运动员信息  -->
+	<select id="getbyName" parameterType="java.util.HashMap" resultMap="BaseResultMap">
+		SELECT 
+			*
+		FROM 
+			athlete_base_info 
+		WHERE 
+			1=1 
+			<if test="athleteName != null and ersionNum !=''">
+				and ATHLETE_NAME = #{athleteName}
+			</if>
+			<if test="ersionNum != null and ersionNum !=''">
+				and  ERSION_NUM = #{ersionNum}
+			</if>
+	</select>
+</mapper>

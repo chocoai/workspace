@@ -1,0 +1,18 @@
+package com.whty.mxbj.api.dao;
+
+import java.util.List;
+import java.util.Map;
+
+import com.whty.mxbj.api.model.BaseNote;
+import com.whty.mxbj.api.model.Note;
+import com.whty.mxbj.base.dao.IBaseDao;
+
+public interface NoteDao extends IBaseDao<Note> {
+	
+	Note loadNote(Map<String, Object> noteParam);
+	
+	public void deleteNote(Note note);
+
+	List<BaseNote> findAllNote(Map<String, Object> paramMap);
+	
+}

@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fxzhj.mapper.NodeCodeMapper">
+	<resultMap id="BaseResultMap" type="com.fxzhj.model.NodeCode">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="node_url" property="nodeUrl" jdbcType="VARCHAR" />
+		<result column="code_id" property="codeId" jdbcType="BIGINT" />
+		<result column="describe_id" property="describeId" jdbcType="BIGINT" />
+		<result column="type" property="type" jdbcType="INTEGER" />
+		<result column="field2" property="field2" jdbcType="VARCHAR" />
+		<result column="field3" property="field3" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="create_user" property="createUser" jdbcType="INTEGER" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="update_user" property="updateUser" jdbcType="INTEGER" />
+		
+		<result column="code_num" property="codeNum" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		id, node_url, code_id, describe_id, type, field2, field3, create_time,
+		create_user, update_time, update_user
+	</sql>
+	
+	<!-- 新增节点路径绑定二维码信息表 -->
+	<insert id="addNodeCode" parameterType="com.fxzhj.model.NodeCode">
+		insert into t_node_code (id, node_url, code_id,	describe_id, type, field2,
+		field3, create_time, create_user, update_time, update_user)
+		values (#{id}, #{nodeUrl}, #{codeId}, #{describeId}, #{type}, #{field2}, 
+		#{field3}, #{createTime}, #{createUser}, #{updateTime}, #{updateUser})
+	</insert>
+	
+	<!-- 根据二维码id删除二维码绑定节点信息 -->
+	<delete id="deleteByCid" parameterType="java.lang.Long">
+		delete from t_node_code where code_id = #{0}
+	</delete>
+	
+	<!-- 批量删除 参数为数组 -->
+	<delete id="batchDelete" parameterType="string" >
+        delete from t_node_code where code_id in (
+        	select id from t_code where code_num in 
+        	<foreach item="ids" collection="array" open="(" separator="," close=")">
+            	#{ids}
+        	</foreach>
+        )
+	</delete>
+	
+	<!-- 批量模糊查询 -->  
+	<select id="queryBatchByNid" resultType="int" parameterType="int">  
+    	select count(1) from t_node_code where 
+     		<foreach item="ids" collection="array" index="index" separator="OR">  
+            	node_url LIKE CONCAT('%',#{ids},'%')  
+        	</foreach>
+	</select>
+	
+	<!-- 根据扩展字段查询商城的二维码是否已经绑定 -->  
+	<select id="queryByFiled2" resultType="string" parameterType="string">  
+    	select b.code_num from t_node_code a 
+    	left join t_code b on a.code_id=b.id
+    	where field2=#{0}
+	</select>
+	 
+	<cache />
+</mapper>

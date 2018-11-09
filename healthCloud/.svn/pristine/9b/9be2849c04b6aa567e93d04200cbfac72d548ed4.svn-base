@@ -1,0 +1,471 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.healthcloud.organization.mapper.DoctorMapper">
+	<resultMap id="BaseResultMap" type="com.yhcrt.healthcloud.organization.entity.Doctor">
+		<id column="doc_id" jdbcType="INTEGER" property="docId" />
+		<result column="user_id" jdbcType="INTEGER" property="userId" />
+		<result column="org_id" jdbcType="INTEGER" property="orgId" />
+		<result column="real_name" jdbcType="VARCHAR" property="realName" />
+		<result column="specialty" jdbcType="VARCHAR" property="specialty" />
+		<result column="identity_card" jdbcType="VARCHAR" property="identityCard" />
+		<result column="sex" jdbcType="INTEGER" property="sex" />
+		<result column="phone_no" jdbcType="VARCHAR" property="phoneNo" />
+		<result column="email" jdbcType="VARCHAR" property="email" />
+		<result column="identity_photo" jdbcType="VARCHAR" property="identityPhoto" />
+		<result column="create_user" jdbcType="VARCHAR" property="createUser" />
+		<result column="create_time" jdbcType="VARCHAR" property="createTime" />
+		<result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+		<result column="remark" jdbcType="VARCHAR" property="remark" />
+		<!-- 游离字段   用于界面角色下拉框   -->
+		<result column="role_id" jdbcType="INTEGER" property="roleId" />
+		
+		<association property="org" column="org_id" select="com.yhcrt.healthcloud.organization.mapper.OrganizationMapper.selectByPrimaryKey"></association>
+		<association property="user" column="user_id" select="com.yhcrt.healthcloud.system.mapper.SysUserMapper.selectByUserId"></association>
+		<association property="memberSize" column="doc_id" select="com.yhcrt.healthcloud.memberBack.mapper.MemberBackMapper.countByDocId"></association>
+	</resultMap>
+	<resultMap id="SimpleResultMap" type="com.yhcrt.healthcloud.organization.entity.Doctor">
+		<id column="doc_id" jdbcType="INTEGER" property="docId" />
+		<result column="user_id" jdbcType="INTEGER" property="userId" />
+		<result column="org_id" jdbcType="INTEGER" property="orgId" />
+		<result column="real_name" jdbcType="VARCHAR" property="realName" />
+		<result column="specialty" jdbcType="VARCHAR" property="specialty" />
+		<result column="identity_card" jdbcType="VARCHAR" property="identityCard" />
+		<result column="sex" jdbcType="INTEGER" property="sex" />
+		<result column="phone_no" jdbcType="VARCHAR" property="phoneNo" />
+		<result column="email" jdbcType="VARCHAR" property="email" />
+		<result column="identity_photo" jdbcType="VARCHAR" property="identityPhoto" />
+		<result column="create_user" jdbcType="VARCHAR" property="createUser" />
+		<result column="create_time" jdbcType="VARCHAR" property="createTime" />
+		<result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+		<result column="remark" jdbcType="VARCHAR" property="remark" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		doc_id, user_id, org_id, real_name, specialty, identity_card, sex, phone_no,
+		email, identity_photo, create_user, create_time, update_time, status, remark
+	</sql>
+	<select id="selectByExample"
+		parameterType="com.yhcrt.healthcloud.organization.entity.DoctorExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from doctor
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select a.doc_id, a.user_id, a.org_id, a.real_name, a.specialty, a.identity_card, a.sex, 
+		a.phone_no, a.email, a.identity_photo, a.status, a.remark, b.role_id 
+		from doctor a
+		left join user_role b on a.user_id=b.user_id
+		where a.doc_id = #{0}
+	</select>
+	
+	<!-- 根据排除docId判断identityCard在表中是否存在 -->
+	<select id="countExtDocId" parameterType="com.yhcrt.healthcloud.organization.entity.Doctor" resultType="int">
+		select count(1) from doctor where identity_card = #{identityCard} 
+		<if test="docId != null">
+			and doc_id != #{docId}
+		</if>
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from doctor where doc_id = #{docId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample"
+		parameterType="com.yhcrt.healthcloud.organization.entity.DoctorExample">
+		delete from doctor
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.yhcrt.healthcloud.organization.entity.Doctor">
+		insert into doctor (doc_id, user_id, org_id,
+		real_name, specialty, identity_card,
+		sex, phone_no, email,
+		identity_photo, create_user, create_time,
+		update_time, status, remark
+		)
+		values (#{docId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER},
+		#{orgId,jdbcType=INTEGER},
+		#{realName,jdbcType=VARCHAR}, #{specialty,jdbcType=VARCHAR}, #{identityCard,jdbcType=VARCHAR},
+		#{sex,jdbcType=INTEGER}, #{phoneNo,jdbcType=VARCHAR},
+		#{email,jdbcType=VARCHAR},
+		#{identityPhoto,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR},
+		#{updateTime,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER},
+		#{remark,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.yhcrt.healthcloud.organization.entity.Doctor">
+		insert into doctor
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="docId != null">
+				doc_id,
+			</if>
+			<if test="userId != null">
+				user_id,
+			</if>
+			<if test="orgId != null">
+				org_id,
+			</if>
+			<if test="realName != null">
+				real_name,
+			</if>
+			<if test="specialty != null">
+				specialty,
+			</if>
+			<if test="identityCard != null">
+				identity_card,
+			</if>
+			<if test="sex != null">
+				sex,
+			</if>
+			<if test="phoneNo != null">
+				phone_no,
+			</if>
+			<if test="email != null">
+				email,
+			</if>
+			<if test="identityPhoto != null">
+				identity_photo,
+			</if>
+			<if test="createUser != null">
+				create_user,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="updateTime != null">
+				update_time,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="docId != null">
+				#{docId,jdbcType=INTEGER},
+			</if>
+			<if test="userId != null">
+				#{userId,jdbcType=INTEGER},
+			</if>
+			<if test="orgId != null">
+				#{orgId,jdbcType=INTEGER},
+			</if>
+			<if test="realName != null">
+				#{realName,jdbcType=VARCHAR},
+			</if>
+			<if test="specialty != null">
+				#{specialty,jdbcType=VARCHAR},
+			</if>
+			<if test="identityCard != null">
+				#{identityCard,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				#{sex,jdbcType=INTEGER},
+			</if>
+			<if test="phoneNo != null">
+				#{phoneNo,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				#{email,jdbcType=VARCHAR},
+			</if>
+			<if test="identityPhoto != null">
+				#{identityPhoto,jdbcType=VARCHAR},
+			</if>
+			<if test="createUser != null">
+				#{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				#{updateTime,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample"
+		parameterType="com.yhcrt.healthcloud.organization.entity.DoctorExample"
+		resultType="java.lang.Long">
+		select count(*) from doctor
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update doctor
+		<set>
+			<if test="record.docId != null">
+				doc_id = #{record.docId,jdbcType=INTEGER},
+			</if>
+			<if test="record.userId != null">
+				user_id = #{record.userId,jdbcType=INTEGER},
+			</if>
+			<if test="record.orgId != null">
+				org_id = #{record.orgId,jdbcType=INTEGER},
+			</if>
+			<if test="record.realName != null">
+				real_name = #{record.realName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.specialty != null">
+				specialty = #{record.specialty,jdbcType=VARCHAR},
+			</if>
+			<if test="record.identityCard != null">
+				identity_card = #{record.identityCard,jdbcType=VARCHAR},
+			</if>
+			<if test="record.sex != null">
+				sex = #{record.sex,jdbcType=INTEGER},
+			</if>
+			<if test="record.phoneNo != null">
+				phone_no = #{record.phoneNo,jdbcType=VARCHAR},
+			</if>
+			<if test="record.email != null">
+				email = #{record.email,jdbcType=VARCHAR},
+			</if>
+			<if test="record.identityPhoto != null">
+				identity_photo = #{record.identityPhoto,jdbcType=VARCHAR},
+			</if>
+			<if test="record.createUser != null">
+				create_user = #{record.createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="record.createTime != null">
+				create_time = #{record.createTime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.updateTime != null">
+				update_time = #{record.updateTime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.status != null">
+				status = #{record.status,jdbcType=INTEGER},
+			</if>
+			<if test="record.remark != null">
+				remark = #{record.remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update doctor
+		set doc_id = #{record.docId,jdbcType=INTEGER},
+		user_id = #{record.userId,jdbcType=INTEGER},
+		org_id = #{record.orgId,jdbcType=INTEGER},
+		real_name = #{record.realName,jdbcType=VARCHAR},
+		specialty = #{record.specialty,jdbcType=VARCHAR},
+		identity_card = #{record.identityCard,jdbcType=VARCHAR},
+		sex = #{record.sex,jdbcType=INTEGER},
+		phone_no = #{record.phoneNo,jdbcType=VARCHAR},
+		email = #{record.email,jdbcType=VARCHAR},
+		identity_photo = #{record.identityPhoto,jdbcType=VARCHAR},
+		create_user = #{record.createUser,jdbcType=VARCHAR},
+		create_time = #{record.createTime,jdbcType=VARCHAR},
+		update_time = #{record.updateTime,jdbcType=VARCHAR},
+		status = #{record.status,jdbcType=INTEGER},
+		remark = #{record.remark,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.healthcloud.organization.entity.Doctor">
+		update doctor
+		<set>
+			<if test="userId != null">
+				user_id = #{userId,jdbcType=INTEGER},
+			</if>
+			<if test="orgId != null">
+				org_id = #{orgId,jdbcType=INTEGER},
+			</if>
+			<if test="realName != null">
+				real_name = #{realName,jdbcType=VARCHAR},
+			</if>
+			<if test="specialty != null">
+				specialty = #{specialty,jdbcType=VARCHAR},
+			</if>
+			<if test="identityCard != null">
+				identity_card = #{identityCard,jdbcType=VARCHAR},
+			</if>
+			<if test="sex != null">
+				sex = #{sex,jdbcType=INTEGER},
+			</if>
+			<if test="phoneNo != null">
+				phone_no = #{phoneNo,jdbcType=VARCHAR},
+			</if>
+			<if test="email != null">
+				email = #{email,jdbcType=VARCHAR},
+			</if>
+			<if test="identityPhoto != null">
+				identity_photo = #{identityPhoto,jdbcType=VARCHAR},
+			</if>
+			<if test="createUser != null">
+				create_user = #{createUser,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where doc_id = #{docId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.yhcrt.healthcloud.organization.entity.Doctor">
+		update doctor
+		set user_id = #{userId,jdbcType=INTEGER},
+		org_id = #{orgId,jdbcType=INTEGER},
+		real_name = #{realName,jdbcType=VARCHAR},
+		specialty = #{specialty,jdbcType=VARCHAR},
+		identity_card = #{identityCard,jdbcType=VARCHAR},
+		sex = #{sex,jdbcType=INTEGER},
+		phone_no = #{phoneNo,jdbcType=VARCHAR},
+		email = #{email,jdbcType=VARCHAR},
+		identity_photo = #{identityPhoto,jdbcType=VARCHAR},
+		create_user = #{createUser,jdbcType=VARCHAR},
+		create_time = #{createTime,jdbcType=VARCHAR},
+		update_time = #{updateTime,jdbcType=VARCHAR},
+		status = #{status,jdbcType=INTEGER},
+		remark = #{remark,jdbcType=VARCHAR}
+		where doc_id = #{docId,jdbcType=INTEGER}
+	</update>
+	<select id="search" parameterType="map" resultMap="BaseResultMap">
+		select doc.org_id,sys.user_id, doc.doc_id, doc.real_name, doc.specialty, 
+		doc.phone_no, doc.identity_card, doc.sex, doc.email   
+		from doctor doc 
+		left join sys_user sys on sys.user_id = doc.user_id
+		left join user_role ur on doc.user_id = ur.user_id
+		where 1=1
+		<if test="roleList !=null and roleList.size()>0">
+			and ur.role_id in
+			<foreach item="item" collection="roleList" index="index" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+		<if test="orgId_list !=null and orgId_list.size()>0">
+			and doc.org_id in
+			<foreach item="item" collection="orgId_list" index="index" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+		<if test="userCode !=null and userCode!='' ">
+			and sys.user_code LIKE CONCAT('%',#{userCode},'%')
+		</if>
+		<if test="realName !=null and realName!='' ">
+			and doc.real_name LIKE CONCAT('%',#{realName},'%')
+		</if>
+		<if test="specialty !=null and specialty!=''">
+			and doc.specialty = #{specialty,jdbcType=VARCHAR}
+		</if>
+		and doc.status = #{status}
+		order by doc.update_time desc,doc_id desc
+	</select>
+	
+	<select id="selectByUserId" parameterType="Integer" resultMap="SimpleResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from doctor doc
+		where doc.user_id = #{userId}
+	</select>
+	
+	<!-- 导入批量新增 -->
+	<insert id="batchAdd" parameterType="java.util.List">
+		insert into doctor (doc_id, user_id, org_id, real_name, specialty, identity_card, sex, 
+		phone_no, email, identity_photo, create_user, create_time, update_time, status, remark)
+		values 
+	    <foreach collection="list" item="item" index="index" separator="," >  
+	        (#{item.docId},#{item.userId},#{item.orgId},#{item.realName},#{item.specialty},
+	        #{item.identityCard},#{item.sex},#{item.phoneNo}, #{item.email},#{item.identityPhoto},
+	        #{item.createUser},#{item.createTime},#{item.updateTime},#{item.status},#{item.remark})  
+	    </foreach> 
+	</insert>
+	
+	<!-- 根据电话号码查询 -->
+	<select id="selectByPhoneNo" parameterType="string" resultMap="SimpleResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from doctor 
+		where phone_no = #{0}
+	</select>
+	
+</mapper>

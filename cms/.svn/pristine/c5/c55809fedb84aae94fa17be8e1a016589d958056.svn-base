@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>视频--东楚网</title>
+<link rel="stylesheet" type="text/css" href="/${res}/css/sp.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/public_all.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/global.css" />
+<script type="text/javascript" src="/${res}/js/dc/settitle.js"></script><!--菜单切换-->
+
+</head>
+
+<body>
+
+<!--top 开始-->
+[#include "../include/header.html"/]
+<div style=" clear:both;"></div>
+
+<!--top end-->
+
+ <!--nav 开始-->
+[#include "../include/navi.html"/]
+<!--nav 结束-->
+
+<div style=" clear:both;"></div>
+
+
+
+<!--内容 开始-->
+<div class="sp_box">
+
+  <!----banner 开始---->
+  <div id="slide_fade" class="slide_fade">
+	<div class="banpic_box">
+		<ul class="list">
+		    [@cms_content_list count='5' orderBy='4' typeId='3' channelId='46' channelOption='1']
+            [#list tag_list as a]
+			<li><a href="${a.url}" target="_blank">
+		     <img src="${a.titleImg!a.typeImg}" alt="${a.title}">
+             <div class="txt">
+			    <h3>${a.title!}</h3>
+			    <p>[@text_cut s=a.desc! len='20' /]</p>
+		 	 </div>
+			</a></li>
+           [/#list]
+           [/@cms_content_list]
+		</ul>
+	</div>
+	<ul class="btn clearfix">
+		[@cms_content_list count='5' orderBy='4' typeId='3' channelId='46' channelOption='1']
+        [#list tag_list as a]
+        <li>
+			<a href="${a.url}" target="_blank">
+				<img src="${a.titleImg!a.typeImg}" width="200" height="70">
+			</a>
+		</li>
+        [/#list]
+        [/@cms_content_list]
+
+	</ul>
+  </div>
+  <!----banner 结束---->
+  <div class="sp_center">
+     <div class="sp_center_l">
+        <!----新闻 开始--->
+       <div class="sp_news">
+          <div class="sp_hd">
+             <h3>新闻</h3>
+             <span class="sp_more"> 
+                [@cms_channel id='49']
+                <a href="${base}/xwtv/index.jhtml" target="_self">更多></a>
+                [/@cms_channel]
+            </span>
+          </div>
+          <ul class="sp_list">
+             [@cms_content_list count='8' orderBy='4' titLen='10' channelId='49' channelOption='1']
+             [#list tag_list as x]
+             <li>
+                <a class="sp_pic" href="${x.url}" target="_blank"><img src="${x.titleImg!x.typeImg!site.defImg}"></a>
+                <a class="sp_tit" href="${x.url}" title="${x.title}" target="_blank">[@text_cut s=x.title len=titLen /]</a>
+                <span class="play_num"><i></i>${x.views!}次</span>
+             </li>
+             [/#list]
+             [/@cms_content_list]
+          </ul>
+        </div>
+        <!----新闻 结束--->
+        
+        <!----访谈 开始--->
+        <div class="sp_news">
+          <div class="sp_hd">
+             <h3>访谈</h3>
+             <span class="sp_more">
+                [@cms_channel id='50']
+                <a href="${base}/fttv/index.jhtml" target="_self">更多></a>
+                [/@cms_channel]
+             </span>
+          </div>
+          <ul class="sp_list">
+             [@cms_content_list count='8' orderBy='4' titLen='10' channelId='50' channelOption='1']
+             [#list tag_list as f]
+             <li>
+                <a class="sp_pic" href="${f.url}" target="_blank"><img src="${f.titleImg!f.typeImg!site.defImg}"></a>
+                <a class="sp_tit" href="${f.url}" title="${f.title}" target="_blank">[@text_cut s=f.title len=titLen /]</a>
+                <span class="play_num"><i></i>${f.views!}次</span>
+             </li>
+             [/#list]
+             [/@cms_content_list]
+          </ul>
+        </div>
+        <!----访谈 结束--->
+        
+        <!----石头黄 开始--->
+        <div class="sp_news">
+         <div class="sp_hd">
+           <h3>石头黄</h3>
+           <span class="sp_more">
+             [@cms_channel id='51']
+                <a href="${base}/xjtv/index.jhtml" target="_self">更多></a><!--${tag_bean.mobileUrl}-->
+             [/@cms_channel]
+           </span>
+         </div>
+          <ul class="sp_list">
+             [@cms_content_list count='8' orderBy='4' titLen='10' channelId='51' channelOption='1']
+             [#list tag_list as s]
+             <li>
+                <a class="sp_pic" href="${s.url}" target="_blank"><img src="${s.titleImg!s.typeImg!site.defImg}"></a>
+                <a class="sp_tit" href="${s.url}" title="${s.title}" target="_blank">[@text_cut s=s.title len=titLen /]</a>
+                <span class="play_num"><i></i>${s.views!}次</span>
+             </li>
+             [/#list]
+             [/@cms_content_list]
+          </ul>
+        </div>
+        <!----石头黄 结束--->
+     </div>
+   
+   <div class="details_right">
+     <!---精选视频 开始--->
+     <div class="zxsp">
+        <div class="spindex_rtit">
+           <span>最新视频</span>
+        </div>
+        <div class="jxsp_bd">
+           <ul class="jxsp_list">
+             [@cms_content_list count='4' orderBy='4' titLen='10' channelOption='1' channelId='46']
+             [#list tag_list as h]
+                 <li>
+                   <a href="${h.url}" target="_blank"><img src="${h.titleImg!h.typeImg!site.defImg}"/></a>
+                   <span><a href="${h.url}" target="_blank">[@text_cut s=h.title len=titLen /]</a></span>
+                   <u><i></i>${h.views!}次</u>
+                 </li>
+             [/#list]
+             [/@cms_content_list]
+           </ul>
+        </div>
+     </div>
+     <!---精选视频 结束--->
+     
+     <!---独家视频 开始--->
+     <div class="jxsp">
+        <div class="spindex_rtit">
+           <span>精选视频</span>
+        </div>
+        <div class="jxsp_bd">
+           <ul class="jxsp_list">
+             [@cms_content_list count='4' orderBy='4' titLen='10' channelOption='1' recommend='1' channelId='46']
+             [#list tag_list as h1]
+                 <li>
+                   <a href="${h1.url}" target="_blank"><img src="${h1.titleImg!h1.typeImg!site.defImg}"/></a>
+                   <span><a href="${h1.url}" target="_blank">[@text_cut s=h1.title len=titLen /]</a></span>
+                   <u><i></i>${h1.views!}次</u>
+                 </li>
+             [/#list]
+             [/@cms_content_list]
+             
+           </ul>
+        </div>
+     </div>
+     <!---独家视频 结束--->
+     
+     <!----热门排行 开始--->
+     <div class="rmph">
+        <div class="spindex_rtit">
+           <span>热门排行</span>
+        </div>
+        <div class="rmph_bd">
+           <ul class="rmph_list">
+            [@cms_content_list count='10' titLen='12' orderBy='9' channelOption='1' channelId='46']
+            [#list tag_list as h2]
+             <li><a href="${h2.url}" target="_blank">[@text_cut s=h2.title len=titLen /]</a></li>
+             [/#list]
+             [/@cms_content_list]
+           </ul> 
+        </div>
+     </div>
+     <!----热门排行 结束--->
+   </div>
+  </div>
+</div>
+<!--内容 end-->
+
+<!--尾部 开始-->
+[#include "../include/footer.html"/]
+<!--尾部 开始-->
+<!----banner---->
+<script type="text/javascript" src="/${res}/js/dc/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="/${res}/js/dc/jquery.cxslide.min.js"></script>
+<script type="text/javascript">
+$("#slide_fade").cxSlide({
+	events:"mouseover",
+	type:"fade",  /*可更换值  “x” 或 “y” 或 “fade” 或 “toggle” x滚动记得改样式*/
+	speed:300
+});
+</script>
+
+</body>
+</html>

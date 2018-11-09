@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ScoreRecordMapper">
+  <resultMap id="BaseResultMap" type="ScoreRecord">
+    <id column="CID" jdbcType="INTEGER" property="cid" />
+    <result column="RULE_NAME" jdbcType="VARCHAR" property="ruleName" />
+    <result column="TROPHY" jdbcType="INTEGER" property="trophy" />
+    <result column="CERTIFICATE" jdbcType="INTEGER" property="certificate" />
+    <result column="GOLD_MEDAL" jdbcType="INTEGER" property="goldMedal" />
+    <result column="SILVER_MEDAL" jdbcType="INTEGER" property="silverMedal" />
+    <result column="BRONZE_MEDAL" jdbcType="INTEGER" property="bronzeMedal" />
+    <result column="FIRST_SCORE" jdbcType="INTEGER" property="firstScore" />
+    <result column="SECOND_SCORE" jdbcType="INTEGER" property="secondScore" />
+    <result column="THIRD_SCORE" jdbcType="INTEGER" property="thirdScore" />
+    <result column="FOURTH_SCORE" jdbcType="INTEGER" property="fourthScore" />
+    <result column="FIFTH_SCORE" jdbcType="INTEGER" property="fifthScore" />
+    <result column="SIXTH_SCORE" jdbcType="INTEGER" property="sixthScore" />
+    <result column="SEVENTH_SCORE" jdbcType="INTEGER" property="seventhScore" />
+    <result column="EIGHT_SCORE" jdbcType="INTEGER" property="eightScore" />
+    <result column="CREA_REN" jdbcType="VARCHAR" property="creaRen"/>
+    <result column="CREA_TIME" jdbcType="VARCHAR" property="creaTime"/>
+    <result column="ERSION_NUM" jdbcType="INTEGER" property="ersionNum" />
+    <result column="ORDER_NUM" jdbcType="INTEGER" property="orderNum" />
+    <result column="BACKUP" jdbcType="VARCHAR" property="backup" />
+    <result column="EXP1" jdbcType="INTEGER" property="exp1" />
+    <result column="EXP2" jdbcType="INTEGER" property="exp2" />
+    <result column="EXP3" jdbcType="VARCHAR" property="exp3" />
+    <result column="EXP4" jdbcType="VARCHAR" property="exp4" />
+    <result column="EXP5" jdbcType="VARCHAR" property="exp5" />
+    <result column="EXP6" jdbcType="VARCHAR" property="exp6" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    CID, RULE_NAME, TROPHY, CERTIFICATE, GOLD_MEDAL, SILVER_MEDAL, BRONZE_MEDAL, FIRST_SCORE, 
+    SECOND_SCORE, THIRD_SCORE, FOURTH_SCORE, FIFTH_SCORE, SIXTH_SCORE, SEVENTH_SCORE, 
+    EIGHT_SCORE, CREA_REN, CREA_TIME,ERSION_NUM, ORDER_NUM, BACKUP, EXP1, EXP2, EXP3, EXP4, EXP5, 
+    EXP6
+  </sql>
+  
+  <select id="countByExample" parameterType="ScoreRecord" resultType="java.lang.Long">
+    SELECT COUNT(*) FROM SCORE_RECORD
+  </select>
+  <select id="selectByExample" parameterType="ScoreRecord" resultMap="BaseResultMap">
+    SELECT
+    	CID,
+    	RULE_NAME,
+    	TROPHY,
+    	CERTIFICATE,
+    	GOLD_MEDAL,
+    	SILVER_MEDAL,
+    	BRONZE_MEDAL,
+    	FIRST_SCORE,
+    	SECOND_SCORE,
+    	THIRD_SCORE,
+    	FOURTH_SCORE,
+    	FIFTH_SCORE,
+    	SIXTH_SCORE,
+    	SEVENTH_SCORE,
+    	EIGHT_SCORE,
+    	ERSION_NUM,
+    	ORDER_NUM,
+    	BACKUP
+    FROM 
+    	SCORE_RECORD
+    WHERE 
+    	1=1
+    	<if test="cid != null">
+	    	AND CID = #{cid,jdbcType=INTEGER}
+	    </if>
+    	<if test="ersionNum != null">
+	    	AND ERSION_NUM = #{ersionNum,jdbcType=INTEGER}
+	    </if>
+	    <if test="ruleName != null and ruleName !=''">
+	    	AND RULE_NAME like "%"#{ruleName,jdbcType=VARCHAR}"%"
+	    </if>
+        order by ORDER_NUM  DESC
+  </select>
+  <!-- 判断计分记牌名称是否重名 -->
+  <select id="isRuleName" parameterType="ScoreRecord" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from
+		SCORE_RECORD
+		where
+		RULE_NAME = #{ruleName,jdbcType=VARCHAR}
+		AND ERSION_NUM = #{ersionNum,jdbcType=INTEGER}
+	</select>
+  
+  <select id="selectByCid" parameterType="Integer" resultMap="BaseResultMap">
+    SELECT
+    	CID,
+    	RULE_NAME,
+    	TROPHY,
+    	CERTIFICATE,
+    	GOLD_MEDAL,
+    	SILVER_MEDAL,
+    	BRONZE_MEDAL,
+    	FIRST_SCORE,
+    	SECOND_SCORE,
+    	THIRD_SCORE,
+    	FOURTH_SCORE,
+    	FIFTH_SCORE,
+    	SIXTH_SCORE,
+    	SEVENTH_SCORE,
+    	EIGHT_SCORE,
+    	ERSION_NUM,
+    	ORDER_NUM,
+    	BACKUP
+    FROM 
+    	SCORE_RECORD
+    WHERE 
+	    CID = #{cid,jdbcType=INTEGER}
+  </select>
+  <delete id="delete" parameterType="java.lang.Integer">
+    DELETE FROM 
+    	SCORE_RECORD
+    WHERE 
+    	CID = #{cid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteAll" parameterType="String" flushCache="false">
+	DELETE FROM 
+		SCORE_RECORD
+	WHERE 
+		CID in
+		<foreach item="item" index="index" collection="list" open="(" separator="," close=")">
+             #{item}
+        </foreach>
+  </delete>
+  <insert id="insert" parameterType="ScoreRecord">
+  	INSERT INTO 
+  		SCORE_RECORD 
+  	(
+  		CID, 
+  		RULE_NAME, 
+  		TROPHY, 
+      	CERTIFICATE, 
+      	GOLD_MEDAL, 
+      	SILVER_MEDAL, 
+      	BRONZE_MEDAL, 
+      	FIRST_SCORE, 
+      	SECOND_SCORE, 
+      	THIRD_SCORE, 
+      	FOURTH_SCORE, 
+      	FIFTH_SCORE, 
+      	SIXTH_SCORE, 
+      	SEVENTH_SCORE, 
+      	EIGHT_SCORE,
+      	CREA_REN,
+      	CREA_TIME, 
+      	ERSION_NUM, 
+      	ORDER_NUM, 
+      	BACKUP
+    )
+    VALUES 
+    (
+    	#{cid,jdbcType=INTEGER}, 
+    	#{ruleName,jdbcType=VARCHAR}, 
+    	#{trophy,jdbcType=INTEGER}, 
+      	#{certificate,jdbcType=INTEGER}, 
+      	#{goldMedal,jdbcType=INTEGER}, 
+      	#{silverMedal,jdbcType=INTEGER}, 
+      	#{bronzeMedal,jdbcType=INTEGER}, 
+      	#{firstScore,jdbcType=INTEGER}, 
+      	#{secondScore,jdbcType=INTEGER}, 
+      	#{thirdScore,jdbcType=INTEGER}, 
+      	#{fourthScore,jdbcType=INTEGER}, 
+      	#{fifthScore,jdbcType=INTEGER}, 
+      	#{sixthScore,jdbcType=INTEGER}, 
+      	#{seventhScore,jdbcType=INTEGER}, 
+      	#{eightScore,jdbcType=INTEGER},
+      	#{creaRen,jdbcType=VARCHAR}, 
+      	#{creaTime,jdbcType=VARCHAR},  
+      	#{ersionNum,jdbcType=INTEGER}, 
+      	#{orderNum,jdbcType=INTEGER}, 
+      	#{backup,jdbcType=VARCHAR}
+    )
+  </insert>
+  <update id="update" parameterType="ScoreRecord">
+   UPDATE 
+  	   SCORE_RECORD
+   SET 
+       RULE_NAME = #{ruleName,jdbcType=VARCHAR},
+       TROPHY = #{trophy,jdbcType=INTEGER},
+       CERTIFICATE = #{certificate,jdbcType=INTEGER},
+       GOLD_MEDAL = #{goldMedal,jdbcType=INTEGER},
+       SILVER_MEDAL = #{silverMedal,jdbcType=INTEGER},
+       BRONZE_MEDAL = #{bronzeMedal,jdbcType=INTEGER},
+       FIRST_SCORE = #{firstScore,jdbcType=INTEGER},
+       SECOND_SCORE = #{secondScore,jdbcType=INTEGER},
+       THIRD_SCORE = #{thirdScore,jdbcType=INTEGER},
+       FOURTH_SCORE = #{fourthScore,jdbcType=INTEGER},
+       FIFTH_SCORE = #{fifthScore,jdbcType=INTEGER},
+       SIXTH_SCORE = #{sixthScore,jdbcType=INTEGER},
+       SEVENTH_SCORE = #{seventhScore,jdbcType=INTEGER},
+       EIGHT_SCORE = #{eightScore,jdbcType=INTEGER},
+       CREA_REN = #{creaRen,jdbcType=VARCHAR}, 
+       CREA_TIME = #{creaTime,jdbcType=VARCHAR}, 
+       ORDER_NUM = #{orderNum,jdbcType=INTEGER},
+       ERSION_NUM = #{ersionNum,jdbcType=INTEGER},
+       BACKUP = #{backup,jdbcType=VARCHAR}
+   WHERE 
+       CID = #{cid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>爆料台 - ${site.name}</title>
+<meta http-equiv="keywords" content="${site.keywords!}"/>
+<meta http-equiv="description" content="${site.description!}"/>
+<head>
+<link rel="stylesheet" type="text/css" href="/${res}/css/blt.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/public_all.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/global.css" />
+<script type="text/javascript" src="/${res}/js/dc/settitle.js"></script>
+
+<script src="${resSys}/jquery.js" type="text/javascript"></script>
+<script src="${resSys}/front.js" type="text/javascript"></script>
+</head>
+
+<body>
+
+[#include "../include/header2.html"/]
+
+
+<!--nav 开始-->
+[#include "../include/navi.html"/]
+
+<!--nav 开始-->
+<div style=" clear:both;"></div>
+
+<!--内容 开始-->
+<div class="box mt10">
+    <div class="map"><img src="/${res}/images/home.png" width="20" height="18"><a href="/">首页</a> >  <a href="${base}/baoliao.jspx">爆料台</a> </div>
+    <div style=" clear:both;"></div>
+    <div class="details">
+                    <div class="article_title">${baoliao.title!}</div>
+                    <div class="time">${baoliao.createTime?string('yyyy-MM-dd HH:mm')}&nbsp;&nbsp;&nbsp;&nbsp;浏览[#if baoliao.readCount ??](${baoliao.readCount})[#else](0)[/#if] 
+                         &nbsp;&nbsp;&nbsp;&nbsp;<span style="color:red;">[#if baoliao.state ??][#if baoliao.state == 0]爆料待处理[/#if][#if baoliao.state == 1]爆料处理中[/#if][#if baoliao.state == 2]爆料已解决[/#if][#else]爆料待处理[/#if] </span>
+                    </div>
+                    <div class="article">    
+                                [#if baoliao.pictures?size gt 0]
+                                [#list baoliao.pictures as pic]
+                                <center><img src="${pic.imgPath!}" width="350" height="300"></center>
+                                [/#list]
+                                [/#if]              
+                             <p>${baoliao.content!}</p>
+                             [#include "../content/inc_share.html"/]
+                            <div style=" clear:both;"></div>
+                            [#if baoliao.reply??]
+                            <div class="progress">
+                                    <h6>爆料进度回复</h6>
+                                    <div class="progress_cont">
+                                        <h1>[#if baoliao.replyTime??]${baoliao.replyTime?string('yyyy-MM-dd HH:mm')}[/#if]</h1>
+                                        <h2>${baoliao.reply!}</h2>
+                                        <h3>东楚网</h3>
+                                    </div>   
+                            </div>  
+                            [/#if]                      
+                     </div> 
+                     <div class="send_mess">我要评论 <span style="float:right;"><a href="${base}/baoliaocommt.jspx?baoliaoId=${baoliao.id}" target="_blank">已有[#if baoliao.commtCount??]${baoliao.commtCount}[#else]0[/#if]条评论</a></span></div>
+                     [#include "bl_comment_input.html"/]
+                     [#include "bl_comment_list.html"/]
+                     
+
+  </div>
+    
+[#include "bl_right.html"/]
+    
+
+           
+</div>
+<!--内容 end-->
+
+<!--尾部 开始-->
+<div style=" clear:both;"></div>
+<div id="footer">
+   <div class="copy">
+     Copyright ◎ 2006-2016 黄石市东楚传媒网络科技有限公司 All Rights Reserved <br />
+营业执照 － 组织机构代码证 － 增值电信业务经营许可证 
+
+   </div>
+</div>
+<!--尾部 开始-->
+
+</body>
+
+</html>

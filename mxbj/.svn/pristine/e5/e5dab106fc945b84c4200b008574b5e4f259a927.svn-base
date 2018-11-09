@@ -1,0 +1,12 @@
+package com.whty.mxbj.api.dao;
+
+import com.whty.mxbj.api.model.ArchiveNotePage;
+import com.whty.mxbj.base.dao.IBaseDao;
+
+public interface ArchiveNotePageDao extends IBaseDao<ArchiveNotePage> {
+
+	void deleteByArchiveNoteId(String archiveNoteId);
+
+	void updateUrl(ArchiveNotePage archiveNotePage);
+
+}

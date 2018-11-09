@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.yhcrt.weihu.cms.entity.assist">
+	<class name="CmsChange" table="jc_exchange" >
+		<meta attribute="sync-DAO">false</meta>
+		<cache usage="read-write"/>
+		<id name="id" type="integer" column="id" >
+			<generator class="identity"/>
+		</id>
+        <property name="name" column="name" type="string" not-null="false"  />
+         <property name="title" column="title" type="string" not-null="false"  />
+        <property name="contact" column="contact" type="string" not-null="false"  />
+		<property name="changeTime" column="change_time" type="timestamp" not-null="true"  />
+		<property name="status" column="status" type="integer"  not-null="true"/>
+		<property name="bz" column="bz" type="string" not-null="false"  />
+		<property name="address" column="address" type="string" not-null="false"  />
+		<many-to-one name="content" column="content_id" class="com.yhcrt.weihu.cms.entity.main.Content" not-null="true" >
+		</many-to-one>
+		<many-to-one name="user" column="user_id" class="com.yhcrt.weihu.core.entity.CmsUser" not-null="true" >
+		</many-to-one>
+
+	</class>	
+</hibernate-mapping>

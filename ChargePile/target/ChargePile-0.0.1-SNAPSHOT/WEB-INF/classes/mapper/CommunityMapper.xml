@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fxzhj.mapper.CommunityMapper">
+	<resultMap id="BaseResultMap" type="com.fxzhj.model.Community">
+		<id column="community_id" property="communityId" jdbcType="INTEGER" />
+		<result column="area_id" property="areaId" jdbcType="INTEGER" />
+		<result column="district_id" property="districtId" jdbcType="INTEGER" />
+		<result column="name" property="name" jdbcType="CHAR" />
+		<result column="address" property="address" jdbcType="CHAR" />
+		<result column="community_type" property="communityType" jdbcType="TINYINT" />
+		<result column="status" property="status" jdbcType="TINYINT" />
+		<result column="allow_register" property="allowRegister" jdbcType="TINYINT" />
+		<result column="sort" property="sort" jdbcType="INTEGER" />
+		<result column="create_time" property="createTime" jdbcType="INTEGER" />
+		<result column="empty_house" property="emptyHouse" jdbcType="INTEGER" />
+		<result column="taichuan_isdoor" property="taichuanIsdoor" jdbcType="TINYINT" />
+		<result column="intro_img" property="introImg" jdbcType="INTEGER" />
+		<result column="longitude" property="longitude" jdbcType="VARCHAR" />
+		<result column="latitude" property="latitude" jdbcType="VARCHAR" />
+		<result column="intro" property="intro" jdbcType="LONGVARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		community_id, area_id, district_id, name, address, community_type, status, allow_register,
+		sort, create_time, empty_house, taichuan_isdoor, intro_img, longitude, latitude, intro
+	</sql>
+	
+	<!-- 根据区县id查询小区 -->
+	<select id="queryByParentId" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select 
+		<include refid="Base_Column_List" />  
+		from t_community where district_id=#{0}
+	</select>
+	
+	
+	<cache />
+</mapper>

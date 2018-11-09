@@ -1,0 +1,1 @@
+alter table t_fi_receivables modify column arrival_date datetime

@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title></title>
+<#include "/cms_sys/head.html"/>
+<script type="text/javascript">
+	$(function() {
+		$("#jvForm").validate();
+	});
+</script>
+</head>
+<body>
+	<div class="box-positon">
+		<div class="rpos"><@s.m "global.position"/>: 专题子栏目管理 - 添加</div>
+		<form class="ropt">
+			<input type="hidden" name="topicId" value="${topicId}"/>
+			<input class="return-button" type="submit" value="返回列表 " onclick="this.form.action='getChildChannelList.do';"/>
+		</form>
+		<div class="clear"></div>
+	</div>
+	<div class="body-box">
+	<@p.form id="jvForm" action="addChildChannel.do" labelWidth="12">
+	<input type="hidden" name="topicId" value="${topicId}"/>
+	<@p.td colspan="2" width="200" label="专题名称">${topic.name}</@p.td><@p.tr/>
+	<@p.text colspan="1" width="50" label="栏目名称" name="channelName" required="true" class="required" maxlength="150" help="专题子栏目名称"/>
+	<@p.text colspan="1" width="50" label="栏目路径" name="channelPath" style="width:220px" maxlength="255"/><@p.tr/>
+	<@p.text colspan="2" width="50" label="cmsTopic.priority" name="priority" value="1" required="true" class="required digits" style="width:70px" maxlength="5"/><@p.tr/>
+	<@p.td colspan="2"><@p.submit code="global.submit"/> &nbsp; <@p.reset code="global.reset"/></@p.td> 
+	</@p.form>
+	</div>
+</body>
+</html>

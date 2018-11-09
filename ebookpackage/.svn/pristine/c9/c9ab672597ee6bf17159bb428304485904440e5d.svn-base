@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.ebp.manage.dao.UserOptLogDao">
+
+	<resultMap type="com.whty.ebp.manage.model.UserOptLog" id="userOptLogResult">
+		<id property="id" column="id" />
+		<result property="dataType" column="data_type" />
+		<result property="userSessionId" column="user_session_id" />
+		<result property="platformCode" column="platform_code" />
+		<result property="userId" column="user_id" />
+		<result property="createTime" column="create_time" />
+		<result property="loginPlatformCode" column="login_platform_code" />		
+		<result property="num" column="num" />
+		<result property="batch" column="batch"/>
+		<result property="systemVersion" column="system_version"/>
+		<result property="terminalType" column="terminal_type"/>
+		<result property="mobileBrand" column="mobile_brand"/>
+		<result property="mobileID" column="mobileID"/>
+		<result property="applyVersion" column="apply_version"/>
+		<result property="exceptionTime" column="exception_time"/>
+		<result property="exceptionInfo" column="exception_info"/>
+		<result property="startTime" column="start_time"/>
+		<result property="endTime" column="end_time"/> 
+		
+		<result property="countTime" column="count_time"/> 
+		
+	</resultMap>
+
+
+	<select id="getUserCount" parameterType="java.util.HashMap" resultMap="userOptLogResult">
+	SELECT date_format(create_time,'%Y-%m-%d') as count_time,user_id
+                   FROM TA_USER_OPT_LOG  
+                   where 1=1
+        <if test="startTime != null and startTime != ''"> and date_format(create_time,'%Y-%m-%d') >=#{startTime}</if>
+		<if test="endTime != null and endTime != ''"><![CDATA[ and date_format(create_time,'%Y-%m-%d')<=#{endTime}]]></if>
+		GROUP BY user_id, date_format(create_time,'%Y-%m-%d')
+	</select>
+
+	<insert id="saveUserOptLog" parameterType="com.whty.ebp.manage.model.UserOptLog">
+		insert into TA_USER_OPT_LOG (
+			id
+			<if test="dataType != null and dataType != ''">,data_type</if>
+			<if test="userSessionId != null and userSessionId != ''">,user_session_id</if>
+			<if test="platformCode != null and platformCode != ''">,platform_code</if>
+			<if test="userId != null and userId != ''">,user_id</if>
+			<if test="loginPlatformCode != null and loginPlatformCode">,login_platform_code</if>
+			<if test="num != null">,num</if>
+			<if test="batch !=null and batch !=''">,batch</if>
+			<if test="terminalType !=null and terminalType !=''">,terminal_type</if>
+			<if test="systemVersion !=null and systemVersion !=''">,system_version</if>
+			<if test="mobileBrand !=null and mobileBrand !=''">,mobile_brand</if>
+			<if test="mobileID !=null and mobileID !=''">,mobile_id</if>
+			<if test="applyVersion !=null and applyVersion !=''">,apply_version</if>
+			<if test="exceptionTime !=null">,exception_time</if>
+			<if test="exceptionInfo !=null and exceptionInfo !=''">,exception_info</if>
+			<if test="startTime !=null ">,start_time</if>
+			<if test="endTime !=null ">,end_time</if>
+		) values (
+			#{id,jdbcType=VARCHAR}
+			<if test="dataType != null and dataType != ''">,#{dataType,jdbcType=VARCHAR}</if>
+			<if test="userSessionId != null and userSessionId != ''">,#{userSessionId,jdbcType=VARCHAR}</if>
+			<if test="platformCode != null and platformCode != ''">,#{platformCode,jdbcType=VARCHAR}</if>
+			<if test="userId != null and userId != ''">,#{userId,jdbcType=VARCHAR}</if>
+			<if test="loginPlatformCode != null and loginPlatformCode != ''">,#{loginPlatformCode,jdbcType=TIMESTAMP}</if>
+			<if test="num != null ">,#{num}</if>
+			<if test="batch !=null and batch!=''">,#{batch}</if>
+			<if test="terminalType !=null and terminalType !=''">,#{terminalType}</if>
+			<if test="systemVersion !=null and systemVersion !=''">,#{systemVersion}</if>
+			<if test="mobileBrand !=null and mobileBrand !=''">,#{mobileBrand}</if>
+			<if test="mobileID !=null and mobileID !=''">,#{mobileID}</if>
+			<if test="applyVersion !=null and applyVersion !=''">,#{applyVersion}</if>
+			<if test="exceptionTime !=null ">,#{exceptionTime}</if>
+			<if test="exceptionInfo !=null and exceptionInfo !=''">,#{exceptionInfo}</if>
+			<if test="startTime !=null ">,#{startTime}</if>
+			<if test="endTime !=null">,#{endTime}</if>
+		)
+	</insert>
+
+	<select id="test" resultMap="userOptLogResult">
+select data_type,sum(num) as num from TA_USER_OPT_LOG 
+where 1=1 and data_type=1 and user_id='1887d34571734dbd803311d745066a8d' 
+and platform_Code='420100' and to_char(create_time,'yyyy-mm-dd hh24:mi:ss')>='2016-10-21 00:00:00' 
+<![CDATA[and to_char(create_time,'yyyy-mm-dd hh24:mi:ss')<='2016-10-21 17:35:00' ]]>
+group by data_type 
+	</select>
+
+	<select id="getDataNum2" parameterType="java.util.HashMap"  resultMap="userOptLogResult">
+	select  num from TA_USER_OPT_LOG 
+		where 1=1 
+		and create_time BETWEEN #{startDateStr} AND #{endDateStr}
+		<if test="dataType != null and dataType != ''">and data_type=#{dataType}</if>
+		<if test="userId != null and userId != ''">and user_id=#{userId}</if>
+		<if test="platformCode != null and platformCode != ''">and platform_Code=#{platformCode}</if>
+	</select>
+
+	<select id="getDataNum" parameterType="java.util.HashMap"  resultMap="userOptLogResult">
+		select data_type,sum(num) as num from TA_USER_OPT_LOG 
+		where 1=1 
+		and create_time BETWEEN #{startDateStr} AND #{endDateStr}
+		<if test="dataType != null and dataType != ''">and data_type=#{dataType}</if>
+		<if test="userId != null and userId != ''">and user_id=#{userId}</if>
+		<if test="platformCode != null and platformCode != ''">and platform_Code=#{platformCode}</if>
+		group by data_type
+	</select>
+
+
+</mapper>

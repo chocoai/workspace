@@ -1,0 +1,69 @@
+
+/*******************************************  首页文字列表页   *********************************************/
+/**  左   **/
+.details{ margin:10px auto 0px; width:1280px; height:auto; overflow:hidden;!important}
+.details .details_left{ float:left; width:856px;background-color:#fff; padding:20px;height:auto; overflow:hidden;!important}
+.details .details_left ul.article_list{margin:0 auto;width:856px;padding:0px;font-size:14px;color:#999;text-align:center;height:auto;overflow:hidden;!important }
+.details .details_left ul.article_list li{ float:left; width:856px; height:30px; line-height:30px; text-align:left; background:url(../images/dics.png) no-repeat 3px center; text-indent:15px;}
+.details .details_left ul.article_list li span{ float:right; color:#aaa;}
+
+/*******************************************  首页详情页   *********************************************/
+/**  文章   **/
+.details .details_left .article_title{ float:left; width:856px; padding:0px 20px;line-height:30px; font-size:20px; color:#333; text-align:center; font-weight:bold;height:auto; overflow:hidden;!important }
+.details .details_left .time{ float:left; width:856px; padding:5px 10px; line-height:30px; font-size:12px; color:#333; text-align:center;}
+.details .details_left .time a{ margin-right:20px; font-size:12px; }
+.details .details_left .article{ margin:20px auto 10px; width:856px;text-align:Justify;text-justify:inter-ideograph; padding-top:20px; padding-bottom:20px; border-top:1px solid #eee;height:auto; overflow:hidden;!important}
+/* .details .details_left .article img{ float:left; margin: 0px 15px 0px 0px;} */
+.details .details_left .article p{text-indent:2em;}
+.details .details_left .article a:link{ color:#999; text-decoration:none; font-size:13px;}
+.details .details_left .article a:hover{ color:#1d9dba; text-decoration: underline;}
+.details .details_left .article .related_news{ float:left;margin-top:20px;}
+.details .details_left .article .related_news h6{ font-size:16px; font-weight:bold; height:40px; line-height:40px; margin-top:20px;}
+.details .details_left .article .related_news ul.relation{ margin:0 auto; width:856px;}
+.details .details_left .article .related_news ul.relation li{ float:left; width:380px; color:#999; margin-right:40px;}
+.details .details_left .article .related_news ul.relation li span{ float:right;}
+.details .details_left .article .related_news ul.relation li a:link{ color:#333; text-decoration:none; font-size:14px;}
+.details .details_left .article .related_news ul.relation li a:hover{ color:#1d9dba; text-decoration:none}
+
+/*******************************************  图文列表左  *****************************************/
+
+/**  图片切换  **/
+.details .details_left2{ float:left; width:896px;height:auto; overflow:hidden;!important}
+.details .ban{ float:left; width:420px; height:294px; position:relative; overflow:hidden;margin:0px auto;}
+.details .ban .ban2{ width:420px; height:294px; position:relative; overflow:hidden;}
+.details .ban .ban2 ul{ position:absolute; left:0; top:0;}
+.details .ban .ban2 ul li{ width:420px; height:294px;}
+.details .ban .ban2 ul li img{ width:420px; height:294px;}
+.prev1{ position:absolute; top:120px; left:20px; width:28px; height:51px;z-index:9;cursor:pointer;}
+.next1{ position:absolute; top:120px; right:20px; width:28px; height:51px;z-index:9;cursor:pointer;}
+
+/**  头条  **/
+.details .hot_box{ float:left; width:435px; height:274px; padding:10px 15px; margin-left:10px; background:url(../images/hot.png) no-repeat left top #fff;}
+.details .hot_box .title{float:left;width:430px; height:40px;line-height:40px; font-size:16px;font-weight:bold; text-align:center; background:none; border:0px;}
+.details .hot_box .title a { font-size:15px;}
+.details .hot_box .title_detail{ margin:0 auto; width:430px; height:90px; line-height:24px; text-indent:2em;}
+.details .hot_box ul.list{ margin:10px auto;width:430px; border-top:1px solid #d3d3d3; padding-top:10px;}
+.details .hot_box ul.list li{ float:left; width:430px; height:26px; line-height:26px;background: url(../images/dics.png) no-repeat 3px center;text-indent:15px;}
+.details .hot_box ul.list li span{ float:right; color:#b8b6b6;}
+
+/**  菜单切换  **/
+.details .place{ float:left;width:896px; background:#fff;height:auto; overflow:hidden;!important}
+.details .place #Tab_link{ margin:10px auto;width:874px;}
+.details .place #Tab_link .Menubox{ float:left; width:874px;height:45px;} 
+.details .place #Tab_link .Menubox ul{ float:left; width:874px;height:45px;list-style:none;padding:0;position:absolute; border-bottom:1px solid #eee;} 
+.details .place #Tab_link .Menubox ul li{float:left;width: 90px; height:45px;text-align: center;line-height:45px;font-weight: bold;font-size: 18px;}
+.details .place #Tab_link .Menubox ul li.hover{background:#cc0303;color:#fff;}
+
+
+.details .place #Tab_link .Contentbox{ float:left;width:874px; padding-top:20px;padding-bottom:0px; height:auto; overflow:hidden;!important} 
+.details .place #Tab_link .Contentbox ul{float:left;width:854px; margin-left:10px;} 
+.details .place #Tab_link .Contentbox ul li{ float:left; width:854px; height:150px;line-height:24px; text-align:left; background:none; }
+.details .place #Tab_link .Contentbox ul li .title{ float:left; width:854px; height:30px; line-height:30px; background:none;}
+.details .place #Tab_link .Contentbox ul li .title a{ font-size:16px; font-weight:bold;}
+.details .place #Tab_link .Contentbox ul li .title a:hover{ text-decoration:underline;}
+.details .place #Tab_link .Contentbox ul li .cont{ float:left; width:854px; height:90px; text-align:left; line-height:24px; padding-top:5px; padding-bottom:10px; overflow:hidden; border-bottom:1px solid #f5f5f5;}
+.details .place #Tab_link .Contentbox ul li .cont .content{ float:left; width:724px; height:70px; text-align:left; line-height:24px;text-align:Justify;text-justify:inter-ideograph;}
+.details .place #Tab_link .Contentbox ul li .cont .content a{ font-size:13px;}
+.details .place #Tab_link .Contentbox ul li .cont .content a:hover{ text-decoration:underline;}
+.details .place #Tab_link .Contentbox ul li .cont .content p{ text-indent:2em;}
+.details .place #Tab_link .Contentbox ul li .cont img{ float:left; padding-right:10px;}

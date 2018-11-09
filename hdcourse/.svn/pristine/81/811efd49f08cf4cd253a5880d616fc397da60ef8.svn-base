@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.manage.dao.BasePropertyDao">
+
+	<select id="queryBaseProperty" parameterType="map" resultType="BaseProperty">
+		select
+		id,property_key,property_value,status,description,create_time,platform_code,
+		platform_name,update_time,property_type_name
+		from TA_BASE_PROPERTY
+		where
+		1=1
+		<if test="property_key != null and property_key != ''">and property_key like '%'||#{property_key}||'%'</if>
+		<if test="status != null and status != ''">and status = #{status}</if>
+		<if test="platform_code != null and platform_code != ''">and platform_code like '%'||#{platform_code}||'%'</if>
+		<if test="property_type_name">and property_type_name like '%'||#{property_type_name}||'%'</if>
+		order by update_time desc
+	</select>
+	
+	<select id="loadById" parameterType="string" resultType="BaseProperty">
+		select
+		id,property_key,property_value,status,description,create_time,platform_code,
+		platform_name,update_time,property_type_name
+		from TA_BASE_PROPERTY
+		where id = #{_parameter}
+	</select>
+	
+	<insert id="addBaseProperty" parameterType="BaseProperty">
+		insert into
+		TA_BASE_PROPERTY(
+		id
+		<if test="property_key != null">,property_key</if>
+		<if test="property_value != null">,property_value</if>
+		<if test="status != null">,status</if>
+		<if test="description != null">,description</if>
+		<if test="create_time != null">,create_time</if>
+		<if test="platform_code != null">,platform_code</if>
+		<if test="platform_name != null">,platform_name</if>
+		<if test="update_time != null">,update_time</if>
+		<if test="property_type_name != null">,property_type_name</if>
+		)values(
+		#{id}
+		<if test="property_key != null">,#{property_key}</if>
+		<if test="property_value != null">,#{property_value}</if>
+		<if test="status != null">,#{status}</if>
+		<if test="description != null">,#{description}</if>
+		<if test="create_time != null">,#{create_time}</if>
+		<if test="platform_code != null">,#{platform_code}</if>
+		<if test="platform_name != null">,#{platform_name}</if>
+		<if test="update_time != null">,#{update_time}</if>
+		<if test="property_type_name != null">,#{property_type_name}</if>
+		)
+	</insert>
+	<update id="updateBaseProperty" parameterType="BaseProperty">
+		update TA_BASE_PROPERTY
+		<set>
+			id=#{id}
+			<if test="property_key != null">,property_key=#{property_key}</if>
+			<if test="property_value != null">,property_value=#{property_value}</if>
+			<if test="status != null">,status=#{status}</if>
+			<if test="description != null">,description=#{description}</if>
+			<if test="create_time != null">,create_time=#{create_time}</if>
+			<if test="platform_code != null">,platform_code=#{platform_code}</if>
+			<if test="platform_name != null">,platform_name=#{platform_name}</if>
+			<if test="update_time != null">,update_time=#{update_time}</if>
+			<if test="property_type_name != null">,property_type_name=#{property_type_name}</if>
+		</set>
+		where id=#{id}
+	</update>
+	<delete id="deleteBaseProperty" parameterType="map">
+		delete from TA_BASE_PROPERTY
+		where id in
+		<foreach collection="idList" item="id" separator="," open="("
+			close=")">#{id}</foreach>
+	</delete>
+	
+	<!-- 根据平台编码查询平台对象 -->
+    <select id="getPlatformProperty" parameterType="map"
+		resultType="com.whty.assis.manage.model.BaseProperty">
+        select id,property_key,property_value,
+        	status,description,create_time,platform_code,
+        	platform_name,update_time,property_type_name
+        from TA_BASE_PROPERTY
+        where status='0' and platform_name is not null 
+        	and platform_code=#{platform_code}
+        	and property_key = 'platform_url'
+    </select>
+    
+    <!-- 根据属性key和平台编码获取属性对象 -->
+    <select id="getBasePropertyByKeyAndPlatformCode" parameterType="map"
+		resultType="com.whty.assis.manage.model.BaseProperty">
+        select id,property_key,property_value,
+        	status,description,create_time,platform_code,
+        	platform_name,update_time,property_type_name
+        from TA_BASE_PROPERTY
+        where status='0'
+        	and platform_code=#{platform_code}
+        	and property_key=#{property_key}
+    </select>
+    
+    <!-- 根据属性key和平台编码获取属性值 -->
+    <select id="getPropertyValue" parameterType="map" 
+		resultType="java.lang.String">
+        select property_value
+        from TA_BASE_PROPERTY
+        where status='0'
+        	and platform_code=#{platform_code}
+        	and property_key=#{property_key}
+    </select>
+    <!-- 查询所有的属性对象 -->
+    <select id="listByCondition" parameterType="map"
+		resultType="com.whty.assis.manage.model.BaseProperty">
+        select id,property_key,property_value,
+        	status,description,create_time,platform_code,
+        	platform_name,update_time,property_type_name
+        from TA_BASE_PROPERTY
+        where status='0'
+    </select>
+    <!-- 查询所有的平台对象 -->
+    <select id="getPlatformList" parameterType="map"
+		resultType="com.whty.assis.manage.model.BaseProperty">
+        select id,
+		       property_key,
+		       property_value,
+		       status,
+		       description,
+		       create_time,
+		       platform_code,
+		       platform_name,
+		       update_time,
+		       property_type_name
+		  from TA_BASE_PROPERTY
+		 where status = '0'
+		   and property_key = 'platform_url'
+    </select>
+    
+</mapper>

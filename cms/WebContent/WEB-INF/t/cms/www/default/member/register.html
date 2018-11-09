@@ -1,0 +1,280 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>东楚网</title>
+<link rel="stylesheet" type="text/css" href="/${res}/css/index.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/global.css" />
+<script src="${resSys}/jquery.js" type="text/javascript"></script>
+<script type="text/javascript">
+	
+	function checkUserName(){
+		var username = $("#username").val();
+		if(username == ''){
+			$("#nameMessage").html("<span style='color:red;'>用户名不能为空</span>");
+			return false;
+		}
+		$.ajax({
+			url:"${base}/username_unique.jspx",
+			data:{"username":username},
+			type:"post",
+			dataType:"text",
+			success:function(data){
+				if(data == 'false'){
+					$("#nameMessage").html("<span style='color:red;'>用户名已存在</span>");
+					return false;
+				}else if(data == 'formatError'){
+					$("#nameMessage").html("<span style='color:red;'>用户名格式不正确</span>");
+					return false;
+				}else{
+					$("#nameMessage").html("");
+					
+				}
+			}
+		});
+		return true;
+		
+	}
+	
+	function checkPassword(){
+		var password = $("#password").val();
+		if(password == ''){
+			$("#passwordMessage").html("<span style='color:red;'>密码不能为空</span>");
+			return false;
+		}
+		if(password.length < 6){
+			$("#passwordMessage").html("<span style='color:red;'>密码长度太短</span>");
+			return false;
+		}
+		var reg = /^[0-9a-zA-Z]+$/g;
+		if(!reg.test(password)){
+			$("#passwordMessage").html("<span style='color:red;'>密码格式不正确</span>");
+			return false;
+		}
+		$("#passwordMessage").html("");
+		return true;
+	}
+	
+	function checkRepassword(){
+		var checkPassword = $("#checkPassword").val();
+		var password = $("#password").val();
+		if(checkPassword != password){
+			$("#checkPasswordMessage").html("<span style='color:red;'>两次密码输入不一致</span>");
+			return false;
+		}
+		$("#checkPasswordMessage").html("");
+		return true;
+	}
+	
+	function checkEmail(){
+		var email = $("#email").val();
+		if(email == ''){
+			$("#emailMessage").html("<span style='color:red;'>邮箱地址不能为空</span>");
+			return false;
+		}
+		$.ajax({
+			url:"${base}/email_unique.jspx",
+			data:{"email":email},
+			type:"post",
+			dataType:"text",
+			success:function(data){
+				if(data == 'false'){
+					$("#emailMessage").html("<span style='color:red;'>邮箱已经被使用</span>");
+					return false;
+				}else if(data == 'formatError'){
+					$("#emailMessage").html("<span style='color:red;'>邮箱格式不正确</span>");
+					return false;
+				}else{
+					$("#emailMessage").html("");
+				}
+			}
+		});
+		return true;
+	}
+	
+	$(document).ready(function() {
+		$("#username").focus(function(){
+			$("#nameMessage").html("<span>用户名由3到16位的英文字母、数字或者中文字符组成 </span>");
+		});
+		$("#username").blur(function(){
+			checkUserName();
+		});
+		
+		$("#password").focus(function(){
+			$("#passwordMessage").html("<span>最小长度6，最大长度16，只能由数字或字母组成</span>");
+		});
+		$("#password").blur(function(){
+			checkPassword();
+		});
+		
+		$("#checkPasswrod").focus(function(){
+			$("#checkPasswordMessage").html("<span>请再输一遍您上面填写的密码</span>");
+		});
+		$("#checkPassword").blur(function(){
+			checkRepassword();
+		});
+		
+		$("#email").focus(function(){
+			$("#emailMessage").html("<span>请输入正确的电子邮箱地址</span>");
+		});
+		$("#email").blur(function(){
+			checkEmail();
+		});
+		
+		$("#agreement").click(function() {
+			if ($('#agreement').is(':checked')) {
+				$("#agree").css("visibility","hidden");
+			}else{
+				$("#agree").css("visibility","visible");
+			}
+		});
+	});
+	
+	function submitForm(){
+		if ($('#agreement').is(':checked')) {
+			$("#agree").css("visibility","hidden");
+		}else{
+			$("#agree").css("visibility","visible");
+			return false;
+		}
+		
+		if(!checkUserName()){
+			return ;
+		}
+		if (!checkPassword()) {
+			return ;
+		}
+		if (!checkRepassword()) {
+			return ;
+		}
+		if (!checkEmail()) {
+			return ;
+		}
+		$("#registerForm").submit();
+		
+	}
+</script>
+</head>
+
+<body class="body">
+	<div class="register_hd_box">
+		<div class="register_hd">
+			<div class="register_hd_l">
+				<div class="register_logo">
+					<a href="${base}/">
+						<img src="/${res}/images/logo.png" alt="" />
+					</a>
+				</div>
+				<div class="register_hd_fgx"></div>
+				<span class="register_tit">注册账号</span>
+			</div>
+			<div class="register_hd_r">
+				已有帐号？去
+				<a href="${base}/login.jspx">登录</a>
+			</div>
+		</div>
+	</div>
+	<div class="register_bg"></div>
+	<div class="register_bd">
+		<div class="register_bd_l">
+			<form id="registerForm" action="${base}/register.jspx" method="post">
+				<div class="h55">
+					<div class="h55_l">用户名</div>
+					<div class="h55_r">
+						<input type="text" class="pass_text" name="username" maxlength="16" id="username" />
+					</div>
+				</div>
+				<div class="h12">
+					<div class="h12_l"></div>
+					<div class="h12_r" id="nameMessage"></div>
+				</div>
+				<div class="h55">
+					<div class="h55_l">密码</div>
+					<div class="h55_r">
+						<input type="password" class="pass_text" name="password" maxlength="16" id="password" />
+					</div>
+				</div>
+				<div class="h12">
+					<div class="h12_l"></div>
+					<div class="h12_r" id="passwordMessage"></div>
+				</div>
+				<div class="h55">
+					<div class="h55_l">确认密码</div>
+					<div class="h55_r">
+						<input type="password" class="pass_text" id="checkPassword" />
+					</div>
+				</div>
+				<div class="h12">
+					<div class="h12_l"></div>
+					<div class="h12_r" id="checkPasswordMessage"></div>
+				</div>
+				<div class="h55">
+					<div class="h55_l">电子邮箱</div>
+					<div class="h55_r">
+						<input type="email" class="pass_text" id="email" name="email" />
+					</div>
+				</div>
+				<div class="h12">
+					<div class="h12_l"></div>
+					<div class="h12_r" id="emailMessage"></div>
+				</div>
+				<div class="h55">
+					<div class="h55_l"></div>
+					<div class="h55_r">
+						<input type="checkbox" class="gou" id="agreement">
+						我已阅读并完全同意
+						<a href="${base}/terms.jspx" target="_blank" class="tiaokuan">《东楚网服务条款》</a>
+					</div>
+				</div>
+				<div class="h12">
+					<div class="h12_l"></div>
+					<div class="h12_r" id="agree" style="visibility: hidden;">
+						<span style="color: red;">请勾选“我已阅读并同意 《东楚网服务条款》”</span>
+					</div>
+				</div>
+				<div class="h55">
+					<div class="h55_l"></div>
+					<div class="h55_r">
+						<!-- <input type="submit" value="注册" class="zhuce_but"> -->
+						<input type="button" value="注册" class="zhuce_but" onclick="submitForm()">
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="register_bd_r">
+			<div class="threelogin">
+				<p class="thr_tit">第三方账号登录东楚论坛</p>
+				<div class="thr_con">
+					<a class="btn qqbtn" href="#">
+						<i></i>
+						QQ登录
+					</a>
+					<a class="btn wechatbtn" href="#">
+						<i></i>
+						微信登录
+					</a>
+					<a class="btn blogbtn" href="#">
+						<i></i>
+						微博登录
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!--尾部 开始-->
+	<div class="footerbox">
+		<div class="footercen">
+			<div class="copy">
+				Copyright ◎ 2006-2016 黄石市东楚传媒网络科技有限公司 All Rights Reserved
+				<br />
+				营业执照 － 组织机构代码证 － 增值电信业务经营许可证
+
+			</div>
+		</div>
+	</div>
+	<!--尾部 开始-->
+
+</body>

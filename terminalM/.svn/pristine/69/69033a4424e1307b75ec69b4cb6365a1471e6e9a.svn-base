@@ -1,0 +1,42 @@
+#Oracle\u8fde\u63a5\u6c60\uff08\u6eaa\u6c34\uff09
+#driverClassName=oracle.jdbc.driver.OracleDriver
+driverClassName=com.mysql.jdbc.Driver
+#url=jdbc:oracle:thin:@10.8.9.160:1521:orcl
+#datasourceUsername=wecourse
+#datasourcePassword=wecourse
+
+
+
+
+#url=jdbc:mysql://192.168.6.183:3306/hdcourse?characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=convertToNull
+url=jdbc:mysql://119.29.229.105:3306/tm?characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=convertToNull
+
+datasourceUsername=root
+datasourcePassword=adazhang
+
+#url=jdbc:oracle:thin:@192.168.6.142:1521:edu
+#datasourceUsername=hdcourse
+#datasourcePassword=pass4hdcourse
+
+#mySql
+#driverClassName=com.mysql.jdbc.Driver
+#url=jdbc:mysql://localhost:3306/eduapp
+#username=root
+#password=root
+initialSize=2
+maxPoolSize=10
+minPoolSize=2
+maxIdleTime=60
+acquireIncrement=2
+#check connection is ok
+preferredTestQuery=select 1 from dual
+#check every 300 seconds
+idleConnectionTestPeriod=300
+testConnectionOnCheckin=false
+testConnectionOnCheckout=false
+validationQuery=select 1 from dual
+
+
+acquireRetryAttempts=30
+acquireRetryDelay=100
+breakAfterAcquireFailure=false

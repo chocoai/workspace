@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ClassManagerMapper">
+  <resultMap id="BaseResultMap" type="ClassManager">
+    <id column="CID" jdbcType="INTEGER" property="cid" />
+    <result column="CLASSIFY_NAME" jdbcType="VARCHAR" property="classifyName" />
+    <result column="ABBREVIATION" jdbcType="VARCHAR" property="abbreviation" />
+    <result column="ALIAS" jdbcType="VARCHAR" property="alias" />
+    <result column="CLASS_CID" jdbcType="INTEGER" property="classCid" />
+    <result column="CLASS_TYPE" jdbcType="INTEGER" property="classType" />
+    <result column="ATHLETES_NUM" jdbcType="INTEGER" property="athletesNum" />
+    <result column="MAN_NUM" jdbcType="INTEGER" property="manNum" />
+    <result column="WOMAN_NUM" jdbcType="INTEGER" property="womanNum" />
+    <result column="UNIT_TEAM" jdbcType="INTEGER" property="unitTeam" />
+    <result column="PERSON_TOTNUM" jdbcType="INTEGER" property="personTotnum" />
+    <result column="PERSON_SINGLENUM" jdbcType="INTEGER" property="personSinglenum" />
+    <result column="PERSON_TEAMNUM" jdbcType="INTEGER" property="personTeamnum" />
+    <result column="UNIT_TOTNUM" jdbcType="INTEGER" property="unitTotnum" />
+    <result column="UNIT_SINGLENUM" jdbcType="INTEGER" property="unitSinglenum" />
+    <result column="UNIT_TEAMNUM" jdbcType="INTEGER" property="unitTeamnum" />
+    <result column="IS_CROSS_GROUP" jdbcType="INTEGER" property="isCrossGroup" />
+    <result column="GROUP_MAN_AGE_START" jdbcType="VARCHAR" property="groupManAgeStart" />
+    <result column="GROUP_MAN_AGE_END" jdbcType="VARCHAR" property="groupManAgeEnd" />
+    <result column="GROUP_WOMAN_AGE_START" jdbcType="VARCHAR" property="groupWomanAgeStart" />
+    <result column="GROUP_WOMAN_AGE_END" jdbcType="VARCHAR" property="groupWomanAgeEnd" />
+    <result column="AGE_SUM" jdbcType="INTEGER" property="ageSum" />
+    <result column="CREA_REN" jdbcType="VARCHAR" property="creaRen" />
+    <result column="CREA_TIME" jdbcType="VARCHAR" property="creaTime" />
+    <result column="ERSION_NUM" jdbcType="INTEGER" property="ersionNum" />
+    <result column="ORDER_NUM" jdbcType="INTEGER" property="orderNum" />
+    <result column="TEAM_SUM" jdbcType="INTEGER" property="teamSum" />
+    <result column="TEAM_MAN_SUM" jdbcType="INTEGER" property="teamManSum" />
+    <result column="TEAM_WOMAN_SUM" jdbcType="INTEGER" property="teamWomanSum" />
+    <result column="TEAM_MAN_AGE_START" jdbcType="VARCHAR" property="teamManAgeStart" />
+    <result column="TEAM_MAN_AGE_END" jdbcType="VARCHAR" property="teamManAgeEnd" />
+    <result column="TEAM_WOMAN_AGE_START" jdbcType="VARCHAR" property="teamWomanAgeStart" />
+    <result column="TEAM_WOMAN_AGE_END" jdbcType="VARCHAR" property="teamWomanAgeEnd" />
+    <result column="BACKUP" jdbcType="VARCHAR" property="backup" />
+    <result column="EXP1" jdbcType="INTEGER" property="exp1" />
+    <result column="EXP2" jdbcType="INTEGER" property="exp2" />
+    <result column="EXP3" jdbcType="VARCHAR" property="exp3" />
+    <result column="EXP4" jdbcType="VARCHAR" property="exp4" />
+    <result column="EXP5" jdbcType="VARCHAR" property="exp5" />
+    <result column="EXP6" jdbcType="VARCHAR" property="exp6" />
+    
+	<association property="manager" column="CLASS_CID" javaType="ClassManager">
+		<id column="CID1" property="cid"/>
+		<result column="CLASSIFY_NAME1" property="classifyName"/>
+		<result column="CLASS_TYPE1" property="classType"/>
+	</association>
+  </resultMap>
+  
+  	<sql id="Base_Column_List">
+    	C.CID,C.CLASSIFY_NAME,C.ABBREVIATION,C.ALIAS,C.CLASS_CID,C.CLASS_TYPE,C.ATHLETES_NUM,C.MAN_NUM,C.WOMAN_NUM,
+    	C.UNIT_TEAM,C.PERSON_TOTNUM,C.PERSON_SINGLENUM,C.PERSON_TEAMNUM,C.UNIT_TOTNUM,C.UNIT_SINGLENUM,C.UNIT_TEAMNUM,
+    	C.IS_CROSS_GROUP, C.GROUP_MAN_AGE_START, C.GROUP_MAN_AGE_END,C.GROUP_WOMAN_AGE_START, C.GROUP_WOMAN_AGE_END,
+    	C.AGE_SUM,C.ORDER_NUM,C.CREA_REN,C.CREA_TIME,C.ERSION_NUM,
+    	C.TEAM_SUM,C.TEAM_MAN_SUM,C.TEAM_WOMAN_SUM,C.TEAM_MAN_AGE_START,C.TEAM_MAN_AGE_END,C.TEAM_WOMAN_AGE_START,C.TEAM_WOMAN_AGE_END,
+    	C.BACKUP,C.EXP1,C.EXP2,C.EXP3,C.EXP4,C.EXP5,C.EXP6
+	</sql>
+  
+  <!-- 查询 是否有下级节点-->	
+  <select id="countByPid" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select count(*) from CLASS_MANAGER
+		where
+		CLASS_CID =  #{pid,jdbcType=INTEGER}
+  </select>
+  <!-- 新增时根据上级CID以及分类名称去查询是否重复输入-->	
+  <select id="countByNameAndClassCid" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select count(*) from CLASS_MANAGER
+		WHERE 1=1
+	    <if test="classifyName != null and classifyName !=''">
+	    	AND CLASSIFY_NAME = #{classifyName,jdbcType=VARCHAR}
+	    </if>
+	    <if test="classCid != null and classCid !=''">
+	    	AND CLASS_CID = #{classCid,jdbcType=INTEGER}
+	    </if>
+  </select>
+  
+  <select id="selectByExample" parameterType="ClassManager" resultMap="BaseResultMap">
+    SELECT
+    	<include refid="Base_Column_List" />
+	FROM
+		class_manager AS C
+    WHERE 
+    	1=1
+    	<if test="ersionNum != null">
+	    	AND C.ERSION_NUM = #{ersionNum,jdbcType=INTEGER}
+	    </if>
+    	<if test="cid != null and cid !=''">
+	    	AND C.CID = #{cid,jdbcType=INTEGER}
+	    </if>
+	    <if test="classifyName != null and classifyName !=''">
+	    	AND C.CLASSIFY_NAME LIKE "%"#{classifyName,jdbcType=VARCHAR}"%"
+	    </if>
+	    <if test="classCid != null and classCid !=''">
+	    	AND C.CLASS_CID = #{classCid,jdbcType=INTEGER}
+	    </if>
+	    <if test="abbreviation != null and abbreviation !=''">
+	    	AND C.ABBREVIATION LIKE "%"#{abbreviation,jdbcType=VARCHAR}"%"
+	    </if>
+        ORDER BY C.ORDER_NUM DESC,C.CREA_TIME DESC
+  </select>
+  <select id="searchObjectByCid" parameterType="Integer" resultMap="BaseResultMap">
+    SELECT
+		<include refid="Base_Column_List" />,
+		M.CID AS CID1,
+		M.CLASSIFY_NAME AS CLASSIFY_NAME1,
+		M.CLASS_TYPE AS CLASS_TYPE1
+	FROM
+		class_manager AS C
+		LEFT JOIN class_manager AS M ON C.CLASS_CID = M.CID	
+    WHERE 
+    	C.CID = #{cid}	
+  </select>
+  
+  
+  
+  <select id="searchClassNameByClassCid" parameterType="Integer" resultMap="BaseResultMap">
+    SELECT
+    	C.CID,
+    	C.CLASSIFY_NAME
+	FROM 
+		CLASS_MANAGER C
+    WHERE 
+    	C.CID = #{cid}
+  </select>
+  <delete id="delete" parameterType="java.lang.Integer">
+    delete from 
+    	class_manager
+    where 
+    	CID = #{cid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="ClassManager">
+   insert into class_manager (CID, CLASSIFY_NAME, ABBREVIATION, 
+      ALIAS, CLASS_CID, CLASS_TYPE, 
+      ATHLETES_NUM, MAN_NUM, WOMAN_NUM, 
+      UNIT_TEAM, PERSON_TOTNUM, PERSON_SINGLENUM, 
+      PERSON_TEAMNUM, UNIT_TOTNUM, UNIT_SINGLENUM, 
+      UNIT_TEAMNUM, IS_CROSS_GROUP, GROUP_MAN_AGE_START, 
+      GROUP_MAN_AGE_END, GROUP_WOMAN_AGE_START, GROUP_WOMAN_AGE_END, 
+      AGE_SUM, CREA_REN, CREA_TIME, 
+      ERSION_NUM, ORDER_NUM, TEAM_SUM, 
+      TEAM_MAN_SUM, TEAM_WOMAN_SUM, TEAM_MAN_AGE_START, 
+      TEAM_MAN_AGE_END, TEAM_WOMAN_AGE_START, TEAM_WOMAN_AGE_END, 
+      BACKUP, EXP1, EXP2, 
+      EXP3, EXP4, EXP5, EXP6
+      )
+    values (#{cid,jdbcType=INTEGER}, #{classifyName,jdbcType=VARCHAR}, #{abbreviation,jdbcType=VARCHAR}, 
+      #{alias,jdbcType=VARCHAR}, #{classCid,jdbcType=INTEGER}, #{classType,jdbcType=INTEGER}, 
+      #{athletesNum,jdbcType=INTEGER}, #{manNum,jdbcType=INTEGER}, #{womanNum,jdbcType=INTEGER}, 
+      #{unitTeam,jdbcType=INTEGER}, #{personTotnum,jdbcType=INTEGER}, #{personSinglenum,jdbcType=INTEGER}, 
+      #{personTeamnum,jdbcType=INTEGER}, #{unitTotnum,jdbcType=INTEGER}, #{unitSinglenum,jdbcType=INTEGER}, 
+      #{unitTeamnum,jdbcType=INTEGER}, #{isCrossGroup,jdbcType=INTEGER}, #{groupManAgeStart,jdbcType=VARCHAR}, 
+      #{groupManAgeEnd,jdbcType=VARCHAR}, #{groupWomanAgeStart,jdbcType=VARCHAR}, #{groupWomanAgeEnd,jdbcType=VARCHAR}, 
+      #{ageSum,jdbcType=INTEGER}, #{creaRen,jdbcType=VARCHAR}, #{creaTime,jdbcType=VARCHAR}, 
+      #{ersionNum,jdbcType=INTEGER}, #{orderNum,jdbcType=INTEGER}, #{teamSum,jdbcType=INTEGER}, 
+      #{teamManSum,jdbcType=INTEGER}, #{teamWomanSum,jdbcType=INTEGER}, #{teamManAgeStart,jdbcType=VARCHAR}, 
+      #{teamManAgeEnd,jdbcType=VARCHAR}, #{teamWomanAgeStart,jdbcType=VARCHAR}, #{teamWomanAgeEnd,jdbcType=VARCHAR}, 
+      #{backup,jdbcType=VARCHAR}, #{exp1,jdbcType=INTEGER}, #{exp2,jdbcType=INTEGER}, 
+      #{exp3,jdbcType=VARCHAR}, #{exp4,jdbcType=VARCHAR}, #{exp5,jdbcType=VARCHAR}, #{exp6,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="update" parameterType="ClassManager">
+	update 
+		  class_manager
+    set 
+    	  CLASSIFY_NAME = #{classifyName,jdbcType=VARCHAR},
+	      ABBREVIATION = #{abbreviation,jdbcType=VARCHAR},
+	      ALIAS = #{alias,jdbcType=VARCHAR},
+	      CLASS_CID = #{classCid,jdbcType=INTEGER},
+	      CLASS_TYPE = #{classType,jdbcType=INTEGER},
+	      ATHLETES_NUM = #{athletesNum,jdbcType=INTEGER},
+	      MAN_NUM = #{manNum,jdbcType=INTEGER},
+	      WOMAN_NUM = #{womanNum,jdbcType=INTEGER},
+	      UNIT_TEAM = #{unitTeam,jdbcType=INTEGER},
+	      PERSON_TOTNUM = #{personTotnum,jdbcType=INTEGER},
+	      PERSON_SINGLENUM = #{personSinglenum,jdbcType=INTEGER},
+	      PERSON_TEAMNUM = #{personTeamnum,jdbcType=INTEGER},
+	      UNIT_TOTNUM = #{unitTotnum,jdbcType=INTEGER},
+	      UNIT_SINGLENUM = #{unitSinglenum,jdbcType=INTEGER},
+	      UNIT_TEAMNUM = #{unitTeamnum,jdbcType=INTEGER},
+	      IS_CROSS_GROUP = #{isCrossGroup,jdbcType=INTEGER},
+	      GROUP_MAN_AGE_START = #{groupManAgeStart,jdbcType=VARCHAR},
+	      GROUP_MAN_AGE_END = #{groupManAgeEnd,jdbcType=VARCHAR},
+	      GROUP_WOMAN_AGE_START = #{groupWomanAgeStart,jdbcType=VARCHAR},
+	      GROUP_WOMAN_AGE_END = #{groupWomanAgeEnd,jdbcType=VARCHAR},
+	      AGE_SUM = #{ageSum,jdbcType=INTEGER},
+	      CREA_REN = #{creaRen,jdbcType=VARCHAR},
+	      CREA_TIME = #{creaTime,jdbcType=VARCHAR},
+	      ERSION_NUM = #{ersionNum,jdbcType=INTEGER},
+	      ORDER_NUM = #{orderNum,jdbcType=INTEGER},
+	      TEAM_SUM = #{teamSum,jdbcType=INTEGER},
+	      TEAM_MAN_SUM = #{teamManSum,jdbcType=INTEGER},
+	      TEAM_WOMAN_SUM = #{teamWomanSum,jdbcType=INTEGER},
+	      TEAM_MAN_AGE_START = #{teamManAgeStart,jdbcType=VARCHAR},
+	      TEAM_MAN_AGE_END = #{teamManAgeEnd,jdbcType=VARCHAR},
+	      TEAM_WOMAN_AGE_START = #{teamWomanAgeStart,jdbcType=VARCHAR},
+	      TEAM_WOMAN_AGE_END = #{teamWomanAgeEnd,jdbcType=VARCHAR},
+	      BACKUP = #{backup,jdbcType=VARCHAR},
+	      EXP1 = #{exp1,jdbcType=INTEGER},
+	      EXP2 = #{exp2,jdbcType=INTEGER},
+	      EXP3 = #{exp3,jdbcType=VARCHAR},
+	      EXP4 = #{exp4,jdbcType=VARCHAR},
+	      EXP5 = #{exp5,jdbcType=VARCHAR},
+	      EXP6 = #{exp6,jdbcType=VARCHAR}
+    where 
+     	  CID = #{cid,jdbcType=INTEGER}
+	</update>
+  
+  <!-- 查询项目分类构成分类节点树 -->
+  <select id="queryClassToTree" resultMap="BaseResultMap">
+    select 
+		cid,
+		class_cid,
+		classify_name
+	from 
+		class_manager 
+	where
+		cid=#{cid}
+	order by ORDER_NUM DESC,CREA_TIME DESC	
+  </select>
+  <!-- 查询项目分类构成分类树 -->
+  <select id="queryClassTree" resultMap="BaseResultMap">
+    select 
+		cid,
+		class_cid,
+		classify_name,
+		CLASS_TYPE
+	from 
+		class_manager 
+	where 1 = 1
+	 	<if test="ersionNum != null">
+	    	AND ERSION_NUM = #{ersionNum,jdbcType=INTEGER}
+	    </if>
+	order by ORDER_NUM DESC,CREA_TIME DESC	
+  </select>
+</mapper>

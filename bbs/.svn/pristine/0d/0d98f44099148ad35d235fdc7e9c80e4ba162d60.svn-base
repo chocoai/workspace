@@ -1,0 +1,373 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>东楚论坛搜索</title>
+<link href="${base}/style/main.css" rel="stylesheet" type="text/css">
+<link href="${base}/style/lanmu.css" rel="stylesheet" type="text/css">
+<link href="${base}/style/upload.css" rel="stylesheet" type="text/css">
+<link href="${base}/style/page.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${base}/js/jquery.js"></script>
+<script type="text/javascript" src="${base}/js/popwin.js"></script>
+
+</head>
+
+<body class="body">
+	<!---------顶部----------->
+	<div class="top">
+		<div class="top_center">
+			<div class="top_l">您好，欢迎来到东楚论坛！</div>
+			<div class="top_r">
+				[#if user??]
+				<div class="user_logout" style="margin-top:9px;">
+					<span class="user_logout_name">
+						<a href="${base}/member/index.jhtml">${user.username}</a>
+					</span>
+					<span class="logout">
+						<a href="${base}/logout.jspx?returnUrl=/">退出</a>
+					</span>
+				</div>
+				[#else]
+				<ul>
+					<li><a href="#"><img src="${base}/images/icon_signin_01.png"
+							alt="" /></a></li>
+					<li><a href="#"><img src="${base}/images/icon_signin_02.png"
+							alt="" /></a></li>
+					<li><a href="#"><img src="${base}/images/icon_signin_03.png"
+							alt="" /></a></li>
+				</ul>
+				<div class="dlzc">
+					<span><a href="${base}/login.jspx">登录</a></span>
+					<span class="register"><a href="${base}/register.jspx">注册</a></span>
+				</div>
+				[/#if]
+			</div>
+		</div>
+	</div>
+
+
+	<!-------logo、导航和搜索----------->
+	<div class="nav">
+		<div class="nav_center">
+			<h1>
+				<a href="${base}/"><img src="${base}/images/logo.png" alt="" /></a>
+			</h1>
+			<div class="navsearch">
+				<!----导航---->
+				<nav>
+					<ul>
+						<li><a href="/">东楚网首页</a></li>
+						[#if forum?? && forum.id==9]
+						<li class="now"><a href="${forum.url}">大咖圈</a></li>
+						[#else]
+						<li><a href="${base}/dakaquan/index.jhtml">大咖圈</a></li>
+						[/#if]
+					</ul>
+				</nav>
+
+				<!----搜索---->
+				<div class="search radius6">
+					<form name="searchform" id="searchForm" method="get" action="">
+						<select>
+							<option value="0">帖子</option>
+							<option value="1">用户</option>
+						</select>
+						<input type="hidden" name="searchType" value="" id="searchType"/>
+						<input class="inp_srh" type="text" id="searchContent" name="keywords" placeholder="搜索其实很简单！">
+						<input class="btn_srh" type="button" onclick="toSearch()" value="搜索">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!------------------中间内容部分------------------------>
+	<div class="big_center">
+		<!------当前位置------>
+		<div class="location">
+			<i></i> &nbsp;<a href="${base}/">东楚论坛</a> &nbsp;> &nbsp;
+			<a href="javascript:void(0);">搜索用户结果页</a>
+		</div>
+
+		<!-----用户列表 开始----->
+		<div class="search_users">
+			<div class="search_users_hd">搜索到的用户</div>
+			<div class="search_user_bd">
+				[#if pageBean.list?size gt 0]
+				<ul>
+					[#list pageBean.list as bbsUser]
+					<li>
+						<span class="search_users_pic">
+							[#if user?? && user.id == bbsUser.id]
+							<a target="_blank" href="${base}/member/index.jhtml">
+							[#else]
+							<a target="_blank" href="${base}/personal/other_information${bbsUser.id!}.jspx">
+							[/#if]
+								[#if bbsUser.avatar??]
+								<img src="${bbsUser.avatar!}" alt="" />
+								[#else]
+								<img src="${base}/images/default_user.jpg" alt="" />
+								[/#if]
+							</a>
+						</span>
+						<span class="search_users_text">
+							<div class="search_users_lh26">
+								<span class="search_users_name">
+									[#if user?? && user.id == bbsUser.id]
+									<a target="_blank" href="${base}/member/index.jhtml">
+									[#else]
+									<a target="_blank" href="${base}/personal/other_information${bbsUser.id!}.jspx">
+									[/#if]
+										[#if keywords?? && keywords != ""]
+										${bbsUser.username?replace('${keywords!}','<b class="keyword">${keywords!}</b>')}
+										[#else]
+										${bbsUser.username!}
+										[/#if]
+									</a>
+								</span>
+								[#if user??]
+									[#if isConcerns?seq_contains(bbsUser.id)]
+									<span class="addcare post${bbsUser.id}" onclick="concern('${bbsUser.id}','${user.id}')">取消关注</span>
+									[#elseif user.id == bbsUser.id]
+									[#else]
+									<span class="addcare post${bbsUser.id}" onclick="concern('${bbsUser.id}','${user.id}')">加关注</span>
+									[/#if]
+									[#if isFriends?seq_contains(bbsUser.id)]
+									<span class="addfriend">好友</span>
+									[#elseif isApplys?seq_contains(bbsUser.id)]
+									<span class="addfriend">已申请</span>
+									[#elseif user.id == bbsUser.id]
+									[#else]
+									<span class="addfriend friend${bbsUser.id!}" id="applyFriend" onclick="applyFriend('${bbsUser.id!}','${user.id!}')">加好友</span>
+									[/#if]
+								[#else]
+									<span class="addcare post${bbsUser.id}" onclick="concern('${bbsUser.id}','')">加关注</span>
+									<span class="addfriend friend${bbsUser.id!}" id="applyFriend"  onclick="applyFriend('${bbsUser.id!}','')">加好友</span>
+								[/#if]
+							</div>
+							<div class="search_users_lh26">
+								<span class="search_users_level">
+									<span class="level">${bbsUser.group.name!}</span>
+									<img src="/${res}/bbs_forum/img/level/${bbsUser.group.imgPath}.png">
+								</span>
+							</div>
+							<div class="search_users_lh26">
+								<span class="from">来自：<b class="from_add">[#if bbsUser.comefrom??]${bbsUser.comefrom!}[#else]保密[/#if]</b></span>
+								<span class="from">现居地：<b class="nowlive_add">[#if bbsUser.address??]${bbsUser.address!}[#else]保密[/#if]</b></span>
+								<span class="from">性别：<b class="femmal">[#if bbsUser.gender??][#if bbsUser.gender]男[#else]女[/#if][#else]保密[/#if]</b></span>
+							</div>
+							<div class="search_users_lh26 littercol">
+								注册时间：<span class="regtime">${bbsUser.registerTime?string("yyyy-MM-dd")}</span>&nbsp;&nbsp;&nbsp;
+								最后登录时间：<span class="logtime">${bbsUser.lastLoginTime?string("yyyy-MM-dd")}</span>
+							</div>
+						</span>
+					</li>
+					[/#list]
+				</ul>
+				<!--------分页--------->
+				<div class="page">
+					<div style="clear: left;">
+						[#import "/WEB-INF/t/cms/www/blue/tld/page.ftl" as tt]
+						[@tt.page pageBean=pageBean url="${base}/search/search_user.jspx?keywords=${keywords!}" /]
+					</div>
+				</div>
+				[#else]
+					<div style="clear: left;height:8px;"></div>
+					<p style="height:20px;text-align:center;">没有您想要搜索到的内容</p>
+				[/#if]
+			</div>
+		</div>
+		<!-----用户列表 结束------>
+
+		<!----搜索历史 开始---->
+		<div class="search_record">
+			<div class="search_record_hd">
+				<span class="search_record_tit">热门用户</span>
+				<input type="hidden" class="search_record_but" value="清除">
+			</div>
+			<div class="search_record_bd">
+				<ul>
+					[#if userList?? && userList?size gt 0]
+					[#list userList as hostUser]
+						[#if user?? && user.id == hostUser.id]
+						<li><a target="_blank" href="${base}/member/index.jhtml">${hostUser.username!}</a></li>
+						[#else]
+						<li><a target="_blank" href="${base}/personal/other_information${hostUser.id!}.jspx">${hostUser.username!}</a></li>
+						[/#if]
+					[/#list]
+					[/#if]
+				</ul>
+			</div>
+		</div>
+		<!----搜索历史 结束---->
+
+		<!------页脚------>
+		<div class="footer">
+			<div class="footer_listbox">
+				<div class="footer_list">
+					
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<div id="caseHistory" class="fjsc">
+		<div class="fjsc_box">
+			<div class="fjsc_top"></div>
+			<div class="fjsc_head">
+				<div class="fjsc_tit">申请好友</div>
+				<div class="close icon-cross"><a href="javascript:void(0);"></a>X</div>
+			</div>
+			<div class="fjsc_con">
+				<form action="" method="post" name="applyForm" enctype="multipart/form-data">
+					<table width="410" border="0">
+						<tr>
+							<td style="width: 90px; height: 48px; text-align: right; font-size: 12px; color: #434343; padding-right: 10px;">申请理由：</td>
+							<td>
+								<input type="text" name="applyDesc" id="applyDesc" placeholder="您最多可以输入30个字..."
+									style="width: 310px; height: 30px; padding: 0 5px; font-size: 12px;" maxlength="30">
+							</td>
+						</tr>
+					</table>
+					<input type="hidden" value="" id="apply_user_id" name="id"/>
+					<div class="qdsc_butt">
+						<a href="javascript:;" onclick="doUpload()">确定申请</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	
+
+	<!------------------返回顶部-------------------->
+	<div id="before">
+		<a href="http://bbs.hsdcw.com/" target="_blank" title="东楚论坛"
+			class='before'></a>
+	</div>
+	<div id="wechat" class="wechat">
+		<a href="javascript:void(0)"><div class="wechath"></div></a>
+	</div>
+	<a id="moquu_top" href="javascript:void(0)"></a>
+
+
+	<script type="text/javascript" src="${base}/js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="${base}/js/jquery.select.js"></script>
+
+</body>
+<script type="text/javascript">
+	document.onkeydown=function(event){ 
+		e = event ? event :(window.event ? window.event : null); 
+		if(e.keyCode==13){   //回车
+			//提交查询的form
+			if(document.activeElement.id == 'searchContent'){
+				toSearch();
+			}
+		} 
+	};
+
+	function toSearch(){
+		var searchType = $(".select_option li[class='selected']").html();
+		if(searchType == '帖子'){
+			$("#searchForm").attr("action",'${base}/topic/search.jhtml');
+			$("#searchType").val("0");
+			$("#searchForm").submit();
+			return ;
+		}else if(searchType == '用户'){
+			$("#searchForm").attr("action",'${base}/search/search_user.jspx');
+			$("#searchType").val("1");
+			$("#searchForm").submit();
+			return ;
+		}
+	}
+	
+	function concern(concernUserId,userId){
+ 		if(concernUserId == userId){
+ 			return ;
+ 		}
+ 		if(userId == ""){
+ 			location.href = "${base}/login.jspx";
+ 			return ;
+ 		}
+		$.ajax({
+ 			url:"${base}/member/concern_add.jspx",
+ 			type:"post",
+ 			data:{"concernUserId":concernUserId,"userId":userId},
+ 			dataType:"text",
+ 			success:function(data){
+ 				if(data == -1){
+ 					location.href = "${base}/login.jspx";
+ 				}else if(data == 1){
+ 					$(".post"+concernUserId).text("取消关注");
+ 					alert("关注成功");
+ 				}else if(data == 2){
+ 					$(".post"+concernUserId).text("加关注");
+ 					alert("取消关注成功");
+ 				}
+ 			}
+ 		});
+ 	}
+	
+	function applyFriend(bbsUserId,userId){
+		if(userId == ''){
+			location.href = "${base}/login.jspx";
+			return ;
+		}
+		$('#caseHistory').addClass('is-visible3');
+		$("#apply_user_id").val(bbsUserId);
+		return ;
+	}
+</script>
+<script type="text/javascript">
+/*弹框JS内容*/
+	jQuery(document).ready(
+		function() {
+			//关闭窗口
+			$('#caseHistory').on(
+				'click',
+				function(event) {
+					if ($(event.target).is('.close')
+							|| $(event.target).is('#caseHistory')) {
+						event.preventDefault();
+						$(this).removeClass('is-visible3');
+						$("#apply_user_id").val("");
+					}
+				});
+
+			//ESC关闭
+			$(document).keyup(function(event) {
+				if (event.which == '27') {
+					$('#caseHistory').removeClass('is-visible3');
+					$('#contacts').removeClass('is-visible3');
+					$("#apply_user_id").val("");
+				}
+			});
+	});
+	
+	function doUpload() {
+		$('#caseHistory').removeClass('is-visible3');
+		var formData = new FormData(document.forms.namedItem("applyForm"));
+		var url = "${base}/member/applyJson.jhtml";
+		$.ajax({
+			url : url,
+			type : 'POST',
+			data : formData,
+			async : false,
+			cache : false,
+			dataType : 'json',
+			contentType : false,
+			processData : false,
+			success : function(data) {
+				if(data.status == 1){
+					alert(data.msg);
+					location.reload();
+				}else{
+					alert(data.msg);
+				}
+				$('#applyDesc').val('');
+				$("#apply_user_id").val("");
+			}
+		});
+	}
+</script>
+</html>

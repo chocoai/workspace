@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SysUserMapper">
+	<resultMap id="BaseResultMap" type="com.yhcrt.entity.system.SysUser">
+		<id column="CID" jdbcType="INTEGER" property="cid" />
+		<result column="USER_CODE" jdbcType="VARCHAR" property="userCode" />
+		<result column="PASSWORD" jdbcType="VARCHAR" property="password" />
+		<result column="STATE" jdbcType="INTEGER" property="state" />
+		<result column="LAST_LOGIN_TIME" jdbcType="VARCHAR" property="lastLoginTime" />
+		<result column="LAST_LOGIN_IP" jdbcType="VARCHAR" property="lastLoginIp" />
+		<result column="ORDER_NUM" jdbcType="INTEGER" property="orderNum" />
+		<result column="BACKUP" jdbcType="VARCHAR" property="backup" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		CID, USER_CODE, PASSWORD, STATE, LAST_LOGIN_TIME, LAST_LOGIN_IP,
+		ORDER_NUM, BACKUP
+	</sql>
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="java.lang.Integer"
+		flushCache="false">
+		delete
+		from sys_user
+		where
+		CID in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	
+  	<insert id="saveSelective" parameterType="com.yhcrt.entity.system.SysUser">
+		insert into sys_user
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="cid != null">
+				CID,
+			</if>
+			<if test="userCode != null">
+				USER_CODE,
+			</if>
+			<if test="password != null">
+				PASSWORD,
+			</if>
+			<if test="state != null">
+				STATE,
+			</if>
+			<if test="lastLoginTime != null">
+				LAST_LOGIN_TIME,
+			</if>
+			<if test="lastLoginIp != null">
+				LAST_LOGIN_IP,
+			</if>
+			<if test="orderNum != null">
+				ORDER_NUM,
+			</if>
+			<if test="backup != null">
+				BACKUP,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="cid != null">
+				#{cid,jdbcType=INTEGER},
+			</if>
+			<if test="userCode != null">
+				#{userCode,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				#{password,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=INTEGER},
+			</if>
+			<if test="lastLoginTime != null">
+				#{lastLoginTime,jdbcType=VARCHAR},
+			</if>
+			<if test="lastLoginIp != null">
+				#{lastLoginIp,jdbcType=VARCHAR},
+			</if>
+			<if test="orderNum != null">
+				#{orderNum,jdbcType=INTEGER},
+			</if>
+			<if test="backup != null">
+				#{backup,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.entity.system.SysUser">
+		update sys_user
+		<set>
+			<if test="userCode != null">
+				USER_CODE = #{userCode,jdbcType=VARCHAR},
+			</if>
+			<if test="password != null">
+				PASSWORD = #{password,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				STATE = #{state,jdbcType=INTEGER},
+			</if>
+			<if test="lastLoginTime != null">
+				LAST_LOGIN_TIME = #{lastLoginTime,jdbcType=VARCHAR},
+			</if>
+			<if test="lastLoginIp != null">
+				LAST_LOGIN_IP = #{lastLoginIp,jdbcType=VARCHAR},
+			</if>
+			<if test="orderNum != null">
+				ORDER_NUM = #{orderNum,jdbcType=INTEGER},
+			</if>
+			<if test="backup != null">
+				BACKUP = #{backup,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where CID = #{cid,jdbcType=INTEGER}
+	</update>
+	<!-- 统计满足条件的记录数 -->
+	<select id="countByParam" parameterType="com.yhcrt.entity.system.SysUser"  resultType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from sys_user
+		<include refid="where_all" />
+	</select>
+	<!-- 查询满足条件的集合 -->
+	<select id="getByParam" parameterType="com.yhcrt.entity.system.SysUser" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_user
+		<include refid="where_all" />
+	</select>
+
+	<sql id="where_all">
+		where 1 = 1
+		<if test="userCode != null and userCode!='' ">
+			and USER_CODE = #{userCode,jdbcType=VARCHAR}
+		</if>
+		<if test="password != null and password!='' ">
+			and PASSWORD = #{password,jdbcType=VARCHAR}
+		</if>
+	</sql>
+	
+	<!-- 根据ID查询 -->
+	<select id="getByCid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_user
+		where CID = #{cid,jdbcType=INTEGER}
+	</select>
+	<!-- 更新用户状态 -->
+	<update id="updateByCidSates" parameterType="Map">
+		update sys_user set STATE = #{state,jdbcType=INTEGER}
+		where CID = #{id,jdbcType=INTEGER}
+	</update>
+	
+</mapper>

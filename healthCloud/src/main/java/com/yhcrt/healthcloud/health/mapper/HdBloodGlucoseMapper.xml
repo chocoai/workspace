@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.healthcloud.health.mapper.HdBloodGlucoseMapper">
+  <resultMap id="BaseResultMap" type="com.yhcrt.healthcloud.health.entity.HdBloodGlucose">
+    <id column="cid" jdbcType="INTEGER" property="cid" />
+    <result column="imei" jdbcType="VARCHAR" property="imei" />
+    <result column="member_id" jdbcType="INTEGER" property="memberId" />
+    <result column="data_date" jdbcType="VARCHAR" property="dataDate" />
+    <result column="upload_time" jdbcType="VARCHAR" property="uploadTime" />
+    <result column="bg_type" jdbcType="INTEGER" property="bgType" />
+    <result column="bg_value" jdbcType="REAL" property="bgValue" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    cid, imei, member_id, data_date, upload_time, bg_type, bg_value
+  </sql>
+  <select id="selectByExample" parameterType="com.yhcrt.healthcloud.health.entity.HdBloodGlucoseExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from hd_blood_glucose
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from hd_blood_glucose
+    where cid = #{cid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from hd_blood_glucose
+    where cid = #{cid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yhcrt.healthcloud.health.entity.HdBloodGlucoseExample">
+    delete from hd_blood_glucose
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yhcrt.healthcloud.health.entity.HdBloodGlucose">
+    insert into hd_blood_glucose (cid, imei, member_id, 
+      data_date, upload_time, bg_type, 
+      bg_value)
+    values (#{cid,jdbcType=INTEGER}, #{imei,jdbcType=VARCHAR}, #{memberId,jdbcType=INTEGER}, 
+      #{dataDate,jdbcType=VARCHAR}, #{uploadTime,jdbcType=VARCHAR}, #{bgType,jdbcType=INTEGER}, 
+      #{bgValue,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yhcrt.healthcloud.health.entity.HdBloodGlucose">
+    insert into hd_blood_glucose
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="imei != null">
+        imei,
+      </if>
+      <if test="memberId != null">
+        member_id,
+      </if>
+      <if test="dataDate != null">
+        data_date,
+      </if>
+      <if test="uploadTime != null">
+        upload_time,
+      </if>
+      <if test="bgType != null">
+        bg_type,
+      </if>
+      <if test="bgValue != null">
+        bg_value,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="imei != null">
+        #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="memberId != null">
+        #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="dataDate != null">
+        #{dataDate,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadTime != null">
+        #{uploadTime,jdbcType=VARCHAR},
+      </if>
+      <if test="bgType != null">
+        #{bgType,jdbcType=INTEGER},
+      </if>
+      <if test="bgValue != null">
+        #{bgValue,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yhcrt.healthcloud.health.entity.HdBloodGlucoseExample" resultType="java.lang.Long">
+    select count(*) from hd_blood_glucose
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update hd_blood_glucose
+    <set>
+      <if test="record.cid != null">
+        cid = #{record.cid,jdbcType=INTEGER},
+      </if>
+      <if test="record.imei != null">
+        imei = #{record.imei,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memberId != null">
+        member_id = #{record.memberId,jdbcType=INTEGER},
+      </if>
+      <if test="record.dataDate != null">
+        data_date = #{record.dataDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uploadTime != null">
+        upload_time = #{record.uploadTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bgType != null">
+        bg_type = #{record.bgType,jdbcType=INTEGER},
+      </if>
+      <if test="record.bgValue != null">
+        bg_value = #{record.bgValue,jdbcType=REAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update hd_blood_glucose
+    set cid = #{record.cid,jdbcType=INTEGER},
+      imei = #{record.imei,jdbcType=VARCHAR},
+      member_id = #{record.memberId,jdbcType=INTEGER},
+      data_date = #{record.dataDate,jdbcType=VARCHAR},
+      upload_time = #{record.uploadTime,jdbcType=VARCHAR},
+      bg_type = #{record.bgType,jdbcType=INTEGER},
+      bg_value = #{record.bgValue,jdbcType=REAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.healthcloud.health.entity.HdBloodGlucose">
+    update hd_blood_glucose
+    <set>
+      <if test="imei != null">
+        imei = #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="memberId != null">
+        member_id = #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="dataDate != null">
+        data_date = #{dataDate,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadTime != null">
+        upload_time = #{uploadTime,jdbcType=VARCHAR},
+      </if>
+      <if test="bgType != null">
+        bg_type = #{bgType,jdbcType=INTEGER},
+      </if>
+      <if test="bgValue != null">
+        bg_value = #{bgValue,jdbcType=REAL},
+      </if>
+    </set>
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yhcrt.healthcloud.health.entity.HdBloodGlucose">
+    update hd_blood_glucose
+    set imei = #{imei,jdbcType=VARCHAR},
+      member_id = #{memberId,jdbcType=INTEGER},
+      data_date = #{dataDate,jdbcType=VARCHAR},
+      upload_time = #{uploadTime,jdbcType=VARCHAR},
+      bg_type = #{bgType,jdbcType=INTEGER},
+      bg_value = #{bgValue,jdbcType=REAL}
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+    <select id="selectLatestByMemberId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  	SELECT * FROM hd_blood_glucose WHERE cid = (SELECT MAX(cid) from hd_blood_glucose) and member_id = #{memberId}
+  </select>
+  
+  <select id="selectByMon" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from hd_blood_glucose
+    where member_id = #{memberId,jdbcType=INTEGER} and upload_time >=DATE_ADD(curdate(), INTERVAL -1 MONTH); 
+  </select>
+</mapper>

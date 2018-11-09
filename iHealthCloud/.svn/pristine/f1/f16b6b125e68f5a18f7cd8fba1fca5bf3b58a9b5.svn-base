@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>功能介绍</title>
+    <!-- Bootstrap core CSS -->
+    <link href="res/css/bootstrap.min.css" rel="stylesheet">
+    <link href="res/css/mycss.css" rel="stylesheet">
+    <script src="res/js/jquery-3.2.1.min.js"></script>
+  </head>
+  <body>
+     <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 nopad-lr">
+              <ul class="update-list" id="parentIndustryUL">
+
+              </ul>
+            </div>
+        </div>
+     </div>
+  </body>
+    <script type="text/javascript">
+  	$(function(){
+    	
+    	$.ajax({
+	    	type: "get",
+            url: '/api/services?pdata={"sid":"healthCloud.app.getVersionList","biz":{"app_code":"XKT"}}',
+            dataType: "json",
+            success: function(data){
+            	var biz = data.biz;
+ 		        for(var i=0;i<biz.length;i++){
+		        	var version = biz[i];
+	            	var version_id = version.kid;
+	            	var cVersionDesc = version.cVersionDesc;
+	            	var cUploadDate = version.cUploadDate.substring(0,10);
+	                var li = '<li ><a href="/api/userDirection/versionDesc.html?version_id='+version_id+'"><div class="pull-left"><p class="update-title">孝康通'+cVersionDesc+'更新</p><p class="update-date">'+cUploadDate+'</p></div><i class="glyphicon glyphicon-menu-right pull-right"></i></a></li>';
+	                $("#parentIndustryUL").append(li);
+		        } 
+           	}
+        });
+	})
+	</script>
+</html>

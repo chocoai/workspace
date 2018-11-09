@@ -1,0 +1,442 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="keywords" content="${site.keywords!}" />
+<meta http-equiv="description" content="${site.description!}" />
+<title>${channel.title!channel.name} - ${site.name}</title>
+
+<link rel="stylesheet" type="text/css" href="/${res}/css/global.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/index_fc.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/index.css"/>
+
+</head>
+
+<body>
+
+	
+	[#include "../include/header.html"/]
+	<!--  顶部    start-->
+	<div class="yHeader">
+		<!-- 导航   start  -->
+		<div class="yNavIndex">
+			<div class="pullDown">
+				<h2 class="pullDownTitle">快速查询</h2>
+				<!-- 下拉详细列表具体分类 -->
+				<ul class="pullDownList">
+					[@cms_model id="17"]
+					    [#list tag_bean.items as item]
+						    [#if item.field=="area"]
+						        [#assign area=item.optValue/]
+						    [#elseif item.field=="acreage"]
+						        [#assign acreage=item.optValue/]
+						    [#elseif item.field=="priceRange"]
+						        [#assign priceRange=item.optValue/]
+						    [/#if]
+					   	[/#list]
+					<li>
+						<span class="title">区域</span>
+						[#list area!?split(",") as opt]
+							<a href="${base}/searchHouse.jspx?area=${opt!}&channelId=162">${opt!}</a>
+						[/#list]
+					</li>
+
+					<li>
+						<span class="title">价格</span>
+						[#list priceRange!?split(",") as opt]
+							<a href="${base}/searchHouse.jspx?price=${opt!}&channelId=162">${opt!}</a>
+						[/#list]
+					</li>
+
+					<li>
+						<span class="title">面积</span>
+						[#list acreage!?split(",") as opt]
+							<a href="${base}/searchHouse.jspx?acreage=${opt!}&channelId=162">${opt!}</a>
+						[/#list]
+					</li>
+					
+					[/@cms_model]
+				</ul>
+				<!-- 下拉详细列表具体分类 -->
+			</div>
+
+			<ul class="yMenuIndex">
+				<li>
+					<a href="${base}/" class="yMenua">首页</a>
+				</li>
+				<li>
+					<a href="${base}/fcxw/index.jhtml">新闻</a>
+				</li>
+				<li>
+					<a href="${base}/house/index.jhtml">新房</a>
+				</li>
+				<li>
+					<a href="${base}/jiaju/index.jhtml">家居</a>
+				</li>
+				<li>
+					<a href="${base}/bbs" target="_blank">论坛</a>
+				</li>
+				<li>
+					<a href="${base}/ppk/index.jhtml">品牌库</a>
+				</li>
+			</ul>
+		</div>
+		<!-- 导航   end  -->
+	</div>
+	<!--  顶部    end-->
+
+	<!-- banner代码 开始 -->
+	<div class="banner">
+		<div class="banner_show" id="banner_show">
+			[@cms_content_list count='3' orderBy='4' titLen='10' typeId='3' channelOption='1' channelPath='lptj,zxkp'] 
+			[#list tag_list as content]
+			<a href="${content.url}" class="bannger_inbox">
+				<img src="${content.typeImg!content.titleImg!}" width="2000" height="370">
+			</a>
+			[/#list] 
+			[/@cms_content_list]
+			
+			<div class="banner_mag">
+				<div class="yq_banner_list" id="yq_banner_list">
+					<a href="javascript:;" rel="0" class="hover">&nbsp;</a>
+					<a href="javascript:;" rel="1">&nbsp;</a>
+					<a href="javascript:;" rel="2">&nbsp;</a>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- banner 结束 -->
+
+
+
+	<!--内容 开始-->
+	<div class="box">
+		<div id="Tab_link">
+			<div class="Menubox">
+				<div class="tuijian">
+					<a href="${base}/house/index.jhtml"><span>新房</span></a>
+				</div>
+				<ul>
+					<li id="menuc1" onmouseover="setTab('menuc',1,2)" class="hover"><a href="${base}/lptj/index.jhtml">楼盘推荐</a></li>
+					<li id="menuc2" onmouseover="setTab('menuc',2,2)"><a href="${base}/kft/index.jhtml">看房团</a></li>
+				</ul>
+			</div>
+
+			<div class="Contentbox">
+				<div class="hover">
+					<div class="left">
+						<div class="check_box">
+							<h1>区域选择</h1>
+							<div class="choose">
+								[#list area!?split(",") as opt]
+								<a href="${base}/searchHouse.jspx?area=${opt!}&channelId=162">${opt!}</a>
+								[/#list]
+								
+							</div>
+						</div>
+
+						<!---最新开盘 开始--->
+						<div class="check_box">
+							<h1><a href="${base}/zxkp/index.jhtml">最新开盘</a></h1>
+							<div class="house_box">
+								<div id="dv_scroll">
+									<div id="dv_scroll_text" class="Scroller-Container">
+										<div class="zxkp_list">
+											<ul>
+												<li>
+													[@cms_content_list count='12' orderBy='4' titLen='10' channelOption='1' channelId='164'] 
+													[#list tag_list as content]
+													<div class="zxkp_tit">
+														<span class="zxkp_tit_left">
+															<a href="${content.url}" title="${content.title}">[@text_cut s=content.title! len='18' append='...'/]</a>
+														</span>
+														<span class="zxkp_tit_right">
+														[#if content.attr.price ?? && content.attr.price != '' ] 
+															<strong>${content.attr.price}元/㎡</strong>
+														[#else]
+															<strong>待定</strong>
+														[/#if]
+														</span>
+													</div>
+													[/#list] 
+													[/@cms_content_list]
+													
+												</li>
+											</ul>
+										</div>
+										<!--about end-->
+									</div>
+								</div>
+								<!--dv_scroll end-->
+								<div id="dv_scroll_bar">
+									<div id="dv_scroll_track" class="Scrollbar-Track">
+										<div class="Scrollbar-Handle"></div>
+									</div>
+								</div>
+								<!--dv_scroll_bar end-->
+							</div>
+						</div>
+						<!---最新开盘 结束--->
+					</div>
+					
+					<div id="con_menuc_1">
+						<ul class="right ml20">
+						[@cms_content_list count='8' orderBy='4' titLen='10' recommend='1' channelOption='1' channelId='163,164'] 
+							[#list tag_list as content]
+							[#if (content_index+1)%4 = 1]
+							<li>
+							[#else]
+							<li class="ml20">
+							[/#if]
+								<a href="${content.url}">
+									<a href="${content.url}"><img src="${content.titleImg!content.typeImg!}" /></a>
+									<u>
+									[#if content.attr.price ?? && content.attr.price != '' ] 
+										<span class="red">￥${content.attr.price}</span> 元/㎡
+									[#else]
+										<span class="red">待定</span>
+									[/#if]
+									</u>
+									<i><a href="${content.url}" title="${content.title}">[@text_cut s=content.title! len='8' append='...'/]</a></i>
+									
+								</a>
+							</li>
+							[/#list] 
+						[/@cms_content_list]
+						</ul>
+					</div>
+					
+					<div id="con_menuc_2">
+						<ul class="right ml20">
+							[@cms_content_list count='8' orderBy='4' titLen='10' channelOption='1' channelId='165'] 
+								[#list tag_list as content]
+								[#if (content_index+1)%4 = 1]
+								<li>
+								[#else]
+								<li class="ml20">
+								[/#if]
+									<a href="${content.url}">
+										<a href="${content.url}"><img src="${content.titleImg!content.typeImg!}" /></a>
+										<a href="${content.url}" title="${content.title}">[@text_cut s=content.title! len='16' append='...'/]</a>
+									</a>
+								</li>
+								[/#list] 
+							[/@cms_content_list]
+						</ul>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+
+		<div id="New_house">
+
+			<div class="Menubox">
+				<div class="tuijian">
+					<a href="${base}/jiaju/index.jhtml"><span>家居</span></a>
+				</div>
+				<ul>
+					<a href="${base}/jiazhuang/index.jhtml"><li id="menud1" onmouseover="setTab('menud',1,3)" class="hover">家装</li></a>
+					<a href="${base}/jiancai/index.jhtml"><li id="menud2" onmouseover="setTab('menud',2,3)">建材</li></a>
+					<a href="${base}/sjzp/index.jhtml"><li id="menud3" onmouseover="setTab('menud',3,3)">设计作品</li></a>
+				</ul>
+			</div>
+
+			<div class="Contentbox">
+				<div id="con_menud_1" class="hover">
+					<ul class="right jiaju">
+					[@cms_content_list count='10' orderBy='4' titLen='10' channelOption='1' channelId='167'] 
+						[#list tag_list as content]
+						[#if (content_index+1)%5 = 1]
+						<li>
+						[#else]
+						<li class="ml16">
+						[/#if]
+							<a href="${content.url}">
+								<a href="${content.url}"><img src="${content.titleImg!content.typeImg!}" /></a>
+								<a href="${content.url}" title="${content.title}">[@text_cut s=content.title! len='16' append='...'/]</a>
+							</a>
+						</li>
+						[/#list] 
+					[/@cms_content_list]
+					</ul>
+				</div>
+
+				<div id="con_menud_2" style="display: none">
+					<ul class="right jiaju">
+						[@cms_content_list count='10' orderBy='4' titLen='10' channelOption='1' channelId='168'] 
+						[#list tag_list as content]
+						[#if (content_index+1)%5 = 1]
+						<li>
+						[#else]
+						<li class="ml16">
+						[/#if]
+							<a href="${content.url}">
+								<a href="${content.url}"><img src="${content.titleImg!content.typeImg!}" /></a>
+								<a href="${content.url}" title="${content.title}">[@text_cut s=content.title! len='16' append='...'/]</a>
+							</a>
+						</li>
+						[/#list] 
+					[/@cms_content_list]
+						
+					</ul>
+				</div>
+
+				<div id="con_menud_3" style="display: none">
+					<ul class="right jiaju">
+					[@cms_content_list count='10' orderBy='4' titLen='10' channelOption='1' channelId='169'] 
+						[#list tag_list as content]
+						[#if (content_index+1)%5 = 1]
+						<li>
+						[#else]
+						<li class="ml16">
+						[/#if]
+							<a href="${content.url}">
+								<a href="${content.url}"><img src="${content.titleImg!content.typeImg!}" /></a>
+								<a href="${content.url}" title="${content.title}">[@text_cut s=content.title! len='16' append='...'/]</a>
+							</a>
+						</li>
+						[/#list] 
+					[/@cms_content_list]
+					</ul>
+				</div>
+			</div>
+
+		</div>
+
+		<div class="news">
+			<h1>
+				<a href="${base}/fcxw/index.jhtml"><span>新闻</span></a>
+			</h1>
+			<div class="news_left">
+				<a href="${base}/mzcj/index.jhtml"><h2>每周成交</h2></a>
+				<ul>
+				[@cms_content_list count='7' orderBy='4' titLen='10' channelOption='1' channelId='173'] 
+					[#list tag_list as content]
+					<li>
+						<span>${content.date?string('yyyy-MM-dd')}</span>
+						<a href="${content.url}" title="${content.title}">[@text_cut s=content.title! len='18' append='...'/]</a>
+					</li>
+					[/#list] 
+				[/@cms_content_list]
+				</ul>
+			</div>
+			<div class="news_center">
+				<div id="Tab_news">
+
+					<div class="Newsbox">
+						<ul>
+							<li id="menuf1" onmouseover="setTab('menuf',1,2)" class="hover"><a href="${base}/policy/index.jhtml">政策</a></li>
+							<li id="menuf2" onmouseover="setTab('menuf',2,2)"><a href="${base}/zixun/index.jhtml">资讯</a></li>
+						</ul>
+					</div>
+
+					<div class="Content_News">
+						<div id="con_menuf_1" class="hover">
+							<ul>
+								[@cms_content_list count='7' orderBy='4' titLen='10' channelOption='1' channelId='171'] 
+									[#list tag_list as content]
+									<li>
+										<span>${content.date?string('yyyy-MM-dd')}</span>
+										<a href="${content.url}" title="${content.title}">[@text_cut s=content.title! len='22' append='...'/]</a>
+									</li>
+									[/#list] 
+								[/@cms_content_list]
+							</ul>
+
+						</div>
+						<div id="con_menuf_2" style="display: none">
+							<ul>
+								[@cms_content_list count='7' orderBy='4' titLen='10' channelOption='1' channelId='172'] 
+									[#list tag_list as content]
+									<li>
+										<span>${content.date?string('yyyy-MM-dd')}</span>
+										<a href="${content.url}" title="${content.title}">[@text_cut s=content.title! len='22' append='...'/]</a>
+									</li>
+									[/#list] 
+								[/@cms_content_list]
+							</ul>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="news_right">
+				<a href="${base}/spsf/index.jhtml"><h2>视频秀房</h2></a>
+				<ul>
+				[@cms_content_list count='4' orderBy='4' titLen='10' channelOption='1' channelId='160'] 
+					[#list tag_list as content]
+					[#if (content_index+1)%2 = 1]
+					<li>
+					[#else]
+					<li class="last">
+					[/#if]
+						<a href="${content.url}">
+							<a href="${content.url}"><img src="${content.titleImg!content.typeImg!}" /></a>
+							<a href="${content.url}" title="${content.title}">[@text_cut s=content.title! len='22' append='...'/]</a>
+						</a>
+					</li>
+					[/#list] 
+				[/@cms_content_list]
+				</ul>
+			</div>
+		</div>
+
+		<div class="cooperation nopb">
+			<h1>
+				<a href="${base}/ppk/index.jhtml"><span>品牌库</span></a>
+			</h1>
+			<ul>
+				[@cms_content_list count='10' orderBy='1' titLen='10' channelOption='1' channelId='170'] 
+					[#list tag_list as content] 
+					[#if content_index = 5]
+					<li class="sixth"> 
+					[#else]
+					<li>
+					[/#if] 
+						<span class="fc_brand_pic">
+							<a href="${content.url}">
+								<img src="${content.titleImg!content.typeImg!}">
+							</a>
+						</span>
+						<span class="fc_brand_text">
+							<p class="fc_brand_tit">
+								<a href="${content.url}" title="${content.title}">[@text_cut s=content.title! len='6' append='...'/]</a>
+								<strong>
+								<a href="${content.url}" title="${content.attr.saleTel}">
+								[@text_cut s=content.attr.saleTel! len='9' append='...'/]
+								</a>
+								</strong>
+							</p>
+							<p class="fc_brand_add">
+								楼盘位置：
+							<i>
+								<a href="${content.url}" title="${content.attr.houseAddress}">
+								[@text_cut s=content.attr.houseAddress! len='22' append='...'/]
+								</a>
+							</i>
+						</p>
+						</span>
+					</li>
+					
+					[/#list] 
+				[/@cms_content_list]
+
+			</ul>
+		</div>
+	</div>
+	<!--内容 end-->
+
+	<!--尾部 start-->
+	[#include "../include/footer.html"/] 
+	<!--尾部 end-->
+
+	<script type="text/javascript" src="/${res}/js/dc/jquery-2.2.4.min.js"></script>
+	<script type="text/javascript" src="/${res}/js/dc/settitle.js"></script>
+	<script type="text/javascript" src="/${res}/js/dc/fc_index.js"></script>
+	<script type="text/javascript" src="/${res}/js/dc/jquery.caroufredsel-6.0.4-packed.js"></script>
+	<script type="text/javascript" src="/${res}/js/dc/focus.js"></script>
+	<script type="text/javascript" src="/${res}/js/dc/scrollbar.js"></script>
+	<script type="text/javascript" src="/${res}/js/dc/jquery.select.js"></script>
+</body>
+</html>

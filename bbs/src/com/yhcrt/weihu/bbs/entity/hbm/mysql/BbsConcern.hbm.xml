@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.yhcrt.weihu.bbs.entity">
+	<class
+		name="BbsConcern"
+		table="bbs_concern"
+		>
+		<meta attribute="sync-DAO">false</meta>
+		<cache usage="read-write"/>
+		<id
+			name="id"
+			type="java.lang.Integer"
+			column="CONCERN_ID"
+			>
+			<generator class="native"/>
+		</id>
+		<property
+			name="createTime"
+			column="CREATE_TIME"
+			type="timestamp"
+			not-null="true"
+			/>
+		<many-to-one
+			name="creater"
+			column="creater_id"
+			class="BbsUser"
+			not-null="true"
+			>
+		</many-to-one>
+		<many-to-one
+			name="concernUser"
+			column="concern_user_id"
+			class="BbsUser"
+			not-null="true"
+			>
+		</many-to-one>
+	</class>	
+</hibernate-mapping>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.healthcloud.health.mapper.MedicalExaminationReportMapper">
+  <resultMap id="BaseResultMap" type="com.yhcrt.healthcloud.health.entity.MedicalExaminationReport">
+    <id column="mer_id" jdbcType="INTEGER" property="merId" />
+    <result column="member_id" jdbcType="INTEGER" property="memberId" />
+    <result column="mer_time" jdbcType="VARCHAR" property="merTime" />
+    <association property="merBloodGlucose" column="mer_id" select="com.yhcrt.healthcloud.health.mapper.MerBloodGlucoseMapper.selectBymerId"></association>
+    <association property="bloodOxygen" column="mer_id" select="com.yhcrt.healthcloud.health.mapper.MerBloodOxygenMapper.selectBymerId"></association>
+    <association property="bloodPressure" column="mer_id" select="com.yhcrt.healthcloud.health.mapper.MerBloodPressureMapper.selectBymerId"></association>
+    <association property="bmi" column="mer_id" select="com.yhcrt.healthcloud.health.mapper.MerBmiMapper.selectBymerId"></association>
+    <association property="bodyFat" column="mer_id" select="com.yhcrt.healthcloud.health.mapper.MerBodyFatMapper.selectBymerId"></association>
+    <association property="cholesterol" column="mer_id" select="com.yhcrt.healthcloud.health.mapper.MerCholesterolMapper.selectBymerId"></association>
+    <association property="electrocardiogram" column="mer_id" select="com.yhcrt.healthcloud.health.mapper.MerElectrocardiogramMapper.selectBymerId"></association>
+    <association property="merTemperature" column="mer_id" select="com.yhcrt.healthcloud.health.mapper.MerTemperatureMapper.selectBymerId"></association>
+    <association property="acid" column="mer_id" select="com.yhcrt.healthcloud.health.mapper.MerUricAcidMapper.selectBymerId"></association>
+    <association property="hipRatio" column="mer_id" select="com.yhcrt.healthcloud.health.mapper.MerWaistHipRatioMapper.selectBymerId"></association>
+    <association property="member" column="member_id" select="com.yhcrt.healthcloud.memberBack.mapper.MemberBackMapper.selectByPrimaryKey"></association>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    mer_id, member_id, mer_time
+  </sql>
+  <select id="selectByExample" parameterType="com.yhcrt.healthcloud.health.entity.MedicalExaminationReportExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from medical_examination_report
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from medical_examination_report
+    where mer_id = #{merId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from medical_examination_report
+    where mer_id = #{merId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yhcrt.healthcloud.health.entity.MedicalExaminationReportExample">
+    delete from medical_examination_report
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yhcrt.healthcloud.health.entity.MedicalExaminationReport">
+    insert into medical_examination_report (mer_id, member_id, mer_time
+      )
+    values (#{merId,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, #{merTime,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yhcrt.healthcloud.health.entity.MedicalExaminationReport">
+    insert into medical_examination_report
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="merId != null">
+        mer_id,
+      </if>
+      <if test="memberId != null">
+        member_id,
+      </if>
+      <if test="merTime != null">
+        mer_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="merId != null">
+        #{merId,jdbcType=INTEGER},
+      </if>
+      <if test="memberId != null">
+        #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="merTime != null">
+        #{merTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yhcrt.healthcloud.health.entity.MedicalExaminationReportExample" resultType="java.lang.Long">
+    select count(*) from medical_examination_report
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update medical_examination_report
+    <set>
+      <if test="record.merId != null">
+        mer_id = #{record.merId,jdbcType=INTEGER},
+      </if>
+      <if test="record.memberId != null">
+        member_id = #{record.memberId,jdbcType=INTEGER},
+      </if>
+      <if test="record.merTime != null">
+        mer_time = #{record.merTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update medical_examination_report
+    set mer_id = #{record.merId,jdbcType=INTEGER},
+      member_id = #{record.memberId,jdbcType=INTEGER},
+      mer_time = #{record.merTime,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.healthcloud.health.entity.MedicalExaminationReport">
+    update medical_examination_report
+    <set>
+      <if test="memberId != null">
+        member_id = #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="merTime != null">
+        mer_time = #{merTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where mer_id = #{merId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yhcrt.healthcloud.health.entity.MedicalExaminationReport">
+    update medical_examination_report
+    set member_id = #{memberId,jdbcType=INTEGER},
+      mer_time = #{merTime,jdbcType=VARCHAR}
+    where mer_id = #{merId,jdbcType=INTEGER}
+  </update>
+  <select id="selectByMemberId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from medical_examination_report
+    where member_id = #{memberId,jdbcType=INTEGER}
+  </select>
+</mapper>

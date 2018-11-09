@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>孝康通</title>
+    <!-- Bootstrap -->
+    <link th:href="@{/pages/mall/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- FontAwesome 4.7.0字体 -->
+    <link  th:href="@{/pages/mall/css/font-awesome.min.css}" rel="stylesheet">
+    <!-- banner --> 
+    <link  th:href="@{/pages/mall/css/swiper.min.css}" rel="stylesheet">
+    <!-- 自定义css -->
+    <link th:href="@{/pages/mall/css/mymall.css}" rel="stylesheet">
+  </head>
+  <body class="index-mall">
+    <!-- 导航 开始 -->
+    <nav class="navbar navbar-default navbar-fixed-top navbar-mall">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand" th:href="@{/h5}">
+            <img alt="Brand" th:src="@{/pages/mall/images/logo.png}"> 孝康通
+          </a>
+          <ul class="mall-icon-top pull-right">
+              <li><a th:href="@{/h5/search}"><i class="fa fa-search"></i></a></li>
+              <li><a th:href="@{/h5/cart/getPersonalCart}"><i class="fa fa-shopping-cart"></i></a></li>
+              <li><a th:href="@{/h5/mycenter}"><i class="fa fa-user-o"></i></a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <!-- 导航 结束 -->
+
+    <!-- banner 开始 -->
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide"><img th:src="@{/pages/mall/images/banner01.jpg}" class="img-responsive"></div>
+        <div class="swiper-slide"><img th:src="@{/pages/mall/images/banner02.jpg}" class="img-responsive"></div>
+        <div class="swiper-slide"><img th:src="@{/pages/mall/images/banner01.jpg}" class="img-responsive"></div>
+        <div class="swiper-slide"><img th:src="@{/pages/mall/images/banner02.jpg}" class="img-responsive"></div>
+      </div>
+      <!-- Add Pagination -->
+      <div class="swiper-pagination"></div>
+    </div>
+    <!-- banner 结束 -->
+   
+    <!-- 商品服务两大类 开始 -->
+    <div class="twobigtype">
+      <div class="col-xs-6 pad-r7">
+        <a th:href="@{/h5/goods}" class="twobigtype-cell type-goods">
+            <img th:src="@{/pages/mall/images/icon-goods.png}" class="img-responsive"> <span>商品</span>
+        </a>
+      </div>
+      <div class="col-xs-6 pad-l7">
+        <a th:href="@{/h5/service}"  class="twobigtype-cell type-service">
+            <img th:src="@{/pages/mall/images/icon-service.png}" class="img-responsive"> <span>服务预约</span>
+        </a>
+      </div>
+    </div>
+    <!-- 商品服务两大类 结束 -->
+
+    <!-- 限时折扣 开始 -->
+    <div class="mallindex-cell">
+      <div class="mallindex-cell-hd">
+        <em></em>限时折扣
+      </div>
+      <div class="mallindex-cell-bd">
+        <ul class="goods-list">
+            <tr th:each="goods:${goodsList}" >
+			 <td>
+	           <li class="col-xs-6 col-md-3">
+	              <a th:href="@{'/h5/goods/detail/'+${goods.goodsId}}">
+	              	  <img th:if="${goods.titleImg} ==null" th:src="@{/pages/mall/images/good01.png}" class="img-responsive img-goods">
+                  	  <img th:if="${goods.titleImg} !=null" th:src="${goods.titleImg}" class="img-responsive img-goods">
+	                  <p class="mallcell-title" th:text="${goods.goodsName}"></p>
+	                  <p class="mallcell-smalltitle" th:if="${goods.goodsIntro} !=null" th:text="${goods.goodsIntro}"></p>
+	                  <p class="mallcell-price" >￥<lable th:text="${goods.unitPrice}"></lable></p>
+	              </a>
+	            </li>
+            </td>
+  			</tr>
+        </ul>
+      </div>
+    </div>
+    <!-- 限时折扣 结束 -->
+
+    <!-- 服务预约 开始 -->
+    <div class="mallindex-cell">
+      <div class="mallindex-cell-hd">
+        <em></em>服务预约
+      </div>
+      <div class="mallindex-cell-bd">
+        <ul class="goods-list service-list"  >
+            <li class="col-xs-6 col-md-3" th:each="service:${serviceList}">
+              <a th:href="@{'/h5/service/detail/'+${service.serviceId}}">
+                  <img th:if="${service.titleImg} ==null" th:src="@{/pages/mall/images/service02.jpg}" class="img-responsive">
+                  <img th:if="${service.titleImg} !=null" th:src="${service.titleImg}" class="img-responsive">
+                  <p class="mallcell-title" th:text="${service.serviceName}"></p>
+                  <p class="mallcell-smalltitle" th:text="${service.org.orgName}"></p>
+                  <p class="mallcell-price" >￥<lable th:text="${service.unitPrice}"></lable></p>
+              </a>
+            </li>
+            
+        </ul>
+      </div>
+    </div>
+    <!-- 服务预约 结束 -->
+
+    <!-- 页脚 开始 -->
+    <div class="mall-footer">
+      <ul class="footer-list">
+        <li><a th:href="@{/h5}">首页</a></li>
+        <li><a href="https://healthcloud.ejyhealth.com/api/userDirection/appshare.html">客户端</a></li>
+        <li><a th:href="@{/h5/register}" th:if="${member} ==null">注册</a><a href="/h5/mycenter" th:if="${member} !=null">个 人中心</a></li>
+        <li><a th:href="@{/h5/login}" th:if="${member} ==null">登陆</a><a href="/h5/relogin" th:if="${member} !=null">退出</a></li>
+      </ul>
+      <p class="pra-footer">武汉炎黄创新科技服务有限公司@2017-2018</p>
+    </div>
+    <!-- 页脚 结束 -->
+
+    <!-- 返回顶部 开始 -->
+    <div class="gototop" style="display: none;">
+      <a href="javascript:void(0)"><i class="glyphicon glyphicon-menu-up"></i></a>
+    </div>
+    <!-- 返回顶部 结束 -->
+
+    <script th:src="@{/pages/mall/js/jquery-1.9.1.min.js}"></script>
+    <script th:src="@{/pages/mall/js/bootstrap.min.js}"></script>
+    <!-- banner -->
+    <script th:src="@{/pages/mall/js/swiper.min.js}"></script>
+    <script type="text/javascript">
+      //banner
+      var swiper = new Swiper('.swiper-container', {
+        pagination: {
+          el: '.swiper-pagination',
+        },
+        autoplay: {
+            disableOnInteraction: false,
+          }
+      });
+      
+
+      // 返回顶部
+      $(window).scroll(function(){
+        if($(window).scrollTop()>=20){
+           $(".gototop").fadeIn(300);
+        }else{
+           $(".gototop").fadeOut(300);
+        }
+      })
+      $(".gototop a").click(function(){
+        $("html,body").animate({scrollTop:"0px"},300)
+      })
+    </script>
+  </body>
+</html>

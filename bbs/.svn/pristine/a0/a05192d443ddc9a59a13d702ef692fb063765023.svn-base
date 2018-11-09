@@ -1,0 +1,466 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>${forum.title}</title>
+<link href="${base}/style/main.css" rel="stylesheet" type="text/css">
+<link href="${base}/style/lanmu.css" rel="stylesheet" type="text/css">
+<link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="${base}/js/jquery.js"></script>
+<script type="text/javascript" src="${base}/js/popwin.js"></script>
+<script type="text/javascript">
+	function collectionForum(forumId,userId){
+		if(forumId == ""){
+			return ;
+		}
+		if(userId == ""){
+			location.href = "${base}/login.jspx";
+			return ;
+		}
+		var isCollection = $("#collectionForum").val();
+		if(isCollection == "取消收藏"){
+			$.ajax({
+				url:"${base}/topic/collectionForumDelete"+forumId+".jspx",
+				type:"post",
+	 			dataType:"text",
+	 			success:function(data){
+	 				if(data == -1){
+	 					location.href = "${base}/login.jspx";
+	 					return ;
+	 				}else if(data == 1){
+	 					alert("取消收藏成功");
+	 					$("#collectionForum").val('收藏');
+	 				}
+	 			}
+			});
+		}else if(isCollection == "收藏"){
+			$.ajax({
+				url:"${base}/topic/collectionForumSave"+forumId+".jspx",
+				type:"post",
+	 			dataType:"text",
+	 			success:function(data){
+	 				if(data == -1){
+	 					location.href = "${base}/login.jspx";
+	 					return ;
+	 				}else if(data == 1){
+	 					alert("收藏成功");
+	 					$("#collectionForum").val('取消收藏');
+	 				}
+	 			}
+			});
+		}
+	}
+</script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		//全选与反选
+		$("#topicAll").click(function(){
+			if($("#topicAll").prop("checked")){
+				$("input[name='topicIds']").prop("checked",true);
+			}else{
+				$("input[name='topicIds']").prop("checked",false);
+			}
+		});
+		$("input[type='checkbox'][name='topicIds']").click(function(){
+		    if (!$("input[type='checkbox'][name='topicIds']:checked").checked) {  
+		        $("#topicAll").prop("checked", false);  
+		    } 
+		    var chsub = $("input[type='checkbox'][name='topicIds']").length; 
+		    var checkedsub = $("input[type='checkbox'][name='topicIds']:checked").length;
+		    if (checkedsub == chsub) {  
+		        $("#topicAll").prop("checked", true);  
+		    }  
+		});
+	});
+	
+	function manageTopic(url) {
+		var batchChecks = document.getElementsByName('topicIds');
+		var hasChecked = false;
+		for(var i=0; i<batchChecks.length; i++) {
+			if(batchChecks[i].checked) {
+				hasChecked = true;
+				break;
+			}
+		}
+		if(!hasChecked) {
+			alert('请选择要操作的数据！');
+			return;
+		}
+		if(!confirm("确认删除主题吗?")) {
+			return;
+		}
+		var form = document.getElementById('jvForm');
+		form.action=url;
+		form.submit();
+   	}
+	
+	function upTopic(url) {
+		var batchChecks = document.getElementsByName('topicIds');
+		var hasChecked = false;
+		for(var i=0; i<batchChecks.length; i++) {
+			if(batchChecks[i].checked) {
+				hasChecked = true;
+				break;
+			}
+		}
+		if(!hasChecked) {
+			alert('请选择要操作的数据！');
+			return;
+		}
+		if(!confirm("确认置顶主题吗?")) {
+			return;
+		}
+		$("#topLevel").val('1');
+		var form = document.getElementById('jvForm');
+		form.action=url;
+		form.submit();
+   	}
+	
+	function downTopic(url) {
+		var batchChecks = document.getElementsByName('topicIds');
+		var hasChecked = false;
+		for(var i=0; i<batchChecks.length; i++) {
+			if(batchChecks[i].checked) {
+				hasChecked = true;
+				break;
+			}
+		}
+		if(!hasChecked) {
+			alert('请选择要操作的数据！');
+			return;
+		}
+		if(!confirm("确认解除置顶主题吗?")) {
+			return;
+		}
+		$("#topLevel").val('0');
+		var form = document.getElementById('jvForm');
+		form.action=url;
+		form.submit();
+   	}
+	
+	function addPrime(url) {
+		var batchChecks = document.getElementsByName('topicIds');
+		var hasChecked = false;
+		for(var i=0; i<batchChecks.length; i++) {
+			if(batchChecks[i].checked) {
+				hasChecked = true;
+				break;
+			}
+		}
+		if(!hasChecked) {
+			alert('请选择要操作的数据！');
+			return;
+		}
+		if(!confirm("确认设置主题为精华吗?")) {
+			return;
+		}
+		$("#primeLevel").val('1');
+		var form = document.getElementById('jvForm');
+		form.action=url;
+		form.submit();
+   	}
+	
+	function subPrime(url) {
+		var batchChecks = document.getElementsByName('topicIds');
+		var hasChecked = false;
+		for(var i=0; i<batchChecks.length; i++) {
+			if(batchChecks[i].checked) {
+				hasChecked = true;
+				break;
+			}
+		}
+		if(!hasChecked) {
+			alert('请选择要操作的数据！');
+			return;
+		}
+		if(!confirm("确认主题解除精华吗?")) {
+			return;
+		}
+		$("#primeLevel").val('0');
+		var form = document.getElementById('jvForm');
+		form.action=url;
+		form.submit();
+   	}
+	
+	document.onkeydown=function(event){ 
+		e = event ? event :(window.event ? window.event : null); 
+		if(e.keyCode==13){   //回车
+			//提交查询的form
+			if(document.activeElement.id == 'searchContent'){
+				toSearch();
+			}
+		} 
+	};
+	
+	function toSearch(){
+		var searchType = $(".select_option li[class='selected']").html();
+		if(searchType == '帖子'){
+			$("#searchForm").attr("action",'${base}/topic/search.jhtml');
+			$("#searchType").val("0");
+			$("#searchForm").submit();
+			return ;
+		}else if(searchType == '用户'){
+			$("#searchForm").attr("action",'${base}/search/search_user.jspx');
+			$("#searchType").val("1");
+			$("#searchForm").submit();
+			return ;
+		}
+	}
+</script>
+</head>
+
+<body class="body">
+	<!---------顶部----------->
+	<div class="top">
+		<div class="top_center">
+			<div class="top_l">您好，欢迎来到东楚论坛！</div>
+			<div class="top_r">
+				[#if user??]
+				<div class="user_logout"  style="margin-top:9px;">
+					<span class="user_logout_name">
+						<a href="${base}/member/index.jhtml">${user.username}</a>
+					</span>
+					<span class="logout">
+						<a href="${base}/logout.jspx?returnUrl=/">退出</a>
+					</span>
+				</div>
+				[#else]
+				<ul>
+					<li><a href="#"><img src="${base}/images/icon_signin_01.png"
+							alt="" /></a></li>
+					<li><a href="#"><img src="${base}/images/icon_signin_02.png"
+							alt="" /></a></li>
+					<li><a href="#"><img src="${base}/images/icon_signin_03.png"
+							alt="" /></a></li>
+				</ul>
+				<div class="dlzc">
+					<span><a href="${base}/login.jspx">登录</a></span>
+					<span class="register"><a href="${base}/register.jspx">注册</a></span>
+				</div>
+				[/#if]
+			</div>
+		</div>
+	</div>
+
+
+	<!-------logo、导航和搜索----------->
+	<div class="nav">
+		<div class="nav_center">
+			<h1>
+				<a href="${base}/"><img src="${base}/images/logo.png" alt="" /></a>
+			</h1>
+			<div class="navsearch">
+				<!----导航---->
+				<nav>
+					<ul>
+						<li><a href="/">东楚网首页</a></li>
+						[#if forum.id==9]
+						<li class="now"><a href="${forum.url}">大咖圈</a></li>
+						[#else]
+						<li><a href="${base}/dakaquan/index.jhtml">大咖圈</a></li>
+						[/#if]
+					</ul>
+				</nav>
+
+				<!----搜索---->
+				<div class="search radius6">
+					<form name="searchform" id="searchForm" method="get" action="">
+						<select>
+							<option value="0">帖子</option>
+							<option value="1">用户</option>
+						</select>
+						<input type="hidden" name="searchType" value="" id="searchType"/>
+						<input type="hidden" name="forumId" value="${forum.id!}"/>
+						<input class="inp_srh" type="text" id="searchContent" name="keywords" placeholder="搜索其实很简单！">
+						<input class="btn_srh" type="button" onclick="toSearch()" value="搜索">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!------------------中间内容部分------------------------>
+	<div class="big_center">
+		<!------当前位置------>
+		<div class="location">
+			<i></i> &nbsp;<a href="${base}/">东楚论坛</a> &nbsp;> &nbsp;
+			<a href="javascript:void(0);">论坛栏目</a> &nbsp;> &nbsp;
+			<a href="${forum.url}">${forum.title}</a>
+		</div>
+
+		<!-----帖子列表----->
+		<div class="bbs_list">
+			<div class="bbs_list_top">
+				<div class="board_name">${forum.title}</div>
+				<div class="writepost">
+					[#if user??]
+					<a target="_blank" href="${base}/topic/v_add${forum.id!}.jspx"><i></i>发 帖</a>
+					[#else]
+					<a href="${base}/login.jspx"><i></i>发 帖</a>
+					[/#if]
+				</div>
+			</div>
+
+			<div class="board_tab_nav">
+				<ul class="board_tab">
+					[#if forum.id !=9]
+						[#if type=='index']
+						<li class="now">
+						[#else]
+						<li>
+						[/#if]
+							<a href="${forum.url}">全部</a>
+						</li>
+						[#if type=='index_jing']
+						<li class="now">
+						[#else]
+						<li>
+						[/#if]
+							<a href="${forum.url?substring(0,forum.url?length-6)}_jing${forum.url?substring(forum.url?length-6,forum.url?length)}">精华</a>
+						</li>
+					[/#if]
+					[@bbs_posttype forumId=forum.id]
+					[#list tag_list as topicType]
+						[#if type=='${topicType.id}']
+					 	<li class="now">
+					 	[#else]
+					 	<li>
+					 	[/#if]
+					 		<a href="${base}/${forum.path!}/type/${topicType.id}.jhtml" onmouseover="showChild('${topicType.id}')">${topicType.typeName!}</a>
+					 	</li>
+					[/#list]
+				   	[/@bbs_posttype]
+				</ul>
+			</div>
+
+			<div class="board_list_hd">
+				<div class="board_list_title">话题</div>
+				<div class="right">
+					<div class="board_list_writer">作者</div>
+					<div class="board_list_count">回复/点击</div>
+					<div class="board_list_reply">最后发表</div>
+				</div>
+			</div>
+
+			<div class="board_list_bd">
+				<div class="board_list_one even">
+					<div class="board_list_title">
+						<span class="article_icon icon_notice"></span>
+						<span class="article_title">${forum.forumRule}</span>
+					</div>
+				</div>
+        		<form method="post" action="" id="jvForm">
+					[@topic_page forumId=forum.id findType=type count='20' tpl='0' typeId='${typeId!}' parentTypeId='${parentTypeId!}' status='-1']
+					[#list tag_pagination.list as list]
+					<div [#if list_index %2 ==0 ]class="board_list_one even"[#else]class="board_list_one odd"[/#if]>
+						<div class="board_list_title">
+							[#if moderators]
+							<input type="checkbox" class="tz_sel" name="topicIds" value="${list.id!}">
+							[/#if]
+							<span class="article_icon icon_up"></span>
+							<span class="article_title">
+								<a target="_blank" href="${list.url}">${list.title}</a>
+							</span>
+						</div>
+						<div class="board_list_wrire">
+							<a href="javascript:void(0);">${list.creater.username}</a>
+							<span class="date">${list.createTime}</span>
+						</div>
+						<div class="board_list_count_inner">${list.replyCount}/${list.viewCount}</div>
+						<div class="board_list_reply_inner">
+							<a href="javascript:void(0);">${list.lastReply.username}</a>
+							<span class="date">${list.lastTime}</span>
+						</div>
+					</div>
+					[/#list]
+	        		[/@topic_page]
+	        		<input type="hidden" value="${forum.id}" name="forumId" />
+	        		<input type="hidden" value="" name="topLevel" id="topLevel"/>
+	        		<input type="hidden" value="" name="primeLevel" id="primeLevel"/>
+        		</form>
+			</div>
+			[#if moderators]
+			<div class="tz_sel_box">
+		     	<input type="checkbox" class="qx_sel" id="topicAll">
+		     	<input type="button" class="tz_sel_but" onclick="manageTopic('${base}/topic/o_delete.jspx');" value="删除">
+		     	<input type="button" class="tz_sel_but" onclick="upTopic('${base}/topic/o_upTopSubmit.jspx');" value="置顶">
+		     	<input type="button" class="tz_sel_but" onclick="addPrime('${base}/topic/o_primeSubmit.jspx');" value="精华">
+		     	<input type="button" class="tz_sel_but" onclick="downTopic('${base}/topic/o_upTopSubmit.jspx');" value="解除置顶">
+		     	<input type="button" class="tz_sel_but" onclick="subPrime('${base}/topic/o_primeSubmit.jspx');" value="取消精华">
+		   	</div>
+		   	[/#if]
+			<div class="board_tab_down">
+				<div style="clear: left;height:16px;"></div>
+				<div class="writepost">
+					[#if user??]
+					<a target="_blank" href="${base}/topic/v_add${forum.id!}.jspx"><i></i>发 帖</a>
+					[#else]
+					<a href="${base}/login.jspx"><i></i>发 帖</a>
+					[/#if]
+				</div>
+				<div class="board_page">
+					[@topic_page forumId=forum.id findType=type count='20' tpl='0'  typeId='${typeId!}'][#include "../tag/forumtopic.html"/] [/@topic_page]
+				</div>
+			</div>
+
+		</div>
+
+		<!----栏目信息----->
+		<div class="lanmu_inf">
+			<div class="lanmu_pic">
+				<img src="${forum.forumImg!}" alt="" />
+			</div>
+			<div class="lanmu_r">
+				<span>${forum.title}</span>
+				<input type="button" id="collectionForum" class="lanmu_collection_but" 
+					[#if user??]
+					onclick="collectionForum('${forum.id}','${user.id}')" 
+					[#else]
+					onclick="collectionForum('${forum.id}','')" 
+					[/#if]
+					[#if isCollection == 0]value="收藏"[#else]value="取消收藏"[/#if]>
+			</div>
+			<div class="lanmu_mes">
+				<div class="lanmu_message_bg"></div>
+				<div class="lanmu_message">
+					<p>${forum.description}</p>
+					<div class="lanmu_banzhu">
+						版主： <span style="color:#0090ff;">${forum.moderators}</span>
+					</div>
+				</div>
+			</div>
+			<ul class="lanmu_num_list">
+				<li>今日 <span>${forum.postToday}</span></li>
+				<li>主题 <span>${forum.topicTotal}</span></li>
+				<li>帖数 <span>${forum.postTotal}</span></li>
+			</ul>
+
+		</div>
+		<!------页脚------>
+		<div class="footer">
+			<div class="footer_listbox">
+				<div class="footer_list">
+					
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+	<!------------------返回顶部-------------------->
+	<div id="before">
+		<a href="http://bbs.hsdcw.com/" target="_blank" title="东楚论坛"
+			class='before'></a>
+	</div>
+	<div id="wechat" class="wechat">
+		<a href="javascript:void(0)"><div class="wechath"></div></a>
+	</div>
+	<a id="moquu_top" href="javascript:void(0)"></a>
+
+
+	<script type="text/javascript" src="${base}/js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="${base}/js/jquery.select.js"></script>
+
+</body>
+</html>

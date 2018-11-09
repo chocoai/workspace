@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>孝康通</title>
+    <!-- Bootstrap -->
+    <link th:href="@{/pages/mall/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- FontAwesome 4.7.0字体 -->
+    <link th:href="@{/pages/mall/css/font-awesome.min.css}" rel="stylesheet">
+    <!-- 自定义css -->
+    <link th:href="@{/pages/mall/css/mymall.css}" rel="stylesheet">
+	<!-- 筛选侧边栏 -->
+    <link th:href="@{/pages/mall/css/sidenav.min.css}" rel="stylesheet">
+    
+    <link rel="stylesheet" th:href="@{/pages/mall/css/jquery-weui.min.css}">
+</head>
+<body class="list-mall"  ontouchstart>
+    <input type="hidden" id="pageNum" value="1" >
+  	<input type="hidden" id="pages" value="0" >
+	<!-- 导航 开始 -->
+	<nav class="navbar navbar-default navbar-fixed-top navbar-mall-other">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a th:href="@{/h5}" class="othertop-left"><i
+					class="fa fa-angle-left icon-back"></i></a> 服务预约
+			</div>
+		</div>
+	</nav>
+	<!-- 导航 结束 -->
+
+	<!-- tab 开始 -->
+	<div class="mall-list-tab">
+		<ul>
+			<li class="col-xs-4 nopad-lr active"><a href="javascript:void(0)">默认排序</a></li>
+			<li class="col-xs-4 nopad-lr"><a href="javascript:void(0)">价格<i class="fa fa-unsorted"></i></a></li>
+        	<li class="col-xs-4 nopad-lr"><a href="javascript:void(0)" class="toggle" id="sidenav-toggle">筛选 <i class="fa fa-filter"></i></a></li>
+		</ul>
+	</div>
+	<!-- tab 结束 -->
+
+	<!-- 服务列表 开始 -->
+	<div class="mall-list-content">
+		<!-- 综合列表 开始 -->
+		<ul class="goods-list service-list list-cell" id="orderNum"> 
+			
+		</ul>
+		<!-- 综合列表 结束 -->
+	</div>
+	<!-- 服务列表 结束 -->
+	<div class="no none" id="noorderId">
+      		<p><img th:src="@{/pages/mall/images/noorders.png}"><br>哦哦，您还没有相关的订单哦~</p>
+    </div>
+    <!-- 筛选侧边栏 开始 -->
+    <nav class="sidenav col-xs-9" data-sidenav data-sidenav-toggle="#sidenav-toggle">
+      <form class="form-filter">
+        <div class="filter-cell">
+          <div class="filter-cell-hd">机构类型</div>
+          <div class="filter-cell-bd">
+            <ul id="orgType">
+              <li th:each="d:${orgType}" th:id="${d.dictValue}">
+              	<a href="javascript:void(0);" th:text="${d.dictKey}" >家政服务</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="filter-cell">
+          <div class="filter-cell-hd">服务项目</div>
+          <div class="filter-cell-bd">
+            <ul id="serviceType">
+              <li th:each="d:${serviceType}"  th:id="${d.dictKey}">
+              	<a href="javascript:void(0);" th:text="${d.dictKey}" >包时</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="filter-cell">
+          <div class="filter-cell-hd">服务区域</div>
+          <div class="filter-cell-bd">
+            <ul  id="areaId">
+           	 	<li th:each="a:${areas}"  th:id="${a.areaId}">
+           		 	<a href="javascript:void(0);" th:text="${a.areaName}">洪山区</a>
+           	 	</li>
+            </ul>
+          </div>
+        </div>
+        <div class="filter-fixed">
+          <a href="javascript:void(0)" class="col-xs-6 btn-filter-reset" id="reset">重置</a>
+          <a href="javascript:void(0)" class="col-xs-6 btn-filter-ok" id="search">确认</a>
+        </div>
+      </form>
+    </nav>
+    <!-- 筛选侧边栏 结束 -->
+	<!-- 加载开始 -->
+ 	<div class="weui-loadmore">  
+	    <i class="weui-loading"></i>  
+	    <span class="weui-loadmore_tips" id="loading">正在加载</span>  
+	</div>
+	<!-- 返回顶部 开始 -->
+	<div class="gototop" style="display: none;">
+		<a href="javascript:void(0)"><i class="glyphicon glyphicon-menu-up"></i></a>
+	</div>
+	<!-- 返回顶部 结束 -->
+
+    <script th:src="@{/pages/mall/js/jquery-1.9.1.min.js}"></script>
+    <script th:src="@{/pages/mall/js/bootstrap.min.js}"></script>
+    <!-- 筛选侧边栏 -->
+    <script th:src="@{/pages/mall/js/filter.js}"></script>
+    
+    <script th:src="@{/pages/mall/js/fastclick.js}"></script>
+    <script th:src="@{/pages/mall/js/jquery-weui.js}"></script>
+	<script type="text/javascript">
+ 	var pathName=window.document.location.pathname;
+    var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
+    	$('html').on('click',function(){ }); 
+        // 返回顶部
+	    $(window).scroll(function(){
+	      if($(window).scrollTop()>=20){
+	         $(".gototop").fadeIn(300);
+	      }else{
+	         $(".gototop").fadeOut(300);
+	      }
+	    })
+	    $(".gototop a").click(function(){
+	      $("html,body").animate({scrollTop:"0px"},300)
+	    })
+	    
+		
+	    $(document).ready(function(){
+	        $(document.body).destroyInfinite();
+	        $(".weui-loadmore").hide();
+  			getService(null,null,null,1);
+		});
+	    //下一页
+	    var loading = false;
+        $(document.body).infinite().on("infinite", function() {
+	        if(loading) return;
+	        loading = true;
+		    var pageNum = $("#pageNum").val();
+		    var pages = $("#pages").val();
+	        if(pageNum >=pages){
+	        	loading = false;
+	        	$("loading").val("已为最后一页");
+	        	$(document.body).destroyInfinite();
+	        	$(".weui-loadmore").css('display','none');
+	        	return;
+	        }else{
+	        	pageNum = parseInt(pageNum)+1;
+	        	sarch(pageNum);
+	        	loading = false;
+	        }
+        })
+	    
+		
+		//筛选侧边栏
+        $('[data-sidenav]').sidenav();
+		var $firstli = $(".filter-cell-bd ul li");
+	    $firstli.find("a").click(function(){
+	        $(this).parent("li").addClass('active').siblings().removeClass('active');
+	        //sarch(1);
+	    })
+	    //重置
+	    $("#reset").click(function(){
+	    	$(".filter-cell-bd ul li").removeClass('active');
+	    	sarch(1);
+	    })
+	    //完成
+	    $("#search").click(function(){
+	    	sarch(1);
+	    	$("#sidenav-toggle").click();
+	    })
+	    
+	    
+		var orderNum = 0;
+		// tab
+		$(".mall-list-tab ul li").click(function() {
+			$(this).addClass("active").siblings().removeClass("active");
+			var index = $(this).index();
+			if(index==2){
+				orderNum=0;
+			}else if(index==1){
+				//价格
+	        	if(orderNum==1){
+	        		orderNum=2;
+	        	}else{
+	        		orderNum=1;
+	        	}
+	        	getService(null,null,null,1);
+	        }else{
+	            //默认
+	         	orderNum=0;
+	        	getService(null,null,null,1);
+	        }
+		})
+		//查找
+		function sarch(pageNum){
+			var orgType,serviceType,areaId;
+	    	$(".filter-cell-bd ul").each(function(i,dom){
+	      		var li = $(this).find("li.active");
+	      		if(li){
+	      			var id = li.attr("id");
+	      			if(i==0){
+	      				orgType =id;
+	      			}else if(i==1){
+	      				serviceType =id;
+	      			}else{
+	      				areaId =id;
+	      			}
+	      		}
+	      	});
+	    	getService(orgType,serviceType,areaId,pageNum);
+		}
+		
+		//筛选+排序
+		function getService(orgType,serviceType,areaId,pageNum){
+			 $.ajax({
+					url : projectName+"/h5/service/getServiceAjax",
+					data :{
+						orgType:orgType,
+						serviceType:serviceType,
+						areaId:areaId,
+						orderNum:orderNum,
+						pageNum:pageNum
+			        },
+			        type:'post',
+			        contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+			        dataType:"json",
+					async : false,
+					traditional : true,
+					cache : true,
+					success : function(result) {
+					 //将从后台接收的json字符串转换成json对象
+			         var json = eval(result);
+			    	 var service = new Array();
+			    	 service=json.service;
+			    	 
+			         var serviceHtml="" ;
+			         if(service.length>0){
+			         	for(var i =0;i<service.length;i++){
+				         	serviceHtml+="<li class='col-xs-6 col-md-3' >";
+				         	serviceHtml+="<a href='"+projectName+"/h5/service/detail/"+service[i].serviceId+"'>";
+				         	if(service[i].titleImg!=""){
+				         		serviceHtml+="<img src='"+service[i].titleImg+"' class='img-responsive' />";
+				         	}else{
+				         		serviceHtml+="<img src='"+projectName+"/pages/mall/images/service02.jpg' class='img-responsive' />";
+				         	}
+				         	serviceHtml+="<p class='mallcell-title' >"+service[i].serviceName+"</p>";
+				         	serviceHtml+="<p class='mallcell-smalltitle' >"+service[i].org.orgName+"</p>";
+				         	serviceHtml+="<p class='mallcell-price' >￥"+service[i].unitPrice+"</p></a></li>";
+				         }
+			         }
+					 var pageNum = json.pageNum;
+					 var pages = json.pages;
+					 $("#pageNum").val(pageNum);
+				     $("#pages").val(pages);
+			         if(pageNum==1){
+				         $("#orderNum").html(serviceHtml);
+						 if(serviceHtml&&serviceHtml!=""){
+							 $("#noorderId").hide();
+						 }else{
+							 $("#noorderId").show();
+						 }
+			         }else{
+			        	 $("#orderNum").append(serviceHtml);
+					 	 loading = false;
+			         }
+			         if(pageNum<pages){
+					     $(document.body).infinite();
+		 				 $(".weui-loadmore").show();
+					 }else{
+						 $(document.body).destroyInfinite();
+		 				 $(".weui-loadmore").hide();
+					 }
+			         
+				}
+			}) 
+		}
+	</script>
+</body>
+</html>

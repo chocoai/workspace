@@ -1,0 +1,243 @@
+<script src="${resSys}/jquery.js" type="text/javascript"></script>
+<script type="text/javascript" src="/${res}/bbs_box/wbox.js"></script>
+<link rel="stylesheet" type="text/css" href="/${res}/bbs_box/wbox.css" />
+<script type="text/javascript">
+function checkedCount(name) {
+	var batchChecks = document.getElementsByName(name);
+	alert(batchChecks.length);
+	var count = 0;
+	for (var i = 0; i < batchChecks.length; i++) {
+		if (batchChecks[i].checked) {
+			count++;
+			alert(count);
+		}
+	}
+	return count;
+}
+
+function submitForm2(){
+	if('${user!}'==''){
+		location.href = "${base}/login.jspx";
+	}else{
+		$("#jvForm2").submit();
+	}
+}
+
+function vote(name, tid) {
+	//var itemNum = checkedCount(name);
+	
+	var items = document.getElementsByName(name);
+	//alert(items.length);
+	var count = 0;
+	var itemIds = new Array();
+	var str = "";
+	for (var i = 0; i < items.length; i++) {
+		if (items[i].checked) {
+			itemIds[count] = items[i].value;
+			if(count == 0){
+				str = itemIds[count]+"";
+			}else{
+				str = str + "," + itemIds[count];
+			}
+			count++;
+		}
+	}
+	for(var i=0; i<itemIds.length;i++){
+		//alert(itemIds[i]);
+	}
+	//alert(count);
+	if (count === 0) {
+		alert("请至少选择一项");
+		return;
+	}
+	$.post('${base}/topic/vote.jspx', {
+		'itemIds' : str,
+		'tid' : tid
+	}, function(data) {
+		//alert(data.success);
+		if (data.success) {
+			VoteResult();
+		} else {
+			alert(data.message);
+		}
+	}, "json");
+}
+</script>
+[#if topic.category==101||topic.category==102]
+<style>
+	.vote img {
+		height:10px;
+	}
+</style>
+<script type="text/javascript">
+	$(function() {
+		VoteResult();
+	});
+
+	function VoteResult() {
+		$.post("${base}/topic/vote_result.jspx", {
+			tid : "${topic.id}"
+		}, function(data) {
+			$(".vote").html(data);
+		});
+	}
+</script>
+[/#if]
+[#list tag_pagination.list as post]
+[#assign userR=post.creater/] 
+   <div class="tie_floor" id="${post.id}">
+		<div class="tie_con_hd">
+			<div class="tie_author">
+				[#if user?? && user.id==userR.id]
+				<a class="a_img" href="${base}/member/index.jhtml">
+					[#if userR.avatar??]
+					<img src="${userR.avatar!}" alt="" />
+					[#else]
+					<img src="${base}/images/default_user.jpg" alt="" />
+					[/#if]
+				</a>
+				<a class="name" href="${base}/member/index.jhtml">${userR.username}</a>
+				[#else]
+				<a class="a_img" href="${base}/personal/other_information${userR.id}.jspx">
+					[#if userR.avatar??]
+					<img src="${userR.avatar!}" alt="" />
+					[#else]
+					<img src="${base}/images/default_user.jpg" alt="" />
+					[/#if]
+				</a>
+				<a class="name" href="${base}/personal/other_information${userR.id}.jspx">${userR.username}</a>
+				[/#if]
+				<!-----用户个人简介开始----->
+				<div class="user_card_box">
+					<b></b>
+					<div class="user_card">
+						<div class="user_card_l">
+							[#if user?? && user.id==userR.id]
+							<a href="${base}/member/index.jhtml">
+							[#else]
+							<a href="${base}/personal/other_information${userR.id}.jspx">
+							[/#if]
+								[#if userR.avatar??]
+								<img src="${userR.avatar!}" alt="" />
+								[#else]
+								<img src="${base}/images/default_user.jpg" alt="" />
+								[/#if]
+							</a>
+						</div>
+						<div class="user_card_r">
+							<p class="user_card_r01">
+								<span class="user_card_name">
+									[#if user?? && user.id==userR.id]
+									<a href="${base}/member/index.jhtml">${userR.username}</a>
+									[#else]
+									<a href="${base}/personal/other_information${userR.id}.jspx">${userR.username}</a>
+									[/#if]
+								</span>
+								[#if user??]
+									[#if isConcerns?seq_contains(userR.id)]
+									<span class="addcare post${userR.id}" onclick="concern('${userR.id}','${user.id}')">取消关注</span>
+									[#elseif user.id == userR.id]
+									[#else]
+									<span class="addcare post${userR.id}" onclick="concern('${userR.id}','${user.id}')">加关注</span>
+									[/#if]
+									[#if isFriends?seq_contains(userR.id)]
+									<span class="addfriend">好友</span>
+									[#elseif isApplys?seq_contains(userR.id)]
+									<span class="addfriend">已申请</span>
+									[#elseif user.id == userR.id]
+									[#else]
+									<span class="addfriend friend${userR.id!}" onclick="applyFriend('${userR.id!}','${user.id!}')">加好友</span>
+									[/#if]
+								[#else]
+									<span class="addcare post${userR.id!}" onclick="concern('${userR.id!}','')">加关注</span>
+									<span class="addfriend friend${userR.id!}" onclick="applyFriend('${userR.id!}','')">加好友</span>
+								[/#if]
+							</p>
+							<p class="user_card_r02">
+								<a class="postnum" href="#">发帖：<span>${userR.topicCount}</span></a> &nbsp;&nbsp;
+								| &nbsp;&nbsp; <a href="#">精华：<span>${userR.primeCount}</span></a>
+							</p>
+							<p class="user_card_r03">注册时间${userR.registerTime}&nbsp;&nbsp;
+								最后登录${userR.lastLoginTime}</p>
+
+						</div>
+
+					</div>
+				</div>
+				<!-------用户个人简介结束------->
+			</div>
+			<div class="tie_author_level">
+				<span>${userR.group.name}</span>
+				<img src="/${res}/bbs_forum/img/level/${userR.group.imgPath}.png" alt="" />
+			</div>
+			[#if post.indexCount == 2]
+				<div class="floor">沙发</div>
+			[#elseif post.indexCount == 3]
+				<div class="floor">板凳</div>
+			[/#if]
+			<div class="tie_author_more">
+				<span class="onlylook"><a href="#">只看该作者</a></span>
+			</div>
+		</div>
+
+		<div class="tie_con_bd">
+			[#if post.upPost??]
+			<div class="previous">
+				<div class="previous_hd">
+					<span class="previous_hd_l">
+						<a href="javascript:void(0);">
+							引用 ${post.upPost.indexCount-1}楼 &nbsp;
+							<em>${post.upPost.creater.username}</em>&nbsp;
+							于${post.upPost.createTime} 发表
+						</a>
+					</span>
+					<span class="previous_hd_r"><b class="down" onclick="showUpPost('${post.id}')"></b></span>
+				</div>
+				<div class="previous_con" style="display: none;">
+					<div class="tie_con_bd_text">
+						<p>
+							<font>${post.upPost.postText.content}</font>
+						</p>
+					</div>
+				</div>
+			</div>
+			[/#if]
+			<div class="tie_con_bd_text">
+				<p>
+					<font>${post.postText.content}</font>
+				</p>
+			</div>
+		</div>
+
+		<div class="tie_con_manage">
+			<div class="tie_con_manage_down">
+				<div class="tie_con_manage_down_l">
+					<span class="date">${post.createTime}</span>
+				</div>
+				<div class="tie_con_manage_down_r">
+					[#if topic.allayReply]
+					<span class="reply" onclick="showHtml('${post.id}')">回帖</span>
+					<span>|</span>
+					[/#if]
+					<span><a href="javascript:void(0);" class="reportButton" id="${post.id!}">举报</a></span>
+				</div>
+			</div>
+		</div>
+		<div class="againreply" style="display: none;">
+			<form id="jvForm2" action="${base}/post/o_save.jspx" method="post" enctype="multipart/form-data" validate="true">
+			<div class="againreply_hd">
+				<span>回帖</span>进入 <b><a href="${base}/member/to_reply${post.id!}.jspx">高级模式</a></b> 回帖(可传图等)
+			</div>
+			<div class="againreply_edit">
+				<textarea name="content"></textarea>
+				<input type="hidden" name="topicId" value="${topic.id}"/>
+				<input type="hidden" name="upPostId" value="${post.id}"/>
+				<input type="hidden" value="${postTypeId!}" name="postTypeId"/>
+				<input type="hidden" name="forumId" value="${forum.id!}"/>
+			</div>
+			<div><input type="button" value="发布" onclick="submitForm2()" style="width:100px;height:30px;background-color:#ffa11b;color:#fff;"/></div>
+			</form>
+		</div>
+	</div>
+[/#list]
+

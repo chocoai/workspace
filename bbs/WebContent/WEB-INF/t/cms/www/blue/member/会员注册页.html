@@ -1,0 +1,276 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>东楚论坛</title>
+<link href="${base}/style/main.css" rel="stylesheet" type="text/css">
+<link href="${base}/style/lanmu.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${base}/js/jquery.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#username").focus(function(){
+			$("#nameMessage").html("<span>可以是中文，长度控制在3-20字符以内</span>");
+		});
+		$("#username").blur(function(){
+			var username = $("#username").val();
+			if(username == ''){
+				$("#nameMessage").html("<span style='color:red;'>用户名不能为空</span>");
+				return ;
+			}
+			$.ajax({
+				url:"${base}/register/checkUserName.jspx",
+				data:{"username":username},
+				type:"post",
+				dataType:"text",
+				success:function(data){
+					if(data == -1){
+						$("#nameMessage").html("<span style='color:red;'>用户名格式不正确</span>");
+					}else if(data == 1){
+						$("#nameMessage").html("<span style='color:red;'>用户名已存在</span>");
+					}else{
+						$("#nameMessage").html("");
+					}
+				}
+			});
+		});
+		
+		$("#password").focus(function(){
+			$("#passwordMessage").html("<span>最小长度6，最大长度16，只能由数字或字母组成</span>");
+		});
+		$("#password").blur(function(){
+			var password = $("#password").val();
+			if(password == ''){
+				$("#passwordMessage").html("<span style='color:red;'>密码不能为空</span>");
+				return ;
+			}
+			if(password.length < 6){
+				$("#passwordMessage").html("<span style='color:red;'>密码长度太短</span>");
+				return ;
+			}
+			var reg = /^[0-9a-zA-Z]+$/g;
+			if(!reg.test(password)){
+				$("#passwordMessage").html("<span style='color:red;'>密码格式不正确</span>");
+				return ;
+			}
+			$("#passwordMessage").html("");
+		});
+		
+		$("#checkPasswrod").focus(function(){
+			$("#checkPasswordMessage").html("<span>请再输一遍您上面填写的密码</span>");
+		});
+		$("#checkPassword").blur(function(){
+			var checkPassword = $("#checkPassword").val();
+			var password = $("#password").val();
+			if(checkPassword != password){
+				$("#checkPasswordMessage").html("<span style='color:red;'>两次密码输入不一致</span>");
+				return ;
+			}
+			$("#checkPasswordMessage").html("");
+		});
+		
+		$("#email").focus(function(){
+			$("#emailMessage").html("<span>请输入正确的电子邮箱地址</span>");
+		});
+		$("#email").blur(function(){
+			var email = $("#email").val();
+			if(email == ''){
+				$("#emailMessage").html("<span style='color:red;'>邮箱地址不能为空</span>");
+				return ;
+			}
+			$.ajax({
+				url:"${base}/register/checkEmail.jspx",
+				data:{"email":email},
+				type:"post",
+				dataType:"text",
+				success:function(data){
+					if(data == 1){
+						$("#emailMessage").html("<span style='color:red;'>邮箱格式不正确</span>");
+					}else if(data == 0){
+						$("#emailMessage").html("");
+					}else{
+						$("#emailMessage").html("");
+					}
+				}
+			});
+		});
+	});
+	
+	function submitForm(){
+		if(!$("#checkbox").is(':checked')){
+			return ;
+		}
+		var flag = 1;
+		var nameMessage = $("#nameMessage").text();
+		var passwordMessage = $("#passwordMessage").text();
+		var checkPasswordMessage = $("#checkPasswordMessage").text();
+		var emailMessage = $("#emailMessage").text();
+		if(nameMessage=='' && passwordMessage=='' && checkPasswordMessage=='' && emailMessage==''){
+			var password = $("#password").val();
+			if(password == ''){
+				$("#passwordMessage").html("<span style='color:red;'>密码不能为空</span>");
+				return ;
+			}
+			var checkPassword = $("#checkPassword").val();
+			if(checkPassword == ''){
+				$("#checkPasswordMessage").html("<span style='color:red;'>密码不能为空</span>");
+				return ;
+			}
+			if(password != checkPassword){
+				$("#checkPasswordMessage").html("<span style='color:red;'>两次密码输入不一致</span>");
+				return ;
+			}
+			var username = $("#username").val();
+			if(username == ''){
+				$("#nameMessage").html("<span style='color:red;'>用户名不能为空</span>");
+				return ;
+			}
+			$.ajax({
+				url:"${base}/register/checkUserName.jspx",
+				data:{"username":username},
+				type:"post",
+				dataType:"text",
+				success:function(data){
+					if(data == -1){
+						$("#nameMessage").html("<span style='color:red;'>用户名格式不正确</span>");
+						flag = 0;
+						return ;
+					}else if(data == 1){
+						$("#nameMessage").html("<span style='color:red;'>用户名已存在</span>");
+						flag = 0;
+						return ;
+					}else{
+						if(flag == 0){
+							return ;
+						}
+						var email = $("#email").val();
+						if(email == ''){
+							$("#emailMessage").html("<span style='color:red;'>邮箱地址不能为空</span>");
+							return ;
+						}
+						$.ajax({
+							url:"${base}/register/checkEmail.jspx",
+							data:{"email":email},
+							type:"post",
+							dataType:"text",
+							success:function(data){
+								if(data == 1){
+									$("#emailMessage").html("<span style='color:red;'>邮箱格式不正确</span>");
+									flag = 0;
+								}else{
+									if(flag != 0){
+										$("#jvForm").submit();
+									}
+								}
+							}
+						});
+					}
+				}
+			});
+		}
+	}
+</script>
+</head>
+
+<body class="body">
+	<div class="register_hd_box">
+		<div class="register_hd">
+			<div class="register_hd_l">
+				<div class="register_logo">
+					<a href="${base}/"><img src="${base}/images/logo.png" alt="" /></a>
+				</div>
+				<div class="register_hd_fgx"></div>
+				<span class="register_tit">注册账号</span>
+			</div>
+			<div class="register_hd_r">
+				已有帐号？去 <a href="${base}/login.jspx">登录</a>
+			</div>
+		</div>
+	</div>
+	<div class="register_bg"></div>
+	<div class="register_bd">
+		<div class="register_bd_l">
+			<form id="jvForm" action="register.jspx" method="post">
+				<div class="h55">
+					<div class="h55_l">用户名</div>
+					<div class="h55_r">
+						<input type="text" class="pass_text" name="username" maxlength="16" id="username"/>
+					</div>
+				</div>
+				<div class="h12">
+					<div class="h12_l"></div>
+					<div class="h12_r" id="nameMessage"></div>
+				</div>
+				<div class="h55">
+					<div class="h55_l">密码</div>
+					<div class="h55_r">
+						<input type="password" class="pass_text" name="password" maxlength="16" id="password"/>
+					</div>
+				</div>
+				<div class="h12">
+					<div class="h12_l"></div>
+					<div class="h12_r" id="passwordMessage"></div>
+				</div>
+				<div class="h55">
+					<div class="h55_l">确认密码</div>
+					<div class="h55_r">
+						<input type="password" class="pass_text" id="checkPassword"/>
+					</div>
+				</div>
+				<div class="h12">
+					<div class="h12_l"></div>
+					<div class="h12_r" id="checkPasswordMessage"></div>
+				</div>
+				<div class="h55">
+					<div class="h55_l">电子邮箱</div>
+					<div class="h55_r">
+						<input type="email" class="pass_text" id="email" name="email"/>
+					</div>
+				</div>
+				<div class="h12">
+					<div class="h12_l"></div>
+					<div class="h12_r" id="emailMessage"></div>
+				</div>
+				<div class="h55">
+					<div class="h55_l"></div>
+					<div class="h55_r">
+						<input type="checkbox" id="checkbox"> 我已阅读并完全同意
+						<a href="${base}/personal/clause.jspx" target="_blank" class="tiaokuan">《条款内容》</a>
+					</div>
+				</div>
+				<div class="h55">
+					<div class="h55_l"></div>
+					<div class="h55_r">
+						<!-- <input type="submit" value="注册" class="zhuce_but"> -->
+						<input type="button" value="注册" class="zhuce_but" onclick="submitForm()">
+					</div>
+				</div>
+			</form>
+		</div>
+		<div class="register_bd_r">
+			<div class="threelogin">
+				<p class="thr_tit">第三方账号登录东楚论坛</p>
+				<div class="thr_con">
+					<a class="btn qqbtn" href="#"><i></i>QQ登录</a> <a
+						class="btn wechatbtn" href="#"><i></i>微信登录</a> <a
+						class="btn blogbtn" href="#"><i></i>微博登录</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="reg_footerbox">
+		<div class="reg_footer">
+			<div class="footer">
+				<div class="footer_listbox">
+					<div class="footer_list">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>

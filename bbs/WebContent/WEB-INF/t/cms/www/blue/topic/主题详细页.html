@@ -1,0 +1,843 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>东楚论坛</title>
+<link href="${base}/style/main.css" rel="stylesheet" type="text/css">
+<link href="${base}/style/lanmu.css" rel="stylesheet" type="text/css">
+<link href="${base}/style/upload.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${base}/js/jquery.js"></script>
+<script type="text/javascript" src="${base}/js/popwin.js"></script>
+<script type="text/javascript" src="${base}/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".jiathis_style table tbody tr td img").css({
+			"max-width":"26px",
+		});
+		
+		$(".shares").hide();
+		$("#share").click(function(){
+			var shareId=$("#share");
+			var shareclass=$(".shares");
+	        var left = shareId.offset().left + shareId.width() / 2-shareclass.width() / 2;
+	        var top = shareId.offset().top +shareclass.height()-20;
+			$(".shares").css({
+				"position": "absolute",
+				"left": left + "px",
+				"top": top + "px",
+				"z-index": 9999,				   
+			});
+			$(".shares").toggle();
+		});
+		
+		$(".sharesR").hide();
+		$("#shareR").click(function(){
+			var shareIdR=$("#shareR");
+			var shareclassR=$(".sharesR");
+	        var leftR = shareIdR.offset().left + shareIdR.width() / 2-shareclassR.width() / 2;
+	        var topR = shareIdR.offset().top +shareclassR.height()-20;
+			$(".sharesR").css({
+				"position": "absolute",
+				"left": leftR + "px",
+				"top": topR + "px",
+				"z-index": 9999,				   
+			});
+			$(".sharesR").toggle();
+		});
+	});
+	
+	function showUpPost(postId){
+		if($("#"+postId+" .previous_con").css('display')=='none'){
+			$("#"+postId+" .previous_con").slideDown(200);
+			$(this).removeClass('down');
+			$(this).addClass('up');
+		}else{
+			$("#"+postId+" .previous_con").slideUp(200);
+			$(this).removeClass('up');
+			$(this).addClass('down');
+		}
+	}
+
+ 	function showHtml(postId){
+	 	$("#"+postId+" .againreply").toggle();
+ 	}
+	
+ 	function collectionTopicSave(topicId){
+ 		if(topicId==""){
+ 			return ;
+ 		}
+ 		$.ajax({
+ 			url:"${base}/topic/collectionTopicSave"+topicId+".jspx",
+ 			type:"post",
+ 			dataType:"text",
+ 			success:function(data){
+ 				if(data == -1){
+ 					location.href = "${base}/login.jspx";
+ 					return ;
+ 				}else if(data == 1){
+ 					alert("收藏成功");
+ 					$("#collectionTopic").html('');
+ 					$("#collectionTopic").html('<a href="javascript:void(0);" onclick="collectionTopicDelete('
+ 							+topicId+')"><i class="collection"></i>取消收藏</a>');
+ 				}
+ 			}
+ 		});
+ 	}
+ 	
+ 	function collectionTopicDelete(topicId){
+ 		if(topicId==""){
+ 			return ;
+ 		}
+ 		$.ajax({
+ 			url:"${base}/topic/collectionTopicDelete"+topicId+".jspx",
+ 			type:"post",
+ 			dataType:"text",
+ 			success:function(data){
+ 				if(data == -1){
+ 					location.href = "${base}/login.jspx";
+ 					return ;
+ 				}else if(data == 1){
+ 					alert("取消收藏成功");
+ 					$("#collectionTopic").html('');
+ 					$("#collectionTopic").html('<a href="javascript:void(0);" onclick="collectionTopicSave('
+ 							+topicId+')"><i class="collection"></i>收藏</a>');
+ 				}
+ 			}
+ 		});
+ 	}
+ 	
+ 	function concern(concernUserId,userId){
+ 		if(concernUserId == userId){
+ 			return ;
+ 		}
+ 		if(userId == ""){
+ 			location.href = "${base}/login.jspx";
+ 			return ;
+ 		}
+		$.ajax({
+ 			url:"${base}/member/concern_add.jspx",
+ 			type:"post",
+ 			data:{"concernUserId":concernUserId,"userId":userId},
+ 			dataType:"text",
+ 			success:function(data){
+ 				if(data == -1){
+ 					location.href = "${base}/login.jspx";
+ 				}else if(data == 1){
+ 					$(".post"+concernUserId).text("取消关注");
+ 					alert("关注成功");
+ 				}else if(data == 2){
+ 					$(".post"+concernUserId).text("加关注");
+ 					alert("取消关注成功");
+ 				}
+ 			}
+ 		});
+ 		
+ 	}
+ 	
+ 	document.onkeydown=function(event){ 
+		e = event ? event :(window.event ? window.event : null); 
+		if(e.keyCode==13){   //回车
+			//提交查询的form
+			if(document.activeElement.id == 'searchContent'){
+				toSearch();
+			}
+		} 
+	};
+ 	
+ 	function toSearch(){
+		var searchType = $(".select_option li[class='selected']").html();
+		if(searchType == '帖子'){
+			$("#searchForm").attr("action",'${base}/topic/search.jhtml');
+			$("#searchType").val("0");
+			$("#searchForm").submit();
+			return ;
+		}else if(searchType == '用户'){
+			$("#searchForm").attr("action",'${base}/search/search_user.jspx');
+			$("#searchType").val("1");
+			$("#searchForm").submit();
+			return ;
+		}
+	}
+ 	
+	function applyFriend(bbsUserId,userId){
+		if(userId == ''){
+			location.href = "${base}/login.jspx";
+			return ;
+		}
+		$('#caseHistory1').addClass('is-visible3');
+		$("#apply_user_id").val(bbsUserId);
+		return ;
+	}
+	
+	function forwordTopic(topicId,topicUserId,userId){
+		if(userId == ''){
+			location.href = '${base}/login.jspx';
+			return ;
+		}
+		if(userId==topicUserId){
+			alert("此贴是您自己的帖子，不能转发");
+			return ;
+		}
+		if(!confirm("确认转发吗?")){
+			return ;
+		}
+		$.ajax({
+ 			url:"${base}/personal/forword_topic.jspx",
+ 			type:"post",
+ 			data:{"topicId":topicId},
+ 			dataType:"json",
+ 			success:function(data){
+ 				if(data.status == 1){
+ 					alert(data.msg);
+ 				}else if(data.status == -1){
+ 					alert(data.msg);
+ 				}
+ 			}
+ 		});
+	}
+</script>
+<script type="text/javascript">
+/*弹框JS内容*/
+	jQuery(document).ready(
+		function() {
+			//打开窗口
+			$('.reportButton').on('click', function(event) {
+				event.preventDefault();
+				$('#caseHistory').addClass('is-visible3');
+			});
+			
+			$('#delCaseHistory').on('click', function(event) {
+				event.preventDefault();
+				toDelete();
+			});
+			//关闭窗口
+			$('#caseHistory').on(
+				'click',
+				function(event) {
+					if ($(event.target).is('.close')
+							|| $(event.target).is('#caseHistory')) {
+						event.preventDefault();
+						$(this).removeClass('is-visible3');
+					}
+				});
+			//打开窗口
+			$('#addContact').on('click', function(event) {
+				event.preventDefault();
+				$('#contacts').addClass('is-visible3');
+			});
+			//关闭窗口
+			$('#contacts').on(
+				'click',
+				function(event) {
+					if ($(event.target).is('.close')
+							|| $(event.target).is('#contacts')) {
+						event.preventDefault();
+						$(this).removeClass('is-visible3');
+					}
+				});
+
+			//ESC关闭
+			$(document).keyup(function(event) {
+				if (event.which == '27') {
+					$('#caseHistory').removeClass('is-visible3');
+					$('#contacts').removeClass('is-visible3');
+				}
+			});
+	});
+		
+	function toDelete() {
+		var cIds = [];
+		$("#tbody td input[type=checkbox]").each(function() {
+			if (this.checked) {
+				cIds.push($(this).val());
+			}
+		});
+
+		$.ajax({
+			data : {
+				'cIds' : cIds.join(",")
+			},
+			type : "POST",
+			asyn : true,
+			cache : false,
+			dataType : 'json',
+			url : "deleteBliFile.htm",
+			success : function(data) {
+				if (data.result) {
+					renderTable(data.data);
+				}
+			}
+		});
+	}
+	
+	function doUpload() {
+		$('#caseHistory').removeClass('is-visible3');
+		var user = '${user!}';
+		if(user == ''){
+			location.href = "${base}/login.jspx";
+ 			return ;
+		}
+		var reason = $("#reason").val();
+		var url = '${topic.url!}';
+		var pid = '${topic.id!}';
+		$.ajax({
+			url:"${base}/member/report.jhtml",
+			data:{"reason":reason,"url":url,"pid":pid},
+			type:"post",
+			dataType:"json",
+			success:function(data){
+				if(data == 1){
+					alert("举报成功");
+					$("#reason").val('');
+					window.parent.location.reload();
+				}
+			}
+		});
+		
+	}
+</script>
+</head>
+
+<body class="body">
+	<!---------顶部----------->
+	<div class="top">
+		<div class="top_center">
+			<div class="top_l">您好，欢迎来到东楚论坛！</div>
+			<div class="top_r">
+				[#if user??]
+				<div class="user_logout" style="margin-top:9px;">
+					<span class="user_logout_name">
+						<a href="${base}/member/index.jhtml">${user.username}</a>
+					</span>
+					<span class="logout">
+						<a href="${base}/logout.jspx?returnUrl=/">退出</a>
+					</span>
+				</div>
+				[#else]
+				<ul>
+					<li><a href="#"><img src="${base}/images/icon_signin_01.png"
+							alt="" /></a></li>
+					<li><a href="#"><img src="${base}/images/icon_signin_02.png"
+							alt="" /></a></li>
+					<li><a href="#"><img src="${base}/images/icon_signin_03.png"
+							alt="" /></a></li>
+				</ul>
+				<div class="dlzc">
+					<span><a href="${base}/login.jspx">登录</a></span>
+					<span class="register"><a href="${base}/register.jspx">注册</a></span>
+				</div>
+				[/#if]
+			</div>
+		</div>
+	</div>
+
+
+	<!-------logo、导航和搜索----------->
+	<div class="nav">
+		<div class="nav_center">
+			<h1>
+				<a href="${base}/"><img src="${base}/images/logo.png" alt="" /></a>
+			</h1>
+			<div class="navsearch">
+				<!----导航---->
+				<nav>
+					<ul>
+						<li><a href="/">东楚网首页</a></li>
+						<li><a href="${base}/dakaquan/index.jhtml">大咖圈</a></li>
+					</ul>
+				</nav>
+
+				<!----搜索---->
+				<div class="search radius6">
+					<form name="searchform" id="searchForm" method="get" action="">
+						<select>
+							<option value="0">帖子</option>
+							<option value="1">用户</option>
+						</select>
+						<input type="hidden" name="searchType" value="" id="searchType"/>
+						<input type="hidden" name="forumId" value="${forum.id!}"/>
+						<input class="inp_srh" type="text" id="searchContent" name="keywords" placeholder="搜索其实很简单！">
+						<input class="btn_srh" type="button" onclick="toSearch()" value="搜索">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!------------------中间内容部分------------------------>
+	<div class="big_center">
+		<!------当前位置------>
+		<div class="location">
+			<i></i>
+			&nbsp;<a href="${base}/">东楚论坛</a>
+			&nbsp;>
+			&nbsp;<a href="javascript:void(0);">论坛栏目</a>
+			&nbsp;>
+			&nbsp;<a href="${forum.url}">${forum.title}</a>
+			&nbsp;>
+			&nbsp;${topic.title}
+		</div>
+
+		<!----帖子详情----->
+		<div class="tie_l">
+			<div class="tie_con">
+				<div class="tie_con_hd">
+					<div class="tie_author">
+						[#if user?? && user.id==topic.creater.id]
+						<a class="a_img" target="_blank" href="${base}/member/index.jhtml">
+							[#if topic.creater.avatar??]
+							<img src="${topic.creater.avatar!}" alt="" />
+							[#else]
+							<img src="${base}/images/default_user.jpg" alt="" />
+							[/#if]
+						</a>
+						<a class="name" target="_blank" href="${base}/member/index.jhtml">${topic.creater.username}</a>
+						[#else]
+						<a class="a_img" target="_blank" href="${base}/personal/other_information${topic.creater.id}.jspx">
+							[#if topic.creater?? && topic.creater.avatar??]
+							<img src="${topic.creater.avatar!}" alt="" />
+							[#else]
+							<img src="${base}/images/default_user.jpg" alt="" />
+							[/#if]
+						</a>
+						<a class="name" target="_blank" href="${base}/personal/other_information${topic.creater.id}.jspx">${topic.creater.username}</a>
+						[/#if]
+						<!-----用户个人简介开始----->
+						<div class="user_card_box">
+							<b></b>
+							<div class="user_card">
+								<div class="user_card_l">
+									[#if user?? && user.id==topic.creater.id]
+									<a target="_blank" href="${base}/member/index.jhtml">
+										[#if topic.creater.avatar??]
+										<img src="${topic.creater.avatar!}" alt="" />
+										[#else]
+										<img src="${base}/images/default_user.jpg" alt="" />
+										[/#if]
+									</a>
+									[#else]
+									<a target="_blank" href="${base}/personal/other_information${topic.creater.id}.jspx">
+										[#if topic.creater?? && topic.creater.avatar??]
+										<img src="${topic.creater.avatar!}" alt="" />
+										[#else]
+										<img src="${base}/images/default_user.jpg" alt="" />
+										[/#if]
+									</a>
+									[/#if]
+									
+								</div>
+								<div class="user_card_r">
+									<p class="user_card_r01">
+										<span class="user_card_name">
+											[#if user?? && user.id==topic.creater.id]
+											<a target="_blank" href="${base}/member/index.jhtml">${topic.creater.username}</a>
+											[#else]
+											<a target="_blank" href="${base}/personal/other_information${topic.creater.id}.jspx">${topic.creater.username}</a>
+											[/#if]
+										</span>
+										[#if user??]
+											[#if user.id != topic.creater.id && isConcern == 1]
+											<span class="addcare post${topic.creater.id}" onclick="concern('${topic.creater.id}','${user.id}')">取消关注</span>
+											[#elseif user.id == topic.creater.id]
+											[#else]
+											<span class="addcare post${topic.creater.id}" onclick="concern('${topic.creater.id}','${user.id}')">加关注</span>
+											[/#if]
+											[#if isFriends?seq_contains(topic.creater.id)]
+											<span class="addfriend">好友</span>
+											[#elseif isApplys?seq_contains(topic.creater.id)]
+											<span class="addfriend">已申请</span>
+											[#elseif user.id == topic.creater.id]
+											[#else]
+											<span class="addfriend friend${topic.creater.id!}" onclick="applyFriend('${topic.creater.id!}','${user.id!}')">加好友</span>
+											[/#if]
+										[#else]
+											<span class="addcare post${topic.creater.id}" onclick="concern('${topic.creater.id}','')">加关注</span>
+											<span class="addfriend friend${topic.creater.id!}" onclick="applyFriend('${topic.creater.id!}','')">加好友</span>
+										[/#if]
+									</p>
+									<p class="user_card_r02">
+										<a class="postnum" href="javascript:void(0);">发帖：<span>${topic.creater.topicCount}</span></a>
+										&nbsp;&nbsp; | &nbsp;&nbsp;
+										<a href="javascript:void(0);">精华：<span>${topic.creater.primeCount}</span></a>
+									</p>
+									<p class="user_card_r03">
+										注册时间&nbsp;${topic.creater.registerTime?string("yyyy-MM-dd")}&nbsp;&nbsp;
+										最后登录&nbsp;${topic.creater.lastLoginTime?string("yyyy-MM-dd")}
+									</p>
+								</div>
+							</div>
+						</div>
+						<!-----用户个人简介结束----->
+					</div>
+
+
+					<div class="tie_author_level">
+						<span>${topic.creater.group.name}</span>
+						<img src="/${res}/bbs_forum/img/level/${topic.creater.group.imgPath}.png" alt="" />
+					</div>
+					<div class="floor">楼主</div>
+					<div class="tie_author_more">
+						<!-- <span class="onlylook"><a href="#">只看楼主</a></span> -->
+					</div>
+				</div>
+
+				<div class="tie_con_bd">
+					<div class="tie_con_bd_tit">
+						<h2>${topic.title}</h2>
+						<p>
+							阅读：<span class="num">${topic.viewCount}</span> &nbsp;&nbsp;&nbsp;
+							回复：<span class="num">${topic.replyCount}</span>
+						</p>
+					</div>
+					<div class="tie_con_bd_text">
+						<p><font>${topic.firstPost.postText.content}</font></p>
+					</div>
+					<div style="clear: left;height:8px;"></div>
+					<div class="vote"></div>
+				</div>
+				<div class="tie_con_manage">
+					<div class="tie_con_manage_icon">
+						<span id="collectionTopic">
+							[#if isCollection == 0]
+							<a href="javascript:void(0);" onclick="collectionTopicSave('${topic.id}')">
+								<i class="collection"></i>收藏
+							</a>
+							[#else]
+							<a href="javascript:void(0);" onclick="collectionTopicDelete('${topic.id}')">
+								<i class="collection"></i>取消收藏
+							</a>
+							[/#if]
+						</span>
+						<!-- [#if user??]
+						<span><a href="javascript:void(0);" onclick="forwordTopic('${topic.id!}','${topic.creater.id!}','${user.id!}')"><i class="zhuanfa"></i>转发</a></span>
+						[#else]
+						<span><a href="javascript:void(0);" onclick="forwordTopic('${topic.id!}','${topic.creater.id!}','')"><i class="zhuanfa"></i>转发</a></span>
+						[/#if] -->
+						<span class="wp"><a href="#"><i class="write"></i>回帖</a></span>
+					</div>
+					<div class="tie_con_manage_down">
+						<div class="tie_con_manage_down_l">
+							<span class="date">${topic.createTime}</span>
+							&nbsp;来自&nbsp;
+							<span class="from">${topic.creater.username}</span>
+						</div>
+						<div class="tie_con_manage_down_r">
+							<!-- <span class="share">
+								<a href="javascript:void(0);" id="share">分享</a>
+							</span>
+							<span>|</span> -->
+							<span class="jubao"><a href="javascript:void(0);" class="reportButton" id="${topic.id!}">举报</a></span>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<!--------------跟帖--------------->
+			[@post_page topicId=topic.id  count='5' tpl='1'/]
+			<div class="page">
+				<div class="sabrosus">
+					[@post_page topicId=topic.id  count='5' tpl='0']
+					[#if tag_pagination.list?size != 0]
+						[#include "../tag/topic.html"/]
+					[/#if]
+					[/@post_page]
+				</div>
+			</div>
+
+
+			<!------快速回帖-------->
+			[#if topic.allayReply]
+			<div class="quickreply">
+				<div class="quickreply_hd">快速回帖</div>
+				<div class="quickreply_bd">
+					<div class="quickreply_bd_l">
+						[#if user??]
+						<a target="_blank" href="${base}/member/index.jhtml">
+							[#if user.avatar??]
+							<img src="${user.avatar!}" alt="" />
+							[#else]
+							<img src="${base}/images/default_user.jpg" alt="" />
+							[/#if]
+						</a>
+						<a target="_blank" href="${base}/member/index.jhtml">${user.username}</a>
+						[#else]
+						<a href="javascript:void(0);">
+							<img src="${base}/images/default_user.jpg" alt="" />
+						</a>
+						<a href="javascript:void(0);">游客</a>
+						[/#if]
+					</div>
+					<div class="quickreply_bd_r">
+					<form id="jvForm" action="${base}/post/o_save.jspx" method="post" enctype="multipart/form-data" validate="true">
+						<div class="quickreply_bd_r_edit">
+							<div class="quickreply_bd_r_edit_hd">
+								<div class="quickreply_bd_r_edit_hd_icon">
+									<!-- <i class="expression"></i>
+									<i class="picture"></i> -->
+								</div>
+								<div class="advanced_reply">
+									<a target="_blank" href="${base}/member/to_reply${topic.firstPost.id!}.jspx">进入高级模式</a>
+								</div>
+							</div>
+							<div class="quickreply_bd_r_edit_bd">
+								<textarea name="content"></textarea>
+								<input type="hidden" name="topicId" value="${topic.id}"/>
+								<input type="hidden" value="${postTypeId}" name="postTypeId"/>
+								<input type="hidden" name="forumId" value="${forum.id}"/>
+								<input type="hidden" name="upPostId" value=""/>
+								<input type="hidden" name="title" value=""/>
+								<input type="hidden" name="allattachment" value=""/>
+							</div>
+						</div>
+						<div><input type="button" onclick="submitForm()" value="发布"  class="send_but"/></div>
+					</form>
+					</div>
+				</div>
+			</div>
+			[/#if]
+		</div>
+
+		<!----帖子详情右侧开始----->
+		<div class="fixed_box">
+			<div class="fixed" id="float">
+				<div class="fixed_up">
+					<div class="fixed_up_pic">
+						<a target="_blank" href="${forum.url}"><img src="${forum.forumImg!}" alt="" /></a>
+					</div>
+					<div class="fixed_up_r">
+						<span>${forum.title}</span>
+						<p>${forum.description}</p>
+					</div>
+					<div class="gotoforum_but">
+						<a href="${forum.url}">进入论坛</a>
+					</div>
+				</div>
+
+				<div class="fixed_down">
+					<ul class="fixed_down_list">
+						<li class="li wp"><a class="fixed_reply" href="#wp">回帖</a></li>
+						<!-- [#if user??]
+						<li class="li"><a class="fixed_repeat" href="javascript:void(0);" onclick="forwordTopic('${topic.id!}','${topic.creater.id!}','${user.id!}')">转发</a></li>
+						[#else]
+						<li class="li"><a class="fixed_repeat" href="javascript:void(0);" onclick="forwordTopic('${topic.id!}','${topic.creater.id!}','')">转发</a></li>
+						[/#if]
+						<li class="share_but li"><a class="fixed_share" href="javascript:void(0);" id="shareR">分享</a></li>
+						 -->
+						<li class="li">
+							[#if user??]
+							<a target="_blank" class="fixed_write" href="${base}/topic/v_add${forum.id!}.jspx"><i></i>发 帖</a>
+							[#else]
+							<a class="fixed_write" href="${base}/login.jspx"><i></i>发 帖</a>
+							[/#if]
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<!-------帖子详情右侧结束--------->
+		<!-- JiaThis Button BEGIN -->
+		<script type="text/javascript" src="http://v3.jiathis.com/code/jiathis_r.js?move=0&amp;btn=r5.gif" charset="utf-8"></script>
+		<!-- JiaThis Button END -->
+		<!-- <div class="shares" style="margin-top:-6px;width:306px; height:72px;background:url(../images/bg.png);background-size:306px 72px">
+	      	<div style="padding-top:21px;padding-left: 55px">
+	        	<div class="jiathis_style_32x32">
+					<a class="jiathis_button_qzone"></a>
+					<a class="jiathis_button_tsina"></a>
+					<a class="jiathis_button_tqq"></a>
+					<a class="jiathis_button_weixin"></a>
+					<a class="jiathis_button_renren"></a>
+					<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+				</div>
+				<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+	      	</div>
+	       </div>
+		<div class="sharesR" style="margin-top:-6px;width:306px; height:72px;background:url(../images/bg.png);background-size:306px 72px">
+	      	<div style="padding-top:21px;padding-left: 55px">
+	        	<div class="jiathis_style_32x32">
+					<a class="jiathis_button_qzone"></a>
+					<a class="jiathis_button_tsina"></a>
+					<a class="jiathis_button_tqq"></a>
+					<a class="jiathis_button_weixin"></a>
+					<a class="jiathis_button_renren"></a>
+					<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+				</div>
+				<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+	      	</div>
+	       </div> -->
+
+		<!------页脚------>
+		<div class="footer">
+			<div class="footer_listbox">
+				<div class="footer_list">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<!------------------返回顶部-------------------->
+	<div id="before">
+		<a href="http://bbs.hsdcw.com/" target="_blank" title="东楚论坛"
+			class='before'></a>
+	</div>
+	<div id="wechat" class="wechat">
+		<a href="javascript:void(0)"><div class="wechath"></div></a>
+	</div>
+	<a id="moquu_top" href="javascript:void(0)"></a>
+
+
+	<script type="text/javascript" src="${base}/js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="${base}/js/jquery.select.js"></script>
+	<script type="text/javascript">
+	// 固定层
+	function buffer(a,b,c){
+		var d;
+		return function(){
+			if(d)
+			return;
+			d=setTimeout(function(){
+				a.call(this),d=undefined
+			},b)
+		}
+	}
+	(function(){
+		function e(){
+			var d=document.body.scrollTop||document.documentElement.scrollTop;
+			d>b?(a.className="fixed fixed2",c&&(a.style.top=d-b+"px")):a.className="fixed"
+		}
+		var a=document.getElementById("float");
+		if(a==undefined)
+		return!1;
+		var b=0,c,d=a;
+		while(d)b+=d.offsetTop,d=d.offsetParent;
+		c=window.ActiveXObject&&!window.XMLHttpRequest;
+		if(!c||!0)
+		window.onscroll=buffer(e,0,this)
+	})();
+</script>
+
+	<div id="caseHistory" class="fjsc">
+		<div class="fjsc_box">
+			<div class="fjsc_top"></div>
+			<div class="fjsc_head">
+				<div class="fjsc_tit">举报信息栏</div>
+				<div class="close icon-cross">X</div>
+			</div>
+			<div class="fjsc_con">
+				<form action="${base}/member/report.jhtml" method="post" id="reportForm" name="reportForm" enctype="multipart/form-data">
+					<table width="410" border="0">
+						<tr>
+							<td style="width: 70px; height: 48px; text-align: right; font-size: 12px; color: #434343; padding-right: 10px;">举报内容</td>
+							<td>
+								<textarea type="text" name="reason" id="reason" maxlength="150" placeholder="最多只能输入150个字符"
+									style="width: 320px; height: 90px; padding: 0 2px; font-size: 12px;">
+								</textarea>
+							</td>
+						</tr>
+					</table>
+					
+					<div class="qdsc_butt">
+						<a href="javascript:;" onclick="doUpload()">确定举报</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<div id="caseHistory1" class="fjsc">
+		<div class="fjsc_box">
+			<div class="fjsc_top"></div>
+			<div class="fjsc_head">
+				<div class="fjsc_tit">申请好友</div>
+				<div class="close icon-cross"><a href="javascript:void(0);"></a>X</div>
+			</div>
+			<div class="fjsc_con">
+				<form action="" method="post" name="applyForm" enctype="multipart/form-data">
+					<table width="410" border="0">
+						<tr>
+							<td style="width: 90px; height: 48px; text-align: right; font-size: 12px; color: #434343; padding-right: 10px;">申请理由：</td>
+							<td>
+								<input type="text" name="applyDesc" id="applyDesc" placeholder="您最多可以输入30个字..."
+									style="width: 310px; height: 30px; padding: 0 5px; font-size: 12px;" maxlength="30">
+							</td>
+						</tr>
+					</table>
+					<input type="hidden" value="" id="apply_user_id" name="id"/>
+					<div class="qdsc_butt">
+						<a href="javascript:;" onclick="doUpload()">确定申请</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+<script type="text/javascript">
+ jQuery(document).ready(function($){
+  $('.wp a').click(function(){$('html,body').animate({scrollTop:$('.quickreply').offset().top}, 200);});
+ });
+</script>
+<script type="text/javascript">
+/*弹框JS内容*/
+	jQuery(document).ready(
+		function() {
+			//关闭窗口
+			$('#caseHistory1').on(
+				'click',
+				function(event) {
+					if ($(event.target).is('.close')
+							|| $(event.target).is('#caseHistory1')) {
+						event.preventDefault();
+						$(this).removeClass('is-visible3');
+						$("#apply_user_id").val("");
+					}
+				});
+
+			//ESC关闭
+			$(document).keyup(function(event) {
+				if (event.which == '27') {
+					$('#caseHistory1').removeClass('is-visible3');
+					$("#apply_user_id").val("");
+				}
+			});
+	});
+	
+	function doUpload() {
+		$('#caseHistory1').removeClass('is-visible3');
+		var formData = new FormData(document.forms.namedItem("applyForm"));
+		var url = "${base}/member/applyJson.jhtml";
+		$.ajax({
+			url : url,
+			type : 'POST',
+			data : formData,
+			async : false,
+			cache : false,
+			dataType : 'json',
+			contentType : false,
+			processData : false,
+			success : function(data) {
+				if(data.status == 1){
+					alert(data.msg);
+					location.reload();
+				}else{
+					alert(data.msg);
+				}
+				$('#applyDesc').val('');
+				$("#apply_user_id").val("");
+			}
+		});
+	}
+	
+	function submitForm(){
+		if('${user!}'==''){
+			location.href = "${base}/login.jspx";
+		}else{
+			$("#jvForm").submit();
+		}
+	}
+</script>
+</html>

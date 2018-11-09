@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SysDeptMapper">
+	<resultMap id="BaseResultMap" type="com.yhcrt.entity.system.SysDept">
+		<id column="CID" jdbcType="INTEGER" property="cid" />
+		<result column="PARE_CDOE" jdbcType="INTEGER" property="pareCdoe" />
+		<result column="DEPT_NAME" jdbcType="VARCHAR" property="deptName" />
+		<result column="DEPT_SNAME" jdbcType="VARCHAR" property="deptSname" />
+		<result column="DEPT_ENAME" jdbcType="VARCHAR" property="deptEname" />
+		<result column="STATE" jdbcType="INTEGER" property="state" />
+		<result column="ORDER_NUM" jdbcType="INTEGER" property="orderNum" />
+		<result column="BACKUP" jdbcType="VARCHAR" property="backup" />
+		<result column="EXP1" jdbcType="INTEGER" property="exp1" />
+		<result column="EXP2" jdbcType="INTEGER" property="exp2" />
+		<result column="EXP3" jdbcType="VARCHAR" property="exp3" />
+		<result column="EXP4" jdbcType="VARCHAR" property="exp4" />
+		<result column="EXP5" jdbcType="VARCHAR" property="exp5" />
+		<result column="EXP6" jdbcType="VARCHAR" property="exp6" />
+		<association property="sysDept" column="PARE_CDOE"  select="getByCid" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		CID, PARE_CDOE, DEPT_NAME, DEPT_SNAME, DEPT_ENAME, STATE,
+		ORDER_NUM,
+		BACKUP, EXP1,
+		EXP2, EXP3, EXP4, EXP5, EXP6
+	</sql>
+	<!-- 单个插入 -->
+	  <insert id="saveSelective" parameterType="com.yhcrt.entity.system.SysDept">
+    insert into sys_dept
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        CID,
+      </if>
+      <if test="pareCdoe != null">
+        PARE_CDOE,
+      </if>
+      <if test="deptName != null">
+        DEPT_NAME,
+      </if>
+      <if test="deptSname != null">
+        DEPT_SNAME,
+      </if>
+      <if test="deptEname != null">
+        DEPT_ENAME,
+      </if>
+      <if test="state != null">
+        STATE,
+      </if>
+      <if test="orderNum != null">
+        ORDER_NUM,
+      </if>
+      <if test="backup != null">
+        BACKUP,
+      </if>
+      <if test="exp1 != null">
+        EXP1,
+      </if>
+      <if test="exp2 != null">
+        EXP2,
+      </if>
+      <if test="exp3 != null">
+        EXP3,
+      </if>
+      <if test="exp4 != null">
+        EXP4,
+      </if>
+      <if test="exp5 != null">
+        EXP5,
+      </if>
+      <if test="exp6 != null">
+        EXP6,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="pareCdoe != null">
+        #{pareCdoe,jdbcType=INTEGER},
+      </if>
+      <if test="deptName != null">
+        #{deptName,jdbcType=VARCHAR},
+      </if>
+      <if test="deptSname != null">
+        #{deptSname,jdbcType=VARCHAR},
+      </if>
+      <if test="deptEname != null">
+        #{deptEname,jdbcType=VARCHAR},
+      </if>
+      <if test="state != null">
+        #{state,jdbcType=INTEGER},
+      </if>
+      <if test="orderNum != null">
+        #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="backup != null">
+        #{backup,jdbcType=VARCHAR},
+      </if>
+      <if test="exp1 != null">
+        #{exp1,jdbcType=INTEGER},
+      </if>
+      <if test="exp2 != null">
+        #{exp2,jdbcType=INTEGER},
+      </if>
+      <if test="exp3 != null">
+        #{exp3,jdbcType=VARCHAR},
+      </if>
+      <if test="exp4 != null">
+        #{exp4,jdbcType=VARCHAR},
+      </if>
+      <if test="exp5 != null">
+        #{exp5,jdbcType=VARCHAR},
+      </if>
+      <if test="exp6 != null">
+        #{exp6,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  	<!-- 查询 是否有下级节点-->	
+	<select id="countByPid" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select count(*) from sys_dept where 
+		PARE_CDOE =  #{cid,jdbcType=INTEGER}
+	</select>
+  
+  	<!-- 单个删除信息 -->
+	<delete id="removeByCid" parameterType="java.lang.Integer">
+		delete from
+		sys_dept
+		where
+		CID = #{cid,jdbcType=INTEGER}
+	</delete>
+	<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="java.lang.Integer"
+		flushCache="false">
+		delete
+		from sys_dept
+		where
+		CID in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+  	<!-- 更新信息 -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.entity.system.SysDept">
+		update sys_dept
+		<set>
+			<if test="pareCdoe != null">
+				PARE_CDOE = #{pareCdoe,jdbcType=INTEGER},
+			</if>
+			<if test="deptName != null">
+				DEPT_NAME = #{deptName,jdbcType=VARCHAR},
+			</if>
+			<if test="deptSname != null">
+				DEPT_SNAME = #{deptSname,jdbcType=VARCHAR},
+			</if>
+			<if test="deptEname != null">
+				DEPT_ENAME = #{deptEname,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				STATE = #{state,jdbcType=INTEGER},
+			</if>
+			<if test="orderNum != null">
+				ORDER_NUM = #{orderNum,jdbcType=INTEGER},
+			</if>
+			<if test="backup != null">
+				BACKUP = #{backup,jdbcType=VARCHAR},
+			</if>
+			<if test="exp1 != null">
+				EXP1 = #{exp1,jdbcType=INTEGER},
+			</if>
+			<if test="exp2 != null">
+				EXP2 = #{exp2,jdbcType=INTEGER},
+			</if>
+			<if test="exp3 != null">
+				EXP3 = #{exp3,jdbcType=VARCHAR},
+			</if>
+			<if test="exp4 != null">
+				EXP4 = #{exp4,jdbcType=VARCHAR},
+			</if>
+			<if test="exp5 != null">
+				EXP5 = #{exp5,jdbcType=VARCHAR},
+			</if>
+			<if test="exp6 != null">
+				EXP6 = #{exp6,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where CID = #{cid,jdbcType=INTEGER}
+	</update>
+	<!-- 根据ID查询 -->
+	<select id="getByCid" parameterType="java.lang.Integer"
+	resultMap="BaseResultMap">
+	select
+		<include refid="Base_Column_List" />
+		from sys_dept
+		where CID = #{cid,jdbcType=INTEGER}
+	</select>
+	<!--多条件查询 -->
+	<select id="quertByParam" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_dept
+		<include refid="where_all" />
+		order by ORDER_NUM  DESC,DEPT_SNAMR,CID
+	</select>
+
+	<sql id="where_all">
+		where 1 = 1
+		<if test="findContent != null and findContent!='' ">
+			and (LOWER(DEPT_NAME) like CONCAT("%",#{findContent},"%")
+			or
+			LOWER(DEPT_SNAMR) like CONCAT("%",#{findContent},"%")
+			or
+			LOWER(DEPT_ENAMR) like CONCAT("%",#{findContent},"%"))
+		</if>
+	</sql>
+ 	<!-- 查询权限资源构成分类树 -->
+  	<select id="queryToTree" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List" />
+		from 
+			sys_dept
+		where 
+		    1 = 1 
+		<if test="pid != null and pid!='' ">
+			and PARE_CODE = #{pid,jdbcType=INTEGER}
+		</if>	
+  	</select>
+</mapper>

@@ -1,0 +1,14 @@
+package #package#;
+
+import org.springframework.stereotype.Repository;
+import #baseDaoImpl#;
+import #dao#;
+import #model#;
+
+/**
+ * #daoImplName#. @author Auto Tools by 充满智慧的威哥
+ */
+@Repository
+public class #daoImplName# extends BaseDaoImpl<#entityName#, #idType#> implements #daoName# {
+
+}

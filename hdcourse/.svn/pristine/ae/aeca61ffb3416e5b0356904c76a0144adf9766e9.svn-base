@@ -1,0 +1,12 @@
+package com.whty.assis.api.service;
+
+import com.whty.assis.api.model.TUserBackground;
+
+public interface TUserBackgroundService {
+
+    TUserBackground getListByTUserBackground(TUserBackground entity);
+
+    void insert(TUserBackground entity);
+
+    void delete(String backgroundCode);
+}

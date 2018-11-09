@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.basicdata.dao.DictTypeDao">
+
+	<!-- 这里的Demo是别名，需要在mybatis-config.xml中定义，或者写类全名 -->
+	<resultMap type="com.whty.assis.basicdata.model.DictType" id="DictTypeResult">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="creator"     column="creator" />
+		<result property="creatorName" column="creator_name" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	
+	<insert id="save" parameterType="com.whty.assis.basicdata.model.DictType">
+		insert into t_dict_type(
+			name,
+			creator,
+			create_time,
+			update_time
+			) values (
+				#{name},
+				#{creator},
+				#{createTime},
+				#{updateTime}
+			)
+	</insert>
+	
+	<update id="update" parameterType="com.whty.assis.basicdata.model.DictType">
+		update t_dict_type
+		set 
+		<trim prefixOverrides=",">
+			<if test="updateTime != null ">, update_time=#{updateTime}</if>
+			<if test="name != null and name != ''">, name=#{name}</if>
+		</trim>
+		where id=#{id}
+	</update>
+	
+	<select id="listByCondition" parameterType="map" resultMap="DictTypeResult">
+		select t1.*,t2.user_name as creator_name from t_dict_type t1 left join ta_manage_user_info t2 on t1.creator=t2.id
+		<if test="id != null ">and t1.id=#{id}</if>
+		<if test="typeId != null ">and t1.type_id=#{typeId}</if>
+		<if test="key != null ">and t1.key=#{typeId}</if>
+		order by t1.create_time desc
+	</select>
+	
+	
+</mapper>

@@ -1,0 +1,200 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>${channel.title!channel.name} - ${site.name}</title>
+<meta http-equiv="keywords" content="${site.keywords!}"/>
+<meta http-equiv="description" content="${site.description!}"/>
+<link rel="stylesheet" type="text/css" href="/${res}/css/hkkj.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/public_all.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/global.css" />
+<script type="text/javascript" src="/${res}/js/dc/settitle.js"></script>
+<script src="/${res}/js/dc/jquery-1.8.3.min.js"></script><!--左边图片切换-->
+</head>
+
+<body>
+[#include "../include/hk_navi.html"/]
+<div id="nav">
+   <div class="box">
+      <ul class="nav_box">
+        <li><a href="${base}/">首 页</a></li>
+	    <li><a href="${base}/tops.jhtml">头条</a></li>
+		<li><a href="${base}/jds.jhtml">焦点新闻</a></li>
+		<li><a href="${base}/topic.jspx">专题</a></li>
+		<li><a href="${base}/xsq/index.jhtml">县市区新闻</a></li>
+		<li><a href="/bbs" target="_blank">东楚论坛</a></li>
+		<li><a href="${base}/vedio/index.jhtml" target="_self">东楚视频</a></li>
+		<li><a href="${base}/picture/index.jhtml">图轻松</a></li>
+		<li><a href="${base}/baoliao.jspx" target="_self">投诉爆料台</a></li>
+		<li><a href="${base}/gsgg/index.jhtml">公示公告</a></li>
+		<li><a href="${base}/activity/index.jhtml" target="_self">活动</a></li>
+		<li><a href="${base}/hk/index.jhtml" target="_self" class="current">换客</a></li>
+		<li><a href="http://www.07448.com/huangshi" target="_blank">秒杀</a></li>
+		<li><a href="${base}/fc/index.jhtml" target="_blank">房产</a></li>
+		<li><a href="http://auto.hsdcw.com" target="_blank">汽车</a></li>
+		<li><a href="${base}/life/index.jhtml" target="_blank">生活</a></li>
+		<li><a href="${base}/edu/index.jhtml" target="_self">教育</a></li>
+		<li><a href="${base}/cj/index.jhtml" target="_self">财经</a></li>
+		<li><a href="${base}/health/index.jhtml" target="_self">健康</a></li>
+		<li><a href="${base}/wh/index.jhtml" target="_self">文化</a></li>
+       </ul>
+   </div>   
+</div>
+<div style=" clear:both;"></div>
+<!--内容 开始-->
+<div class="box mt10">
+    <div class="map"><img src="/${res}/images/home.png" width="20" height="18"><a href="${base}/">首页</a> >  <a href="${base}/hk/index.jhtml">换客</a>>  <a href="${channel.url}">${channel.name}列表</a></div>
+    <div style="clear:both;"></div>
+
+    <div class="left bg_white mv10">
+           <!--<div class="pro_title"><span>所有产品</span></div>-->
+            [@cms_content_page count='8' orderBy='4' titLen='22' channelOption='1' channelId=channel.id]
+           <ul class="list_tw">
+           [#list tag_pagination.list as a]
+                 <li>
+                         <div class="pic">
+                         <a href="${a.url}">
+                          [#if a.pictures?size >0]
+                                    [#list a.pictures as p]
+	                                [#if p_index = 0]
+	                                  <img src="${p.imgPath!}" />
+	                                [/#if]
+	                                [/#list]
+	                      [#else]<img src="${a.titleImg!a.typeImg!site.defImg}"/>
+                          [/#if]
+                         </a></div>
+                         <div class="pic_des">
+                                 <div class="title"><b>${a.title}</b><u>${a.date?string('yyyy-MM-dd HH:mm')}</u></div>        
+                                 <div class="content">
+                                 <p>[@text_cut s=a.txt! len='140' /]
+                                 </div>
+                                 <div class="more">[<a href="${a.url}" target="_blank">查看详情</a>]</div>
+                         </div>
+                </li>
+           [/#list]  
+	           <div style=" clear:both;"></div>
+	           <div class="list_dis">            
+	                <div class="jogger">[@cms_pagination sysPage='1'/]</div>
+	           </div>
+	           [/@cms_content_page]                    
+           </ul>
+
+   
+    </div>
+    
+    <div class="right mv10">
+    
+      <!--   <div class="need">
+                    <div class="title"><span>公示公告</span></div>
+                    <div class="hot_article">
+                       <ul>
+                            <li><span>2016-06-13</span><a href="hkkj_list.html">高考前你都做了哪些很ZUO的事情呢？</a></li>
+                            <li><span>2016-06-13</span><a href="hkkj_list.html">高考前你都做了哪些很ZUO的事情呢？</a></li>
+                            <li><span>2016-06-13</span><a href="hkkj_list.html">高考前你都做了哪些很ZUO的事情呢？</a></li>
+                            <li><span>2016-06-13</span><a href="hkkj_list.html">高考前你都做了哪些很ZUO的事情呢？</a></li>
+                            <li><span>2016-06-13</span><a href="hkkj_list.html">高考前你都做了哪些很ZUO的事情呢？</a></li>
+                            <li><span>2016-06-13</span><a href="hkkj_list.html">高考前你都做了哪些很ZUO的事情呢？</a></li>
+                            <li><span>2016-06-13</span><a href="hkkj_list.html">高考前你都做了哪些很ZUO的事情呢？</a></li>
+                            <li><span>2016-06-13</span><a href="hkkj_list.html">高考前你都做了哪些很ZUO的事情呢？</a></li>
+                            <li><span>2016-06-13</span><a href="hkkj_list.html">高考前你都做了哪些很ZUO的事情呢？</a></li>
+                            <li><span>2016-06-13</span><a href="hkkj_list.html">高考前你都做了哪些很ZUO的事情呢？</a></li>
+                            <li><span>2016-06-13</span><a href="hkkj_list.html">高考前你都做了哪些很ZUO的事情呢？</a></li>
+                            <li><span>2016-06-13</span><a href="hkkj_list.html">高考前你都做了哪些很ZUO的事情呢？</a></li>
+
+                       </ul>
+                       
+                   </div>
+                    
+                     
+       </div>-->
+          
+     <div class="need">
+                    <div class="title"><span>供</span></div>
+                    [@cms_content_list count='6' orderBy='4' titLen='20' channelOption='1' channelId=channel.id]
+                    <div class="hot_article">
+                    [#list tag_list as g]
+                    [#if g.title??]
+                       [#if g_index = 0]
+                         [#if g.pictures?size gt 0]
+	                         [#list g.pictures as p]
+	                         [#if p_index = 0]
+	                         <img src="${p.imgPath!}" width="130" height="90"/>
+	                         [/#if]
+	                         [/#list]
+                         [#else]<img src="/${res}/images/detail.png" width="130" height="90" >
+                         
+                         [/#if]
+                       <div class="hot_cont">
+                           <h4><a href="${g.url}" target="_blank">[@text_cut s=g.title! len=titLen/]</a></h4>
+                           <a href="${g.url}" target="_blank">[@text_cut s=g.txt! len='30' append='...'/]</a>
+                       </div>
+                       <div style=" clear:both;"></div>
+                       [#else]
+                       <ul>
+                            <li><span>${g.date?string('yyyy-MM-dd')}</span><a href="${g.url}" target="_blank">[@text_cut s=g.title! len=titLen/]</a></li>
+                            
+                       </ul>
+                       [/#if]
+                      [/#if] 
+                      [/#list] 
+                   </div>
+                    [/@cms_content_list]
+                     
+          </div> 
+          
+          
+          <div class="need">
+                    <div class="title"><span>求</span></div>
+                    [@cms_content_list count='6' orderBy='4' titLen='20' channelOption='1' channelId=channel.id]
+                    <div class="hot_article">
+                    [#list tag_list as q]
+                    [#if q.attr.change??]
+                       [#if q_index = 0]
+                         [#if q.pictures?size gt 0]
+	                         [#list q.pictures as pq]
+	                         [#if pq_index = 0]
+	                         <img src="${pq.imgPath!}" width="130" height="90"/>
+	                         [/#if]
+	                         [/#list]
+                         [#else]<img src="/${res}/images/detail.png" width="130" height="90" >
+                         [/#if]
+                       <div class="hot_cont">
+                           <h4><a href="${q.url}" target="_blank">[@text_cut s=q.attr.change! len=titLen/]</a></h4>
+                           <a href="${q.url}" target="_blank">[@text_cut s=q.txt! len='30' append='...'/]</a>
+                       </div>
+                       <div style=" clear:both;"></div>
+                       [#else]
+                       <ul>
+                            <li><span>${q.date?string('yyyy-MM-dd')}</span><a href="${q.url}" target="_blank">[@text_cut s=q.attr.change! len=titLen/]</a></li>
+                            
+                       </ul>
+                       [/#if]
+                      [/#if] 
+                      [/#list] 
+                   </div>
+                    [/@cms_content_list]
+                    
+                     
+          </div>   
+    
+    </div>
+    
+
+           
+</div>
+<!--内容 end-->
+
+<!--尾部 开始-->
+<div style=" clear:both;"></div>
+<div id="footer">
+   <div class="copy">
+     Copyright ◎ 2006-2016 黄石市东楚传媒网络科技有限公司 All Rights Reserved <br />
+营业执照 － 组织机构代码证 － 增值电信业务经营许可证 
+
+   </div>
+</div>
+<!--尾部 开始-->
+
+</body>
+</html>

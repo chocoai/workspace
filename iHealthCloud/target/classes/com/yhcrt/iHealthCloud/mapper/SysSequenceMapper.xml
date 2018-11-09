@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.iHealthCloud.mapper.SysSequenceMapper">
+  <resultMap id="BaseResultMap" type="com.yhcrt.iHealthCloud.entity.SysSequence">
+    <id column="CID" jdbcType="VARCHAR" property="cid" />
+    <result column="SEQU_NAME" jdbcType="VARCHAR" property="sequName" />
+    <result column="SEQU_DESC" jdbcType="VARCHAR" property="sequDesc" />
+    <result column="SEQU_VALUE" jdbcType="INTEGER" property="sequValue" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    CID, SEQU_NAME, SEQU_DESC, SEQU_VALUE
+  </sql>
+  <select id="selectByExample" parameterType="com.yhcrt.iHealthCloud.entity.SysSequenceExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_sequence
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_sequence
+    where CID = #{cid,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from sys_sequence
+    where CID = #{cid,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yhcrt.iHealthCloud.entity.SysSequenceExample">
+    delete from sys_sequence
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yhcrt.iHealthCloud.entity.SysSequence">
+    insert into sys_sequence (CID, SEQU_NAME, SEQU_DESC, 
+      SEQU_VALUE)
+    values (#{cid,jdbcType=VARCHAR}, #{sequName,jdbcType=VARCHAR}, #{sequDesc,jdbcType=VARCHAR}, 
+      #{sequValue,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yhcrt.iHealthCloud.entity.SysSequence">
+    insert into sys_sequence
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        CID,
+      </if>
+      <if test="sequName != null">
+        SEQU_NAME,
+      </if>
+      <if test="sequDesc != null">
+        SEQU_DESC,
+      </if>
+      <if test="sequValue != null">
+        SEQU_VALUE,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        #{cid,jdbcType=VARCHAR},
+      </if>
+      <if test="sequName != null">
+        #{sequName,jdbcType=VARCHAR},
+      </if>
+      <if test="sequDesc != null">
+        #{sequDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="sequValue != null">
+        #{sequValue,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yhcrt.iHealthCloud.entity.SysSequenceExample" resultType="java.lang.Long">
+    select count(*) from sys_sequence
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_sequence
+    <set>
+      <if test="record.cid != null">
+        CID = #{record.cid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sequName != null">
+        SEQU_NAME = #{record.sequName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sequDesc != null">
+        SEQU_DESC = #{record.sequDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sequValue != null">
+        SEQU_VALUE = #{record.sequValue,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_sequence
+    set CID = #{record.cid,jdbcType=VARCHAR},
+      SEQU_NAME = #{record.sequName,jdbcType=VARCHAR},
+      SEQU_DESC = #{record.sequDesc,jdbcType=VARCHAR},
+      SEQU_VALUE = #{record.sequValue,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.iHealthCloud.entity.SysSequence">
+    update sys_sequence
+    <set>
+      <if test="sequName != null">
+        SEQU_NAME = #{sequName,jdbcType=VARCHAR},
+      </if>
+      <if test="sequDesc != null">
+        SEQU_DESC = #{sequDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="sequValue != null">
+        SEQU_VALUE = #{sequValue,jdbcType=INTEGER},
+      </if>
+    </set>
+    where CID = #{cid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yhcrt.iHealthCloud.entity.SysSequence">
+    update sys_sequence
+    set SEQU_NAME = #{sequName,jdbcType=VARCHAR},
+      SEQU_DESC = #{sequDesc,jdbcType=VARCHAR},
+      SEQU_VALUE = #{sequValue,jdbcType=INTEGER}
+    where CID = #{cid,jdbcType=VARCHAR}
+  </update>
+</mapper>

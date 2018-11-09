@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>许可协议--bbs安装向导</title>
+<link href="img/style.css" type="text/css" rel="stylesheet"/>
+<script type="text/javascript">
+function formSubmit() {
+	if(document.getElementById('license_agree').checked==false){
+		alert('请同意我们的协议');
+		return false;
+	}
+	document.getElementById('license_form').submit();
+}
+</script>
+</head>
+
+<body>
+<table width="600" align="center" style="border:#106DBA 1px solid; margin-top:10px;">
+  <tr>
+    <td bgcolor="#D1E9FA"><table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="27%" height="60" rowspan="2" align="center"><img src="img/logo.gif" border="0"/></td>
+        <td width="73%" height="30" class="f14b">1、用户许可协议</td>
+      </tr>
+      <tr>
+        <td height="20" valign="top">&nbsp;&nbsp;&nbsp;&nbsp;欢迎使用bbs，安装前请仔细阅读以下用户许可协议：</td>
+      </tr>
+    </table></td>
+  </tr>
+  <tr>
+    <td height="300" bgcolor="#F0F8FD">
+	<textarea name="textarea" cols="82" rows="23">                            
+    </textarea></td>
+  </tr>
+  <tr>
+    <td align="right" bgcolor="#D1E9FA">
+	<form id="license_form" action="install_params.jsp" method="post">
+	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+      <tr>
+        <td width="27" height="30" align="center"><input type="checkbox" id="license_agree" name="license_agree"/></td>
+        <td width="273" align="left">我已经阅读并同意此协议</td>
+        <td width="292" align="center">
+		<input type="button" class="btn" onclick="formSubmit();" value="下一步 >"/></td>
+      </tr>
+    </table>
+	</form>	</td>
+  </tr>
+</table>
+</body>
+</html>

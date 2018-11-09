@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.healthcloud.health.mapper.AlarmMsgMapper">
+	<resultMap id="BaseResultMap" type="com.yhcrt.healthcloud.health.entity.AlarmMsg">
+		<id column="cid" jdbcType="INTEGER" property="cid" />
+		<result column="member_id" jdbcType="INTEGER" property="memberId" />
+		<result column="alarm_type" jdbcType="VARCHAR" property="alarmType" />
+		<result column="alarm_content" jdbcType="VARCHAR" property="alarmContent" />
+		<result column="is_read" jdbcType="INTEGER" property="isRead" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+		<result column="create_time" jdbcType="VARCHAR" property="createTime" />
+		<result column="real_name" jdbcType="VARCHAR" property="realName" />
+		<result column="gender" jdbcType="INTEGER" property="gender" />
+		<result column="identity_card" jdbcType="VARCHAR" property="identityCard" />
+		<result column="phone_no" jdbcType="VARCHAR" property="phoneNo" />
+		<result column="org_name" jdbcType="VARCHAR" property="orgName" />
+		<result column="dict_key" jdbcType="VARCHAR" property="dictKey" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		cid, member_id, alarm_type, alarm_content, is_read, status, create_time
+	</sql>
+	
+	<!-- 查询健康预警数据 -->
+	<select id="getAlarmMsgsByMap" parameterType="map" resultMap="BaseResultMap">
+		select a.*,b.real_name,b.gender,b.identity_card,b.phone_no,c.org_name,d.dict_key from alarm_msg a 
+		inner join member b on a.member_id = b.member_id 
+		inner join organization c on b.org_id = c.org_id
+		left join sys_dictionary d on a.alarm_type = d.dict_value and d.dict_en_name = 'alarm_type' 
+		where a.status = 0 and b.status = '0' and c.status = '0'
+		<if test="orgId_list !=null and orgId_list.size()>0">
+        	and b.org_id in
+        	<foreach item="item" collection="orgId_list" index="index"  open="(" separator="," close=")">#{item}</foreach>
+        </if>
+        <if test="realName !=null and realName != '' ">
+        	and b.real_name LIKE CONCAT('%',#{realName},'%')
+        </if>
+        <if test="idCard !=null and idCard != '' ">
+        	and b.identity_card LIKE CONCAT('%',#{idCard},'%')
+        </if>
+        order by a.create_time desc 
+	</select>
+	
+	
+</mapper>

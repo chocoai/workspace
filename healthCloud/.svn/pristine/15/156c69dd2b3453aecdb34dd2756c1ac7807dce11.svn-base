@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.healthcloud.memberBack.mapper.MemberInfoMapper">
+	<resultMap id="BaseResultMap" type="com.yhcrt.healthcloud.memberBack.entity.MemberInfo">
+		<id column="cid" jdbcType="INTEGER" property="cid" />
+		<result column="member_id" jdbcType="INTEGER" property="memberId" />
+		<result column="nation" jdbcType="VARCHAR" property="nation" />
+		<result column="marriage_status" jdbcType="VARCHAR" property="marriageStatus" />
+		<result column="member_type" jdbcType="VARCHAR" property="memberType" />
+		<result column="age" jdbcType="INTEGER" property="age" />
+		<result column="birthday" jdbcType="VARCHAR" property="birthday" />
+		<result column="address" jdbcType="VARCHAR" property="address" />
+		<result column="live_status" jdbcType="VARCHAR" property="liveStatus" />
+		<result column="money_source" jdbcType="VARCHAR" property="moneySource" />
+		<result column="salary" jdbcType="VARCHAR" property="salary" />
+		<result column="security_num" jdbcType="VARCHAR" property="securityNum" />
+		<result column="guarantee" jdbcType="VARCHAR" property="guarantee" />
+		<result column="disease" jdbcType="VARCHAR" property="disease" />
+		<result column="disability" jdbcType="VARCHAR" property="disability" />
+		<result column="deformity" jdbcType="VARCHAR" property="deformity" />
+		<result column="degree" jdbcType="VARCHAR" property="degree" />
+		<result column="company" jdbcType="VARCHAR" property="company" />
+		<result column="blood_type" jdbcType="VARCHAR" property="bloodType" />
+		<result column="cext1" jdbcType="VARCHAR" property="cext1" />
+		<result column="cext2" jdbcType="VARCHAR" property="cext2" />
+		<result column="cext3" jdbcType="VARCHAR" property="cext3" />
+		<result column="iext1" jdbcType="INTEGER" property="iext1" />
+		<result column="iext2" jdbcType="INTEGER" property="iext2" />
+		<result column="dext1" jdbcType="DATE" property="dext1" />
+		<result column="dext2" jdbcType="DATE" property="dext2" />
+		<result column="native_place" jdbcType="VARCHAR" property="nativePlace" />
+		<result column="district" jdbcType="VARCHAR" property="district" />
+		<result column="politics_status" jdbcType="VARCHAR" property="politicsStatus" />
+		<result column="religion" jdbcType="VARCHAR" property="religion" />
+		<result column="professional_title" jdbcType="VARCHAR" property="professionalTitle" />
+		<result column="service_type" jdbcType="VARCHAR" property="serviceType" />
+	</resultMap>
+	
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		cid, member_id, nation, marriage_status, member_type, age, birthday, address, live_status,
+		money_source, salary, security_num, guarantee, disease, disability, deformity, degree,
+		company, blood_type, cext1, cext2, cext3, iext1, iext2, dext1, dext2, native_place,
+		district, politics_status, religion, professional_title, service_type
+	</sql>
+	<select id="selectByExample" parameterType="com.yhcrt.healthcloud.memberBack.entity.MemberInfoExample" resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from member_info
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	
+	<select id="selectByMemberId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from member_info
+		where member_id = #{memberId,jdbcType=INTEGER}
+	</select>
+	
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from member_info where cid = #{cid,jdbcType=INTEGER}
+	</delete>
+	
+	<delete id="deleteByExample" parameterType="com.yhcrt.healthcloud.memberBack.entity.MemberInfoExample">
+		delete from member_info
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	
+	<insert id="insert" parameterType="com.yhcrt.healthcloud.memberBack.entity.MemberInfo">
+		insert into member_info (cid, member_id, nation,
+		marriage_status, member_type, age,
+		birthday, address, live_status,
+		money_source, salary, security_num,
+		guarantee, disease, disability,
+		deformity, degree, company,
+		blood_type, cext1, cext2,
+		cext3, iext1, iext2,
+		dext1, dext2, native_place,
+		district, politics_status, religion,
+		professional_title, service_type)
+		values (#{cid,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER},
+		#{nation,jdbcType=VARCHAR},
+		#{marriageStatus,jdbcType=VARCHAR}, #{memberType,jdbcType=VARCHAR}, #{age,jdbcType=INTEGER},
+		#{birthday,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR},
+		#{liveStatus,jdbcType=VARCHAR},
+		#{moneySource,jdbcType=VARCHAR}, #{salary,jdbcType=VARCHAR}, #{securityNum,jdbcType=VARCHAR},
+		#{guarantee,jdbcType=VARCHAR}, #{disease,jdbcType=VARCHAR},
+		#{disability,jdbcType=VARCHAR},
+		#{deformity,jdbcType=VARCHAR}, #{degree,jdbcType=VARCHAR}, #{company,jdbcType=VARCHAR},
+		#{bloodType,jdbcType=VARCHAR}, #{cext1,jdbcType=VARCHAR},
+		#{cext2,jdbcType=VARCHAR},
+		#{cext3,jdbcType=VARCHAR}, #{iext1,jdbcType=INTEGER}, #{iext2,jdbcType=INTEGER},
+		#{dext1,jdbcType=DATE}, #{dext2,jdbcType=DATE},
+		#{nativePlace,jdbcType=VARCHAR},
+		#{district,jdbcType=VARCHAR}, #{politicsStatus,jdbcType=VARCHAR}, #{religion,jdbcType=VARCHAR},
+		#{professionalTitle,jdbcType=VARCHAR},
+		#{serviceType,jdbcType=VARCHAR})
+	</insert>
+	
+	<select id="countByExample" parameterType="com.yhcrt.healthcloud.memberBack.entity.MemberInfoExample" resultType="java.lang.Long">
+		select count(*) from member_info
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	
+	<!-- 修改详细信息数据 -->
+	<update id="updateByMemberInfo" parameterType="com.yhcrt.healthcloud.memberBack.entity.MemberInfo">
+		update member_info set 
+		nation = #{nation,jdbcType=VARCHAR},
+		marriage_status = #{marriageStatus,jdbcType=VARCHAR},
+		member_type = #{memberType,jdbcType=VARCHAR},
+		age = #{age,jdbcType=INTEGER},
+		birthday = #{birthday,jdbcType=VARCHAR},
+		address = #{address,jdbcType=VARCHAR},
+		live_status = #{liveStatus,jdbcType=VARCHAR},
+		money_source = #{moneySource,jdbcType=VARCHAR},
+		salary = #{salary,jdbcType=VARCHAR},
+		security_num = #{securityNum,jdbcType=VARCHAR},
+		guarantee = #{guarantee,jdbcType=VARCHAR},
+		disease = #{disease,jdbcType=VARCHAR},
+		disability = #{disability,jdbcType=VARCHAR},
+		deformity = #{deformity,jdbcType=VARCHAR},
+		degree = #{degree,jdbcType=VARCHAR},
+		company = #{company,jdbcType=VARCHAR},
+		blood_type = #{bloodType,jdbcType=VARCHAR},
+		native_place = #{nativePlace,jdbcType=VARCHAR},
+		politics_status = #{politicsStatus,jdbcType=VARCHAR},
+		religion = #{religion,jdbcType=VARCHAR},
+		professional_title = #{professionalTitle,jdbcType=VARCHAR},
+		service_type = #{serviceType,jdbcType=VARCHAR}
+		where cid = #{cid,jdbcType=INTEGER}
+	</update>
+
+</mapper>

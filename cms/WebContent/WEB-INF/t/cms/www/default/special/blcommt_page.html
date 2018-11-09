@@ -1,0 +1,202 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>爆料评论 - ${site.name}</title>
+<link rel="stylesheet" type="text/css" href="/${res}/css/blt.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/public_all.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/global.css" />
+<script src="/${res}/js/dc/settitle.js" type="text/javascript"></script>
+<script src="/${res}/js/dc/jquery.min.js" type="text/javascript"></script>
+<script src="/${res}/js/layer/layer.js"></script>
+<script type="text/javascript">
+function showList(id,text) {
+    //iframe层
+    layer.open({
+        type: 2,
+        title: "回复" + text,
+        shadeClose: true,
+        shade: 0.8,
+        area: ['780px', '80%'],
+        content: '${base}/comment_list.jspx?commentId='+id //iframe的url
+    }); 
+}
+</script>
+</head>
+
+<body>
+
+[#include "../include/header2.html"/]
+
+
+<!--nav 开始-->
+[#include "../include/navi.html"/]
+<!--nav 开始-->
+<div style=" clear:both;"></div>
+
+
+<!--内容 开始-->
+<div class="box mt10">
+    <div class="map"><img src="/${res}/images/home.png" width="20" height="18"><a href="/">首页</a> ><a href="${base}/baoliao/${baoliao.id}.jspx">${baoliao.title}</a>>  评论列表</div>
+    <div style=" clear:both;"></div>
+    <div class="details">
+                     
+                     
+                     <div style=" clear:both;"></div>
+                     <div class="send_mess">我要评论</div>
+                     [#include "bl_comment_input.html"/]
+                     
+                     <div style=" clear:both;"></div>
+                     <div class="send_mess">全部评论（[#if baoliao.commtCount??]${baoliao.commtCount}[#else]0[/#if]）</div>
+                     <div class="review_all">
+                             <!-- <div class="sort"><u>排序：</u><span class="now">时间</span><span>热度</span></div> -->
+                             [@cms_blcomment_page baoliaoId=baoliao.id count='10' ]
+                             <ul>
+                                     [#if tag_pagination.list?size = 0]
+							         <li>暂无评论！</li> 
+								    [#else] 
+								    [#list tag_pagination.list as c]
+								    <input type="hidden" id="content${c.id}" name="text" />
+                                     <li>
+                                              <div class="review_all_l">
+                                              <a href="#">
+                                                [#if c.user??]
+									          	 [#if c.user.userImg??]<img src="${c.user.userImg!}" width="60" height="60"/>
+									             [#else]<img src="/${res}/images/people.png" width="60" height="60"/>
+								                 [/#if]
+								                [#else]<img src="/${res}/images/people.png" width="60" height="60"/>
+								                [/#if]
+                                              </a></div>
+                                              <div class="review_all_r">
+                                              
+                                                       <div class="reviewer">
+                                                            <span>${(c.commentUser.username)!"匿名网友"}</span>
+                                                            <u>${c.createTime!string("yyyy-MM-dd HH:mm")}</u>
+                                                       </div>
+                                                       
+                                                       <div class="review_cont">${c.text!}</div>
+                                                   
+                                                       <ul class="reply">
+	                                                       <li class="zan" onclick="addUPs(${c.id})" id="agree${c.id}">赞（<span id="ups_${c.id}">${c.ups}</span>）</span></li>
+	                                                       <li class="reversion" onclick="showReply('${c.id}')">回复</li>
+	                                                       [@cms_blcomment_list  parentId= c.id]
+	                                                       [#if tag_list?size gt 0]
+	                                                       <li class="search_reply" onclick="showList('${c.id}','${(c.commentUser.username)!}:${c.textHtml!}')">${tag_list?size}条回复</li>
+	                                                       [/#if]
+														   [/@cms_blcomment_list]
+                                                       </ul>
+                                                       <div id="reply${c.id}" title="" class="send_mess_box2" style="display: none">
+                                                           <textarea id="re_content${c.id}" name="kcontent"></textarea>
+                                                           <span id="face${c.id}"><img src="/${res}/images/icon_biaoqing.png" alt=""/></span>
+                                                           <div class="send_butt"><a href="javascript:addBlReply('${c.id}');">确认</a></div>
+                                                       </div>
+	                                                   
+                                              </div>
+                                     </li>
+                                     [/#list]
+                                     
+                                     
+                            </ul>
+                            
+                            
+                            <div style=" clear:both;"></div>
+                            <div class="list_dis">
+                                <div class="jogger">[@cms_pagination sysPage='1'/]</div>
+                                
+                            </div>
+                            [/#if] [/@cms_blcomment_page]
+                    </div>
+                     
+                                       
+  </div>
+    
+   [#include "bl_right.html"/]
+
+           
+</div>
+<!--内容 end-->
+
+<!--尾部 开始-->
+<div style=" clear:both;"></div>
+<div id="footer">
+   <div class="copy">
+     Copyright ◎ 2006-2016 黄石市东楚传媒网络科技有限公司 All Rights Reserved <br />
+营业执照 － 组织机构代码证 － 增值电信业务经营许可证 
+
+   </div>
+</div>
+<!--尾部 开始-->
+
+</body>
+<script type="text/javascript" src="/${res}/js/face/jquery-1.8.0.min.js"></script> 
+<link href="/${res}/js/face/jquery.sinaEmotion.css" rel="stylesheet" type="text/css"/>
+<script src="/${res}/js/face/jquery.sinaEmotion.js" type="text/javascript"></script>
+
+<script type="text/javascript" >
+	    function showReply(obj) {
+	    	// 绑定表情
+		$('#face'+obj).SinaEmotion($("#re_content"+obj));
+		if(document.getElementById("reply"+obj).style.display=="none"){
+		    $('div[id=reply'+obj+'][title=]').show();
+		}else{
+		    $('div[id=reply'+obj+'][title=]').hide();
+		}
+		 
+    	 $('div[id!=reply'+obj+'][title=]').hide();
+	  }
+		function addBlReply(pid) {
+			[#if user??]
+			var text = $("#re_content" + pid).val();
+			if (text == '') {
+				alert('请输入回复内容！');
+				$("#re_content" + pid).focus();
+				return;
+			}
+			
+			$("#content" + pid).val(AnalyticEmotion(text));
+			var content = $("#content" + pid).val();
+			$.ajax({
+				url:"${base}/blcommt_reply.jspx",
+	     		type:"post",
+				data:"pid="+pid+"&text="+content+"&baoliaoId="+${baoliao.id},
+				dataType: 'json',
+				success:function(data){
+					if(data.status==0) {
+		                alert("评论成功");
+		                location.href=location.href;
+		            }  else {
+		                alert("评论失败");
+		            }
+                }
+            });
+		    [#else]window.location.href="${base}/login.jspx?returnUrl=baoliaocommt.jspx?baoliaoId=${baoliao.id}";
+			[/#if]
+		  }
+		/**
+		 * 点赞
+		 * @param id
+		 * @return
+		 */
+			function addUPs(id) {
+		
+			$.ajax({
+	     		type:"post",
+				url:"/comment_up.jspx?commentId=" + id,
+				asyn:true,		//false为同步提交
+				dataType:'text',	//返回文本
+				success:function(d){
+					//支持+1
+					var ups = $('#ups_'+ id).html();
+					$('#agree'+id).removeClass("zan").addClass("support");
+					$('#agree'+id).html('赞（'+parseInt(parseInt(ups) + 1 )+'）');
+				    //点击失效
+				    $('#agree'+id).attr("onclick","").click(function(){
+				    	
+				    }); 
+					
+				}
+			});
+	      
+		  }
+	</script>
+</html>

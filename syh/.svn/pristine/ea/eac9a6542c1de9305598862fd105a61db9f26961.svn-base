@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SysDeptUserMapper">
+	<resultMap id="BaseResultMap" type="com.yhcrt.entity.system.SysDeptUser">
+		<id column="USER_ID" jdbcType="INTEGER" property="userId" />
+		<id column="DEPT_CID" jdbcType="INTEGER" property="deptCid" />
+	</resultMap>
+	
+	
+	 <sql id="Base_Column_List">
+    USER_ID, ROLE_CID
+  </sql>
+  <!-- 单条记录插入 -->
+	<insert id="saveSelective">
+		insert into sys_dept_user (USER_ID,DEPT_CID)
+		values (#{userId,jdbcType=INTEGER}, #{deptCid,jdbcType=INTEGER})
+	</insert>
+	<!-- 批量插入 -->
+	<insert id="saveSelectives">
+		insert into sys_dept_user (USER_ID,DEPT_CID)
+		values
+		<foreach collection="userCids" item="item" index="index"
+			separator=",">
+			(#{item,jdbcType=INTEGER}, #{deptCid,jdbcType=INTEGER})
+		</foreach>
+	</insert>
+	<!-- 删除部门的所有用户 -->
+	<delete id="removeByDeptCid" parameterType="java.lang.Integer">
+		delete from
+		sys_dept_user
+		where DEPT_CID = #{deptCid,jdbcType=INTEGER}
+	</delete>
+	<!-- 删除所有部门的某个用户-->
+	<delete id="removeByUserCid" parameterType="java.lang.Integer">
+		delete from
+		sys_dept_user
+		where USER_ID in 
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	<!-- 删除部门的集合-->
+	<delete id="removeByDeptCids" parameterType="java.lang.Integer">
+		delete from
+		sys_dept_user
+		where DEPT_CID in 
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+</mapper>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.demo.dao.ManageUserDao">
+
+	<!-- 更新后台用户信息-->
+	<update id="updateManageUser" parameterType="ManageUserInfo">
+		update TA_MANAGE_USER_INFO 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="account != null">account=#{account},</if>
+			<if test="password != null">password=#{password},</if>
+			<if test="status != null">status=#{status},</if>
+			<if test="update_time != null">update_time=#{update_time},</if>
+			<if test="last_time != null">last_time=#{last_time},</if>
+			<if test="user_name != null">user_name=#{user_name},</if>
+			<if test="login_count != null">login_count=login_count+1,</if>
+		</trim>
+		where id=#{id}
+	</update>
+	
+	<!-- 查询后台用户信息 -->
+	<select id="loadByAccount" parameterType="string" resultType="ManageUserInfo">
+		select id,account,password,status,create_time,update_time,
+			login_count,user_name,last_time
+		from TA_MANAGE_USER_INFO
+		where account=#{_parameter}
+	</select>
+	
+	<!-- 查询后台用户信息 -->
+	<select id="queryManageUser" parameterType="map" resultType="ManageUserInfo">
+		SELECT u.id,u.account,u.password,u.status,u.create_time,u.update_time,
+			u.login_count,u.user_name,u.last_time,u.user_type,r.role_name
+		FROM TA_MANAGE_USER_INFO u LEFT JOIN SYS_USER_ROLE ur ON u.id=ur.user_id LEFT JOIN SYS_ROLE r ON ur.role_id= r.id
+		where 1=1
+		<if test="account != null and account != ''">and account like CONCAT('%',#{account},'%')</if>
+		<if test="status != null and status != ''">and u.status=#{status}</if>
+		<if test="role_name != null and role_name != ''">and role_name like CONCAT('%',#{role_name},'%')</if>
+	</select>
+	
+	<insert id="addManageUser" parameterType="ManageUserInfo">
+		insert into TA_MANAGE_USER_INFO (
+			id
+			<if test="account != null">,account</if>
+			<if test="password != null">,password</if>
+			<if test="status != null">,status</if>
+			<if test="create_time != null">,create_time</if>
+			<if test="update_time != null">,update_time</if>
+			<if test="last_time != null">,last_time</if>
+			<if test="user_name != null">,user_name</if>
+			<if test="login_count != null">,login_count</if> 
+			<if test="user_type != null">,user_type</if>
+		) values (
+			#{id}
+			<if test="account != null">,#{account}</if>
+			<if test="password != null">,#{password}</if>
+			<if test="status != null">,#{status}</if>
+			<if test="create_time != null">,#{create_time}</if>
+			<if test="update_time != null">,#{update_time}</if>
+			<if test="last_time != null">,#{last_time}</if>
+			<if test="user_name != null">,#{user_name}</if>
+			<if test="login_count != null">,#{login_count}</if>
+			<if test="user_type != null">,#{user_type}</if> 
+		)
+	</insert>
+	
+	<!-- 更新后台用户信息-->
+	<update id="updateManageUserStatus" parameterType="map">
+		update TA_MANAGE_USER_INFO 
+		set status=#{status}
+		where id in <foreach collection="idList" item="id" separator="," open="(" close=")">#{id}</foreach>
+	</update>
+	
+	<delete id="deleteManageUser" parameterType="map">
+		delete from TA_MANAGE_USER_INFO
+		where id in <foreach collection="idList" item="id" separator="," open="(" close=")">#{id}</foreach>
+	</delete>
+	
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bigdata.assis.manage.dao.CountCOUDao">
+
+	<resultMap type="com.bigdata.assis.manage.model.COUCount" id="COUCountResult">		
+		<result property="ALL_LOGIN_CITY_NUM" column="ALL_LOGIN_CITY_NUM" />
+		<result property="ALL_LOGIN_ORGA_NUM" column="ALL_LOGIN_ORGA_NUM" />
+		<result property="ALL_LOGIN_USER_NUM" column="ALL_LOGIN_USER_NUM" />
+		<result property="MON_LOGIN_CITY_NUM" column="MON_LOGIN_CITY_NUM" />
+		<result property="MON_LOGIN_ORGA_NUM" column="MON_LOGIN_ORGA_NUM" />
+		<result property="MON_LOGIN_USER_NUM" column="MON_LOGIN_USER_NUM" />
+		<result property="MON_LOGIN_NUM" column="MON_LOGIN_NUM" />
+		<result property="MON_LOGIN_USE_TIME" column="MON_LOGIN_USE_TIME" />
+		<result property="YEAR_NAME" column="YEAR_NAME" />
+		<result property="MONTH_NAME" column="MONTH_NAME" />
+	</resultMap>
+
+	<select id="getHomeCount"   resultMap="COUCountResult" >
+		select * from DW.RPT_ZHKT_LOGIN_TOTAL_D order by MODIFY_TIME  desc
+	</select>
+	
+	<select id="getCityHomeCount"  parameterType="map"   resultMap="COUCountResult" >
+		select * from DW.RPT_ZHKT_LOGIN_TOTAL_D where 1=1
+		<if test="PROV_CODE != null and PROV_CODE != ''">and PROV_CODE = #{PROV_CODE}</if>
+		<if test="CITY_CODE != null and CITY_CODE != ''">and CITY_CODE = #{CITY_CODE}</if>
+		order by MODIFY_TIME  desc
+	</select>
+
+	<select id="getAllMonCount"    resultMap="COUCountResult" >
+		select * from dw.rpt_zhkt_login_total_m 
+		where 1=1 
+	    <if test="year !=null"> and YEAR_NAME=#{year}</if>
+	    <if test="month !=null"> and MONTH_NAME=#{month}</if>
+	</select>
+	
+	<select id="getCityMonCount"   resultMap="COUCountResult" >
+		select * from dw.rpt_zhkt_login_city_m
+		where 1=1 
+		<if test="provinceCode !=null and provinceCode !=''"> and PROV_CODE in(select area_code from TA_AREA where parent_id=#{provinceCode} and level_id='2')</if>
+	    <if test="year !=null"> and YEAR_NAME=#{year}</if>
+	    <if test="month !=null"> and MONTH_NAME=#{month}</if>
+	</select>
+
+</mapper>

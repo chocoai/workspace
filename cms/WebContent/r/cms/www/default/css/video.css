@@ -1,0 +1,29 @@
+
+/*******************************************  左  *****************************************/
+.details_left { float:left; width:896px; background-color:#fff;}
+.def_video { float:left; width:896px; height:508px; background:url(../images/video.jpg) 0 0 no-repeat; position:relative; }
+.play_butt { float:left; width:80px; height:80px; position:absolute; cursor:pointer; left:50%; margin-left:-40px; top:50%; margin-top:-40px; }
+/****视频分享****/
+.video_share{ margin:0 auto 20px; width:896px; height:60px; background-color:#202020;}
+.video_share ul{ float:right;}
+.video_share ul li{ float:left; width:100px; height:60px; line-height:60px;}
+.video_share ul li img{ float:left; width:20px; height:20px; vertical-align:middle; margin-top:20px; margin-right:5px;}
+.video_share ul li a{ color:#fff; text-decoration:none;}
+.video_share ul li a:hover{ color:#fff; text-decoration: underline;}
+.video_share .video_ing{ float:left; width:500px; height:60px; line-height:60px; font-size:16px; color:#fff; text-indent:20px;}
+.video_share .video_ing a{ color:#73bf00;text-decoration:none;}
+.video_share .video_ing a:hover{ color:#fff; text-decoration: underline;}
+/****推荐列表****/
+.recommend{ float:left; width:856px; background-color:#fff; margin:10px 0px; padding:20px; height:auto; overflow:hidden;!important}
+.recommend .title{ float:left; width:856px; height:40px; line-height:40px; font-size:16px; font-weight:bold;}
+.recommend .title span{ float:right; font-weight:normal;}
+.recommend ul{ margin:0 auto; width:856px;}
+.recommend ul li { float:left; width:205px; margin:0px 12px 10px 0px;}
+.recommend ul li.last{ margin-right:0px;}
+.recommend ul li a { display:block; width:205px; overflow:hidden;}
+.recommend ul li img {  width:205px; height:124px; }
+.recommend ul li i{ float:left; width:205px;height:24px; line-height:24px; font-style:normal;}
+.recommend ul li i span{ float:right;}
+.recommend ul li a{ color:#1e867d; text-decoration:none;}
+.recommend ul li a:hover{ color:#1e867d; text-decoration: underline;}
+.pinglun{ margin:0 auto; width:856px;}

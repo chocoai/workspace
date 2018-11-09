@@ -1,0 +1,170 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>东楚论坛</title>
+<link href="${base}/style/main.css" rel="stylesheet" type="text/css">
+<link href="${base}/style/lanmu.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${base}/js/jquery.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#password").focus(function(){
+			$("#password_message").hide();
+		});
+		$("#Rpassword").focus(function(){
+			$("#Rpassword_message").hide();
+		});
+		$("#password").blur(function(){
+			if($("#password").val() == ''){
+				$("#password_message").html('请输入新密码');
+				$("#password_message").show();
+			}else if($("#password").val().length<6){
+				$("#password_message").html('密码长度过短');
+				$("#password_message").show();
+			}else if($("#Rpassword").val() == $("#password").val()){
+				$("#Rpassword_message").hide();
+			}else if($("#Rpassword").val() != $("#password").val() && $("#Rpassword").val() != ''){
+				$("#Rpassword_message").html('两次密码输入不一致');
+				$("#Rpassword_message").show();
+			}
+		});
+		$("#Rpassword").blur(function(){
+			if($("#Rpassword").val() == ''){
+				$("#Rpassword_message").html('请输入确认密码');
+				$("#Rpassword_message").show();
+			}else if($("#Rpassword").val() != $("#password").val()){
+				$("#Rpassword_message").html('两次密码输入不一致');
+				$("#Rpassword_message").show();
+			}
+		});
+	});
+	
+	var d = 6;
+	var myInterval;
+	function getCurDate(){
+		var seconds = d--;
+		if(seconds <= 0){
+			$("#redirect_message").html("");
+			window.clearInterval(myInterval);
+			location.href = "${base}/login.jspx";
+			return ;
+		}
+		var ndate = "重置密码成功；&nbsp;<b>"+seconds+"</b>&nbsp;秒后将跳转到登录页面。";
+		var divT=document.getElementById("redirect_message");
+		divT.innerHTML= ndate;
+	}
+	
+	function submitForm(){
+		var password = $("#password").val();
+		var Rpassword = $("#Rpassword").val();
+		var userId = $("#userId").val();
+		if(userId == ''){
+			return ;
+		}
+		if(password == ''){
+			$("#password_message").html('请输入新密码');
+			$("#password_message").show();
+			return ;
+		}else if(password.length<6){
+			$("#password_message").html('密码长度过短');
+			$("#password_message").show();
+			return ;
+		}
+		if(password == ''){
+			$("#Rpassword_message").html('请输入确认密码');
+			$("#Rpassword_message").show();
+			return ;
+		}else if(Rpassword != password){
+			$("#Rpassword_message").html('两次密码输入不一致');
+			$("#Rpassword_message").show();
+			return ;
+		}
+		$.ajax({
+			url:"${base}/personal/reset_save.jspx",
+			data:{"userId":userId,"password":password},
+			type:"post",
+			dataType:"json",
+			success:function(data){
+				if(data == 1){
+					$("#passwordBox").hide();
+					$("#redirectBox").show();
+					myInterval = setInterval("getCurDate()",1000);
+				}
+			}
+		});
+	}
+	
+</script>
+</head>
+
+<body class="body">
+	<div class="register_hd_box">
+		<div class="register_hd">
+			<div class="register_hd_l">
+				<div class="register_logo">
+					<a href="${base}/"><img src="${base}/images/logo.png" alt="" /></a>
+				</div>
+				<div class="register_hd_fgx"></div>
+				<span class="register_tit">找回密码</span>
+			</div>
+			<div class="register_hd_r findtop">
+				<a href="${base}/login.jspx">登录</a> &nbsp;&nbsp;
+				<a href="${base}/register.jspx">注册</a>
+			</div>
+		</div>
+	</div>
+	<div class="register_bg"></div>
+	<div id="redirectBox" style="margin:0 auto;text-align:center;margin-top:50px;display:none;">
+		<div style="height:250px;">
+			<a href="${base}/login.jspx" id="redirect_message"></a>
+		</div>
+	</div>
+	<div class="register_bd" id="passwordBox" style="display:block;">
+		<!-- <div class="tab_menu">
+			<ul>
+				<li id="one1" class="off" onclick="setTab('one1')">邮箱找回</li>
+				<li id="one2" class="" onclick="setTab('one2')">手机找回</li>
+			</ul>
+		</div> -->
+		<div class="findstep_bd">
+			<form action="${base}/reset_save.jspx" method="post" id="jvForm">
+				<p>
+					您正在找回的账号是：<span>${joUser.username!}</span>
+				</p>
+				<input type="hidden" id="userId" value="${joUser.id!}"/>
+				<div class="findpas_lh40 marbot">
+					<span class="findpas_newpastext">新密码</span>
+					<input type="password" name="password" id="password" maxlength="16" class="findpas_newpas">
+					<span class="findpas_tips04" id="password_message" style="display: none;">请输入新密码</span>
+				</div>
+				<div class="findpas_lh12">
+					<span class="findpas_newpastext"></span>
+					<span class="findpas_tips03">最小长度6，最大长度16</span>
+				</div>
+				<div class="findpas_lh40 marbot">
+					<span class="findpas_newpastext">确认新密码</span>
+					<input type="password" id="Rpassword" class="findpas_newpas">
+					<span class="findpas_tips04" id="Rpassword_message" style="display: none;">请输入确认密码</span>
+				</div>
+				<button class="findpas_nextstepbut findpasstep02 findpasstep03"
+					type="button" onclick="submitForm()">确定</button>
+			</form>
+		</div>
+	</div>
+
+
+	<div class="reg_footerbox">
+		<div class="reg_footer">
+			<div class="footer">
+				<div class="footer_listbox">
+					<div class="footer_list">
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+</body>
+
+</html>

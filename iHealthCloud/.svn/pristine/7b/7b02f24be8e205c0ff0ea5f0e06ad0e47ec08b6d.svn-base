@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>孝康通</title>
+    <!-- Bootstrap -->
+    <link th:href="@{/pages/mall/css/bootstrap.min.css}" rel="stylesheet">
+	<!-- FontAwesome 4.7.0字体 -->
+	<link th:href="@{/pages/mall/css/font-awesome.min.css}" rel="stylesheet">
+    <!-- 选择省市区css -->
+    <link rel="stylesheet" th:href="@{/pages/mall/css/area.css}" />
+    <!-- 自定义css -->
+    <link th:href="@{/pages/mall/css/mymall.css}" rel="stylesheet">
+  </head>
+  <body>
+    <!-- 导航 开始 -->
+    <nav class="navbar navbar-default navbar-mall-other">
+      <div class="container-fluid">
+        <div class="navbar-header" th:if="${dto} ==null">
+          <a href="javascript:goUrl()" class="othertop-left"><i class="fa fa-angle-left icon-back"></i></a>
+         	 添加收货地址         
+        </div>
+         <div class="navbar-header" th:if="${dto} !=null">
+          <a href="javascript:goUrl()" class="othertop-left"><i class="fa fa-angle-left icon-back"></i></a>
+         	 修改收货地址         
+        </div>
+      </div>
+    </nav>
+    <!-- 导航 结束 -->
+    
+    <!-- 添加收货地址 开始 -->
+    <div class="newaddress">
+      <form method="post" class="form-horizontal newaddress form-twopage" id="fmSubmit">
+        <input id="addressId" type="hidden" th:if="${dto} !=null" th:value="${dto.cid}" name="memberAddressId"/>
+        <input type="hidden" name="url" th:value="${url}"/>
+        <input type="hidden" name="status" th:value="${status}"/>
+        <input type="hidden" name="type" th:value="${type}"/>
+        <div class="form-group newaddress-cell">
+          <label class="col-xs-3 col-sm-2 control-label">收货人</label>
+          <div class="col-xs-9 col-sm-10">
+            <input th:if="${dto} ==null" type="text" class="form-control input-newaddress" placeholder="名称" name="recipient" id="recipient" maxlength="15" >
+            <input th:if="${dto} !=null" type="text" class="form-control input-newaddress" placeholder="名称" name="recipient" id="recipient" maxlength="15" th:value="${dto.recipient}">
+          </div>
+        </div>
+        <div class="form-group newaddress-cell">
+          <label class="col-xs-3 col-sm-2 control-label">联系电话</label>
+          <div class="col-xs-9 col-sm-10">
+            <input th:if="${dto} ==null" type="text" class="form-control input-newaddress" placeholder="联系电话" name="phoneNum" id="phoneNum"  maxlength="16" >
+            <input th:if="${dto} !=null" type="text" class="form-control input-newaddress" placeholder="联系电话" name="phoneNum" id="phoneNum"  maxlength="16" th:value="${dto.tel}">
+          </div>
+        </div>
+        <!-- 选择省市区 开始 -->
+        <div class="browser">
+              <!--选择地区-->
+              <section class="express-area">
+                  <a id="expressArea" href="javascript:void(0)">
+                      <dl>
+                          <dt class="col-xs-3 col-sm-2 nopad-r">选择地区：</dt>
+                          <dd th:if="${dto} ==null" class="col-xs-9 col-sm-10" id="areaText" >省 > 市 > 区/县</dd>
+                          <dd th:if="${dto} !=null" class="col-xs-9 col-sm-10" id="areaText" th:text="${dto.area}">省 > 市 > 区/县</dd>
+                      </dl>
+                  </a>
+              </section>
+              <!--选择地区弹层-->
+              <section id="areaLayer" class="express-area-box">
+                  <header>
+                      <h3>选择地区</h3>
+                      <a id="backUp" class="back" href="javascript:void(0)" title="返回">
+                        <i class="fa fa-angle-left"></i>
+                      </a>
+                      <a id="closeArea" class="close" href="javascript:void(0)" title="关闭">
+                        x
+                      </a>
+                  </header>
+                  <article id="areaBox">
+                      <ul id="areaList" class="area-list"></ul>
+                  </article>
+              </section>  
+        </div>
+        <!-- 选择省市区 结束 -->
+
+        <div class="form-group newaddress-cell">
+          <label class="col-xs-3 col-sm-2 control-label" th:if="${dto.cid} ==null">街道地址</label>
+          <label class="col-xs-3 col-sm-2 control-label" th:if="${dto.cid} !=null">详细地址</label>
+          <div class="col-xs-9 col-sm-10">
+            <input th:if="${dto.cid} ==null" type="text" class="form-control input-newaddress" placeholder="街道、小区门牌等" name="address" id="address" maxlength="64" >
+            <input th:if="${dto.cid} !=null" type="text" class="form-control input-newaddress" placeholder="详细地址等" name="address" id="address" maxlength="64" th:value="${dto.address}">
+          </div>
+        </div>
+        
+        <div class="form-group newaddress-cell">
+          <label class="col-xs-3 col-sm-2 control-label">邮政编码</label>
+          <div class="col-xs-9 col-sm-10">
+            <input th:if="${dto} ==null" type="text" class="form-control input-newaddress" placeholder="邮政编码" name="postcode" id="postcode" maxlength="10" >
+            <input th:if="${dto} !=null" type="text" class="form-control input-newaddress" placeholder="邮政编码" name="postcode" id="postcode" maxlength="10" th:value="${dto.postcode}">
+          </div>
+        </div>
+        <div class="newaddress-save" style="border:0px;display:none" id="errorDiv">
+          <div class="col-xs-12 col-sm-12" id="error" style="margin-bottom: 15px; color:#ff5c5c; font-size: 11px;text-align:center;">
+           </div>
+        </div>
+        <input id="area" type="hidden" name="area"/>
+        <div class="form-group newaddress-save">
+          <div class="col-xs-12 col-sm-12">
+            <a href="javascript:void(0)" onclick="fmSubmit()" type="button" class="btn form-control btn-newaddress-save" style="color:#fff">保存</a>
+          </div>
+        </div>
+      </form>
+    </div>
+    <!-- 添加收货地址 结束 -->
+        
+    <!-- 返回顶部 开始 -->
+    <div class="gototop" style="display: none;">
+      <a href="javascript:void(0)"><i class="glyphicon glyphicon-menu-up"></i></a>
+    </div>
+    <!-- 返回顶部 结束 -->
+
+    <!--遮罩层-->
+    <div id="areaMask" class="mask"></div>
+   
+
+    <script th:src="@{/pages/mall/js/jquery-1.9.1.min.js}"></script>
+    <script th:src="@{/pages/mall/js/bootstrap.min.js}"></script>
+    <script th:src="@{/pages/mall/js/jquery.area.js}"></script>
+    <script th:src="@{/pages/mall/css/layer_mobile/layer.js}"></script>
+    <script type="text/javascript">
+    var pathName=window.document.location.pathname;
+    var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
+      // 返回顶部
+      $(window).scroll(function(){
+        if($(window).scrollTop()>=20){
+           $(".gototop").fadeIn(300);
+        }else{
+           $(".gototop").fadeOut(300);
+        }
+      })
+      $(".gototop a").click(function(){
+        $("html,body").animate({scrollTop:"0px"},300)
+      })
+      
+      function fmSubmit(){
+        var recipient = $.trim($("#recipient").val());
+      	if(recipient==""){
+      			layer.open({
+				    content: '请填写收货人'
+				    ,skin: 'msg'
+				    ,time: 2 //2秒后自动关闭
+				  });
+      		return false;
+      	}
+      	var phoneNum = $.trim($("#phoneNum").val());
+      	if(phoneNum==""){
+      		layer.open({
+				    content: '请填写联系电话'
+				    ,skin: 'msg'
+				    ,time: 2 //2秒后自动关闭
+				  });
+      		return false;
+      	}
+      	var areaText = $("#areaText").text();
+      	if(areaText!="省 > 市 > 区/县"){
+      		$("#area").val(areaText);
+      		$("#errorDiv").hide();
+      		$("#error").html("");
+      	}else{
+      		layer.open({
+				    content: '请选择地区'
+				    ,skin: 'msg'
+				    ,time: 2 //2秒后自动关闭
+				  });
+      		return false;
+      	}
+      	var address = $.trim($("#address").val());
+      	if(address==""){
+      		layer.open({
+				    content: '请填写街道地址'
+				    ,skin: 'msg'
+				    ,time: 2 //2秒后自动关闭
+				  });
+      		return false;
+      	}
+      	var postcode=$.trim($("#postcode").val());
+      	if(postcode==""){
+      		layer.open({
+				    content: '请填写邮政编码'
+				    ,skin: 'msg'
+				    ,time: 2 //2秒后自动关闭
+				  });
+      		return false;
+      	}else{
+      		var mypostcode = /^[0-9][0-9]{5}$/;
+      		 if (!mypostcode.test(postcode)) {
+		     	layer.open({
+				    content: '请输入正确的邮政编码'
+				    ,skin: 'msg'
+				    ,time: 2 //2秒后自动关闭
+				  });
+      			return false;
+		    }
+      	}
+      	if($("#addressId").val()!=null&&$("#addressId").val()>0){
+      		$("#fmSubmit").attr("action",projectName+"/h5/admin/member/updateMemberAddress");
+      	}else{
+      		$("#fmSubmit").attr("action",projectName+"/h5/admin/member/addMemberAddress");
+      	}
+      	$("#fmSubmit").submit();
+      }
+      //返回上一页
+       function goUrl(){
+    	  window.location.href=projectName+"/h5/admin/cart/getChooseAddress?type="+$('#type').val()+"&status="+$('#status').val()+"&url="+$('#url').val();
+	  }
+    </script>
+  </body>
+</html>

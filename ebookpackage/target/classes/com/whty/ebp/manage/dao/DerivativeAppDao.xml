@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.ebp.manage.dao.DerivativeAppDao">
+
+	<resultMap type="com.whty.ebp.manage.model.DerivativeApp" id="derviativeAppResult">
+		<result column="id" property="id" jdbcType="VARCHAR" />
+		<result column="derivative_type" property="derivativeType" jdbcType="VARCHAR" />
+		<result column="app_name" property="appName" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="version_code" property="versionCode" />
+		<result column="inter_version_code" property="interVersionCode" />
+		<result column="file_size" property="fileSize" />
+		<result column="status" property="status" />
+		<result column="can_update" property="canUpdate" />
+		<result column="description" property="description" />
+		<result column="apk_package_name" property="apkPackageName" />
+		<result column="baidu_bos_url" property="baiduBosUrl" />
+		<result column="icon_url" property="iconUrl" />
+		
+		<result column="flat_model_ids" property="flat_model_ids" />
+		<result column="platform_codes" property="platform_codes" />
+		
+		<result column="platform_code" property="platformCode" />
+		<result column="flat_Model" property="flatModel" />
+	</resultMap>
+
+	<resultMap type="com.whty.ebp.manage.model.DerivativeAppApi" id="derviativeAppResult_api">
+		<result column="id" property="id" jdbcType="VARCHAR" />
+		<result column="derivative_type" property="derivative_type" jdbcType="VARCHAR" />
+		<result column="app_name" property="app_name" jdbcType="VARCHAR" />
+		<result column="create_time" property="create_time" />
+		<result column="update_time" property="update_time" />
+		<result column="version_code" property="version_code" />
+		<result column="inter_version_code" property="inter_version_code" />
+		<result column="file_size" property="file_size" />
+		<result column="status" property="status" />
+		<result column="can_update" property="can_update" />
+		<result column="description" property="description" />
+		<result column="apk_package_name" property="apk_package_name" />
+		<result column="baidu_bos_url" property="baiduBosUrl" />
+		<result column="icon_url" property="icon_url" />
+		
+		<result column="flat_model_ids" property="flat_model_ids" />
+		<result column="platform_codes" property="platform_codes" />
+		
+		<result column="platform_code" property="platformCode" />
+		<result column="flat_Model" property="flatModel" />
+	</resultMap>
+
+
+<select id="getNewProductAppListPlatformCode" parameterType="map" resultMap="derviativeAppResult_api">
+	select t.*,
+			 (select group_concat(model_code) from DERIVATIVE_EBP_APP_FLAT_MODEL t1,TA_FLAT_MODEL t2 
+   where t1.flat_model_id=t2.id and t1.DERIVATIVE_EBP_APP_ID=t.id) as flat_model
+		from (select t1.* from DERIVATIVE_EBP_APP t1, EBP_APP_PLATFORM_INFO t2,TA_PLATFORM_INFO t3 
+    where t1.id=t2.DERIVATIVE_EBP_APP_ID and t2.PLATFORM_CODE=t3.PLATFORM_CODE and t3.PLATFORM_CODE=#{platformCode}) t
+		where t.status='0' and t.can_update=#{can_update} 
+		<if test="derivativeAppId != null "> and derivative_Type=#{derivativeAppId}</if>
+		 order by t.create_time desc
+	</select>
+
+
+
+
+<select id="getNewProductAppModelCode" parameterType="map" resultMap="derviativeAppResult_api">
+select t.*,
+(select group_concat(t1.platform_code) from DERIVATIVE_EBP_APP_PLATFORM_INFO t1,
+TA_PLATFORM_INFO t2 where t1.platform_code=t2.platform_code and t1.DERIVATIVE_EBP_APP_ID=t.id) as platform_code
+		from (select t1.* from DERIVATIVE_EBP_APP t1, DERIVATIVE_EBP_APP_FLAT_MODEL t2,TA_FLAT_MODEL t3 where t1.id=t2.DERIVATIVE_EBP_APP_ID and t2.FLAT_MODEL_ID=t3.ID and t3.MODEL_CODE=#{modelCode}) t
+		where t.status='0' and t.can_update=#{can_update} 
+		<if test="derivativeAppId != null "> and derivative_Type=#{derivativeAppId}</if>
+		 order by t.create_time desc
+	</select>	
+
+	<select id="getNewProductAppList" parameterType="map" resultMap="derviativeAppResult_api">
+			select *
+			from DERIVATIVE_EBP_APP t
+			where t.status='0' and t.can_update=#{can_update}  
+			and t.id not in(select DERIVATIVE_EBP_APP_ID from DERIVATIVE_EBP_APP_FLAT_MODEL GROUP BY DERIVATIVE_EBP_APP_ID) 
+			and t.id not in(select DERIVATIVE_EBP_APP_ID from DERIVATIVE_EBP_APP_PLATFORM_INFO GROUP BY DERIVATIVE_EBP_APP_ID)
+			<if test="derivativeAppId != null "> and derivative_Type=#{derivativeAppId}</if>
+			 order by t.CREATE_TIME desc
+	</select>
+
+
+<select id="queryNewProductAppListByModelCodeAndPlatformCodeMap" parameterType="map" resultMap="derviativeAppResult_api">
+ select t.*,(select group_concat(model_code) from DERIVATIVE_EBP_APP_FLAT_MODEL t1,TA_FLAT_MODEL t2 where t1.flat_model_id=t2.id  and t1.DERIVATIVE_EBP_APP_ID=t.id ) as flat_model,
+        (select group_concat(t2.platform_code) from DERIVATIVE_EBP_APP_PLATFORM_INFO t1,TA_PLATFORM_INFO t2 where t1.PLATFORM_CODE=t2.platform_code and t1.DERIVATIVE_EBP_APP_ID=t.id ) as platform_code
+			from DERIVATIVE_EBP_APP t
+			where t.status='0' and t.can_update=#{can_update}  
+			<if test="derivativeAppId != null "> and derivative_Type=#{derivativeAppId}</if>
+		 order by t.create_time desc
+</select>
+
+	<!-- 删除-->
+	<delete id="deleteById" parameterType="string">
+		delete from DERIVATIVE_EBP_APP
+		where id=#{_parameter}
+	</delete>
+
+
+	<select id="loadById" parameterType="string" resultMap="derviativeAppResult">
+		SELECT *,(SELECT GROUP_CONCAT(flat_model_id) as flat_models_ids from DERIVATIVE_EBP_APP_FLAT_MODEL where DERIVATIVE_EBP_APP_ID=t.id) as flat_model_ids FROM DERIVATIVE_EBP_APP t where 1=1 and id = #{_parameter}
+	</select>
+
+	<update id="updateByCondition" parameterType="map">
+	    update DERIVATIVE_EBP_APP set id=#{id}
+	    <if test="appName != null">, app_name=#{appName}</if>
+	    <if test="can_update != null">, can_update=#{can_update}</if>
+	    <if test="updateTime != null">, update_time=#{updateTime}</if>
+	    <if test="status != null">, status=#{status}</if>
+	    where id=#{id}
+	</update>
+	
+	<update id="update" parameterType="com.whty.ebp.manage.model.DerivativeApp">
+		update DERIVATIVE_EBP_APP set id=#{id}
+	    <if test="appName != null">, app_name=#{appName}</if>
+	    <if test="canUpdate != null">, can_update=#{canUpdate}</if>
+	    <if test="updateTime != null">, update_time=#{updateTime}</if>
+	    <if test="status != null">, status=#{status}</if>
+	    where id=#{id}
+	</update>
+	
+	<select id="listByCondition" parameterType="map" resultMap="derviativeAppResult">
+		SELECT *,(SELECT GROUP_CONCAT(flat_model_id) as flat_models_ids from DERIVATIVE_EBP_APP_FLAT_MODEL where DERIVATIVE_EBP_APP_ID=t.id) as flat_model_ids FROM DERIVATIVE_EBP_APP t where 1=1
+		<if test="derivativeType != null "> and derivative_Type=#{derivativeType}</if>
+		order by create_time desc
+	</select>
+	
+	<insert id="save" parameterType="map">
+		insert into DERIVATIVE_EBP_APP(
+		<trim suffixOverrides=",">
+			<if test="id != null">id,</if>
+			<if test="appName != null">app_name,</if>
+			<if test="derivativeType != null">DERIVATIVE_TYPE,</if>
+			<if test="versionCode != null">version_code,</if>
+			<if test="interVersionCode != null">inter_version_code,</if>
+			<if test="fileSize != null">file_size,</if>
+			<if test="createTime != null">create_time,</if>
+			<if test="updateTime != null">update_Time,</if>
+			<if test="status != null">status,</if>
+			<if test="canUpdate != null">can_update,</if>
+			<if test="description != null">description,</if>
+			<if test="apkPackageName != null">apk_package_name,</if>
+			<if test="baiduBosUrl != null">baidu_bos_url,</if>
+			<if test="iconUrl != null">icon_url,</if>
+		</trim>
+		)
+		values(
+		<trim suffixOverrides=",">
+			<if test="id != null">#{id},</if>
+			<if test="appName != null">#{appName},</if>
+			<if test="derivativeType != null">#{derivativeType},</if>
+			<if test="versionCode != null">#{versionCode},</if>
+			<if test="interVersionCode != null">#{interVersionCode},</if>
+			<if test="fileSize != null">#{fileSize},</if>
+			<if test="createTime != null">#{createTime},</if>
+			<if test="updateTime != null">#{updateTime},</if>
+			<if test="status != null">#{status},</if>
+			<if test="canUpdate != null">#{canUpdate},</if>
+			<if test="description != null">#{description},</if>
+			<if test="apkPackageName != null">#{apkPackageName},</if>
+			<if test="baiduBosUrl != null">#{baiduBosUrl},</if>
+			<if test="iconUrl != null">#{iconUrl},</if>
+		</trim>
+		)
+	</insert>
+	
+	
+</mapper>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.wfd.page.dao.BasePropertyDao">
+
+	<resultMap type="com.whty.wfd.page.model.BaseProperty" id="BasePropertyResult">
+		<result column="id" property="id" />
+		<result column="property_key" property="property_key" />
+		<result column="property_value" property="property_value" />
+		<result column="status" property="status" />
+		<result column="description" property="description" />
+		<result column="platform_code" property="platform_code" />
+		<result column="platform_name" property="platform_name" />
+		<result column="create_time" property="create_time" />
+		<result column="update_time" property="update_time" />
+	</resultMap>
+
+	<select id="find" parameterType="map" resultMap="BasePropertyResult">
+		SELECT * FROM t_base_property
+		where 1=1
+		<if test="id != null and id !='' ">and id=#{id}</if>
+		<if test="propertyKey != null and propertyKey != '' ">and property_key=#{propertyKey}</if>
+		<if test="propertyValue != null and propertyValue !='' ">and property_value=#{propertyValue}</if>
+		<if test="status != null and status !='' ">and status=#{status}</if>
+		<if test="platformCode != null and platformCode !='' ">and platform_Code=#{platformCode}</if>
+	</select>
+
+	<select id="listByCondition" parameterType="map" resultMap="BasePropertyResult">
+		SELECT * FROM t_base_property
+		where 1=1
+		<if test="id != null and id !='' ">and id=#{id}</if>
+		<if test="property_key != null and property_key != '' ">and property_key=#{property_key}</if>
+		<if test="property_value != null and property_value !='' ">and property_value=#{property_value}</if>
+		<if test="status != null and status !='' ">and status=#{status}</if>
+		<if test="platformCode != null and platformCode !='' ">and platform_Code=#{platformCode}</if>
+	</select>
+
+	<!-- order by update_time desc 改用Collections.sort()实现 -->
+	<select id="queryBaseProperty" parameterType="map" resultMap="BasePropertyResult">
+		select * from t_base_property
+		where
+		1=1
+		<if test="property_key != null and property_key != ''">and property_key like '%'||#{property_key}||'%'</if>
+		<if test="status != null and status != ''">and status = #{status}</if>
+		<if test="platform_code != null and platform_code != ''">and platform_code like '%'||#{platform_code}||'%'</if>
+		<if test="property_name and property_name != '' "> like '%'||#{property_name}||'%'</if>
+	</select>
+
+	<!-- 根据属性key和平台编码获取属性值 -->
+	<select id="getPropertyValue" parameterType="map" resultType="java.lang.String">
+		select property_value
+		from t_base_property
+		where status='0'
+		and
+		platform_code=#{platform_code}
+		and property_key=#{property_key}
+	</select>
+
+	<insert id="addBaseProperty" parameterType="com.whty.wfd.page.model.BaseProperty">
+		insert into
+		t_base_property(
+		id
+		<if test="property_key != null">,property_key</if>
+		<if test="property_value != null">,property_value</if>
+		<if test="status != null">,status</if>
+		<if test="description != null">,description</if>
+		<if test="create_time != null">,create_time</if>
+		<if test="platform_code != null">,platform_code</if>
+		<if test="platform_name != null">,platform_name</if>
+		<if test="update_time != null">,update_time</if>
+		)values(
+		#{id}
+		<if test="property_key != null">,#{property_key}</if>
+		<if test="property_value != null">,#{property_value}</if>
+		<if test="status != null">,#{status}</if>
+		<if test="description != null">,#{description}</if>
+		<if test="create_time != null">,#{create_time}</if>
+		<if test="platform_code != null">,#{platform_code}</if>
+		<if test="platform_name != null">,#{platform_name}</if>
+		<if test="update_time != null">,#{update_time}</if>
+		)
+	</insert>
+
+	<update id="updateBaseProperty" parameterType="com.whty.wfd.page.model.BaseProperty">
+		update t_base_property
+		<set>
+			id=#{id}
+			<if test="property_key != null">,property_key=#{property_key}</if>
+			<if test="property_value != null">,property_value=#{property_value}</if>
+			<if test="status != null">,status=#{status}</if>
+			<if test="description != null">,description=#{description}</if>
+			<if test="create_time != null">,create_time=#{create_time}</if>
+			<if test="platform_code != null">,platform_code=#{platform_code}</if>
+			<if test="platform_name != null">,platform_name=#{platform_name}</if>
+			<if test="update_time != null">,update_time=#{update_time}</if>
+		</set>
+		where id=#{id}
+	</update>
+
+	<delete id="deleteBaseProperty" parameterType="map">
+		delete from t_base_property
+		where id in
+		<foreach collection="idList" item="id" separator="," open="("
+			close=")">#{id}</foreach>
+	</delete>
+
+	<select id="loadById" parameterType="string" resultMap="BasePropertyResult">
+		select
+		id,property_key,property_value,status,description,create_time,platform_code,
+		platform_name,update_time
+		from t_base_property
+		where id = #{_parameter}
+	</select>
+
+</mapper>

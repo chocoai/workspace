@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.api.dao.UserBackgroundPicDao">
+	
+	<resultMap type="com.whty.assis.api.model.UserBackgroundPic" id="BaseResultMap">
+		<result column="resource_id" property="resourceId"  />
+		<result column="user_background_code" property="userBackgroundCode"  />
+		<result column="md5" property="md5" />
+		<result column="resource_name" property="resourceName"  />
+		<result column="down_url" property="downUrl"  />
+		<result column="create_time" property="createTime"  />
+	</resultMap>
+
+	<select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+		SELECT * FROM t_user_background_pic WHERE resource_id = #{resourceId}
+	</select>
+
+	<select id="selectByUserBackgroundCode" parameterType="java.lang.String" resultMap="BaseResultMap">
+		SELECT * FROM t_user_background_pic WHERE user_background_code = #{userBackgroundCode}
+	</select>
+
+	<insert id="insert" parameterType="com.whty.assis.api.model.UserBackgroundPic">
+		INSERT  into t_user_background_pic (
+			resource_id,user_background_code,md5,resource_name,down_url,create_time
+		) VALUES (
+			#{resourceId},#{userBackgroundCode},#{md5},#{resourceName},#{downUrl},#{createTime}
+		)
+	</insert>
+
+</mapper>
+

@@ -1,0 +1,4 @@
+db_url=jdbc:mysql://120.202.36.12:3399/bbs?autoReconnect=true&characterEncoding=UTF-8
+db_user=root
+db_pwd=2wsx#EDC
+bbs_url=http://120.202.36.12:9090/bbs/

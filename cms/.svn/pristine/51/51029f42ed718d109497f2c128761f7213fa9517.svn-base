@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="keywords" content="${site.keywords!}" />
+<meta http-equiv="description" content="${site.description!}" />
+<title>${topic.name} - 专题 - ${site.name}</title>
+
+<link rel="stylesheet" type="text/css" href="/${res}/css/global.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/zt.css" />
+<script type="text/javascript" src="/${res}/js/dc/jquery-1.11.2.min.js"></script>
+<script type="text/javascript" src="/${res}/js/dc/Tony_Tab.js"></script>
+<script type="text/javascript" src="/${res}/js/dc/slides.min.jquery.js"></script>
+
+
+<script>
+	$(function() {
+		$('#slides').slides({
+			preload : true,
+			preloadImage : 'images/loading.gif',
+			play : 5000,
+			pause : 2500,
+			hoverPause : true,
+			animationStart : function() {
+				$('.caption').animate({
+					bottom : -35
+				}, 100);
+			},
+			animationComplete : function(current) {
+				$('.caption').animate({
+					bottom : 0
+				}, 200);
+				if (window.console && console.log) {
+					// example return of current slide number
+					console.log(current);
+				}
+				;
+			}
+		});
+	});
+</script>
+
+<script type="text/javascript">
+	$(function() {
+		$('#focus').slideFocus();
+	});
+</script>
+
+</head>
+
+<body class="zt_body02">
+	<!---专题top 开始--->
+	<div class="zt_top">
+		<div class="zt_top_center">
+			<div class="zt_logo">
+				<a href="${base}/">
+					<img src="/${res}/images/logo.png">
+				</a>
+			</div>
+		</div>
+	</div>
+	<!---专题top 结束--->
+
+	<!----专题内容 开始--->
+	<div class="zt_con">
+		<div class="bigbanner_box">
+			<div class="bigbanner">
+				<img src="${topic.titleImg!site.defImg}">
+			</div>
+		</div>
+		<div class="zt_con_center">
+		[#list topicChannels as topicChannel]
+		[#if topicChannel_index = 0]
+			<div class="tout_box">
+				<h3 class="tout_tit">
+					<a href="${base}/topic/getList.jsp?topicId=${topic.id}&topicChannelId=${topicChannel.channelId}">
+						${topicChannel.channelName} 
+					</a>
+				</h3>
+				<div id="focus" class="focus">
+					<ul>
+					[@cms_content_list count='4' orderBy='4' typeId='1,2,3,4' titLen='18' channelOption='1' topicId=topic.id topicChannelId=topicChannel.channelId ]
+                    	[#list tag_list as content]
+						<li>
+							<a href="${content.url}" title="${content.title}"><img src="${content.titleImg!content.typeImg!}"></a>
+						</li>
+						[/#list]
+                    [/@cms_content_list]
+					</ul>
+				</div>
+				<ul class="tout_list">
+				[@cms_content_list count='12' orderBy='4' first='5' typeId='1,2,3,4' titLen='18' channelOption='1' topicId=topic.id topicChannelId=topicChannel.channelId ]
+                    [#list tag_list as content]
+					<li>
+						<a href="${content.url}" title="${content.title}"><span>[@text_cut s=content.title! len='26' append='...'/]</span></a>
+					</li>	
+					[/#list]
+               	[/@cms_content_list]
+					
+				</ul>
+			</div>		
+		[#elseif !topicChannel_has_next]
+			<!--板块2 开始--->
+			<div class="zt_bank">
+				<div class="zt_bank_hd">
+					<span class="line_l"></span>
+					<h3 class="zt_bank_tit">
+						<a href="${base}/topic/getList.jsp?topicId=${topic.id}&topicChannelId=${topicChannel.channelId}">
+							${topicChannel.channelName} 
+						</a>
+					</h3>
+					<span class="line_r"></span>
+				</div>
+				<div class="zt_bank_bd">
+					<div id="container">
+						<div id="example">
+							<div id="slides">
+								<div class="slides_container">
+								[@cms_content_list count='10' orderBy='4' typeId='1,2,3,4' titLen='18' channelOption='1' topicId=topic.id topicChannelId=topicChannel.channelId ]
+                    				[#list tag_list as content]
+                    				<div>
+										<a href="${content.url}" title="${content.title}" target="_blank">
+											<img src="${content.titleImg!content.typeImg!}" alt="${content.title}">
+										</a>
+										<div class="caption" style="bottom: 0">
+											<p>[@text_cut s=content.title! len='26' append='...'/]</p>
+										</div>
+									</div>
+                    				[/#list]
+                    			[/@cms_content_list]
+								</div>
+								<a href="#" class="prev">
+									<img src="/${res}/images/arrow-prev.png" width="40" height="68" alt="Arrow Prev">
+								</a>
+								<a href="#" class="next">
+									<img src="/${res}/images/arrow-next.png" width="40" height="68" alt="Arrow Next">
+								</a>
+							</div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<!--板块2 结束--->
+		[#else]
+			<!--板块1 开始--->
+			<div class="zt_bank">
+				<div class="zt_bank_hd">
+					<span class="line_l"></span>
+					<h3 class="zt_bank_tit">
+						<a href="${base}/topic/getList.jsp?topicId=${topic.id}&topicChannelId=${topicChannel.channelId}">
+							${topicChannel.channelName} </a>
+					</h3>
+					<span class="line_r"></span>
+				</div>
+				<div class="zt_bank_bd">
+					<ul class="mold_list01">
+					[@cms_content_list count='10' orderBy='4' typeId='1,2,3,4' titLen='18' channelOption='1' topicId=topic.id topicChannelId=topicChannel.channelId ]
+                    	[#list tag_list as content]
+                    	[#if content_index % 5 == 0]
+						<li style="margin-left: 0px;">
+						[#else]
+						<li>
+						[/#if]
+							<div class="mold01_tit" title="${content.title}">
+							[@text_cut s=content.title! len='6' append='...'/]
+							</div>
+							<p>[@text_cut s=content.description! len='60' append='...'/]</p>
+							<div class="mold01_more">
+								<a href="${content.url}">查看详细内容>></a>
+							</div>
+						</li>
+						[/#list]
+                    [/@cms_content_list]
+					</ul>
+				</div>
+			</div>
+			<!--板块1 结束--->
+		[/#if]
+		[/#list]	
+
+		</div>
+	</div>
+	<!----专题内容 结束--->
+
+	<!--尾部 开始-->
+	[#include "../include/footer.html"/]
+	<!--尾部 开始-->
+
+</body>
+</html>

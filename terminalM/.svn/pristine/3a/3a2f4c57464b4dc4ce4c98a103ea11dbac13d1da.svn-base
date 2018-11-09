@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.basicdata.dao.SchoolDao">
+
+	<!-- 这里的Demo是别名，需要在mybatis-config.xml中定义，或者写类全名 -->
+	<resultMap type="com.whty.assis.basicdata.model.School" id="SchoolResult">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="address"  column="address" />
+		<result property="mobile" column="mobile" />
+		<result property="provinceCode" column="province_code" />
+		<result property="cityCode" column="city_code" />
+		<result property="contacts" column="contacts" />
+		<result property="schoolType" column="school_type" />
+		<result property="orgType" column="org_type" />
+		<result property="aamOrgaId" column="aam_orga_id" />
+		<result property="webUrl" column="web_url" />
+		<result property="orgaPic" column="orga_pic" />
+		<result property="creator" column="creator" />
+		<result property="creatorName" column="creator_name" />
+		
+		<result property="provinceName" column="province_name" />
+		<result property="cityName" column="city_name" />
+		<result property="areaName" column="area_name" />
+	</resultMap>
+	
+	<insert id="save" parameterType="com.whty.assis.basicdata.model.School">
+		insert into t_school (
+			name,
+			address,
+			mobile
+			<if test="email != null and email != ''">,email</if>
+			<if test="provinceCode != null and provinceCode != ''">,province_code</if>
+			<if test="cityCode != null and cityCode != '' ">,city_code</if>
+			<if test="areaCode != null and areaCode != '' " >,area_code</if>
+			<if test="contacts != null and contacts != '' ">,contacts</if>
+			<if test="schoolType != null ">,school_type</if>
+			<if test="aamOrgaId != null and aamOrgaId">,aam_orga_id</if>
+			<if test="platformCode != null ">,platform_code</if>
+			<if test="orgaPic != null and orgaPic != ''">,orga_pic</if>
+			<if test="webUrl != null and webUrl != ''">,web_url</if>
+			<if test="creator != null ">,creator</if>
+			<if test="createTime != null ">,create_time</if>
+			<if test="updateTime != null ">,update_time</if>
+		) values (
+			#{name},
+			#{address},
+			#{mobile}
+			<if test="email != null and email != ''">,#{email}</if>
+			<if test="provinceCode != null and provinceCode != ''">,#{provinceCode}</if>
+			<if test="cityCode != null and cityCode != '' ">,#{cityCode}</if>
+			<if test="areaCode != null and areaCode != '' " >,#{areaCode}</if>
+			<if test="contacts != null and contacts != '' ">,#{contacts}</if>
+			<if test="schoolType != null ">,#{schoolType}</if>
+			<if test="aamOrgaId != null and aamOrgaId">,#{aamOrgaId}</if>
+			<if test="platformCode != null ">,#{platformCode}</if>
+			<if test="orgaPic != null and orgaPic != ''">,#{orgaPic}</if>
+			<if test="webUrl != null and webUrl != ''">,#{webUrl}</if>
+			<if test="creator != null ">,#{creator}</if>
+			<if test="createTime != null ">,#{createTime}</if>
+			<if test="updateTime != null ">,#{updateTime}</if>
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.whty.assis.basicdata.model.School">
+		update t_school
+		set 
+		<trim prefixOverrides=",">
+			<if test="name != null and name != '' ">, name=#{name}</if>
+			<if test="address != null and address != ''">, address=#{address}</if>
+			<if test="mobile != null and mobile !='' ">, mobile=#{mobile}</if>
+			<if test="email != null and email !='' ">, email=#{email}</if>
+			<if test="webUrl != null and webUrl !='' ">, web_url=#{webUrl}</if>
+			<if test="provinceCode != null and provinceCode != ''">, province_code=#{provinceCode}</if>
+			<if test="cityCode != null and cityCode != ''">, city_code=#{cityCode}</if>
+			<if test="areaCode != null and areaCode != ''">, area_code=#{areaCode}</if>
+			<if test="updateTime != null ">, update_time=#{updateTime}</if>
+		</trim>
+		where id=#{id}
+	</update>
+	
+	<select id="loadById" parameterType="map" resultMap="SchoolResult">
+	  select t1.*,t2.user_name,t3.area_name as province_name,t4.area_name as city_name,t5.area_name as area_name from t_school t1 left join ta_manage_user_info t2 on t1.creator=t2.id 
+  left join ta_area t3 on t1.province_code = t3.area_code 
+  left join ta_area t4 on t1.city_code = t4.area_code left join ta_area t5 on t1.area_code = t5.area_code
+  where 1=1
+		and t1.id= #{_parameter}
+	</select>
+	
+	<select id="listByCondition" parameterType="map" resultMap="SchoolResult">
+		select t2.value as org_type,t1.* from t_school t1 left join v_school_type t2 on t1.school_type=t2.key where 1=1
+		<if test="areaCode!= null  and areaCode!=''">and t1.area_code=#{areaCode}</if>
+		<if test="provinceCode != null  and provinceCode != '' ">and t1.province_code=#{provinceCode}</if>
+		<if test="cityCode!= null  and cityCode!=''">and t1.city_code=#{cityCode}</if>
+		order by t1.create_time desc
+	</select>
+	
+	<select id="listSchoolMap" parameterType="map" resultType="map">
+		select t1.id,t2.value,t1.name,t1.web_url,t1.email,t1.mobile,t1.address from t_school t1 left join v_school_type t2 on t1.school_type = t2.key
+		where 1=1 
+		<if test="provinceCode != null and provinceCode != '' ">and province_code=#{provinceCode}</if>
+		<if test="cityCode != null and cityCode != '' ">and city_code=#{cityCode}</if>
+		<if test="areaCode != null and areaCode != '' ">and area_code=#{areaCode}</if>
+		<if test="name != null and name != '' ">and name like CONCAT('%',#{name},'%')</if>
+	</select>
+	
+	<select id="listByConditionByAreaCode" parameterType="map" resultType="map">
+		select id,name from t_school where (province_code=#{code} or city_code=#{code} or area_code=#{code})
+	</select>
+	<select id="getSchools" resultType="map">
+		select id,name from t_school  where 1=1 
+		<if test="provinceCode != null and provinceCode != '' ">and province_code=#{provinceCode}</if>
+		<if test="cityCode != null and cityCode != '' ">and city_code=#{cityCode}</if>
+		<if test="areaCode != null and areaCode != '' ">and area_code=#{areaCode}</if>
+	</select>
+	
+	<select id="getSchoolById" parameterType="java.lang.Integer" resultMap="SchoolResult">
+	  select t.name from t_school t where id = #{id}
+	</select>
+	
+	<delete id="deleteById" parameterType="int">
+		delete from t_school where id = #{_parameter}	
+	</delete>
+	
+	<select id="getAllSchools" resultType="map">
+		select id,name from t_school order by id
+	</select>
+	
+</mapper>

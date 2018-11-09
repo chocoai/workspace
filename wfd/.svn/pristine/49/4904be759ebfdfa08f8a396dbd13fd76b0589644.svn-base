@@ -1,0 +1,74 @@
+package com.whty.wfd.page.dao;
+
+import com.whty.wfd.page.model.TPlatePostEdit;
+import com.whty.wfd.page.model.TPlatePostEditExample;
+import java.util.List;
+import org.apache.ibatis.annotations.Param;
+
+public interface TPlatePostEditMapper {
+    /**
+     *
+     * @mbg.generated 2018-08-25
+     */
+    long countByExample(TPlatePostEditExample example);
+
+    /**
+     *
+     * @mbg.generated 2018-08-25
+     */
+    int deleteByExample(TPlatePostEditExample example);
+
+    /**
+     *
+     * @mbg.generated 2018-08-25
+     */
+    int deleteByPrimaryKey(String id);
+
+    /**
+     *
+     * @mbg.generated 2018-08-25
+     */
+    int insert(TPlatePostEdit record);
+
+    /**
+     *
+     * @mbg.generated 2018-08-25
+     */
+    int insertSelective(TPlatePostEdit record);
+
+    /**
+     *
+     * @mbg.generated 2018-08-25
+     */
+    List<TPlatePostEdit> selectByExample(TPlatePostEditExample example);
+
+    /**
+     *
+     * @mbg.generated 2018-08-25
+     */
+    TPlatePostEdit selectByPrimaryKey(String id);
+
+    /**
+     *
+     * @mbg.generated 2018-08-25
+     */
+    int updateByExampleSelective(@Param("record") TPlatePostEdit record, @Param("example") TPlatePostEditExample example);
+
+    /**
+     *
+     * @mbg.generated 2018-08-25
+     */
+    int updateByExample(@Param("record") TPlatePostEdit record, @Param("example") TPlatePostEditExample example);
+
+    /**
+     *
+     * @mbg.generated 2018-08-25
+     */
+    int updateByPrimaryKeySelective(TPlatePostEdit record);
+
+    /**
+     *
+     * @mbg.generated 2018-08-25
+     */
+    int updateByPrimaryKey(TPlatePostEdit record);
+}

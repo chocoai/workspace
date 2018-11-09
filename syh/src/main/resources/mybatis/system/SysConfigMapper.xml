@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SysConfigMapper">
+	<resultMap id="BaseResultMap" type="com.yhcrt.entity.system.SysConfig">
+		<id column="CID" jdbcType="INTEGER" property="cid" />
+		<result column="SITE_NAME" jdbcType="VARCHAR" property="siteName" />
+		<result column="SITE_PAME" jdbcType="VARCHAR" property="sitePame" />
+		<result column="SITE_URL" jdbcType="VARCHAR" property="siteUrl" />
+		<result column="BOOTTOM_TEXT" jdbcType="VARCHAR" property="boottomText" />
+		<result column="LOGO_URL" jdbcType="VARCHAR" property="logoUrl" />
+		<result column="DB_IP" jdbcType="VARCHAR" property="dbIp" />
+		<result column="DB_PATH" jdbcType="VARCHAR" property="dbPath" />
+		<result column="DB_USER_NAME" jdbcType="VARCHAR" property="dbUserName" />
+		<result column="DB_PASSWORD" jdbcType="VARCHAR" property="dbPassword" />
+		<result column="DB_NAME" jdbcType="VARCHAR" property="dbName" />
+		<result column="DB_FILE_PATH" jdbcType="VARCHAR" property="dbFilePath" />
+		<result column="ERSION_NUM" jdbcType="INTEGER" property="ersionNum" />
+		<result column="EXP1" jdbcType="VARCHAR" property="exp1" />
+		<result column="EXP2" jdbcType="VARCHAR" property="exp2" />
+		<result column="EXP3" jdbcType="VARCHAR" property="exp3" />
+		<result column="EXP4" jdbcType="VARCHAR" property="exp4" />
+		<result column="EXP5" jdbcType="VARCHAR" property="exp5" />
+		<result column="EXP6" jdbcType="VARCHAR" property="exp6" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		CID, SITE_NAME, SITE_PAME, SITE_URL, BOOTTOM_TEXT,
+		LOGO_URL, DB_IP,
+		DB_PATH, DB_USER_NAME,
+		DB_PASSWORD, DB_NAME,ERSION_NUM,
+		DB_FILE_PATH, EXP1, EXP2, EXP3, EXP4, EXP5, EXP6
+	</sql>
+	<!-- 根据ID获取 -->
+	<select id="getByCid" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_config
+		where CID = #{cid,jdbcType=INTEGER}
+	</select>
+	<!--更新数据 -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.entity.system.SysConfig">
+		update sys_config
+		<set>
+			<if test="siteName != null">
+				SITE_NAME = #{siteName,jdbcType=VARCHAR},
+			</if>
+			<if test="sitePame != null">
+				SITE_PAME = #{sitePame,jdbcType=VARCHAR},
+			</if>
+			<if test="siteUrl != null">
+				SITE_URL = #{siteUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="boottomText != null">
+				BOOTTOM_TEXT = #{boottomText,jdbcType=VARCHAR},
+			</if>
+			<if test="logoUrl != null">
+				LOGO_URL = #{logoUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="ersionNum != null">
+				ERSION_NUM = #{ersionNum,jdbcType=INTEGER},
+			</if>
+			<if test="exp1 != null">
+				EXP1 = #{exp1,jdbcType=VARCHAR},
+			</if>
+			<if test="exp2 != null">
+				EXP2 = #{exp2,jdbcType=VARCHAR},
+			</if>
+			<if test="exp3 != null">
+				EXP3 = #{exp3,jdbcType=VARCHAR},
+			</if>
+			<if test="exp4 != null">
+				EXP4 = #{exp4,jdbcType=VARCHAR},
+			</if>
+			<if test="exp5 != null">
+				EXP5 = #{exp5,jdbcType=VARCHAR},
+			</if>
+			<if test="exp6 != null">
+				EXP6 = #{exp6,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where CID = #{cid,jdbcType=INTEGER}
+	</update>
+
+</mapper>

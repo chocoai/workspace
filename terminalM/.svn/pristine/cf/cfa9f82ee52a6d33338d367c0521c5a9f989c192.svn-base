@@ -1,0 +1,10 @@
+user.accessKeyID = LTAI1mVSjKP4rKWi
+user.accessKeySecret = 355MPmXG6NeRvbALZCXlR5E9X21eBV
+iot.regionId = cn-shanghai
+#iot.productKey = VhCDhZ78H53
+
+iot.domain = iot.cn-shanghai.aliyuncs.com
+
+
+itj.iot.productKey= a12o3MUDtnf
+dzsb.iot.productKey= a1zTLhHC2cL

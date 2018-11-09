@@ -1,0 +1,66 @@
+ <div class="friend_link">
+                <div id="Tab_link">
+                        <div class="Menubox">
+                          <ul>
+                            <li id="menuc1" onmouseover="setTab('menuc',1,4)" class="hover">本地链接</li>
+                            <li id="menuc2" onmouseover="setTab('menuc',2,4)">友情链接</li>
+                            <li id="menuc3" onmouseover="setTab('menuc',3,4)">地市网盟</li>
+                            <li id="menuc4" onmouseover="setTab('menuc',4,4)">其他链接</li>
+                          </ul>
+                        </div>
+                        <div class="Contentbox">
+                          <div id="con_menuc_1" class="hover">
+                              <ul>
+                                    [@cms_friendlink_list ctgId="1"]
+                                     [#if tag_list?size gt 0]
+                                     [#list tag_list as link]
+                                     <li><a href="${link.domain}" onclick="$.get('${base}/friendlink_view.jspx?id=${link.id}')" target="_blank">${link.name}</a></li>
+                                     [/#list]
+                                     [#else]<li>&nbsp;</li>
+                                     [/#if]
+                                     [/@cms_friendlink_list]
+                               </ul>
+                          </div>
+                          <div id="con_menuc_2" style="display:none">
+                               <ul>
+                                    [@cms_friendlink_list ctgId="2"]
+                                     [#if tag_list?size gt 0]
+                                     [#list tag_list as link]
+                                     <li><a href="${link.domain}" onclick="$.get('${base}/friendlink_view.jspx?id=${link.id}')" target="_blank">${link.name}</a></li>
+                                     [/#list]
+                                     [#else]<li>&nbsp;</li>
+                                     [/#if]
+                                     [/@cms_friendlink_list]
+                                </ul>
+                          </div>
+                          <div id="con_menuc_3" style="display:none">
+                               <ul>
+                                    [@cms_friendlink_list ctgId="3"]
+                                    [#if tag_list?size gt 0]
+                                     [#list tag_list as link]
+                                     <li><a href="${link.domain}" onclick="$.get('${base}/friendlink_view.jspx?id=${link.id}')" target="_blank">${link.name}</a></li>
+                                     [/#list]
+                                    [#else]<li>&nbsp;</li>
+                                     
+                                     [/#if]
+                                     
+                                     [/@cms_friendlink_list]
+                                </ul>
+                          
+                          </div>
+                          <div id="con_menuc_4" style="display:none">
+                               <ul>  
+                                     [@cms_friendlink_list ctgId="4"]
+                                     [#if tag_list?size gt 0]
+                                     [#list tag_list as link]
+                                     <li><a href="${link.domain}" onclick="$.get('${base}/friendlink_view.jspx?id=${link.id}')" target="_blank">${link.name}</a></li>
+                                      [/#list]
+                                     [#else]<li>&nbsp;</li>
+                                     [/#if]
+                                     [/@cms_friendlink_list]
+                                   </ul>
+                          </div>
+                        </div>
+                 </div>
+                               
+ </div>   

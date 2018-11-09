@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fxzhj.mapper.OrderMapper">
+	<resultMap id="BaseResultMap" type="com.fxzhj.model.Order">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="order_no" property="orderNo" jdbcType="VARCHAR" />
+		<result column="user_account" property="userAccount" jdbcType="VARCHAR" />
+		<result column="device_id" property="deviceId" jdbcType="BIGINT" />
+		<result column="port_id" property="portId" jdbcType="BIGINT" />
+		<result column="price" property="price" jdbcType="REAL" />
+		<result column="mins" property="mins" jdbcType="INTEGER" />
+		<result column="price_type" property="priceType" jdbcType="INTEGER" />
+		<result column="ctime" property="ctime" jdbcType="TIMESTAMP" />
+		<result column="order_money" property="orderMoney" jdbcType="REAL" />
+		<result column="pay_money" property="payMoney" jdbcType="REAL" />
+		<result column="save_money" property="saveMoney" jdbcType="REAL" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="pay_type" property="payType" jdbcType="INTEGER" />
+		<result column="pay_way" property="payWay" jdbcType="INTEGER" />
+		<!-- 界面显示字段  -->
+		<result column="device_no" property="deviceNo" jdbcType="VARCHAR" />
+		<result column="port_no" property="portNo" jdbcType="VARCHAR" />
+		<result column="cTimeStr" property="cTimeStr" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		id, order_no, user_account, device_id, port_id, 
+		price, mins, price_type, ctime, order_money,
+		pay_money, save_money, status, pay_type, pay_way
+	</sql>
+	
+	<!-- 根据条件查询具体小区的充电订单 -->
+	<select id="queryByCId" resultMap="BaseResultMap" parameterType="com.fxzhj.model.Order">
+		SELECT b.device_no,e.port_no,a.*,date_format(a.ctime,'%Y-%m-%d %H:%i:%S') cTimeStr 
+		FROM t_order a 
+		LEFT JOIN t_device b ON a.device_id = b.id 
+		LEFT JOIN t_community c ON b.community_id=c.community_id 
+		LEFT JOIN t_range_device d ON a.device_id=d.device_id
+		LEFT JOIN t_port e ON a.device_id=e.device_id and a.port_id=e.id
+		where c.community_id=#{comOrareId} 
+		<if test="deviceNo != null and deviceNo != '' ">
+			and b.device_no=#{deviceNo}
+		</if>
+		<if test="orderNo != null and orderNo != '' ">
+			and a.order_no=#{orderNo}
+		</if>
+		<if test="status != null">
+			and a.status=#{status}
+		</if>
+		<if test="payType != null">
+			and a.pay_type=#{payType}
+		</if>
+		<if test="qStartTime !=null and qStartTime !=''">
+			<![CDATA[ 
+        		and a.ctime >= #{qStartTime}
+           	]]>
+		</if>
+		<if test="qEndTime !=null and qEndTime !=''">
+			<![CDATA[ 
+        		and a.ctime <= #{qEndTime}
+           	]]>
+		</if>
+		order by a.ctime desc
+	</select>
+	
+	<!-- 根据条件查询具体区域的充电订单 -->
+	<select id="queryByAId" resultMap="BaseResultMap" parameterType="com.fxzhj.model.Order">
+		SELECT b.device_no,e.port_no,a.*,date_format(a.ctime,'%Y-%m-%d %H:%i:%S') cTimeStr 
+		FROM t_order a 
+		LEFT JOIN t_device b ON a.device_id = b.id 
+		LEFT JOIN t_area c ON b.area_id=c.id 
+		LEFT JOIN t_range_device d ON a.device_id=d.device_id
+		LEFT JOIN t_port e ON a.device_id=e.device_id and a.port_id=e.id
+		where c.id=#{comOrareId}
+		<if test="deviceNo != null and deviceNo != '' ">
+			and b.device_no=#{deviceNo}
+		</if>
+		<if test="orderNo != null and orderNo != '' ">
+			and a.order_no=#{orderNo}
+		</if>
+		<if test="status != null">
+			and a.status=#{status}
+		</if>
+		<if test="payType != null">
+			and a.pay_type=#{payType}
+		</if>
+		<if test="qStartTime !=null and qStartTime !=''">
+			<![CDATA[ 
+        		and a.ctime >= #{qStartTime}
+           	]]>
+		</if>
+		<if test="qEndTime !=null and qEndTime !=''">
+			<![CDATA[ 
+        		and a.ctime <= #{qEndTime}
+           	]]>
+		</if>
+		order by a.ctime desc
+	</select>
+	
+	<cache />
+</mapper>

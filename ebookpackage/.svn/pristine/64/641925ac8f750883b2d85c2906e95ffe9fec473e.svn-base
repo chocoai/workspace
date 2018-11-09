@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.ebp.manage.dao.BrowserDao">
+
+	<resultMap type="com.whty.ebp.manage.model.Browser" id="BrowserResult">
+		<id property="id" column="id"/>
+		<id property="name" column="name"/>
+		<id property="address" column="address"/>
+		<id property="logo" column="logo"/>
+		<id property="groupId" column="groupId"/>
+		<id property="groupName" column="groupName"/>
+		<id property="version" column="version"/>
+		<id property="updateTime" column="update_time"/>
+		<id property="flatModelIds" column="model_code"/>
+	</resultMap>
+	
+	<update id="updateWhiteVersion" parameterType="map" >
+		update TA_BROWSER_WHITE_LIST set
+		<trim suffixOverrides=",">
+		<if test="updateTime != null">update_time=#{updateTime},</if>
+		</trim>
+	</update>
+	
+	<update id="updateLabelVersion" parameterType="map" >
+		update TA_BROWSER_LABEL set
+		<trim suffixOverrides=",">
+		<if test="updateTime != null">update_time=#{updateTime},</if>
+		</trim>
+	</update>
+	
+	<select id="queryWhiteListByModelCode" parameterType="map" resultMap="BrowserResult">
+  	select t1.address from TA_BROWSER_WHITE_LIST t1,TA_BROWSER_FLAT_MODEL t2, TA_FLAT_MODEL t3 
+	where t1.ID=t2.BROWSER_ID and t2.FLAT_MODEL_ID=t3.ID 
+	and t3.MODEL_CODE=#{modelCode}
+  union all
+  	select t1.address from TA_BROWSER_LABEL t1,TA_BROWSER_FLAT_MODEL t2, TA_FLAT_MODEL t3 
+	where t1.ID=t2.BROWSER_ID and t2.FLAT_MODEL_ID=t3.ID 
+	and t3.MODEL_CODE=#{modelCode}
+	</select>
+	
+	<select id="queryWhiteVersionByModelCode" resultMap="BrowserResult">
+  	select max(update_time) as update_time from 
+ 	 (select update_time from TA_BROWSER_WHITE_LIST
+      union all
+      select update_time from TA_BROWSER_LABEL ) t
+	</select>
+	
+	<select id="queryLabelByModelCode" parameterType="map" resultMap="BrowserResult">
+	select t1.* from TA_BROWSER_LABEL t1,TA_BROWSER_FLAT_MODEL t2, TA_FLAT_MODEL t3 
+	where t1.ID=t2.BROWSER_ID and t2.FLAT_MODEL_ID=t3.ID 
+	and t3.MODEL_CODE=#{modelCode}
+	order by t1.groupId,t1.id
+	</select>
+	
+	<select id="queryLabelVersionByModelCode" resultMap="BrowserResult">
+  	select max(update_time) as update_time from TA_BROWSER_LABEL
+	</select>	
+	
+	<select id="whiteListByCondition" parameterType="map" resultMap="BrowserResult">
+	  select t1.address,t1.id,
+	 (select MODEL_CODE from TA_FLAT_MODEL WHERE ID=flat_model_id) as model_code 
+	 from TA_BROWSER_LABEL t1 left join TA_BROWSER_FLAT_MODEL t2 on t1.id = t2.browser_id
+	 union all
+	 select t1.address,t1.id,
+	 (select MODEL_CODE from TA_FLAT_MODEL WHERE ID=flat_model_id) as model_code 
+	 from TA_BROWSER_WHITE_LIST t1 left join TA_BROWSER_FLAT_MODEL t2 on t1.id = t2.browser_id
+	</select>
+	
+	<select id="labelByCondition" parameterType="map" resultMap="BrowserResult">
+	  select t1.*,
+	 (select MODEL_CODE from TA_FLAT_MODEL WHERE ID=flat_model_id) as model_code 
+	 from TA_BROWSER_LABEL t1 left join TA_BROWSER_FLAT_MODEL t2 on t1.id = t2.browser_id
+	 order by t1.groupId,t1.id
+	</select>
+	
+	<insert id="saveBrowserFlatModel" parameterType="map">
+		insert into TA_BROWSER_FLAT_MODEL(
+		<trim suffixOverrides=",">
+		<if test="flatModelId != null">flat_model_id,</if>
+		<if test="browserId != null">browser_id,</if>
+		</trim>
+		)
+		values(
+		<trim suffixOverrides=",">
+		<if test="flatModelId != null">#{flatModelId},</if>
+		<if test="browserId != null">#{browserId},</if>
+		</trim>
+		)
+	</insert>
+
+	<insert id="saveWhite" parameterType="com.whty.ebp.manage.model.Browser">
+		insert into TA_BROWSER_WHITE_LIST(
+		<trim suffixOverrides=",">
+		<if test="id != null">id,</if>
+		<if test="address!= null">address,</if>
+		<if test="updateTime != null">update_time,</if>
+		</trim>
+		)
+		values(
+		<trim suffixOverrides=",">
+		<if test="id != null">#{id},</if>
+		<if test="address!= null">#{address},</if>
+		<if test="updateTime != null">#{updateTime},</if>
+		</trim>
+		)
+	</insert>
+	
+	<insert id="saveLabel" parameterType="com.whty.ebp.manage.model.Browser">
+		insert into TA_BROWSER_LABEL(
+		<trim suffixOverrides=",">
+		<if test="id != null">id,</if>
+		<if test="name != null">name,</if>
+		<if test="address!= null">address,</if>
+		<if test="logo != null">logo,</if>
+		<if test="groupId != null">groupId,</if>
+		<if test="groupName != null">groupName,</if>
+		<if test="updateTime != null">update_time,</if>
+		</trim>
+		)
+		values(
+		<trim suffixOverrides=",">
+		<if test="id != null">#{id},</if>
+		<if test="name != null">#{name},</if>
+		<if test="address!= null">#{address},</if>
+		<if test="logo != null">#{logo},</if>
+		<if test="groupId != null">#{groupId},</if>
+		<if test="groupName != null">#{groupName},</if>
+		<if test="updateTime != null">#{updateTime},</if>
+		</trim>
+		)
+	</insert>
+
+	<delete id="deleteBrowserById"  parameterType="String">
+		delete from TA_BROWSER_FLAT_MODEL where BROWSER_ID= #{id}
+	</delete>
+
+	<delete id="deleteByMap"  parameterType="map">
+		delete from TA_BROWSER_FLAT_MODEL where BROWSER_ID= #{id}
+		and flat_model_id = 
+		(select id from TA_FLAT_MODEL where model_code = #{flatModelIds})
+	</delete>
+	
+	<select id="queryCountById" parameterType="String"  resultType="int">
+  		select count(browser_id) as count from TA_BROWSER_FLAT_MODEL where BROWSER_ID= #{id}
+	</select>	
+	
+	<select id="queryById" parameterType="string" resultMap="BrowserResult">
+		select t1.address,t1.id,
+		 (select MODEL_CODE from TA_FLAT_MODEL WHERE ID=flat_model_id) as model_code 
+		 from TA_BROWSER_LABEL t1 left join TA_BROWSER_FLAT_MODEL t2 on t1.id = t2.browser_id
+		 where t1.id = #{id}
+	 union all
+		 select t1.address,t1.id,
+		 (select MODEL_CODE from TA_FLAT_MODEL WHERE ID=flat_model_id) as model_code 
+		 from TA_BROWSER_WHITE_LIST t1 left join TA_BROWSER_FLAT_MODEL t2 on t1.id = t2.browser_id
+		 where t1.id = #{id}
+	</select>
+	
+	<delete id="deleteBrowserWhiteById" parameterType="String">
+		delete from TA_BROWSER_WHITE_LIST where id= #{id}
+	</delete>
+	
+	<delete id="deleteBrowserLabelById" parameterType="String">
+		delete from TA_BROWSER_LABEL where id= #{id}
+	</delete>
+	
+	<update id="updateWhite" parameterType="com.whty.ebp.manage.model.Browser">
+		update TA_BROWSER_WHITE_LIST set
+		<trim suffixOverrides=",">
+		<if test="memo != null">address=#{address},</if>
+		<if test="updateTime != null">update_time=#{updateTime},</if>
+		</trim>
+		where id=#{id}
+	</update>
+	
+</mapper>

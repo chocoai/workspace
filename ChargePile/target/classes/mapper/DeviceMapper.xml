@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fxzhj.mapper.DeviceMapper">
+	<resultMap id="BaseResultMap" type="com.fxzhj.model.Device">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="area_id" property="areaId" jdbcType="INTEGER" />
+		<result column="community_id" property="communityId" jdbcType="INTEGER" />
+		<result column="device_no" property="deviceNo" jdbcType="VARCHAR" />
+		<result column="card_no" property="cardNo" jdbcType="VARCHAR" />
+		<result column="made_in" property="madeIn" jdbcType="VARCHAR" />
+		<result column="out_date" property="outDate" jdbcType="DATE" />
+		<result column="in_date" property="inDate" jdbcType="DATE" />
+		<result column="port_num" property="portNum" jdbcType="INTEGER" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="device_ip" property="deviceIp" jdbcType="VARCHAR" />
+		<result column="node_id" property="nodeId" jdbcType="VARCHAR" />
+		<result column="update_time" property="updateTime" jdbcType="DATE" />
+		
+		<!-- 界面需要字段 -->
+		<result column="site_name" property="siteName" jdbcType="VARCHAR" />
+		<result column="tel_phone" property="telPhone" jdbcType="VARCHAR" />
+		<result column="lng" property="lng" jdbcType="VARCHAR" />
+		<result column="lat" property="lat" jdbcType="VARCHAR" />
+		<result column="start_time" property="startTime" jdbcType="VARCHAR" />
+		<result column="end_time" property="endTime" jdbcType="VARCHAR" />
+		<result column="endLoadTime" property="endLoadTime" jdbcType="VARCHAR" />
+		<result column="count" property="count" jdbcType="VARCHAR" />
+		<result column="outDateStr" property="outDateStr" jdbcType="VARCHAR" />
+		<result column="inDateStr" property="inDateStr" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		id, name, area_id, community_id, device_no, card_no, made_in, out_date,
+		in_date, port_num, status, device_ip, node_id, 
+		date_format(out_date,'%Y-%m-%d') outDateStr,
+		date_format(in_date,'%Y-%m-%d') inDateStr
+	</sql>
+	
+	<!-- 查询设备 -->
+	<select id="queryDevice" resultMap="BaseResultMap" parameterType="com.fxzhj.model.Device">
+		select
+		<include refid="Base_Column_List" />
+		from t_device 
+		where 1=1 
+		<if test="deviceNo != null and deviceNo != '' ">
+			and device_no = #{deviceNo}
+		</if>
+		<if test="cardNo != null and cardNo != '' ">
+			and card_no = #{cardNo}
+		</if>
+		<if test="madeIn != null and madeIn != '' ">
+			and made_in = #{madeIn}
+		</if>
+		<if test="date !=null and date !=''">
+        	<![CDATA[ 
+        		and in_date = #{date}
+           	]]>
+      	</if>
+		ORDER BY in_date DESC
+	</select>
+	
+	<!-- 生产厂商下拉框显示  -->
+	<select id="showCombobox" resultMap="BaseResultMap" >
+		select made_in from t_device GROUP BY made_in ORDER BY made_in
+	</select>
+	
+	<!-- 新增判断是否重复 -->
+	<select id="count" resultType="int" parameterType="com.fxzhj.model.Device">
+		select count(1) from t_device where device_no=#{deviceNo}
+	</select>
+	
+	<!-- 新增数据 -->
+	<insert id="addDevice" parameterType="com.fxzhj.model.Device" useGeneratedKeys="true" keyProperty="id">
+		insert into t_device (id, name, area_id, community_id, device_no, card_no,
+		made_in, out_date, in_date,	port_num, status, device_ip, node_id)
+		values (#{id}, #{name}, #{areaId}, #{communityId}, #{deviceNo}, #{cardNo},
+		#{madeIn}, #{outDate}, #{inDate}, #{portNum}, #{status}, #{deviceIp}, #{nodeId})
+	</insert>
+	
+	<!-- 修改判断是否重复 -->
+	<select id="countClearById" resultType="int" parameterType="com.fxzhj.model.Device">
+		select count(1) from t_device where device_no=#{deviceNo} and id !=#{id} 
+	</select>
+	
+	<!-- 修改数据 -->
+	<update id="updateDevice" parameterType="com.fxzhj.model.Device">
+		update t_device set
+		<if test="name != null and name != '' ">
+			 name = #{name},
+		</if>
+		<if test="areaId != null">
+			 area_id = #{areaId},
+		</if>
+		<if test="communityId != null">
+			 community_id = #{communityId},
+		</if>
+		<if test="deviceNo != null and deviceNo != '' ">
+			 device_no = #{deviceNo},
+		</if>
+		<if test="cardNo != null and cardNo != '' ">
+			 card_no = #{cardNo},
+		</if>
+		<if test="madeIn != null and madeIn != '' ">
+			 made_in = #{madeIn},
+		</if>
+		<if test="outDate != null ">
+			out_date = #{outDate},
+		</if>
+		<if test="portNum != null ">
+			 port_num = #{portNum},
+		</if>
+		<if test="deviceIp != null and deviceIp != '' ">
+			 device_ip = #{deviceIp},
+		</if>
+		<if test="nodeId != null and nodeId != '' ">
+			 node_id = #{nodeId},
+		</if>
+		<if test="updateTime != null ">
+			 update_time = #{updateTime},
+		</if>
+		<if test="updateTime == null ">
+			 update_time = null
+		</if>
+		where id = #{id}
+	</update>
+	
+	<!-- 修改设备绑定地址数据 -->
+	<update id="updateDeviceAreaorComm" parameterType="com.fxzhj.model.Device">
+		update t_device set
+		<if test="areaId != null">
+			 area_id = #{areaId}
+		</if>
+		<if test="communityId != null">
+			 community_id = #{communityId}
+		</if>
+		where id = #{id}
+	</update>
+	
+	<!-- 查询所有未绑定的设备 -->
+	<select id="queryUnboundedDevice" resultMap="BaseResultMap" parameterType="com.fxzhj.model.Device">
+		SELECT a.id,a.name,a.area_id,a.community_id,b.site_name,b.tel_phone,b.lng,b.lat,b.start_time,b.end_time FROM (
+			SELECT id,name,area_id,community_id FROM t_device  WHERE (community_id is null and area_id is null) 
+			<if test="areaId != null ">
+			 or area_id = #{areaId} 
+			</if>
+			<if test="communityId != null ">
+				 or community_id = #{communityId}
+			</if>
+	 	) a LEFT JOIN t_range_device b ON a.id = b.device_id 
+	</select>
+	
+	<!-- 根据小区id修改绑定地址 -->
+	<update id="updateByCId" parameterType="java.lang.Integer">
+		update t_device set area_id=null, community_id=null where community_id=#{0}
+	</update>
+	
+	<!-- 根据区域id修改绑定地址 -->
+	<update id="updateByAId" parameterType="java.lang.Integer">
+		update t_device set area_id=null, community_id=null where area_id=#{0}
+	</update>
+	
+	
+	<!-- 根据查询条件查询小区设备运营记录 -->
+	<select id="queryOperateDevice" resultMap="BaseResultMap" parameterType="com.fxzhj.model.Device">
+		SELECT a.id,a.name,a.area_id,a.community_id,a.device_no,a.card_no,a.status,a.port_num,
+		a.device_ip,b.site_name,b.tel_phone,b.lng,b.lat,b.start_time,b.end_time,c.count,
+		date_format(c.start_time, '%Y-%m-%d') endLoadTime FROM t_device a
+		LEFT JOIN t_range_device b ON a.id = b.device_id
+		LEFT JOIN ( SELECT a.device_id,a.start_time,a.count FROM (
+			SELECT device_id,start_time,count(1) count FROM	t_record ORDER BY start_time DESC 
+			) a GROUP BY a.device_id ) c ON a.id = c.device_id 
+		WHERE 1 = 1
+		<if test="areaId != null ">
+			 and a.area_id = #{areaId}
+		</if>
+		<if test="communityId != null ">
+			and a.community_id = #{communityId}
+		</if>
+		<if test="deviceNo != null and deviceNo != '' ">
+			 and a.device_no = #{deviceNo}
+		</if>
+		<if test="cardNo != null and cardNo != '' ">
+			 and a.card_no = #{cardNo}
+		</if>
+		<if test="status != null ">
+			 and a.status = #{status}
+		</if>
+		ORDER BY a.in_date DESC
+	</select>
+	
+	<!-- 根据区域id修改绑定地址 -->
+	<update id="updateStatusById" parameterType="com.fxzhj.model.Device">
+		update t_device set status=#{1} where id=#{0}
+	</update>
+	
+	<!-- 根据id查询设备端口和节点编号  -->
+	<select id="queryById" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select port_num,node_id,status from t_device where id =#{0} 
+	</select>
+	<cache />
+</mapper>

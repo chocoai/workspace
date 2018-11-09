@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+		<!-- 全局映射器启用缓存 -->
+		<setting name="cacheEnabled" value="true" />
+		<!-- 查询时，关闭关联对象即时加载以提高性能 -->
+		<setting name="lazyLoadingEnabled" value="false" />
+		<setting name="autoMappingBehavior" value="FULL" />
+	</settings>
+
+	<!-- mybaties别名配置 -->
+	<typeAliases>
+		<!-- 
+		<typeAlias type="com.whty.mxbj.api.model.User" alias="User" />
+		<typeAlias type="com.whty.mxbj.api.model.Page" alias="Page" />
+		<typeAlias type="com.whty.mxbj.api.model.Pen" alias="Pen" />
+		<typeAlias type="com.whty.mxbj.api.model.Note" alias="Note" />
+		<typeAlias type="com.whty.mxbj.api.model.UserPen" alias="UserPen" />
+		<typeAlias type="com.whty.mxbj.api.model.UserConfig" alias="UserConfig" />
+		<typeAlias type="com.whty.mxbj.api.model.BaseProperty"
+			alias="BaseProperty" />
+		<typeAlias type="com.whty.mxbj.api.model.ArchiveNote" alias="ArchiveNote" />
+		<typeAlias type="com.whty.mxbj.api.model.ArchiveNotePage"
+			alias="ArchiveNotePage" />
+		<typeAlias type="com.whty.mxbj.api.model.Subject" alias="Subject" />
+		<typeAlias type="com.whty.mxbj.api.model.NoteTemplate"
+			alias="noteTemplate" />
+			 -->
+	</typeAliases>
+</configuration>

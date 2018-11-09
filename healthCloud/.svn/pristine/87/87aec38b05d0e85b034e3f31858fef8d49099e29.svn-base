@@ -1,0 +1,7 @@
+主动获取位置命令：
+   http://api.ejyhealth.com:9995/yhcrtSocket/setting/api
+       参数：  {'sid'：'S13','biz':{'imei':'XXXXXXXXXXXXXXXXX'}}
+主动获取心率命令：
+   http://api.ejyhealth.com:9995/yhcrtSocket/setting/api
+       参数：  {'sid'：'S5','biz':{'imei':'XXXXXXXXXXXXXXXXX'}}
+       

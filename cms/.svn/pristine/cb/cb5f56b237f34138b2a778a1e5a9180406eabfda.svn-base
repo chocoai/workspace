@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta content="${content.tagStr!}" http-equiv="keywords" />
+<meta content="${content.description!}" http-equiv="description" />
+<title>${title} - ${site.name}</title>
+
+<!-- <link rel="stylesheet" type="text/css" href="/${res}/css/index.css" /> -->
+
+<link rel="stylesheet" type="text/css" href="/${res}/css/public_all.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/global.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/index_con.css" />
+
+<link rel="stylesheet" type="text/css" href="${resSys}/front.css" />
+<link rel="stylesheet" type="text/css" href="${resSys}/jqueryUI/jquery.ui.css" />
+
+
+<script src="/${res}/js/dc/jquery-1.8.3.min.js" type="text/javascript"></script>
+
+<script src="/${res}/js/dc/settitle.js" type="text/javascript"></script>
+
+<script src="${resSys}/jquery.js" type="text/javascript"></script>
+<script src="${resSys}/jqueryUI/jquery-ui.js" type="text/javascript"></script>
+<script src="${resSys}/front.js" type="text/javascript"></script>
+<script src="${resSys}/ckplayer/ckplayer.js" type="text/javascript"></script>
+<script src="${resSys}/ckplayer/offlights.js" type="text/javascript"></script>
+<script type="text/javascript">
+	$(function() {
+		Cms.checkPerm("${base}", "${content.id}");
+		Cms.collectCsi("${base}", "collectCsiDiv", "collect_csi",
+				"${content.id}");
+		Cms.attachment("${base}", "${content.id}",
+				"${content.attachments?size}", "attach");
+		Cms.viewCount("${base}", "${content.id}");
+		Cms.siteFlow("${base}", location.href, document.referrer,
+				"${site.config.flowSwitch?string}");
+	});
+</script>
+
+</head>
+
+<body>
+	[#include "../include/header.html"/] 
+	[#include "../include/navi.html"/]
+
+	<div style="clear: both;"></div>
+
+	<!--内容 开始-->
+	<div class="content">
+		<div class="box mt10">
+			<div class="map">
+				<img src="/${res}/images/home.png" width="20" height="18" alt="" />
+				<a href="${base}/">首页</a>> 
+				[#list channel.nodeList as n]
+				<a target="_blank" href="${n.url}">${n.name}</a>
+					[#if n_has_next] > [/#if]
+				[/#list] > 正文
+			</div>
+
+			<div class="details">
+
+				<div class="details_left">
+					<div class="article_title">${content.title}</div>
+					<div class="time">
+						发布时间： ${content.releaseDate} &nbsp;作者：${content.author!'本站编辑'} &nbsp; 来源： ${content.origin!'本站原创'} &nbsp; 浏览次数：
+						<span id="views"></span>
+					</div>
+					<div class="article">
+						<!-- <img src="/${res}/images/adds.jpg" alt="" /> -->
+						<p>
+							${txt!}
+							[#include "inc_share.html"/]
+							<div style="clear: both;"></div>
+							[#include "inc_relation.html"/]
+
+
+						</p>
+					</div>
+					<div style="clear: both;"></div>
+					<!--  ${content.commentsCheckedNum!}-->
+					[#if channel.commentControl!=2]
+					<div class="send_mess">
+						<span style="float: left">我要评论</span>
+						<span style="float: right;">
+							<a href="${base}/comment.jspx?contentId=${content.id}" target="_blank">
+								已有
+								<span id="comments"></span>
+								条评论
+							</a>
+						</span>
+					</div>
+					[#include "inc_comment_input.html"/]
+                    [#include "../special/comment_list.html"/]
+			       [/#if]
+				</div>
+
+				[#include "../include/right.html"/]
+
+
+			</div>
+
+
+		</div>
+
+	</div>
+
+	<!--内容 end-->
+
+	[#include "../include/footer.html"/]
+</body>
+</html>

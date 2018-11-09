@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="keywords" content="${site.keywords!}" />
+<meta http-equiv="description" content="${site.description!}" />
+<title>${topic.name} - 专题 - ${site.name}</title>
+
+<link rel="stylesheet" type="text/css" href="/${res}/css/global.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/zt.css" />
+
+</head>
+
+<body class="zt_body05">
+	<!---专题top 开始--->
+	<div class="zt_top">
+		<div class="zt_top_center">
+			<div class="zt_logo">
+				<a href="${base}/">
+					<img src="/${res}/images/logo.png">
+				</a>
+			</div>
+		</div>
+	</div>
+	<!---专题top 结束--->
+
+	<!----专题内容 开始--->
+	<div class="zt_con">
+		<div class="bigbanner_box">
+			<div class="bigbanner">
+				<img src="${topic.titleImg!site.defImg}">
+			</div>
+		</div>
+		<div class="zt_con_center">
+		     <div class="part2">
+		      	[@cms_content_list count='4' orderBy='4' typeId='1,2,3,4' titLen='18' channelOption='1' topicId=topic.id ]
+		        [#list tag_list as content]
+		        [#if content_index == 0]
+		        <div class="part2_l">
+		        	<a href="${content.url}" title="${content.title}">
+		        		<img src="${content.titleImg!content.typeImg!site.defImg}">
+		        	</a>
+		        </div>
+		        <div class="part2_c">
+		        [/#if]
+		        [#if content_index == 1 || content_index == 2]
+		        	<h1><a href="${content.url}">[@text_cut s=content.title! len='30' append='...'/]</a></h1>
+			    	<p class="h1_neirong">[@text_cut s=content.description! len='90' append='...'/]</p>
+		        [/#if]
+		        [#if (content_index == 1 && !content_has_next) || content_index == 2]
+		        </div>
+			    [/#if]
+			    [#if content_index == 3]
+		        <div class="part2_r">
+			      <span>
+			      	<a href="${content.url}" title="${content.title}">
+			      		<img src="${content.titleImg!content.typeImg!site.defImg}">
+			      	</a>
+			      </span>
+			      <p class="part2_r_nr">[@text_cut s=content.description! len='70' append='...'/]</p>
+			    </div>
+			    [/#if]             
+		        [/#list]
+		        [/@cms_content_list]
+		    </div>
+		[#list topicChannels as topicChannel]
+			[#if topicChannel_index = 0]
+			<div class="part10">
+				<div class="part_bt">
+					<a href="${base}/topic/getList.jsp?topicId=${topic.id}&topicChannelId=${topicChannel.channelId}">
+						${topicChannel.channelName} 
+					</a>
+				</div>
+				<div class="part_kuang">
+				[@cms_content_list count='4' orderBy='4' typeId='1,2,3,4' titLen='18' channelOption='1' topicId=topic.id topicChannelId=topicChannel.channelId ]
+                	[#list tag_list as content]
+                	<div class="part10_little">
+						<a href="${content.url}">
+							<img src="${content.titleImg!content.typeImg!site.defImg}">
+						</a>
+						<h4 class="part10_tit">
+							<a href="${content.url}">[@text_cut s=content.title! len='30' append='...'/]</a>
+						</h4>
+						<p>[@text_cut s=content.description! len='60' append='...'/]</p>
+					</div>
+                    [/#list]
+                [/@cms_content_list]
+				</div>
+			</div>
+			[#elseif !topicChannel_has_next]
+			<div class="part8">
+				<div class="part_bt">
+					<a href="${base}/topic/getList.jsp?topicId=${topic.id}&topicChannelId=${topicChannel.channelId}">
+						${topicChannel.channelName} 
+					</a>
+				</div>
+				<div class="part_kuang part8kuang">
+				[@cms_content_list count='6' orderBy='4' typeId='1,2,3,4' titLen='18' channelOption='1' topicId=topic.id topicChannelId=topicChannel.channelId ]
+                	[#list tag_list as content]
+                	[#if content_index == 0]
+                	<span class="part8_lpic">
+                		<a href="${content.url}" title="${content.title}">
+                			<img src="${content.titleImg!content.typeImg!site.defImg}">
+                		</a>
+					</span>
+                	[/#if]
+                	[#if content_index == 1]
+                	<span class="part8_rpic">
+						<a href="${content.url}" title="${content.title}">
+                			<img src="${content.titleImg!content.typeImg!site.defImg}">
+                		</a>
+					</span>
+                	[/#if]
+                	[#if content_index == 2]
+                	<ul class="part8_list">
+						<li class="row1">
+							<a href="${content.url}" title="${content.title}">
+								<img src="${content.titleImg!content.typeImg!site.defImg}">
+							</a>
+						</li>
+                	[/#if]
+                	[#if content_index > 2]
+                		<li class="row1">
+							<a href="${content.url}" title="${content.title}">
+								<img src="${content.titleImg!content.typeImg!site.defImg}">
+							</a>
+						</li>
+                	[/#if]
+                	[#if content_index > 1 && !content_has_next]
+                	</ul>
+                	[/#if]
+                	[/#list]
+                [/@cms_content_list]
+					
+				</div>
+			</div>
+			[#else]
+			<div class="part9">
+				<div class="part_bt">
+					<a href="${base}/topic/getList.jsp?topicId=${topic.id}&topicChannelId=${topicChannel.channelId}">
+						${topicChannel.channelName} 
+					</a>
+				</div>
+				<div class="part_kuang">
+				[@cms_content_list count='13' orderBy='4' typeId='1,2,3,4' titLen='18' channelOption='1' topicId=topic.id topicChannelId=topicChannel.channelId ]
+                	[#list tag_list as content]
+                	[#if content_index == 0]
+                	<div class="part9_l">
+	                	<a href="${content.url}" title="${content.title}">
+							<img src="${content.titleImg!content.typeImg!site.defImg}">
+						</a>
+					</div>
+					<div class="part9_r">
+						<ul class="part9_ul">
+                	[/#if]
+	                [#if content_index > 0]
+	                		<li>
+								<a href="${content.url}" title="${content.title}">[@text_cut s=content.title! len='20' append='...'/]</a>
+							</li>
+					[/#if]
+					[#if !content_has_next]
+                    	</ul>
+					</div>
+                    [/#if]
+                	[/#list]
+                [/@cms_content_list]
+					
+				</div>
+			</div>
+			[/#if]
+		[/#list]	
+
+		</div>
+	</div>
+	<!----专题内容 结束--->
+
+	<!--尾部 开始-->
+	[#include "../include/footer.html"/]
+	<!--尾部 开始-->
+
+</body>
+</html>

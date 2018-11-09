@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bigdata.assis.manage.dao.CountOperateDao">
+
+	<resultMap type="com.bigdata.assis.manage.model.UserOperate" id="UserOperateResult">		
+		<result property="USER_ID" column="USER_ID" />
+		<result property="USER_NAME" column="USER_NAME" />
+		<result property="USER_ACCOUNT" column="USER_ACCOUNT" />
+		<result property="ALL_LOGIN_NUM" column="ALL_LOGIN_NUM" />
+		<result property="LAST_LOGIN_TIME" column="LAST_LOGIN_TIME" />
+		<result property="ALL_LOGIN_USE_TIME" column="ALL_LOGIN_USE_TIME" />
+		<result property="ALL_LOGIN_VALID_NUM" column="ALL_LOGIN_VALID_NUM" />
+		<result property="ALL_LOGIN_VALID_TIME" column="ALL_LOGIN_VALID_TIME" />
+		<result property="ALL_JXZS_BS_NUM" column="ALL_JXZS_BS_NUM" />
+		<result property="ALL_JXZS_KTSL_NUM" column="ALL_JXZS_KTSL_NUM" />
+		<result property="ALL_TERMINAL_DZSB_NUM" column="ALL_TERMINAL_DZSB_NUM" />
+		<result property="ALL_TERMINAL_ZZHB_NUM" column="ALL_TERMINAL_ZZHB_NUM" />
+		<result property="ALL_TERMINAL_XSZNB_NUM" column="ALL_TERMINAL_XSZNB_NUM"/>
+		<result property="ALL_TERMINAL_DTQ_NUM" column="ALL_TERMINAL_DTQ_NUM"/>
+		<result property="ALL_TERMINAL_YDJT_NUM" column="ALL_TERMINAL_YDJT_NUM"/>
+		
+		<result property="GENDER" column="GENDER" />
+		<result property="PHONE_NUMBER" column="PHONE_NUMBER" />
+		<result property="EMAIL" column="EMAIL" />
+		<result property="CITY_NAME" column="CITY_NAME" />
+		<result property="ORGA_NAME" column="ORGA_NAME" />
+		<result property="EVENT_NAME" column="EVENT_NAME"/>
+		<result property="ALL_EVENT_USE_NUM" column="ALL_EVENT_USE_NUM"/>
+	</resultMap>
+
+	<select id="getUserOperate"  parameterType="map" resultMap="UserOperateResult" >
+		select * from DW.RPT_ZHKT_ALLMETRIC_USER_D WHERE 1=1
+		<if test="PROV_CODE != null and PROV_CODE != ''">and PROV_CODE = #{PROV_CODE}</if>
+		<if test="CITY_CODE != null and CITY_CODE != ''">and CITY_CODE = #{CITY_CODE}</if>
+		<if test="ORGA_NAME != null and ORGA_NAME != ''">and ORGA_NAME = #{ORGA_NAME}</if>
+		<if test="USER_NAME != null and USER_NAME != ''">and USER_NAME = #{USER_NAME}</if>
+		<if test="USER_ACCOUNT != null and USER_ACCOUNT != ''">and USER_ACCOUNT = #{USER_ACCOUNT}</if>
+		order by LAST_LOGIN_TIME desc
+	</select>
+
+	<select id="getUserFunc"  parameterType="map" resultMap="UserOperateResult" >
+		select * from DW.RPT_ZHKT_EVENTFUC_USER_D WHERE USER_ID = #{USER_ID}
+	</select>
+
+</mapper>

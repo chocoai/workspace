@@ -1,0 +1,284 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.iHealthCloud.mapper.HdStepMapper">
+	<resultMap id="BaseResultMap" type="com.yhcrt.iHealthCloud.entity.HdStep">
+		<id column="cid" jdbcType="INTEGER" property="cid" />
+		<result column="imei" jdbcType="VARCHAR" property="imei" />
+		<result column="member_id" jdbcType="INTEGER" property="memberId" />
+		<result column="data_date" jdbcType="VARCHAR" property="dataDate" />
+		<result column="upload_time" jdbcType="VARCHAR" property="uploadTime" />
+		<result column="step_count" jdbcType="INTEGER" property="stepCount" />
+	</resultMap>
+	
+	<resultMap id="HdStepExtendMap" type="com.yhcrt.iHealthCloud.pojo.HdStepDTO">
+		<result column="dataDate" jdbcType="VARCHAR" property="dataDate" />
+		<result column="stepCount" jdbcType="VARCHAR" property="stepCount" />
+	</resultMap>
+	
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach collection="criterion.value" item="listItem" open="(" separator="," close=")">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		cid, imei, member_id, data_date, upload_time, step_count
+	</sql>
+	
+	<select id="selectByExample" parameterType="com.yhcrt.iHealthCloud.entity.HdStepExample" resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from hd_step
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	
+	<select id="getStepByTime" parameterType="map" resultMap="HdStepExtendMap">
+		SELECT substring(hd_step.data_date, 6, 5) AS dataDate,
+		       sum(hd_step.step_count) AS stepCount
+		  FROM hd_step
+		 WHERE member_id = #{memberId,jdbcType=VARCHAR}
+		       AND data_date &gt;= #{startTime,jdbcType=VARCHAR}
+		       AND data_date &lt;= #{endTime,jdbcType=VARCHAR}
+		GROUP BY dataDate;	
+	</select>
+	
+	<select id="getStepDataForWeek" parameterType="java.lang.String" resultMap="HdStepExtendMap">
+		SELECT DATE_FORMAT(data_date, '%m-%d') AS dataDate, sum(step_count) AS stepCount
+		  FROM hd_step WHERE member_id = #{memberId,jdbcType=VARCHAR}
+		GROUP BY dataDate ORDER BY DATE_FORMAT(data_date, '%Y-%m-%d') ASC LIMIT 7
+	</select>
+	
+	<select id="getMaxMinAvgStepDataForWeek" parameterType="java.lang.String" resultType="com.yhcrt.iHealthCloud.pojo.DataItem">
+		SELECT max(t.stepCount) as max, min(t.stepCount) as min, round(avg(t.stepCount)) as avg FROM
+			(SELECT DATE_FORMAT(data_date, '%m-%d') AS dataDate, sum(step_count) AS stepCount
+			  FROM hd_step WHERE member_id = #{memberId,jdbcType=VARCHAR}
+			GROUP BY dataDate ORDER BY DATE_FORMAT(data_date, '%Y-%m-%d') DESC LIMIT 7) t
+	</select>
+	
+	<!-- 查询最近七天行走总步数 -->
+	<select id="selectHdStep" parameterType="map" resultMap="BaseResultMap">
+		select cid, imei, member_id, data_date, DATE_FORMAT(MAX(upload_time), '%m-%d') upload_time, 
+		SUM(step_count) step_count from hd_step 
+		where member_id=#{memberId} 
+		and DATE_FORMAT(upload_time, '%Y-%m-%d') &gt;= DATE_FORMAT(#{startTime}, '%Y-%m-%d') 
+		and DATE_FORMAT(upload_time, '%Y-%m-%d') &lt;= DATE_FORMAT(#{endTime}, '%Y-%m-%d') 
+		GROUP BY DATE_FORMAT(upload_time, '%Y-%m-%d') 
+		ORDER BY upload_time desc
+	</select>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from hd_step
+		where cid = #{cid,jdbcType=INTEGER}
+	</select>
+
+	<select id="getTodayStep" parameterType="java.lang.String"
+		resultType="java.lang.Integer">
+		select ifnull(sum(step_count),0) from hd_step
+		where data_date like CONCAT( DATE_FORMAT(NOW(),'%Y-%m-%d'),'%')
+		and member_id = #{memberId,jdbcType=VARCHAR}
+	</select>
+
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from hd_step
+		where cid = #{cid,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.yhcrt.iHealthCloud.entity.HdStepExample">
+		delete from hd_step
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.yhcrt.iHealthCloud.entity.HdStep">
+		insert into hd_step (cid, imei, member_id,
+		data_date, upload_time, step_count
+		)
+		values (#{cid,jdbcType=INTEGER}, #{imei,jdbcType=VARCHAR},
+		#{memberId,jdbcType=INTEGER},
+		#{dataDate,jdbcType=VARCHAR}, #{uploadTime,jdbcType=VARCHAR}, #{stepCount,jdbcType=INTEGER}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.yhcrt.iHealthCloud.entity.HdStep">
+		insert into hd_step
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="cid != null">
+				cid,
+			</if>
+			<if test="imei != null">
+				imei,
+			</if>
+			<if test="memberId != null">
+				member_id,
+			</if>
+			<if test="dataDate != null">
+				data_date,
+			</if>
+			<if test="uploadTime != null">
+				upload_time,
+			</if>
+			<if test="stepCount != null">
+				step_count,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="cid != null">
+				#{cid,jdbcType=INTEGER},
+			</if>
+			<if test="imei != null">
+				#{imei,jdbcType=VARCHAR},
+			</if>
+			<if test="memberId != null">
+				#{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="dataDate != null">
+				#{dataDate,jdbcType=VARCHAR},
+			</if>
+			<if test="uploadTime != null">
+				#{uploadTime,jdbcType=VARCHAR},
+			</if>
+			<if test="stepCount != null">
+				#{stepCount,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.yhcrt.iHealthCloud.entity.HdStepExample"
+		resultType="java.lang.Long">
+		select count(*) from hd_step
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update hd_step
+		<set>
+			<if test="record.cid != null">
+				cid = #{record.cid,jdbcType=INTEGER},
+			</if>
+			<if test="record.imei != null">
+				imei = #{record.imei,jdbcType=VARCHAR},
+			</if>
+			<if test="record.memberId != null">
+				member_id = #{record.memberId,jdbcType=INTEGER},
+			</if>
+			<if test="record.dataDate != null">
+				data_date = #{record.dataDate,jdbcType=VARCHAR},
+			</if>
+			<if test="record.uploadTime != null">
+				upload_time = #{record.uploadTime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.stepCount != null">
+				step_count = #{record.stepCount,jdbcType=INTEGER},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update hd_step
+		set cid = #{record.cid,jdbcType=INTEGER},
+		imei = #{record.imei,jdbcType=VARCHAR},
+		member_id = #{record.memberId,jdbcType=INTEGER},
+		data_date = #{record.dataDate,jdbcType=VARCHAR},
+		upload_time = #{record.uploadTime,jdbcType=VARCHAR},
+		step_count = #{record.stepCount,jdbcType=INTEGER}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.iHealthCloud.entity.HdStep">
+		update hd_step
+		<set>
+			<if test="imei != null">
+				imei = #{imei,jdbcType=VARCHAR},
+			</if>
+			<if test="memberId != null">
+				member_id = #{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="dataDate != null">
+				data_date = #{dataDate,jdbcType=VARCHAR},
+			</if>
+			<if test="uploadTime != null">
+				upload_time = #{uploadTime,jdbcType=VARCHAR},
+			</if>
+			<if test="stepCount != null">
+				step_count = #{stepCount,jdbcType=INTEGER},
+			</if>
+		</set>
+		where cid = #{cid,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.yhcrt.iHealthCloud.entity.HdStep">
+		update hd_step
+		set imei = #{imei,jdbcType=VARCHAR},
+		member_id = #{memberId,jdbcType=INTEGER},
+		data_date = #{dataDate,jdbcType=VARCHAR},
+		upload_time = #{uploadTime,jdbcType=VARCHAR},
+		step_count = #{stepCount,jdbcType=INTEGER}
+		where cid = #{cid,jdbcType=INTEGER}
+	</update>
+</mapper>

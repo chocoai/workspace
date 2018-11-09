@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fxzhj.mapper.RecordDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.fxzhj.model.RecordDetail" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="record_id" property="recordId" jdbcType="BIGINT" />
+    <result column="device_id" property="deviceId" jdbcType="BIGINT" />
+    <result column="port_id" property="portId" jdbcType="BIGINT" />
+    <result column="user_account" property="userAccount" jdbcType="VARCHAR" />
+    <result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+    <result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="voltage" property="voltage" jdbcType="REAL" />
+    <result column="electricity" property="electricity" jdbcType="REAL" />
+    <result column="power" property="power" jdbcType="REAL" />
+    <result column="kwh" property="kwh" jdbcType="REAL" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, record_id, device_id, port_id, user_account, start_time, end_time, voltage, electricity, 
+    power, kwh
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_record_detail
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from t_record_detail
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.fxzhj.model.RecordDetail" >
+    insert into t_record_detail (id, record_id, device_id, 
+      port_id, user_account, start_time, 
+      end_time, voltage, electricity, 
+      power, kwh)
+    values (#{id,jdbcType=BIGINT}, #{recordId,jdbcType=BIGINT}, #{deviceId,jdbcType=BIGINT}, 
+      #{portId,jdbcType=BIGINT}, #{userAccount,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{voltage,jdbcType=REAL}, #{electricity,jdbcType=REAL}, 
+      #{power,jdbcType=REAL}, #{kwh,jdbcType=REAL})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fxzhj.model.RecordDetail" >
+    insert into t_record_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="recordId != null" >
+        record_id,
+      </if>
+      <if test="deviceId != null" >
+        device_id,
+      </if>
+      <if test="portId != null" >
+        port_id,
+      </if>
+      <if test="userAccount != null" >
+        user_account,
+      </if>
+      <if test="startTime != null" >
+        start_time,
+      </if>
+      <if test="endTime != null" >
+        end_time,
+      </if>
+      <if test="voltage != null" >
+        voltage,
+      </if>
+      <if test="electricity != null" >
+        electricity,
+      </if>
+      <if test="power != null" >
+        power,
+      </if>
+      <if test="kwh != null" >
+        kwh,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="recordId != null" >
+        #{recordId,jdbcType=BIGINT},
+      </if>
+      <if test="deviceId != null" >
+        #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="portId != null" >
+        #{portId,jdbcType=BIGINT},
+      </if>
+      <if test="userAccount != null" >
+        #{userAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="voltage != null" >
+        #{voltage,jdbcType=REAL},
+      </if>
+      <if test="electricity != null" >
+        #{electricity,jdbcType=REAL},
+      </if>
+      <if test="power != null" >
+        #{power,jdbcType=REAL},
+      </if>
+      <if test="kwh != null" >
+        #{kwh,jdbcType=REAL},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fxzhj.model.RecordDetail" >
+    update t_record_detail
+    <set >
+      <if test="recordId != null" >
+        record_id = #{recordId,jdbcType=BIGINT},
+      </if>
+      <if test="deviceId != null" >
+        device_id = #{deviceId,jdbcType=BIGINT},
+      </if>
+      <if test="portId != null" >
+        port_id = #{portId,jdbcType=BIGINT},
+      </if>
+      <if test="userAccount != null" >
+        user_account = #{userAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null" >
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="voltage != null" >
+        voltage = #{voltage,jdbcType=REAL},
+      </if>
+      <if test="electricity != null" >
+        electricity = #{electricity,jdbcType=REAL},
+      </if>
+      <if test="power != null" >
+        power = #{power,jdbcType=REAL},
+      </if>
+      <if test="kwh != null" >
+        kwh = #{kwh,jdbcType=REAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fxzhj.model.RecordDetail" >
+    update t_record_detail
+    set record_id = #{recordId,jdbcType=BIGINT},
+      device_id = #{deviceId,jdbcType=BIGINT},
+      port_id = #{portId,jdbcType=BIGINT},
+      user_account = #{userAccount,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      voltage = #{voltage,jdbcType=REAL},
+      electricity = #{electricity,jdbcType=REAL},
+      power = #{power,jdbcType=REAL},
+      kwh = #{kwh,jdbcType=REAL}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <cache />
+</mapper>

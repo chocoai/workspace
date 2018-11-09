@@ -1,0 +1,12 @@
+package com.whty.assis.api.dao;
+
+import com.whty.assis.api.model.UserBackgroundPic;
+
+public interface UserBackgroundPicDao {
+
+    void insert(UserBackgroundPic userBackgroundPic);
+
+    UserBackgroundPic selectByPrimaryKey(String resourceId);
+
+    UserBackgroundPic selectByUserBackgroundCode(String userBackgroundCode);
+}

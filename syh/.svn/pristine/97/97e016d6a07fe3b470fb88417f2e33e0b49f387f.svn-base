@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SysSystemLogMapper">
+	<resultMap id="BaseResultMap" type="SysSystemLog">
+		<id column="CID" jdbcType="INTEGER" property="cid" />
+		<result column="OPEARTION_CONTENT" jdbcType="VARCHAR" property="opeartionContent" />
+		<result column="OPEARTION_DETAIL" jdbcType="VARCHAR" property="opeartionDetail" />
+		<result column="OPEARTION_TIME" jdbcType="VARCHAR" property="opeartionTime" />
+		<result column="OPEARTION_STATE" jdbcType="INTEGER" property="opeartionState" />
+		<result column="OPEARTION_USER" jdbcType="VARCHAR" property="opeartionUser" />
+		<result column="OPEARTION_IP" jdbcType="VARCHAR" property="opeartionIp" />
+		<result column="OPEARTION_TYPE" jdbcType="INTEGER" property="opeartionType" />
+		<result column="ERSION_NUM" jdbcType="INTEGER" property="ersionNum" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		CID, OPEARTION_CONTENT, OPEARTION_DETAIL, OPEARTION_TIME, OPEARTION_STATE,
+		OPEARTION_USER,OPEARTION_TYPE,
+		OPEARTION_IP,ERSION_NUM
+	</sql>
+	<insert id="saveSelective" parameterType="SysSystemLog">
+		insert into sys_system_log
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="cid != null">
+				CID,
+			</if>
+			<if test="opeartionContent != null">
+				OPEARTION_CONTENT,
+			</if>
+			<if test="opeartionDetail != null">
+				OPEARTION_DETAIL,
+			</if>
+			<if test="opeartionTime != null">
+				OPEARTION_TIME,
+			</if>
+			<if test="opeartionState != null">
+				OPEARTION_STATE,
+			</if>
+			<if test="opeartionUser != null">
+				OPEARTION_USER,
+			</if>
+			<if test="opeartionIp != null">
+				OPEARTION_IP,
+			</if>
+			<if test="opeartionType != null">
+				OPEARTION_TYPE,
+			</if>
+			<if test="ersionNum != null">
+				ERSION_NUM,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="cid != null">
+				#{cid,jdbcType=INTEGER},
+			</if>
+			<if test="opeartionContent != null">
+				#{opeartionContent,jdbcType=VARCHAR},
+			</if>
+			<if test="opeartionDetail != null">
+				#{opeartionDetail,jdbcType=VARCHAR},
+			</if>
+			<if test="opeartionTime != null">
+				#{opeartionTime,jdbcType=VARCHAR},
+			</if>
+			<if test="opeartionState != null">
+				#{opeartionState,jdbcType=INTEGER},
+			</if>
+			<if test="opeartionUser != null">
+				#{opeartionUser,jdbcType=VARCHAR},
+			</if>
+			<if test="opeartionIp != null">
+				#{opeartionIp,jdbcType=VARCHAR},
+			</if>
+			<if test="opeartionType != null">
+				#{opeartionType,jdbcType=INTEGER},
+			</if>
+			<if test="ersionNum != null">
+				#{ersionNum,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<!--多条件查询 -->
+	<select id="quertByParam" parameterType="SysSystemLog"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_system_log
+		where 1=1  
+    	<if test="opeartionState!=null and opeartionState!=''">
+    		and OPEARTION_STATE = #{opeartionState,jdbcType=INTEGER}
+    	</if>
+    	<!-- mybatis默认将integer值为0的看成空字符串 -->
+    	<if test="opeartionType!=null">
+    		and OPEARTION_TYPE = #{opeartionType,jdbcType=INTEGER}
+    	</if>
+    	<if test="opeartionUser!=null and opeartionUser!=''">
+    		and LOWER(OPEARTION_USER) like CONCAT("%",#{opeartionUser},"%")
+    	</if>
+    	<if test="opeartionIp!=null and opeartionIp!=''">
+    		and LOWER(OPEARTION_IP) like CONCAT("%",#{opeartionIp},"%")
+    	</if>
+    	<if test="opeartionContent!=null and opeartionContent!=''">
+    		and LOWER(OPEARTION_CONTENT) like CONCAT("%",#{opeartionContent},"%")
+    	</if>
+    	<if test="timeStart!=null and timeStart!=''">
+    		and  OPEARTION_TIME &gt;= #{timeStart,jdbcType=VARCHAR}
+    	</if>
+    	<if test="timeEnd!=null and timeEnd!=''">
+    		and  OPEARTION_TIME  &lt;= #{timeEnd,jdbcType=VARCHAR}
+    	</if>
+    	<if test="ersionNum!=null">
+    		and  ERSION_NUM  = #{ersionNum,jdbcType=INTEGER}
+    	</if>
+		order by OPEARTION_TIME DESC
+	</select>
+	
+	<!-- 单个删除信息 -->
+	<delete id="removeByCid" parameterType="java.lang.Integer">
+		delete from
+		sys_system_log
+		where
+		CID = #{cid,jdbcType=INTEGER}
+	</delete>
+	<!-- 根据ID批量删除 -->
+	<delete id="removeByCids" parameterType="java.lang.Integer">
+		delete from sys_system_log
+		where CID in 
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	<!-- 根据操作时间批量删除 -->
+	<delete id="removeByParam" parameterType="SysSystemLog">
+		delete from sys_system_log
+		where 
+		OPEARTION_TYPE = #{opeartionType,jdbcType=INTEGER}
+		
+    	<if test="opeartionUser!=null and opeartionUser!=''">
+    		and LOWER(OPEARTION_USER) like CONCAT("%",#{opeartionUser},"%")
+    	</if>
+    	<if test="opeartionIp!=null and opeartionIp!=''">
+    		and LOWER(OPEARTION_IP) like CONCAT("%",#{opeartionIp},"%")
+    	</if>
+    	<if test="timeStart!=null and timeStart!=''">
+    		and  OPEARTION_TIME &gt;= #{timeStart,jdbcType=VARCHAR}
+    	</if>
+    	<if test="timeEnd!=null and timeEnd!=''">
+    		and  OPEARTION_TIME  &lt;= #{timeEnd,jdbcType=VARCHAR}
+    	</if>
+    	<if test="ersionNum!=null">
+    		and  ERSION_NUM  = #{ersionNum,jdbcType=INTEGER}
+    	</if>
+    	
+	</delete>
+</mapper>

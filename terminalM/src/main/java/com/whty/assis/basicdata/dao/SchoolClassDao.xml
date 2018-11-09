@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.basicdata.dao.SchoolClassDao">
+
+	<resultMap type="com.whty.assis.basicdata.model.SchoolClass" id="SchoolClassResult">
+		<result property="id" column="id" />
+		<result property="className" column="class_name" />
+		<result property="gradeId"  column="grade_id" />
+		<result property="aamClassId" column="aam_class_id" />
+		<result property="gradeClass" column="grade_class" />
+		<result property="classType" column="class_type" />
+		<result property="foundTime" column="found_time" />
+		<result property="aamCreated" column="aam_created" />
+		<result property="classCate" column="class_cate" />
+		<result property="systme" column="systme" />
+		<result property="schoolId" column="school_id" />
+		
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	
+	<insert id="save" parameterType="com.whty.assis.basicdata.model.SchoolClass">
+		insert into t_school_class (
+			class_name,
+			school_Id
+			<if test="gradeId != null and gradeId != ''">,grade_id</if>
+			<if test="aamClassId != null and aamClassId != '' ">,aam_class_id</if>
+			<if test="gradeClass != null and gradeClass != '' " >,grade_class</if>
+			<if test="classType != null and classType != '' ">,class_type</if>
+			<if test="foundTime != null and foundTime !='' ">,found_time</if>
+			<if test="aamCreated != null and aamCreated !='' ">,aam_created</if>
+			<if test="classCate != null and classCate != '' ">,class_cate</if>
+			<if test="systme != null and systme !='' ">,systme</if>
+			<if test="createTime != null  ">,create_time</if>
+			<if test="updateTime != null  ">,update_time</if>
+		) values (
+			#{className},
+			#{schoolId}
+			<if test="gradeId != null and gradeId != ''">,#{gradeId}</if>
+			<if test="aamClassId != null and aamClassId != '' ">,#{aamClassId}</if>
+			<if test="gradeClass != null and gradeClass != '' " >,#{gradeClass}</if>
+			<if test="classType != null and classType != '' ">,#{classType}</if>
+			<if test="foundTime != null and foundTime !='' ">,#{foundTime}</if>
+			<if test="aamCreated != null and aamCreated !='' ">,#{aamCreated}</if>
+			<if test="classCate != null and classCate != '' ">,#{classCate}</if>
+			<if test="systme != null and systme !='' ">,#{systme}</if>
+			<if test="createTime != null  ">,#{createTime}</if>
+			<if test="updateTime != null  ">,#{updateTime}</if>
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.whty.assis.basicdata.model.SchoolClass">
+		update t_school_class
+		set 
+		<trim prefixOverrides=",">
+			<if test="className != null and className != ''">,class_name=#{className}</if>
+			<if test="schoolId != null and schoolId != ''">,school_id=#{schoolId}</if>
+			<if test="gradeId != null and gradeId != ''">,grade_id=#{gradeId}</if>
+			<if test="aamClassId != null and aamClassId != '' ">,aam_class_id=#{aamClassId}</if>
+			<if test="gradeClass != null and gradeClass != '' " >,grade_class=#{gradeClass}</if>
+			<if test="classType != null and classType != '' ">,class_type=#{classType}</if>
+			<if test="foundTime != null and foundTime !='' ">,found_time=#{foundTime}</if>
+			<if test="aamCreated != null and aamCreated !='' ">,aam_created=#{aamCreated}</if>
+			<if test="classCate != null and classCate != '' ">,class_cate=#{classCate}</if>
+			<if test="systme != null and systme !='' ">,systme=#{systme}</if>
+			<if test="updateTime != null  ">,update_time=#{updateTime}</if>
+		</trim>
+		where id=#{id}
+	</update>
+	
+	<select id="loadById" parameterType="int" resultMap="SchoolClassResult">
+		select * from t_school_class
+		<if test="id != null ">and id=#{id}</if>
+	</select>
+	
+	<select id="listByCondition" parameterType="map" resultMap="SchoolClassResult">
+		select * from t_school_class where 1=1
+		<if test="id != null ">and id=#{id}</if>
+		<if test="schoolId != null and schoolId != '' ">and school_id=#{schoolId}</if>
+		order by create_time desc
+	</select>
+	
+	<delete id="deleteById" parameterType="int">
+		delete from t_school_class where id= #{_parameter}
+	</delete>
+	
+	<delete id="deleteBySchoolId" parameterType="int">
+		delete from t_school_class where school_id = #{_parameter}
+	</delete>
+	
+	
+</mapper>

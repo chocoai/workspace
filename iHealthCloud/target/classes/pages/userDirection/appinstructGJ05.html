@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>app使用说明</title>
+    <!-- Bootstrap core CSS -->
+    <link href="res/css/bootstrap.min.css" rel="stylesheet">
+    <link href="res/css/mycss.css" rel="stylesheet">
+  </head>
+  <body>
+     <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 nopad-lr">
+              <ul class="list">
+                <li class="list-head"><i class="glyphicon glyphicon-menu-left" onclick="goBack()"></i> APP使用说明</li>
+              </ul>
+              <h4>1.5 APP工单管理—服务人员添加工作日志</h4>
+              <div class="cell">
+				    <p>（1）在工单管理首页，选择一个待办的工单，进入工单详情。</p>
+					<p>（2）点击页面最下面的“新增工作日志”按钮。</p>
+					<p>（3）输入工作内容并上传工作图片，点击右上角的“保存”。</p>
+					<p>（4）保存成功，跳回工单详情页面，状态变为待审核。</p>
+                <p><img class="one" src="res/images/GJ_5.jpg"></p>
+              </div>
+            </div>
+        </div>
+     </div>
+  </body>
+  <script type="text/javascript">
+  	function goBack(){
+  		window.history.go(-1);
+  	}
+  </script>
+</html>

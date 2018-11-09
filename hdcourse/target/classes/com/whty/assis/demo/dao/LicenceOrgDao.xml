@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.demo.dao.LicenceOrgDao">
+<resultMap type="com.whty.assis.demo.model.Ebp_licence_org" id="LicenceOrg">
+	<id column="id" property="id" jdbcType="VARCHAR"/>
+	<result column="school_name" property="school_name" jdbcType="VARCHAR"/>
+	<result column="school_address" property="school_address" jdbcType="VARCHAR"/>
+	<result column="contacts_name" property="contacts_name" jdbcType="VARCHAR"/>
+	<result column="contacts_sex" property="contacts_sex" jdbcType="VARCHAR"/>
+	<result column="contacts_cellphone" property="contacts_cellphone" jdbcType="VARCHAR"/>
+	<result column="contacts_phone" property="contacts_phone" jdbcType="VARCHAR"/>
+	<result column="contacts_qq" property="contacts_qq" jdbcType="VARCHAR"/>
+	<result column="contacts_email" property="contacts_email" jdbcType="VARCHAR"/>
+	<result column="contacts_address" property="contacts_address" jdbcType="VARCHAR"/>
+	<result column="managers_name" property="managers_name" jdbcType="VARCHAR"/>
+	<result column="managers_cellphone" property="managers_cellphone" jdbcType="VARCHAR"/>
+	<result column="managers_email" property="managers_email" jdbcType="VARCHAR"/>
+	<result column="contract_number" property="contract_number" jdbcType="VARCHAR"/>
+	<result column="create_time" property="create_time" jdbcType="TIMESTAMP" />
+	<result column="update_time" property="update_time" jdbcType="TIMESTAMP" />
+	<result column="status" property="status" jdbcType="VARCHAR"/>
+</resultMap>
+
+
+<parameterMap type="java.util.Map" id="countMap">
+		<parameter property="licenceCodeCount" mode="OUT" />
+</parameterMap>
+
+
+
+<select id="countLicenceCode" statementType="CALLABLE" parameterMap="countMap">
+		call CountLicenceCode(?)
+</select>
+
+
+
+<resultMap type="java.util.HashMap" id="SoftLicenceResult">
+		<result column="COUNT" property="COUNT"/>
+</resultMap>
+
+<select id="getLicenceCount" parameterType="map" resultMap="SoftLicenceResult" >
+	(select count(*) as count from EBP_SOFT_LICENCE where create_time>=#{startTime} <![CDATA[and create_time<=#{endTime}]]>)
+    union all
+ ( select count(*) as count from EBP_SOFT_LICENCE)
+    union all
+  (select count(*) as count from EBP_SOFT_LICENCE where create_time>=#{startTime} <![CDATA[and create_time<=#{endTime}]]> and status=1)
+    union all
+ ( select count(*) as count from EBP_SOFT_LICENCE where status=1)
+    union all
+  (select count(*) as count from EBP_LICENCE_ORG where  status=0 and create_time>=#{startTime}  <![CDATA[and create_time<=#{endTime} ]]>)
+    union all
+ ( select count(*) as count from EBP_LICENCE_ORG)
+    union all
+ ( select count(*) as count from EBP_SOFT_LICENCE where org_id=#{orgId1} and create_time>=#{startTime} <![CDATA[and create_time<=#{endTime}]]> and status=1)
+      union all
+   ( select count(*) as count from EBP_SOFT_LICENCE where org_id=#{orgId1} and create_time>=#{startTime} <![CDATA[and create_time<=#{endTime}]]>)
+      union all
+   ( select count(*) as count from EBP_SOFT_LICENCE where org_id=#{orgId2} and create_time>=#{startTime} <![CDATA[and create_time<=#{endTime}]]> and status=1)
+      union all
+    (select count(*) as count from EBP_SOFT_LICENCE where org_id=#{orgId2} and create_time>=#{startTime}  <![CDATA[and create_time<=#{endTime}]]>)
+      union all
+    (select count(*) as count from EBP_SOFT_LICENCE where org_id=#{orgId3} and create_time>=#{startTime}  <![CDATA[and create_time<=#{endTime}]]> and status=1)
+      union all
+   ( select count(*) as count from EBP_SOFT_LICENCE where org_id=#{orgId3} and create_time>=#{startTime} <![CDATA[and create_time<=#{endTime}]]>)
+</select>
+
+
+<!-- 
+<select id="countLicenceCode" statementType="CALLABLE" parameterMap="countMap">
+		call CountLicenceCode(?,?,?,?,?,?,?,?,?,?,?,?)
+</select>
+
+<parameterMap type="java.util.Map" id="countMap">
+	<parameter property="newLicenceCodeCount"  jdbcType="INTEGER" mode="OUT"/>
+	<parameter property="licenceCodeCount"  jdbcType="INTEGER" mode="OUT"/>
+	<parameter property="newUseLicenceCodeCount"  jdbcType="INTEGER" mode="OUT"/>
+	<parameter property="useLicenceCodeCount" jdbcType="INTEGER"  mode="OUT"/>
+	<parameter property="newSchoolCount"  jdbcType="INTEGER" mode="OUT"/>
+	<parameter property="schoolCount"  jdbcType="INTEGER" mode="OUT"/>
+	<parameter property="q1usedLicenceCodeCount"  jdbcType="INTEGER" mode="OUT"/>
+	<parameter property="q1licenceCodeCount"  jdbcType="INTEGER" mode="OUT"/>
+	<parameter property="q2usedLicenceCodeCount"  jdbcType="INTEGER" mode="OUT"/>
+	<parameter property="q2licenceCodeCount"  jdbcType="INTEGER" mode="OUT"/>
+	<parameter property="q3usedLicenceCodeCount"  jdbcType="INTEGER" mode="OUT"/>
+	<parameter property="q3licenceCodeCount"  jdbcType="INTEGER" mode="OUT"/>
+</parameterMap>
+ -->
+<!-- 如果插入的字段可能为空，则要设置jdbcType -->
+<!-- 新增授权机构信息 -->
+<insert id="saveLicenceOrg" parameterType="com.whty.assis.demo.model.Ebp_licence_org">
+	insert into EBP_LICENCE_ORG (
+		id
+		<if test="school_name != null">,school_name</if>
+		<if test="school_address != null">,school_address</if>
+		<if test="contacts_name != null">,contacts_name</if>
+		<if test="contacts_sex != null">,contacts_sex</if>
+		<if test="contacts_cellphone != null">,contacts_cellphone</if>
+		<if test="contacts_phone != null">,contacts_phone</if>
+		<if test="contacts_qq != null">,contacts_qq</if>
+		<if test="contacts_email != null">,contacts_email</if>
+		<if test="contacts_address != null">,contacts_address</if>
+		<if test="managers_name != null">,managers_name</if>
+		<if test="managers_cellphone != null">,managers_cellphone</if>
+		<if test="managers_email != null">,managers_email</if>
+		<if test="contract_number != null">,contract_number</if>
+		<if test="create_time != null">,create_time</if>
+		<if test="update_time != null">,update_time</if>
+		<if test="status != null">,status</if>
+		) values (
+			#{id,jdbcType=VARCHAR}
+			<if test="school_name != null">,#{school_name,jdbcType=VARCHAR}</if>
+			<if test="school_address != null">,#{school_address,jdbcType=VARCHAR}</if>
+			<if test="contacts_name != null">,#{contacts_name,jdbcType=VARCHAR}</if>
+			<if test="contacts_sex != null">,#{contacts_sex,jdbcType=VARCHAR}</if>
+			<if test="contacts_cellphone != null">,#{contacts_cellphone,jdbcType=VARCHAR}</if>
+			<if test="contacts_phone != null">,#{contacts_phone,jdbcType=VARCHAR}</if>
+			<if test="contacts_qq != null">,#{contacts_qq,jdbcType=VARCHAR}</if>
+			<if test="contacts_email != null">,#{contacts_email,jdbcType=VARCHAR}</if>
+			<if test="contacts_address != null">,#{contacts_address,jdbcType=VARCHAR}</if>
+			<if test="managers_name != null">,#{managers_name,jdbcType=VARCHAR}</if>
+			<if test="managers_cellphone != null">,#{managers_cellphone,jdbcType=VARCHAR}</if>
+			<if test="managers_email != null">,#{managers_email,jdbcType=VARCHAR}</if>
+			<if test="contract_number != null">,#{contract_number,jdbcType=VARCHAR}</if>
+			<if test="create_time != null">,#{create_time,jdbcType=TIMESTAMP}</if>
+			<if test="update_time != null">,#{update_time,jdbcType=TIMESTAMP}</if>
+			<if test="status != null and status != ''">,#{status,jdbcType=VARCHAR}</if>
+		)
+</insert>
+<!-- 删除用户机构信息 -->
+<update id="deleteLicenceOrg" parameterType="java.util.List">
+	update EBP_LICENCE_ORG set status = 1 
+		<where>
+			<foreach collection="list" index="index" item="item" open="(" separator="or" close=")">     
+			  id=#{item}
+			</foreach>
+		</where>
+</update>
+<!-- 修改授权机构信息 -->
+<update id="updateLicenceOrg" parameterType="com.whty.assis.demo.model.Ebp_licence_org">
+	update EBP_LICENCE_ORG
+	<trim prefix="set" suffixOverrides=",">
+			<if test="school_name != null">school_name=#{school_name},</if>
+			<if test="school_address != null">school_address=#{school_address},</if>
+			<if test="contacts_name != null">contacts_name=#{contacts_name},</if>
+			<if test="contacts_sex != null">contacts_sex=#{contacts_sex},</if>
+			<if test="contacts_cellphone != null">contacts_cellphone=#{contacts_cellphone},</if>
+			<if test="contacts_phone != null">contacts_phone=#{contacts_phone},</if>
+			<if test="contacts_qq != null">contacts_qq=#{contacts_qq},</if>
+			<if test="contacts_email != null">contacts_email=#{contacts_email},</if>
+			<if test="contacts_address != null">contacts_address=#{contacts_address},</if>
+			<if test="managers_name != null">managers_name=#{managers_name},</if>
+			<if test="managers_cellphone != null">managers_cellphone=#{managers_cellphone},</if>
+			<if test="managers_email != null">managers_email=#{managers_email},</if>
+			<if test="contract_number != null">contract_number=#{contract_number},</if>
+			<if test="update_time != null">update_time=#{update_time},</if>
+		</trim>
+		where id=#{id}
+</update>
+
+<select id="queryLicenceCode" parameterType="map" resultMap="LicenceOrg">
+
+</select>
+
+<!-- 查询授权机构信息列表 -->
+<select id="queryLicenceOrg"  parameterType="map" resultMap="LicenceOrg">
+		select * from EBP_LICENCE_ORG
+		where 1=1 and id != 'e27285760d264b9b9279ad3bb3a56755' 
+		<if test="id != null and id != ''">and id=#{id}</if>
+		<if test="school_name != null and school_name != ''">and school_name like CONCAT('%',#{school_name},'%')</if>
+		<if test="school_address != null and school_address != ''">and school_address=#{school_address}</if>
+		<if test="contacts_name != null and contacts_name != ''">and contacts_name=#{contacts_name}</if>
+		<if test="contacts_sex != null and contacts_sex != ''">and contacts_sex=#{contacts_sex}</if>
+		<if test="contacts_cellphone != null and contacts_cellphone != ''">and contacts_cellphone=#{contacts_cellphone}</if>
+		<if test="contacts_phone != null and contacts_phone != ''">and contacts_phone=#{contacts_phone}</if>
+		<if test="contacts_qq != null and contacts_qq != ''">and contacts_qq=#{contacts_qq}</if>
+		<if test="contacts_email != null and contacts_email != ''">and contacts_email=#{contacts_email}</if>
+		<if test="contacts_address != null and contacts_address != ''">and contacts_address=#{contacts_address}</if>
+		<if test="managers_name != null and managers_name != ''">and managers_name=#{managers_name}</if>
+		<if test="managers_cellphone != null and managers_cellphone != ''">and managers_cellphone=#{managers_cellphone}</if>
+		<if test="managers_email != null and managers_email != ''">and managers_email=#{managers_email}</if>
+		<if test="contract_number != null and contract_number != ''">and contract_number=#{contract_number}</if>
+		<if test="create_time != null and create_time != ''">and date_format(create_time,'yyyy-mm-dd')>=#{create_time}</if>
+		<if test="update_time != null and update_time != ''">and date_format(update_time,'yyyy-mm-dd')>=#{update_time}</if>
+		<if test="status != null and status != ''">and status=#{status}</if>
+		order by create_time desc
+	</select>
+
+
+</mapper>

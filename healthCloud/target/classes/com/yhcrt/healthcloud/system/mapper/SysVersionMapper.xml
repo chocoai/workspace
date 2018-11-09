@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.healthcloud.system.mapper.SysVersionMapper">
+	<resultMap id="BaseResultMap" type="com.yhcrt.healthcloud.system.entity.SysVersion">
+		<id column="KID" jdbcType="VARCHAR" property="kid" />
+		<result column="C_APP_CODE" jdbcType="VARCHAR" property="cAppCode" />
+		<result column="C_VERSION_DESC" jdbcType="VARCHAR" property="cVersionDesc" />
+		<result column="I_VERSION_CODE" jdbcType="INTEGER" property="iVersionCode" />
+		<result column="C_UPDATE_DESC" jdbcType="VARCHAR" property="cUpdateDesc" />
+		<result column="C_UPLOAD_DATE" jdbcType="VARCHAR" property="cUploadDate" />
+		<result column="C_UPLOAD_USER" jdbcType="VARCHAR" property="cUploadUser" />
+		<result column="C_DOWNLOAD_URL" jdbcType="VARCHAR" property="cDownloadUrl" />
+		<result column="C_EXT01" jdbcType="VARCHAR" property="cExt01" />
+		<result column="C_EXT02" jdbcType="VARCHAR" property="cExt02" />
+		<result column="C_EXT03" jdbcType="VARCHAR" property="cExt03" />
+		<result column="C_EXT04" jdbcType="VARCHAR" property="cExt04" />
+		<result column="C_EXT05" jdbcType="VARCHAR" property="cExt05" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		KID, C_APP_CODE, C_VERSION_DESC, I_VERSION_CODE, C_UPDATE_DESC, C_UPLOAD_DATE, 
+		C_UPLOAD_USER, C_DOWNLOAD_URL, C_EXT01, C_EXT02, C_EXT03, C_EXT04, C_EXT05
+	</sql>
+	
+	<!-- 根据条件查询所有的版本信息 -->
+	<select id="queryAll" parameterType="map" resultMap="BaseResultMap">
+        select 
+            <include refid="Base_Column_List" />
+        from sys_version where 1=1 
+        <if test="cAppCode != null and cAppCode !='' ">
+        	and C_APP_CODE = #{cAppCode}
+        </if>  
+        order by C_APP_CODE asc,I_VERSION_CODE desc  
+  	</select>
+	
+	<!-- 根据kid查询版本信息 -->
+	<select id="queryById" parameterType="java.lang.String" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_version
+		where KID = #{0}
+	</select>
+	
+	<!-- 查询版本存放路径 -->
+	<select id="queryUrl" parameterType="java.lang.String" resultType="java.lang.String">
+		select C_DOWNLOAD_URL from sys_version where KID = #{0}
+	</select>
+	
+	<!-- 批量删除版本信息 -->
+	<delete id="batchDel" parameterType="java.util.List">
+		delete from sys_version where KID in 
+		<foreach item="kid" collection="list" open="(" separator="," close=")">
+            #{kid}
+        </foreach>
+	</delete>
+	
+	<!-- 新增判断重复 -->
+	<select id="countBySysVersion" parameterType="com.yhcrt.healthcloud.system.entity.SysVersion" resultType="java.lang.Integer">
+		select count(1) from sys_version where C_APP_CODE = #{cAppCode} and C_VERSION_DESC = #{cVersionDesc} and I_VERSION_CODE = #{iVersionCode} and KID != #{kid} 
+	</select>
+	
+	<!-- 新增版本信息 -->
+	<insert id="insert" parameterType="com.yhcrt.healthcloud.system.entity.SysVersion">
+		insert into sys_version (KID, C_APP_CODE, C_VERSION_DESC,
+		I_VERSION_CODE, C_UPDATE_DESC, C_UPLOAD_DATE,
+		C_UPLOAD_USER, C_DOWNLOAD_URL, C_EXT01,
+		C_EXT02, C_EXT03, C_EXT04,
+		C_EXT05)
+		values (#{kid,jdbcType=VARCHAR}, #{cAppCode,jdbcType=VARCHAR},
+		#{cVersionDesc,jdbcType=VARCHAR},
+		#{iVersionCode,jdbcType=INTEGER}, #{cUpdateDesc,jdbcType=VARCHAR}, #{cUploadDate,jdbcType=VARCHAR},
+		#{cUploadUser,jdbcType=VARCHAR}, #{cDownloadUrl,jdbcType=VARCHAR},
+		#{cExt01,jdbcType=VARCHAR},
+		#{cExt02,jdbcType=VARCHAR}, #{cExt03,jdbcType=VARCHAR}, #{cExt04,jdbcType=VARCHAR},
+		#{cExt05,jdbcType=VARCHAR})
+	</insert>
+	
+	<!-- 修改版本信息 -->
+	<update id="update" parameterType="com.yhcrt.healthcloud.system.entity.SysVersion">
+		update sys_version
+		<set>
+			<if test="cAppCode != null">
+				C_APP_CODE = #{cAppCode,jdbcType=VARCHAR},
+			</if>
+			<if test="cVersionDesc != null">
+				C_VERSION_DESC = #{cVersionDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="iVersionCode != null">
+				I_VERSION_CODE = #{iVersionCode,jdbcType=INTEGER},
+			</if>
+			<if test="cUpdateDesc != null">
+				C_UPDATE_DESC = #{cUpdateDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="cUploadUser != null">
+				C_UPLOAD_USER = #{cUploadUser,jdbcType=VARCHAR},
+			</if>
+			<if test="cDownloadUrl != null">
+				C_DOWNLOAD_URL = #{cDownloadUrl,jdbcType=VARCHAR},
+			</if>
+			<if test="cExt01 != null">
+				C_EXT01 = #{cExt01,jdbcType=VARCHAR},
+			</if>
+			<if test="cExt02 != null">
+				C_EXT02 = #{cExt02,jdbcType=VARCHAR},
+			</if>
+			<if test="cExt03 != null">
+				C_EXT03 = #{cExt03,jdbcType=VARCHAR},
+			</if>
+			<if test="cExt04 != null">
+				C_EXT04 = #{cExt04,jdbcType=VARCHAR},
+			</if>
+			<if test="cExt05 != null">
+				C_EXT05 = #{cExt05,jdbcType=VARCHAR},
+			</if>
+			<if test="cUploadDate != null">
+				C_UPLOAD_DATE = #{cUploadDate,jdbcType=VARCHAR}
+			</if>
+		</set>
+		where KID = #{kid,jdbcType=VARCHAR}
+	</update>
+	
+</mapper>

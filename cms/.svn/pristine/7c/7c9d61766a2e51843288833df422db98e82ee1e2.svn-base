@@ -1,0 +1,45 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<form id="submitForm" action="${base}/baoliaocommt.jspx" method="post">
+	<input type="hidden" name="baoliaoId" value="${baoliao.id}" />
+	<input type="hidden" name="sessionId" id="sessionId" /> 
+	<input type="hidden" id="text" name="text" />
+	<div class="send_mess_box">
+		<textarea id="cont" name="cont"></textarea>
+		<span id="facect"><a href="#"><img src="${base}/${res}/images/icon_biaoqing.png" alt="" /></a></span>
+		<div class="send_butt">
+			<a href="javascript:void(0);" onclick="submitForm()">评论</a>
+		</div>
+	</div>
+</form>
+<div style="clear: both;"></div>
+<script type="text/javascript" src="http://code.jquery.com/jquery-1.8.0.min.js"></script> 
+<link href="${base}/${res}/js/face/jquery.sinaEmotion.css" rel="stylesheet" type="text/css"/>
+<script src="${base}/${res}/js/face/jquery.sinaEmotion.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	  function  submitForm(){
+			if ($('#cont').val() == '') {
+				alert('请先填写评论内容');
+				$('#cont').focus();
+				return;
+			}
+			$('#text').val($('#cont').val());
+			var s = $("#submitForm");
+			var url = s[0].action;
+			var data = s.serialize();
+			var options = {
+	                    url: url,
+	                    type: 'post',
+	                    dataType: 'json',
+	                    data: data,
+	                    success:  function (data) {
+		                	if(data.status==0) {
+			                    alert("提交成功");
+			                    location.href=location.href;
+			                }
+	                    }
+	                };
+	                $.ajax(options);
+	                return false;
+         }
+     
+      </script> 

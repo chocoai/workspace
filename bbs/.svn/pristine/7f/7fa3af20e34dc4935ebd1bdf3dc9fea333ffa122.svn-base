@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.yhcrt.weihu.bbs.entity">
+	<class
+		name="BbsPointDetail"
+		table="bbs_point_detail"
+		>
+		<meta attribute="sync-DAO">false</meta>
+		<cache usage="read-write"/>
+		<id
+			name="id"
+			type="java.lang.Integer"
+			column="POINT_ID"
+			>
+			<generator class="native"/>
+		</id>
+		<property
+			name="createTime"
+			column="CREATE_TIME"
+			type="timestamp"
+			not-null="true"
+			/>
+		<property
+			name="points"
+			column="POINTS"
+			type="java.lang.Integer"
+			not-null="true"
+			/>
+		<property
+			name="description"
+			column="DESCRIPTION"
+			type="string"
+			not-null="true"
+			length="64"
+		/>
+		<property
+			name="operation"
+			column="OPERATION"
+			type="string"
+			not-null="true"
+			length="32"
+		/>
+		<property
+			name="type"
+			column="TYPE"
+			type="string"
+			not-null="true"
+			length="32"
+		/>
+		<many-to-one
+			name="creater"
+			column="creater_id"
+			class="BbsUser"
+			not-null="true"
+			>
+		</many-to-one>
+	</class>	
+</hibernate-mapping>

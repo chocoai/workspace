@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>孝康通</title>
+    <!-- Bootstrap -->
+	<link th:href="@{/pages/mall/css/bootstrap.min.css}" rel="stylesheet">
+	<!-- FontAwesome 4.7.0字体 -->
+	<link th:href="@{/pages/mall/css/font-awesome.min.css}" rel="stylesheet">
+    <!-- jquery WEUI -->
+    <link rel="stylesheet" th:href="@{/pages/mall/css/weui.min.css}">
+    <link rel="stylesheet" th:href="@{/pages/mall/css/jquery-weui.min.css}">
+    <!-- layer -->
+    <link th:href="@{/pages/mall/css/layer_mobile/need/layer.css}" rel="stylesheet">
+	<!-- 自定义css -->
+	<link th:href="@{/pages/mall/css/mymall.css}" rel="stylesheet">
+  </head>
+  <body style="background: #f3f3f3;">
+  	<input type="hidden" th:value="${cid}" id="cid">
+  	<input type="hidden" th:value="${orderid}" id="orderid">
+    <input type="hidden" th:value="${type}" id="type">
+    <!-- 导航 开始 -->
+    <nav class="navbar navbar-default navbar-mall-other">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a href="javascript:history.back();" class="othertop-left"><i class="fa fa-angle-left icon-back"></i></a>
+          		申请退货
+        </div>
+      </div>
+    </nav>
+    <!-- 导航 结束 -->
+
+    <div class="goods-info-bd" style="background: #fff;">
+      <ul>
+	        <li  th:if="${type eq 'goods'}"> 
+	          <a th:href="@{'/h5/goods/detail/'+${order.goods.goodsId}}">
+		            <div class="col-xs-3 nopad-lr">
+		               <img th:if="${order.goods.titleImg} ==null" th:src="@{/pages/mall/images/good01.png}" class="img-responsive">
+			           <img th:if="${order.goods.titleImg} !=null" th:src="${order.goods.titleImg}" class="img-responsive">
+		            </div>
+		            <div class="col-xs-9">
+		              <p class="goods-info-name" th:text="${order.goods.goodsName}">老年健康智能手表 实时监测步数、血压 心率、血糖</p>
+		              <p class="goods-info-other">
+		                <span class="goods-info-price">￥<lable th:text="${order.price}">799</lable></span>
+		                <span class="goods-info-number">x<lable th:text="${order.amount}">1</lable></span>
+		              </p>
+		            </div>
+		    	</a>
+	        </li>
+	        <li  th:if="${type eq 'service'}"> 
+	            <a th:href="@{'/h5/service/detail/'+${order.serviceId}}">
+	                 <div class="col-xs-3 nopad-lr">
+	                     <img th:if="${order.service.titleImg} ==null" th:src="@{/pages/mall/images/service01.jpg}" class="img-responsive">
+	                 	 <img th:if="${order.service.titleImg} !=null" th:src="${order.service.titleImg}" class="img-responsive">
+	                 </div>
+	                 <div class="col-xs-9">
+	                   <p class="goods-info-name" th:text="${order.orderContent}">上门理发</p>
+	                   <p class="goods-info-other">
+	                     <span class="goods-info-price">￥<lable th:text="${order.unitPrice}">799</lable></span>
+	                     <span class="goods-info-number">x<lable th:text="${order.amount}">1</lable></span>
+	                   </p>
+	                 </div>
+                 </a>
+	        </li>
+      </ul>
+    </div>
+
+    <div class="refund-reason">
+        <span class="refund-reason-l">退货原因</span>
+        <span class="refund-reason-r"><input class="weui-input" id="refundtype" placeholder="请选择 >" type="text"></span>
+    </div>
+    <div class="refund-reason-other">
+      <textarea class="form-control" placeholder="写点您真实的使用感受吧..." id="content"></textarea>
+    </div>
+
+    <div class="paydone-bottom">
+      <a href="javascript:void(0)" id="myBackOrder" class="btn-paydone">提交</a>
+    </div>
+
+
+    <!-- 返回顶部 开始 -->
+    <div class="gototop" style="display: none;">
+      <a href="javascript:void(0)"><i class="glyphicon glyphicon-menu-up"></i></a>
+    </div>
+    <!-- 返回顶部 结束 -->
+
+    <script th:src="@{/pages/mall/js/jquery-1.9.1.min.js}"></script>
+    <script th:src="@{/pages/mall/js/bootstrap.min.js}"></script>
+    <!-- jquery WEUI -->
+    <!-- 服务日期时间选择 -->
+    <script th:src="@{/pages/mall/js/jquery-weui.js}"></script>
+    <script th:src="@{/pages/mall/css/layer_mobile/layer.js}"></script>
+    <script type="text/javascript">
+	var pathName=window.document.location.pathname;
+    var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
+      $('html,body').on('click',function(){ }); 
+      // 返回顶部
+      $(window).scroll(function(){
+        if($(window).scrollTop()>=20){
+           $(".gototop").fadeIn(300);
+        }else{
+           $(".gototop").fadeOut(300);
+        }
+      })
+      $(".gototop a").click(function(){
+        $("html,body").animate({scrollTop:"0px"},300)
+      })
+
+      var items = [];
+  	  $.ajax({
+		  url : projectName+"/h5/admin/myBackOrder/refundtype",
+			dataType : "json",
+			async : false,
+			traditional : true,
+			cache : true,
+			success : function(data) {
+				items = data;
+			}
+  	  })
+      
+      //申请退货下拉选择框
+      $("#refundtype").select({
+        title: "选择退货原因",
+        //items: ["拍错了／多拍了", "地址电话等信息填写错误", "不想要了", "其他"]
+        items: items
+      });
+      var isClick = true;
+      $("#myBackOrder").click(function(){
+  	   	if(!isClick){
+  	   		return;
+  	   	}
+    	var refundtype = $("#refundtype").val();	  
+	    if(!refundtype){
+	    	layer.open({
+			    content: '请选择退款原因！'
+			    ,skin: 'msg'
+			    ,time: 2 //2秒后自动关闭
+		   });
+	    	return;
+	    }
+	    var refundvalue = $("#refundtype").attr("data-values");
+	    var content = $("#content").val();	
+	    var orderid = $("#orderid").val();	  
+	    var type = $("#type").val();	  
+	    var cid = $("#cid").val();	  
+      	var data ={
+      			orderid:orderid,
+      			cid:cid,
+      			refundtype:refundtype,
+      			refundvalue:refundvalue,
+      			content:content
+      	}
+      	$("#myBackOrder").text("提交中...");
+      	isClick = false;
+      	$.ajax({
+			  url : projectName+"/h5/admin/myBackOrder/"+type,
+				data : data,
+				dataType : "json",
+				async : false,
+				traditional : true,
+				cache : true,
+				success : function(data) {
+					if(data.status==202){
+						window.location.href=projectName+"/h5/login";
+					}else if(data.status==1){
+						layer.open({
+							  content: '提交成功',
+							  skin: 'msg',
+							  time: 2 ,//2秒后自动关闭
+							  end: function () {
+						 			window.location.href=projectName+"/h5/admin/myOrders/"+type;
+					          }
+						 });
+					}else{
+						layer.open({
+						    content: '提交失败'
+						    ,skin: 'msg'
+						    ,time: 2 //2秒后自动关闭
+					   });
+					}
+				}
+		  })
+    	})
+    </script>
+  </body>
+</html>

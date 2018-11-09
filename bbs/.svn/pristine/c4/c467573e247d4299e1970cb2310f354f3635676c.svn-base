@@ -1,0 +1,428 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>发表主题[#if forum??] - ${forum.title}[/#if]</title>
+<link href="${base}/style/main.css" rel="stylesheet" type="text/css">
+<link href="${base}/style/lanmu.css" rel="stylesheet" type="text/css">
+<link href="${base}/style/upload.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${base}/js/jquery.js"></script>
+<script type="text/javascript" src="${base}/js/popwin.js"></script>
+<link rel="stylesheet" href="${base}/kindeditor/themes/default/default.css" />
+<link rel="stylesheet" href="${base}/kindeditor/plugins/code/prettify.css" />
+<script charset="utf-8" src="${base}/kindeditor/kindeditor.js"></script>
+<script charset="utf-8" src="${base}/kindeditor/lang/zh_CN.js"></script>
+<script charset="utf-8" src="${base}/kindeditor/plugins/code/prettify.js"></script>
+<script type="text/javascript">
+	var editor1;
+	KindEditor.ready(function(K) {
+		editor1 = K.create('textarea[name="content"]', {
+			cssPath : '${base}/kindeditor/plugins/code/prettify.css',
+			uploadJson : '${base}/kindEditor/imgUpload.jhtml',
+			fileManagerJson : '${base}/kindeditor/file_manager_json.jsp',
+			allowFileManager : true,
+			filterMode:true,
+			afterCreate : function() {
+				var self = this;
+				K.ctrl(document, 13, function() {
+					self.sync();
+					document.forms['example'].submit();
+				});
+				K.ctrl(self.edit.doc, 13, function() {
+					self.sync();
+					document.forms['example'].submit();
+				});
+			},
+			afterChange : function(){
+				var count = this.count('text');//字数统计包含纯文本、IMG、EMBED，不包含换行符，IMG和EMBED算一个文字
+				var limitNum = 8000;//设置输入的最大值
+				if(count > limitNum){
+					$("#countMessage").html("<span style='color:red;'>输入内容已超过最大字数限制，超过的为无效输入</span>");
+					var textValue = editor1.text();
+					textValue = textValue.substring(0,limitNum);
+					editor1.text(textValue);
+				}else{
+					var result = limitNum - count;
+					$("#countMessage").html("您还可以输入"+result+"个字符");
+				}
+			}
+		});
+		prettyPrint();
+	});
+	
+	var text = "text";
+	function vote(){
+		$("#fqtp_con").empty();
+		var html =  '<div id="itemPanel">'
+        			+'多选<input type="radio" name="categoryType" value="1" checked="checked"/>'
+            		+'单选<input type="radio" name="categoryType" value="2"/>'
+            		+'</div>'
+					+'<div class="dxdx_but">'
+					+'<input type="button" id="newColumn" onclick="newColumns()" value="增加栏目"/>'
+					+'</div>'
+					+'<div id="addColumn" class="tp_box">'
+					+'	<span><input type="text" name="name" class="select" placeholder="栏目名称"/><input type="button" value="删除" class="shanchu" onclick="reomveColumn($(this))"/></span><br>'
+					+'	<span><input type="text" name="name" class="select" placeholder="栏目名称"/><input type="button" value="删除" class="shanchu" onclick="reomveColumn($(this))"/></span><br>'
+					+'</div>';
+		$("#fqtp_con").append(html);
+	}
+	
+	function posts(){
+		$("#fqtp_con").empty();
+	}
+	
+	function reomveColumn($this){
+		$this.parent().next().remove();
+		$this.parent().remove();
+	}
+	
+	function newColumns(){
+		var html = 
+		'<span><input type="text" name="name" style=" width:240px; height:28px; line-height:28px; padding:0 5px; margin:10px 20px 0 0;" class="select" placeholder="栏目名称"/><input type="button" style=" width:60px; height:30px;" value="删除" class="shanchu" onclick="reomveColumn($(this))"/></span><br>';
+		$("#addColumn").append(html);
+	}
+</script>
+<script type="text/javascript">
+/*弹框JS内容*/
+	jQuery(document).ready(
+		function() {
+			//打开窗口
+			$('#titleImg').on('click', function(event) {
+				event.preventDefault();
+				$('#caseHistory').addClass('is-visible3');
+
+			});
+			
+			$('#delCaseHistory').on('click', function(event) {
+				event.preventDefault();
+				toDelete();
+			});
+			//关闭窗口
+			$('#caseHistory').on(
+				'click',
+				function(event) {
+					if ($(event.target).is('.close')
+							|| $(event.target).is('#caseHistory')) {
+						event.preventDefault();
+						$(this).removeClass('is-visible3');
+					}
+				});
+			//打开窗口
+			$('#addContact').on('click', function(event) {
+				event.preventDefault();
+				$('#contacts').addClass('is-visible3');
+			});
+			//关闭窗口
+			$('#contacts').on(
+				'click',
+				function(event) {
+					if ($(event.target).is('.close')
+							|| $(event.target).is('#contacts')) {
+						event.preventDefault();
+						$(this).removeClass('is-visible3');
+					}
+				});
+
+			//ESC关闭
+			$(document).keyup(function(event) {
+				if (event.which == '27') {
+					$('#caseHistory').removeClass('is-visible3');
+					$('#contacts').removeClass('is-visible3');
+				}
+			});
+	});
+		
+	function toDelete() {
+		var cIds = [];
+		$("#tbody td input[type=checkbox]").each(function() {
+			if (this.checked) {
+				cIds.push($(this).val());
+			}
+		});
+
+		$.ajax({
+			data : {
+				'cIds' : cIds.join(",")
+			},
+			type : "POST",
+			asyn : true,
+			cache : false,
+			dataType : 'json',
+			url : "deleteBliFile.htm",
+			success : function(data) {
+				if (data.result) {
+					renderTable(data.data);
+				}
+			}
+		});
+	}
+	
+	function doUpload() {
+		$('#caseHistory').removeClass('is-visible3');
+		var formData = new FormData(document.forms.namedItem("bliFileForm"));
+		var url = "${base}/admin/bbs/forum/o_Upload.do";
+		$.ajax({
+			url : url,
+			type : 'POST',
+			data : formData,
+			async : false,
+			cache : false,
+			dataType : 'json',
+			contentType : false,
+			processData : false,
+			success : function(data) {
+				if(data.status == 1){
+					$("#titleImg").val(data.imgUrl);
+					alert("上传成功");
+				}else{
+					alert("上传失败");
+				}
+				$('#fileName').val('');
+				$('#bliFile').val('');
+			}
+		});
+	}
+</script>
+</head>
+
+<body class="body">
+	<!---------顶部----------->
+	<div class="top">
+		<div class="top_center">
+			<div class="top_l">您好，欢迎来到东楚论坛！</div>
+			<div class="top_r">
+				[#if user??]
+				<div class="user_logout" style="margin-top:9px;">
+					<span class="user_logout_name"><a href="${base}/member/index.jhtml">${user.username}</a></span>
+					<span class="logout"><a href="${base}/logout.jspx?returnUrl=/">退出</a></span>
+				</div>
+				[#else]
+				<ul>
+					<li><a href="#"><img src="${base}/images/icon_signin_01.png"
+							alt="" /></a></li>
+					<li><a href="#"><img src="${base}/images/icon_signin_02.png"
+							alt="" /></a></li>
+					<li><a href="#"><img src="${base}/images/icon_signin_03.png"
+							alt="" /></a></li>
+				</ul>
+				<div class="dlzc">
+					<span><a href="${base}/login.jspx">登录</a></span>
+					<span class="register"><a href="${base}/register.jspx">注册</a></span>
+				</div>
+				[/#if]
+			</div>
+		</div>
+	</div>
+
+	<!-------logo、导航和搜索----------->
+	<div class="nav">
+		<div class="nav_center">
+			<h1>
+				<a href="${base}/"><img src="${base}/images/logo.png" alt="" /></a>
+			</h1>
+			<div class="navsearch">
+				<!----导航---->
+				<nav>
+					<ul>
+						<li><a href="/">东楚网首页</a></li>
+						<li><a href="${base}/dakaquan/index.jhtml">大咖圈</a></li>
+					</ul>
+				</nav>
+
+				<!----搜索---->
+				<div class="search radius6">
+					<form name="searchform" id="searchForm" method="get" action="">
+						<select>
+							<option value="0">帖子</option>
+							<option value="1">用户</option>
+						</select>
+						<input type="hidden" name="searchType" value="" id="searchType"/>
+						<input class="inp_srh" type="text" id="searchContent" name="keywords" placeholder="搜索其实很简单！">
+						<input class="btn_srh" type="button" onclick="toSearch()" value="搜索">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!------------------中间内容部分------------------------>
+	<div class="big_center">
+		<!------当前位置------>
+		<div class="location">
+			<i></i>&nbsp;
+			<a href="${base}/">东楚论坛</a>&nbsp;
+			> &nbsp;
+			<a href="javascript:void(0);">论坛栏目</a>&nbsp;
+			[#if forum??]
+			> &nbsp;
+			<a href="${forum.url}">${forum.title}</a>&nbsp;
+			[/#if]
+			> &nbsp;
+			发帖
+		</div>
+
+		<!-----发帖----->
+		<div class="wpost">
+			<div class="wpost_hd">
+				<a href="${base}/topic/v_add${forum.id!}.jspx" [#if category!=101]style="border-bottom:2px solid #f0acab;"[/#if]>我要发帖</a>
+				<a class="current" href="${base}/topic/v_add${forum.id!}.jspx?category=vote" [#if category==101]style="border-bottom:2px solid #f0acab;"[/#if]>发起投票</a>
+			</div>
+			<div class="wpost_bd">
+				<form class="wpost_form" action="${base}/topic/o_save.jspx" method="post" enctype="multipart/form-data" validate="true">
+					<div class="wpost_bd_t">
+						<span class="posttit_text">帖子标题</span>
+						<input type="text" class="wpost_tit" placeholder="请输入标题" name="title">
+						<span class="wpost_tips">可输入35个汉字</span>
+					</div>
+					<div class="classify">
+						<span class="sec_cla_text">板块分类</span>
+						<select class="sec_box" name="forumId" >
+							<option value="${forum.id}">${forum.title}</option>
+						</select>
+						[#if postTypes??]
+			           	[#if postTypes?size>0]
+			           		<span class="theme_classify">主题分类</span>
+				           	<select class="the_box" name="postTypeId">
+			            		[#list postTypes as type]
+			            		<option value="${type.id!}">${type.typeName!}</option>
+			            		[/#list]
+				            </select>
+				        [/#if]
+				        [/#if]
+					</div>
+					<div class="title_picture">
+						<span>标题图片</span> <input type="text" class="tit_pic" name="titleImg" id="titleImg">
+					</div>
+					<div class="wpost_bd_b">
+						<!-- <div class="posteditor">
+							<i class="expression"></i> <i class="picture"></i> <i
+								class="video"></i>
+						</div> -->
+						<div class="postedit">
+							<textarea name="content" id="content"></textarea>
+						</div>
+					</div>
+					<div style="float:right;" id="countMessage">您还可以输入8000个字</div>
+					<div class="yesorno">
+						<span>主题是否允许回复：</span>
+						<label>
+							<input type="radio" name="allayReply" value="1"> 是 
+							<input type="radio" name="allayReply" value="0" class="no_option"> 否
+						</label>
+					</div>
+					[#if category==101]
+						<div class="fqtp_con" id="fqtp_con" style=" float:left; width:1180px;">
+							<input name="category" type="hidden" value="${category}"/>
+							<div id="itemPanel" style="line-height:30px;">
+			        			多选 <input type="radio" name="categoryType" style="margin-right:20px;" value="1" checked="checked"/>
+			            		单选 <input type="radio" name="categoryType" value="2"/>
+		            		</div>
+							<div class="dxdx_but" style="margin:5px 0;">
+								<input type="button" id="newColumn" style="height:30px; width:90px;" onclick="newColumns()" value="增加栏目"/>
+							</div>
+							<div id="addColumn" class="tp_box">
+								<span><input type="text" name="name" style=" width:240px; height:
+								28px; line-height:28px; padding:0 5px; margin:10px 20px 0 0;" class="select" placeholder="栏目名称"/><input type="button" style=" width:60px; height:30px;" value="删除" class="shanchu" onclick="reomveColumn($(this))"/></span><br>
+								<span><input type="text" name="name" style=" width:240px; height:
+								28px; line-height:28px; padding:0 5px; margin:10px 20px 0 0;" class="select" placeholder="栏目名称"/><input type="button"  style=" width:60px; height:30px;" value="删除" class="shanchu" onclick="reomveColumn($(this))"/></span><br>
+							</div>
+						</div>
+					[/#if]
+					<button class="postsend_but">
+						<a href="#">发布帖子</a>
+					</button>
+				</form>
+			</div>
+		</div>
+
+		<!------页脚------>
+		<div class="footer">
+			<div class="footer_listbox">
+				<div class="footer_list">
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	<!------------------返回顶部-------------------->
+	<div id="before">
+		<a href="http://bbs.hsdcw.com/" target="_blank" title="东楚论坛"
+			class='before'></a>
+	</div>
+	<div id="wechat" class="wechat">
+		<a href="javascript:void(0)"><div class="wechath"></div></a>
+	</div>
+	<a id="moquu_top" href="javascript:void(0)"></a>
+
+
+	<script type="text/javascript" src="${base}/js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="${base}/js/jquery.select.js"></script>
+
+	<div id="caseHistory" class="fjsc">
+		<div class="fjsc_box">
+			<div class="fjsc_top"></div>
+			<div class="fjsc_head">
+				<div class="fjsc_tit">标题图片上传</div>
+				<div class="close icon-cross">X
+					
+				</div>
+			</div>
+			<div class="fjsc_con">
+				<form action="bliFileUpload.htm" method="post" name="bliFileForm" enctype="multipart/form-data">
+					<table width="410" border="0">
+						<tr>
+							<td style="width: 70px; height: 48px; text-align: right; font-size: 12px; color: #434343; padding-right: 10px;">图片名称</td>
+							<td>
+								<input type="text" name="fileName" id="fileName" placeholder="请输入标题图片名称"
+									style="width: 320px; height: 30px; padding: 0 2px; font-size: 12px;"
+								>
+								<input type="hidden" name="path" value="topicImg"/>
+							</td>
+						</tr>
+						<tr>
+							<td style="width: 70px; height: 48px; text-align: right; font-size: 12px; color: #434343; padding-right: 0px;">标题图片：</td>
+							<td rowspan="2">
+								<input class="" type="file" id="bliFile" name="bliFile">
+							</td>
+						</tr>
+					</table>
+	
+					<div class="qdsc_butt">
+						<a href="javascript:;" onclick="doUpload()">确定上传</a>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+</body>
+<script type="text/javascript">
+	document.onkeydown=function(event){ 
+		e = event ? event :(window.event ? window.event : null); 
+		if(e.keyCode==13){   //回车
+			//提交查询的form
+			if(document.activeElement.id == 'searchContent'){
+				toSearch();
+			}
+		} 
+	};
+
+	function toSearch(){
+		var searchType = $(".select_option li[class='selected']").html();
+		if(searchType == '帖子'){
+			$("#searchForm").attr("action",'${base}/topic/search.jhtml');
+			$("#searchType").val("0");
+			$("#searchForm").submit();
+			return ;
+		}else if(searchType == '用户'){
+			$("#searchForm").attr("action",'${base}/search/search_user.jspx');
+			$("#searchType").val("1");
+			$("#searchForm").submit();
+			return ;
+		}
+	}
+</script>
+</html>

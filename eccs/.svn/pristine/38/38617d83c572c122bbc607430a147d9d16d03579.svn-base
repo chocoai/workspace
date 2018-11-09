@@ -1,0 +1,1 @@
+ALTER TABLE step5 ADD projectAddress  varchar(50) comment '工程地点';

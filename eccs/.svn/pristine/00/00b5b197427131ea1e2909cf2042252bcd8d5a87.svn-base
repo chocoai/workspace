@@ -1,0 +1,1 @@
+ALTER TABLE step2  MODIFY COLUMN consult_type_id VARCHAR(50);

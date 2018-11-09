@@ -1,0 +1,55 @@
+.fjsc { position:fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+    -moz-transition: opacity 0.3s 0s, visibility 0s 0.3s;
+    transition: opacity 0.3s 0s, visibility 0s 0.3s;
+    z-index:9999;}
+.fjsc.is-visible3 {
+    opacity: 1;
+    visibility: visible;
+    -webkit-transition: opacity 0.3s 0s, visibility 0s 0s;
+    -moz-transition: opacity 0.3s 0s, visibility 0s 0s;
+    transition: opacity 0.3s 0s, visibility 0s 0s;
+}
+.fjsc_box { position:relative; width:450px; margin:200px auto; border-radius:2px; background:#fff; overflow:hidden;box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+  -webkit-transform:scale(0.8);
+  -moz-transform:scale(0.8);
+  -ms-transform:scale(0.8);
+  -o-transform:scale(0.8);
+  transform:scale(0.8);
+    -webkit-backface-visibility: hidden;
+    -webkit-transition-property: -webkit-transform;
+    -moz-transition-property: -moz-transform;
+    transition-property: transform;
+    -webkit-transition-duration: 0.3s;
+    -moz-transition-duration: 0.3s;
+    -ms-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+}
+.fjsc_top { float:left; width:450px; height:2px; border-top-left-radius:2px; border-top-right-radius:2px; overflow:hidden; background:#00a977;}
+.fjsc_head { float:left; width:450px; height:38px; border-bottom:1px solid #e0e0e0;}
+.fjsc_tit { float:left; height:38px; line-height:38px; margin-left:20px; font-size:14px; font-weight:normal; color:#000;}
+.fjsc_head .close { float:right; width:auto; cursor:pointer;position: absolute; right:20px;top:0; z-index:100; display: block; font-size:12px; line-height:38px; color:#999;}
+.fjsc_head .close a { display:block; text-decoration:none;}
+.fjsc_con { float:left; width:410px; padding:10px 0 20px;}
+.fjsc_con .xzscfj { float:right; width:318px; height:32px; line-height:32px; background:#ccc; padding:0 4px; color:#fff; font-size:12px; margin-right:3px; margin-top:10px;}
+.fjsc_con .xzscfj a { display:block; color:#fff; text-decoration:none;}
+.fjsc_con .qdsc_butt { float:right; width:120px; height:32px; line-height:32px; text-align:center; color:#fff; background:#13C08D; border-radius:2px; margin:20px 3px 0 0; font-size:14px;}
+.fjsc_con .qdsc_butt a { display:block; color:#fff; text-decoration:none;}
+.fjsc_con .qdsc_butt button { display:block; color:#fff; text-decoration:none;}
+
+.is-visible3 .fjsc_box {
+  -webkit-transform:scale(1);
+  -moz-transform:scale(1);
+  -ms-transform:scale(1);
+  -o-transform:scale(1);
+  transform:scale(1);
+  }
+  

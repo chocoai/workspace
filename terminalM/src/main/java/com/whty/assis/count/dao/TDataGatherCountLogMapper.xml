@@ -1,0 +1,571 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.count.dao.TDataGatherCountLogMapper">
+  <resultMap id="BaseResultMap" type="com.whty.assis.count.model.TDataGatherCountLog">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="week" jdbcType="VARCHAR" property="week" />
+    <result column="start_time" jdbcType="TIMESTAMP" property="startTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    <result column="software_version" jdbcType="VARCHAR" property="softwareVersion" />
+    <result column="software_name" jdbcType="VARCHAR" property="softwareName" />
+    <result column="corporate_name" jdbcType="VARCHAR" property="corporateName" />
+    <result column="user_account" jdbcType="VARCHAR" property="userAccount" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="textbook_edition" jdbcType="VARCHAR" property="textbookEdition" />
+    <result column="subject_id" jdbcType="INTEGER" property="subjectId" />
+    <result column="grade_id" jdbcType="INTEGER" property="gradeId" />
+    <result column="device_id" jdbcType="INTEGER" property="deviceId" />
+    <result column="use_taking" jdbcType="VARCHAR" property="useTaking" />
+    <result column="userCount" jdbcType="INTEGER" property="userCount" />
+    <result column="rank" jdbcType="INTEGER" property="rank" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, week, start_time, end_time, create_time, update_time, software_version, software_name, 
+    corporate_name, user_account, user_name, textbook_edition, subject_id, grade_id, 
+    device_id, use_taking
+  </sql>
+  <select id="selectByExample" parameterType="com.whty.assis.count.model.TDataGatherCountLogExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_data_gather_count_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from t_data_gather_count_log
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_data_gather_count_log
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.whty.assis.count.model.TDataGatherCountLogExample">
+    delete from t_data_gather_count_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.whty.assis.count.model.TDataGatherCountLog">
+    insert into t_data_gather_count_log (id, week, start_time, 
+      end_time, create_time, update_time, 
+      software_version, software_name, corporate_name, 
+      user_account, user_name, textbook_edition, 
+      subject_id, grade_id, device_id, 
+      use_taking)
+    values (#{id,jdbcType=INTEGER}, #{week,jdbcType=VARCHAR}, #{startTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=VARCHAR}, 
+      #{softwareVersion,jdbcType=VARCHAR}, #{softwareName,jdbcType=VARCHAR}, #{corporateName,jdbcType=VARCHAR}, 
+      #{userAccount,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{textbookEdition,jdbcType=VARCHAR}, 
+      #{subjectId,jdbcType=INTEGER}, #{gradeId,jdbcType=INTEGER}, #{deviceId,jdbcType=INTEGER}, 
+      #{useTaking,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.whty.assis.count.model.TDataGatherCountLog">
+    insert into t_data_gather_count_log
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="week != null">
+        week,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="softwareVersion != null">
+        software_version,
+      </if>
+      <if test="softwareName != null">
+        software_name,
+      </if>
+      <if test="corporateName != null">
+        corporate_name,
+      </if>
+      <if test="userAccount != null">
+        user_account,
+      </if>
+      <if test="userName != null">
+        user_name,
+      </if>
+      <if test="textbookEdition != null">
+        textbook_edition,
+      </if>
+      <if test="subjectId != null">
+        subject_id,
+      </if>
+      <if test="gradeId != null">
+        grade_id,
+      </if>
+      <if test="deviceId != null">
+        device_id,
+      </if>
+      <if test="useTaking != null">
+        use_taking,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="week != null">
+        #{week,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="softwareVersion != null">
+        #{softwareVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="softwareName != null">
+        #{softwareName,jdbcType=VARCHAR},
+      </if>
+      <if test="corporateName != null">
+        #{corporateName,jdbcType=VARCHAR},
+      </if>
+      <if test="userAccount != null">
+        #{userAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="textbookEdition != null">
+        #{textbookEdition,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectId != null">
+        #{subjectId,jdbcType=INTEGER},
+      </if>
+      <if test="gradeId != null">
+        #{gradeId,jdbcType=INTEGER},
+      </if>
+      <if test="deviceId != null">
+        #{deviceId,jdbcType=INTEGER},
+      </if>
+      <if test="useTaking != null">
+        #{useTaking,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.whty.assis.count.model.TDataGatherCountLogExample" resultType="java.lang.Long">
+    select count(*) from t_data_gather_count_log
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_data_gather_count_log
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.week != null">
+        week = #{record.week,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startTime != null">
+        start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.endTime != null">
+        end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.softwareVersion != null">
+        software_version = #{record.softwareVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.softwareName != null">
+        software_name = #{record.softwareName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.corporateName != null">
+        corporate_name = #{record.corporateName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userAccount != null">
+        user_account = #{record.userAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null">
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.textbookEdition != null">
+        textbook_edition = #{record.textbookEdition,jdbcType=VARCHAR},
+      </if>
+      <if test="record.subjectId != null">
+        subject_id = #{record.subjectId,jdbcType=INTEGER},
+      </if>
+      <if test="record.gradeId != null">
+        grade_id = #{record.gradeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.deviceId != null">
+        device_id = #{record.deviceId,jdbcType=INTEGER},
+      </if>
+      <if test="record.useTaking != null">
+        use_taking = #{record.useTaking,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_data_gather_count_log
+    set id = #{record.id,jdbcType=INTEGER},
+      week = #{record.week,jdbcType=VARCHAR},
+      start_time = #{record.startTime,jdbcType=TIMESTAMP},
+      end_time = #{record.endTime,jdbcType=TIMESTAMP},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=VARCHAR},
+      software_version = #{record.softwareVersion,jdbcType=VARCHAR},
+      software_name = #{record.softwareName,jdbcType=VARCHAR},
+      corporate_name = #{record.corporateName,jdbcType=VARCHAR},
+      user_account = #{record.userAccount,jdbcType=VARCHAR},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      textbook_edition = #{record.textbookEdition,jdbcType=VARCHAR},
+      subject_id = #{record.subjectId,jdbcType=INTEGER},
+      grade_id = #{record.gradeId,jdbcType=INTEGER},
+      device_id = #{record.deviceId,jdbcType=INTEGER},
+      use_taking = #{record.useTaking,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.whty.assis.count.model.TDataGatherCountLog">
+    update t_data_gather_count_log
+    <set>
+      <if test="week != null">
+        week = #{week,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="softwareVersion != null">
+        software_version = #{softwareVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="softwareName != null">
+        software_name = #{softwareName,jdbcType=VARCHAR},
+      </if>
+      <if test="corporateName != null">
+        corporate_name = #{corporateName,jdbcType=VARCHAR},
+      </if>
+      <if test="userAccount != null">
+        user_account = #{userAccount,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="textbookEdition != null">
+        textbook_edition = #{textbookEdition,jdbcType=VARCHAR},
+      </if>
+      <if test="subjectId != null">
+        subject_id = #{subjectId,jdbcType=INTEGER},
+      </if>
+      <if test="gradeId != null">
+        grade_id = #{gradeId,jdbcType=INTEGER},
+      </if>
+      <if test="deviceId != null">
+        device_id = #{deviceId,jdbcType=INTEGER},
+      </if>
+      <if test="useTaking != null">
+        use_taking = #{useTaking,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.whty.assis.count.model.TDataGatherCountLog">
+    update t_data_gather_count_log
+    set week = #{week,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=TIMESTAMP},
+      end_time = #{endTime,jdbcType=TIMESTAMP},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=VARCHAR},
+      software_version = #{softwareVersion,jdbcType=VARCHAR},
+      software_name = #{softwareName,jdbcType=VARCHAR},
+      corporate_name = #{corporateName,jdbcType=VARCHAR},
+      user_account = #{userAccount,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      textbook_edition = #{textbookEdition,jdbcType=VARCHAR},
+      subject_id = #{subjectId,jdbcType=INTEGER},
+      grade_id = #{gradeId,jdbcType=INTEGER},
+      device_id = #{deviceId,jdbcType=INTEGER},
+      use_taking = #{useTaking,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <!--查询累计使用人数-->
+  <select id="selectByUseCount" parameterType="map"  resultMap="BaseResultMap">
+    SELECT COUNT(*)userCount,a.createTime create_time FROM
+    (SELECT COUNT(*),DATE_FORMAT(t.create_time,'%Y-%m-%d')createTime,t.user_account,t.device_id FROM
+    t_data_gather_count_log  t GROUP BY t.user_account,t.create_time ORDER BY createTime) a
+    INNER JOIN t_device_info d ON d.id = a.device_id
+    WHERE 1=1
+    <if test="schoolId != null">
+      and d.school_id >= #{schoolId}
+    </if>
+    <if test="areaCode != null">
+      and d.area_code >= #{areaCode}
+    </if>
+    <if test="cityCode != null">
+      and d.city_code >= #{cityCode}
+    </if>
+    <if test="provinceCode != null">
+      and d.province_code >= #{provinceCode}
+    </if>
+    GROUP BY a.createTime
+    ORDER by a.createTime
+  </select>
+
+  <!--设备开机数-->
+  <select id="selectByDevice" parameterType="map"  resultMap="BaseResultMap">
+    SELECT COUNT(*)userCount,a.creatTime create_time
+    FROM (SELECT DATE_FORMAT(t.create_time,'%Y-%m-%d')creatTime ,t.device_id FROM
+    t_data_gather_count_log  t GROUP BY t.device_id ,DATE_FORMAT(t.create_time,'%Y-%m-%d')) a
+    INNER JOIN t_device_info d ON d.id = a.device_id
+    WHERE 1=1
+    <if test="schoolId != null">
+      and d.school_id >= #{schoolId}
+    </if>
+    <if test="areaCode != null">
+      and d.area_code >= #{areaCode}
+    </if>
+    <if test="cityCode != null">
+      and d.city_code >= #{cityCode}
+    </if>
+    <if test="provinceCode != null">
+      and d.province_code >= #{provinceCode}
+    </if>
+    GROUP BY a.creatTime
+    ORDER by a.creatTime
+  </select>
+
+  <!--应用统计-->
+  <select id="selectBySoftware" parameterType="map"  resultMap="BaseResultMap">
+   SELECT COUNT(t.subject_id)userCount,t.software_name
+   FROM t_data_gather_count_log  t
+   INNER JOIN t_device_info d ON d.id = t.device_id
+   WHERE 1=1
+    <if test="startTime != null">
+      and t.create_time >= #{startTime}
+    </if>
+    <if test="endTime != null">
+      <![CDATA[and t.create_time <= #{endTime}]]>
+    </if>
+    <if test="schoolId != null">
+      and d.school_id >= #{schoolId}
+    </if>
+    <if test="areaCode != null">
+      and d.area_code >= #{areaCode}
+    </if>
+    <if test="cityCode != null">
+      and d.city_code >= #{cityCode}
+    </if>
+    <if test="provinceCode != null">
+      and d.province_code >= #{provinceCode}
+    </if>
+   GROUP BY t.software_name
+   ORDER BY userCount desc
+  </select>
+
+  <!--教师使用排名-->
+  <select id="selectByTeacher"  parameterType="map" resultMap="BaseResultMap">
+    SELECT SUM(t.use_taking)use_taking,COUNT(t.use_taking)userCount,t.software_name,t.user_account,t.user_name,t.subject_id
+    FROM t_data_gather_count_log t
+    INNER JOIN t_device_info d ON d.id = t.device_id
+    WHERE 1=1
+    <if test="startTime != null ">
+      and t.create_time >= #{startTime}
+    </if>
+    <if test="endTime != null ">
+      <![CDATA[and t.create_time <= #{endTime}]]>
+    </if>
+    <if test="schoolId != null">
+      and d.school_id >= #{schoolId}
+    </if>
+    <if test="areaCode != null">
+      and d.area_code >= #{areaCode}
+    </if>
+    <if test="cityCode != null">
+      and d.city_code >= #{cityCode}
+    </if>
+    <if test="provinceCode != null">
+      and d.province_code >= #{provinceCode}
+    </if>
+    GROUP BY t.user_account
+    ORDER BY use_taking desc
+  </select>
+
+  <!--时长统计-->
+  <select id="selectByUseTaking"  parameterType="map" resultMap="BaseResultMap">
+    SELECT SUM(use_taking)use_taking,t.device_id device_id
+    FROM t_data_gather_count_log t
+    INNER JOIN t_device_info d ON d.id = t.device_id
+    WHERE 1=1
+    <if test="startTime != null ">
+      and t.create_time >= #{startTime}
+    </if>
+    <if test="endTime != null ">
+      <![CDATA[and t.create_time <= #{endTime}]]>
+    </if>
+    <if test="schoolId != null">
+      and d.school_id >= #{schoolId}
+    </if>
+    <if test="areaCode != null">
+      and d.area_code >= #{areaCode}
+    </if>
+    <if test="cityCode != null">
+      and d.city_code >= #{cityCode}
+    </if>
+    <if test="provinceCode != null">
+      and d.province_code >= #{provinceCode}
+    </if>
+    GROUP BY device_id
+  </select>
+
+  <!--学科统计时长-->
+  <select id="selectBySubject"  parameterType="map" resultMap="BaseResultMap">
+    SELECT SUM(use_taking)use_taking,t.subject_id subject_id,COUNT(use_taking)userCount,COUNT(DISTINCT t.user_account)rank
+    FROM t_data_gather_count_log t
+    INNER JOIN t_device_info d ON d.id = t.device_id
+    WHERE 1=1
+    <if test="startTime != null">
+      and t.create_time >= #{startTime}
+    </if>
+    <if test="endTime != null ">
+      <![CDATA[and t.create_time <= #{endTime}]]>
+    </if>
+    <if test="schoolId != null">
+      and d.school_id >= #{schoolId}
+    </if>
+    <if test="areaCode != null">
+      and d.area_code >= #{areaCode}
+    </if>
+    <if test="cityCode != null">
+      and d.city_code >= #{cityCode}
+    </if>
+    <if test="provinceCode != null">
+      and d.province_code >= #{provinceCode}
+    </if>
+    GROUP BY subject_id
+  </select>
+
+  <!--设备使用统计-->
+  <select id="selectByDeviceUse"  parameterType="map" resultMap="BaseResultMap">
+    SELECT t.device_id,SUM(use_taking)use_taking,COUNT(use_taking)userCount,GROUP_CONCAT(t.user_name)user_name
+    FROM t_data_gather_count_log t
+    INNER JOIN t_device_info d ON d.id = t.device_id
+    WHERE 1=1
+    <if test="startTime != null">
+      and t.create_time >= #{startTime}
+    </if>
+    <if test="endTime != null ">
+      <![CDATA[and t.create_time <= #{endTime}]]>
+    </if>
+    <if test="schoolId != null">
+      and d.school_id >= #{schoolId}
+    </if>
+    <if test="areaCode != null">
+      and d.area_code >= #{areaCode}
+    </if>
+    <if test="cityCode != null">
+      and d.city_code >= #{cityCode}
+    </if>
+    <if test="provinceCode != null">
+      and d.province_code >= #{provinceCode}
+    </if>
+    GROUP BY device_id
+  </select>
+</mapper>

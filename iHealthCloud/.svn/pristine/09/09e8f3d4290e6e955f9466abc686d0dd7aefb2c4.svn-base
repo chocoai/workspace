@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>孝康通</title>
+    <!-- Bootstrap -->
+    <link th:href="@{/pages/mall/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- FontAwesome 4.7.0字体 -->
+    <link th:href="@{/pages/mall/css/font-awesome.min.css}" rel="stylesheet">
+    <!-- 商品图片轮播 -->
+    <link th:href="@{/pages/mall/css/swiper.min.css}" rel="stylesheet">
+    <!-- 服务分类和时间选择 -->
+    <link th:href="@{/pages/mall/css/sidenav.min.css}" rel="stylesheet">
+    
+    
+    <!-- 服务日期时间选择 -->
+    <link rel="stylesheet" th:href="@{/pages/mall/css/jquery-weui.min.css}">
+	<!-- 自定义css -->
+    <link th:href="@{/pages/mall/css/mymall.css}" rel="stylesheet">
+  </head>
+  <body class="other-mall" ontouchstart>
+  	<input th:if="${a} !=null" id="a" type="hidden" th:value="${a}" />
+  	<input th:if="${u} !=null" id="u" type="hidden" th:value="${u}" />
+    <input th:if="${session.memberSession} !=null" id="memberId" type="hidden" th:value="${session.memberSession.memberId}" />
+  	<input id="serviceId" type="hidden" th:value="${biz.serviceId}" />
+  	<input th:if="${dto} !=null" id="userCollectId" type="hidden" th:value="${dto.cid}" />
+    <!-- 导航 开始 -->
+    <nav class="navbar navbar-default navbar-fixed-top navbar-mall-other">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a th:if="${a} ==null" href="javascript:history.back();" class="othertop-left"><i class="fa fa-angle-left icon-back"></i></a>
+          <div class="top-tab">
+            <ul>
+              <li class="active"><a href="#goodsimg">服务</a></li>
+              <li><a href="#goodsintroduce">详情</a></li>
+              <li><a href="#goodsremarks">评价</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- 导航 结束 -->
+
+    <!-- 服务 开始 -->
+    <div class="goods-simple" id="goodsimg">
+        <!-- 服务图片轮播 开始 -->
+        <div class="swiper-container">
+          <div class="swiper-wrapper">
+           	<div class="swiper-slide" th:each="images:${biz.images}"><img th:src="${images.imgPath}" class="img-responsive"></div> 
+          </div>
+          <!-- Add Pagination -->
+          <div class="swiper-pagination mypager"></div>
+        </div>
+        <!-- 服务图片轮播 结束 -->
+        <div class="things-info">
+          <div class="things-title" th:text="${biz.serviceName}">保洁</div>
+          <div class="things-price">￥<span th:text="${biz.unitPrice}">35</span></div>
+        </div>
+        <!-- 20180104 开始 -->
+        <div class="service-info-cell mar-t10">
+          <a th:if="${a} ==null" th:href="@{'/h5/service/provider/'+${biz.providerId}}" class="facilitator-info">
+            <span class="facilitator-info-l" th:text="${biz.providerName}">悠闲老年服务中心</span>
+			<span class="facilitator-info-r"><i class="fa fa-angle-right"></i></span>
+          </a>
+          <a th:if="${a} !=null" th:href="@{'/h5/service/provider/'+${biz.providerId}+'?a=1&u='+${u}}" class="facilitator-info">
+            <span class="facilitator-info-l" th:text="${biz.providerName}">悠闲老年服务中心</span>
+            <span class="facilitator-info-r"><i class="fa fa-angle-right"></i></span>
+          </a>
+        </div>
+        <div class="service-info-cell">
+          <a href="javascript:;" class="facilitator-info service-select sideselect-toggle">
+            <span class="facilitator-info-l">选择 服务分类和时间</span>
+            <span class="facilitator-info-r"><i class="fa fa-angle-right"></i></span>
+          </a>
+        </div>
+        <!-- 20180104 结束 -->
+    </div>
+    <!-- 服务 结束 -->
+
+     <!-- 用户评价 开始 -->
+    <div class="goods-remarks" id="goodsremarks" th:if="${biz.moreComments}>0">
+        <div class="goods-remarks-hd" th:if="${a} ==null">
+          <div class="remarks-title pull-left">评价(<span th:text="${biz.moreComments}"></span>条)</div>
+          <a th:href="@{'/h5/remarks?type=service&id='+${biz.serviceId}}" class="remarks-lookall pull-right" th:if="${biz.moreComments}>2">查看全部评价 &gt;</a>
+        </div>
+         <div class="goods-remarks-hd" th:if="${a} !=null">
+          <div class="remarks-title pull-left">评价(<span th:text="${biz.moreComments}"></span>条)</div>
+          <a th:href="@{'/h5/remarks?type=service&id='+${biz.serviceId}+'a=1&u='+${u}}" class="remarks-lookall pull-right" th:if="${biz.moreComments}>2">查看全部评价 &gt;</a>
+        </div>
+        <div class="goods-remarks-bd">
+           <ul class="remarks-list">
+            <li th:each="comments:${biz.comments}">
+               <div class="remarks-top">
+                  <div class="remarks-user">
+                     <img th:if="${comments.userLogo} ==null" th:src="@{/pages/mall/images/user-photo.png}" class="img-responsive">
+                  	 <img th:if="${comments.userLogo} !=null" th:src="${comments.userLogo}" class="img-responsive">
+                  </div>
+                  <div class="remarks-name" th:text="${comments.nickName}">哆啦A梦</div>
+                  <div class="remarks-date" th:text="${comments.createTimeStr}">2017-12-12</div>
+               </div>
+               <div class="remarks-content">
+                 <p class="remarks-txt" th:text="${comments.content}">很喜欢，但是我更想要个爱watch,更翻醒，得啦得啦得啦</p>
+               </div>
+            </li>
+           </ul>
+        </div>
+    </div>
+    <div class="goods-remarks" id="goodsremarks" th:if="${biz.moreComments}==0">
+        <div class="goods-remarks-hd">
+        <div style="text-align:center;color:#888;font-size:12px">暂无评价</div>
+        </div>
+    </div>
+    <!-- 用户评价 结束 -->
+
+        <!-- 商品详情 开始 -->
+    <div class="goods-show" id="goodsintroduce">
+      <div class="goods-show-hd">—— 图文详情 ——</div>
+      <div class="goods-show-bd"  th:utext="${biz.content}"><img th:src="@{/pages/mall/images/good01-show.jpg}" class="img-responsive"></div>
+    </div>
+    <!-- 商品详情 结束 -->
+
+    <!-- 固定底部的加入购物车 开始 -->
+    <nav class="navbar navbar-default navbar-fixed-bottom mall-parts">
+      <div class="container-fluid nopad-lr">
+        <div class="mall-fixed-bottom">
+          <div class="mall-fixed-bottom-l">
+	            <a th:href="@{/h5}" class="fixed-bottom-l-cell service-bottom-cell" th:if="${a} ==null">
+	              <span><i class="fa fa-home"></i></span>
+	              <span>首页</span>
+	            </a>
+	            <a th:href="@{'/h5?a=1&u='+${u}}" class="fixed-bottom-l-cell service-bottom-cell" th:if="${a} !=null">
+	              <span><i class="fa fa-home"></i></span>
+	              <span>首页</span>
+	            </a>
+	            <a href="javascript:;" class="fixed-bottom-l-cell icon-collection service-bottom-cell">
+	              <span>
+	              <i class="fa fa-star" th:if="${dto} !=null"></i>
+	              <i class="fa fa-star-o" th:if="${dto} ==null"></i>
+	              </span>
+	              <span th:text="${dto} !=null?'已收藏':'收藏'"></span>
+	            </a>
+          </div>
+          <div class="mall-fixed-bottom-r" th:switch="${biz.serviceStatus}">
+            <a th:case="0" href="javascript:void(0)" class="fixed-bottom-r-cell nowbux nowappoint " >服务已下架</a>
+            <a th:case="1" href="javascript:void(0)" class="fixed-bottom-r-cell nowbuy nowappoint sideselect-toggle">立即预约</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- 固定底部的加入购物车 结束 -->
+
+    <!-- 服务分类和时间选择 开始 -->
+    <div class="sideselect" data-sidenav data-sidenav-toggle=".sideselect-toggle">
+      <div class="select-top">
+      	<!-- 20180117 开始 -->
+        <span class="dismiss"><i class="fa fa-close"></i></span>
+        <!-- 20180117 结束 -->
+         	<img th:if="${biz.titleImg} ==null" th:src="@{/pages/mall/images/service01.jpg}" class="img-service-select">
+	     	<img th:if="${biz.titleImg} !=null" th:src="${biz.titleImg}" class="img-service-select">
+        <div class="priceinfo-service-select">
+          <p class="price-service-select" id="unitPrice" th:text="${biz.unitPrice}">￥35</p>
+          <p class="pra-service-select">选择服务分类和时间</p>
+        </div>
+      </div>
+      <div class="service-select-content">
+        <div class="service-select-cell">
+          <div class="service-select-cell-hd">服务预约时间</div>
+           <div class="service-select-cell-bd">
+            <input type="text" id='datetime-picker'/>
+          </div>
+        </div>
+        <div class="service-select-cell">
+          <div class="service-select-cell-hd">服务分类</div>
+          <div class="service-select-cell-bd">
+            <ul>
+              	<li th:each="price:${biz.priceList}" th:id="${price.cid}">
+	              	<lable th:text="${price.level}">保洁师</lable><span><lable th:text="${price.price}" >90</lable><lable th:text="${price.unit}">元/3小时</lable></span><!-- (<lable th:text="${price.desct}">不带清洁剂</lable>) -->
+              	</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- 20180117 固定底部的立即预约 开始 -->
+      <nav class="navbar navbar-default navbar-fixed-bottom mall-parts servicedetail-fixed-bottom">
+        <div class="container-fluid nopad-lr">
+          <div class="mall-fixed-bottom">
+            <div class="mall-fixed-bottom-l" style="width: 100%;" th:switch="${biz.serviceStatus}">
+              <a th:case="0" href="javascript:void(0)" class="fixed-bottom-r-cell nowbux nowappoint">服务已下架</a>
+              <a th:case="1" href="javascript:void(0)" onclick="firmOrder()" class="fixed-bottom-r-cell nowbuy nowappoint">确定</a>
+            </div>
+          </div>
+        </div>
+      </nav>
+      <!-- 20180117 固定底部的立即预约 结束 -->
+    </div>
+    <!-- 服务分类和时间选择 结束 -->
+
+    <!-- 返回顶部 开始 -->
+    <div class="gototop" style="display: none;">
+      <a href="javascript:void(0)"><i class="glyphicon glyphicon-menu-up"></i></a>
+    </div>
+    <!-- 返回顶部 结束 -->
+
+    <script th:src="@{/pages/mall/js/jquery-1.9.1.min.js}"></script>
+    <script th:src="@{/pages/mall/js/bootstrap.min.js}"></script>
+    <!-- 商品图片轮播 -->
+    <script th:src="@{/pages/mall/js/swiper.min.js}"></script>
+    <!-- 服务分类和时间选择 -->
+    <script th:src="@{/pages/mall/js/sidenav.min.js}"></script>
+     <!-- layer -->
+    <script th:src="@{/pages/mall/css/layer_mobile/layer.js}"></script>
+   
+    <!-- 服务日期时间选择 -->
+    <script th:src="@{/pages/mall/js/jquery-weui.js}"></script>
+    <script type="text/javascript">
+    var a=$("#a").val();
+    var u=$("#u").val();
+ 	var pathName=window.document.location.pathname;
+    var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
+	$('html,body').on('click',function(){ }); 
+    // 返回顶部
+    $(window).scroll(function(){
+      if($(window).scrollTop()>=20){
+         $(".gototop").fadeIn(300);
+      }else{
+         $(".gototop").fadeOut(300);
+      }
+    })
+    $(".gototop a").click(function(){
+      $("html,body").animate({scrollTop:"0px"},300)
+    })
+
+      // 商品图片轮播
+      var swiper = new Swiper('.swiper-container', {
+        pagination: {
+          el: '.swiper-pagination',
+          type: 'fraction',
+        },
+      });
+
+      //商品、详情、评价Tab
+      $(".top-tab ul li a").click(function(){
+        $(this).parent("li").addClass("active").siblings().removeClass("active");
+      })
+      //服务分类和时间选择
+      $('[data-sidenav]').sidenav();
+      
+      $("#datetime-picker").datetimePicker({
+        title: "请选择服务开始时间"
+      });
+      $(".service-select-cell-bd ul li").click(function(){
+	        $(this).addClass('active').siblings().removeClass('active');
+	        var n = $(this).find("span").text();
+	        $("#unitPrice").text(n);
+	  })
+      //收藏
+      $(".icon-collection").click(function(){
+      	if($("#memberId").val()>0){
+      			doUserCollect();
+      	}else{
+    	   layer.open({
+		    	content: '您还没登录，请您先登录！'
+		    	,skin: 'msg'
+		    	,time: 2 //2秒后自动关闭
+		   });
+		   setTimeout(function(){
+		  		window.location.href=projectName+"/h5/login?url="+window.location.href
+		   },2000);
+      	}
+      })
+      //收藏
+      function doUserCollect(){
+        var userCollectId = $("#userCollectId").val();
+        var url=projectName+"/h5/admin/member/doUserCollect";
+        if(a==1){
+        	url+="?a=1&u="+u;
+        }
+	 	$.ajax({
+			url : url,
+			data : {
+				refId : $("#serviceId").val(),
+				type:'service'
+			},
+			dataType : "json",
+			success : function(result) {
+				if(result.result==0){
+					layer.open({
+					    content: '操作失败'
+					    ,skin: 'msg'
+					    ,time: 2 //2秒后自动关闭
+					  });
+				}else{
+					if ($(".icon-collection").find(".fa").hasClass('fa-star-o')) {
+				          $(".icon-collection").find(".fa").addClass('fa-star').removeClass('fa-star-o');
+				          $(".icon-collection").find("span").eq(1).text("已收藏");
+				    }else{
+				          $(".icon-collection").find(".fa").addClass('fa-star-o').removeClass('fa-star');
+				          $(".icon-collection").find("span").eq(1).text("收藏");
+				    }
+				}
+			}
+		})
+      }
+      
+      //立即预约
+      function firmOrder(){
+      		if($("#memberId").val()>0){
+      			var time = $("#datetime-picker").val();
+      			if(!time){
+      				layer.open({
+    				    content: '请选择预约时间！'
+    				    ,skin: 'msg'
+    				    ,time: 2 //2秒后自动关闭
+    				  });
+      				return;
+      			}
+      			var $li = $(".service-select-cell-bd ul li.active");
+      			if(!$li.html()){
+      				layer.open({
+    				    content: '请选择服务类型！'
+    				    ,skin: 'msg'
+    				    ,time: 2 //2秒后自动关闭
+    				});
+      				return;
+      			}
+      		  var datetime = $("#datetime-picker").val();
+          	  var date = new Date(Date.parse(datetime.replace(/-/g, "/")));
+      	  	  var a = new Date().getTime();
+      	  	  var b = date.getTime();
+      	  	  console.log(datetime);
+      	  	  console.log(b);
+          	  	if(a >= b){
+          		  console.log("超时");
+          		  layer.open({
+        		    	content: '预约时间不正确！'
+        		    	,skin: 'msg'
+        		    	,time: 2 //2秒后自动关闭
+          		  });
+          		  return;
+          	  	}
+      			var priceId = $li.attr("id");
+      			var serviceId=$("#serviceId").val();
+      			var url=projectName+"/h5/admin/getSubmitOrderService?id="+serviceId+"&priceId="+priceId+"&time="+time;
+		        if($("#a").val()==1){
+		        	url+="&a=1&u="+$("#u").val();
+		        }
+      			window.location.href=url;
+      		}else{
+      			layer.open({
+				    content: '您还没登录，请您先登录！'
+				    ,skin: 'msg'
+				    ,time: 2 //2秒后自动关闭
+				  });
+				  setTimeout(function(){
+				  	window.location.href=projectName+"/h5/login?url="+window.location.href
+				  },2000);
+      		}
+      }
+    //判断
+  	function timeout(i){
+  		if(i<10){
+  			return "0"+i;
+  		}else{
+  			return i;
+  		}
+  	}
+    </script>
+  </body>
+</html>

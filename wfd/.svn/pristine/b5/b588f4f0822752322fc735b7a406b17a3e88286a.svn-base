@@ -1,0 +1,29 @@
+/**
+ * 
+ */
+package com.whty.wfd.page.controller;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import com.whty.wfd.base.controller.BaseController;
+
+/**
+ * @author zhangzheng
+ * @date 2018年8月23日
+ */
+@Controller
+@RequestMapping("/page/test")
+public class TestController extends BaseController {
+
+	@RequestMapping("test.html")
+	public String test(HttpServletRequest request, Model model, HttpServletResponse response) {
+
+		return "test2";
+	}
+
+}

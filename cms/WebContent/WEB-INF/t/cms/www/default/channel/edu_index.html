@@ -1,0 +1,407 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="keywords" content="${site.keywords!}" />
+<meta http-equiv="description" content="${site.description!}" />
+<title>${channel.title!channel.name} - ${site.name}</title>
+
+<link rel="stylesheet" type="text/css" href="/${res}/css/wh.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/public_all.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/global.css" />
+
+</head>
+<body>
+
+	[#include "../include/header.html"/] 
+	[#include "../include/navi.html"/]
+
+	<!--内容 开始-->
+	<div class="box">
+		<div class="left">
+			<!--图片切换 开始-->
+			<div class="ban" id="demo1">
+				<div class="ban2" id="ban_pic1">
+					<div class="prev1" id="prev1">
+						<img src="/${res}/images/index_tab_l.png" width="28" height="51" alt="">
+					</div>
+					<div class="next1" id="next1">
+						<img src="/${res}/images/index_tab_r.png" width="28" height="51" alt="">
+					</div>
+					<ul>
+						[@cms_content_list count='5' orderBy='4' titLen='20' typeId="3" channelOption='1' channelId=channel.id] 
+						[#list tag_list as tw] 
+						<li>
+							<a href="${tw.url}" target="_blank">
+								<img src="${tw.titleImg!tw.typeImg!}">
+							</a>
+						</li>
+						[/#list] 
+						[/@cms_content_list]
+					</ul>
+				</div>
+			</div>
+			<!--图片切换 结束-->
+
+
+			<!--头条 开始-->
+			<div class="hot_box">
+				[@cms_content_list count='1' orderBy='4' titLen='22' typeId="4" channelOption='1' channelId=channel.id] 
+				[#if tag_list?size gt 0] 
+					[#list tag_list as t]
+					<div class="title">
+						<a href="${t.url}" title="${t.title}" target="_blank">[@text_cut s=t.title len=titLen /]</a>
+					</div>
+					<div class="title_detail">
+						<a href="${t.url}" target="_blank">[@text_cut s=t.desc! len='50' append='...'/]</a>
+					</div>
+					[/#list] 
+				[#else]
+					<div class="title">&nbsp;</div>
+					<div class="title_detail">&nbsp;</div>
+				[/#if] 
+				[/@cms_content_list]
+				<ul class="list">
+					[@cms_content_list count='6' orderBy='4' titLen='22' typeId="1,2" channelOption='1' channelId=channel.id] 
+					[#list tag_list as j]
+					<li>
+						<span>${j.date?string('yyyy-MM-dd')}</span>
+						<a href="${j.url}" title="${j.title}" target="_blank">[@text_cut s=j.title len=titLen /]</a>
+					</li>
+					[/#list] 
+					[/@cms_content_list]
+				</ul>
+			</div>
+			<!--头条 结束-->
+			<div style="clear: both;"></div>
+
+<!-- 
+			菜单切换 开始
+			<div class="culture">
+				<div id="Tab_link">
+					<div class="Menubox">
+						<ul>
+							<a href="${base}/jjxy/index.jhtml"><li id="menuc1" onmouseover="setTab('menuc',1,3)" class="hover">菁菁校园</li></a>
+                            <a href="${base}/jchd/index.jhtml"><li id="menuc2" onmouseover="setTab('menuc',2,3)">精彩活动</li></a>
+                            <a href="${base}/mskj/index.jhtml"><li id="menuc3" onmouseover="setTab('menuc',3,3)">名师开讲</li></a>
+						</ul>
+					</div>
+
+					<div class="Contentbox">
+						<div id="con_menuc_1" class="hover">
+							<ul>
+								[@cms_content_list count='6' orderBy='4' titLen='22' channelOption='1' channelId='104'] 
+								[#list tag_list as a]
+								<li>
+									<div class="title">
+										<a href="${a.url}" title="${a.title}" target="_blank">[@text_cut s=a.title len=titLen /]</a>
+									</div>
+									<div class="cont">
+										[#if a.typeImg??]
+										<a href="${a.url}" target="_blank"><img src="${a.typeImg!site.typeImg}" width="120" height="90" /></a>
+										[/#if]
+										<div class="content">
+											<a href="${a.url}" target="_blank">[@text_cut s=a.desc! len='200' append='...'/]</a>
+										</div>
+									</div>
+								</li>
+								[/#list] 
+								[/@cms_content_list]
+
+
+							</ul>
+						</div>
+						<div id="con_menuc_2" style="display: none">
+							<ul>
+								[@cms_content_list count='6' orderBy='4' titLen='22' channelOption='1' channelId='105'] 
+								[#list tag_list as a1]
+								<li>
+									<div class="title">
+										<a href="${a1.url}" title="${a1.title}" target="_blank">[@text_cut s=a1.title len=titLen /]</a>
+									</div>
+									<div class="cont">
+										[#if a1.typeImg??]
+										<a href="${a1.url}"><img src="${a1.typeImg!site.typeImg}" width="120" height="90" /></a>
+										[/#if]
+										<div class="content">
+											<a href="${a1.url}">[@text_cut s=a1.desc! len='200' append='...'/]</a>
+										</div>
+									</div>
+								</li>
+								[/#list] 
+								[/@cms_content_list]
+							</ul>
+						</div>
+						<div id="con_menuc_3" style="display: none">
+							<ul>
+								[@cms_content_list count='6' orderBy='4' titLen='22' channelOption='1' channelId='106'] 
+								[#list tag_list as a2]
+								<li>
+									<div class="title">
+										<a href="${a2.url}" title="${a2.title}" target="_blank">[@text_cut s=a2.title len=titLen /]</a>
+									</div>
+									<div class="cont">
+										[#if a2.typeImg??]
+										<a href="${a2.url}" target="_blank"><img src="${a2.typeImg!site.typeImg}" width="120" height="90" /></a>
+										[/#if]
+										<div class="content">
+											<a href="${a2.url}" target="_blank">[@text_cut s=a2.desc! len='200' append='...'/]</a>
+										</div>
+									</div>
+								</li>
+								[/#list] 
+								[/@cms_content_list]
+							</ul>
+						</div>
+
+					</div>
+
+				</div>
+
+			</div>
+			菜单切换 结束
+			<div style="clear: both;"></div>
+ -->
+			<!--大内容 开始-->
+			<div class="education">
+				<!----菁菁校园 开始---->
+				<div class="jy_box">
+					<div class="jy_hd">
+						<h3 class="jy_tit">菁菁校园</h3>
+						<a class="jy_more" href="${base}/jjxy/index.jhtml">更多></a>
+					</div>
+					<div class="jy_bd">
+					[@cms_content_list count='9' orderBy='4' titLen='22' channelOption='1' channelId='104'] 
+					[#list tag_list as content]
+					[#if content_index == 0]
+						<div class="jy_bigpic">
+							<a class="jy_img" title="${content.title}" href="${content.url}">
+								<img src="${content.titleImg!content.typeImg!site.defImg}">
+							</a>
+							<a class="jy_tex" title="${content.title}" href="${content.url}">[@text_cut s=content.title! len='26' append='...'/]</a>
+						</div>
+					[/#if]
+	                [#if content_index == 1]
+	                	<ul class="jyindex_list">
+							<li>
+								<a title="${content.title}" href="${content.url}">[@text_cut s=content.title! len='26' append='...'/]</a>
+							</li>
+	                [/#if]
+	                [#if content_index > 1]
+	                		<li>
+								<a title="${content.title}" href="${content.url}">[@text_cut s=content.title! len='26' append='...'/]</a>
+							</li>
+	                [/#if]
+                   	[#if content_index > 0 && !content_has_next]
+                   		</ul>
+                   	[/#if]
+					
+					[/#list] 
+					[/@cms_content_list]
+						
+					</div>
+				</div>
+				<!----菁菁校园 结束---->
+
+				<!----精彩活动 开始---->
+				<div class="jy_box">
+					<div class="jy_hd">
+						<h3 class="jy_tit">精彩活动</h3>
+						<a class="jy_more" href="${base}/jchd/index.jhtml">更多></a>
+					</div>
+					<div class="jy_bd">
+					[@cms_content_list count='9' orderBy='4' titLen='22' channelOption='1' channelId='105'] 
+					[#list tag_list as content]
+					[#if content_index == 0]
+						<div class="jy_bigpic">
+							<a class="jy_img" title="${content.title}" href="${content.url}">
+								<img src="${content.titleImg!content.typeImg!site.defImg}">
+							</a>
+							<a class="jy_tex" title="${content.title}" href="${content.url}">[@text_cut s=content.title! len='26' append='...'/]</a>
+						</div>
+					[/#if]
+	                [#if content_index == 1]
+	                	<ul class="jyindex_list">
+							<li>
+								<a title="${content.title}" href="${content.url}">[@text_cut s=content.title! len='26' append='...'/]</a>
+							</li>
+	                [/#if]
+	                [#if content_index > 1]
+	                		<li>
+								<a title="${content.title}" href="${content.url}">[@text_cut s=content.title! len='26' append='...'/]</a>
+							</li>
+	                [/#if]
+                   	[#if content_index > 0 && !content_has_next]
+                   		</ul>
+                   	[/#if]
+					
+					[/#list] 
+					[/@cms_content_list]					
+						
+					</div>
+				</div>
+				<!----精彩活动 结束---->
+
+				<!----名师开讲 开始---->
+				<div class="jy_box">
+					<div class="jy_hd">
+						<h3 class="jy_tit">名师开讲</h3>
+						<a class="jy_more" href="${base}/mskj/index.jhtml">更多></a>
+					</div>
+					<div class="jy_bd">
+					[@cms_content_list count='9' orderBy='4' titLen='22' channelOption='1' channelId='106'] 
+					[#list tag_list as content]
+					[#if content_index == 0]
+						<div class="jy_bigpic">
+							<a class="jy_img" title="${content.title}" href="${content.url}">
+								<img src="${content.titleImg!content.typeImg!site.defImg}">
+							</a>
+							<a class="jy_tex" title="${content.title}" href="${content.url}">[@text_cut s=content.title! len='26' append='...'/]</a>
+						</div>
+					[/#if]
+	                [#if content_index == 1]
+	                	<ul class="jyindex_list">
+							<li>
+								<a title="${content.title}" href="${content.url}">[@text_cut s=content.title! len='26' append='...'/]</a>
+							</li>
+	                [/#if]
+	                [#if content_index > 1]
+	                		<li>
+								<a title="${content.title}" href="${content.url}">[@text_cut s=content.title! len='26' append='...'/]</a>
+							</li>
+	                [/#if]
+                   	[#if content_index > 0 && !content_has_next]
+                   		</ul>
+                   	[/#if]
+					
+					[/#list] 
+					[/@cms_content_list]					
+						
+					</div>
+				</div>
+				<!----名师开讲 结束---->
+			</div>
+			<!--大内容 结束-->
+			<div style="clear: both;"></div>
+
+		</div>
+
+		<div class="right similar">
+			<div class="title">
+				<a href="${base}/jzxx/index.jhtml"><span>家长信箱</span></a>
+			</div>
+			<div style="clear: both;"></div>
+			<div class="read">
+				<div class="hot_article">
+					<ul>
+					[@cms_content_list count='8' orderBy='4' titLen='16' channelOption='1' channelId='141'] 
+					[#list tag_list as d]
+						<li>
+							<span>${d.date?string('yyyy-MM-dd')}</span>
+							<a href="${d.url}" target="_blank">[@text_cut s=d.title! len='16' append='...'/]</a>
+						</li>
+					[/#list] 
+					[/@cms_content_list] 
+					</ul>
+				</div>
+			</div>
+			
+			<div class="title">
+				<a href="${base}/zcdt/index.jhtml"><span>政策动态</span></a>
+			</div>
+			<div style="clear: both;"></div>
+			<div class="read">
+				<div class="hot_article">
+					<ul>
+					[@cms_content_list count='8' orderBy='4' titLen='16' channelOption='1' channelId='103'] 
+					[#list tag_list as d]
+						<li>
+							<span>${d.date?string('yyyy-MM-dd')}</span>
+							<a href="${d.url}" target="_blank">[@text_cut s=d.title! len='16' append='...'/]</a>
+						</li>
+					[/#list] 
+					[/@cms_content_list] 
+					</ul>
+				</div>
+			</div>			
+
+			<div class="title">
+				<a href="${base}/zjzc/index.jhtml"><span>职教之窗</span></a>
+			</div> 
+			<div style="clear: both;"></div>
+			<div class="sign">
+				<ul class="sign_list">
+					[@cms_content_list count='6' orderBy='4' titLen='16' channelOption='1' channelId='108'] 
+					[#list tag_list as w]
+					<li>
+						<a href="${w.url}" target="_blank">
+							<img src="${w.titleImg!w.typeImg!site.defImg}" width="150" height="100" />
+							[@text_cut s=w.title! len='10' append='...'/]
+						</a>
+					</li>
+					[/#list] 
+					[/@cms_content_list]
+				</ul>
+			</div>
+
+			<div class="title">
+				<a href="${base}/yjtd/index.jhtml"><span>幼教天地</span></a>
+			</div>
+			<div style="clear: both;"></div>
+			<div class="sign">
+				<ul class="sign_list">
+					[@cms_content_list count='6' orderBy='4' titLen='16' channelOption='1' channelId='107'] 
+					[#list tag_list as w]
+					<li>
+						<a href="${w.url}" target="_blank">
+							<img src="${w.titleImg!w.typeImg!site.defImg}" width="150" height="100" />
+							[@text_cut s=w.title! len='10' append='...'/]
+						</a>
+					</li>
+					[/#list] 
+					[/@cms_content_list]
+				</ul>
+
+			</div>
+
+		</div>
+	</div>
+	<!--内容 end-->
+
+	<!--尾部 开始-->
+	[#include "../include/footer.html"/]
+	<!--尾部 开始-->
+
+	<script type="text/javascript" src="/${res}/js/dc/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="/${res}/js/dc/settitle.js"></script>
+	<script type="text/javascript" src="/${res}/js/dc/pic_tab.js"></script>
+	<!--图片切换-->
+	<script type="text/javascript">
+		jQuery('#demo1').banqh({
+			box : "#demo1",//总框架
+			pic : "#ban_pic1",//大图框架
+			pnum : "#ban_num1",//小图框架
+			prev_btn : "#prev_btn1",//小图左箭头
+			next_btn : "#next_btn1",//小图右箭头
+			pop_prev : "#prev2",//弹出框左箭头
+			pop_next : "#next2",//弹出框右箭头
+			prev : "#prev1",//大图左箭头
+			next : "#next1",//大图右箭头
+			pop_div : "#demo2",//弹出框框架
+			pop_pic : "#ban_pic2",//弹出框图片框架
+			pop_xx : ".pop_up_xx",//关闭弹出框按钮	
+			autoplay : true,//是否自动播放
+			interTime : 3000,//图片自动切换间隔
+			delayTime : 400,//切换一张图片时间
+			pop_delayTime : 400,//弹出框切换一张图片时间
+			order : 0,//当前显示的图片（从0开始）
+			picdire : true,//大图滚动方向（true为水平方向滚动）
+			mindire : true,//小图滚动方向（true为水平方向滚动）
+			min_picnum : 5,//小图显示数量
+	
+		})
+	</script>
+	
+</body>
+</html>

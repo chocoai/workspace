@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<mapper namespace="PubRewInfoMapper">
+  <resultMap id="BaseResultMap" type="PubRewInfo">
+    <id column="CID" jdbcType="INTEGER" property="cid" />
+    <result column="PROJECT_CID" jdbcType="INTEGER" property="projectCid" />
+    <result column="PARTICIPAT_ID" jdbcType="INTEGER" property="participatId" />
+    <result column="COMPANY_CID" jdbcType="INTEGER" property="companyCid" />
+    <result column="INFO_TYPE" jdbcType="INTEGER" property="infoType" />
+    <result column="MEDAL_TYPE" jdbcType="INTEGER" property="medalType" />
+    <result column="MEDAL_COUNT" jdbcType="DOUBLE" property="medalCount" />
+    <result column="INTRGRAL_COUNT" jdbcType="DOUBLE" property="intrgralCount" />
+    <result column="SCORES_COUNT" jdbcType="VARCHAR" property="scoresCount" />
+    <result column="RANKING_COUNT" jdbcType="INTEGER" property="rankingCount" />
+    <result column="REASON" jdbcType="VARCHAR" property="reason" />
+    <result column="RECORD_INFO" jdbcType="VARCHAR" property="recordInfo" />
+    <result column="BACKUP" jdbcType="VARCHAR" property="backup" />
+    <result column="ORDER_NUM" jdbcType="INTEGER" property="orderNum" />
+    <result column="CREA_REN" jdbcType="VARCHAR" property="creaRen"/>
+    <result column="CREA_TIME" jdbcType="VARCHAR" property="creaTime"/>
+    <result column="EXP1" jdbcType="INTEGER" property="exp1" />
+    <result column="EXP2" jdbcType="INTEGER" property="exp2" />
+    <result column="EXP3" jdbcType="VARCHAR" property="exp3" />
+    <result column="EXP4" jdbcType="VARCHAR" property="exp4" />
+    <result column="EXP5" jdbcType="VARCHAR" property="exp5" />
+    <result column="EXP6" jdbcType="VARCHAR" property="exp6" />
+	<association property="projectManager" column="PROJECT_CID" javaType="ProjectManager">
+		<id column="CID" property="cid"/>
+		<result column="PROJECT_NAME" property="projectName"/>
+	</association>
+	
+    <association property="unitInfo" column="COMPANY_CID" javaType="UnitInfo">
+		<id column="CID" property="cid"/>
+		<result column="UNIT_NAME" property="unitName"/>
+	</association>
+  </resultMap>
+    <sql id="Base_Column_List">
+    CID, PROJECT_CID, PARTICIPAT_ID, COMPANY_CID, INFO_TYPE, MEDAL_TYPE, MEDAL_COUNT, INTRGRAL_COUNT, SCORES_COUNT, 
+    RANKING_COUNT, REASON, RECORD_INFO,BACKUP, CREA_REN, ORDER_NUM
+  </sql>
+    <!-- 查询所有奖惩信息 -->
+  <select id="getById"  resultMap="BaseResultMap" parameterType="java.lang.Integer">
+    SELECT 
+ 	<include refid="Base_Column_List" />
+    FROM 
+    	PUB_REW_INFO P
+    WHERE 
+    	P.CID=  #{cid,jdbcType=INTEGER}
+  </select>
+  
+  <!-- 根据分类或单位名称查询奖惩信息 -->
+  <select id="queryByProperties" parameterType="map" resultMap="BaseResultMap">
+    SELECT 
+    	P.CID ,
+    	P.COMPANY_CID,
+    	P.PROJECT_CID,
+    	P.INFO_TYPE ,
+    	P.MEDAL_TYPE, 
+    	P.MEDAL_COUNT ,
+    	P.INTRGRAL_COUNT,
+    	P.SCORES_COUNT,
+    	P.RANKING_COUNT,
+    	P.REASON,P.BACKUP,
+    	U.UNIT_NAME ,
+    	(SELECT PROJECT_NAME  FROM PROJECT_MANAGER WHERE  CID=P.PROJECT_CID ) AS PROJECT_NAME
+    FROM
+    	PUB_REW_INFO P,
+    	UNIT_INFO U 
+    WHERE  
+    	P.COMPANY_CID=U.CID 
+    	<if test="projectName!=null and projectName!=''">
+    		and project_cid in (select CID from PROJECT_MANAGER where PROJECT_NAME like "%${projectName}%")
+    	</if>
+    	<if test="unitName!=null and unitName!=''">
+    		and (U.UNIT_NAME LIKE "%${unitName}%" 
+   			OR 
+   			U.ABBREVIATION LIKE "%${unitName}%") 
+    	</if>
+    	<if test="ersionNum!=null">
+    		and U.ERSION_NUM = #{ersionNum}
+   			
+    	</if>
+  </select>
+  
+  <!-- 新增奖励信息 -->
+  <insert id="insertRewInfo"  parameterType="PubRewInfo">
+    INSERT INTO pub_rew_info (
+    	CID,
+    	company_cid,
+    	info_type,
+    	medal_type,
+    	CREA_REN,
+		CREA_TIME,
+    	medal_count,
+    	INTRGRAL_COUNT,
+    	SCORES_COUNT,
+    	RANKING_COUNT,
+    	REASON,BACKUP
+    ) VALUES (
+		#{cid},
+		#{companyCid},
+		#{infoType},
+		#{medalType},
+		#{creaRen},
+		#{creaTime},
+		#{medalCount},
+		#{intrgralCount},
+		#{scoresCount},
+		#{rankingCount},
+		#{reason},
+		#{backup}
+	)
+  </insert>
+  
+   <!-- 新增惩罚信息 -->
+    <insert id="insertPunishInfo"  parameterType="PubRewInfo">
+    INSERT INTO pub_rew_info (
+    	CID,
+    	project_cid,
+    	PARTICIPAT_ID,
+    	company_cid,
+    	info_type,
+    	medal_type,
+    	CREA_REN,
+		CREA_TIME,
+    	medal_count,
+    	INTRGRAL_COUNT,
+    	SCORES_COUNT,
+    	RANKING_COUNT,
+    	REASON,BACKUP
+    ) VALUES (
+		#{cid},
+		#{projectCid},
+		#{participatId},
+		#{companyCid},
+		#{infoType},
+		#{medalType},
+		#{creaRen},
+		#{creaTime},
+		#{medalCount},
+		#{intrgralCount},
+		#{scoresCount},
+		#{rankingCount},
+		#{reason},
+		#{backup}
+	)
+  </insert>
+  
+  <!-- 批量删除奖惩信息 -->
+  <insert id="deleteInfoByCid"  parameterType="Integer">
+     delete from 
+     	pub_rew_info 
+     where 
+     	cid
+     in
+     	<foreach item="item" index="index" collection="array" open="(" separator="," close=")">
+            #{item}
+        </foreach>
+  </insert>
+  
+  <insert id="deleteByCid"  parameterType="Integer">
+     delete from 
+     	pub_rew_info 
+     where 
+     	CID = #{cid}
+     
+  </insert>
+  
+  <!-- 根据单位、奖惩类型、奖牌类型查询奖惩信息 -->
+  <select id="queryGoldMedal" parameterType="PubRewInfo" resultType="java.lang.Integer">
+    SELECT 
+    	sum(P.MEDAL_COUNT) as medalCount
+    FROM
+    	PUB_REW_INFO P
+    WHERE  
+    	1=1 
+    	<if test="companyCid!=null and companyCid!=0">
+    		and P.COMPANY_CID=#{companyCid} 
+    	</if>
+    	<if test="infoType!=null and infoType!=0">
+    		and P.INFO_TYPE=#{infoType}
+    	</if>
+    	<if test="medalType!=null and medalType!=0">
+    		and P.MEDAL_TYPE=#{medalType} 
+    	</if>
+  </select>
+</mapper>

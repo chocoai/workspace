@@ -1,0 +1,46 @@
+
+[#if user??]
+<ul class="login">
+<li>欢迎您: ${user.username!}</li>
+<li><a href="${base}/member/index.jspx" target="_blank">会员中心</a></li>
+<li><a href="javascript:void(0)" onclick="logout()">退出登录</a></li>
+</ul>
+[#else]
+<form id="loginForm" action="${base}/login.jspx" method="post">
+	<input type="hidden" id ="returnUrl" name="returnUrl"/>
+	<ul class="login">
+		<li><a href="javascript:void(0)" onclick="login()">登录</a></li>
+		<li><a href="${base}/register.jspx">注册</a></li>
+		<li>用户名：<input type="text" id="username" name="username"
+			class="text" /></li>
+		<li>密码：<input type="password" id="password" name="password"
+			class="text" /></li>
+		<li><input type="button" class="sure" value="登录" onclick ="checkUser();" /></li>
+	</ul>
+</form>
+[/#if]
+<script type="text/javascript">
+	function checkUser() {
+		if ($('#username').val() == '') {
+			alert('请先填写用户名');
+			$('#username').focus();
+			return;
+		}
+		if ($('#password').val() == '') {
+			alert('请填写密码');
+			return;
+		}
+		var returnUrl = window.location.href;
+		$("#returnUrl").val(returnUrl);
+		$('#loginForm').submit();
+	}
+	function login() {
+		var returnUrl = window.location.href;
+		location.href ="${base}/login.jspx?returnUrl="+returnUrl;
+	}
+	function logout() {
+		var returnUrl = window.location.href;
+		location.href ="${base}/logout.jspx?returnUrl="+returnUrl;
+	}
+	
+</script>

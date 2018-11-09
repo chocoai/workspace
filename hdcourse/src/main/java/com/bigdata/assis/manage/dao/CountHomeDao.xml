@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bigdata.assis.manage.dao.CountHomeDao">
+
+	<resultMap type="com.bigdata.assis.manage.model.HomeCount" id="HomeCountResult">		
+		<result property="ADD_LOGIN_NEW_NUM" column="ADD_LOGIN_NEW_NUM" />
+		<result property="ADD_LOGIN_USER_NUM" column="ADD_LOGIN_USER_NUM" />
+		<result property="ALL_LOGIN_USER_NUM" column="ALL_LOGIN_USER_NUM" />
+		<result property="ADD_LOGIN_NUM" column="ADD_LOGIN_NUM" />
+		<result property="ALL_LOGIN_NUM" column="ALL_LOGIN_NUM" />
+		<result property="ADD_LOGIN_VALID_NUM" column="ADD_LOGIN_VALID_NUM" />
+		<result property="ALL_LOGIN_VALID_NUM" column="ALL_LOGIN_VALID_NUM" />
+		<result property="ADD_LOGIN_COUR_NUM" column="ADD_LOGIN_COUR_NUM" />
+		<result property="ALL_LOGIN_COUR_NUM" column="ALL_LOGIN_COUR_NUM" />
+		
+		<result property="ADD_LOGIN_ORGA_NUM" column="ADD_LOGIN_ORGA_NUM" />
+		<result property="ADD_TERMINAL_DZSB_NUM" column="ADD_TERMINAL_DZSB_NUM" />
+		<result property="ADD_TERMINAL_YDJT_NUM" column="ADD_TERMINAL_YDJT_NUM" />
+		<result property="ADD_TERMINAL_ZZHB_NUM" column="ADD_TERMINAL_ZZHB_NUM" />
+		<result property="ADD_TERMINAL_DTQ_NUM" column="ADD_TERMINAL_DTQ_NUM" />
+		
+		<result property="ADD_JXZS_BS_NUM" column="ADD_JXZS_BS_NUM" />
+		<result property="ADD_JXZS_KTSL_NUM" column="ADD_JXZS_KTSL_NUM" />
+		
+		<result property="MON_LOGIN_ORGA_NUM" column="MON_LOGIN_ORGA_NUM" />
+		<result property="MON_LOGIN_USER_NUM" column="MON_LOGIN_USER_NUM" />
+		<result property="MON_LOGIN_NUM" column="MON_LOGIN_NUM" />
+		<result property="MON_LOGIN_NEW_NUM" column="MON_LOGIN_NEW_NUM" />
+		<result property="MON_LOGIN_VALID_NUM" column="MON_LOGIN_VALID_NUM" />
+		<result property="MON_LOGIN_COUR_NUM" column="MON_LOGIN_COUR_NUM" />
+		<result property="MON_TERMINAL_DZSB_NUM" column="MON_TERMINAL_DZSB_NUM" />
+		<result property="MON_TERMINAL_YDJT_NUM" column="MON_TERMINAL_YDJT_NUM" />
+		<result property="MON_TERMINAL_ZZHB_NUM" column="MON_TERMINAL_ZZHB_NUM" />
+		<result property="MON_TERMINAL_DTQ_NUM" column="MON_TERMINAL_DTQ_NUM" />
+		
+		<result property="MON_JXZS_BS_NUM" column="MON_JXZS_BS_NUM" />
+		<result property="MON_JXZS_KTSL_NUM" column="MON_JXZS_KTSL_NUM" />
+		
+		<result property="ADD_JXZS_VALIDBS_NUM" column="MON_JXZS_BS_NUM" />
+		<result property="ADD_JXZS_VALIDKTSL_NUM" column="MON_JXZS_KTSL_NUM" />
+		<result property="ADD_TERMINAL_VALIDDZSB_NUM" column="MON_TERMINAL_DZSB_NUM" />
+		<result property="ADD_TERMINAL_VALIDYDJT_NUM" column="MON_TERMINAL_YDJT_NUM" />
+		<result property="ADD_TERMINAL_VALIDZZHB_NUM" column="MON_TERMINAL_ZZHB_NUM" />
+		<result property="ADD_TERMINAL_VALIDDTQ_NUM" column="MON_TERMINAL_DTQ_NUM" />
+		
+		<result property="MON_JXZS_VALIDBS_NUM" column="MON_JXZS_BS_NUM" />
+		<result property="MON_JXZS_VALIDKTSL_NUM" column="MON_JXZS_KTSL_NUM" />
+		<result property="MON_TERMINAL_VALIDDZSB_NUM" column="MON_TERMINAL_DZSB_NUM" />
+		<result property="MON_TERMINAL_VALIDYDJT_NUM" column="MON_TERMINAL_YDJT_NUM" />
+		<result property="MON_TERMINAL_VALIDZZHB_NUM" column="MON_TERMINAL_ZZHB_NUM" />
+		<result property="MON_TERMINAL_VALIDDTQ_NUM" column="MON_TERMINAL_DTQ_NUM" />
+		
+		<result property="OP_TIME" column="OP_TIME" />
+		<result property="MODIFY_TIME" column="MODIFY_TIME" />
+	</resultMap>
+
+	<!-- 基本指标全国 -->
+	<select id="getBasicIndexes"   resultMap="HomeCountResult" >
+		select * from DW.RPT_ZHKT_LOGINVIEW_TOTAL_D order by OP_TIME desc
+	</select>
+	
+	<!-- 基本指标按省市 -->
+	<select id="getCityBasicIndexes"  parameterType="map"   resultMap="HomeCountResult" >
+		select op_time,
+		sum(ADD_LOGIN_NEW_NUM) as ADD_LOGIN_NEW_NUM,
+		sum(ADD_LOGIN_USER_NUM) as ADD_LOGIN_USER_NUM,
+		sum(ALL_LOGIN_USER_NUM) as ALL_LOGIN_USER_NUM,
+		sum(ADD_LOGIN_NUM) as ADD_LOGIN_NUM,
+		sum(ALL_LOGIN_NUM) as ALL_LOGIN_NUM,
+		sum(ADD_LOGIN_VALID_NUM) as ADD_LOGIN_VALID_NUM,
+		sum(ALL_LOGIN_VALID_NUM) as ALL_LOGIN_VALID_NUM,
+		sum(ADD_LOGIN_COUR_NUM) as ADD_LOGIN_COUR_NUM,
+		sum(ALL_LOGIN_COUR_NUM) as ALL_LOGIN_COUR_NUM
+		from DW.RPT_ZHKT_LOGINVIEW_CITY_D where 1=1
+		<if test="PROV_CODE != null and PROV_CODE != ''">and PROV_CODE = #{PROV_CODE}</if>
+		<if test="CITY_CODE != null and CITY_CODE != ''">and CITY_CODE = #{CITY_CODE}</if>
+		group by op_time
+		 order by OP_TIME desc
+	</select>
+
+	<!-- 各项指标全国按天统计 -->
+	<select id="getAllIndexesDateCount"  parameterType="map"  resultMap="HomeCountResult" >
+		select * from DW.RPT_ZHKT_ALLMETRIC_TOTAL_D where 1=1 
+		<if test="start_time != null and start_time != ''">and op_time >= #{start_time}</if>
+		<if test="end_time != null and end_time != ''">and <![CDATA[op_time < #{end_time}]]></if>
+		 order by op_time desc
+	</select>
+
+	<!-- 各项指标全国按月统计 -->
+	<select id="getAllIndexesMonthCount"  parameterType="map"  resultMap="HomeCountResult" >
+		select * from dw.rpt_zhkt_allmetric_total_m order by op_time desc
+	</select>
+
+	<!-- 各项指标按省市按天统计 -->
+	<select id="getCityIndexesDateCount"  parameterType="map"  resultMap="HomeCountResult" >
+		select op_time,
+		sum(ADD_LOGIN_ORGA_NUM) as ADD_LOGIN_ORGA_NUM,
+		sum(ADD_LOGIN_USER_NUM) as ADD_LOGIN_USER_NUM,
+		sum(ADD_LOGIN_NUM) as ADD_LOGIN_NUM,
+		sum(ADD_LOGIN_NEW_NUM) as ADD_LOGIN_NEW_NUM,
+		sum(ADD_LOGIN_VALID_NUM) as ADD_LOGIN_VALID_NUM,
+		sum(ADD_LOGIN_COUR_NUM) as ADD_LOGIN_COUR_NUM,
+		sum(ADD_TERMINAL_DZSB_NUM) as ADD_TERMINAL_DZSB_NUM,
+		sum(ADD_TERMINAL_YDJT_NUM) as ADD_TERMINAL_YDJT_NUM,
+		sum(ADD_TERMINAL_ZZHB_NUM) as ADD_TERMINAL_ZZHB_NUM,
+		sum(ADD_TERMINAL_DTQ_NUM) as ADD_TERMINAL_DTQ_NUM
+		from dw.rpt_zhkt_allmetric_city_d where 1=1 
+		<if test="start_time != null and start_time != ''">and op_time >= #{start_time}</if>
+		<if test="end_time != null and end_time != ''">and <![CDATA[op_time < #{end_time}]]></if>
+		<if test="PROV_CODE != null and PROV_CODE != ''">and PROV_CODE=#{PROV_CODE}</if>
+		<if test="CITY_CODE != null and CITY_CODE != ''">and CITY_CODE=#{CITY_CODE}</if>
+		group by op_time
+		 order by op_time desc
+	</select>
+
+	<!-- 各项指标按省市按月统计 -->
+	<select id="getCityIndexesMonthCount"  parameterType="map"  resultMap="HomeCountResult" >
+		select op_time,
+		sum(MON_LOGIN_ORGA_NUM) as MON_LOGIN_ORGA_NUM,
+		sum(MON_LOGIN_USER_NUM) as MON_LOGIN_USER_NUM,
+		sum(MON_LOGIN_NUM) as MON_LOGIN_NUM,
+		sum(MON_LOGIN_NEW_NUM) as MON_LOGIN_NEW_NUM,
+		sum(MON_LOGIN_VALID_NUM) as MON_LOGIN_VALID_NUM,
+		sum(MON_LOGIN_COUR_NUM) as MON_LOGIN_COUR_NUM,
+		sum(MON_TERMINAL_DZSB_NUM) as MON_TERMINAL_DZSB_NUM,
+		sum(MON_TERMINAL_YDJT_NUM) as MON_TERMINAL_YDJT_NUM,
+		sum(MON_TERMINAL_ZZHB_NUM) as MON_TERMINAL_ZZHB_NUM,
+		sum(MON_TERMINAL_DTQ_NUM) as MON_TERMINAL_DTQ_NUM
+		from dw.rpt_zhkt_allmetric_city_m where 1=1 
+		<if test="start_time != null and start_time != ''">and op_time >= #{start_time}</if>
+		<if test="end_time != null and end_time != ''">and <![CDATA[op_time < #{end_time}]]></if>
+		<if test="PROV_CODE != null and PROV_CODE != ''">and PROV_CODE=#{PROV_CODE}</if>
+		<if test="CITY_CODE != null and CITY_CODE != ''">and CITY_CODE=#{CITY_CODE}</if>
+		group by op_time
+		 order by op_time desc
+	</select>
+
+	<!-- 有效课程6项指标全国按天统计 -->
+	<select id="getAllValidIndexesDateCount"  parameterType="map"  resultMap="HomeCountResult" >
+		select * from DW.RPT_ZHKT_ALLMETRIC_TOTAL_D where 1=1 
+		<if test="start_time != null and start_time != ''">and op_time >= #{start_time}</if>
+		<if test="end_time != null and end_time != ''">and <![CDATA[op_time < #{end_time}]]></if>
+		 order by op_time desc
+	</select>
+
+	<!-- 有效课程6项指标全国按月统计 -->
+	<select id="getAllValidIndexesMonthCount"  parameterType="map"  resultMap="HomeCountResult" >
+		select OP_TIME,MON_JXZS_VALIDBS_NUM,MON_JXZS_VALIDKTSL_NUM,MON_TERMINAL_VALIDDZSB_NUM,MON_TERMINAL_VALIDYDJT_NUM,
+		MON_TERMINAL_VALIDZZHB_NUM from dw.rpt_zhkt_allmetric_total_m order by op_time desc
+	</select>
+
+	<!-- 有效课程6项指标按省市按天统计 -->
+	<select id="getCityValidIndexesDateCount"  parameterType="map"  resultMap="HomeCountResult" >
+		select op_time,
+		sum(ADD_JXZS_VALIDBS_NUM) as ADD_JXZS_VALIDBS_NUM,
+		sum(ADD_JXZS_VALIDKTSL_NUM) as ADD_JXZS_VALIDKTSL_NUM,
+		sum(ADD_TERMINAL_VALIDDZSB_NUM) as ADD_TERMINAL_VALIDDZSB_NUM,
+		sum(ADD_TERMINAL_VALIDYDJT_NUM) as ADD_TERMINAL_VALIDYDJT_NUM,
+		sum(ADD_TERMINAL_VALIDZZHB_NUM) as ADD_TERMINAL_VALIDZZHB_NUM,
+		sum(ADD_TERMINAL_VALIDDTQ_NUM) as ADD_TERMINAL_VALIDDTQ_NUM
+		from dw.rpt_zhkt_allmetric_city_d where 1=1 
+		<if test="start_time != null and start_time != ''">and op_time >= #{start_time}</if>
+		<if test="end_time != null and end_time != ''">and <![CDATA[op_time < #{end_time}]]></if>
+		<if test="PROV_CODE != null and PROV_CODE != ''">and PROV_CODE=#{PROV_CODE}</if>
+		<if test="CITY_CODE != null and CITY_CODE != ''">and CITY_CODE=#{CITY_CODE}</if>
+		group by op_time
+		 order by op_time desc
+	</select>
+
+	<!-- 有效课程6项指标按省市按月统计 -->
+	<select id="getCityValidIndexesMonthCount"  parameterType="map"  resultMap="HomeCountResult" >
+		select op_time,
+		sum(MON_JXZS_VALIDBS_NUM) as MON_JXZS_VALIDBS_NUM,
+		sum(MON_JXZS_VALIDKTSL_NUM) as MON_JXZS_VALIDKTSL_NUM,
+		sum(MON_TERMINAL_VALIDDZSB_NUM) as MON_TERMINAL_VALIDDZSB_NUM,
+		sum(MON_TERMINAL_VALIDYDJT_NUM) as MON_TERMINAL_VALIDYDJT_NUM,
+		sum(MON_TERMINAL_VALIDZZHB_NUM) as MON_TERMINAL_VALIDZZHB_NUM,
+		sum(MON_TERMINAL_VALIDDTQ_NUM) as MON_TERMINAL_VALIDDTQ_NUM
+		from dw.rpt_zhkt_allmetric_city_m where 1=1 
+		<if test="start_time != null and start_time != ''">and op_time >= #{start_time}</if>
+		<if test="end_time != null and end_time != ''">and <![CDATA[op_time < #{end_time}]]></if>
+		<if test="PROV_CODE != null and PROV_CODE != ''">and PROV_CODE=#{PROV_CODE}</if>
+		<if test="CITY_CODE != null and CITY_CODE != ''">and CITY_CODE=#{CITY_CODE}</if>
+		group by op_time
+		 order by op_time desc
+	</select>
+
+
+</mapper>
+
+

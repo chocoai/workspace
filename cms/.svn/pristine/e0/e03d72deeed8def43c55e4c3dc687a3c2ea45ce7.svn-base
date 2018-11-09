@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>爆料</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<link href="/${mobileRes!}/css/pic/public.css" rel="stylesheet"
+	type="text/css" />
+<link href="/${mobileRes!}/css/pic/share.css" rel="stylesheet"
+	type="text/css" />
+<script src="/${mobileRes!}/js/focus/TouchSlide.1.1.js"></script>
+
+<link href="${resSys}/front.css" rel="stylesheet" type="text/css" />
+<link href="${resSys}/jqueryUI/jquery.ui.css" rel="stylesheet"
+	type="text/css" />
+
+<script type="text/javascript">
+	
+</script>
+</head>
+
+<body>
+	<div id="wrap" class="clearfix overflow mg-auto">
+		[#include "../include/header_lanmu.html"/]
+		<div class="i-title clearfix area border">
+			<h2>爆料<a href="${base}/baoliaoform.jspx" style="display: block;float: right;font-size: 0.7em; color: #65BAF1;padding-right: 1.5em;">我要爆料></a></h2>
+		</div>
+		<div class="clearfix">
+			<div class="clearfix tab-con2">
+				<ul class="clearfix">
+					[@cms_baoliao_page siteId=site.id title=queryTitle count='5'
+					checked='0' recommend='0'] [#if tag_pagination.list?size gt 0]
+					<ul>
+						[#list tag_pagination.list as m]
+						<li>
+							<div class="cont_box">
+								<h2>
+									<a href="${base}/baoliao/${m.id}.jspx">${m.title!}</a>
+								</h2>
+								<div class="bl_cont">
+									<a href="#">[@text_cut s=m.content len='200' append='...'/]</a>
+								</div>
+								<div class="time">
+									${m.createTime?string('yyyy-MM-dd HH:mm')}&nbsp;&nbsp;来自：[#if
+									m.user??]${m.user.username!}[#else]匿名网友[/#if]<span>[#if
+										m.state ??][#if m.state == 0]待处理[/#if][#if m.state ==
+										1]处理中[/#if][#if m.state == 2]已解决[/#if][#else]待处理[/#if]
+										&nbsp;&nbsp;浏览[#if m.readCount
+										??](${m.readCount})[#else](0)[/#if]&nbsp;&nbsp;|&nbsp;&nbsp;回复[#if
+										m.commentCount ??](${m.commentCount})[#else](0)[/#if]</span>
+								</div>
+							</div>
+						</li> [/#list]
+					</ul>
+					<div style="clear: both;"></div>
+					<div class="list_dis">
+						<div class="jogger">
+							<div class="pagesite">[@cms_pagination sysPage='1'/]</div>
+						</div>
+					</div>
+					[#else]
+					<ul>
+						<li>暂时无相关记录</li>
+					</ul>
+					[/#if] [/@cms_baoliao_page]
+				</ul>
+			</div>
+			<!-- <div class="i-more">
+    <a href="#">查看更多分类</a>
+    </div>-->
+		</div>
+
+		[#include "../include/footer.html"/]
+	</div>
+	<script src="/${mobileRes!}/js/focus/foot.js"></script>
+</body>
+</html>

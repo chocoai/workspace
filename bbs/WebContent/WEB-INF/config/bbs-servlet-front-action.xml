@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd"
+	default-lazy-init="true">
+    
+    <bean id="dynamicPageAct" class="com.yhcrt.weihu.bbs.action.front.DynamicPageAct"/>
+    <bean id="bbsPostAct" class="com.yhcrt.weihu.bbs.action.front.BbsPostAct"/>
+	<bean id="bbsTopicAct" class="com.yhcrt.weihu.bbs.action.front.BbsTopicAct"/>
+	<bean id="registerAct" class="com.yhcrt.weihu.bbs.action.front.RegisterAct"/>
+	<bean id="casLoginAct" class="com.yhcrt.weihu.bbs.action.front.CasLoginAct"/>
+	<bean id="userPostAct" class="com.yhcrt.weihu.bbs.action.member.UserPostAct"/>
+	<bean id="friendlinkAct" class="com.yhcrt.weihu.bbs.action.front.FriendlinkAct"/>
+	<bean id="forgotPasswordAct" class="com.yhcrt.weihu.bbs.action.member.ForgotPasswordAct"/>
+	<bean id="bbsMagicAct" class="com.yhcrt.weihu.bbs.action.front.BbsMagicAct"/>
+	<bean id="friendAct" class="com.yhcrt.weihu.bbs.action.member.FriendAct"></bean>
+	<bean id="messageAct" class="com.yhcrt.weihu.bbs.action.member.MessageAct"></bean>
+	<bean id="imageUploadAct" class="com.yhcrt.weihu.bbs.action.member.ImageUploadAct"></bean>
+	<bean id="imageCutAct" class="com.yhcrt.weihu.bbs.action.member.ImageCutAct"></bean>
+	<bean id="reportFrontAct" class="com.yhcrt.weihu.bbs.action.member.BbsReportFrontAct"></bean>
+	<bean id="bbsTopicSearchAct" class="com.yhcrt.weihu.bbs.action.front.BbsTopicSearchAct"/>
+	
+	<bean id="thirdLoginAct" class="com.yhcrt.weihu.bbs.action.login.ThirdLoginAct"/>
+	<bean id="bbsSessionStatisticAct" class="com.yhcrt.weihu.bbs.action.front.BbsSessionStatisticAct"/>
+	
+	<bean id="bbsPersonalAct" class="com.yhcrt.weihu.bbs.action.member.BbsPersonalAct"></bean>
+	<bean id="kindEditorAct" class="com.yhcrt.weihu.bbs.action.front.KindEditorAct"></bean>
+	<bean id="bbsNewTopicAct" class="com.yhcrt.weihu.bbs.action.member.BbsNewTopicAct"></bean>
+	<bean id="bbsSearchAct" class="com.yhcrt.weihu.bbs.action.front.BbsSearchAct"></bean>
+	<bean id="bbsAlbumAct" class="com.yhcrt.weihu.bbs.action.member.BbsAlbumAct"></bean>
+	<bean id="personalMessageAct" class="com.yhcrt.weihu.bbs.action.member.PersonalMessageAct"></bean>
+	<bean id="bbsFriendAct" class="com.yhcrt.weihu.bbs.action.member.BbsFriendAct"></bean>
+</beans>

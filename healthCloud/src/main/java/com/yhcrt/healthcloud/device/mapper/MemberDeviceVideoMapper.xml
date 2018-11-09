@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.healthcloud.device.mapper.MemberDeviceVideoMapper">
+	<resultMap id="BaseResultMap" type="com.yhcrt.healthcloud.device.entity.MemberDeviceVideo">
+		<id column="cid" jdbcType="INTEGER" property="cid" />
+		<result column="org_id" jdbcType="INTEGER" property="orgId" />
+		<result column="device_id" jdbcType="VARCHAR" property="deviceId" />
+		<result column="device_name" jdbcType="VARCHAR" property="deviceName" />
+		<result column="device_model" jdbcType="VARCHAR" property="deviceModel" />
+		<result column="device_vendor" jdbcType="VARCHAR" property="deviceVendor" />
+		<result column="address" jdbcType="VARCHAR" property="address" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+		<result column="create_time" jdbcType="VARCHAR" property="createTime" />
+		
+		<result column="org_name" jdbcType="VARCHAR" property="orgName" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		cid, org_id, device_id, device_name, device_model, device_vendor, address, status, create_time
+	</sql>
+	
+	<!-- 查询设备视频数据 -->
+	<select id="queryPageList" parameterType="map" resultMap="BaseResultMap">
+		select a.cid, a.org_id, a.device_id, a.device_name, a.device_model, a.device_vendor, 
+		a.address, a.status, a.create_time, b.org_name
+		from member_device_video a
+		left join organization b on a.org_id = b.org_id
+		where 1=1 
+		<if test="orgList !=null and orgList.size()>0">
+			and a.org_id in
+			<foreach item="item" collection="orgList" index="index" open="(" separator="," close=")">#{item}</foreach>
+		</if>
+		<if test="status != null ">
+			and a.status = #{status}
+		</if>
+		<if test="deviceName != null and deviceName != '' ">
+			and a.device_name LIKE CONCAT('%',#{deviceName},'%')
+		</if>
+		<if test="deviceModel != null and deviceModel != '' ">
+			and a.device_model LIKE CONCAT('%',#{deviceModel},'%')
+		</if>
+		order by a.create_time desc, a.status asc
+	</select>
+	
+	<!-- 根据cid查询数据 -->
+	<select id="queryByCid" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List" />
+		from member_device_video 
+		where cid = #{0}
+	</select>
+	
+	<!-- 根据设备id进行去重判断 -->
+	<select id="countByVideo" parameterType="com.yhcrt.healthcloud.device.entity.MemberDeviceVideo" resultType="int">
+		select count(1) from member_device_video where device_id = #{deviceId} 
+		<if test="cid != null">
+			and cid != #{cid}
+		</if>
+	</select>
+	
+	<!-- 新增数据 -->
+	<insert id="insert" parameterType="com.yhcrt.healthcloud.device.entity.MemberDeviceVideo">
+		insert into member_device_video(org_id, device_id, device_name, device_model, device_vendor, address, status, create_time) 
+		values(#{orgId},#{deviceId},#{deviceName},#{deviceModel},#{deviceVendor},#{address},#{status},#{createTime})
+	</insert>
+	
+	<!-- 修改数据 -->
+	<update id="update" parameterType="com.yhcrt.healthcloud.device.entity.MemberDeviceVideo">
+		update member_device_video
+    	<set>
+      		<if test="deviceId != null">
+        		device_id = #{deviceId},
+      		</if>
+      		<if test="deviceName != null and deviceName != '' ">
+        		device_name = #{deviceName},
+      		</if>
+      		<if test="deviceModel != null and deviceModel != '' ">
+        		device_model = #{deviceModel},
+      		</if>
+      		<if test="deviceVendor != null and deviceVendor != '' ">
+        		device_vendor = #{deviceVendor},
+      		</if>
+      		<if test="address != null and address != '' ">
+        		address = #{address},
+      		</if>
+      		<if test="status != null">
+        		status = #{status},
+      		</if>
+      		<if test="createTime != null and create_time != '' ">
+        		create_time = #{create_time},
+      		</if>
+      		<if test="orgId != null">
+        		org_id = #{orgId}
+      		</if>
+    	</set>
+    	where cid = #{cid}
+	</update>
+	
+	<!-- 批量删除 -->
+	<delete id="batchDelete" parameterType="map">
+		 delete from member_device_video where cid in 
+		<foreach item="cid" collection="cids" open="(" separator="," close=")">  
+        	#{cid}  
+        </foreach>  
+	</delete>
+	
+</mapper>

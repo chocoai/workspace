@@ -1,0 +1,642 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.iHealthCloud.mapper.MerBodyFatMapper">
+  <resultMap id="BaseResultMap" type="com.yhcrt.iHealthCloud.entity.MerBodyFat">
+    <id column="cid" jdbcType="INTEGER" property="cid" />
+    <result column="mer_id" jdbcType="VARCHAR" property="merId" />
+    <result column="upload_time" jdbcType="VARCHAR" property="uploadTime" />
+    <result column="bfp" jdbcType="DOUBLE" property="bfp" />
+    <result column="bf" jdbcType="DOUBLE" property="bf" />
+    <result column="non_fat" jdbcType="DOUBLE" property="nonFat" />
+    <result column="bwp" jdbcType="DOUBLE" property="bwp" />
+    <result column="bw" jdbcType="DOUBLE" property="bw" />
+    <result column="mineral" jdbcType="DOUBLE" property="mineral" />
+    <result column="protein" jdbcType="DOUBLE" property="protein" />
+    <result column="icw" jdbcType="DOUBLE" property="icw" />
+    <result column="ecw" jdbcType="DOUBLE" property="ecw" />
+    <result column="muscle_mass" jdbcType="DOUBLE" property="muscleMass" />
+    <result column="fat_regulation" jdbcType="DOUBLE" property="fatRegulation" />
+    <result column="weight_regulation" jdbcType="DOUBLE" property="weightRegulation" />
+    <result column="muscle_regulation" jdbcType="DOUBLE" property="muscleRegulation" />
+    <result column="bmr" jdbcType="DOUBLE" property="bmr" />
+    <result column="visceral_fat_level" jdbcType="DOUBLE" property="visceralFatLevel" />
+    <result column="skeletal_mass" jdbcType="DOUBLE" property="skeletalMass" />
+    <result column="muscle_percent" jdbcType="DOUBLE" property="musclePercent" />
+    <result column="trunk_muscle" jdbcType="DOUBLE" property="trunkMuscle" />
+    <result column="trunk_fat" jdbcType="DOUBLE" property="trunkFat" />
+    <result column="left_arm_muscle" jdbcType="DOUBLE" property="leftArmMuscle" />
+    <result column="right_arm_muscle" jdbcType="DOUBLE" property="rightArmMuscle" />
+    <result column="left_leg_muscle" jdbcType="DOUBLE" property="leftLegMuscle" />
+    <result column="right_leg_muscle" jdbcType="DOUBLE" property="rightLegMuscle" />
+    <result column="left_arm_fat" jdbcType="DOUBLE" property="leftArmFat" />
+    <result column="right_arm_fat" jdbcType="DOUBLE" property="rightArmFat" />
+    <result column="left_leg_fat" jdbcType="DOUBLE" property="leftLegFat" />
+    <result column="right_leg_fat" jdbcType="DOUBLE" property="rightLegFat" />
+    <result column="conclusion" jdbcType="VARCHAR" property="conclusion" />
+    <result column="advice" jdbcType="VARCHAR" property="advice" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    cid, mer_id, upload_time, bfp, bf, non_fat, bwp, bw, mineral, protein, icw, ecw, 
+    muscle_mass, fat_regulation, weight_regulation, muscle_regulation, bmr, visceral_fat_level, 
+    skeletal_mass, muscle_percent, trunk_muscle, trunk_fat, left_arm_muscle, right_arm_muscle, 
+    left_leg_muscle, right_leg_muscle, left_arm_fat, right_arm_fat, left_leg_fat, right_leg_fat, 
+    conclusion, advice
+  </sql>
+  <select id="selectByExample" parameterType="com.yhcrt.iHealthCloud.entity.MerBodyFatExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from mer_body_fat
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from mer_body_fat
+    where cid = #{cid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from mer_body_fat
+    where cid = #{cid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yhcrt.iHealthCloud.entity.MerBodyFatExample">
+    delete from mer_body_fat
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yhcrt.iHealthCloud.entity.MerBodyFat">
+    insert into mer_body_fat (cid, mer_id, upload_time, 
+      bfp, bf, non_fat, bwp, 
+      bw, mineral, protein, 
+      icw, ecw, muscle_mass, 
+      fat_regulation, weight_regulation, muscle_regulation, 
+      bmr, visceral_fat_level, skeletal_mass, 
+      muscle_percent, trunk_muscle, trunk_fat, 
+      left_arm_muscle, right_arm_muscle, left_leg_muscle, 
+      right_leg_muscle, left_arm_fat, right_arm_fat, 
+      left_leg_fat, right_leg_fat, conclusion, 
+      advice)
+    values (#{cid,jdbcType=INTEGER}, #{merId,jdbcType=VARCHAR}, #{uploadTime,jdbcType=VARCHAR}, 
+      #{bfp,jdbcType=DOUBLE}, #{bf,jdbcType=DOUBLE}, #{nonFat,jdbcType=DOUBLE}, #{bwp,jdbcType=DOUBLE}, 
+      #{bw,jdbcType=DOUBLE}, #{mineral,jdbcType=DOUBLE}, #{protein,jdbcType=DOUBLE}, 
+      #{icw,jdbcType=DOUBLE}, #{ecw,jdbcType=DOUBLE}, #{muscleMass,jdbcType=DOUBLE}, 
+      #{fatRegulation,jdbcType=DOUBLE}, #{weightRegulation,jdbcType=DOUBLE}, #{muscleRegulation,jdbcType=DOUBLE}, 
+      #{bmr,jdbcType=DOUBLE}, #{visceralFatLevel,jdbcType=DOUBLE}, #{skeletalMass,jdbcType=DOUBLE}, 
+      #{musclePercent,jdbcType=DOUBLE}, #{trunkMuscle,jdbcType=DOUBLE}, #{trunkFat,jdbcType=DOUBLE}, 
+      #{leftArmMuscle,jdbcType=DOUBLE}, #{rightArmMuscle,jdbcType=DOUBLE}, #{leftLegMuscle,jdbcType=DOUBLE}, 
+      #{rightLegMuscle,jdbcType=DOUBLE}, #{leftArmFat,jdbcType=DOUBLE}, #{rightArmFat,jdbcType=DOUBLE}, 
+      #{leftLegFat,jdbcType=DOUBLE}, #{rightLegFat,jdbcType=DOUBLE}, #{conclusion,jdbcType=VARCHAR}, 
+      #{advice,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yhcrt.iHealthCloud.entity.MerBodyFat">
+    insert into mer_body_fat
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="merId != null">
+        mer_id,
+      </if>
+      <if test="uploadTime != null">
+        upload_time,
+      </if>
+      <if test="bfp != null">
+        bfp,
+      </if>
+      <if test="bf != null">
+        bf,
+      </if>
+      <if test="nonFat != null">
+        non_fat,
+      </if>
+      <if test="bwp != null">
+        bwp,
+      </if>
+      <if test="bw != null">
+        bw,
+      </if>
+      <if test="mineral != null">
+        mineral,
+      </if>
+      <if test="protein != null">
+        protein,
+      </if>
+      <if test="icw != null">
+        icw,
+      </if>
+      <if test="ecw != null">
+        ecw,
+      </if>
+      <if test="muscleMass != null">
+        muscle_mass,
+      </if>
+      <if test="fatRegulation != null">
+        fat_regulation,
+      </if>
+      <if test="weightRegulation != null">
+        weight_regulation,
+      </if>
+      <if test="muscleRegulation != null">
+        muscle_regulation,
+      </if>
+      <if test="bmr != null">
+        bmr,
+      </if>
+      <if test="visceralFatLevel != null">
+        visceral_fat_level,
+      </if>
+      <if test="skeletalMass != null">
+        skeletal_mass,
+      </if>
+      <if test="musclePercent != null">
+        muscle_percent,
+      </if>
+      <if test="trunkMuscle != null">
+        trunk_muscle,
+      </if>
+      <if test="trunkFat != null">
+        trunk_fat,
+      </if>
+      <if test="leftArmMuscle != null">
+        left_arm_muscle,
+      </if>
+      <if test="rightArmMuscle != null">
+        right_arm_muscle,
+      </if>
+      <if test="leftLegMuscle != null">
+        left_leg_muscle,
+      </if>
+      <if test="rightLegMuscle != null">
+        right_leg_muscle,
+      </if>
+      <if test="leftArmFat != null">
+        left_arm_fat,
+      </if>
+      <if test="rightArmFat != null">
+        right_arm_fat,
+      </if>
+      <if test="leftLegFat != null">
+        left_leg_fat,
+      </if>
+      <if test="rightLegFat != null">
+        right_leg_fat,
+      </if>
+      <if test="conclusion != null">
+        conclusion,
+      </if>
+      <if test="advice != null">
+        advice,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="merId != null">
+        #{merId,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadTime != null">
+        #{uploadTime,jdbcType=VARCHAR},
+      </if>
+      <if test="bfp != null">
+        #{bfp,jdbcType=DOUBLE},
+      </if>
+      <if test="bf != null">
+        #{bf,jdbcType=DOUBLE},
+      </if>
+      <if test="nonFat != null">
+        #{nonFat,jdbcType=DOUBLE},
+      </if>
+      <if test="bwp != null">
+        #{bwp,jdbcType=DOUBLE},
+      </if>
+      <if test="bw != null">
+        #{bw,jdbcType=DOUBLE},
+      </if>
+      <if test="mineral != null">
+        #{mineral,jdbcType=DOUBLE},
+      </if>
+      <if test="protein != null">
+        #{protein,jdbcType=DOUBLE},
+      </if>
+      <if test="icw != null">
+        #{icw,jdbcType=DOUBLE},
+      </if>
+      <if test="ecw != null">
+        #{ecw,jdbcType=DOUBLE},
+      </if>
+      <if test="muscleMass != null">
+        #{muscleMass,jdbcType=DOUBLE},
+      </if>
+      <if test="fatRegulation != null">
+        #{fatRegulation,jdbcType=DOUBLE},
+      </if>
+      <if test="weightRegulation != null">
+        #{weightRegulation,jdbcType=DOUBLE},
+      </if>
+      <if test="muscleRegulation != null">
+        #{muscleRegulation,jdbcType=DOUBLE},
+      </if>
+      <if test="bmr != null">
+        #{bmr,jdbcType=DOUBLE},
+      </if>
+      <if test="visceralFatLevel != null">
+        #{visceralFatLevel,jdbcType=DOUBLE},
+      </if>
+      <if test="skeletalMass != null">
+        #{skeletalMass,jdbcType=DOUBLE},
+      </if>
+      <if test="musclePercent != null">
+        #{musclePercent,jdbcType=DOUBLE},
+      </if>
+      <if test="trunkMuscle != null">
+        #{trunkMuscle,jdbcType=DOUBLE},
+      </if>
+      <if test="trunkFat != null">
+        #{trunkFat,jdbcType=DOUBLE},
+      </if>
+      <if test="leftArmMuscle != null">
+        #{leftArmMuscle,jdbcType=DOUBLE},
+      </if>
+      <if test="rightArmMuscle != null">
+        #{rightArmMuscle,jdbcType=DOUBLE},
+      </if>
+      <if test="leftLegMuscle != null">
+        #{leftLegMuscle,jdbcType=DOUBLE},
+      </if>
+      <if test="rightLegMuscle != null">
+        #{rightLegMuscle,jdbcType=DOUBLE},
+      </if>
+      <if test="leftArmFat != null">
+        #{leftArmFat,jdbcType=DOUBLE},
+      </if>
+      <if test="rightArmFat != null">
+        #{rightArmFat,jdbcType=DOUBLE},
+      </if>
+      <if test="leftLegFat != null">
+        #{leftLegFat,jdbcType=DOUBLE},
+      </if>
+      <if test="rightLegFat != null">
+        #{rightLegFat,jdbcType=DOUBLE},
+      </if>
+      <if test="conclusion != null">
+        #{conclusion,jdbcType=VARCHAR},
+      </if>
+      <if test="advice != null">
+        #{advice,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yhcrt.iHealthCloud.entity.MerBodyFatExample" resultType="java.lang.Long">
+    select count(*) from mer_body_fat
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update mer_body_fat
+    <set>
+      <if test="record.cid != null">
+        cid = #{record.cid,jdbcType=INTEGER},
+      </if>
+      <if test="record.merId != null">
+        mer_id = #{record.merId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.uploadTime != null">
+        upload_time = #{record.uploadTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.bfp != null">
+        bfp = #{record.bfp,jdbcType=DOUBLE},
+      </if>
+      <if test="record.bf != null">
+        bf = #{record.bf,jdbcType=DOUBLE},
+      </if>
+      <if test="record.nonFat != null">
+        non_fat = #{record.nonFat,jdbcType=DOUBLE},
+      </if>
+      <if test="record.bwp != null">
+        bwp = #{record.bwp,jdbcType=DOUBLE},
+      </if>
+      <if test="record.bw != null">
+        bw = #{record.bw,jdbcType=DOUBLE},
+      </if>
+      <if test="record.mineral != null">
+        mineral = #{record.mineral,jdbcType=DOUBLE},
+      </if>
+      <if test="record.protein != null">
+        protein = #{record.protein,jdbcType=DOUBLE},
+      </if>
+      <if test="record.icw != null">
+        icw = #{record.icw,jdbcType=DOUBLE},
+      </if>
+      <if test="record.ecw != null">
+        ecw = #{record.ecw,jdbcType=DOUBLE},
+      </if>
+      <if test="record.muscleMass != null">
+        muscle_mass = #{record.muscleMass,jdbcType=DOUBLE},
+      </if>
+      <if test="record.fatRegulation != null">
+        fat_regulation = #{record.fatRegulation,jdbcType=DOUBLE},
+      </if>
+      <if test="record.weightRegulation != null">
+        weight_regulation = #{record.weightRegulation,jdbcType=DOUBLE},
+      </if>
+      <if test="record.muscleRegulation != null">
+        muscle_regulation = #{record.muscleRegulation,jdbcType=DOUBLE},
+      </if>
+      <if test="record.bmr != null">
+        bmr = #{record.bmr,jdbcType=DOUBLE},
+      </if>
+      <if test="record.visceralFatLevel != null">
+        visceral_fat_level = #{record.visceralFatLevel,jdbcType=DOUBLE},
+      </if>
+      <if test="record.skeletalMass != null">
+        skeletal_mass = #{record.skeletalMass,jdbcType=DOUBLE},
+      </if>
+      <if test="record.musclePercent != null">
+        muscle_percent = #{record.musclePercent,jdbcType=DOUBLE},
+      </if>
+      <if test="record.trunkMuscle != null">
+        trunk_muscle = #{record.trunkMuscle,jdbcType=DOUBLE},
+      </if>
+      <if test="record.trunkFat != null">
+        trunk_fat = #{record.trunkFat,jdbcType=DOUBLE},
+      </if>
+      <if test="record.leftArmMuscle != null">
+        left_arm_muscle = #{record.leftArmMuscle,jdbcType=DOUBLE},
+      </if>
+      <if test="record.rightArmMuscle != null">
+        right_arm_muscle = #{record.rightArmMuscle,jdbcType=DOUBLE},
+      </if>
+      <if test="record.leftLegMuscle != null">
+        left_leg_muscle = #{record.leftLegMuscle,jdbcType=DOUBLE},
+      </if>
+      <if test="record.rightLegMuscle != null">
+        right_leg_muscle = #{record.rightLegMuscle,jdbcType=DOUBLE},
+      </if>
+      <if test="record.leftArmFat != null">
+        left_arm_fat = #{record.leftArmFat,jdbcType=DOUBLE},
+      </if>
+      <if test="record.rightArmFat != null">
+        right_arm_fat = #{record.rightArmFat,jdbcType=DOUBLE},
+      </if>
+      <if test="record.leftLegFat != null">
+        left_leg_fat = #{record.leftLegFat,jdbcType=DOUBLE},
+      </if>
+      <if test="record.rightLegFat != null">
+        right_leg_fat = #{record.rightLegFat,jdbcType=DOUBLE},
+      </if>
+      <if test="record.conclusion != null">
+        conclusion = #{record.conclusion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.advice != null">
+        advice = #{record.advice,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update mer_body_fat
+    set cid = #{record.cid,jdbcType=INTEGER},
+      mer_id = #{record.merId,jdbcType=VARCHAR},
+      upload_time = #{record.uploadTime,jdbcType=VARCHAR},
+      bfp = #{record.bfp,jdbcType=DOUBLE},
+      bf = #{record.bf,jdbcType=DOUBLE},
+      non_fat = #{record.nonFat,jdbcType=DOUBLE},
+      bwp = #{record.bwp,jdbcType=DOUBLE},
+      bw = #{record.bw,jdbcType=DOUBLE},
+      mineral = #{record.mineral,jdbcType=DOUBLE},
+      protein = #{record.protein,jdbcType=DOUBLE},
+      icw = #{record.icw,jdbcType=DOUBLE},
+      ecw = #{record.ecw,jdbcType=DOUBLE},
+      muscle_mass = #{record.muscleMass,jdbcType=DOUBLE},
+      fat_regulation = #{record.fatRegulation,jdbcType=DOUBLE},
+      weight_regulation = #{record.weightRegulation,jdbcType=DOUBLE},
+      muscle_regulation = #{record.muscleRegulation,jdbcType=DOUBLE},
+      bmr = #{record.bmr,jdbcType=DOUBLE},
+      visceral_fat_level = #{record.visceralFatLevel,jdbcType=DOUBLE},
+      skeletal_mass = #{record.skeletalMass,jdbcType=DOUBLE},
+      muscle_percent = #{record.musclePercent,jdbcType=DOUBLE},
+      trunk_muscle = #{record.trunkMuscle,jdbcType=DOUBLE},
+      trunk_fat = #{record.trunkFat,jdbcType=DOUBLE},
+      left_arm_muscle = #{record.leftArmMuscle,jdbcType=DOUBLE},
+      right_arm_muscle = #{record.rightArmMuscle,jdbcType=DOUBLE},
+      left_leg_muscle = #{record.leftLegMuscle,jdbcType=DOUBLE},
+      right_leg_muscle = #{record.rightLegMuscle,jdbcType=DOUBLE},
+      left_arm_fat = #{record.leftArmFat,jdbcType=DOUBLE},
+      right_arm_fat = #{record.rightArmFat,jdbcType=DOUBLE},
+      left_leg_fat = #{record.leftLegFat,jdbcType=DOUBLE},
+      right_leg_fat = #{record.rightLegFat,jdbcType=DOUBLE},
+      conclusion = #{record.conclusion,jdbcType=VARCHAR},
+      advice = #{record.advice,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.iHealthCloud.entity.MerBodyFat">
+    update mer_body_fat
+    <set>
+      <if test="merId != null">
+        mer_id = #{merId,jdbcType=VARCHAR},
+      </if>
+      <if test="uploadTime != null">
+        upload_time = #{uploadTime,jdbcType=VARCHAR},
+      </if>
+      <if test="bfp != null">
+        bfp = #{bfp,jdbcType=DOUBLE},
+      </if>
+      <if test="bf != null">
+        bf = #{bf,jdbcType=DOUBLE},
+      </if>
+      <if test="nonFat != null">
+        non_fat = #{nonFat,jdbcType=DOUBLE},
+      </if>
+      <if test="bwp != null">
+        bwp = #{bwp,jdbcType=DOUBLE},
+      </if>
+      <if test="bw != null">
+        bw = #{bw,jdbcType=DOUBLE},
+      </if>
+      <if test="mineral != null">
+        mineral = #{mineral,jdbcType=DOUBLE},
+      </if>
+      <if test="protein != null">
+        protein = #{protein,jdbcType=DOUBLE},
+      </if>
+      <if test="icw != null">
+        icw = #{icw,jdbcType=DOUBLE},
+      </if>
+      <if test="ecw != null">
+        ecw = #{ecw,jdbcType=DOUBLE},
+      </if>
+      <if test="muscleMass != null">
+        muscle_mass = #{muscleMass,jdbcType=DOUBLE},
+      </if>
+      <if test="fatRegulation != null">
+        fat_regulation = #{fatRegulation,jdbcType=DOUBLE},
+      </if>
+      <if test="weightRegulation != null">
+        weight_regulation = #{weightRegulation,jdbcType=DOUBLE},
+      </if>
+      <if test="muscleRegulation != null">
+        muscle_regulation = #{muscleRegulation,jdbcType=DOUBLE},
+      </if>
+      <if test="bmr != null">
+        bmr = #{bmr,jdbcType=DOUBLE},
+      </if>
+      <if test="visceralFatLevel != null">
+        visceral_fat_level = #{visceralFatLevel,jdbcType=DOUBLE},
+      </if>
+      <if test="skeletalMass != null">
+        skeletal_mass = #{skeletalMass,jdbcType=DOUBLE},
+      </if>
+      <if test="musclePercent != null">
+        muscle_percent = #{musclePercent,jdbcType=DOUBLE},
+      </if>
+      <if test="trunkMuscle != null">
+        trunk_muscle = #{trunkMuscle,jdbcType=DOUBLE},
+      </if>
+      <if test="trunkFat != null">
+        trunk_fat = #{trunkFat,jdbcType=DOUBLE},
+      </if>
+      <if test="leftArmMuscle != null">
+        left_arm_muscle = #{leftArmMuscle,jdbcType=DOUBLE},
+      </if>
+      <if test="rightArmMuscle != null">
+        right_arm_muscle = #{rightArmMuscle,jdbcType=DOUBLE},
+      </if>
+      <if test="leftLegMuscle != null">
+        left_leg_muscle = #{leftLegMuscle,jdbcType=DOUBLE},
+      </if>
+      <if test="rightLegMuscle != null">
+        right_leg_muscle = #{rightLegMuscle,jdbcType=DOUBLE},
+      </if>
+      <if test="leftArmFat != null">
+        left_arm_fat = #{leftArmFat,jdbcType=DOUBLE},
+      </if>
+      <if test="rightArmFat != null">
+        right_arm_fat = #{rightArmFat,jdbcType=DOUBLE},
+      </if>
+      <if test="leftLegFat != null">
+        left_leg_fat = #{leftLegFat,jdbcType=DOUBLE},
+      </if>
+      <if test="rightLegFat != null">
+        right_leg_fat = #{rightLegFat,jdbcType=DOUBLE},
+      </if>
+      <if test="conclusion != null">
+        conclusion = #{conclusion,jdbcType=VARCHAR},
+      </if>
+      <if test="advice != null">
+        advice = #{advice,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yhcrt.iHealthCloud.entity.MerBodyFat">
+    update mer_body_fat
+    set mer_id = #{merId,jdbcType=VARCHAR},
+      upload_time = #{uploadTime,jdbcType=VARCHAR},
+      bfp = #{bfp,jdbcType=DOUBLE},
+      bf = #{bf,jdbcType=DOUBLE},
+      non_fat = #{nonFat,jdbcType=DOUBLE},
+      bwp = #{bwp,jdbcType=DOUBLE},
+      bw = #{bw,jdbcType=DOUBLE},
+      mineral = #{mineral,jdbcType=DOUBLE},
+      protein = #{protein,jdbcType=DOUBLE},
+      icw = #{icw,jdbcType=DOUBLE},
+      ecw = #{ecw,jdbcType=DOUBLE},
+      muscle_mass = #{muscleMass,jdbcType=DOUBLE},
+      fat_regulation = #{fatRegulation,jdbcType=DOUBLE},
+      weight_regulation = #{weightRegulation,jdbcType=DOUBLE},
+      muscle_regulation = #{muscleRegulation,jdbcType=DOUBLE},
+      bmr = #{bmr,jdbcType=DOUBLE},
+      visceral_fat_level = #{visceralFatLevel,jdbcType=DOUBLE},
+      skeletal_mass = #{skeletalMass,jdbcType=DOUBLE},
+      muscle_percent = #{musclePercent,jdbcType=DOUBLE},
+      trunk_muscle = #{trunkMuscle,jdbcType=DOUBLE},
+      trunk_fat = #{trunkFat,jdbcType=DOUBLE},
+      left_arm_muscle = #{leftArmMuscle,jdbcType=DOUBLE},
+      right_arm_muscle = #{rightArmMuscle,jdbcType=DOUBLE},
+      left_leg_muscle = #{leftLegMuscle,jdbcType=DOUBLE},
+      right_leg_muscle = #{rightLegMuscle,jdbcType=DOUBLE},
+      left_arm_fat = #{leftArmFat,jdbcType=DOUBLE},
+      right_arm_fat = #{rightArmFat,jdbcType=DOUBLE},
+      left_leg_fat = #{leftLegFat,jdbcType=DOUBLE},
+      right_leg_fat = #{rightLegFat,jdbcType=DOUBLE},
+      conclusion = #{conclusion,jdbcType=VARCHAR},
+      advice = #{advice,jdbcType=VARCHAR}
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectByMerId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+  	select * from mer_body_fat where mer_id = #{merId }
+  </select>
+</mapper>

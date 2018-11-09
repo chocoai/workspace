@@ -1,0 +1,309 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.iHealthCloud.mapper.HdSleepMapper">
+	<resultMap id="BaseResultMap" type="com.yhcrt.iHealthCloud.entity.HdSleep">
+		<id column="cid" jdbcType="INTEGER" property="cid" />
+		<result column="imei" jdbcType="VARCHAR" property="imei" />
+		<result column="member_id" jdbcType="INTEGER" property="memberId" />
+		<result column="sleep_duration" jdbcType="DOUBLE" property="sleepDuration" />
+		<result column="deep_sleep_duration" jdbcType="DOUBLE" property="deepSleepDuration" />
+		<result column="sleep_quality" jdbcType="INTEGER" property="sleepQuality" />
+		<result column="data_date" jdbcType="VARCHAR" property="dataDate" />
+		<result column="upload_time" jdbcType="VARCHAR" property="uploadTime" />
+	</resultMap>
+	
+	<resultMap id="SleepResultMap" type="com.yhcrt.iHealthCloud.pojo.SleepDTO">
+		<result column="sleep_duration" jdbcType="VARCHAR" property="sleepDuration" />
+		<result column="deep_sleep_duration" jdbcType="VARCHAR" property="deepSleepDuration" />
+		<result column="sleep_quality" jdbcType="VARCHAR" property="sleepQuality" />
+		<result column="data_date" jdbcType="VARCHAR" property="dataDate" />
+		<result column="upload_time" jdbcType="VARCHAR" property="uploadTime" />
+	</resultMap>
+	
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		cid, imei, member_id, sleep_duration, deep_sleep_duration,sleep_quality, data_date,	upload_time
+	</sql>
+	
+	<!-- 获取最近七天的数据 -->
+	<select id="selectHdSleep" parameterType="map" resultMap="BaseResultMap">
+		select cid, imei, member_id, SUM(deep_sleep_duration) deep_sleep_duration,
+		sleep_quality, data_date, DATE_FORMAT(MAX(upload_time), '%m-%d') upload_time
+		from hd_sleep where member_id=#{memberId} 
+		and DATE_FORMAT(upload_time, '%Y-%m-%d') &gt;= DATE_FORMAT(#{startTime}, '%Y-%m-%d') 
+		and DATE_FORMAT(upload_time, '%Y-%m-%d') &lt;= DATE_FORMAT(#{endTime}, '%Y-%m-%d')
+		GROUP BY DATE_FORMAT(upload_time, '%Y-%m-%d') 
+		ORDER BY upload_time desc
+	</select>
+	
+	<select id="selectByExample" parameterType="com.yhcrt.iHealthCloud.entity.HdSleepExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from hd_sleep
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from hd_sleep
+		where cid = #{cid,jdbcType=INTEGER}
+	</select>
+	
+	<select id="getLatestSleepData" parameterType="java.lang.String" resultMap="SleepResultMap">
+		SELECT sleep_duration, deep_sleep_duration, sleep_quality, data_date, upload_time FROM hd_sleep
+ 		WHERE member_id = #{memberId,jdbcType=VARCHAR} ORDER BY upload_time DESC LIMIT 1
+	</select>
+	
+	<select id="listSleepDataByMemberId" parameterType="java.lang.String" resultMap="SleepResultMap">
+		SELECT sleep_duration, deep_sleep_duration, sleep_quality, data_date, upload_time FROM hd_sleep
+ 		WHERE member_id = #{memberId,jdbcType=VARCHAR} ORDER BY upload_time DESC 
+	</select>
+	
+	<select id="getSleepDataForWeek" parameterType="java.lang.String" resultMap="SleepResultMap">
+		SELECT sleep_duration, deep_sleep_duration, sleep_quality, DATE_FORMAT(data_date, '%m-%d') AS data_date,upload_time
+		  FROM hd_sleep WHERE member_id = #{memberId,jdbcType=VARCHAR}
+		ORDER BY DATE_FORMAT(data_date, '%Y-%m-%d') ASC LIMIT 7;
+	</select>
+	
+	<select id="getMaxMinAvgSleepDataForWeek" parameterType="java.lang.String" resultType="com.yhcrt.iHealthCloud.pojo.DataItem">
+		SELECT max(t.deep_sleep_duration) as max, min(t.deep_sleep_duration) as min, round(avg(t.deep_sleep_duration)) as avg FROM(
+		  SELECT deep_sleep_duration, DATE_FORMAT(data_date, '%m-%d') AS data_date
+		    FROM hd_sleep WHERE member_id = #{memberId,jdbcType=VARCHAR}
+		  ORDER BY DATE_FORMAT(data_date, '%Y-%m-%d') DESC LIMIT 7) t
+	</select>
+	
+	<select id="listSleepDataByTime" parameterType="map" resultMap="SleepResultMap">
+		SELECT sleep_duration, deep_sleep_duration, sleep_quality, substring(hd_sleep.data_date,6,5) as data_date, upload_time FROM hd_sleep
+ 		WHERE member_id = #{memberId,jdbcType=VARCHAR} 
+			AND hd_sleep.data_date &gt;= #{startTime,jdbcType=VARCHAR}
+			AND hd_sleep.data_date &lt;= #{endTime,jdbcType=VARCHAR} 
+			ORDER BY upload_time DESC
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from hd_sleep
+		where cid = #{cid,jdbcType=INTEGER}
+	</delete>
+	
+	<delete id="deleteByExample" parameterType="com.yhcrt.iHealthCloud.entity.HdSleepExample">
+		delete from hd_sleep
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.yhcrt.iHealthCloud.entity.HdSleep">
+		insert into hd_sleep (cid, imei, member_id,
+		deep_sleep_duration,sleep_quality, data_date, upload_time
+		)
+		values (#{cid,jdbcType=INTEGER}, #{imei,jdbcType=VARCHAR},
+		#{memberId,jdbcType=INTEGER},
+		#{deepSleepDuration,jdbcType=DOUBLE},#{sleepQuality,jdbcType=INTEGER},
+		#{dataDate,jdbcType=VARCHAR}, #{uploadTime,jdbcType=VARCHAR}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.yhcrt.iHealthCloud.entity.HdSleep">
+		insert into hd_sleep
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="cid != null">
+				cid,
+			</if>
+			<if test="imei != null">
+				imei,
+			</if>
+			<if test="memberId != null">
+				member_id,
+			</if>
+			<if test="deepSleepDuration != null">
+				deep_sleep_duration,
+			</if>
+			<if test="sleepQuality != null">
+				sleep_quality,
+			</if>
+			<if test="dataDate != null">
+				data_date,
+			</if>
+			<if test="uploadTime != null">
+				upload_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="cid != null">
+				#{cid,jdbcType=INTEGER},
+			</if>
+			<if test="imei != null">
+				#{imei,jdbcType=VARCHAR},
+			</if>
+			<if test="memberId != null">
+				#{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="deepSleepDuration != null">
+				#{deepSleepDuration,jdbcType=DOUBLE},
+			</if>
+			<if test="sleepQuality != null">
+				#{sleepQuality,jdbcType=Integer},
+			</if>
+			<if test="dataDate != null">
+				#{dataDate,jdbcType=VARCHAR},
+			</if>
+			<if test="uploadTime != null">
+				#{uploadTime,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.yhcrt.iHealthCloud.entity.HdSleepExample"
+		resultType="java.lang.Long">
+		select count(*) from hd_sleep
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update hd_sleep
+		<set>
+			<if test="record.cid != null">
+				cid = #{record.cid,jdbcType=INTEGER},
+			</if>
+			<if test="record.imei != null">
+				imei = #{record.imei,jdbcType=VARCHAR},
+			</if>
+			<if test="record.memberId != null">
+				member_id = #{record.memberId,jdbcType=INTEGER},
+			</if>
+			<if test="record.deepSleepDuration != null">
+				deep_sleep_duration = #{record.deepSleepDuration,jdbcType=DOUBLE},
+			</if>
+			<if test="record.sleepQuality != null">
+				sleep_quality = #{record.sleepQuality,jdbcType=INTEGER},
+			</if>
+			<if test="record.dataDate != null">
+				data_date = #{record.dataDate,jdbcType=VARCHAR},
+			</if>
+			<if test="record.uploadTime != null">
+				upload_time = #{record.uploadTime,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update hd_sleep
+		set cid = #{record.cid,jdbcType=INTEGER},
+		imei = #{record.imei,jdbcType=VARCHAR},
+		member_id = #{record.memberId,jdbcType=INTEGER},
+		deep_sleep_duration = #{record.deepSleepDuration,jdbcType=DOUBLE},
+		sleep_quality = #{record.sleepQuality,jdbcType=INTEGER},
+		data_date = #{record.dataDate,jdbcType=VARCHAR},
+		upload_time = #{record.uploadTime,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.iHealthCloud.entity.HdSleep">
+		update hd_sleep
+		<set>
+			<if test="imei != null">
+				imei = #{imei,jdbcType=VARCHAR},
+			</if>
+			<if test="memberId != null">
+				member_id = #{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="deepSleepDuration != null">
+				deep_sleep_duration = #{deepSleepDuration,jdbcType=DOUBLE},
+			</if>
+			<if test="sleepQuality != null">
+				sleep_quality = #{sleepQuality,jdbcType=INTEGER},
+			</if>
+			<if test="dataDate != null">
+				data_date = #{dataDate,jdbcType=VARCHAR},
+			</if>
+			<if test="uploadTime != null">
+				upload_time = #{uploadTime,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where cid = #{cid,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.yhcrt.iHealthCloud.entity.HdSleep">
+		update hd_sleep
+		set imei = #{imei,jdbcType=VARCHAR},
+		member_id = #{memberId,jdbcType=INTEGER},
+		deep_sleep_duration = #{deepSleepDuration,jdbcType=DOUBLE},
+		sleep_quality = #{sleepQuality,jdbcType=INTEGER},
+		data_date = #{dataDate,jdbcType=VARCHAR},
+		upload_time = #{uploadTime,jdbcType=VARCHAR}
+		where cid = #{cid,jdbcType=INTEGER}
+	</update>
+</mapper>

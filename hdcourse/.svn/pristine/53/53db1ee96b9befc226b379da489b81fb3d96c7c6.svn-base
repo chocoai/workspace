@@ -1,0 +1,10 @@
+package com.whty.assis.api.service;
+
+import com.whty.assis.api.model.UserBackgroundPic;
+
+public interface UserBackgroundPicService {
+
+    void insert(UserBackgroundPic userBackgroundPic);
+
+    UserBackgroundPic selectByPrimaryKey(String resourceId);
+}

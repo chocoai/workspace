@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fxzhj.mapper.CodeMapper">
+	<resultMap id="BaseResultMap" type="com.fxzhj.model.Code">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="code_num" property="codeNum" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="field1" property="field1" jdbcType="VARCHAR" />
+		<result column="field2" property="field2" jdbcType="VARCHAR" />
+		<result column="field3" property="field3" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="create_user" property="createUser" jdbcType="INTEGER" />
+		<result column="createTimeStr" property="createTimeStr" jdbcType="VARCHAR" />
+		<result column="node_url" property="nodeUrl" jdbcType="VARCHAR" />
+		<result column="descpt" property="descpt" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		id, code_num, status, field1, field2, field3, create_time, create_user, 
+		date_format(create_time, '%Y-%m-%d %H:%i:%S') createTimeStr
+	</sql>
+	
+	<!-- 查询绑定信息 -->
+	<select id="queryCodeByUrl" resultMap="BaseResultMap" parameterType="com.fxzhj.model.Code">
+		select a.id, a.code_num, a.status, a.create_user, b.node_url, c.descpt,
+		date_format(a.create_time, '%Y-%m-%d %H:%i:%S') createTimeStr  
+		from t_code a 
+		LEFT JOIN t_node_code b ON a.id=b.code_id 
+		LEFT JOIN t_url_describe c ON b.describe_id=c.id
+		where b.node_url=#{nodeUrl}
+	</select>
+
+	<!-- 查询未绑定的二维码 -->
+	<select id="queryCodeUnbounded" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from t_code
+		where status = '0' 
+		order by create_time desc
+	</select>
+	
+	<!-- 随机查询一条空闲的二维码 -->
+	<select id="queryRandom" resultMap="BaseResultMap">
+		select 
+		<include refid="Base_Column_List" />
+ 		from t_code 
+ 		where status='0' 
+ 		group by status
+	</select>
+	
+	<!-- 根据codeNum判断是否重复-->
+	<select id="countByCodeNum" resultType="java.lang.Integer" parameterType="java.lang.String">
+		select count(1) from t_code where code_num=#{0}
+	</select>
+	
+	<!-- 根据二维码id修改状态  -->
+	<update id="updateCode" parameterType="com.fxzhj.model.Code">
+		update t_code set status=#{status} where id = #{id}
+	</update>
+	
+	<!-- 批量生成1000个二维码 -->
+	<insert id="batchCode" parameterType="java.util.List">
+		insert into t_code (id, code_num, status, field1, field2, field3, create_time, create_user)
+		values 
+		<foreach collection="list" item="item" index="index" separator=",">
+			(#{item.id}, #{item.codeNum}, #{item.status}, #{item.field1}, #{item.field2}, 
+			#{item.field3}, #{item.createTime}, #{item.createUser})
+		</foreach>
+	</insert>
+	
+	<!-- 新增二维码编号 -->
+	<insert id="addCode" parameterType="com.fxzhj.model.Code" useGeneratedKeys="true" keyProperty="id">
+		insert into t_code (id, code_num, status, field1, field2, field3, create_time, create_user)
+		values(#{id}, #{codeNum}, #{status}, #{field1}, #{field2}, #{field3}, #{createTime}, #{createUser})
+	</insert>
+	
+	<!-- 根据二维码修改二维码编号  -->
+	<update id="updateByCodeNum" parameterType="java.lang.String">
+		update t_code set code_num=#{1} where code_num = #{0}
+	</update>
+	
+	<!-- 批量删除 参数为数组 -->
+	<delete id="batchDelete" parameterType="string" >
+        delete from t_code where code_num in 
+        <foreach item="ids" collection="array" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+	</delete>
+	<cache />
+</mapper>

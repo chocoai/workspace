@@ -1,0 +1,69 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="keywords" content="" />
+<meta http-equiv="description" content="" />
+<title>专题 - ${site.name}</title>
+
+<link rel="stylesheet" type="text/css" href="/${res}/css/public_all.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/global.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/index_con.css" />
+
+<script type="text/javascript" src="/${res}/js/dc/settitle.js"></script>
+
+</head>
+<body>
+	[#include "../include/header.html"/]
+	[#include "../include/navi.html"/]
+	<!--内容 开始-->
+	<!--内容 开始-->
+	<div class="content">
+		<div class="box mt10">
+			<div class="map">
+				<img src="/${res}/images/home.png" width="20" height="18">
+				<a href="${base}">首页</a> > <a href="${base}/topic.jspx">专题</a>
+				[#if (topic.name)?? ] 
+					>
+				<a target="_self" href="${base}/topic/${topic.id}.jspx">${topic.name}</a>
+				[/#if]
+				[#if (topicChannel.channelName)?? ] 
+					> ${topicChannel.channelName} 
+				[/#if]
+			</div>
+
+			<div class="details">
+
+				<div class="details_left">
+					[@cms_content_page count='35' orderBy='4' titLen='22'  topicId=topicId topicChannelId=topicChannelId ] 
+					<ul class="article_list">
+						[#list tag_pagination.list as a]
+						<li>
+							<span>${a.date?string('yyyy-MM-dd')}</span>
+							<a href="${a.url}" title="${a.title}" target="_blank">[@text_cut s=a.title len=titLen /]</a>
+						</li>
+						[/#list]
+					</ul>
+
+					<div style="clear: both;"></div>
+					<div class="list_dis">
+						<div class="jogger">[@cms_pagination sysPage='1'/]</div>
+						
+					</div>
+					[/@cms_content_page]
+
+				</div>
+
+				[#include "../include/right.html"/]
+
+			</div>
+
+		</div>
+
+	</div>
+	<!--内容 end-->
+	<!-- [#include "../include/friend_link.html"/] -->
+	[#include "../include/footer.html"/]
+</body>
+</html>

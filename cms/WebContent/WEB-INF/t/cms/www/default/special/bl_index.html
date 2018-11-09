@@ -1,0 +1,342 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>爆料台- ${site.name}</title>
+<meta http-equiv="keywords" content="${site.keywords!}"/>
+<meta http-equiv="description" content="${site.description!}"/>
+<link rel="stylesheet" type="text/css" href="/${res}/css/blt.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/public_all.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/global.css" />
+<script type="text/javascript" src="/${res}/js/dc/settitle.js"></script>
+
+<link href="${base}/r/cms/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css"/>
+<script src="${base}/r/cms/jquery.js" type="text/javascript"></script>
+<script src="${base}/res/common/js/jquery.ext.js" type="text/javascript"></script>
+<script src="${base}/r/cms/jqueryUI/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/r/cms/front.js" type="text/javascript"></script>
+<script src="${base}/thirdparty/swfupload/swfupload.js" type="text/javascript"></script>
+<script src="${base}/thirdparty/swfupload/swfupload.queue.js" type="text/javascript"></script>
+<script src="${base}/thirdparty/swfupload/fileprogress.js" type="text/javascript"></script>
+<script src="${base}/thirdparty/swfupload/handlers.js" type="text/javascript"></script>
+<link href="${base}/thirdparty/swfupload/process.css" rel="stylesheet" type="text/css"/>
+<script src="/${res}/js/dc/theme.js"></script>
+</head>
+<script type="text/javascript">
+
+function showUp(){
+	[#if user??]
+	$('.theme-popover-mask').fadeIn(100);
+	$('.theme-popover').slideDown(200);
+	[#else]alert("上传图片前请先登录");
+	[/#if]
+}
+
+function slideUp(){
+	$('.theme-popover-mask').fadeOut(100);
+	$('.theme-popover').slideUp(200);
+
+}
+
+
+var swfu;
+$(function() {
+	$("#baoliaoForm").validate();
+	var uploadPicsUrl = "${base}/member/o_swfPicsUpload.jspx";
+	//在firefox、chrome下，上传不能保留登录信息，所以必须加上jsessionid。
+	//var jsessionid ="${sessionId!}";
+	var jsessionid = $.cookie("JSESSIONID");
+
+	if(jsessionid) {
+		uploadPicsUrl += ";jsessionid="+jsessionid;
+	}
+	
+	swfu=new SWFUpload({
+		upload_url : uploadPicsUrl,
+		flash_url : "${base}/thirdparty/swfupload/swfupload.swf",
+		file_size_limit : "20 MB",
+		file_types : "*.jpg;*.gif;*.png;*.bmp",
+		file_types_description : "图片",
+		file_queue_limit : 5,
+		custom_settings : {
+			progressTarget : "fsUploadProgress",
+			cancelButtonId : "btnCancel"
+		},
+		debug: false,
+		
+		button_image_url : "${base}/thirdparty/swfupload/button_notext.png",
+		button_placeholder_id : "spanButtonPlaceHolder",
+		button_text: "<span class='btnText'>上传图片</span>",
+		button_width: 84,
+		button_height: 24,
+		button_text_top_padding: 2,
+		button_text_left_padding: 20,
+		button_text_style: '.btnText{color:#666666;}',
+		
+		file_queued_handler : fileQueued,
+		file_queue_error_handler : fileQueueError,
+		file_dialog_complete_handler : fileDialogComplete,
+		upload_progress_handler : uploadProgress,
+		upload_error_handler : uploadError,
+		upload_success_handler : uploadPicsSuccess,
+		upload_complete_handler : uploadComplete,
+		queue_complete_handler : queueComplete
+	});
+	
+});
+function uploadPicsSuccess(file,data) {
+	var jsonData=eval("("+data+")");//转换为json对象 
+	if(jsonData.error!=null){
+		$.alert("[@s.m 'global.prompt'/]",jsonData.error);
+	}else{
+		addPicLine();
+		var index = picIndex - 1;
+		imgUrl=jsonData.imgUrl;
+		$("#preImg"+index).attr("src",""+imgUrl);
+		var imgSrc = parent.document.getElementById("preImg"+index);
+		if(!$(imgSrc).attr("noResize")) {
+			$(imgSrc).css("width","auto");
+			$(imgSrc).css("height","auto");
+		}
+		$("#uploadImgPath"+index).val(imgUrl);
+	}
+}
+
+</script>
+<body>
+
+[#include "../include/header2.html"/]
+
+
+<!--nav 开始-->
+[#include "../include/navi.html"/]
+
+<div style=" clear:both;"></div>
+
+<!--内容 开始-->
+<div class="box">
+    <div class="map mt10"><img src="/${res}/images/home.png" width="20" height="18"><a href="${base}/">首页</a> >  爆料台</div>
+    <div style=" clear:both;"></div>
+    <div class="left">
+    <form id="baoliaoForm" action="${base}/baoliao.jspx" method="post">
+         <div class="blt_box">
+              <input type="text"  id="title" name="title" placeholder="请填写标题" class="blt_title" />
+             <div class="send_mess_box">
+                        <textarea  id="txt" name="content" class="blt_title" placeholder="请填写爆料内容"></textarea>
+                        <span><a id="upd" href="javascript:void(0);" onclick="showUp()"><img src="/${res}/images/icon_pho.png" alt=""/></a></span>
+                        <span>手机：<input type="text" name="tel"/>&nbsp;&nbsp;邮箱：<input type="text" name="email"/></span>
+                        <span>验证码：<input type="text" id="captcha" name="captcha" maxlength="20" vld="{required:true}"/> </span>
+                         <img id="blCaptcha" src="${base}/captcha.svl" onclick="this.src='${base}/captcha.svl?d='+new Date()"/>
+                        <div class="send_butt"><a href="javascript:void(0);" onclick="baoliaoForm()">爆料</a></div>
+           
+             </div>
+
+             <!-- 弹出层 -->
+             <div class="theme-popover" >
+			     <div class="theme-poptit">
+			          <a href="javascript:;" title="关闭" class="close" onclick="slideUp()">×</a>
+			          <h3 id="spanButtonPlaceHolder"></h3>
+			     </div>
+			     <div class="theme-popbod dform">
+			        <div class="mt10">
+						<span style="display: none;"><input class="cancel" id="btnCancel" type="button" value="取消" onclick="swfu.cancelQueue();" disabled="disabled" /></span>
+						<div id="fsUploadProgress" style="display: none;"></div>
+					</div>
+					<div id="picBefore" style="clear:both"></div>
+					<div id="picTable" style="display:none;">
+					  <table id="picTable{0}" border="0" style="float:left;">
+						<tr>
+							<td style="display:none">
+								<div><input type="text" id="uploadImgPath{0}" name="picPaths" style="width:160px"/> <a href="javascript:void(0);" onclick="$('#picTable{0}').remove();" class="pn-opt">删除</a></div>
+								 <div>
+								<span id="ufc{0}" style="position:relative">
+								<input type='hidden' id='uploadFileText{0}' size="10"/>  
+								<input onchange="$('#uploadFileText{0}').val(this.value)" size="10" type="file" id="uploadFile{0}"/>
+								</span>
+								<input type="button" value="上传" onclick="upload({0});" />
+								</div>
+								  <div style="display:none"><textarea style="width:200px;height:60px;" name="picDescs" maxlength="255"></textarea></div>
+							</td>
+							<td >
+								<div class="album_pic">
+							     <ul><li><a href="javascript:void(0);" onclick="$('#picTable{0}').remove();"><img id="preImg{0}" src="" alt="预览" noResize="true" style="width:140px;height:140px;margin:5px;background-color:#ccc;border:1px solid #333"><i></i></a></li></ul>
+							    </div>
+						    </td>
+						</tr>
+					   </table>
+					</div>
+					<script>
+						var picIndex = 1;
+						var picTpl = $.format($("#picTable").html());
+
+						function addPicLine() {
+							$('#picBefore').before(picTpl(picIndex++));
+							
+						}
+					</script>
+			     </div>
+			</div>
+			<div class="theme-popover-mask"></div>
+			<!-- 弹出层 -->
+			
+         </div>  
+         </form>
+          <script type="text/javascript">
+       
+            function  baoliaoForm(){
+            [#if user??]
+            	if ($('#title').val() == '') {
+    				alert('请输入标题');
+    				$('#title').focus();
+    				return;
+    			}
+            	if ($('#txt').val() == '') {
+    				alert('请输入爆料内容');
+    				$('#txt').focus();
+    				return;
+    			}
+    			if ($('#captcha').val() == '') {
+    				alert('验证码不能为空');
+    				$('#captcha').focus();
+    				return;
+    			}
+    			var s = $("#baoliaoForm");
+    			var url = s[0].action;
+    			var data = s.serialize();
+    			var options = {
+    	                    url: 'baoliao.jspx',
+    	                    type: 'post',
+    	                    dataType: 'json',
+    	                    data: data,
+    	                    success:  function (data) {
+    		                	if(data.status==0) {
+    			                    alert("提交成功");
+    			                    location.href=location.href;
+    			                } else if(data.status==1) {	
+    			                    alert("验证码错误");
+    			                    $("#blCaptcha").click();
+    			                }
+    	                    }
+    	                };
+    	                $.ajax(options);
+    	                return false;
+    	     	  [#else]window.location.href="${base}/login.jspx?returnUrl=baoliao.jspx";
+    	     	  [/#if]
+               }
+           
+            </script> 
+         <div id="Tab_link">
+                            <div class="Menubox">
+                              <ul>
+                                <li id="menus1" onmouseover="setTab('menus',1,2)" class="hover">最新</li>
+                                <li id="menus2" onmouseover="setTab('menus',2,2)">精华</li>
+                              </ul>
+                            </div>
+                            
+                            <div class="Contentbox">
+                                <div id="con_menus_1" class="hover">
+                                      [@cms_baoliao_page siteId=site.id  title=queryTitle  count='5' ]
+                                      [#if tag_pagination.list?size gt 0]
+                                      <ul> 
+                                      
+                                      [#list tag_pagination.list as m]
+                                             <li>
+                                                 <div class="user_pic">
+                                                  [#if m.user??]
+	          	   	                                 [#if m.user.userImg??]<img src="${m.user.userImg!}" width="60" height="60"/>
+	                                                 [#else]<img src="/${res}/images/people1.png" width="60" height="60"/>
+                                                     [/#if]
+                                                  ${m.user.username!}
+                                                  [#else]<img src="/${res}/images/people1.png" width="60" height="60"/>匿名网友[/#if]
+                                                   
+                                                 </div>
+                                                 <div class="cont_box">
+                                                      <h2><a href="${base}/baoliao/${m.id}.jspx" target="_blank">${m.title!}</a></h2>
+                                                      <div class="bl_cont"><a href="${base}/baoliao/${m.id}.jspx" target="_blank">[@text_cut s=m.content len='200' append='...'/]</a></div>
+                                                       <div class="pic">
+                                                       [#if m.pictures?size gt 0]
+						                                [#list m.pictures as pic]
+						                                [#if pic_index < 5]
+						                                <img src="${pic.imgPath!}"/>
+						                                [/#if]
+						                                [/#list]
+						                                [/#if]  
+                                                      </div> 
+                                                      <div class="time">${m.createTime?string('yyyy-MM-dd HH:mm')}
+                                                      <span>[#if m.state ??][#if m.state == 0]待处理[/#if][#if m.state == 1]处理中[/#if][#if m.state == 2]已解决[/#if][#else]待处理[/#if] 
+                                                      &nbsp;&nbsp;浏览[#if m.readCount ??](${m.readCount})[#else](0)[/#if]&nbsp;&nbsp;|&nbsp;&nbsp;
+                                                                                                                                                                                                                         回复[#if m.commtCount ??](${m.commtCount})[#else](0)[/#if]</span></div>
+                                                 </div>
+                                             </li>
+                                         [/#list]	
+                                       
+                                       </ul>
+                                        <div style=" clear:both;"></div>
+                                        <div class="list_dis">
+                                           <div class="jogger">  <div class="pagesite">[@cms_pagination sysPage='1'/]</div>
+                                           </div>
+                                        </div>
+                                       [#else]<ul><li>暂时无相关记录</li></ul>
+                                       [/#if]     
+                                       [/@cms_baoliao_page]
+                                  </div>
+                                  
+                                   
+                                <div id="con_menus_2" style="display:none">
+                                      [@cms_baoliao_page siteId=site.id title=queryTitle count='5' checked='0' recommend='1']
+                                      [#if tag_pagination.list?size gt 0]
+                                       <ul>
+                                          
+                                           [#list tag_pagination.list as b]
+                                             <li>
+                                                 <div class="user_pic">
+                                                  [#if b.user??]
+	          	   	                                 [#if b.user.userImg??]<img src="${b.user.userImg!}" width="60" height="60"/>
+	                                                 [#else]<img src="/${res}/images/people1.png" width="60" height="60"/>
+                                                     [/#if]
+                                                  ${b.user.username!}
+                                                  [#else]<img src="/${res}/images/people1.png" width="60" height="60"/>匿名网友[/#if]
+                                                 </div>
+                                                 <div class="cont_box">
+                                                      <h2><a href="${base}/baoliao/${b.id}.jspx" target="_blank">${b.title!}</a></h2>
+                                                      <div class="bl_cont"><a href="${base}/baoliao/${b.id}.jspx" target="_blank">[@text_cut s=b.content len='200' append='...'/]</a></div>
+                                                       <div class="pic">                                                      <div class="pic">
+                                                       [#if b.pictures?size gt 0]
+						                                [#list b.pictures as pic]
+						                                [#if pic_index < 5]
+						                                <img src="${b.imgPath!}"/>
+						                                [/#if] 
+						                                [/#list]
+						                                [/#if]  
+                                                      </div> 
+                                                      <div class="time">${b.createTime?string('yyyy-MM-dd HH:mm')}
+                                                      <span>[#if b.state ??][#if b.state == 0]待处理[/#if][#if b.state == 1]处理中[/#if][#if b.state == 2]已解决[/#if][#else]待处理[/#if] 
+                                                      &nbsp;&nbsp;浏览[#if b.readCount ??](${b.readCount})[#else](0)[/#if]&nbsp;&nbsp;|&nbsp;&nbsp;
+                                                                                                                                                                                                                         回复[#if b.commtCount ??](${b.commtCount})[#else](0)[/#if]</span></div>
+                                                 </div>
+                                             </li>
+                                           [/#list]	
+                                        </ul>
+                                        <div style=" clear:both;"></div>
+                                        <div class="list_dis">
+                                           <div class="jogger">  <div class="pagesite">[@cms_pagination sysPage='1'/]</div>
+                                           </div>
+                                        </div>
+                                       [#else]<ul><li>暂时无相关记录</li></ul>
+                                       [/#if]     
+                                       [/@cms_baoliao_page]
+                                  </div>
+                            </div>
+                     </div> 
+    </div>
+    
+
+[#include "bl_right.html"/]
+           
+</div>
+<!--内容 end-->
+
+	[#include "../include/footer.html"/]
+</body>
+
+</html>

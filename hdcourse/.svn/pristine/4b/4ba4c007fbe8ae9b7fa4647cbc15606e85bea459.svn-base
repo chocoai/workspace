@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.api.dao.AppToolsDao">
+	
+	<resultMap type="com.whty.assis.api.model.AppTools" id="AppToolsResult">
+		<result column="id" property="id"  />
+		<result column="app_name" property="appName"  />
+		<result column="sort_num" property="sortNum" />
+		<result column="down_url" property="downUrl"  />
+		<result column="icon" property="icon"  />
+		<result column="click_icon" property="clickIcon"  />
+		<result column="file_size" property="fileSize"  />
+		<result column="description" property="description"  />
+		<result column="subject_id" property="subjectId"  />
+		<result column="is_folder" property="isFolder"  />
+		<result column="model_code" property="modelCode"  />
+		<result column="create_time" property="createTime"/>
+		<result column="update_time" property="updateTime"  />
+		<result column="parent_id" property="parentId"  />
+		<result column="is_parent" property="isParent"  />
+		<result column="sub_file_ext" property="subFileExt"  />
+		<result column="version" property="version"  />
+		<result column="status" property="status"  />
+		<result column="need_login" property="needlogin"  />
+		<result column="type_name" property="typeName"  />
+		<result column="behaviorcode" property="behaviorcode" />
+		<result column="hdkt_version" property="hdktVersion" />
+	</resultMap>
+	
+	<select id="listByConditionByCode" parameterType="map" resultMap="AppToolsResult">
+		select * from t_app_tools where model_code in('205','132','206','126','204','129','127','130','131','133','134','201','113','118')
+		<if test="status != null and status != ''">and status=#{status}</if>
+	</select>
+	
+	
+	<select id="listByCondition" parameterType="map" resultMap="AppToolsResult">
+		select * from t_app_tools WHERE 1=1 
+		<if test="status != null and status != ''">and status=#{status}</if>
+	</select>
+	
+	<insert id="save" parameterType="com.whty.assis.api.model.AppTools">
+		insert into t_app_tools(
+			app_name,
+			parent_id,
+			is_parent
+			) values (
+				#{appName},
+				#{parentId},
+				#{isParent}
+			)
+	</insert>
+	
+	<update id="update" parameterType="com.whty.assis.api.model.UserBackGround">
+		update t_app_tools 
+		set 
+		<trim prefixOverrides=",">
+			<if test="appName != null and appName != ''">, app_name=#{appName}</if>
+			<if test="sortNum != null and sortNum != ''">, sort_num=#{sortNum}</if>
+			<if test="downUrl != null and downUrl != ''">, down_url=#{downUrl}</if>
+			<if test="icon != null and icon != ''">, icon=#{icon}</if>
+			<if test="clickIcon != null and clickIcon != ''">, click_icon=#{clickIcon}</if>
+			<if test="fileSize != null and fileSize != ''">, file_size=#{fileSize}</if>
+			<if test="description != null and description != ''">, description=#{description}</if>
+			<if test="subjectId != null and subjectId != ''">, subject_id=#{subjectId}</if>
+			<if test="isFolder != null ">, is_folder=#{isFolder}</if>
+			<if test="modelCode != null and modelCode != ''">, model_code=#{modelCode}</if>
+			<if test="createTime != null ">, create_time=#{createTime}</if>
+			<if test="updateTime != null ">, update_time=#{updateTime}</if>
+			<if test="parentId != null and parentId != ''">, parent_id=#{parentId}</if>
+			<if test="isParent != null and isParent != ''">, is_parent=#{isParent}</if>
+			<if test="subFileExt != null and subFileExt != ''">, sub_file_ext=#{subFileExt}</if>
+			,version=#{version}
+			<if test="status != null and status != ''">, status=#{status}</if>
+			<if test="isNeedlogin != null ">, need_login= #{isNeedlogin}</if>
+			<if test="typeName != null ">, type_name= #{typeName}</if>
+			<if test="behaviorcode != null ">, behaviorcode = #{behaviorcode}</if>
+			,hdkt_version = #{hdktVersion}		
+		</trim>
+		where id=#{id}
+	</update>
+	
+	
+	<delete id="deleteById" parameterType="int">
+		delete from t_app_tools where id = #{_parameter}
+	</delete>
+</mapper>
+

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.wfd.page.dao.CollectionMapper">
+  <resultMap id="BaseResultMap" type="com.whty.wfd.page.vo.Collection">
+    <result column="plate_post_id"  property="id" />
+    <result column="type"  property="type" />
+    <result column="user_id"  property="userId" />
+    <result column="is_read"  property="isRead" />
+    <result column="create_time"  property="createTime" />
+    <result column="update_time" property="updateTime" />
+    <result column="creatorName" property="creatorName" />
+    <result column="postContent" property="postContent" />
+    <result column="replyContent" property="replyContent" />
+    <result column="replyPostContent" property="replyPostContent" />
+    <result column="replyPostId" property="replyPostId" />
+    <result column="m_logo_url" property="mlogoUrl" />
+    <result column="p_logo_url" property="plogoUrl" />
+    <result column="m_creator" property="messageCreator" />
+    <result column="p_creator" property="postCreator" />
+    <result column="audio_url" property="messageAudioUrl" />
+    <result column="img_url" property="messageImgUrl" />
+  </resultMap>
+
+  <select id="getCollections" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select hbb.*,tu2.name m_creator ,tu2.logo_url m_logo_url ,tu3.name p_creator ,tu3.logo_url p_logo_url ,tpp.content postContent,tpm.content replyContent,
+    tpp2.content replyPostContent,tpp2.id replyPostId ,tpm.audio_url audio_url,tpm.img_url img_url from
+    (select *,1 type from t_user_favorite_post tufp
+    union ALL
+    select *,2 type from t_user_favorite_message tufm
+    )hbb
+    left join t_plate_post tpp on hbb.type=1 and tpp .id = hbb.plate_post_id  and tpp.is_delete=0
+    left join (select tpm.*,tpmi.down_url img_url,tpma.down_url audio_url from t_post_message tpm
+left join t_post_message_img tpmi on tpmi.post_message_id = tpm.id
+left join t_post_message_audio tpma on tpma.post_message_id = tpm.id where tpm.is_delete=0
+group by tpm.id
+) tpm on hbb.type=2 and  hbb.plate_post_id = tpm.id
+    left join t_plate_post tpp2 on hbb.type=2 and tpp2.id = tpm.plate_post_id and tpp2.is_delete=0
+	left join t_user tu2 on tu2.id=tpm.user_id
+	left join t_user tu3 on tu3.id=tpp.creator
+    where hbb.user_id =#{userId} and (tpp.is_delete=0 or tpp2.is_delete=0)
+    ORDER BY hbb.create_time desc
+  </select>
+
+
+
+</mapper>

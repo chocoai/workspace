@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fxzhj.mapper.NodeMapper">
+	<resultMap id="BaseResultMap" type="com.fxzhj.model.Node">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="node_id" property="nodeId" jdbcType="VARCHAR" />
+		<result column="node_name" property="nodeName" jdbcType="VARCHAR" />
+		<result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+		<result column="property_id" property="propertyId" jdbcType="BIGINT" />
+		<result column="is_node" property="isNode" jdbcType="INTEGER" />
+		<result column="node_status" property="nodeStatus" jdbcType="INTEGER" />
+		<result column="group_id" property="groupId" jdbcType="BIGINT" />
+		<result column="field1" property="field1" jdbcType="VARCHAR" />
+		<result column="field2" property="field2" jdbcType="VARCHAR" />
+		<result column="field3" property="field3" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="create_user" property="createUser" jdbcType="INTEGER" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="update_user" property="updateUser" jdbcType="INTEGER" />
+		
+		<result column="property_name" property="propertyName" jdbcType="VARCHAR" />
+		<result column="property_type" property="propertyType" jdbcType="INTEGER" />
+		<result column="property_status" property="propertyStatus" jdbcType="INTEGER" />
+		<result column="group_name" property="groupName" jdbcType="VARCHAR" />
+		<result column="descpt" property="descpt" jdbcType="VARCHAR" />
+		<result column="createTimeStr" property="createTimeStr" jdbcType="VARCHAR" />
+		<result column="updateTimeStr" property="updateTimeStr" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		id, node_id, node_name, parent_id, property_id, is_node, group_id, node_status,
+		field1,	field2, field3, create_time,create_user, update_time, update_user
+	</sql>
+	
+	<!-- 查询一级节点 -->
+	<select id="queryNodeTree" resultMap="BaseResultMap">
+		select node_id,node_name,is_node from t_node where parent_id is null
+	</select>
+	
+	<!-- 查询子节点 -->
+	<select id="queryChildTree" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select node_id,node_name,is_node from t_node where parent_id = #{0}
+	</select>
+	
+	<!-- 查询节点名称 -->
+	<select id="queryNodeName" resultType="java.lang.String" parameterType="java.lang.String">
+		select node_name from t_node where node_id = #{0}
+	</select>
+	
+	<!-- 根据节点id查询节点信息 -->
+	<select id="queryByNid" resultMap="BaseResultMap" parameterType="java.lang.String">
+		select a.*,date_format(a.create_time, '%Y-%m-%d %H:%i:%S') createTimeStr,
+		b.property_name,b.property_type,b.property_status,c.group_name,c.descpt 
+		from t_node a 
+		LEFT JOIN t_property b ON a.property_id=b.id 
+		LEFT JOIN t_node_group c ON a.group_id=c.id  
+		where a.node_id=#{0}
+	</select>
+	
+	<!-- 根据节点id修改节点数据 -->
+	<update id="updateNode" parameterType="com.fxzhj.model.Node">
+		update t_node set group_id=#{1} where node_id=#{0}
+	</update>
+	
+	<!-- 根据设备id修改节点信息 -->
+	<update id="updateByDid" parameterType="com.fxzhj.model.Node">
+		update t_node set node_status=#{1} where 
+		node_id = (select node_id from t_device where id=#{0}) 
+		OR parent_id = (select node_id from t_device where id=#{0}) 
+	</update>
+	
+	<!-- 根据端口id修改节点信息 -->
+	<update id="updateByPid" parameterType="com.fxzhj.model.Node">
+		update t_node set node_status=#{1} where 
+		node_id = (select node_id from t_port where id=#{0}) 
+	</update>
+	
+	<!-- 批量新增节点-->
+	<insert id="batchNode" parameterType="java.util.List">
+		insert into t_node (id, node_id, node_name, parent_id, property_id, is_node, 
+		node_status, create_time, create_user)
+		values 
+		<foreach collection="list" item="item" index="index" separator=",">
+			(#{item.id}, #{item.nodeId}, #{item.nodeName}, #{item.parentId}, #{item.propertyId}, 
+			#{item.isNode}, #{item.nodeStatus}, #{item.createTime}, #{item.createUser})
+		</foreach>
+	</insert>
+	
+	<!-- 新增节点信息 -->
+	<insert id="addNode" parameterType="com.fxzhj.model.Node">
+		insert into t_node (id, node_id, node_name, parent_id, property_id, is_node, 
+		node_status, create_time, create_user)
+		values (#{id}, #{nodeId}, #{nodeName}, #{parentId}, #{propertyId}, #{isNode}, 
+			#{nodeStatus}, #{createTime}, #{createUser})
+	</insert>
+	
+	<!-- 根据端口id修改节点信息 -->
+	<update id="updateByNid" parameterType="java.lang.String">
+		update t_node set node_name=#{1} where node_id = #{0} 
+	</update>
+	
+	<!-- 批量删除 参数为数组 -->
+	<delete id="batchDelete" parameterType="string" >
+        delete from t_node where node_id in 
+        <foreach item="ids" collection="array" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+	</delete>
+	<cache />
+</mapper>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.demo.dao.SoftComponentDao">
+	<resultMap type="com.whty.assis.demo.model.SoftComponent" id="softComponentResult">
+		<result column="id" property="id" jdbcType="VARCHAR" />
+		<result column="soft_id" property="softId" jdbcType="VARCHAR" />
+		<result column="file_url" property="fileUrl" jdbcType="VARCHAR" />
+		<result column="file_name" property="fileName" jdbcType="VARCHAR" />
+		<result column="file_rename" property="fileRename" jdbcType="VARCHAR" />
+		<result column="file_size" property="fileSize" jdbcType="INTEGER" />
+		<result column="download_url" property="downloadUrl" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<select id="querySoftComponent" parameterType="map" resultMap="softComponentResult">
+		select t.id,t.soft_id,t.file_url,t.file_name,t.file_size,t.download_url,t.create_time,t.update_time,t.status
+		from TA_SOFT_COMPONENT t
+		where 1=1
+		<if test="id != null and id != ''">and t.id=#{id}</if>
+		<if test="status != null and status != ''">and t.status=#{status}</if>
+		<if test="softId != null and softId != ''">and t.soft_id=#{softId}</if>
+		<if test="fileName != null and fileName != ''">and t.file_name like '%'||#{fileName}||'%'</if>
+		<if test="idList != null">
+			and id in <foreach collection="idList" open="(" close=")" separator="," item="item">#{item}</foreach>
+		</if>
+	</select>
+	
+	<insert id="saveSoftComponent" parameterType="com.whty.assis.demo.model.SoftComponent">
+		insert into TA_SOFT_COMPONENT (
+			id
+			<if test="softId != null and softId != ''">,soft_id</if>
+			<if test="fileUrl != null and fileUrl != ''">,file_url</if>
+			<if test="fileName != null and fileName != ''">,file_name</if>
+			<if test="fileRename != null and fileRename != ''">,file_rename</if>
+			<if test="fileSize != null">,file_size</if>
+			<if test="downloadUrl != null and downloadUrl != ''">,download_url</if>
+			<if test="createTime != null">,create_time</if>
+			<if test="updateTime != null">,update_time</if>
+			<if test="status != null and status != ''">,status</if>
+		) values (
+			#{id,jdbcType=VARCHAR}
+			<if test="softId != null and softId != ''">,#{softId,jdbcType=VARCHAR}</if>
+			<if test="fileUrl != null and fileUrl != ''">,#{fileUrl,jdbcType=VARCHAR}</if>
+			<if test="fileName != null and fileName != ''">,#{fileName,jdbcType=VARCHAR}</if>
+			<if test="fileRename != null and fileRename != ''">,#{fileRename,jdbcType=VARCHAR}</if>
+			<if test="fileSize != null">,#{fileSize,jdbcType=INTEGER}</if>
+			<if test="downloadUrl != null and downloadUrl != ''">,#{downloadUrl,jdbcType=VARCHAR}</if>
+			<if test="createTime != null">,#{createTime,jdbcType=TIMESTAMP}</if>
+			<if test="updateTime != null">,#{updateTime,jdbcType=TIMESTAMP}</if>
+			<if test="status != null and status != ''">,#{status,jdbcType=VARCHAR}</if>
+		)
+	</insert>
+	
+	<insert id="saveSoftComponentBatch" parameterType="list">
+		insert into TA_SOFT_COMPONENT (
+			id,soft_id,file_url,file_name,file_rename,file_size,status
+		) 
+		<foreach collection="list" item="obj" separator="union all">
+			select #{obj.id,jdbcType=VARCHAR},
+				#{obj.softId,jdbcType=VARCHAR},
+				#{obj.fileUrl,jdbcType=VARCHAR},
+				#{obj.fileName,jdbcType=VARCHAR},
+				#{obj.fileRename,jdbcType=VARCHAR},
+				#{obj.fileSize,jdbcType=INTEGER},
+				#{obj.status,jdbcType=VARCHAR}
+			from dual
+		</foreach>
+	</insert>
+	
+	<update id="updateSoftComponent" parameterType="com.whty.assis.demo.model.SoftComponent">
+		update TA_SOFT_COMPONENT 
+		set 
+		<trim prefixOverrides=",">
+			<if test="updateTime != null">, update_time=#{updateTime,jdbcType=TIMESTAMP}</if>
+			<if test="downloadUrl != null">,download_url=#{downloadUrl,jdbcType=VARCHAR}</if>
+			<if test="status != null and status != ''">, status=#{status,jdbcType=VARCHAR}</if>
+		</trim>
+		where id=#{id,jdbcType=VARCHAR}
+	</update>
+	
+	<delete id="deleteSoftComponent" parameterType="java.util.List">
+		delete from TA_SOFT_COMPONENT
+		where id in <foreach collection="list" item="item" open="(" separator="," close=")">#{item}</foreach>
+	</delete>
+	
+	<!-- 根据版本号查询组件列表 -->
+	<select id="querySoftComponentForApi" parameterType="map" resultMap="softComponentResult">
+		select t.id,t.soft_id,t.file_url,t.file_name,t.file_size,t.download_url,t.create_time,t.update_time,t.status
+		from TA_SOFT_COMPONENT t
+		left join TA_SOFT s on t.soft_id=s.id
+		where s.status='0' and s.soft_type='2' and t.status='0' and s.version_code=#{versionCode}
+	</select>
+	
+</mapper>

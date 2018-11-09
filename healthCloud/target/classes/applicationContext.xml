@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       http://www.springframework.org/schema/context 
+       http://www.springframework.org/schema/context/spring-context-3.0.xsd 
+       http://www.springframework.org/schema/mvc 
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd
+       http://www.springframework.org/schema/tx 
+       http://www.springframework.org/schema/tx/spring-tx-2.5.xsd 
+       http://www.springframework.org/schema/aop 
+       http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+       http://www.springframework.org/schema/task
+       http://www.springframework.org/schema/task/spring-task-4.0.xsd"
+	default-lazy-init="true">
+
+ <task:annotation-driven executor="asyncExecutor" />
+ <task:executor id="asyncExecutor" pool-size="100-10000" queue-capacity="10"/>
+ 
+	<!--加载配置文件 -->
+	<bean id="propertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:db.properties</value>
+			</list>
+		</property>
+	</bean>
+ 	<bean id="httpUtil" class="com.yhcrt.healthcloud.util.HttpUtil" /> 
+
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource"
+		init-method="init" destroy-method="close">
+		<!-- <property name="name" value="dataSourceRead"></property> -->
+		<!-- 基本属性 url、user、password -->
+		<property name="driverClassName" value="${database.jdbc.driverClass}" />
+		<property name="url" value="${database.jdbc.connectionURL}" />
+		<property name="username" value="${database.jdbc.username}" />
+		<property name="password" value="${database.jdbc.password}" />
+
+		<!-- 配置初始化大小、最小、最大 -->
+		<property name="initialSize" value="${database.jdbc.initialSize}" />
+		<property name="maxActive" value="${database.jdbc.maxActive}" />
+		<!-- <property name="maxIdle" value="${database.jdbc.maxIdle}" /> -->
+		<property name="minIdle" value="${database.jdbc.minIdle}" /> 
+
+		<!-- 配置获取连接等待超时的时间 -->
+		<property name="maxWait" value="${database.jdbc.maxWait}" />
+
+		<!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+		<property name="timeBetweenEvictionRunsMillis" value="60000" />
+
+		<!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+		<property name="minEvictableIdleTimeMillis" value="300000" />
+
+		<property name="validationQuery" value="${database.jdbc.validationQuery}" />
+		<property name="testWhileIdle" value="true" />
+		<property name="testOnBorrow" value="false" />
+		<property name="testOnReturn" value="false" />
+
+		<!-- 配置监控统计拦截的filters -->
+		<property name="filters" value="wall,stat,mergeStat,log4j" />
+		<!-- StatFilter属性slowSqlMillis用来配置SQL慢的标准，执行时间超过slowSqlMillis的就是慢 -->
+		<property name="connectionProperties" value="druid.stat.slowSqlMillis=5000;druid.stat.logSlowSql=true" />
+		
+		<!-- 合并多个DruidDataSource的监控数据 -->
+		<property name="useGlobalDataSourceStat" value="true" />
+	</bean>
+
+	<!-- JDBC -->
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- 配置 SqlSessionFactory -->
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- 加载mybatis的配置文件 -->
+		<property name="configLocation" value="classpath:sqlMapConfig.xml" />
+		<!-- 加载数据源 -->
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	
+	<!-- 通过MapperScannerConfigurer进行mapper扫描（建议使用） mapper 批量扫描，从 mapper 包中扫描出 
+		mapper 接口，自动创建代理对象，并在 spring 容器中注册名陈为类名首字母小写。 遵循的规范：将 mapper.java 和 mapper.xml 
+		映射文件名陈一致，且在同一个目录 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<!-- 指定扫描的包，如果存在多个包使用(逗号,)分割 -->
+		<property name="basePackage" value="com.yhcrt.healthcloud.*.mapper" />
+		<!-- 注意此处是sqlSessionFactoryBeanName，如果写成 sqlSessionFactory，ref="sqlSessionFactory" 
+			会造成 <context:property-placeholder location="classpath:config/db.properties"/> 
+			失效 而连接不上数据库 -->
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+	</bean>
+
+	<!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+
+	<!-- 配置通知 -->
+	<tx:advice id="interceptorAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="insert*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+
+			<tx:method name="find*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="get*" propagation="SUPPORTS" read-only="true" />
+			<tx:method name="select*" propagation="SUPPORTS" read-only="true" />
+
+			<tx:method name="is*" read-only="true" propagation="SUPPORTS" />
+			<tx:method name="load*" read-only="true" propagation="SUPPORTS" />
+			<tx:method name="query*" read-only="true" propagation="SUPPORTS" />
+			<tx:method name="check*" read-only="true" propagation="SUPPORTS" />
+			<tx:method name="validate*" read-only="true" propagation="SUPPORTS" />
+			<tx:method name="convert*" read-only="true" propagation="SUPPORTS" />
+			<tx:method name="refresh*" read-only="true" propagation="SUPPORTS" />
+			<tx:method name="fetch*" read-only="true" propagation="SUPPORTS" />
+			<tx:method name="view*" read-only="true" propagation="SUPPORTS" />
+			<tx:method name="*" propagation="REQUIRED" rollback-for="java.lang.Exception" />
+		</tx:attributes>
+	</tx:advice>
+	
+	<!-- 配置切面 aop ,proxy-target-class="true" 基于类的代理(cglib) -->
+	<aop:config proxy-target-class="true">
+		<aop:pointcut id="serviceMethods"
+			expression="execution(* com.yhcrt.healthcloud.*.service.impl.*.*(..))" />
+		<aop:advisor advice-ref="interceptorAdvice" pointcut-ref="serviceMethods" />
+	</aop:config>
+	
+	<context:component-scan base-package="com.yhcrt.healthcloud" />
+
+</beans>
+

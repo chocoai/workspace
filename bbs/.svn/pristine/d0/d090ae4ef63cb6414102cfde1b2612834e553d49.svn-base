@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.yhcrt.weihu.bbs.entity">
+	<class
+		name="BbsCollection"
+		table="bbs_collection"
+		>
+		<meta attribute="sync-DAO">false</meta>
+		<cache usage="read-write"/>
+		<id
+			name="id"
+			type="java.lang.Integer"
+			column="COLLECTION_ID"
+			>
+			<generator class="native"/>
+		</id>
+		<property
+			name="createTime"
+			column="CREATE_TIME"
+			type="timestamp"
+			not-null="true"
+			/>
+		<many-to-one
+			name="creater"
+			column="creater_id"
+			class="BbsUser"
+			not-null="true"
+			>
+		</many-to-one>
+		<many-to-one
+			name="topic"
+			column="TOPIC_ID"
+			class="BbsTopic"
+			not-null="false"
+			>
+		</many-to-one>
+		<many-to-one
+			name="forum"
+			column="FORUM_ID"
+			class="BbsForum"
+			not-null="false"
+			>
+		</many-to-one>
+	</class>	
+</hibernate-mapping>

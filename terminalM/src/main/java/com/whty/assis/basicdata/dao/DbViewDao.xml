@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.basicdata.dao.DbViewDao">
+
+	<resultMap type="com.whty.assis.basicdata.model.DbView" id="DbViewResult">
+		<result property="key" column="key" />
+		<result property="value" column="value" />
+		<result property="subValue"    column="sub_Value" />
+	</resultMap>
+
+
+	<select id="listScreenType" resultType="map">
+		select * from v_screen_type
+	</select>
+
+	<select id="listTerminalUserType" resultType="map">
+		select * from v_terminal_user_type
+	</select>
+	
+	<select id="listTouchType" resultType="map">
+		select * from v_touch_type
+	</select>
+
+	<select id="listLocationAreaAttribute" resultType="map">
+		select * from v_location_area_attribute
+	</select>
+
+	<select id="listTerminalDeviceTypeTree" resultMap="DbViewResult">
+		select *, cast((SELECT GROUP_CONCAT(name,':',id separator ',' ) as layers from t_terminal_device_type 
+		where terminal_user_type=t.key order by layers desc)  as char) as sub_value from v_terminal_type t
+	</select>
+
+	<select id="listOrderType"  resultMap="DbViewResult">
+		select * from v_order_type
+	</select>
+
+	<select id="listUseTimeType"  resultMap="DbViewResult">
+		select * from v_usetime_type
+	</select>
+
+	<select id="listSchoolType"  resultMap="DbViewResult">
+		select * from v_school_type
+	</select>
+
+</mapper>

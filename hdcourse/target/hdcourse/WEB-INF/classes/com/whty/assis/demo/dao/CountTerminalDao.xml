@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.demo.dao.CountTerminalDao">
+
+	<resultMap type="com.whty.assis.demo.model.TerminalUseLog" id="TerminalUseLogResult">
+		<result property="terminalType" column="terminal_type" />
+		<result property="linkNum" column="link_num" />
+		<result property="userId" column="user_id" />
+		<result property="orgId" column="org_id" />
+		<result property="platformCode" column="platform_code" />
+		<result property="createTime" column="create_time" />
+		<result property="classId" column="class_id" />
+		<result property="classType" column="classType" />
+		<result property="hdktVersion" column="hdkt_version" />
+		<result property="courseNum" column="course_num" />
+		<result property="id" column="id" />
+		<result property="isTransfer" column="is_transfer" />
+	</resultMap>
+
+	<resultMap type="com.whty.assis.demo.model.TerminalUseHistory" id="TerminalUseHistoryResult">		
+		<result property="terminalType" column="terminal_type" />
+		<result property="linkNum" column="link_num" />
+		<result property="userId" column="user_id" />
+		<result property="userName" column="user_name" />
+		<result property="orgId" column="org_id" />
+		<result property="orgName" column="org_name" />
+		<result property="platformCode" column="platform_code" />
+		<result property="createTime" column="create_time" />
+		<result property="classId" column="class_id" />
+		<result property="classType" column="classType" />
+		<result property="hdktVersion" column="hdkt_version" />
+		<result property="areaCode" column="area_code" />
+		<result property="courseNum" column="course_num" />
+		<result property="year" column="year" />
+		<result property="month" column="month" />
+		<result property="id" column="id" />
+		
+		<result property="dzsbCreateTime" column="dzsb_create_time" />
+		<result property="dzsbLinkNum" column="dzsb_link_num" />
+		<result property="zzhbCreateTime" column="zzhb_create_time" />
+		<result property="zzhbLinkNum" column="zzhb_link_num" />
+		<result property="smbCreateTime" column="smb_create_time" />
+		<result property="smbLinkNum" column="smb_link_num" />
+		<result property="dtqCreateTime" column="dtq_create_time" />
+		<result property="dtqLinkNum" column="dtq_link_num" />
+	</resultMap>
+
+	<resultMap type="java.util.HashMap" id="OrgResult">
+		<result column="org_Id" property="orgId"/>
+		<result column="org_name" property="orgName"/>
+	</resultMap>
+	
+	<select id="getOrgListByAreaCode" parameterType="string" resultMap="OrgResult">
+		select org_id,org_name from T_TERMINAL_COUNT where area_code = #{_parameter} and org_name is not null group by org_id,org_name
+	</select>
+	
+	<select id="getTerminalUseHistoryCount" parameterType="java.util.HashMap" resultMap="TerminalUseHistoryResult">
+		select create_time as dzsb_create_time,
+		sum(case when terminal_type = 1 then terminal_count else 0 end) as dzsb_link_num,
+		sum(case when terminal_type = 2 then terminal_count else 0 end) as zzhb_link_num,
+		sum(case when terminal_type = 3 then terminal_count else 0 end) as smb_link_num,
+		sum(case when terminal_type = 4 then terminal_count else 0 end) as dtq_link_num
+		from T_TERMINAL_COUNT 
+		where year=#{year} and month=#{month} 
+		group by create_time
+	</select>
+	
+	<select id="getTerminalUseHistoryCountByOrg" parameterType="java.util.HashMap" resultMap="TerminalUseHistoryResult">
+		select create_time as dzsb_create_time,
+		sum(case when terminal_type = 1 then terminal_count else 0 end) as dzsb_link_num,
+		sum(case when terminal_type = 2 then terminal_count else 0 end) as zzhb_link_num,
+		sum(case when terminal_type = 3 then terminal_count else 0 end) as smb_link_num,
+		sum(case when terminal_type = 4 then terminal_count else 0 end) as dtq_link_num
+		from T_TERMINAL_COUNT 
+		where year=#{year} and month=#{month} and org_id=#{orgId} 
+		group by create_time
+	</select>
+	
+	<select id="getTerminalUseHistoryCountByAreaCode" parameterType="java.util.HashMap" resultMap="TerminalUseHistoryResult">
+		select create_time as dzsb_create_time,
+		sum(case when terminal_type = 1 then terminal_count else 0 end) as dzsb_link_num,
+		sum(case when terminal_type = 2 then terminal_count else 0 end) as zzhb_link_num,
+		sum(case when terminal_type = 3 then terminal_count else 0 end) as smb_link_num,
+		sum(case when terminal_type = 4 then terminal_count else 0 end) as dtq_link_num
+		from T_TERMINAL_COUNT 
+		where year=#{year} and month=#{month} and area_code=#{areaCode} 
+		group by create_time
+	</select>
+	
+	<!-- 查询省份下的所有区域数据 -->
+	<select id="getTerminalUseHistoryCountByProvinceCode" parameterType="java.util.HashMap" resultMap="TerminalUseHistoryResult">
+		select create_time as dzsb_create_time,
+		sum(case when terminal_type = 1 then terminal_count else 0 end) as dzsb_link_num,
+		sum(case when terminal_type = 2 then terminal_count else 0 end) as zzhb_link_num,
+		sum(case when terminal_type = 3 then terminal_count else 0 end) as smb_link_num,
+		sum(case when terminal_type = 4 then terminal_count else 0 end) as dtq_link_num
+		from T_TERMINAL_COUNT 
+		where year=#{year} and month=#{month} and area_code in(select area_code from TA_AREA where parent_id=#{provinceCode} and level_id='2') 
+		group by create_time
+	</select>
+	
+	
+
+	
+	<update id="updateTerminalUseLog" parameterType="com.whty.assis.demo.model.TerminalUseLog">
+		update TA_TERMINAL_USE_LOG  
+		set 
+		<trim prefixOverrides=",">
+			<if test="isTransfer != null">, is_transfer=#{isTransfer}</if>
+		</trim>
+		where id=#{id}
+	</update>
+
+	<!-- 获取统计数据 -->
+	<select id="getTerminalUseLogCountData" parameterType="java.util.HashMap" resultMap="TerminalUseLogResult">
+	select * from TA_TERMINAL_USE_LOG where 1=1 and user_id is not null and org_id is not null and platform_code is not null and link_num>0 and is_transfer=0
+		<if test="id != null">and id=#{id}</if>
+		<if test="startTime != null and startTime != ''"> and create_time >=#{startTime}</if>
+		<if test="endTime != null and endTime != ''"><![CDATA[ and create_time <=#{endTime}]]></if>
+	</select>
+
+	<select id="getTerminalUseLog" parameterType="java.util.HashMap" resultMap="TerminalUseLogResult">
+		select * from TA_TERMINAL_USE_LOG where 1=1 and user_id is not null and org_id is not null and platform_code is not null
+		<if test="id != null">and id=#{id}</if>
+		<if test="startTime != null and startTime != ''"> and create_time>=#{startTime}</if>
+		<if test="endTime != null and endTime != ''"><![CDATA[ and create_time <=#{endTime}]]></if>
+	</select> 
+
+	<insert id="saveTerminalUseHistory" parameterType ="com.whty.assis.demo.model.TerminalUseHistory">
+		insert into TA_TERMINAL_USE_HISTORY(
+			id,
+			<if test="userId != null">user_id,</if>
+			<if test="userName != null">user_name,</if>
+			<if test="orgId != null">org_id,</if>
+			<if test="orgName != null">org_name,</if>
+			<if test="platformCode != null">platform_code,</if>
+			<if test="classId != null">class_id,</if>
+			<if test="classType != null">class_type,</if>
+			<if test="courseNum != null">course_num,</if>
+			<if test="areaCode != null">area_code,</if>
+			<if test="hdktVersion != null">hdkt_version,</if>
+			<if test="linkNum != null">link_num,</if>
+			<if test="year != null">year,</if>
+			<if test="month != null">month,</if>
+			<if test="createTime != null">create_time,</if>
+			terminal_Type
+		)
+		values (
+			#{id,jdbcType=VARCHAR}
+			<if test="userId != null">,#{userId,jdbcType=VARCHAR}</if>
+			<if test="userName != null">,#{userName,jdbcType=VARCHAR}</if>
+			<if test="orgId != null">,#{orgId,jdbcType=VARCHAR}</if>
+			<if test="orgName != null">,#{orgName,jdbcType=VARCHAR}</if>
+			<if test="platformCode != null">,#{platformCode,jdbcType=VARCHAR}</if>
+			<if test="classId != null">,#{classId,jdbcType=VARCHAR}</if>
+			<if test="classType != null">,#{classType,jdbcType=VARCHAR}</if>
+			<if test="courseNum != null">,#{courseNum,jdbcType=VARCHAR}</if>
+			<if test="areaCode != null">,#{areaCode,jdbcType=VARCHAR}</if>
+			<if test="hdktVersion != null">,#{hdktVersion,jdbcType=VARCHAR}</if>
+			<if test="linkNum != null">,#{linkNum}</if>
+			<if test="year != null">,#{year}</if>
+			<if test="month != null">,#{month}</if>
+			<if test="createTime != null">,#{createTime}</if>
+			,#{terminalType}
+		)
+	</insert>
+
+</mapper>

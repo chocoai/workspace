@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fxzhj.mapper.PowerMapper">
+	<resultMap id="BaseResultMap" type="com.fxzhj.model.Power">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="device_id" property="deviceId" jdbcType="BIGINT" />
+		<result column="end_date" property="endDate" jdbcType="VARCHAR" />
+		<result column="today_kwh" property="todayKwh" jdbcType="REAL" />
+		<result column="kwh" property="kwh" jdbcType="REAL" />
+		
+		<!-- 界面显示字段 -->
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="device_no" property="deviceNo" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<result column="site_name" property="siteName" jdbcType="VARCHAR" />
+		<result column="commName" property="commName" jdbcType="VARCHAR" />
+		<result column="areaName" property="areaName" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		id, device_id, end_date, today_kwh, kwh
+	</sql>
+	
+	<!-- 根据条件查询设备用电记录 -->
+	<select id="queryPower" resultMap="BaseResultMap" parameterType="com.fxzhj.model.Power">
+		SELECT a.name, a.device_no, a.status, b.site_name, c.name commName, d.name areaName, 
+		e.device_id, e.end_date, e.today_kwh, e.kwh
+		FROM t_device a
+		LEFT JOIN t_range_device b ON a.id = b.device_id
+		LEFT JOIN t_community c ON a.community_id=c.community_id
+		LEFT JOIN t_area d ON a.area_id=d.id
+		RIGHT JOIN (SELECT a.device_id,a.end_date,a.today_kwh,a.kwh FROM (
+			SELECT device_id,end_date,today_kwh,kwh FROM t_power ORDER BY end_date DESC 
+			) a GROUP BY a.device_id) e ON a.id=e.device_id
+		WHERE 1 = 1
+		<if test=" deviceNo != null and deviceNo != '' ">
+			and a.device_no = #{deviceNo}
+		</if>
+		<if test=" status != null ">
+			and a.status = #{status}
+		</if>
+		ORDER BY a.in_date DESC
+	</select>
+	
+	<!-- 根据设备id查询设备明细电量 -->
+	<select id="queryByDid" resultMap="BaseResultMap" parameterType="java.lang.Long">
+		select
+		<include refid="Base_Column_List" />
+		from t_power
+		where device_id = #{0}
+	</select>
+	
+	<cache />
+</mapper>

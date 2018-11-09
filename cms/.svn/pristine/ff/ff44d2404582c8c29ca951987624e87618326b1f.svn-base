@@ -1,0 +1,282 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>发布天天信息- ${site.name}</title>
+<meta http-equiv="keywords" content="${site.keywords!}" />
+<meta http-equiv="description" content="${site.description!}" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/ttxx.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/public_all.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/global.css" />
+<script type="text/javascript" src="/${res}/js/dc/settitle.js"></script>
+<!--菜单切换-->
+<script src="/${res}/js/dc/jquery-1.8.3.min.js"></script>
+<!--左边图片切换-->
+<SCRIPT src="/${res}/js/dc/jquery-1.2.6.pack.js" type=text/javascript></SCRIPT>
+<SCRIPT src="/${res}/js/dc/base.js" type=text/javascript></SCRIPT>
+<script src="/${res}/js/dc/jquery.min.js"></script>
+<!--下拉列表-->
+<script src="/${res}/js/dc/jquery.selectui.js"></script>
+<link href="${base}/r/cms/jqueryUI/jquery.ui.css" rel="stylesheet" type="text/css"/>
+<script src="${base}/r/cms/jquery.js" type="text/javascript"></script>
+<script src="${base}/res/common/js/jquery.ext.js" type="text/javascript"></script>
+<script src="${base}/r/cms/jqueryUI/jquery-ui.js" type="text/javascript"></script>
+<script src="${base}/r/cms/front.js" type="text/javascript"></script>
+<script src="${base}/thirdparty/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+<script src="${base}/thirdparty/swfupload/swfupload.js" type="text/javascript"></script>
+<script src="${base}/thirdparty/swfupload/swfupload.queue.js" type="text/javascript"></script>
+<script src="${base}/thirdparty/swfupload/fileprogress.js" type="text/javascript"></script>
+<script src="${base}/thirdparty/swfupload/handlers.js" type="text/javascript"></script>
+<link href="${base}/thirdparty/swfupload/process.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript">
+var swfu;
+$(function() {
+	$("#submitForm").validate();
+	var uploadPicsUrl = "${base}/member/o_swfPicsUpload.jspx";
+	//在firefox、chrome下，上传不能保留登录信息，所以必须加上jsessionid。
+	var jsessionid =$.cookie("JSESSIONID");
+	if(jsessionid) {
+		uploadPicsUrl += ";jsessionid="+jsessionid;
+	}
+	
+	swfu=new SWFUpload({
+		upload_url : uploadPicsUrl,
+		flash_url : "${base}/thirdparty/swfupload/swfupload.swf",
+		file_size_limit : "20 MB",
+		file_types : "*.jpg;*.gif;*.png;*.bmp",
+		file_types_description : "图片",
+		file_queue_limit : 0,
+		custom_settings : {
+			progressTarget : "fsUploadProgress",
+			cancelButtonId : "btnCancel"
+		},
+		debug: false,
+		
+		button_image_url : "${base}/thirdparty/swfupload/button_notext.png",
+		button_placeholder_id : "spanButtonPlaceHolder",
+		button_text: "<span class='btnText'>上传</span>",
+		button_width: 84,
+		button_height: 24,
+		button_text_top_padding: 2,
+		button_text_left_padding: 20,
+		button_text_style: '.btnText{color:#666666;}',
+		
+		file_queued_handler : fileQueued,
+		file_queue_error_handler : fileQueueError,
+		file_dialog_complete_handler : fileDialogComplete,
+		upload_progress_handler : uploadProgress,
+		upload_error_handler : uploadError,
+		upload_success_handler : uploadPicsSuccess,
+		upload_complete_handler : uploadComplete,
+		queue_complete_handler : queueComplete
+	});
+	
+});
+function uploadPicsSuccess(file,data) {
+	var jsonData=eval("("+data+")");//转换为json对象 
+	if(jsonData.error!=null){
+		$.alert("[@s.m 'global.prompt'/]",jsonData.error);
+	}else{
+		addPicLine();
+		var index = picIndex - 1;
+		imgUrl=jsonData.imgUrl;
+		$("#preImg"+index).attr("src",""+imgUrl);
+		var imgSrc = parent.document.getElementById("preImg"+index);
+		if(!$(imgSrc).attr("noResize")) {
+			$(imgSrc).css("width","auto");
+			$(imgSrc).css("height","auto");
+		}
+		$("#uploadImgPath"+index).val(imgUrl);
+	}
+}
+
+</script>
+</head>
+
+<body>
+	[#include "../include/header1.html"/] 
+<div id="nav">
+   <div class="box">
+      <ul class="nav_box">
+        <li><a href="${base}/">首 页</a></li>
+	    <li><a href="${base}/tops.jhtml">头条</a></li>
+		<li><a href="${base}/jds.jhtml">焦点新闻</a></li>
+		<li><a href="${base}/xsq/index.jhtml">县市区新闻</a></li>
+		<li><a href="/bbs" target="_self">东楚论坛</a></li>
+		<li><a href="#" target="_self">东楚视频</a></li>
+		<li><a href="${base}/picture/index.jhtml">图轻松</a></li>
+		<li><a href="${base}/baoliao.jspx" target="_self">投诉爆料台</a></li>
+		<li><a href="${base}/gsgg/index.jhtml">公示公告</a></li>
+		<li><a href="#" target="_self">活动</a></li>
+		<li><a href="${base}/hk/index.jhtml" target="_self" >换客</a></li>
+		<li><a href="http://www.07448.com/huangshi" target="_self">秒杀</a></li>
+		<li><a href="${base}/fc/index.jhtml" target="_self">房产</a></li>
+		<li><a href="http://auto.hsdcw.com" target="_blank">汽车</a></li>
+		<li><a href="${base}/life/index.jhtml" target="_self">生活</a></li>
+		<li><a href="${base}/edu/index.jhtml" target="_self">教育</a></li>
+		<li><a href="${base}/cj/index.jhtml" target="_self">财经</a></li>
+		<li><a href="${base}/health/index.jhtml" target="_self">健康</a></li>
+		<li><a href="${base}/wh/index.jhtml" target="_self">文化</a></li>
+       </ul>
+   </div>   
+</div>
+	<!--nav 开始-->
+	<div style="clear: both;"></div>
+
+
+	<!--内容 开始-->
+	<!--内容 开始-->
+	<div class="box mt10">
+	   <div class="map"><img src="${base}/r/cms/www/default/images/home.png" width="20" height="18"><a href="#">首页</a> >  <a href="#">发布信息</a></div>
+	   <div class="ttxx">
+	     <div class="put">    
+	      <form id="submitForm" action="${base}/member/tt_save.jspx" method="post">     
+	           <table width="98%" border="0" align="center" class="biaodan">
+	               <tr>
+	                 <td colspan="3" class="title">天天信息发布</td>
+	               </tr>
+	               	<tr>
+	                 <td class="left_name">供求选择:</td>
+	                 <td class="right_input"><input type="radio" name="demand" value="1" checked="checked"/>供
+					    <input type="radio"  name="demand" value="0" />求
+	                 <td class="right_red"><span class="red"></span></td>
+	               </tr>  
+	               <tr>
+	                 <td class="left_name">类别：</td>
+	                 <td class="right_input">
+	                     <div class="profile">
+			                   <select name="typeId" required="true">
+			                   [#list typeList as type]
+								<option  value="${type.id}" [#if tt.type ?? && tt.type.id==type.id ]selected[/#if] >${type.name}</option>
+						       [/#list]
+			                   </select>
+	                      </div>
+	                 </td>
+	                 <td class="right_red"><span class="red">*</span></td>
+	               </tr>
+	               <tr>
+	                 <td class="left_name">标题：</td>
+	                 <td class="right_input"><input type="text" id="title" name="title" value="${tt.title!}" class="put_box required" /></td>
+	                 <td class="right_red"><span class="red">*</span></td>
+	               </tr>
+	               <tr>
+	                 <td class="left_name">图片上传：</td>
+	                 <td class="right_input">
+	                   	<div class="mt10">
+							<span id="spanButtonPlaceHolder"></span>
+							<span style="display: none;"><input class="cancel" id="btnCancel" type="button" value="取消" onclick="swfu.cancelQueue();" disabled="disabled" /></span>
+							<div id="fsUploadProgress" style="display: none;"></div>
+						</div>
+						<div id="picBefore" style="clear:both"></div>
+						<div id="picTable" style="display:none;">
+						  <table id="picTable{0}" border="0" style="float:left;">
+							<tr>
+								<td style="display:none">
+									<div><input type="text" id="uploadImgPath{0}" name="picPaths" style="width:160px"/> <a href="javascript:void(0);" onclick="$('#picTable{0}').remove();" class="pn-opt">删除</a></div>
+									 <div>
+									<span id="ufc{0}" style="position:relative">
+									<input type='text' id='uploadFileText{0}' size="10"/>  
+									<input onchange="$('#uploadFileText{0}').val(this.value)" size="10" type="file" id="uploadFile{0}"/>
+									</span>
+									<input type="button" value="上传" onclick="upload({0});" />
+									</div>
+									  <div ><textarea style="width:200px;height:60px;" name="picDescs" maxlength="255"></textarea></div>
+								</td>
+								<td><a href="javascript:void(0);" onclick="$('#picTable{0}').remove();"><img id="preImg{0}" src="" alt="预览" noResize="true" style="width:110px;height:110px;margin:5px;background-color:#ccc;border:1px solid #333"/></a></td>
+							</tr>
+						   </table>
+						</div>
+							<script type="text/javascript">
+							var picIndex = 1;
+							var picTpl = $.format($("#picTable").html());
+							function addPicLine() {
+								$('#picBefore').before(picTpl(picIndex++));
+							}
+							</script>
+	                 </td>
+	                 <td class="right_red"><span class="red"></span></td>
+	                </tr>
+                    <tr>
+	                 <td class="left_name">内容：</td>
+	                 <td class="right_input"><textarea id="description" name="description" value="${tt.description!}" class="text_ar"></textarea> 
+		               
+					 </td>
+	                 <td class="right_red"><span class="red"></span></td>
+	               </tr>
+	              
+	               <tr>
+	                 <td class="left_name">姓名</td>
+	                 <td class="right_input"><input type="text" id="name" name="name" value="${tt.name!}" class="put_box required" /></td>
+	                 <td class="right_red"><span class="red"></span></td>
+	               </tr>
+	               <tr>
+	                 <td class="left_name">联系方式</td>
+	                 <td class="right_input"><input type="text" id="contact" name="contact" value="${tt.contact!}" class="time" />你的电话号码或其它</td>
+	                 <td class="right_red"><span class="red">*</span></td>
+	               </tr>
+	               <!--   <tr>
+	                 <td class="left_name">所在地区:</td>
+	                 <td class="right_input"><input type="text" name="attr_address" class="time" /></td>
+	                 <td class="right_red"><span class="red">*</span></td>
+	               </tr>-->
+	               <tr>
+	                 <td class="left_name">有效期:</td>
+	                 <td class="right_input"><input type="text" name="expTime" value="${tt.expTime!}" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" class="time required" />
+	                 <td class="right_red"><span class="red"></span></td>
+	               </tr>
+	               <tr>
+	                 <td class="left_name"></td>
+	                 <td class="right_input">
+	                     <div class="but"><input name="input" type="button" value="确认提交" onclick="submitForm()" class="sure" /></div>
+	                     <div class="but"><input name="input" type="reset" value="取消" class="cancel" /></div></td>
+	                 <td class="right_red"></td>
+	               </tr>
+	               
+	          </table>
+	         </form>
+	         	<script type="text/javascript">
+				function  submitForm(){
+					var np = $('#title').val();
+					var rp = $('#description').val();
+					if (np == '') {
+						alert('请输入标题');
+						$('#title').focus();
+						return;
+					}
+					if (rp == '') {
+						alert('请输入内容');
+						$('#description').focus();
+						return;
+					}
+					var s = $("#submitForm");
+					var url = s[0].action;
+					var data = s.serialize();
+					var options = {
+			                    url: 'tt.jspx',
+			                    type: 'post',
+			                    dataType: 'json',
+			                    data: data,
+			                    success:  function (data) {
+				                	if(data.status==0) {
+					                    alert("提交成功");
+					                    location.href=location.href;
+					                } else {	
+					                    alert("提交失败");
+					                }
+			                    }
+			                };
+			                $.ajax(options);
+			                return false;
+		           }
+			    </script>
+	       </div>                                                      
+	   </div>
+	           
+	</div>
+	<!--内容 end-->
+
+	<!--   [#include "../include/friend_link.html"/] -->
+	[#include "../include/footer.html"/]
+
+</body>
+</html>

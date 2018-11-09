@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fxzhj.mapper.ElevatorMapper">
+	<resultMap id="BaseResultMap" type="com.fxzhj.model.Elevator">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="ele_name" property="eleName" jdbcType="VARCHAR" />
+		<result column="reg_code" property="regCode" jdbcType="VARCHAR" />
+		<result column="company_name" property="companyName" jdbcType="VARCHAR" />
+		<result column="community_id" property="communityId" jdbcType="INTEGER" />
+		<result column="ele_brand" property="eleBrand" jdbcType="VARCHAR" />
+		<result column="node_id" property="nodeId" jdbcType="VARCHAR" />
+		<result column="filed3" property="filed3" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="creater_user" property="createrUser" jdbcType="INTEGER" />
+		
+		<result column="createTimeStr" property="createTimeStr" jdbcType="VARCHAR" />
+		
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		id, ele_name, reg_code, company_name, community_id, ele_brand, node_id, filed3, 
+		create_time, creater_user, date_format(create_time, '%Y-%m-%d %H:%i:%S') createTimeStr
+	</sql>
+	
+	<!-- 根据条件查询小区电梯 -->
+	<select id="queryElevator" resultMap="BaseResultMap" parameterType="com.fxzhj.model.Elevator">
+		select
+		<include refid="Base_Column_List" />
+		from t_elevator
+		where community_id = #{communityId}
+		<if test="eleName != null and eleName != '' ">
+			and ele_name=#{eleName}
+		</if>
+		<if test="regCode != null and regCode != '' ">
+			and reg_code=#{regCode}
+		</if>
+		<if test="eleBrand != null and eleBrand != '' ">
+			and ele_brand=#{eleBrand}
+		</if>
+		order by create_time
+	</select>
+	
+	<!-- 新增小区电梯 -->
+	<insert id="add" parameterType="com.fxzhj.model.Elevator">
+		insert into t_elevator (id, ele_name, reg_code, company_name, community_id, 
+		ele_brand, node_id, filed3, create_time, creater_user)
+		values (#{id}, #{eleName}, #{regCode}, #{companyName}, #{communityId}, 
+		#{eleBrand}, #{nodeId}, #{filed3}, #{createTime}, #{createrUser})
+	</insert>
+	
+	<!-- 根据id修改电梯 -->
+	<update id="update" parameterType="com.fxzhj.model.Elevator">
+		update t_elevator
+		<set>
+			<if test="eleName != null and eleName != '' ">
+				ele_name = #{eleName},
+			</if>
+			<if test="regCode != null and regCode != '' ">
+				reg_code = #{regCode},
+			</if>
+			<if test="companyName != null and companyName != '' ">
+				company_name = #{companyName},
+			</if>
+			<if test="eleBrand != null and eleBrand != '' ">
+				ele_brand = #{eleBrand},
+			</if>
+			<if test="communityId != null">
+				community_id = #{communityId}
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+	
+	<!-- 批量删除 参数为数组 -->
+	<delete id="batchDelete" parameterType="int" >
+        delete from t_elevator where id in 
+        <foreach item="ids" collection="array" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+	</delete>
+	
+	<!-- 根据id查询二维码  -->
+	<select id="queryById" resultType="com.fxzhj.model.Elevator" parameterType="java.lang.Long">
+		select reg_code,node_id from t_elevator where id=#{0}
+	</select>
+	
+	<!-- 批量查询电梯信息 -->
+	<select id="queryByArrIds" resultMap="BaseResultMap" parameterType="int" >
+        select reg_code,node_id from t_elevator where id in 
+        <foreach item="ids" collection="array" open="(" separator="," close=")">
+            #{ids}
+        </foreach>
+	</select>
+	
+	<!-- 根据名称和二维码判断是否重复 -->
+	<select id="countByNameOrCode" resultType="int" parameterType="com.fxzhj.model.Elevator" >
+        select count(1) from t_elevator where ele_name = #{eleName} or reg_code = #{regCode} 
+	</select>
+	
+	<!-- 根据名称和二维码并根据id排除本条数据 进行重复判断 -->
+	<select id="countExId" resultType="int" parameterType="com.fxzhj.model.Elevator" >
+        select count(1) from t_elevator where ele_name = #{eleName} or reg_code = #{regCode} and id != #{id} 
+	</select>
+	<cache />
+</mapper>

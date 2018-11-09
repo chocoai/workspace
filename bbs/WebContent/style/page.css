@@ -1,0 +1,62 @@
+.pagination {
+	font-size: 12px;
+}
+
+/* 链接 */
+.pagination :link, :visited {color:#9D9D9D; text-decoration: none;}
+
+/* 鼠标覆盖效果 */ 
+.pagination .nocurrent:hover, .pagination .pre-nex:hover {
+    background: none repeat scroll 0 0 #D6623D;
+    border: 1px solid #DFDFDF;
+    text-decoration: none;
+    color: #fff;
+}
+
+/* 选中样式 */
+.pagination .current {
+    background: none repeat scroll 0 0 #D6623D;
+    border: 1px solid #D6623D;
+    color: #fff;
+    font-weight: bold;
+    height: 28px;
+    width: 28px;
+    margin: 0 10px 0 0;
+}
+
+/* 未选中样式 */
+.pagination .nocurrent {
+	border: 1px solid #DFDFDF;
+    height: 28px;
+    width: 28px;
+    margin: 0 10px 0 0;
+}
+
+/* 中间数字样式 */
+.pagination .show {
+	float: left;
+	display: block;
+    font-size: 12px;
+    line-height: 28px;
+    width:30px;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+}
+
+/* 上一页，下一页样式 */
+.pagination .pre-nex {
+	border: 1px solid #DFDFDF;
+    height: 28px;
+    width:40px;
+    margin: 0 10px 0 0;
+    padding: 0 5px 0 5px;
+}
+
+/* 数据总数样式 */
+.pagination .page-count {
+    color: #9D9D9D;
+    float: left;
+    line-height: 30px;
+    width:150px;
+}

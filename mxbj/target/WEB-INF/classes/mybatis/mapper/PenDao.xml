@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.mxbj.api.dao.PenDao">
+
+	<resultMap type="com.whty.mxbj.api.model.Pen" id="PenResult">
+		<result column="user_id" property="userId" />
+		<result column="mac" property="mac" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="version" property="version" />
+		<result column="bind_time" property="bindTime" />
+		<result column="status" property="status" />
+		<result column="user_platform_code" property="userPlatformCode" />
+	</resultMap>
+
+	<select id="getPenByUserAccountAndPlatform" parameterType="map" resultMap="PenResult">
+		select * from T_PEN 
+		where 1=1
+		<if test="userId != null and userId != '' ">and user_id=#{userId}</if>
+		<if test="userPlatformCode != null and userPlatformCode !='' ">and user_platform_code=#{userPlatformCode}</if>
+	</select>
+
+	<delete id="deletePen" parameterType="map">
+		delete from T_PEN  where 1=1 
+		<if test="mac != null and mac !='' ">and mac=#{mac}</if>
+		<if test="userId != null and userId !='' ">and user_Id=#{userId}</if>
+		<if test="userPlatformCode != null and userPlatformCode !='' ">and user_platform_code=#{userPlatformCode}</if>
+	</delete>
+
+	<select id="listByCondition" parameterType="map" resultMap="PenResult">
+		select * from T_PEN where 1=1
+		<if test="penMac != null and penMac !='' ">and mac=#{penMac}</if>
+		<if test="penVersion != null and penVersion!= '' ">and version=#{penVersion}</if>
+		<if test="userId != null and userId !='' ">and user_id=#{userId}</if>
+		<if test="userPlatformCode != null and userPlatformCode !='' ">and user_platform_code=#{userPlatformCode}</if>
+	</select>
+
+	
+
+	<insert id="save" parameterType="com.whty.mxbj.api.model.Pen">
+		insert into T_PEN (
+		VERSION,
+		mac,
+		BIND_TIME,
+		user_id,
+		create_time,
+		user_platform_code
+		) values(
+		#{version},
+		#{mac},
+		#{bindTime},
+		#{userId},
+		#{createTime},
+		#{userPlatformCode}
+		)
+	</insert>
+
+
+</mapper>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="ScoreInfoMapper">
+  <resultMap id="BaseResultMap" type="ScoreInfo">
+     <result column="CID" jdbcType="INTEGER" property="cid" />
+     <result column="PID" jdbcType="INTEGER" property="pid" />
+   	 <result column="RANKING" jdbcType="INTEGER" property="ranking" />
+	 <result column="INTRGRAL" jdbcType="DOUBLE" property="intrgral" />
+     <result column="SCORES" jdbcType="INTEGER" property="scores" />
+     <result column="UNIT_NAME" jdbcType="VARCHAR" property="unitName" />
+     <result column="ATHLETE_NAME" jdbcType="VARCHAR" property="athleteName" />
+     <result column="UNIT_NUM" jdbcType="INTEGER" property="unitNum" />
+     <result column="ATHLETE_NUM" jdbcType="INTEGER" property="athleteNum" />
+     <result column="ISPER_UNIT" jdbcType="INTEGER" property="isperUnit" />
+  </resultMap>
+  
+  <sql id="Base_Column_List">
+		CID,PID,RANKING,INTRGRAL,SCORES,UNIT_NAME,ATHLETE_NAME,UNIT_NUM，ATHLETE_NUM
+  </sql>
+  <!-- 成绩  -->
+  <select id="queryScoreInfo" parameterType="java.lang.Integer" resultMap="BaseResultMap">		
+	SELECT
+		vpb.CID,
+		vpb.PID,
+		vpb.RANKING,
+		vpb.INTRGRAL AS INTRGRAL,
+		vpb.SCORES,
+		group_concat(distinct vpb.UNIT_NAME separator ',') AS UNIT_NAME,
+		group_concat(distinct vpb.ATHLETE_NAME separator ',') AS ATHLETE_NAME,
+		vpb.UNIT_NUM,
+		ATHLETE_NUM,
+		ISPER_UNIT
+		FROM
+		view_particpat_basic AS vpb
+		WHERE PID  = #{pid,jdbcType=INTEGER}  
+		and RANKING &lt; #{ranking,jdbcType=INTEGER}
+		and ERSION_NUM = #{ersionNum,jdbcType=INTEGER}
+		GROUP BY vpb.RANKING,UNIT_CID
+   </select>
+</mapper>

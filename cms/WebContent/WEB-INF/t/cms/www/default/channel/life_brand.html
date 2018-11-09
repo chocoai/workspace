@@ -1,0 +1,141 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="keywords" content="${site.keywords!}" />
+<meta http-equiv="description" content="${site.description!}" />
+<title>${channel.title!channel.name} - ${site.name}</title>
+
+<link rel="stylesheet" type="text/css" href="/${res}/css/global.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/sh.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/index.css"/>
+
+</head>
+
+<body class="sh_body">
+
+	[#include "../include/life_nav.html"/] 
+
+	<!---中间内容部分 开始---->
+	<div class="sh_bigbox">
+		<div class="sh_center">
+			<p class="location_text">
+				<i></i>
+				您现在的位置：&nbsp;
+				<a href="${base}">首页</a> >
+				[#list channel.nodeList as n]
+				<a target="_self" href="${n.url}">${n.name}</a>
+					[#if n_has_next] > [/#if]
+				[/#list]
+			</p>
+
+			<div id="focus" class="shbrand_focus">
+				<ul>
+					[@cms_content_list count='4' orderBy='4' titLen='20' typeId="3" channelOption='1' channelId=channel.id] 
+					[#list tag_list as content] 
+					<li>
+						<a href="${content.url}" title="${content.title}">
+							<img src="${content.contentImg!site.defImg}">
+						</a>
+					</li>
+					[/#list]
+					[/@cms_content_list]
+				</ul>
+			</div>
+
+			<div class="hzpp">
+				<div class="hzpp_hd">
+					<!-- <span>合作</span> -->
+					合作品牌
+				</div>
+				<div class="hzpp_bd">
+					<ul class="hzpp_list">
+					[@cms_content_list count='12' orderBy='4' titLen='20' typeId="2" channelOption='1' channelId='144'] 
+					[#list tag_list as content] 
+					[#if (content_index+1)%6 = 1]
+						<li style="margin-left: 0px;">
+					[#else]
+						<li>
+					[/#if]
+							<a href="${content.url}" title="${content.title}">
+								<img src="${content.typeImg!site.defImg}">
+							</a>
+						</li>
+					[/#list]
+					[/@cms_content_list]
+					</ul>
+				</div>
+			</div>
+
+			<div class="hzsp">
+				<div class="hzpp_hd">
+					<!-- <span>合作</span> -->
+					合作商铺
+				</div>
+				<div class="hzsp_bd">
+					<ul class="hzsp_list">
+					[@cms_content_list count='16' orderBy='4' titLen='20' typeId="2" channelOption='1' channelId='145'] 
+					[#list tag_list as content]
+					[#if (content_index+1)%4 = 1]
+						<li class="fourbei">
+					[#else]
+						<li>
+					[/#if]
+						
+							<div class="hzsp_pic">
+								<a href="${content.url}" title="${content.title}">
+									<img src="${content.typeImg!site.defImg}">
+								</a>
+							</div>
+							<div class="hzsp_text">
+								<a href="${content.url}" title="${content.title}">
+									<p class="hzsp_name">[@text_cut s=content.title! len='18' append='...'/]</p>
+									<p class="hzsp_add">[@text_cut s=content.desc! len='50' append='...'/]</p>
+								</a>
+							</div>
+						</li>
+						[/#list]
+					[/@cms_content_list]
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!---中间内容部分 结束---->
+
+	<!--尾部 开始-->
+	[#include "../include/footer.html"/]
+	<!--尾部 结束-->
+
+	<script type="text/javascript" src="/${res}/js/dc/jquery-2.2.4.min.js"></script>
+	<script type="text/javascript" src="/${res}/js/dc/Tony_Tab.js"></script>
+	
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".sh_search01").on("click", function(e) {
+				if ($(".sh_search02").is(":hidden")) {
+					$(".sh_search02").show();
+				} else {
+					$(".sh_search02").hide();
+				}
+
+				$(document).one("click", function() {
+					$(".sh_search02").hide();
+				});
+
+				e.stopPropagation();
+			});
+			$(".sh_search02").on("click", function(e) {
+				e.stopPropagation();
+			});
+		});
+		
+		$(function() {
+			$('#focus').slideFocus();
+			$('#focus2').slideFocus();
+			$('#focus3').slideFocus();
+		});
+	</script>
+</body>
+</html>

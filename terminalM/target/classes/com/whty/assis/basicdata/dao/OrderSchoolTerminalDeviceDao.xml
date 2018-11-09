@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.basicdata.dao.OrderSchoolTerminalDeviceDao">
+
+	<!-- 这里的Demo是别名，需要在mybatis-config.xml中定义，或者写类全名 -->
+	<resultMap type="com.whty.assis.basicdata.model.OrderSchoolTerminalDevice" id="OrderSchoolTerminalDeviceResult">
+		<id property="id" column="id" />
+		<result property="orderSchoolId" column="order_school_id" />
+		<result property="terminalDeviceTypeId" column="terminal_device_type_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="quan" column="quan" />
+		<result property="orderId" column="order_id" />
+		<result property="terminalDeviceTypeName" column="terminal_device_type_name" />
+		<result property="schoolId" column="school_id" />
+		<result property="useDeviceTotalQuan" column="use_deviceTotal_quan" />
+		<result property="schoolName" column="school_name" />
+	</resultMap>
+	
+	
+	<update id="update" parameterType="com.whty.assis.basicdata.model.OrderSchoolTerminalDevice">
+		update t_order_school_terminal_device
+		set 
+		<trim prefixOverrides=",">
+			<if test="quan != null   ">, quan=#{quan}</if>
+			<if test="updateTime != null ">, update_time=#{updateTime}</if>
+		</trim>
+		where id=#{id}
+	</update>
+	
+	<delete id="deletebyOrderSchoolId" parameterType="int">
+		delete from t_order_school_terminal_device where order_school_id=#{_parameter}
+	</delete>
+	
+	<delete id="deleteById" parameterType="int">
+		delete from t_order_school_terminal_device where id=#{_parameter}
+	</delete>
+	
+	<insert id="save" parameterType="com.whty.assis.basicdata.model.OrderSchoolTerminalDevice">
+		insert into t_order_school_terminal_device (
+			id
+			,order_school_id
+			,terminal_device_type_id
+			,quan
+			,order_id
+			,create_time
+			,update_time
+		) values (
+			#{id}
+			,#{orderSchoolId}
+			,#{terminalDeviceTypeId}
+			,#{quan}
+			,#{orderId}
+			,#{createTime}
+			,#{updateTime}
+		)
+	</insert>
+	
+	
+	<select id="getByOrderSchoolTerminal" parameterType="map" resultMap="OrderSchoolTerminalDeviceResult">
+		select * from t_order_school_terminal_device
+		where 1=1 
+		and order_school_id =#{orderSchoolId}
+		and terminal_device_type_id = #{terminalDeviceTypeId}
+		and order_id = #{orderId}
+	</select>
+	
+	<select id="listByConditionBySchoolAndOrder" parameterType="map" resultType="map">
+		select t1.name,t1.id,t2.quan,t2.id as order_school_terminal_device_id from t_terminal_device_type t1 left join
+ (select * from t_order_school_terminal_device where order_school_id in(select id from t_order_school 
+ where school_id=#{schoolId} and order_id=#{orderId})) t2 on t1.id = t2.terminal_device_type_id
+ group by t1.id
+	</select>
+	
+	<delete id="deleteByOrder" parameterType="int">
+		delete from t_order_school_terminal_device where order_id=#{_parameter}
+	</delete>
+	
+	
+	<select id="getTotalQuanBy" parameterType="map" resultType="int">
+		select sum(quan) as quan from t_order_school_terminal_device 
+		where order_id=#{orderId} and terminal_device_type_id=#{terminalDeviceTypeId}
+	</select>
+	
+
+	<select id="listCountByOrderAndSchool" parameterType="map" resultMap="OrderSchoolTerminalDeviceResult">
+	 select t4.name as school_name,t1.*,t2.name as terminal_device_type_name,t3.school_id,
+(select count(*) from t_device_info where order_id = #{orderId} and device_status=2 and terminal_device_type_id=t1.terminal_device_type_id and school_id = t3.school_id) as use_deviceTotal_quan from 
+t_order_school_terminal_device t1 left join t_terminal_device_type t2 on t1.terminal_device_type_id = t2.id
+left join t_order_school t3 on t1.order_school_id = t3.id
+left join t_school t4 on t3.school_id =t4.id
+		where 1=1 and t1.order_school_id=#{orderSchoolId} and t1.order_id=#{orderId}
+	</select>
+	
+	<select id="listByCondition" parameterType="map" resultMap="OrderSchoolTerminalDeviceResult">
+		   select t1.*,t2.name as terminal_device_type_name from t_order_school_terminal_device t1 left join t_terminal_device_type t2 on t1.terminal_device_type_id = t2.id
+		where 1=1
+		<if test="id != null and id != '' ">and t1.id=#{id}</if>
+		<if test="orderSchoolId != null and orderSchoolId != '' ">and t1.order_school_id=#{orderSchoolId}</if>
+		order by create_time desc
+	</select>
+	
+	
+</mapper>

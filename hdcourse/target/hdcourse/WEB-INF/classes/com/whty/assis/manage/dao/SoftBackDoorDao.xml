@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.manage.dao.SoftBackDoorDao">
+	<resultMap type="com.whty.assis.manage.model.SoftBackDoor"
+		id="SoftBackDoorResult">
+		<result column="id" property="id" />
+		<result column="version_code" property="versionCode" />
+		<result column="soft_type" property="softType" />
+		<result column="down_url" property="downUrl" />
+		<result column="md5" property="md5" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="status" property="status" />
+		<result column="scope" property="scope" />
+		<result column="cbt" property="cbt" />
+		<result column="zip_code_version" property="zipCodeVersion" />
+
+		<result column="bos_status" property="bosStatus" />
+
+		<result column="file_path" property="filePath" />
+	</resultMap>
+
+
+	<select id="listByCondition" parameterType="map" resultMap="SoftBackDoorResult">
+		select * from ta_soft_back_door where 1=1
+		<if test="status != null and status != ''">and status=#{status}</if>
+	</select>
+
+	<insert id="save" parameterType="com.whty.assis.manage.model.SoftBackDoor">
+		insert into ta_soft_back_door(
+		version_code,
+		soft_type,
+		create_time,
+		update_time,
+		file_path,
+		zip_code_version,
+		cbt
+		) values (
+		#{versionCode},
+		#{softType},
+		#{createTime},
+		#{updateTime},
+		#{filePath},
+		#{zipCodeVersion},
+		#{cbt}
+		)
+	</insert>
+
+
+	<delete id="deleteById" parameterType="int" >
+		delete ta_soft_back_door where id=#{_parameter}
+	</delete>
+
+
+	<select id="loadById" parameterType="int" resultMap="SoftBackDoorResult">
+		select *
+		from ta_soft_back_door where id=#{_parameter}
+	</select>
+
+	<update id="update" parameterType="com.whty.assis.manage.model.SoftBackDoor">
+		update ta_soft_back_door
+		set
+		<trim prefixOverrides=",">
+			<if test="status != null and status != ''">, status=#{status}</if>
+			<if test="bosStatus != null and bosStatus != ''">, bos_status=#{bosStatus}</if>
+			<if test="cbt != null ">, cbt=#{cbt}</if>
+			<if test="downUrl != null and downUrl != ''">, down_url=#{downUrl,jdbcType=VARCHAR}</if>
+			<if test="md5 != null and md5 != ''">, md5=#{md5,jdbcType=VARCHAR}</if>
+			<if test="scope != null and scope != ''">, scope=#{scope,jdbcType=VARCHAR}</if>
+		</trim>
+		where id=#{id}
+	</update>
+
+	<update id="updateBos" parameterType="com.whty.assis.manage.model.SoftBackDoor">
+		update ta_soft_back_door
+		set
+		<trim prefixOverrides=",">
+			<if test="status != null and status != ''">, status=#{status}</if>
+			<if test="bosStatus != null and bosStatus != ''">, bos_status=#{bosStatus}</if>
+			<if test="cbt != null and cbt != ''">, cbt=#{cbt}</if>
+			<if test="downUrl != null and downUrl != ''">, down_url=#{downUrl,jdbcType=VARCHAR}</if>
+			<if test="md5 != null and md5 != ''">, md5=#{md5,jdbcType=VARCHAR}</if>
+		</trim>
+		where id=#{id}
+	</update>
+
+	<select id="queryDownUrls" parameterType="map" resultMap="SoftBackDoorResult">
+		select down_url,md5,zip_code_version from ta_soft_back_door
+		where status = '1' and bos_status = '1'
+		<if test="version_code != null and version_code != ''">and version_code = #{version_code}</if>
+		<if test="soft_type != null">and soft_type = #{soft_type}</if>
+		<if test="cbt != null and cbt != ''">and cbt = #{cbt}</if>
+		<if test="zip_code_version != null and zip_code_version != ''">and zip_code_version > #{zip_code_version}</if>
+		order by zip_code_version desc
+	</select>
+</mapper>

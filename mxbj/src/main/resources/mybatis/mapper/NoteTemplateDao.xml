@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.mxbj.api.dao.NoteTemplateDao">
+	
+	
+	<!-- 这里的ManageUserInfo是别名，需要在mybatis-config.xml中定义，或者写类全名 -->
+	<resultMap type="com.whty.mxbj.api.model.NoteTemplate" id="NoteTemplateResult">
+		<id property="noteId" column="note_id" />
+		<id property="noteName" column="note_name" />
+		<id property="pages" column="pages" />
+		<id property="startPageId" column="start_page_id" />
+		<id property="width" column="width" />
+		<id property="height" column="height" />
+		<id property="startX" column="start_x" />
+		<id property="startY" column="start_y" />
+		<id property="coverImageUrl" column="cover_image_url" />
+		<id property="oddeventIssame" column="oddevent_issame" />
+		<id property="oddPageUrl" column="odd_page_url" />
+		<id property="evenPageUrl" column="even_page_url" />
+		<id property="headpageUrl" column="headpage_url" />
+		<id property="headpageId" column="headpage_id" />
+		<id property="actionRectStartX" column="action_rect_start_x" />
+		<id property="actionRectStartY" column="action_rect_start_y" />
+		<id property="actionRectEndX" column="action_rect_end_x" />
+		<id property="actionRectEndY" column="action_rect_end_y" />
+	</resultMap>
+	
+	
+	
+	<insert id="save">
+		insert into T_NOTE_TEMPLATE (
+		NOTE_ID
+		,NOTE_NAME
+		<if test="pages != null ">,pages</if>
+		<if test="startPageId != null ">,start_page_id</if>
+		<if test="width != null ">,width</if>
+		<if test="height != null ">,height</if>
+		<if test="startX != null ">,start_x</if>
+		<if test="startY != null ">,start_y</if>
+		<if test="coverImageUrl != null ">,cover_image_url</if>
+		<if test="oddeventIssame != null ">,oddevent_issame</if>
+		<if test="oddPageUrl != null ">,odd_page_url</if>
+		<if test="evenPageUrl != null ">,even_page_url</if>
+		<if test="headpageUrl != null ">,headpage_url</if>
+		<if test="headpageId != null ">,headpage_id</if>
+		<if test="actionRectStartX != null ">,action_rect_start_x</if>
+		<if test="actionRectStartY != null ">,action_rect_start_y</if>
+		<if test="actionRectEndX != null ">,action_rect_end_x</if>
+		<if test="actionRectEndY != null ">,action_rect_end_y</if>
+		) values(
+		#{noteId}
+		,#{noteName}
+		<if test="pages != null ">,#{pages}</if>
+		<if test="startPageId != null ">,#{startPageId}</if>
+		<if test="width != null ">,#{width}</if>
+		<if test="height != null ">,#{height}</if>
+		<if test="startX != null ">,#{startX}</if>
+		<if test="startY != null ">,#{startY}</if>
+		<if test="coverImageUrl != null ">,#{coverImageUrl}</if>
+		<if test="oddeventIssame != null ">,#{oddeventIssame}</if>
+		<if test="oddPageUrl != null ">,#{oddPageUrl}</if>
+		<if test="evenPageUrl != null ">,#{evenPageUrl}</if>
+		<if test="headpageUrl  != null ">,#{headpageUrl}</if>
+		<if test="headpageId != null ">,#{headpageId}</if>
+		<if test="actionRectStartX != null ">,#{actionRectStartX}</if>
+		<if test="actionRectStartY != null ">,#{actionRectStartY}</if>
+		<if test="actionRectEndX != null ">,#{actionRectEndX}</if>
+		<if test="actionRectEndY != null ">,#{actionRectEndY}</if>
+		)
+	</insert>
+	
+	
+	<update id="update" parameterType="com.whty.mxbj.api.model.NoteTemplate">
+		update T_NOTE_TEMPLATE
+		set
+		<trim prefixOverrides=",">
+			<if test="noteName != null ">,note_name = #{noteName}</if>
+			<if test="pages != null ">,pages = #{pages}</if>
+			<if test="startPageId != null ">,start_page_id = #{startPageId}</if>
+			<if test="width != null ">,width = #{width}</if>
+			<if test="height != null ">,height = #{height}</if>
+			<if test="startX != null ">,start_x = #{startX}</if>
+			<if test="startY != null ">,start_y = #{startY}</if>
+			<if test="coverImageUrl != null ">,cover_image_url = #{coverImageUrl}</if>
+			<if test="oddeventIssame != null ">,oddevent_issame = #{oddeventIssame}</if>
+			<if test="oddPageUrl != null  ">,odd_page_url = #{oddPageUrl}</if>
+			<if test="evenPageUrl != null   ">,even_page_url = #{evenPageUrl}</if>
+			<if test="headpageUrl  != null  ">,headpage_url = #{headpageUrl}</if>
+			<if test="headpageId != null   ">,headpage_id = #{headpageId}</if>
+			<if test="actionRectStartX != null ">,action_rect_start_x = #{actionRectStartX}</if>
+			<if test="actionRectStartY != null ">,action_rect_start_y = #{actionRectStartY}</if>
+			<if test="actionRectEndX != null ">,action_rect_end_x = #{actionRectEndX}</if>
+			<if test="actionRectEndY != null ">,action_rect_end_y = #{actionRectEndY}</if>
+		</trim>
+		where note_id = #{noteId} 
+	</update>
+	
+	<select id="loadNoteTemplate" parameterType="string" resultMap="NoteTemplateResult">
+		select * from T_NOTE_TEMPLATE where note_id = #{_parameter}
+	</select>
+	
+	<delete id="deleteNoteTemplateById" parameterType="string">
+		delete from T_NOTE_TEMPLATE WHERE NOTE_ID=#{_parameter}
+	</delete>
+	
+		
+	<delete id="deleteNoteTemplate" parameterType="java.util.List">
+		delete from T_NOTE_TEMPLATE
+		where note_id in <foreach collection="idList" item="item" open="(" separator="," close=")">#{item}</foreach>
+	</delete>
+	
+	
+	<select id="listByCondition" parameterType="map" resultMap="NoteTemplateResult">
+		select * from T_NOTE_TEMPLATE
+	</select>
+	
+</mapper>

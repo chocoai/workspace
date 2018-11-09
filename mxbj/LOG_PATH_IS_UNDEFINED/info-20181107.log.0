@@ -1,0 +1,5 @@
+2018-11-07 08:55:02.325 [main] INFO  c.w.mxbj.common.utils.GUIDGenerator -RandomGUID=4B8993D3865DC53884D95D846B41EB29
+2018-11-07 08:55:02.478 [main] INFO  c.w.mxbj.common.utils.GUIDGenerator -RandomGUID=48E2D439FF0DC79F75F440735BD00C5F
+2018-11-07 08:55:02.479 [main] INFO  c.w.mxbj.common.utils.GUIDGenerator -UUID=612405be-9be0-4beb-b066-a8c392cdf097
+2018-11-07 08:55:02.480 [main] INFO  c.w.mxbj.common.utils.GUIDGenerator -UUID=5c6a7801-53d5-4b2e-80c4-9d688aed58a6
+2018-11-07 08:55:02.509 [main] INFO  c.w.mxbj.common.utils.GUIDGenerator -Time:184ms.

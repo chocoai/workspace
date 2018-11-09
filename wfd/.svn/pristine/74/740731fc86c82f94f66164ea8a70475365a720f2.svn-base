@@ -1,0 +1,65 @@
+package com.whty.wfd;
+
+import com.whty.wfd.main.Application;
+import com.whty.wfd.page.dao.TPlatePostMapper;
+import com.whty.wfd.page.dao.TPostMessageMapper;
+import com.whty.wfd.page.model.TPlatePost;
+import com.whty.wfd.page.model.TPostMessage;
+import com.whty.wfd.page.service.LikeService;
+import com.whty.wfd.page.service.MessageService;
+import com.whty.wfd.page.service.PersonCenterService;
+import com.whty.wfd.page.vo.Like;
+import com.whty.wfd.page.vo.Message;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.SpringRunner;
+
+import javax.sound.midi.Soundbank;
+import javax.xml.bind.SchemaOutputResolver;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Author: zjd Date: 18-8-14 Time: 上午10:06 Describe: member应用测试类
+ */
+@RunWith(SpringRunner.class)
+@SpringBootTest(classes = Application.class)
+public class AppTest {
+
+	@Autowired
+	private TPlatePostMapper tPlatePostMapper;
+	@Autowired
+	private MessageService messageService;
+	@Autowired
+	private LikeService likeService;
+	@Autowired
+	private PersonCenterService personCenterService;
+	@Autowired
+	private TPostMessageMapper tPostMessageMapper;
+
+	/**
+	 * Rigourous Test :-)
+	 */
+	@Test
+	public void testApp() {
+		/*
+		 * 测试评论 SimpleDateFormat sdf = new SimpleDateFormat(
+		 * "yyyy-MM-dd hh:mm:ss"); List<Like> likes =likeService.getLikes(2);
+		 * for (Like like :likes){ if(like.getType()==1){
+		 * System.out.println("帖子："+like.getPostId()+"时间"+sdf.format(like.
+		 * getTime())+"点赞者:"+like.getName()); }else {
+		 * System.out.println("评论："+like.getMessageId()+"时间"+sdf.format(like.
+		 * getTime())+"点赞者:"+like.getName()); }
+		 * 
+		 * }
+		 */
+
+		List<TPostMessage> tPostMessages = tPostMessageMapper.getPostMessagesByUserId(1);
+		System.out.println(tPostMessages.size() + ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
+
+	}
+}

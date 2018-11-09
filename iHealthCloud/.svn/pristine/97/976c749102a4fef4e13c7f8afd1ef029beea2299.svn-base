@@ -1,0 +1,286 @@
+/**
+ * @Title:   SysDictServiceImpl.java 
+ * @Package: com.yhcrt.healthcloud.system.service.impl  
+ * @Description: 
+ * @author: rpf
+ * @date: 2017年5月26日 
+ * @version V1.0 
+ * Copyright © 2017 Wuhan YHCRT Technology Co.Ltd. All rights reserved.
+ */
+package com.yhcrt.iHealthCloud.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.github.pagehelper.util.StringUtil;
+import com.yhcrt.iHealthCloud.common.Constants;
+import com.yhcrt.iHealthCloud.entity.Area;
+import com.yhcrt.iHealthCloud.entity.AreaExample;
+import com.yhcrt.iHealthCloud.entity.SysDictionary;
+import com.yhcrt.iHealthCloud.entity.SysDictionaryExample;
+import com.yhcrt.iHealthCloud.mapper.AreaMapper;
+import com.yhcrt.iHealthCloud.mapper.SysDictionaryMapper;
+import com.yhcrt.iHealthCloud.service.SysDictService;
+import com.yhcrt.iHealthCloud.util.Const;
+
+/**
+ * @ClassName: SysDictServiceImpl
+ * @Description:
+ * @version V1.0 
+ * @author rpf
+ * @date: 2017年5月26日 
+ */
+
+@Service
+@Transactional
+public class SysDictServiceImpl implements SysDictService {
+
+    @Autowired
+    private SysDictionaryMapper sysDictionaryMapper;
+	@Autowired
+	private AreaMapper areaMapper;
+
+	/* (non-Javadoc)
+	 * @see com.yhcrt.healthcloud.system.service.SysDictService#insert(com.yhcrt.healthcloud.system.entity.SysDictionary)
+	 */
+	@Override
+	public int insert(SysDictionary sysDictionary) {
+		return sysDictionaryMapper.insert(sysDictionary);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.yhcrt.healthcloud.system.service.SysDictService#deleteByDictId(java.lang.Integer)
+	 */
+	@Override
+	public int deleteByDictId(Integer dictId) {
+		return sysDictionaryMapper.deleteByPrimaryKey(dictId);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.yhcrt.healthcloud.system.service.SysDictService#updateByDictId(com.yhcrt.healthcloud.system.entity.SysDictionary)
+	 */
+	@Override
+	public int updateByDictId(SysDictionary sysDictionary) {
+		return sysDictionaryMapper.updateByPrimaryKey(sysDictionary);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.yhcrt.healthcloud.system.service.SysDictService#listAllSysDict()
+	 */
+	@Override
+	public List<SysDictionary> listAllSysDict() {
+		SysDictionaryExample example = new SysDictionaryExample();
+		example.createCriteria().andStatusEqualTo(Constants.STATUS_NORMAL);
+		example.setOrderByClause("create_time desc");
+		return sysDictionaryMapper.selectByExample(example);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.yhcrt.healthcloud.system.service.SysDictService#getSysDictByDictId(java.lang.Integer)
+	 */
+	@Override
+	public SysDictionary getSysDictByDictId(Integer dictId) {
+		return sysDictionaryMapper.selectByPrimaryKey(dictId);
+	}
+	
+	@Override
+	public String getItems(JSONObject pdataObj){
+		try {
+            List<SysDictionary> sysDictionaryList = sysDictionaryMapper.getItems();
+            JSONArray serviceTypeArray = new JSONArray();
+            JSONArray orgTypeArray = new JSONArray();
+            JSONObject bizJson = new JSONObject();
+            for(SysDictionary sysDictionary : sysDictionaryList){
+            	if("org_type".equals(sysDictionary.getDictEnName())){
+            		JSONObject orgTypeJson = new JSONObject();
+            		orgTypeJson.put("cid", sysDictionary.getDictId());
+            		orgTypeJson.put("orgTypeName", sysDictionary.getDictKey());
+            		orgTypeJson.put("orgTypeValue", sysDictionary.getDictDesc());
+            		orgTypeJson.put("orgDictValue", sysDictionary.getDictValue());
+            		orgTypeJson.put("orgIcon", sysDictionary.getDictIcon()==null?"":sysDictionary.getDictIcon());
+            		if(orgTypeArray.size()<4){  //只展示4个
+            			orgTypeArray.add(orgTypeJson);
+            		}
+            	}
+            	if("service_type".equals(sysDictionary.getDictEnName())){
+            		JSONObject serviceTypeJson = new JSONObject();
+            		serviceTypeJson.put("cid", sysDictionary.getDictId());
+            		serviceTypeJson.put("serviceTypeName", sysDictionary.getDictKey());
+            		serviceTypeJson.put("serviceTypeValue", sysDictionary.getDictValue());
+            		serviceTypeJson.put("serviceIcon", sysDictionary.getDictIcon()==null?"":sysDictionary.getDictIcon());
+            		if(serviceTypeArray.size()<8){  //只展示8个
+            			serviceTypeArray.add(serviceTypeJson);
+            		}
+            	}
+            }
+            bizJson.put("org", orgTypeArray);
+            bizJson.put("service", serviceTypeArray);
+			pdataObj.put(Const.TAG_STS, Const.TAG_STS_SUCCESS);
+			pdataObj.put(Const.TAG_RMK, "获取成功");
+			pdataObj.put(Const.TAG_BIZ, bizJson);
+		} catch (Exception e) {
+			pdataObj.put(Const.TAG_STS, Const.TAG_STS_FAIL);
+			pdataObj.put(Const.TAG_RMK, e.getMessage());
+			e.printStackTrace();
+		}
+		return pdataObj.toJSONString();
+	}
+	
+	@Override
+	public String geHotServiceType(JSONObject pdataObj){
+		try {
+            List<SysDictionary> sysDictionaryList = sysDictionaryMapper.getItems();
+            JSONArray serviceTypeArray = new JSONArray();
+            for(SysDictionary sysDictionary : sysDictionaryList){
+            	if("service_type".equals(sysDictionary.getDictEnName())){
+            		JSONObject serviceTypeJson = new JSONObject();
+            		serviceTypeJson.put("cid", sysDictionary.getDictId());
+            		serviceTypeJson.put("serviceType", sysDictionary.getDictKey());
+            		if(serviceTypeArray.size()<6){ //只展示6个
+            			serviceTypeArray.add(serviceTypeJson);
+            		}
+            	}
+            }
+			pdataObj.put(Const.TAG_STS, Const.TAG_STS_SUCCESS);
+			pdataObj.put(Const.TAG_RMK, "获取成功");
+			pdataObj.put(Const.TAG_BIZ, serviceTypeArray);
+		} catch (Exception e) {
+			pdataObj.put(Const.TAG_STS, Const.TAG_STS_FAIL);
+			pdataObj.put(Const.TAG_RMK, e.getMessage());
+			e.printStackTrace();
+		}
+		return pdataObj.toJSONString();
+	}
+	
+	@Override
+	public String getServiceDetail(JSONObject pdataObj){
+		try {
+            List<SysDictionary> sysDictionaryList = sysDictionaryMapper.getItems();
+            JSONArray serviceTypeArray = new JSONArray();
+            for(SysDictionary sysDictionary : sysDictionaryList){
+            	if("service_type".equals(sysDictionary.getDictEnName())){
+            		JSONObject serviceTypeJson = new JSONObject();
+            		serviceTypeJson.put("cid", sysDictionary.getDictId());
+            		serviceTypeJson.put("serviceType", sysDictionary.getDictKey());
+            		if(serviceTypeArray.size()<6){ //只展示6个
+            			serviceTypeArray.add(serviceTypeJson);
+            		}
+            	}
+            }
+			pdataObj.put(Const.TAG_STS, Const.TAG_STS_SUCCESS);
+			pdataObj.put(Const.TAG_RMK, "获取成功");
+			pdataObj.put(Const.TAG_BIZ, serviceTypeArray);
+		} catch (Exception e) {
+			pdataObj.put(Const.TAG_STS, Const.TAG_STS_FAIL);
+			pdataObj.put(Const.TAG_RMK, e.getMessage());
+			e.printStackTrace();
+		}
+		return pdataObj.toJSONString();
+	}
+	
+	@Override
+	public String getServiceType(JSONObject pdataObj){
+		try {
+            List<SysDictionary> sysDictionaryList = sysDictionaryMapper.getItems();
+            JSONArray serviceTypeArray = new JSONArray();
+            for(SysDictionary sysDictionary : sysDictionaryList){
+            	if("service_type".equals(sysDictionary.getDictEnName())){
+            		JSONObject serviceTypeJson = new JSONObject();
+            		serviceTypeJson.put("cid", sysDictionary.getDictId());
+            		serviceTypeJson.put("serviceType", sysDictionary.getDictKey());
+            		serviceTypeArray.add(serviceTypeJson);
+            	}
+            }
+			pdataObj.put(Const.TAG_STS, Const.TAG_STS_SUCCESS);
+			pdataObj.put(Const.TAG_RMK, "获取成功");
+			pdataObj.put(Const.TAG_BIZ, serviceTypeArray);
+		} catch (Exception e) {
+			pdataObj.put(Const.TAG_STS, Const.TAG_STS_FAIL);
+			pdataObj.put(Const.TAG_RMK, e.getMessage());
+			e.printStackTrace();
+		}
+		return pdataObj.toJSONString();
+	}
+
+	//查询所有"org_type"的服务类型
+	@Override
+	public String getAllItems(JSONObject pdataObj) {
+		try {
+            List<SysDictionary> sysDictionaryList = sysDictionaryMapper.getAllItems("org_type");
+            JSONArray orgTypeArray = new JSONArray();
+            JSONObject bizJson = new JSONObject();
+            for(SysDictionary sysDictionary : sysDictionaryList){
+        		JSONObject orgTypeJson = new JSONObject();
+        		orgTypeJson.put("cid", sysDictionary.getDictId());
+        		if(sysDictionary.getDictKey().length()>4){
+        			orgTypeJson.put("orgTypeName", sysDictionary.getDictKey().substring(0, 4));
+        		}else
+        		{
+        			orgTypeJson.put("orgTypeName", sysDictionary.getDictKey());
+        		}
+        		orgTypeJson.put("orgTypeValue", sysDictionary.getDictDesc());
+        		orgTypeJson.put("orgDictValue", sysDictionary.getDictValue());
+        		orgTypeJson.put("orgIcon", sysDictionary.getDictIcon()==null?"":sysDictionary.getDictIcon());
+        		orgTypeArray.add(orgTypeJson);
+            }
+            bizJson.put("org", orgTypeArray);
+			pdataObj.put(Const.TAG_STS, Const.TAG_STS_SUCCESS);
+			pdataObj.put(Const.TAG_RMK, "获取成功");
+			pdataObj.put(Const.TAG_BIZ, bizJson);
+		} catch (Exception e) {
+			pdataObj.put(Const.TAG_STS, Const.TAG_STS_FAIL);
+			pdataObj.put(Const.TAG_RMK, e.getMessage());
+			e.printStackTrace();
+		}
+		return pdataObj.toJSONString();
+	}
+
+	@Override
+	public SysDictionary selectDictEnNameAndValue(String dictEnName,String dictValue) {
+		SysDictionaryExample example = new SysDictionaryExample();
+		if(StringUtil.isNotEmpty(dictValue)){
+			example.createCriteria().andDictEnNameEqualTo(dictEnName).andDictKeyEqualTo(dictValue);
+			return sysDictionaryMapper.selectByExample(example).size()>0?sysDictionaryMapper.selectByExample(example).get(0):null;
+		}
+		return null;
+	}
+	
+	@Override
+	public Area selectAreaAndName(Integer parentId, String areaName) {
+		AreaExample example = new AreaExample();
+		if(StringUtil.isNotEmpty(areaName)){
+			example.createCriteria().andParentIdEqualTo(parentId).andAreaNameEqualTo(areaName);
+			return areaMapper.selectByExample(example).size()>0?areaMapper.selectByExample(example).get(0):null;
+		}
+		return null;
+	}
+
+	@Override
+	public List<SysDictionary> selectDictEnName(String dictEnName) {
+		SysDictionaryExample example = new SysDictionaryExample();
+		example.createCriteria().andDictEnNameEqualTo(dictEnName).andStatusEqualTo(0);
+		example.setOrderByClause("order_num desc,create_time desc");
+		return sysDictionaryMapper.selectByExample(example);
+	}
+
+	@Override
+	public List<Area> selectArea(Integer parentId) {
+		AreaExample example = new AreaExample();
+		example.createCriteria().andParentIdEqualTo(parentId).andStatusEqualTo(0);
+		example.setOrderByClause("order_num desc,create_time desc");
+		return areaMapper.selectByExample(example);
+	}
+	
+	@Override
+	public List<SysDictionary> getSysDictParentId(String parentId) {
+		SysDictionaryExample example = new SysDictionaryExample();
+		example.createCriteria().andParentIdEqualTo(parentId);
+		example.setOrderByClause("create_time desc");
+		return sysDictionaryMapper.selectByExample(example);
+	}
+}

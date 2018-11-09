@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>孝康通</title>
+    <!-- Bootstrap -->
+    <link th:href="@{/pages/mall/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- FontAwesome 4.7.0字体 -->
+    <link th:href="@{/pages/mall/css/font-awesome.min.css}" rel="stylesheet">
+    <!-- 自定义css -->
+    <link th:href="@{/pages/mall/css/mymall.css}" rel="stylesheet">
+    <link th:href="@{/pages/mall/css/layer_mobile/need/layer.css}" rel="stylesheet">
+  </head>
+  <body class="other-mall">
+    <!-- 导航 开始 -->
+    <nav class="navbar navbar-default navbar-fixed-top navbar-mall-other">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a th:if="${a} ==null" th:href="@{'/h5/service/detail/'+${id}}" class="othertop-left"><i class="fa fa-angle-left icon-back"></i></a>
+         	 提交订单
+        </div>
+      </div>
+    </nav>
+    <!-- 导航 结束 -->
+
+    <!-- 收货地址 开始 -->
+    <div class="deliveryaddress">
+      <!-- 添加收货地址(与有收货地址只显示一个) 开始 -->
+      <div class="addaddress" th:if="${address} ==null">
+        <a href="javascript:void(0)" onclick="getChooseAddress()"><span class="addaddress-btn">+ 添加收货地址</span></a>
+      </div>
+      <!-- 添加收货地址 结束 -->
+
+      <!-- 有收货地址(与添加收货地址只显示一个) 开始 -->
+      <div class="hasaddress" th:if="${address} !=null">
+         <a href="javascript:void(0)" onclick="getChooseAddress()">
+          <div class="hasaddress-l col-xs-11 nopad-lr">
+            <p>收货人：<label th:text="${address.recipient}" style="font-weight:normal"></label>
+            <label th:text="${address.tel}" style="font-weight:normal"></label>
+            </p>
+            <p>收货地址：<label th:text="${address.address}" style="font-weight:normal"></label></p>
+          </div>
+          <div class="hasaddress-r col-xs-1 nopad-r"><i class="fa fa-angle-right"></i></div>
+        </a>
+      </div>
+      <!-- 有收货地址 结束 -->
+    </div>
+    <!-- 收货地址 结束 -->
+   <!-- 选择服务时间 开始 -->
+    <div class="goods-info">
+      <div class="goods-info-hd">服务预约时间：<span class="appont-date" th:text="${time}">2018-01-05 12:20</span></div>
+    </div>
+    <!-- 选择服务时间 结束 -->
+    <!-- 商品信息 开始 -->
+    <div class="goods-info mar-b20">
+      <div class="goods-info-hd">服务</div>
+      <div class="goods-info-bd">
+        <ul>
+           <li>
+            <div class="col-xs-3 nopad-lr">
+              	<img th:if="${service.titleImg} ==null" th:src="@{/pages/mall/images/service02.jpg}" class="img-responsive">
+	     		<img th:if="${service.titleImg} !=null" th:src="${service.titleImg}" class="img-responsive">
+            </div>
+            <div class="col-xs-9">
+              <p class="goods-info-name">
+              		<span th:text="${service.serviceName}">保洁</span><br/>
+              		<span th:if="${price} !=null" id="priceStr1"><lable th:text="${price.level}">保洁师</lable><lable th:text="${price.price}" >90</lable><lable th:text="${price.unit}">元/3小时</lable><!-- (<lable th:text="${price.desct}">不带清洁剂</lable>) --></span>
+              </p>
+              <p class="goods-info-other">
+                	<span class="goods-info-price" th:if="${price} !=null" id="priceStr2">￥<lable th:text="${price.price}" style="font-weight:normal">90</lable><lable th:text="${price.unit}" style="font-weight:normal">元/3小时</lable></span>
+                	<span class="goods-info-price" th:if="${price} ==null" th:text="${service.unitPrice}" id="priceStr2">￥90元/次</span>
+              </p>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- 商品信息 结束 -->
+
+    <!-- 固定底部的去支付 开始 -->
+    <nav class="navbar navbar-default navbar-fixed-bottom mall-parts">
+      <div class="container-fluid nopad-lr">
+        <div class="mall-fixed-bottom">
+          <div class="mall-fixed-bottom-l">
+            <p class="allmoney" th:if="${price} !=null">实付款：￥<label style="font-weight:normal" th:text="${price.price}"></label></p>
+            <p class="allmoney" th:if="${price} ==null">实付款：￥<label style="font-weight:normal" th:text="${service.unitPrice}"></label></p>
+          </div>
+          <div class="mall-fixed-bottom-r">
+            <a href="javascript:void(0)" class="fixed-bottom-r-cell submit-order">提交订单</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- 固定底部的去支付 结束 -->
+    
+    <form id="payFm" action="">
+   		<input th:if="${a} !=null" id="a" type="hidden" th:value="${a}" />
+  		<input th:if="${u} !=null" id="u" type="hidden" th:value="${u}" />
+    	<!-- 必须 -->
+    	<input name="addressId" type="hidden" th:if="${address} !=null" th:value="${address.cid}" />
+    	<input name="serviceId" type="hidden" th:value="${service.serviceId}" />
+    	<input name="time" type="hidden" th:value="${time}" />
+    	<input name="price" type="hidden" th:if="${price} !=null" th:value="${price.price}"/>
+    	<input name="price" type="hidden" th:if="${price} ==null" th:value="${service.unitPrice}"/>
+    	
+    </form>
+    <!-- 返回顶部 开始 -->
+    <div class="gototop" style="display: none;">
+      <a href="javascript:void(0)"><i class="glyphicon glyphicon-menu-up"></i></a>
+    </div>
+    <!-- 返回顶部 结束 -->
+
+    <script th:src="@{/pages/mall/js/jquery-1.9.1.min.js}"></script>
+    <script th:src="@{/pages/mall/js/bootstrap.min.js}"></script>
+    <script th:src="@{/pages/mall/css/layer_mobile/layer.js}"></script>
+    <script type="text/javascript">
+    var a = $("#a").val();
+    var u = $("#u").val();
+    var pathName=window.document.location.pathname;
+    var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
+      // 返回顶部
+      $(window).scroll(function(){
+        if($(window).scrollTop()>=20){
+           $(".gototop").fadeIn(300);
+        }else{
+           $(".gototop").fadeOut(300);
+        }
+      })
+      $(".gototop a").click(function(){
+        $("html,body").animate({scrollTop:"0px"},300)
+      })
+      var fmSubmit = true;
+      //提交订单
+      $(".submit-order").click(function(){
+        var url= projectName+"/h5/admin/service/saveWorkOrder";
+        if(a==1){
+        	url+="?a=1&u="+u;
+        }
+      	var addressId = $("input[name='addressId']");
+      	var priceStr = $("#priceStr1").text();
+      	if(!priceStr){
+      		priceStr = $("#priceStr2").text();
+      	}
+      	if(!addressId||addressId.val()==null){
+      		layer.open({
+    		    content: '请先选择地址'
+    		    ,skin: 'msg'
+    		    ,time: 2 //2秒后自动关闭
+    		 });
+      		return;
+      	}else{
+      		if(fmSubmit){
+	    		$.ajax({
+					url : url,
+					data : {
+						serviceId:$("input[name='serviceId']").val(),
+						addressId:addressId.val(),
+						time:$("input[name='time']").val(),
+						price:$("input[name='price']").val(),
+						priceStr:priceStr
+					},
+					dataType : "json",
+					success : function(result) {
+						if(result.result>0){
+							fmSubmit=false;
+							var url=projectName+"/h5/admin/service/getPayfor?type=1&cext1="+result.orderNo;
+					        if(a==1){
+					        	url+="&a=1&u="+$("#u").val();
+					        }
+							window.location.href=url;
+						}
+					}
+				});
+	    	}
+      	}
+      })
+      
+      function getChooseAddress(){
+      	var url = window.location.href;
+	  	window.location.href=projectName+"/h5/admin/cart/getChooseAddress?type=service&status=1&url="+url;;
+	  }
+    </script>
+  </body>
+</html>

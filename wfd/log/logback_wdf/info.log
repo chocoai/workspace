@@ -1,0 +1,403 @@
+2018-08-22 10:03:43.357 [main] INFO  com.whty.wfd.main.Application -Starting Application v0.0.1-SNAPSHOT on lx-PC with PID 3324 (E:\workspace\wfd\target\wfd.jar started by lx in E:\workspace\wfd\target)
+2018-08-22 10:03:43.367 [main] DEBUG com.whty.wfd.main.Application -Running with Spring Boot v1.5.2.RELEASE, Spring v4.3.7.RELEASE
+2018-08-22 10:03:43.367 [main] INFO  com.whty.wfd.main.Application -No active profile set, falling back to default profiles: default
+2018-08-22 10:03:43.497 [main] INFO  o.s.b.c.e.AnnotationConfigEmbeddedWebApplicationContext -Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@32a1bec0: startup date [Wed Aug 22 10:03:43 CST 2018]; root of context hierarchy
+2018-08-22 10:03:44.977 [main] INFO  o.s.b.f.s.DefaultListableBeanFactory -Overriding bean definition for bean 'myInterceptor' with a different definition: replacing [Generic bean: class [com.whty.wfd.common.interceptor.MyInterceptor]; scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in URL [jar:file:/E:/workspace/wfd/target/wfd.jar!/BOOT-INF/classes!/com/whty/wfd/common/interceptor/MyInterceptor.class]] with [Root bean: class [null]; scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=applicationConfig; factoryMethodName=myInterceptor; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/whty/wfd/main/ApplicationConfig.class]]
+2018-08-22 10:03:44.977 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader -Loading XML bean definitions from class path resource [application-bean.xml]
+2018-08-22 10:03:45.207 [main] INFO  o.s.b.f.s.DefaultListableBeanFactory -Overriding bean definition for bean 'cacheInit' with a different definition: replacing [Generic bean: class [com.whty.wfd.common.cache.CacheInit]; scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in URL [jar:file:/E:/workspace/wfd/target/wfd.jar!/BOOT-INF/classes!/com/whty/wfd/common/cache/CacheInit.class]] with [Generic bean: class [com.whty.wfd.common.cache.CacheInit]; scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in class path resource [application-bean.xml]]
+2018-08-22 10:03:45.495 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate -Multiple Spring Data modules found, entering strict repository configuration mode!
+2018-08-22 10:03:48.917 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker -Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$866e1c67] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2018-08-22 10:03:49.724 [main] INFO  o.s.b.c.e.t.TomcatEmbeddedServletContainer -Tomcat initialized with port(s): 8080 (http)
+2018-08-22 10:03:49.744 [main] INFO  o.a.catalina.core.StandardService -Starting service Tomcat
+2018-08-22 10:03:49.744 [main] INFO  o.a.catalina.core.StandardEngine -Starting Servlet Engine: Apache Tomcat/8.5.11
+2018-08-22 10:03:51.164 [localhost-startStop-1] INFO  org.apache.jasper.servlet.TldScanner -At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2018-08-22 10:03:51.224 [localhost-startStop-1] INFO  o.a.c.c.C.[.[localhost].[/wfd] -Initializing Spring embedded WebApplicationContext
+2018-08-22 10:03:51.224 [localhost-startStop-1] INFO  o.s.web.context.ContextLoader -Root WebApplicationContext: initialization completed in 7727 ms
+2018-08-22 10:03:51.494 [localhost-startStop-1] INFO  o.s.b.w.s.ServletRegistrationBean -Mapping servlet: 'dispatcherServlet' to [/]
+2018-08-22 10:03:51.504 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean -Mapping filter: 'characterEncodingFilter' to: [/*]
+2018-08-22 10:03:51.504 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean -Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2018-08-22 10:03:51.504 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean -Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2018-08-22 10:03:51.504 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean -Mapping filter: 'requestContextFilter' to: [/*]
+2018-08-22 10:03:51.614 [main] INFO  com.whty.wfd.common.cache.CacheInit ----------------------开启错误处理线程-------------------------
+2018-08-22 10:03:53.358 [main] WARN  n.r.xmemcached.XMemcachedClient -XMemcachedClient is using Text protocol
+2018-08-22 10:03:53.408 [main] WARN  n.r.xmemcached.XMemcachedClient -XMemcachedClient in failure mode.
+2018-08-22 10:03:53.418 [main] INFO  c.g.c.y.nio.impl.SelectorManager -Creating 8 reactors...
+2018-08-22 10:03:53.448 [main] WARN  c.g.c.y.core.impl.AbstractController -The Controller started at localhost/127.0.0.1:0 ...
+2018-08-22 10:03:53.448 [main] WARN  n.r.xmemcached.XMemcachedClient -You are using connection pool for xmemcached client,it's not recommended unless you have test it that it can boost performance in your app.
+2018-08-22 10:03:53.468 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.468 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.478 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.488 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.498 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.498 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.508 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.508 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.518 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.518 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.528 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.538 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.548 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.558 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.558 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.568 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.578 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.578 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.588 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.598 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.608 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.618 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.618 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.628 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.628 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.638 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.648 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.648 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.658 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.658 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.678 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.678 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.688 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.688 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.698 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.698 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.708 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.718 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.718 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.728 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.728 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.738 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.748 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.748 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.758 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.768 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.768 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.778 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.788 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:53.798 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:03:54.038 [main] INFO  com.whty.wfd.main.RedisConfig -JedisConnectionFactory bean init success.
+2018-08-22 10:03:54.799 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerAdapter -Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@32a1bec0: startup date [Wed Aug 22 10:03:43 CST 2018]; root of context hierarchy
+2018-08-22 10:03:54.969 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/getCollection]}" onto public java.lang.String com.whty.wfd.page.controller.CollectionController.getCollection(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,org.springframework.ui.ModelMap)
+2018-08-22 10:03:54.969 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/index]}" onto public java.lang.String com.whty.wfd.page.controller.IndexController.index(org.springframework.ui.ModelMap)
+2018-08-22 10:03:54.979 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/getLike]}" onto public java.lang.String com.whty.wfd.page.controller.LikeController.getLike(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,org.springframework.ui.ModelMap)
+2018-08-22 10:03:54.979 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/getLikeList]}" onto public void com.whty.wfd.page.controller.LikeController.getLikeList(javax.servlet.http.HttpServletResponse,java.lang.Integer,java.lang.Integer)
+2018-08-22 10:03:54.989 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/classManage.html]}" onto public java.lang.String com.whty.wfd.page.controller.ManagerController.classManage(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:03:54.989 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/deleteClass]}" onto public void com.whty.wfd.page.controller.ManagerController.deleteClass(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:03:54.989 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/createClass.html]}" onto public java.lang.String com.whty.wfd.page.controller.ManagerController.createClass(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:03:54.989 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/saveClass]}" onto public void com.whty.wfd.page.controller.ManagerController.saveClass(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:03:54.999 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/saveStudent]}" onto public void com.whty.wfd.page.controller.ManagerController.saveStudent(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:03:54.999 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/addStudent.html]}" onto public java.lang.String com.whty.wfd.page.controller.ManagerController.addStudent(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:03:54.999 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/getStudent]}" onto public void com.whty.wfd.page.controller.ManagerController.getStudent(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:03:54.999 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/searchStudent]}" onto public void com.whty.wfd.page.controller.ManagerController.searchStudent(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:03:55.009 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/getPostMessage]}" onto public java.lang.String com.whty.wfd.page.controller.MessageController.getPostMessage(javax.servlet.http.HttpServletResponse,javax.servlet.http.HttpServletRequest,org.springframework.ui.ModelMap)
+2018-08-22 10:03:55.009 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/sendMessage]}" onto public java.lang.String com.whty.wfd.page.controller.MessageController.sendMessage()
+2018-08-22 10:03:55.009 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/addMessage]}" onto public void com.whty.wfd.page.controller.MessageController.addMessage(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,java.lang.String,java.lang.Integer,java.lang.String[],java.lang.String[])
+2018-08-22 10:03:55.019 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/addImage]}" onto public void com.whty.wfd.page.controller.MessageController.addMessage(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:03:55.019 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/plate/delete]}" onto public void com.whty.wfd.page.controller.PlateManageController.delete(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:03:55.019 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/plate/create.html]}" onto public java.lang.String com.whty.wfd.page.controller.PlateManageController.create(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:03:55.029 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/plate/list.html]}" onto public java.lang.String com.whty.wfd.page.controller.PlateManageController.list(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:03:55.029 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/plate/save]}" onto public void com.whty.wfd.page.controller.PlateManageController.save(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:03:55.029 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/plate/edit.html]}" onto public java.lang.String com.whty.wfd.page.controller.PlateManageController.edit(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:03:55.029 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/plate/addTeacher.html]}" onto public java.lang.String com.whty.wfd.page.controller.PlateManageController.addTeacher(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:03:55.029 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/plate/saveTmp]}" onto public void com.whty.wfd.page.controller.PlateManageController.saveTmp(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:03:55.039 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/plate/saveTeacher]}" onto public void com.whty.wfd.page.controller.PlateManageController.saveStudent(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:03:55.039 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/getPostDetail],methods=[GET]}" onto public java.lang.String com.whty.wfd.page.controller.PostController.getPostDetail(javax.servlet.http.HttpServletResponse,javax.servlet.http.HttpServletRequest)
+2018-08-22 10:03:55.039 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/getUserPost],methods=[GET]}" onto public java.lang.String com.whty.wfd.page.controller.PostController.getUserPost()
+2018-08-22 10:03:55.039 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/sendPost],methods=[GET]}" onto public java.lang.String com.whty.wfd.page.controller.PostController.sendPost()
+2018-08-22 10:03:55.039 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/getPostList],methods=[GET]}" onto public void com.whty.wfd.page.controller.PostController.getPostList(javax.servlet.http.HttpServletResponse,java.lang.Integer,java.lang.Integer)
+2018-08-22 10:03:55.039 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/addPost],methods=[POST]}" onto public void com.whty.wfd.page.controller.PostController.addPost(java.lang.String,java.lang.String,java.lang.String[],java.lang.String[])
+2018-08-22 10:03:55.049 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/getReply]}" onto public java.lang.String com.whty.wfd.page.controller.ReplyController.gerReply(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,org.springframework.ui.ModelMap)
+2018-08-22 10:03:55.049 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/teacher/index.html]}" onto public java.lang.String com.whty.wfd.page.controller.TeacherController.index(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:03:55.049 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/teacher/detail.html]}" onto public java.lang.String com.whty.wfd.page.controller.TeacherController.detail(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:03:55.059 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/teacher/getTopPlatePostList]}" onto public void com.whty.wfd.page.controller.TeacherController.getTopPlatePostList(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:03:55.059 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/teacher/platePostList]}" onto public void com.whty.wfd.page.controller.TeacherController.getPlatePostList(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:03:55.059 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/teacher/plateList]}" onto public void com.whty.wfd.page.controller.TeacherController.plateList(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:03:55.059 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/teacher/plate.html]}" onto public java.lang.String com.whty.wfd.page.controller.TeacherController.plate(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:03:55.069 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2018-08-22 10:03:55.069 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:03:55.119 [main] INFO  o.s.w.s.h.SimpleUrlHandlerMapping -Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-08-22 10:03:55.119 [main] INFO  o.s.w.s.h.SimpleUrlHandlerMapping -Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-08-22 10:03:55.179 [main] INFO  o.s.w.s.h.SimpleUrlHandlerMapping -Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-08-22 10:03:56.033 [main] INFO  o.s.u.f.SpringTemplateLoader -SpringTemplateLoader for FreeMarker: using resource loader [org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@32a1bec0: startup date [Wed Aug 22 10:03:43 CST 2018]; root of context hierarchy] and template loader path [classpath:/templates/]
+2018-08-22 10:03:56.043 [main] INFO  o.s.w.s.v.f.FreeMarkerConfigurer -ClassTemplateLoader for Spring macros added to FreeMarker configuration
+2018-08-22 10:03:56.263 [main] INFO  o.s.j.e.a.AnnotationMBeanExporter -Registering beans for JMX exposure on startup
+2018-08-22 10:03:56.263 [main] INFO  o.s.j.e.a.AnnotationMBeanExporter -Bean with name 'memcachedClient' has been autodetected for JMX exposure
+2018-08-22 10:03:56.273 [main] INFO  o.s.j.e.a.AnnotationMBeanExporter -Located MBean 'memcachedClient': registering with JMX server as MBean [net.rubyeye.xmemcached:name=memcachedClient,type=XMemcachedClient]
+2018-08-22 10:03:56.313 [main] ERROR o.a.coyote.http11.Http11NioProtocol -Failed to start end point associated with ProtocolHandler [http-nio-8080]
+java.net.BindException: Address already in use: bind
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Unknown Source)
+	at sun.nio.ch.Net.bind(Unknown Source)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(Unknown Source)
+	at sun.nio.ch.ServerSocketAdaptor.bind(Unknown Source)
+	at org.apache.tomcat.util.net.NioEndpoint.bind(NioEndpoint.java:210)
+	at org.apache.tomcat.util.net.AbstractEndpoint.start(AbstractEndpoint.java:980)
+	at org.apache.coyote.AbstractProtocol.start(AbstractProtocol.java:573)
+	at org.apache.catalina.connector.Connector.startInternal(Connector.java:993)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+	at org.apache.catalina.core.StandardService.addConnector(StandardService.java:225)
+	at org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer.addPreviouslyRemovedConnectors(TomcatEmbeddedServletContainer.java:247)
+	at org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer.start(TomcatEmbeddedServletContainer.java:190)
+	at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.startEmbeddedServletContainer(EmbeddedWebApplicationContext.java:297)
+	at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.finishRefresh(EmbeddedWebApplicationContext.java:145)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:545)
+	at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.refresh(EmbeddedWebApplicationContext.java:122)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:737)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:370)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:314)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1162)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1151)
+	at com.whty.wfd.main.Application.main(Application.java:25)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:48)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:87)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:50)
+	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:51)
+2018-08-22 10:03:56.323 [main] ERROR o.a.catalina.core.StandardService -Failed to start connector [Connector[HTTP/1.1-8080]]
+org.apache.catalina.LifecycleException: Failed to start component [Connector[HTTP/1.1-8080]]
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:167)
+	at org.apache.catalina.core.StandardService.addConnector(StandardService.java:225)
+	at org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer.addPreviouslyRemovedConnectors(TomcatEmbeddedServletContainer.java:247)
+	at org.springframework.boot.context.embedded.tomcat.TomcatEmbeddedServletContainer.start(TomcatEmbeddedServletContainer.java:190)
+	at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.startEmbeddedServletContainer(EmbeddedWebApplicationContext.java:297)
+	at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.finishRefresh(EmbeddedWebApplicationContext.java:145)
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:545)
+	at org.springframework.boot.context.embedded.EmbeddedWebApplicationContext.refresh(EmbeddedWebApplicationContext.java:122)
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:737)
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:370)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:314)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1162)
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1151)
+	at com.whty.wfd.main.Application.main(Application.java:25)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at org.springframework.boot.loader.MainMethodRunner.run(MainMethodRunner.java:48)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:87)
+	at org.springframework.boot.loader.Launcher.launch(Launcher.java:50)
+	at org.springframework.boot.loader.JarLauncher.main(JarLauncher.java:51)
+Caused by: org.apache.catalina.LifecycleException: service.getName(): "Tomcat";  Protocol handler start failed
+	at org.apache.catalina.connector.Connector.startInternal(Connector.java:1000)
+	at org.apache.catalina.util.LifecycleBase.start(LifecycleBase.java:150)
+	... 21 common frames omitted
+Caused by: java.net.BindException: Address already in use: bind
+	at sun.nio.ch.Net.bind0(Native Method)
+	at sun.nio.ch.Net.bind(Unknown Source)
+	at sun.nio.ch.Net.bind(Unknown Source)
+	at sun.nio.ch.ServerSocketChannelImpl.bind(Unknown Source)
+	at sun.nio.ch.ServerSocketAdaptor.bind(Unknown Source)
+	at org.apache.tomcat.util.net.NioEndpoint.bind(NioEndpoint.java:210)
+	at org.apache.tomcat.util.net.AbstractEndpoint.start(AbstractEndpoint.java:980)
+	at org.apache.coyote.AbstractProtocol.start(AbstractProtocol.java:573)
+	at org.apache.catalina.connector.Connector.startInternal(Connector.java:993)
+	... 22 common frames omitted
+2018-08-22 10:03:56.383 [main] INFO  o.a.catalina.core.StandardService -Stopping service Tomcat
+2018-08-22 10:03:56.413 [main] INFO  o.s.b.a.l.AutoConfigurationReportLoggingInitializer -
+
+Error starting ApplicationContext. To display the auto-configuration report re-run your application with 'debug' enabled.
+2018-08-22 10:03:56.423 [main] ERROR o.s.b.d.LoggingFailureAnalysisReporter -
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+The Tomcat connector configured to listen on port 8080 failed to start. The port may already be in use or the connector may be misconfigured.
+
+Action:
+
+Verify the connector's configuration, identify and stop any process that's listening on port 8080, or configure this application to listen on another port.
+
+2018-08-22 10:03:56.433 [main] INFO  o.s.b.c.e.AnnotationConfigEmbeddedWebApplicationContext -Closing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@32a1bec0: startup date [Wed Aug 22 10:03:43 CST 2018]; root of context hierarchy
+2018-08-22 10:03:56.433 [main] INFO  o.s.j.e.a.AnnotationMBeanExporter -Unregistering JMX-exposed beans on shutdown
+2018-08-22 10:03:56.433 [main] INFO  o.s.j.e.a.AnnotationMBeanExporter -Unregistering JMX-exposed beans
+2018-08-22 10:03:56.473 [Xmemcached-Reactor-1] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.473 [Xmemcached-Reactor-7] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.483 [Xmemcached-Reactor-1] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.493 [Xmemcached-Reactor-1] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.493 [Xmemcached-Reactor-1] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.493 [Xmemcached-Reactor-1] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.493 [Xmemcached-Reactor-1] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.493 [Xmemcached-Reactor-1] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.503 [Xmemcached-Reactor-4] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.503 [Xmemcached-Reactor-2] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.503 [Xmemcached-Reactor-2] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.513 [Xmemcached-Reactor-4] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.513 [Xmemcached-Reactor-4] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.513 [Xmemcached-Reactor-4] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.513 [Xmemcached-Reactor-4] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.513 [Xmemcached-Reactor-3] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.513 [Xmemcached-Reactor-5] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.523 [Xmemcached-Reactor-7] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.523 [Xmemcached-Reactor-7] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.523 [Xmemcached-Reactor-7] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.523 [Xmemcached-Reactor-7] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.523 [Xmemcached-Reactor-6] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.533 [Xmemcached-Reactor-5] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.533 [Xmemcached-Reactor-3] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.533 [Xmemcached-Reactor-4] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.533 [Xmemcached-Reactor-4] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.533 [Xmemcached-Reactor-3] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.533 [Xmemcached-Reactor-5] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.533 [Xmemcached-Reactor-6] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.543 [Xmemcached-Reactor-7] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.543 [Xmemcached-Reactor-5] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.543 [Xmemcached-Reactor-3] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.543 [Xmemcached-Reactor-2] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.543 [Xmemcached-Reactor-3] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.543 [Xmemcached-Reactor-3] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.553 [Xmemcached-Reactor-5] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.553 [Xmemcached-Reactor-7] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.553 [Xmemcached-Reactor-6] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.553 [Xmemcached-Reactor-6] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.553 [Xmemcached-Reactor-5] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.553 [Xmemcached-Reactor-3] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.553 [Xmemcached-Reactor-2] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.563 [Xmemcached-Reactor-5] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.563 [Xmemcached-Reactor-6] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.563 [Xmemcached-Reactor-2] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.563 [Xmemcached-Reactor-6] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.563 [Xmemcached-Reactor-2] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.563 [Xmemcached-Reactor-6] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.563 [Xmemcached-Reactor-2] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.573 [Xmemcached-Reactor-2] WARN  c.g.c.y.core.impl.AbstractController -Client in failure mode,we don't remove session 127.0.0.175:11211
+2018-08-22 10:03:56.573 [main] INFO  c.g.c.y.core.impl.AbstractController -Controller has been stopped.
+2018-08-22 10:04:27.099 [main] INFO  com.whty.wfd.main.Application -Starting Application v0.0.1-SNAPSHOT on lx-PC with PID 7848 (E:\workspace\wfd\target\wfd.jar started by lx in E:\workspace\wfd\target)
+2018-08-22 10:04:27.109 [main] DEBUG com.whty.wfd.main.Application -Running with Spring Boot v1.5.2.RELEASE, Spring v4.3.7.RELEASE
+2018-08-22 10:04:27.109 [main] INFO  com.whty.wfd.main.Application -No active profile set, falling back to default profiles: default
+2018-08-22 10:04:27.219 [main] INFO  o.s.b.c.e.AnnotationConfigEmbeddedWebApplicationContext -Refreshing org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@32a1bec0: startup date [Wed Aug 22 10:04:27 CST 2018]; root of context hierarchy
+2018-08-22 10:04:28.639 [main] INFO  o.s.b.f.s.DefaultListableBeanFactory -Overriding bean definition for bean 'myInterceptor' with a different definition: replacing [Generic bean: class [com.whty.wfd.common.interceptor.MyInterceptor]; scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in URL [jar:file:/E:/workspace/wfd/target/wfd.jar!/BOOT-INF/classes!/com/whty/wfd/common/interceptor/MyInterceptor.class]] with [Root bean: class [null]; scope=; abstract=false; lazyInit=false; autowireMode=3; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=applicationConfig; factoryMethodName=myInterceptor; initMethodName=null; destroyMethodName=(inferred); defined in class path resource [com/whty/wfd/main/ApplicationConfig.class]]
+2018-08-22 10:04:28.649 [main] INFO  o.s.b.f.xml.XmlBeanDefinitionReader -Loading XML bean definitions from class path resource [application-bean.xml]
+2018-08-22 10:04:28.794 [main] INFO  o.s.b.f.s.DefaultListableBeanFactory -Overriding bean definition for bean 'cacheInit' with a different definition: replacing [Generic bean: class [com.whty.wfd.common.cache.CacheInit]; scope=singleton; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in URL [jar:file:/E:/workspace/wfd/target/wfd.jar!/BOOT-INF/classes!/com/whty/wfd/common/cache/CacheInit.class]] with [Generic bean: class [com.whty.wfd.common.cache.CacheInit]; scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in class path resource [application-bean.xml]]
+2018-08-22 10:04:29.144 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate -Multiple Spring Data modules found, entering strict repository configuration mode!
+2018-08-22 10:04:32.515 [main] INFO  o.s.c.s.PostProcessorRegistrationDelegate$BeanPostProcessorChecker -Bean 'org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration' of type [org.springframework.transaction.annotation.ProxyTransactionManagementConfiguration$$EnhancerBySpringCGLIB$$aad66d74] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2018-08-22 10:04:33.365 [main] INFO  o.s.b.c.e.t.TomcatEmbeddedServletContainer -Tomcat initialized with port(s): 8080 (http)
+2018-08-22 10:04:33.395 [main] INFO  o.a.catalina.core.StandardService -Starting service Tomcat
+2018-08-22 10:04:33.395 [main] INFO  o.a.catalina.core.StandardEngine -Starting Servlet Engine: Apache Tomcat/8.5.11
+2018-08-22 10:04:34.765 [localhost-startStop-1] INFO  org.apache.jasper.servlet.TldScanner -At least one JAR was scanned for TLDs yet contained no TLDs. Enable debug logging for this logger for a complete list of JARs that were scanned but no TLDs were found in them. Skipping unneeded JARs during scanning can improve startup time and JSP compilation time.
+2018-08-22 10:04:34.825 [localhost-startStop-1] INFO  o.a.c.c.C.[.[localhost].[/wfd] -Initializing Spring embedded WebApplicationContext
+2018-08-22 10:04:34.825 [localhost-startStop-1] INFO  o.s.web.context.ContextLoader -Root WebApplicationContext: initialization completed in 7606 ms
+2018-08-22 10:04:35.055 [localhost-startStop-1] INFO  o.s.b.w.s.ServletRegistrationBean -Mapping servlet: 'dispatcherServlet' to [/]
+2018-08-22 10:04:35.065 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean -Mapping filter: 'characterEncodingFilter' to: [/*]
+2018-08-22 10:04:35.065 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean -Mapping filter: 'hiddenHttpMethodFilter' to: [/*]
+2018-08-22 10:04:35.065 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean -Mapping filter: 'httpPutFormContentFilter' to: [/*]
+2018-08-22 10:04:35.065 [localhost-startStop-1] INFO  o.s.b.w.s.FilterRegistrationBean -Mapping filter: 'requestContextFilter' to: [/*]
+2018-08-22 10:04:35.185 [main] INFO  com.whty.wfd.common.cache.CacheInit ----------------------开启错误处理线程-------------------------
+2018-08-22 10:04:36.805 [main] WARN  n.r.xmemcached.XMemcachedClient -XMemcachedClient is using Text protocol
+2018-08-22 10:04:36.855 [main] WARN  n.r.xmemcached.XMemcachedClient -XMemcachedClient in failure mode.
+2018-08-22 10:04:36.855 [main] INFO  c.g.c.y.nio.impl.SelectorManager -Creating 8 reactors...
+2018-08-22 10:04:36.885 [main] WARN  c.g.c.y.core.impl.AbstractController -The Controller started at localhost/127.0.0.1:0 ...
+2018-08-22 10:04:36.885 [main] WARN  n.r.xmemcached.XMemcachedClient -You are using connection pool for xmemcached client,it's not recommended unless you have test it that it can boost performance in your app.
+2018-08-22 10:04:36.905 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:36.915 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:36.925 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:36.935 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:36.935 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:36.945 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:36.955 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:36.965 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:36.965 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:36.975 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:36.985 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:36.985 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:36.995 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.005 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.015 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.015 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.025 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.035 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.045 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.045 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.055 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.065 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.065 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.075 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.085 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.095 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.105 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.105 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.115 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.125 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.135 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.135 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.145 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.155 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.155 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.165 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.175 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.185 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.185 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.195 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.205 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.215 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.225 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.225 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.235 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.245 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.245 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.255 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.265 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.265 [Xmemcached-Reactor-0] WARN  c.g.c.y.core.impl.AbstractController -Add a session: 127.0.0.175:11211
+2018-08-22 10:04:37.525 [main] INFO  com.whty.wfd.main.RedisConfig -JedisConnectionFactory bean init success.
+2018-08-22 10:04:38.176 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerAdapter -Looking for @ControllerAdvice: org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@32a1bec0: startup date [Wed Aug 22 10:04:27 CST 2018]; root of context hierarchy
+2018-08-22 10:04:38.306 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/getCollection]}" onto public java.lang.String com.whty.wfd.page.controller.CollectionController.getCollection(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,org.springframework.ui.ModelMap)
+2018-08-22 10:04:38.306 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/index]}" onto public java.lang.String com.whty.wfd.page.controller.IndexController.index(org.springframework.ui.ModelMap)
+2018-08-22 10:04:38.306 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/getLike]}" onto public java.lang.String com.whty.wfd.page.controller.LikeController.getLike(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,org.springframework.ui.ModelMap)
+2018-08-22 10:04:38.316 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/getLikeList]}" onto public void com.whty.wfd.page.controller.LikeController.getLikeList(javax.servlet.http.HttpServletResponse,java.lang.Integer,java.lang.Integer)
+2018-08-22 10:04:38.316 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/classManage.html]}" onto public java.lang.String com.whty.wfd.page.controller.ManagerController.classManage(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:04:38.326 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/deleteClass]}" onto public void com.whty.wfd.page.controller.ManagerController.deleteClass(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:04:38.326 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/createClass.html]}" onto public java.lang.String com.whty.wfd.page.controller.ManagerController.createClass(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:04:38.326 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/saveClass]}" onto public void com.whty.wfd.page.controller.ManagerController.saveClass(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:04:38.326 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/saveStudent]}" onto public void com.whty.wfd.page.controller.ManagerController.saveStudent(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:04:38.326 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/addStudent.html]}" onto public java.lang.String com.whty.wfd.page.controller.ManagerController.addStudent(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:04:38.336 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/getStudent]}" onto public void com.whty.wfd.page.controller.ManagerController.getStudent(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:04:38.336 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/searchStudent]}" onto public void com.whty.wfd.page.controller.ManagerController.searchStudent(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:04:38.336 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/sendMessage]}" onto public java.lang.String com.whty.wfd.page.controller.MessageController.sendMessage()
+2018-08-22 10:04:38.346 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/addMessage]}" onto public void com.whty.wfd.page.controller.MessageController.addMessage(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,java.lang.String,java.lang.Integer,java.lang.String[],java.lang.String[])
+2018-08-22 10:04:38.346 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/addImage]}" onto public void com.whty.wfd.page.controller.MessageController.addMessage(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:04:38.346 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/getPostMessage]}" onto public java.lang.String com.whty.wfd.page.controller.MessageController.getPostMessage(javax.servlet.http.HttpServletResponse,javax.servlet.http.HttpServletRequest,org.springframework.ui.ModelMap)
+2018-08-22 10:04:38.356 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/plate/delete]}" onto public void com.whty.wfd.page.controller.PlateManageController.delete(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:04:38.356 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/plate/create.html]}" onto public java.lang.String com.whty.wfd.page.controller.PlateManageController.create(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:04:38.356 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/plate/list.html]}" onto public java.lang.String com.whty.wfd.page.controller.PlateManageController.list(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:04:38.356 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/plate/save]}" onto public void com.whty.wfd.page.controller.PlateManageController.save(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:04:38.366 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/plate/saveTeacher]}" onto public void com.whty.wfd.page.controller.PlateManageController.saveStudent(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:04:38.366 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/plate/edit.html]}" onto public java.lang.String com.whty.wfd.page.controller.PlateManageController.edit(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:04:38.366 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/plate/addTeacher.html]}" onto public java.lang.String com.whty.wfd.page.controller.PlateManageController.addTeacher(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:04:38.366 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/manager/plate/saveTmp]}" onto public void com.whty.wfd.page.controller.PlateManageController.saveTmp(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:04:38.376 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/sendPost],methods=[GET]}" onto public java.lang.String com.whty.wfd.page.controller.PostController.sendPost()
+2018-08-22 10:04:38.376 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/getPostDetail],methods=[GET]}" onto public java.lang.String com.whty.wfd.page.controller.PostController.getPostDetail(javax.servlet.http.HttpServletResponse,javax.servlet.http.HttpServletRequest)
+2018-08-22 10:04:38.376 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/getPostList],methods=[GET]}" onto public void com.whty.wfd.page.controller.PostController.getPostList(javax.servlet.http.HttpServletResponse,java.lang.Integer,java.lang.Integer)
+2018-08-22 10:04:38.376 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/getUserPost],methods=[GET]}" onto public java.lang.String com.whty.wfd.page.controller.PostController.getUserPost()
+2018-08-22 10:04:38.376 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/addPost],methods=[POST]}" onto public void com.whty.wfd.page.controller.PostController.addPost(java.lang.String,java.lang.String,java.lang.String[],java.lang.String[])
+2018-08-22 10:04:38.386 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/getReply]}" onto public java.lang.String com.whty.wfd.page.controller.ReplyController.gerReply(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse,org.springframework.ui.ModelMap)
+2018-08-22 10:04:38.386 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/teacher/index.html]}" onto public java.lang.String com.whty.wfd.page.controller.TeacherController.index(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:04:38.386 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/teacher/getTopPlatePostList]}" onto public void com.whty.wfd.page.controller.TeacherController.getTopPlatePostList(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:04:38.396 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/teacher/plateList]}" onto public void com.whty.wfd.page.controller.TeacherController.plateList(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:04:38.396 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/teacher/plate.html]}" onto public java.lang.String com.whty.wfd.page.controller.TeacherController.plate(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:04:38.396 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/teacher/platePostList]}" onto public void com.whty.wfd.page.controller.TeacherController.getPlatePostList(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:04:38.396 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/page/teacher/detail.html]}" onto public java.lang.String com.whty.wfd.page.controller.TeacherController.detail(javax.servlet.http.HttpServletRequest,org.springframework.ui.Model,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:04:38.406 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/error]}" onto public org.springframework.http.ResponseEntity<java.util.Map<java.lang.String, java.lang.Object>> org.springframework.boot.autoconfigure.web.BasicErrorController.error(javax.servlet.http.HttpServletRequest)
+2018-08-22 10:04:38.406 [main] INFO  o.s.w.s.m.m.a.RequestMappingHandlerMapping -Mapped "{[/error],produces=[text/html]}" onto public org.springframework.web.servlet.ModelAndView org.springframework.boot.autoconfigure.web.BasicErrorController.errorHtml(javax.servlet.http.HttpServletRequest,javax.servlet.http.HttpServletResponse)
+2018-08-22 10:04:38.466 [main] INFO  o.s.w.s.h.SimpleUrlHandlerMapping -Mapped URL path [/webjars/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-08-22 10:04:38.466 [main] INFO  o.s.w.s.h.SimpleUrlHandlerMapping -Mapped URL path [/**] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-08-22 10:04:38.546 [main] INFO  o.s.w.s.h.SimpleUrlHandlerMapping -Mapped URL path [/**/favicon.ico] onto handler of type [class org.springframework.web.servlet.resource.ResourceHttpRequestHandler]
+2018-08-22 10:04:39.286 [main] INFO  o.s.u.f.SpringTemplateLoader -SpringTemplateLoader for FreeMarker: using resource loader [org.springframework.boot.context.embedded.AnnotationConfigEmbeddedWebApplicationContext@32a1bec0: startup date [Wed Aug 22 10:04:27 CST 2018]; root of context hierarchy] and template loader path [classpath:/templates/]
+2018-08-22 10:04:39.296 [main] INFO  o.s.w.s.v.f.FreeMarkerConfigurer -ClassTemplateLoader for Spring macros added to FreeMarker configuration
+2018-08-22 10:04:39.496 [main] INFO  o.s.j.e.a.AnnotationMBeanExporter -Registering beans for JMX exposure on startup
+2018-08-22 10:04:39.496 [main] INFO  o.s.j.e.a.AnnotationMBeanExporter -Bean with name 'memcachedClient' has been autodetected for JMX exposure
+2018-08-22 10:04:39.506 [main] INFO  o.s.j.e.a.AnnotationMBeanExporter -Located MBean 'memcachedClient': registering with JMX server as MBean [net.rubyeye.xmemcached:name=memcachedClient,type=XMemcachedClient]
+2018-08-22 10:04:39.596 [main] INFO  o.s.b.c.e.t.TomcatEmbeddedServletContainer -Tomcat started on port(s): 8080 (http)
+2018-08-22 10:04:39.606 [main] INFO  com.whty.wfd.main.Application -Started Application in 13.117 seconds (JVM running for 14.132)
+2018-08-22 10:04:45.900 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[.[localhost].[/wfd] -Initializing Spring FrameworkServlet 'dispatcherServlet'
+2018-08-22 10:04:45.902 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -FrameworkServlet 'dispatcherServlet': initialization started
+2018-08-22 10:04:45.937 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet -FrameworkServlet 'dispatcherServlet': initialization completed in 34 ms
+2018-08-22 10:04:49.710 [http-nio-8080-exec-3] DEBUG c.w.w.p.d.T.getPostByUserId_COUNT -==>  Preparing: SELECT count(0) FROM t_plate_post tpp LEFT JOIN t_plate tp ON tpp.plate_id = tp.id LEFT JOIN (SELECT count(tpm.id) pnum, tpm.plate_post_id FROM t_post_message tpm GROUP BY tpm.plate_post_id) tpmg ON tpmg.plate_post_id = tpp.id LEFT JOIN (SELECT count(tpl.plate_post_id) dnum, tpl.plate_post_id FROM t_post_like tpl GROUP BY tpl.plate_post_id) tplg ON tplg.plate_post_id = tpp.id WHERE tpp.creator = ? 
+2018-08-22 10:04:49.730 [http-nio-8080-exec-3] DEBUG c.w.w.p.d.T.getPostByUserId_COUNT -==> Parameters: 1(Integer)
+2018-08-22 10:04:49.770 [http-nio-8080-exec-3] DEBUG c.w.w.p.d.T.getPostByUserId_COUNT -<==      Total: 1
+2018-08-22 10:04:49.780 [http-nio-8080-exec-3] DEBUG c.w.w.p.d.T.getPostByUserId -==>  Preparing: select tpmg.pnum message_count,tplg.dnum like_count,tp.name plate_name,tpp .id id ,tpp.plate_id,tpp.creator,tpp.create_time,tpp.update_time,tpp.content,tpp.is_top,tpp.is_delete from t_plate_post tpp LEFT JOIN t_plate tp on tpp.plate_id = tp.id LEFT JOIN (SELECT count(tpm.id)pnum,tpm.plate_post_id from t_post_message tpm GROUP BY tpm.plate_post_id) tpmg on tpmg.plate_post_id = tpp.id LEFT JOIN (SELECT count(tpl.plate_post_id)dnum,tpl.plate_post_id from t_post_like tpl GROUP BY tpl.plate_post_id) tplg on tplg.plate_post_id = tpp.id where tpp.creator =? LIMIT ? 
+2018-08-22 10:04:49.780 [http-nio-8080-exec-3] DEBUG c.w.w.p.d.T.getPostByUserId -==> Parameters: 1(Integer), 4(Integer)
+2018-08-22 10:04:49.830 [http-nio-8080-exec-3] DEBUG c.w.w.p.d.T.getPostByUserId -<==      Total: 2

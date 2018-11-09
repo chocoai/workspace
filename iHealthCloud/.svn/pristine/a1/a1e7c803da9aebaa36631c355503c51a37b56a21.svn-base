@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>孝康通</title>
+	<!-- Bootstrap -->
+	<link th:href="@{/pages/mall/css/bootstrap.min.css}" rel="stylesheet">
+	<!-- FontAwesome 4.7.0字体 -->
+	<link th:href="@{/pages/mall/css/font-awesome.min.css}" rel="stylesheet">
+	<!-- 自定义css -->
+	<link th:href="@{/pages/mall/css/mymall.css}" rel="stylesheet">
+    <!--layer -->
+    <link th:href="@{/pages/mall/css/layer_mobile/need/layer.css}" rel="stylesheet">
+    <link th:href="@{/pages/mall/css/animate.min.css}" rel="stylesheet" >
+    
+  </head>
+  <body class="other-mall" onload="showTime()">
+  	<input type="hidden" th:value="${order.orderStatus}" id="orderstatus">
+  	<input type="hidden" th:value="${order.orderId}" id="orderId">
+    <input type="hidden" th:value="${type}" id="type">
+    <!-- 订单剩余有效时长(秒) -->
+    <input type="hidden" th:value="${valid}" id="valid" th:if="${valid} !=null" >
+    <!-- 订单号 -->
+  	<input type="hidden" id="orderNumber">
+    <!-- 导航 开始 -->
+    <nav class="navbar navbar-default navbar-fixed-top navbar-mall-other">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a th:href="@{'/h5/admin/myOrders/'+${type}}" class="othertop-left"><i class="fa fa-angle-left icon-back"></i></a>
+         		 订单详情
+          <div class="othertop-right">
+            <a th:href="@{/h5/mycenter}"><i class="fa fa-user-o"></i></a>
+            <a th:href="@{/h5}"><i class="fa fa-home"></i></a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- 导航 结束 -->
+
+    <!-- 订单状态订单号 开始 -->
+    <lable th:switch="${order.orderStatus}">
+	    <div class="order-detail-info" th:case="0"><!-- 0:待支付 -->
+	      <p class="thisorder-state">订单状态：等待买家付款</p>
+	      <p class="thisorder-other">订单号：<lable th:text="${order.cext1}">5956258966</lable></p>
+	      <p class="thisorder-other">下单时间：<lable th:text="${order.createTime}">2017-12-12 15:12:12</lable></p>
+	      <p class="thisorder-other">您的订单已提交，请在<span id="currentTime"></span>内完成支付，超时将关闭订单</p>
+	    </div>
+	    <div class="order-detail-info" th:case="1"><!-- 1:待发货 -->
+	      <p class="thisorder-state">订单状态：卖家正在发货，请耐心等待</p>
+	      <p class="thisorder-other">订单号：<lable th:text="${order.cext1}">5956258966</lable></p>
+	      <p class="thisorder-other">下单时间：<lable th:text="${order.createTime}">2017-12-12 15:12:12</lable></p>
+	    </div>
+	    <div class="order-detail-info" th:case="2"><!-- 2:待收货 -->
+	      <p class="thisorder-state">订单状态：你的宝贝正长途跋涉向你赶来</p>
+	      <p class="thisorder-other">订单号：<lable th:text="${order.cext1}">5956258966</lable></p>
+	      <p class="thisorder-other">下单时间：<lable th:text="${order.createTime}">2017-12-12 15:12:12</lable></p>
+	    </div>
+	    <div class="order-detail-info" th:case="3"><!-- 3:待评价 -->
+	      <p class="thisorder-state">订单状态：待评价</p>
+	      <p class="thisorder-other">订单号：<lable th:text="${order.cext1}">5956258966</lable></p>
+	      <p class="thisorder-other">下单时间：<lable th:text="${order.createTime}">2017-12-12 15:12:12</lable></p>
+	    </div>
+	    <div class="order-detail-info" th:case="4"><!-- 4:已完成 -->
+	      <p class="thisorder-state">订单状态：交易成功</p>
+	      <p class="thisorder-other">订单号：<lable th:text="${order.cext1}">5956258966</lable></p>
+	      <p class="thisorder-other">下单时间：<lable th:text="${order.createTime}">2017-12-12 15:12:12</lable></p>
+	    </div>
+	    <div class="order-detail-info" th:case="5"><!-- 5:退货中 -->
+	      <p class="thisorder-state">订单状态：退货中</p>
+	      <p class="thisorder-other">订单号：<lable th:text="${order.cext1}">5956258966</lable></p>
+	      <p class="thisorder-other">下单时间：<lable th:text="${order.createTime}">2017-12-12 15:12:12</lable></p>
+	    </div>
+	    <div class="order-detail-info" th:case="6"><!-- 6:已退款 -->
+	      <p class="thisorder-state">订单状态：已退款</p>
+	      <p class="thisorder-other">订单号：<lable th:text="${order.cext1}">5956258966</lable></p>
+	      <p class="thisorder-other">下单时间：<lable th:text="${order.createTime}">2017-12-12 15:12:12</lable></p>
+	    </div>
+	    <div class="order-detail-info" th:case="*"><!-- -1:取消订单-->
+	      <p class="thisorder-state">订单状态：交易关闭</p>
+	      <p class="thisorder-other">订单号：<lable th:text="${order.cext1}">5956258966</lable></p>
+	      <p class="thisorder-other">下单时间：<lable th:text="${order.createTime}">2017-12-12 15:12:12</lable></p>
+	    </div>
+    </lable>
+    
+    <!-- 订单状态订单号 结束 -->
+
+    <!-- 支付金额 开始 -->
+    <div class="order-money">
+      <i class="fa fa-folder-open-o"></i>
+    	  支付金额：<span>￥
+    	   <lable th:text="${order.orderAmount}" th:if="${type eq 'goods'}"></lable>
+           <lable th:text="${order.unitPrice}" th:if="${type eq 'service'}">799</lable>
+    	  </span>
+    </div>
+    <!-- 支付金额 结束 -->
+
+    <!-- 收货地址 开始 -->
+    <div class="deliveryaddress">
+      <!-- 有收货地址 开始 -->
+      <div class="hasaddress">
+       	<lable th:switch="${order.orderStatus}">
+	        <a th:case="0" href="javascript:void(0)" onclick="getChooseAddress()">
+		          <div class="hasaddress-l col-xs-11 nopad-lr" th:if="${type eq 'goods'}">
+		            <p>收货人：
+		            	<lable th:text="${order.recipient}">王大锤</lable>
+		              	<lable th:text="${order.phoneNum}">15612235645</lable>	
+		            </p>
+		            <p>收货地址：<lable th:text="${order.address}">湖北省武汉市江夏区九峰街道花山大道九峰德欣里社区5栋2单元101</lable></p>
+		          </div>
+		          <div class="hasaddress-l col-xs-11 nopad-lr" th:if="${type eq 'service'}">
+		            <p>服务对象：
+		              		<lable th:text="${order.serviceObject}">王大锤</lable>
+		             		<lable th:text="${order.tel}">15612235645</lable>	
+		            </p>
+		            <p>服务地址：<lable th:text="${order.address}">湖北省武汉市江夏区九峰街道花山大道九峰德欣里社区5栋2单元101</lable></p>
+		          </div>
+		          <div class="hasaddress-r col-xs-1 nopad-r"><i class="fa fa-angle-right"></i></div>
+	        </a>
+	        <a th:case="*" href="javascript:void(0);">
+		          <div class="hasaddress-l col-xs-11 nopad-lr" th:if="${type eq 'goods'}">
+		            <p>收货人：
+		            	<lable th:text="${order.recipient}">王大锤</lable>
+		              	<lable th:text="${order.phoneNum}">15612235645</lable>	
+		            </p>
+		            <p>收货地址：<lable th:text="${order.address}">湖北省武汉市江夏区九峰街道花山大道九峰德欣里社区5栋2单元101</lable></p>
+		          </div>
+		          <div class="hasaddress-l col-xs-11 nopad-lr" th:if="${type eq 'service'}">
+		            <p>服务对象：
+		              		<lable th:text="${order.serviceObject}">王大锤</lable>
+		             		<lable th:text="${order.tel}">15612235645</lable>	
+		            </p>
+		            <p>服务地址：<lable th:text="${order.address}">湖北省武汉市江夏区九峰街道花山大道九峰德欣里社区5栋2单元101</lable></p>
+		          </div>
+	        </a>
+	    </lable>     
+      </div>
+      <!-- 有收货地址 结束 -->
+    </div>
+    <!-- 收货地址 结束 -->
+
+    <!-- 商品信息 开始 -->
+    <div class="goods-info mar-b20">
+      <div class="goods-info-hd"><lable th:switch="${type}"><span th:case="goods">商品</span><span th:case="service">服务</span><span th:case="*"></span></lable>信息</div>
+      <div class="goods-info-bd">
+        <ul th:if="${type eq 'goods'}">
+		    <li th:each="orderDetail,oStat : ${order.orderDetails}">
+         		<a th:href="@{'/h5/goods/detail/'+${orderDetail.goods.goodsId}}">
+		            <div class="col-xs-3 nopad-lr">
+		               <img th:if="${orderDetail.goods.titleImg} ==null" th:src="@{/pages/mall/images/good01.png}" class="img-responsive">
+			           <img th:if="${orderDetail.goods.titleImg} !=null" th:src="${orderDetail.goods.titleImg}" class="img-responsive">
+		            </div>
+		            <div class="col-xs-9">
+		              <p class="goods-info-name" th:text="${orderDetail.goods.goodsName}">老年健康智能手表 实时监测步数、血压 心率、血糖</p>
+		              <p class="goods-info-other">
+		                <span class="goods-info-price">￥<lable th:text="${orderDetail.price}">799</lable></span>
+		                <span class="goods-info-number">x<lable th:text="${orderDetail.amount}">1</lable></span>
+		              </p>
+		            </div>
+		    	</a>
+		    	 <lable th:switch="${orderDetail.status}">
+		            <div class="col-xs-12 gotoreturn" th:case="1">
+		              <a th:href="@{'/h5/admin/myBackOrderTo/goods?cid='+${orderDetail.cid}}+'&orderid='+${orderDetail.orderId}">退款</a>
+		            </div>
+		            <div class="col-xs-12 gotoreturn" th:case="2">
+		              <a th:href="@{'/h5/admin/myBackOrderTo/goods?cid='+${orderDetail.cid}}+'&orderid='+${orderDetail.orderId}">退款</a>
+		            </div>
+		            <div class="col-xs-12 gotoreturn" th:case="3">
+		              <a th:href="@{'/h5/admin/myBackOrderTo/goods?cid='+${orderDetail.cid}}+'&orderid='+${orderDetail.orderId}">退款</a>
+		            </div>
+		            <div class="col-xs-12 gotoreturn" th:case="5">
+		              <a href="javascript:void(0);">退款中</a>
+		            </div>
+		            <div class="col-xs-12 gotoreturn" th:case="6">
+		              <a href="javascript:void(0);">已退款</a>
+		            </div>
+		         </lable>   
+		    </li>
+        </ul>
+        <ul th:if="${type eq 'service'}">
+	        <li>
+        		<a th:href="@{'/h5/service/detail/'+${order.serviceId}}">
+	                 <div class="col-xs-3 nopad-lr">
+	                     <img th:if="${order.service.titleImg} ==null" th:src="@{/pages/mall/images/service01.jpg}" class="img-responsive">
+	                 	 <img th:if="${order.service.titleImg} !=null" th:src="${order.service.titleImg}" class="img-responsive">
+	                 </div>
+	                 <div class="col-xs-9">
+	                   <p class="goods-info-name" th:text="${order.orderContent}">上门理发</p>
+	                   <p class="goods-info-other">
+	                     <span class="goods-info-price">￥<lable th:text="${order.unitPrice}">799</lable></span>
+	                     <span class="goods-info-number">x<lable th:text="${order.amount}">1</lable></span>
+	                   </p>
+	                 </div>
+                 </a>
+               	 <lable th:switch="${order.orderStatus}">
+		            <div class="col-xs-12 gotoreturn" th:case="1">
+		              <a th:href="@{'/h5/admin/myBackOrderTo/goods?cid='+${order.cid}}+'&orderid='+${order.orderId}">退款</a>
+		            </div>
+		            <div class="col-xs-12 gotoreturn" th:case="2">
+		              <a th:href="@{'/h5/admin/myBackOrderTo/goods?cid='+${order.cid}}+'&orderid='+${order.orderId}">退款</a>
+		            </div>
+		            <div class="col-xs-12 gotoreturn" th:case="3">
+		              <a th:href="@{'/h5/admin/myBackOrderTo/goods?cid='+${order.cid}}+'&orderid='+${order.orderId}">退款</a>
+		            </div>
+		            <div class="col-xs-12 gotoreturn" th:case="5">
+		              <a href="javascript:void(0);">退款中</a>
+		            </div>
+		            <div class="col-xs-12 gotoreturn" th:case="6">
+		              <a href="javascript:void(0);">已退款</a>
+		            </div>
+		         </lable>   
+	        </li>
+        </ul>
+      </div>
+    </div>
+    <!-- 商品信息 结束 -->
+
+    <!-- 固定底部的去支付 开始 -->
+    <nav class="navbar navbar-default navbar-fixed-bottom mall-parts">
+      <div class="container-fluid nopad-lr">
+        <div class="mall-fixed-bottom" th:switch="${order.orderStatus}">
+        	 <p th:case="0">
+		          <a href="javascript:void(0)" class="order-deal ordersPay" th:id="${order.cext1}" lang="goods" th:if="${type eq 'goods'}" >立即付款</a>
+				  <a href="javascript:void(0)" class="order-deal ordersPay" th:id="${order.cext1}" lang="service" th:if="${type eq 'service'}">立即付款</a>
+		          <a href="javaScript:void(0)" class="order-deal orderDel" th:id="${order.orderId}">取消订单</a>
+			 </p>
+        	 <p th:case="3">
+		          <a th:href="@{'/h5/admin/myOrdersComTo/'+${type}+'?cid='+${order.orderId}}" class="order-deal order-deal-green">评价</a>
+			 </p>
+        	 <p th:case="*">
+			 </p>
+        </div>
+      </div>
+    </nav>
+    <!-- 固定底部的去支付 结束 -->
+    
+    
+    <!-- 返回顶部 开始 -->
+    <div class="gototop" style="display: none;">
+      <a href="javascript:void(0)"><i class="glyphicon glyphicon-menu-up"></i></a>
+    </div>
+    <!-- 返回顶部 结束 -->
+    
+    <!-- Modal -->
+    <div class="modal fade animated slideInUp" id="ordersPay" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog payway-box" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <a href="javascript:void(0)" class="payway" id="small">支付宝</a>
+            <a href="javascript:void(0)" class="payway" id="weixin">微信</a>
+          </div>
+          <div class="modal-footer">
+            <a type="button" class="btn form-control" data-dismiss="modal">取消</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+	<script th:src="@{/pages/mall/js/jquery-1.9.1.min.js}"></script>
+	<script th:src="@{/pages/mall/js/bootstrap.min.js}"></script>
+    <script th:src="@{/pages/mall/css/layer_mobile/layer.js}"></script>
+    <!-- 自定义 公共方法 -->
+    <script th:src="@{/pages/mall/js/commont.js}"></script>
+    
+    <script type="text/javascript">
+      var valid = $("#valid").val(); 
+	  function showTime(){
+		  	var orderstatus = $("#orderstatus").val();
+		  	if(orderstatus!='0'){
+		  		return;
+		  	}
+			var validTime = parseInt(valid -1);
+			if(validTime>0){
+				valid = validTime;
+			    var time = timeout(parseInt(validTime / 60))+"分";
+				time+= timeout(parseInt(validTime % 60))+"秒";
+				document.getElementById("currentTime").innerHTML=time;
+	  			setTimeout("showTime()", 1000);
+			}else{
+				  var type = $("#type").val();
+				  var orderid = $("#orderid").val();
+				  $.ajax({
+					  url : projectName+"/h5/admin/myOrdersDel/"+type,
+						data : {
+							cid: orderid
+						},
+						dataType : "json",
+						async : false,
+						traditional : true,
+						cache : true,
+						success : function(data) {
+							if(data.status==202){
+								window.location.href=projectName+"/h5/login";
+							}else if(data.status==1){
+								window.location.reload();
+							}
+						}
+				  })
+			}
+	  }
+	  //判断
+	  function timeout(i){
+   		if(i<10){
+   			return "0"+i;
+   		}else{
+   			return i;
+   		}
+	  }
+	  function getChooseAddress(){
+		  	var url = window.location.href;
+		  	var type = $("#type").val();
+		  	var orderId = $("#orderId").val();
+		  	window.location.href=projectName+"/h5/admin/cart/getChooseAddress?status=2&type="+type+"&orderId="+orderId+"&url="+url;
+	  }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.ebp.manage.dao.AppDao">
+	<resultMap type="com.whty.ebp.manage.model.EbpApp" id="ebpAppResultPage">
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="app_name" property="app_name" jdbcType="VARCHAR"/>
+		<result column="product_id" property="product_id" jdbcType="VARCHAR"/>
+		<result column="version_code" property="version_code" jdbcType="VARCHAR"/>
+		<result column="inter_version_code" property="inter_version_code" jdbcType="VARCHAR"/>
+		<result column="description" property="description" jdbcType="VARCHAR"/>
+		<result column="file_path" property="file_path" jdbcType="VARCHAR"/>
+		<result column="old_file_name" property="old_file_name" jdbcType="VARCHAR"/>
+		<result column="file_size" property="file_size" jdbcType="BIGINT"/>
+		<result column="new_file_name" property="new_file_name" jdbcType="VARCHAR"/>
+		<result column="create_time" property="create_time" jdbcType="TIMESTAMP"/>
+		<result column="update_time" property="update_time" jdbcType="TIMESTAMP"/>
+		<result column="status" property="status" jdbcType="VARCHAR"/>
+		<result column="can_update" property="can_update" jdbcType="VARCHAR"/>
+		<result column="area_code" property="area_code" jdbcType="VARCHAR"/>
+		<result column="use_doc_path" property="use_doc_path" jdbcType="VARCHAR"/>
+		<result column="old_use_doc_name" property="old_use_doc_name" jdbcType="VARCHAR"/>
+		<result column="new_use_doc_name" property="new_use_doc_name" jdbcType="VARCHAR"/>
+		<result column="use_doc_file_size" property="use_doc_file_size" jdbcType="BIGINT"/>
+		<result column="product_name" property="product_name" jdbcType="VARCHAR"/>
+		<result column="ebookpackage_code" property="ebookpackage_code" jdbcType="VARCHAR"/>
+		<result column="flat_model_ids" property="flat_model_ids" jdbcType="VARCHAR"/>
+		<result column="baidu_bos_url" property="baiduBosUrl" jdbcType="VARCHAR"/>
+		<result column="icon_url" property="iconUrl" jdbcType="VARCHAR"/>
+		
+		<result column="md5" property="md5" jdbcType="VARCHAR"/>
+		
+	</resultMap>
+	
+	<resultMap type="com.whty.ebp.manage.model.EbpApp" id="ebpAppResult">
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="app_name" property="app_name" jdbcType="VARCHAR"/>
+		<result column="product_id" property="product_id" jdbcType="VARCHAR"/>
+		<result column="version_code" property="version_code" jdbcType="VARCHAR"/>
+		<result column="inter_version_code" property="inter_version_code" jdbcType="VARCHAR"/>
+		<result column="description" property="description" jdbcType="VARCHAR"/>
+		<result column="file_path" property="file_path" jdbcType="VARCHAR"/>
+		<result column="old_file_name" property="old_file_name" jdbcType="VARCHAR"/>
+		<result column="file_size" property="file_size" jdbcType="BIGINT"/>
+		<result column="new_file_name" property="new_file_name" jdbcType="VARCHAR"/>
+		<result column="create_time" property="create_time" jdbcType="TIMESTAMP"/>
+		<result column="update_time" property="update_time" jdbcType="TIMESTAMP"/>
+		<result column="status" property="status" jdbcType="VARCHAR"/>
+		<result column="can_update" property="can_update" jdbcType="VARCHAR"/>
+		<result column="area_code" property="area_code" jdbcType="VARCHAR"/>
+		<result column="use_doc_path" property="use_doc_path" jdbcType="VARCHAR"/>
+		<result column="old_use_doc_name" property="old_use_doc_name" jdbcType="VARCHAR"/>
+		<result column="new_use_doc_name" property="new_use_doc_name" jdbcType="VARCHAR"/>
+		<result column="use_doc_file_size" property="use_doc_file_size" jdbcType="BIGINT"/>
+		<result column="ebookpackage_code" property="ebookpackage_code" jdbcType="VARCHAR"/>
+		<result column="baidu_bos_url" property="baiduBosUrl" jdbcType="VARCHAR"/>
+		<result column="icon_url" property="iconUrl" jdbcType="VARCHAR"/>
+		
+		<result column="md5" property="md5" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<resultMap type="com.whty.ebp.manage.model.EbpApp" id="ebpAppResult_api">
+		<result column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="app_name" property="app_name" jdbcType="VARCHAR"/>
+		<result column="product_id" property="product_id" jdbcType="VARCHAR"/>
+		<result column="version_code" property="version_code" jdbcType="VARCHAR"/>
+		<result column="inter_version_code" property="inter_version_code" jdbcType="VARCHAR"/>
+		<result column="description" property="description" jdbcType="VARCHAR"/>
+		<result column="file_size" property="file_size" jdbcType="BIGINT"/>
+		<result column="area_code" property="area_code" jdbcType="VARCHAR"/>
+		<result column="product_name" property="product_name" jdbcType="VARCHAR"/>
+		<result column="product_code" property="product_code" jdbcType="VARCHAR"/>
+		<result column="product_ico_url" property="product_ico_url" jdbcType="VARCHAR"/>
+		<result column="product_type" property="product_type" jdbcType="VARCHAR"/>
+		<result column="apk_package_name" property="apk_package_name" jdbcType="VARCHAR"/>
+		<result column="ebookpackage_code" property="ebookpackage_code" jdbcType="VARCHAR"/>
+		<result column="flat_model_ids" property="flat_model_ids" jdbcType="VARCHAR"/>
+		<result column="flat_model" property="flatModel" jdbcType="VARCHAR"/>
+		<result column="platform_code" property="platformCode" jdbcType="VARCHAR"/>
+		<result column="baidu_bos_url" property="baiduBosUrl" jdbcType="VARCHAR"/>
+		<result column="icon_url" property="iconUrl" jdbcType="VARCHAR"/>
+		
+		<result column="md5" property="md5" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<resultMap type="com.whty.ebp.manage.model.EbpAppFile" id="AppFileResult">
+		<result column="id" property="id" jdbcType="VARCHAR" />
+		<result column="app_id" property="appId" jdbcType="VARCHAR" />
+		<result column="absolute_url" property="absoluteUrl" jdbcType="VARCHAR" />
+		<result column="file_name" property="fileName" jdbcType="VARCHAR" />
+		<result column="file_path" property="filePath" jdbcType="VARCHAR" />
+		<result column="file_size" property="fileSize" jdbcType="VARCHAR" />
+		<result column="file_md5" property="fileMd5" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_type" property="updateType" jdbcType="VARCHAR" />
+	</resultMap>
+	
+
+	<select id="listByCondition" parameterType="map" resultMap="ebpAppResultPage">
+		select t.md5,t.id,t.app_name,t.product_id,t.version_code,t.inter_version_code,t.description,
+			t.file_path,t.old_file_name,t.file_size,t.new_file_name,t.create_time,t.update_time,
+			t.status,t.can_update,t.area_code,t.use_doc_path,t.old_use_doc_name,
+			t.new_use_doc_name,t.use_doc_file_size,
+			(select product_name from EBP_PRODUCT where id=t.product_id) product_name
+		from EBP_APP t
+		right join EBP_PRODUCT p on t.product_id=p.id
+		where t.status='0'
+		<if test="productType != '' and productType != null">and p.product_type=#{productType}</if>
+		<if test="app_name != null and app_name != ''">and t.app_name like '%'||#{app_name}||'%'</if>
+		<if test="product_id != null and product_id != ''">and t.product_id = #{product_id}</if>
+		<if test="version_code != null and version_code !=''">and t.version_code like '%'||#{version_code}||'%'</if>
+		<if test="inter_version_code != null and inter_version_code != ''">and t.inter_version_code like '%'||#{inter_version_code}||'%'</if>
+		<if test="ebookpackage_code != null and ebookpackage_code != ''">and p.ebookpackage_code = #{ebookpackage_code}</if>
+		order by update_time desc
+	</select>
+	
+	<select id="getbaiduDownUrl" resultType="string" parameterType="string">
+		select baidu_bos_url from derivative_ebp_app where id=#{_parameter}
+	</select>
+	
+	<select id="getNewyidongjiangtaiEbpApp"  resultMap="ebpAppResultPage">
+		select * from EBP_APP where product_id='F9A6FA6C6294F9E1489C7D7A9510FC38' and can_update='1'
+	</select>
+	
+	
+	<select id="queryById" parameterType="string" resultMap="ebpAppResultPage">
+	select t.id,t.app_name,t.product_id,t.version_code,t.inter_version_code,t.description,
+			t.file_path,t.old_file_name,t.file_size,t.new_file_name,t.create_time,t.update_time,
+			t.status,t.can_update,t.area_code,t.use_doc_path,t.old_use_doc_name,
+			t.new_use_doc_name,t.use_doc_file_size,p.product_type,
+			p.product_name,(SELECT GROUP_CONCAT(flat_model_id) as flat_models_ids from EBP_APP_FLAT_MODEL where ebp_app_id=t.id) as flat_model_ids
+		from EBP_APP t
+		right join EBP_PRODUCT p on t.product_id=p.id
+		where t.id=#{_parameter}
+	</select>
+	
+	<insert id="save" parameterType="com.whty.ebp.manage.model.EbpApp">
+		insert into EBP_APP(
+		<trim suffixOverrides=",">
+		<if test="id != null">id,</if>
+		<if test="app_name != null">app_name,</if>
+		<if test="product_id != null">product_id,</if>
+		<if test="version_code != null">version_code,</if>
+		<if test="inter_version_code != null">inter_version_code,</if>
+		<if test="description != null">description,</if>
+		<if test="file_path != null">file_path,</if>
+		<if test="old_file_name != null">old_file_name,</if>
+		<if test="file_size != null">file_size,</if>
+		<if test="new_file_name != null">new_file_name,</if>
+		<if test="create_time != null">create_time,</if>
+		<if test="update_time != null">update_time,</if>
+		<if test="status != null">status,</if>
+		<if test="can_update != null">can_update,</if>
+		<if test="area_code != null">area_code,</if>
+		<if test="use_doc_path != null">use_doc_path,</if>
+		<if test="old_use_doc_name != null">old_use_doc_name,</if>
+		<if test="new_use_doc_name != null">new_use_doc_name,</if>
+		<if test="use_doc_file_size != null">use_doc_file_size,</if>
+		<if test="apk_package_name != null">apk_package_name,</if>
+		<if test="baiduBosUrl != null">baidu_bos_url,</if>
+		<if test="iconUrl != null">icon_url,</if>
+		<if test="md5 != null">md5,</if>
+		</trim>
+		)
+		values(
+		<trim suffixOverrides=",">
+		<if test="id != null">#{id},</if>
+		<if test="app_name != null">#{app_name},</if>
+		<if test="product_id != null">#{product_id},</if>
+		<if test="version_code != null">#{version_code},</if>
+		<if test="inter_version_code != null">#{inter_version_code},</if>
+		<if test="description != null">#{description},</if>
+		<if test="file_path != null">#{file_path},</if>
+		<if test="old_file_name != null">#{old_file_name},</if>
+		<if test="file_size != null">#{file_size},</if>
+		<if test="new_file_name != null">#{new_file_name},</if>
+		<if test="create_time != null">#{create_time},</if>
+		<if test="update_time != null">#{update_time},</if>
+		<if test="status != null">#{status},</if>
+		<if test="can_update != null">#{can_update},</if>
+		<if test="area_code != null">#{area_code},</if>
+		<if test="use_doc_path != null">#{use_doc_path},</if>
+		<if test="old_use_doc_name != null">#{old_use_doc_name},</if>
+		<if test="new_use_doc_name != null">#{new_use_doc_name},</if>
+		<if test="use_doc_file_size != null">#{use_doc_file_size},</if>
+		<if test="apk_package_name != null">#{apk_package_name},</if>
+		<if test="baiduBosUrl != null">#{baiduBosUrl},</if>
+		<if test="iconUrl != null">#{iconUrl},</if>
+		<if test="md5 != null">#{md5},</if>
+		</trim>
+		)
+	</insert>
+	
+	<update id="updateMd5" parameterType="com.whty.ebp.manage.model.EbpApp">
+		update ebp_app set md5=#{md5} where id=#{id}
+	</update>
+	
+	<update id="update" parameterType="com.whty.ebp.manage.model.EbpApp">
+		update EBP_APP set
+		<trim suffixOverrides=",">
+		<if test="app_name != null">app_name=#{app_name},</if>
+		<if test="product_id != null">product_id=#{product_id},</if>
+		<if test="description != null">description=#{description},</if>
+		<if test="update_time != null">update_time=#{update_time},</if>
+		<if test="status != null">status=#{status},</if>
+		<if test="version_code != null">version_code=#{version_code},</if>
+		<if test="inter_version_code != null">inter_version_code=#{inter_version_code},</if>
+		</trim>
+		where id=#{id}
+	</update>
+	
+	<!-- 根据产品id和应用id更新应用为不可以升级 -->
+	<update id="updateNoUpdate" parameterType="map">
+	    update EBP_APP set can_update='0' 
+	    where product_id=#{productId}
+	   	<if test="can_update != null and can_update != ''">and can_update=#{can_update}</if>
+	</update>
+	<!-- 根据更新应用 -->
+	<update id="updateByCondition" parameterType="map">
+	    update EBP_APP set id=#{id}
+	    <if test="can_update != null">, can_update=#{can_update}</if>
+	    <if test="status != null">, status=#{status}</if>
+	    where id=#{id}
+	</update>
+	
+	
+	
+
+	<select id="getNewProductAppListPlatformCode" parameterType="map" resultMap="ebpAppResult_api">
+	select t.md5,t.file_path,t.baidu_bos_url,t.id,t.app_name,t.product_id,t.version_code,t.inter_version_code,t.description,
+			t.file_size,t.area_code,p.product_name,p.ico_path product_ico_url,t.icon_url,
+			p.product_type,p.product_code,t.apk_package_name,t.create_time,
+			 (select group_concat(model_code) from EBP_APP_FLAT_MODEL t1,TA_FLAT_MODEL t2 
+   where t1.flat_model_id=t2.id and t1.EBP_APP_ID=t.id) as flat_model
+		from (select t1.* from EBP_APP t1, EBP_APP_PLATFORM_INFO t2,TA_PLATFORM_INFO t3 
+    where t1.id=t2.EBP_APP_ID and t2.PLATFORM_CODE=t3.PLATFORM_CODE and t3.PLATFORM_CODE=#{platformCode}) t
+		right join EBP_PRODUCT p on t.product_id=p.id
+		where t.status='0' and t.can_update=#{can_update} 
+		<if test="ebookpackage_code != null and ebookpackage_code != ''">
+			and p.ebookpackage_code = #{ebookpackage_code}
+		</if>
+		 order by t.create_time desc
+	</select>
+
+
+<select id="queryNewProductAppListByModelCodeAndPlatformCodeMap" parameterType="map" resultMap="ebpAppResult_api">
+ select t.md5,t.file_path,t.baidu_bos_url,t.id,t.app_name,t.product_id,t.version_code,t.inter_version_code,t.description,
+				t.file_size,t.area_code,p.product_name,p.ico_path product_ico_url,t.icon_url,
+				p.product_type,p.product_code,t.apk_package_name,(select group_concat(model_code) from EBP_APP_FLAT_MODEL t1,TA_FLAT_MODEL t2 where t1.flat_model_id=t2.id  and t1.EBP_APP_ID=t.id ) as flat_model,
+        (select group_concat(t2.platform_code) from EBP_APP_PLATFORM_INFO t1,TA_PLATFORM_INFO t2 where t1.PLATFORM_CODE=t2.platform_code  and t1.EBP_APP_ID=t.id ) as platform_code
+			from EBP_APP t
+			right join EBP_PRODUCT p on t.product_id=p.id 
+			where t.status='0' and t.can_update=#{can_update}  
+		<if test="ebookpackage_code != null and ebookpackage_code != ''">
+			and p.ebookpackage_code = #{ebookpackage_code}
+		</if>
+		 order by t.create_time desc
+</select>
+
+
+<select id="getNewProductAppModelCode" parameterType="map" resultMap="ebpAppResult_api">
+select t.md5,t.file_path,t.baidu_bos_url,t.id,t.app_name,t.product_id,t.version_code,t.inter_version_code,t.description,
+			t.file_size,t.area_code,p.product_name,p.ico_path product_ico_url,t.icon_url,
+			p.product_type,p.product_code,t.apk_package_name,t.create_time,
+(select group_concat(t1.platform_code) from EBP_APP_PLATFORM_INFO t1,
+TA_PLATFORM_INFO t2 where t1.platform_code=t2.platform_code and t1.EBP_APP_ID=t.id) as platform_code
+		from (select t1.* from EBP_APP t1, EBP_APP_FLAT_MODEL t2,TA_FLAT_MODEL t3 where t1.id=t2.EBP_APP_ID and t2.FLAT_MODEL_ID=t3.ID and t3.MODEL_CODE=#{modelCode}) t
+		right join EBP_PRODUCT p on t.product_id=p.id
+		where t.status='0' and t.can_update=#{can_update} 
+		<if test="ebookpackage_code != null and ebookpackage_code != ''">
+			and p.ebookpackage_code = #{ebookpackage_code}
+		</if>
+		 order by t.create_time desc
+	</select>	
+
+	<select id="getNewProductAppList" parameterType="map" resultMap="ebpAppResult_api">
+			select t.md5,t.file_path,t.id,t.app_name,t.product_id,t.version_code,t.inter_version_code,t.description,
+				t.file_size,t.area_code,p.product_name,p.ico_path product_ico_url,t.icon_url,
+				p.product_type,p.product_code,t.apk_package_name,t.baidu_bos_url
+			from EBP_APP t
+			right join EBP_PRODUCT p on t.product_id=p.id
+			where t.status='0' and t.can_update=#{can_update}  
+			<if test="ebookpackage_code != null and ebookpackage_code != ''">
+			and p.ebookpackage_code = #{ebookpackage_code}
+			</if>
+			and t.id not in(select EBP_APP_ID from EBP_APP_FLAT_MODEL GROUP BY EBP_APP_ID) 
+			and t.id not in(select EBP_APP_ID from EBP_APP_PLATFORM_INFO GROUP BY EBP_APP_ID)
+			 order by t.CREATE_TIME desc
+	</select>
+	
+	<select id="loadApp" resultMap="ebpAppResult">
+	 select t.id,t.app_name,t.product_id,t.version_code,t.inter_version_code,t.description,
+			t.file_path,t.old_file_name,t.file_size,t.new_file_name,t.create_time,t.update_time,
+			t.status,t.can_update,t.area_code,t.use_doc_path,t.old_use_doc_name,t.icon_url,
+			t.new_use_doc_name,t.use_doc_file_size
+		from EBP_APP t 
+		where t.status='0' and t.can_update!='0'
+		<if test="id != null and id != ''">and t.id=#{id}</if>
+	</select>
+	
+	
+	<select id="loadProductNewApp" parameterType="map" resultMap="ebpAppResult">
+	    select t.id,t.app_name,t.product_id,t.version_code,t.inter_version_code,t.description,
+			t.file_path,t.old_file_name,t.file_size,t.new_file_name,t.create_time,t.update_time,
+			t.status,t.can_update,t.area_code,t.use_doc_path,t.old_use_doc_name,t.icon_url,
+			t.new_use_doc_name,t.use_doc_file_size
+		from EBP_APP t 
+		right join EBP_PRODUCT p on t.product_id=p.id
+		where t.status='0' and t.can_update!='0'
+		<if test="product_id != null and product_id != ''">and t.product_id=#{product_id}</if>
+		<if test="can_update != null and can_update != ''">and t.can_update=#{can_update}</if>
+		<if test="zip_can_update != null and zip_can_update != ''">and t.can_update!='0'</if>
+		<if test="version_code != null and version_code != ''">and t.version_code=#{version_code}</if>
+		<if test="ebookpackage_code != null and ebookpackage_code != ''">and p.ebookpackage_code = #{ebookpackage_code}</if>
+	</select>
+	
+	<!-- 保存客户端文件列表 -->
+	<insert id="saveAppFileBatch" parameterType="java.util.List">
+		insert into EBP_APP_FILE (id,app_id,absolute_url,file_name,file_path,file_size,file_md5) values 
+		<foreach collection="list" item="item" index="index" separator=",">  
+		 (#{item.id,jdbcType=VARCHAR},#{item.appId,jdbcType=VARCHAR},#{item.absoluteUrl,jdbcType=VARCHAR},#{item.fileName,jdbcType=VARCHAR},
+        #{item.filePath,jdbcType=VARCHAR},#{item.fileSize,jdbcType=VARCHAR},#{item.fileMd5,jdbcType=VARCHAR})  
+		</foreach>
+	</insert>
+	
+	<!-- 保存客户端升级的文件列表 -->
+	<insert id="saveAppFileUpgradeBatch" parameterType="java.util.List">
+		insert into EBP_APP_UPGRADE (id,old_app_id,new_app_id,app_file_id,update_type,product_id) values
+		<foreach collection="list" item="item" index="index" separator=",">  
+		 (#{item.id,jdbcType=VARCHAR},#{item.oldAppId,jdbcType=VARCHAR},#{item.newAppId,jdbcType=VARCHAR},
+        #{item.appFileId,jdbcType=VARCHAR},#{item.updateType,jdbcType=VARCHAR},#{item.productId,jdbcType=VARCHAR})  
+		</foreach>
+	</insert>
+	
+	<!-- 删除绿色包解压文件 -->
+	<delete id="deleteAppFile" parameterType="java.util.List">
+		delete from EBP_APP_FILE
+		<where>
+			<foreach collection="list" index="index" item="item" open="(" separator="or" close=")">     
+			  app_id=#{item}
+			</foreach>
+		</where>
+	</delete>
+	
+	<!-- 删除升级文件 -->
+	<delete id="deleteAppUpgradeFile" parameterType="map">
+		delete from EBP_APP_UPGRADE
+		where 1=1
+		<if test="productId != null and productId != ''">and product_id=#{productId}</if>
+		<if test="list != null">
+			and
+			<foreach collection="list" item="item" open="(" separator="or" close=")">     
+			  old_app_id=#{item} or new_app_id=#{item}
+			</foreach>
+		</if>
+	</delete>
+	
+	<!-- 查询文件列表 -->
+	<select id="queryAppFile" parameterType="map" resultMap="AppFileResult">
+		select sf.*,'add' update_type from EBP_APP_FILE sf
+		where 1=1
+		<if test="appId != null and appId != ''">and app_id=#{appId}</if>
+	</select>
+	
+	<!-- 查询文件列表 -->
+	<select id="queryAppUpgradeFile" parameterType="map" resultMap="AppFileResult">
+		select sf.*,t.update_type from EBP_APP_FILE sf
+		right join (select app_file_id,update_type from EBP_APP_UPGRADE where update_type='add' and old_app_id=#{oldAppId} and new_app_id=#{newAppId}) t
+		on sf.id=t.app_file_id
+	</select>
+</mapper>

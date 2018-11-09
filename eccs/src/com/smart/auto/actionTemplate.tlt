@@ -1,0 +1,98 @@
+package #package#;
+
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Result;
+import org.springframework.beans.factory.annotation.Autowired;
+import #baseAction#;
+import #model#;
+import #service#;
+
+/**
+ * #entityName#Action. @author Auto Tools by 充满智慧的威哥
+ */
+public class #entityName#Action extends BaseAction {
+
+	@Autowired
+	private #entityName#Service #entity#Service;
+	
+	private int id;
+	private #entityName# #entity#;
+	
+	/**
+	 * 查看
+	 * @return
+	 */
+	@Action("show")
+	public String show() {
+		#entity# = #entity#Service.get(id);
+		return "show";
+	}
+	
+	/**
+	 * 列表
+	 * @return
+	 */
+	@Action("list")
+	public String list() {
+		
+		return "list";
+	}
+	
+	/**
+	 * 新建
+	 * @return
+	 */
+	@Action("new")
+	public String _new() {
+		
+		return "new";
+	}
+	
+	/**
+	 * 保存
+	 * @return
+	 */
+	@Action(value = "save", results={@Result(name="list", location="list", type="redirectAction")})
+	public String save() {
+		#entity#Service.save(#entity#);
+		return "list";
+	}
+	
+	/**
+	 * 修改
+	 * @return
+	 */
+	@Action("edit")
+	public String edit() {
+		#entity# = #entity#Service.get(id);
+		return "edit";
+	}
+	
+	/**
+	 * 删除
+	 * @return
+	 */
+	@Action(value = "delete", results={@Result(name="list", location="list", type="redirectAction")})
+	public String delete() {
+		#entity#Service.delete(id);
+		return "list";
+	}
+
+	//====================== getter and setter ======================
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public #entityName# get#entityName#() {
+		return #entity#;
+	}
+
+	public void set#entityName#(#entityName# #entity#) {
+		this.#entity# = #entity#;
+	}
+	
+}

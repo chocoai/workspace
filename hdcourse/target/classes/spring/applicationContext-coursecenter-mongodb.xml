@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mongo="http://www.springframework.org/schema/data/mongo"
+	xsi:schemaLocation="http://www.springframework.org/schema/context     
+              http://www.springframework.org/schema/context/spring-context-3.0.xsd     
+              http://www.springframework.org/schema/data/mongo     
+              http://www.springframework.org/schema/data/mongo/spring-mongo-1.0.xsd     
+              http://www.springframework.org/schema/beans     
+              http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	
+	<mongo:mongo replica-set="${coursecenter.mongo.hostport}"  id="coursecenterMongo"> 
+		<mongo:options 
+		    connections-per-host="8"
+			threads-allowed-to-block-for-connection-multiplier="4"
+			connect-timeout="${coursecenter.mongo.connectTimeout}"
+			max-wait-time="${coursecenter.mongo.maxWaitTime}"
+			auto-connect-retry="${coursecenter.mongo.autoConnectRetry}"
+			socket-keep-alive="${coursecenter.mongo.socketKeepAlive}"
+			socket-timeout="${coursecenter.mongo.socketTimeout}"
+			slave-ok="${coursecenter.mongo.slaveOk}"
+			write-number="1" 
+			write-timeout="0"
+			write-fsync="true" />
+	</mongo:mongo>
+	<mongo:db-factory dbname="coursecenterDatabase" mongo-ref="coursecenterMongo" />
+
+	<bean id="coursecenterMongoTemplate" class="org.springframework.data.mongodb.core.MongoTemplate">
+		<constructor-arg ref="coursecenterMongo" />
+		<constructor-arg name="databaseName" value="${coursecenter.mongo.dbname}"/>
+	</bean>
+	
+</beans>

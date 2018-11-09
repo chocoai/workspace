@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fxzhj.mapper.UrlDescribeMapper">
+	<resultMap id="BaseResultMap" type="com.fxzhj.model.UrlDescribe">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="descpt" property="descpt" jdbcType="VARCHAR" />
+		<result column="field1" property="field1" jdbcType="VARCHAR" />
+		<result column="field2" property="field2" jdbcType="VARCHAR" />
+		<result column="field3" property="field3" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="create_user" property="createUser" jdbcType="INTEGER" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="update_user" property="updateUser" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		id, descpt, field1, field2, field3, create_time, create_user,
+		update_time, update_user
+	</sql>
+	
+	<!-- 增到绑定的路径描述 -->
+	<insert id="addUrlDescribe" parameterType="com.fxzhj.model.UrlDescribe" useGeneratedKeys="true" keyProperty="id">
+		insert into t_url_describe (id, descpt, field1, field2, field3, 
+		create_time, create_user, update_time, update_user)
+		values (#{id}, #{descpt},	#{field1}, #{field2}, #{field3}, 
+		#{createTime}, #{createUser}, #{updateTime}, #{updateUser})
+	</insert>
+	
+	<!-- 根据二维码id删除路径描述信息 -->
+	<delete id="deleteByCid" parameterType="java.lang.Long">
+		delete from t_url_describe where id in (select describe_id from t_node_code where code_id=#{0})
+	</delete>
+	
+	<!-- 批量删除 参数为数组 -->
+	<delete id="batchDelete" parameterType="string" >
+        delete from t_url_describe where id in (
+        	select describe_id from t_node_code where code_id in (
+        		select id from t_code where code_num in 
+        		<foreach item="ids" collection="array" open="(" separator="," close=")">
+            		#{ids}
+        		</foreach>
+        	)
+        )
+	</delete>
+	
+	<cache />
+</mapper>

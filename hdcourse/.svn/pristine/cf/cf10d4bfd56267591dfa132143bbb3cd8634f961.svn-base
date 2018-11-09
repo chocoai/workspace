@@ -1,0 +1,112 @@
+#Oracle\u8fde\u63a5\u6c60\uff08\u6eaa\u6c34\uff09
+#driverClassName=oracle.jdbc.driver.OracleDriver
+driverClassName=com.mysql.jdbc.Driver
+#url=jdbc:oracle:thin:@10.8.9.160:1521:orcl
+#datasourceUsername=wecourse
+#datasourcePassword=wecourse
+
+#url=jdbc:oracle:thin:@127.0.0.142:1521:edu
+#url=jdbc:oracle:thin:@(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = 127.0.200.55)(PORT = 1521))(ADDRESS = (PROTOCOL = TCP)(HOST = 127.0.200.55)(PORT = 1521))(LOAD_BALANCE = yes)(CONNECT_DATA =(SERVER = DEDICATED) (SERVICE_NAME = edu)))
+#url=jdbc:oracle:thin:@(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.200.55)(PORT = 1521))(ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.200.56)(PORT = 1521))(LOAD_BALANCE = yes)(CONNECT_DATA =(SERVER = DEDICATED) (SERVICE_NAME = edu)))
+#url=jdbc:oracle:thin:@192.168.6.142:1521:edu
+#datasourceUsername=hdcourse
+#datasourcePassword=pass4hdcourse
+
+#url=jdbc:mysql://127.0.0.1:3306/hdcourse?characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=convertToNull
+
+#url=jdbc:mysql://127.0.30.91:3306/hdcourse_t?characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=convertToNull
+#url=jdbc:mysql://192.168.30.91:3306/hdcourse_t?characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=convertToNull
+#url=jdbc:mysql://192.168.6.101:3306/hdcourse?characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=convertToNull
+#url=jdbc:mysql://127.0.6.101:3306/hdcourse?characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=convertToNull
+#url=jdbc:mysql://127.0.6.116:3306/coursecenter?characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=convertToNull
+#url=jdbc:mysql://127.0.6.183:3306/coursecenter?characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=convertToNull
+url=jdbc:mysql://192.168.6.183:3306/hdcourse?characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=convertToNull
+#url=jdbc:mysql://127.0.6.183:3306/hdcourse?characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=convertToNull
+
+#datasourceUsername=hdcourse
+#datasourcePassword=pass4hdcourse
+
+#url=jdbc:mysql://47.88.237.168:3306/hdcourse2?characterEncoding=UTF-8&autoReconnect=true&failOverReadOnly=false&zeroDateTimeBehavior=convertToNull&useSSL=false
+datasourceUsername=hdcourse
+datasourcePassword=pass4hdcourse
+
+#datasourceUsername=hdcourse_t
+#datasourcePassword=pass4hdcourse_t
+ 
+#url=jdbc:oracle:thin:@192.168.6.142:1521:edu
+#datasourceUsername=hdcourse
+#datasourcePassword=pass4hdcourse
+
+#mySql
+#driverClassName=com.mysql.jdbc.Driver
+#url=jdbc:mysql://localhost:3306/eduapp
+#url=jdbc:mysql://10.8.6.248:3306/eduapp?characterEncoding=utf-8
+#username=root
+#password=root
+initialSize=2
+maxPoolSize=10
+minPoolSize=2
+maxIdleTime=60
+acquireIncrement=2
+#check connection is ok
+preferredTestQuery=select 1 from dual
+#check every 300 seconds
+idleConnectionTestPeriod=300
+testConnectionOnCheckin=false
+testConnectionOnCheckout=false
+validationQuery=select 1 from dual
+
+
+acquireRetryAttempts=30
+acquireRetryDelay=100
+breakAfterAcquireFailure=false
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#Oracle\u8fde\u63a5\u6c60\uff08\u6eaa\u6c34\uff09
+oracle.driverClassName=oracle.jdbc.driver.OracleDriver
+#driverClassName=com.mysql.jdbc.Driver
+#url=jdbc:oracle:thin:@10.8.9.160:1521:orcl
+#datasourceUsername=wecourse
+#datasourcePassword=wecourse
+
+#oracle.url=jdbc:oracle:thin:@127.0.6.141:1521:orcl
+oracle.url=jdbc:oracle:thin:@192.168.6.141:1521:orcl
+#url=jdbc:oracle:thin:@(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = 127.0.200.55)(PORT = 1521))(ADDRESS = (PROTOCOL = TCP)(HOST = 127.0.200.55)(PORT = 1521))(LOAD_BALANCE = yes)(CONNECT_DATA =(SERVER = DEDICATED) (SERVICE_NAME = edu)))
+#url=jdbc:oracle:thin:@(DESCRIPTION =(ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.200.55)(PORT = 1521))(ADDRESS = (PROTOCOL = TCP)(HOST = 192.168.200.56)(PORT = 1521))(LOAD_BALANCE = yes)(CONNECT_DATA =(SERVER = DEDICATED) (SERVICE_NAME = edu)))
+#oracle.url=jdbc:oracle:thin:@192.168.6.141:1521:orcl
+oracle.datasourceUsername = dwsap
+oracle.datasourcePassword = pass4dwsap
+
+
+
+oracle.initialSize=2
+oracle.maxPoolSize=10
+oracle.minPoolSize=2
+oracle.maxIdleTime=60
+oracle.acquireIncrement=2
+#check connection is ok
+oracle.preferredTestQuery=select 1 from dual
+#check every 300 seconds
+oracle.idleConnectionTestPeriod=300
+oracle.testConnectionOnCheckin=false
+oracle.testConnectionOnCheckout=false
+oracle.validationQuery=select 1 from dual
+
+
+oracle.acquireRetryAttempts=30
+oracle.acquireRetryDelay=100
+oracle.breakAfterAcquireFailure=false
+
+

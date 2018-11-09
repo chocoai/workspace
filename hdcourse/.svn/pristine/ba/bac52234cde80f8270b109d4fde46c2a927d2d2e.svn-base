@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.api.dao.TUserBackgroundDao">
+	
+	<resultMap type="com.whty.assis.api.model.TUserBackground" id="BaseResultMap">
+		<result column="background_code" property="backgroundCode"  />
+		<result column="platform_code" property="platformCode"  />
+		<result column="loginPlatform_code" property="loginPlatformCode" />
+		<result column="user_id" property="userId"  />
+		<result column="stretch" property="stretch"  />
+		<result column="sort_num" property="sortNum"  />
+		<result column="create_time" property="createTime"  />
+		<result column="update_time" property="updateTime"  />
+	</resultMap>
+
+	<select id="getListByTUserBackground" parameterType="com.whty.assis.api.model.TUserBackground" resultMap="BaseResultMap">
+		SELECT * FROM t_user_background
+		WHERE platform_code = #{platformCode} and loginPlatform_code =#{loginPlatformCode} and user_id =#{userId}
+	</select>
+
+	<insert id="insert" parameterType="com.whty.assis.api.model.TUserBackground">
+		INSERT  into t_user_background (
+			background_code,platform_code,loginPlatform_code,user_id,stretch,sort_num,create_time,update_time
+		) VALUES (
+			#{backgroundCode},#{platformCode},#{loginPlatformCode},#{userId},#{stretch},#{sortNum},#{createTime},#{updateTime}
+		)
+	</insert>
+
+	<delete id="delete" parameterType="java.lang.String">
+		delete from t_user_background where background_code = #{backgroundCode}
+	</delete>
+
+</mapper>
+

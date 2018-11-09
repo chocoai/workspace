@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>我的交换列表 </title>
+<link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
+<script src="${resSys}/jquery.js" type="text/javascript"></script>
+<script src="${resSys}/front.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="../../${res}/css/member.css" />
+<script type="text/javascript">
+function del_c_by_id(id) {
+	 
+    if(confirm("您确定要删除我的交换吗?")){
+        var tableForm = document.getElementById("tableForm");
+        tableForm.action="${base}/member/exchange_delete.jspx?ids="+id;
+        tableForm.onsubmit=null;
+        tableForm.submit();
+    }
+
+}
+</script>
+</head>
+
+<body>
+[#include "../member/member_header.html"/]
+<div class="container">
+	 [#include "../member/member_navi.html"/]
+    <div class="mc_right">
+        [#include "../member/member_top.html"/]
+        <div class="mr-top-position">
+		     <div class="mr-top-tit fl">我的交换列表</div>
+		    <div class="modify fr"><a href="${base}/member/product_add.jspx" target="_blank">发布物品</a></div>
+		 </div>
+        <div class="mc_content">   
+           	<form id="tableForm" action="exchange_list.jspx" method="post">
+            [#if pagination.list?size gt 0]
+            <table border="0" cellpadding="0" cellspacing="1" bgcolor="#E4FFBB" class="tblist">
+            <tr>
+                <th>序号</th>
+                <th>我提供的物品</th>
+                <th>要交换的物品</th>
+                <th>交换状态</th>
+                <th>交换时间</th>
+                <th>操作</th>
+            </tr>
+            [#list pagination.list as c]
+            <tr>	
+                <td bgcolor="#FFFFFF">${c_index+1}</td>
+                <td bgcolor="#FFFFFF">${c.title!}</td>
+                <td bgcolor="#FFFFFF">${c.content.title!}</td>
+                <td bgcolor="#FFFFFF">[#if c.status ??][#if c.status == 0]交换中[/#if][#if c.status == 1]交换成功[/#if][#if c.status == -1]交换失败[/#if][/#if]</td> 
+                <td bgcolor="#FFFFFF">${c.changeTime?string('yyyy-MM-dd')}</td>
+                <td bgcolor="#FFFFFF">[#if c.status?? && c.status == 0]<!--  <a href="exchange_edit.jspx?id=${c.id}&nextUrl=exchange_list.jspx">修改<a> |--> <a href="javascript:void(0);" onclick="del_c_by_id('${c.id!}')" >删除<a>[#else] 删除[/#if]</td>
+            </tr>
+            [/#list]
+            </table>
+            <input type="hidden" name="nextUrl" id="nextUrl" value="${base}/member/exchange_list.jspx"/>
+            <input type="hidden" name="pageNo"/>
+            <table width="100%" border="0" cellpadding="0" cellspacing="0"><tr><td align="center" class="pn-sp">
+                共 ${pagination.totalCount} 条&nbsp;
+                每页 ${pagination.pageSize} 条&nbsp;
+                <input type="button" value="首 页" onclick="_gotoPage('1');"[#if pagination.firstPage] disabled="disabled"[/#if]/>
+                <input type="button" value="上一页" onclick="_gotoPage('${pagination.prePage}');"[#if pagination.firstPage] disabled="disabled"[/#if]/>
+                <input type="button" value="下一页" onclick="_gotoPage('${pagination.nextPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]/>
+                <input type="button" value="尾 页" onclick="_gotoPage('${pagination.totalPage}');"[#if pagination.lastPage] disabled="disabled"[/#if]/>&nbsp;
+                当前 ${pagination.pageNo}/${pagination.totalPage} 页 &nbsp;转到第<input type="text" id="_goPs" style="width:50px" onfocus="this.select();" onkeypress="if(event.keyCode==13){$('#_goPage').click();return false;}"/>页
+                <input id="_goPage" type="button" value="转" onclick="_gotoPage($('#_goPs').val());"[#if pagination.totalPage==1] disabled="disabled"[/#if]/>
+            </td>
+            </tr>
+            </table>
+            <script type="text/javascript">
+            function _gotoPage(pageNo) {
+                try{
+                    var tableForm = document.getElementById("tableForm");
+                    $("input[name=pageNo]").val(pageNo);
+                    tableForm.action="exchange_list.jspx";
+                    tableForm.onsubmit=null;
+                    tableForm.submit();
+                } catch(e) {
+                    alert('_gotoPage(pageNo)方法出错');
+                }
+            }
+            </script>
+            [#else]
+                <div>暂无交换</div>
+            [/#if]
+            </form>
+    	</div>
+  </div>
+     <div style="clear:both"></div>
+</div>
+</body>
+</html>

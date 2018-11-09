@@ -1,0 +1,20 @@
+package com.yhcrt.weihu.common.security;
+
+import com.yhcrt.weihu.common.security.AccountStatusException;
+
+/**
+ * 用户未激活异常
+ */
+@SuppressWarnings("serial")
+public class InactiveException extends AccountStatusException {
+	public InactiveException() {
+	}
+
+	public InactiveException(String msg) {
+		super(msg);
+	}
+
+	public InactiveException(String msg, Object extraInformation) {
+		super(msg, extraInformation);
+	}
+}

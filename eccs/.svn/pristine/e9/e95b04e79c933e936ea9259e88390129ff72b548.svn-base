@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemesh>
+	<!--默认情况下，
+		sitemesh 只对 HTTP 响应头中 Content-Type 为 text/html 的类型进行拦截和装饰，我们可以添加更多的 mime 类型
+	<mime-type>text/html</mime-type>
+	<mime-type>application/vnd.wap.xhtml+xml</mime-type>
+	<mime-type>application/xhtml+xml </mime-type>
+	-->
+	
+	<!-- web -->
+	<mapping path="/*" decorator="/WEB-INF/decorators/main.jsp" />
+	<mapping path="/mydate/*" exclue="true" />
+	<mapping path="/kindeditor/*" exclue="true" />
+	<mapping path="/login*" exclue="true" />
+	<mapping path="/file*" exclue="true" />
+	<mapping path="/t_liborrow/zzlist*" exclue="true" />
+	<mapping path="/project/listForSelect*" exclue="true" />
+	<mapping path="/project/newcustomer*" exclue="true" />
+	<mapping path="/project/printCheckPerson*" exclue="true" />
+	<mapping path="/t_file/filet*" exclue="true" />
+	<mapping path="/t_cult/selectUser*" exclue="true" />
+	<mapping path="/project/print*" exclue="true" />
+	<mapping path="/user/selectUser*" exclue="true" />
+	<mapping path="/user/getUserBy*" exclue="true" />
+	<mapping path="/user/selectMultiUser*" exclue="true" />
+	<mapping path="/dept/select*" exclue="true" />
+	<mapping path="/role/selectRole*" exclue="true" />
+	<mapping path="/t_invoice/choose*" exclue="true" />
+	<mapping path="/t_seal/choose*" exclue="true" />
+	<mapping path="/dept/new*" exclue="true" />
+	<mapping path="/dept/edit*" exclue="true" />
+	<mapping path="/doc/edit*" exclue="true" />
+	<mapping path="/doc/new*" exclue="true" />
+	<mapping path="/project/selectProject*" exclue="true" />
+	<mapping path="/project/selectcustomer*" exclue="true" />
+	<mapping path="/calendar/new*" exclue="true" />
+	<mapping path="/calendar/edit*" exclue="true" />
+	<mapping path="/calendar/show*" exclue="true" />
+	<mapping path="/pageNotFound*" exclue="true" />
+	<mapping path="/error*" exclue="true" />
+	<mapping path="/step1/print*" exclue="true" />
+	<mapping path="/step2/print*" exclue="true" />
+	<mapping path="/step3/print*" exclue="true" />
+	<mapping path="/step4/print*" exclue="true" />
+	<mapping path="/step5/print*" exclue="true" />
+	<mapping path="/step6/print*" exclue="true" />
+	<mapping path="/step7/print*" exclue="true" />
+	<mapping path="/step8/print*" exclue="true" />
+	<mapping path="/step9/print*" exclue="true" />
+	<mapping path="/step10/print*" exclue="true" />
+	<mapping path="/step11/print*" exclue="true" />
+	<mapping path="/step12/print*" exclue="true" />
+	<mapping path="/step13/print*" exclue="true" />
+	<mapping path="/step14/print*" exclue="true" />
+	<mapping path="/step15/print*" exclue="true" />
+	<mapping path="/information/print*" exclue="true" />
+	<mapping path="/person/print*" exclue="true" />
+	<mapping path="/bid/print*" exclue="true" />
+	<mapping path="/review/print*" exclue="true" />
+	<mapping path="/contract/print*" exclue="true" />
+	<mapping path="/t_customer/print*" exclue="true" />
+	<mapping path="/t_invoice/print*" exclue="true" />
+	<mapping path="/requ/print*" exclue="true" />
+	<mapping path="/t_customer/squeryPrint*" exclue="true" />
+	<mapping path="/t_fire/reportPrint*" exclue="true" />
+	<mapping path="/t_invoice/reportPrint*" exclue="true" />
+	<mapping path="/t_reso/reportPrint.htm*" exclue="true" />
+	
+	<!-- 后台管理 
+	<mapping path="/admin*" decorator="/WEB-INF/decorators/admin-main.jsp" />
+	<mapping path="/admin/login*" exclue="true" />
+	-->
+	
+</sitemesh>

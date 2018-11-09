@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>孝康通</title>
+	<!-- Bootstrap -->
+	<link th:href="@{/pages/mall/css/bootstrap.min.css}" rel="stylesheet">
+	<!-- FontAwesome 4.7.0字体 -->
+	<link th:href="@{/pages/mall/css/font-awesome.min.css}" rel="stylesheet">
+	<!-- 自定义css -->
+	<link th:href="@{/pages/mall/css/mymall.css}" rel="stylesheet">
+    <!--layer -->
+    <link th:href="@{/pages/mall/css/layer_mobile/need/layer.css}" rel="stylesheet">
+    <link th:href="@{/pages/mall/css/animate.min.css}" rel="stylesheet" >
+    
+    <link rel="stylesheet" th:href="@{/pages/mall/css/jquery-weui.min.css}">
+	<link rel="stylesheet" th:href="@{/pages/mall/css/weui.min.css}">
+  </head>
+  <body class="list-mall weui-tab_bd-item" ontouchstart>
+    <input th:if="${a} !=null" id="a" type="hidden" th:value="${a}" />
+    <input th:if="${u} !=null" id="u" type="hidden" th:value="${u}" />
+  	<input type="hidden" th:value="${orderstatus}" id="orderstatus" />
+  	<input type="hidden" th:value="${pageNum}" id="pageNum" />
+  	<input type="hidden" th:value="${pages}" id="pages" />
+  	<input type="hidden" th:value="${type}" id="type" />
+  	
+  	<!-- 订单号 -->
+  	<input type="hidden" id="orderNumber">
+    <!-- 导航 开始 -->
+    <nav class="navbar navbar-default navbar-fixed-top navbar-mall-other">
+      <div class="container-fluid">
+        <div class="navbar-header">
+        	  我的订单
+          <div th:if="${a} ==null" class="othertop-right">
+            <a th:href="@{/h5/mycenter}"><i class="fa fa-user-o"></i></a>
+            <a th:href="@{/h5}"><i class="fa fa-home"></i></a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- 导航 结束 -->
+    
+    <!-- tab 开始 -->
+    <div class="mall-list-tab" th:if="${type eq 'goods'}">
+      <ul th:if="${a} ==null">
+        <li th:class="${orderstatus==null}? 'col-xs-3 nopad-lr active' :'col-xs-3 nopad-lr'"><a th:href="@{'/h5/admin/myOrders/'+${type}}">全部</a></li>
+        <li th:class="${orderstatus ==0}? 'col-xs-3 nopad-lr active':'col-xs-3 nopad-lr'"><a th:href="@{'/h5/admin/myOrders/'+${type}+'?orderstatus=0'}">未支付</a></li>
+        <li th:class="${orderstatus ==1}? 'col-xs-3 nopad-lr active':'col-xs-3 nopad-lr'"><a th:href="@{'/h5/admin/myOrders/'+${type}+'?orderstatus=1'}">已支付</a></li>
+        <li th:class="${orderstatus ==4}? 'col-xs-3 nopad-lr active':'col-xs-3 nopad-lr'"><a th:href="@{'/h5/admin/myOrders/'+${type}+'?orderstatus=4'}">已完成</a></li>
+      </ul>
+       <ul th:if="${a} !=null">
+        <li th:class="${orderstatus==null}? 'col-xs-3 nopad-lr active' :'col-xs-3 nopad-lr'"><a th:href="@{'/h5/admin/myOrders/'+${type}+'?a=1&u='+${u}}">全部</a></li>
+        <li th:class="${orderstatus ==0}? 'col-xs-3 nopad-lr active':'col-xs-3 nopad-lr'"><a th:href="@{'/h5/admin/myOrders/'+${type}+'?orderstatus=0&a=1&u='+${u}}">未支付</a></li>
+        <li th:class="${orderstatus ==1}? 'col-xs-3 nopad-lr active':'col-xs-3 nopad-lr'"><a th:href="@{'/h5/admin/myOrders/'+${type}+'?orderstatus=1&a=1&u='+${u}}">已支付</a></li>
+        <li th:class="${orderstatus ==4}? 'col-xs-3 nopad-lr active':'col-xs-3 nopad-lr'"><a th:href="@{'/h5/admin/myOrders/'+${type}+'?orderstatus=4&a=1&u='+${u}}">已完成</a></li>
+      </ul>
+    </div>
+    <div class="mall-list-tab" th:if="${type eq 'service'}">
+      <ul th:if="${a} ==null">
+        <li th:class="${orderstatus==null}? 'col-xs-3 nopad-lr active' :'col-xs-3 nopad-lr'"><a th:href="@{'/h5/admin/myOrders/'+${type}}">全部</a></li>
+        <li th:class="${orderstatus ==0}? 'col-xs-3 nopad-lr active':'col-xs-3 nopad-lr'"><a th:href="@{'/h5/admin/myOrders/'+${type}+'?orderstatus=0'}">未支付</a></li>
+        <li th:class="${orderstatus ==1}? 'col-xs-3 nopad-lr active':'col-xs-3 nopad-lr'"><a th:href="@{'/h5/admin/myOrders/'+${type}+'?orderstatus=1'}">已支付</a></li>
+        <li th:class="${orderstatus ==8}? 'col-xs-3 nopad-lr active':'col-xs-3 nopad-lr'"><a th:href="@{'/h5/admin/myOrders/'+${type}+'?orderstatus=8'}">已完成</a></li>
+      </ul>
+       <ul th:if="${a} !=null">
+        <li th:class="${orderstatus==null}? 'col-xs-3 nopad-lr active' :'col-xs-3 nopad-lr'"><a th:href="@{'/h5/admin/myOrders/'+${type}+'?a=1&u='+${u}}">全部</a></li>
+        <li th:class="${orderstatus ==0}? 'col-xs-3 nopad-lr active':'col-xs-3 nopad-lr'"><a th:href="@{'/h5/admin/myOrders/'+${type}+'?orderstatus=0&a=1&u='+${u}}">未支付</a></li>
+        <li th:class="${orderstatus ==1}? 'col-xs-3 nopad-lr active':'col-xs-3 nopad-lr'"><a th:href="@{'/h5/admin/myOrders/'+${type}+'?orderstatus=1&a=1&u='+${u}}">已支付</a></li>
+        <li th:class="${orderstatus ==8}? 'col-xs-3 nopad-lr active':'col-xs-3 nopad-lr'"><a th:href="@{'/h5/admin/myOrders/'+${type}+'?orderstatus=8&a=1&u='+${u}}">已完成</a></li>
+      </ul>
+    </div>
+    <!-- tab 结束 -->
+
+    <!-- 订单列表 开始 -->
+    <div class="mall-list-content order-list-content swiper-container">
+      <!-- 全部 开始 --> 
+      <div class="goods-info list-cell mar-t0"  th:if="${pages gt 0}" id="orderList">
+        <!-- 全部订单中的第一个订单 开始 -->
+        <div th:class="${i.index==0}? 'order-one  mar-t1' :'order-one'" th:each="order,i:${list}">
+          <a th:if="${a} ==null" th:href="@{'/h5/admin/myOrdersInfo/'+${type}+'?cid='+${order.orderId}}" class="oneoforders">
+          	<div class="goods-info-hd">
+              <span class="order-time" th:text="${order.createTime}">2017-12-12 12:15:12</span>
+              <span th:if="${type eq 'goods'}" class="order-state" th:switch="${order.orderStatus}">
+                     <p th:case="0">待支付</p>
+					 <p th:case="1">已支付</p>
+					 <p th:case="2">已发货</p>
+					 <p th:case="3">待评价</p>
+					 <p th:case="4">交易完成</p>
+					 <p th:case="5">退货中</p>
+					 <p th:case="6">已退款</p>
+					 <p th:case="-1">交易关闭</p>
+              </span>
+              <span th:if="${type eq 'service'}" class="order-state" th:switch="${order.orderStatus}">
+                     <p th:case="0">待支付</p>
+					 <p th:case="1">已支付</p>
+					 <p th:case="2">进行中</p>
+					 <p th:case="3">审核中</p>
+					 <p th:case="4">待评价</p>
+					 <p th:case="5">重新申请</p>
+					 <p th:case="6"></p>
+					 <p th:case="7"></p>
+					 <p th:case="8">交易成功</p>
+					 <p th:case="-1">交易关闭</p>
+              </span>
+            </div>
+            <div class="goods-info-bd">
+              <ul th:if="${type eq 'goods'}">
+	                <li th:each="orderDetail,oStat : ${order.orderDetails}">
+	                  <div class="col-xs-3 nopad-lr">
+	                     <img th:if="${orderDetail.goods.titleImg} ==null" th:src="@{/pages/mall/images/good01.png}" class="img-responsive">
+	                  	 <img th:if="${orderDetail.goods.titleImg} !=null" th:src="${orderDetail.goods.titleImg}" class="img-responsive">
+	                  </div>
+	                  <div class="col-xs-9">
+	                    <p class="goods-info-name" th:text="${orderDetail.goods.goodsName}">老年健康智能手表 实时监测步数、血压 心率、血糖</p>
+	                    <p class="goods-info-other">
+	                      <span class="goods-info-price">￥<lable th:text="${orderDetail.price}">799</lable></span>
+	                      <span class="goods-info-number">x<lable th:text="${orderDetail.amount}">1</lable></span>
+	                    </p>
+	                  </div>
+	                </li>
+              </ul>
+              <ul th:if="${type eq 'service'}">
+	                <li>
+	                  <div class="col-xs-3 nopad-lr">
+	                     <img th:if="${order.service.titleImg} ==null" th:src="@{/pages/mall/images/service01.png}" class="img-responsive">
+	                  	 <img th:if="${order.service.titleImg} !=null" th:src="${order.service.titleImg}" class="img-responsive">
+	                  </div>
+	                  <div class="col-xs-9">
+	                    <p class="goods-info-name">
+	                    	<span th:text="${order.service.serviceName}">老年健康智能手表 实时监测步数、血压 心率、血糖</span><br/>
+	                    	<span th:if="${order.servicePrice}!=null" th:text="${order.servicePrice}"></span>
+	                    </p>
+	                    <p class="goods-info-other">
+	                      <span class="goods-info-price">￥<lable th:text="${order.unitPrice}">799</lable></span>
+	                      <span class="goods-info-number">x<lable th:text="${order.amount}">1</lable></span>
+	                    </p>
+	                  </div>
+	                </li>
+              </ul>
+            </div>
+          </a>
+          <a th:if="${a} !=null" th:href="@{'/h5/admin/myOrdersInfo/'+${type}+'?cid='+${order.orderId}+'&a=1&u='+${u}}" class="oneoforders">
+          	<div class="goods-info-hd">
+              <span class="order-time" th:text="${order.createTime}">2017-12-12 12:15:12</span>
+              <span th:if="${type eq 'goods'}" class="order-state" th:switch="${order.orderStatus}">
+                     <p th:case="0">待支付</p>
+					 <p th:case="1">已支付</p>
+					 <p th:case="2">已发货</p>
+					 <p th:case="3">待评价</p>
+					 <p th:case="4">交易完成</p>
+					 <p th:case="5">退货中</p>
+					 <p th:case="6">已退款</p>
+					 <p th:case="-1">交易关闭</p>
+              </span>
+              <span th:if="${type eq 'service'}" class="order-state" th:switch="${order.orderStatus}">
+                     <p th:case="0">待支付</p>
+					 <p th:case="1">已支付</p>
+					 <p th:case="2">进行中</p>
+					 <p th:case="3">审核中</p>
+					 <p th:case="4">待评价</p>
+					 <p th:case="5">重新申请</p>
+					 <p th:case="6"></p>
+					 <p th:case="7"></p>
+					 <p th:case="8">交易成功</p>
+					 <p th:case="-1">交易关闭</p>
+              </span>
+            </div>
+            <div class="goods-info-bd">
+              <ul th:if="${type eq 'goods'}">
+	                <li th:each="orderDetail,oStat : ${order.orderDetails}">
+	                  <div class="col-xs-3 nopad-lr">
+	                     <img th:if="${orderDetail.goods.titleImg} ==null" th:src="@{/pages/mall/images/good01.png}" class="img-responsive">
+	                  	 <img th:if="${orderDetail.goods.titleImg} !=null" th:src="${orderDetail.goods.titleImg}" class="img-responsive">
+	                  </div>
+	                  <div class="col-xs-9">
+	                    <p class="goods-info-name" th:text="${orderDetail.goods.goodsName}">老年健康智能手表 实时监测步数、血压 心率、血糖</p>
+	                    <p class="goods-info-other">
+	                      <span class="goods-info-price">￥<lable th:text="${orderDetail.price}">799</lable></span>
+	                      <span class="goods-info-number">x<lable th:text="${orderDetail.amount}">1</lable></span>
+	                    </p>
+	                  </div>
+	                </li>
+              </ul>
+              <ul th:if="${type eq 'service'}">
+	                <li>
+	                  <div class="col-xs-3 nopad-lr">
+	                     <img th:if="${order.service.titleImg} ==null" th:src="@{/pages/mall/images/service01.png}" class="img-responsive">
+	                  	 <img th:if="${order.service.titleImg} !=null" th:src="${order.service.titleImg}" class="img-responsive">
+	                  </div>
+	                  <div class="col-xs-9">
+	                    <p class="goods-info-name">
+	                  		<span th:text="${order.service.serviceName}">老年健康智能手表 实时监测步数、血压 心率、血糖</span><br/>
+	                    	<span th:if="${order.servicePrice}!=null" th:text="${order.servicePrice}"></span>
+						</p>
+	                    <p class="goods-info-other">
+	                      <span class="goods-info-price">￥<lable th:text="${order.unitPrice}">799</lable></span>
+	                      <span class="goods-info-number">x<lable th:text="${order.amount}">1</lable></span>
+	                    </p>
+	                  </div>
+	                </li>
+              </ul>
+            </div>
+          </a>
+          <div class="goods-info-footer">
+            <span class="order-price">金额：￥ 
+            <lable th:text="${order.orderAmount}" th:if="${type eq 'goods'}"></lable>
+            <lable th:text="${order.unitPrice}" th:if="${type eq 'service'}">799</lable>
+            </span>
+            <span th:if="${type eq 'goods'}" class="order-topay" th:switch="${order.orderStatus}">
+             	 <span th:case="0">
+              	 	<a href="javaScript:void(0)" class="orderDel" th:id="${order.orderId}">取消订单</a>
+             	 	<a href="javascript:void(0)" class="ordersPay" th:id="${order.cext1}" lang="goods">立即付款</a>
+              	 </span>
+             	 <span th:case="1">
+             	 	待发货
+              	 </span>
+             	 <span th:case="2">
+             	 	<a th:if="${a} ==null" th:href="@{'/h5/admin/myOrdersPeceipt/goods?cid='+${order.orderId}}">收货</a>
+             	 	<a th:if="${a} !=null" th:href="@{'/h5/admin/myOrdersPeceipt/goods?cid='+${order.orderId}+'&a=1&u='+${u}}">收货</a>
+              	 </span>
+             	 <span th:case="3">
+             	 	<a th:if="${a} ==null" th:href="@{'/h5/admin/myOrdersComTo/goods?cid='+${order.orderId}}">去评价</a>
+             	 	<a th:if="${a} !=null" th:href="@{'/h5/admin/myOrdersComTo/goods?cid='+${order.orderId}+'&a=1&u='+${u}}">去评价</a>
+              	 </span>
+             	 <span th:case="4">
+             	 	已完成
+              	 </span>
+             	 <span th:case="5">
+             	 	退货中
+              	 </span>
+             	 <span th:case="6">
+             	 	已退款
+              	 </span>
+             	 <span th:case="-1">
+              	 </span>
+            </span>
+            <span th:if="${type eq 'service'}" class="order-topay" th:switch="${order.orderStatus}">
+             	 <span th:case="0">
+              	 	<a href="javaScript:void(0)" class="orderDel" th:id="${order.orderId}">取消订单</a>
+             	 	<a href="javascript:void(0)" class="ordersPay" th:id="${order.cext1}" lang="service">立即付款</a>
+              	 </span>
+             	 <span th:case="1">
+             	 	等待服务
+              	 </span>
+             	 <span th:case="2">
+             	 	服务进行中
+              	 </span>
+             	 <span th:case="3">
+             	 	<a th:if="${a} ==null" th:href="@{'/h5/admin/myOrdersComplete/service?cid='+${order.orderId}}">完成</a>
+             	 	<a th:if="${a} !=null" th:href="@{'/h5/admin/myOrdersComplete/service?cid='+${order.orderId}+'&a=1&u='+${u}}">完成</a>
+              	 </span>
+             	 <span th:case="4">
+             	 	<a th:if="${a} ==null" th:href="@{'/h5/admin/myOrdersComTo/service?cid='+${order.orderId}}">去评价</a>
+             	 	<a th:if="${a} !=null" th:href="@{'/h5/admin/myOrdersComTo/service?cid='+${order.orderId}+'&a=1&u='+${u}}">去评价</a>
+              	 </span>
+             	 <span th:case="5">
+             	 	
+              	 </span>
+             	 <span th:case="6">
+             	 	
+              	 </span>
+             	 <span th:case="7">
+             	 	
+              	 </span>
+             	 <span th:case="8">
+             	 	交易成功
+              	 </span>
+             	 <span th:case="-1">
+             	 
+              	 </span>
+            </span>
+            
+          </div>
+        </div>
+        <!-- 全部订单中的第一个订单 结束 -->
+      </div>
+      </div>
+      
+      <div class="no" th:if="${pages eq 0}">
+      		<p><img th:src="@{/pages/mall/images/noorders.png}"><br>哦哦，您还没有相关的订单哦~</p>
+      </div>
+      <!-- 已完成 结束 -->
+    </div>
+    <!-- 订单列表 结束 -->   
+
+    <!-- 返回顶部 开始 -->
+    <div class="gototop" style="display: none;">
+      <a href="javascript:void(0)"><i class="glyphicon glyphicon-menu-up"></i></a>
+    </div>
+    <!-- 返回顶部 结束 -->
+    
+    <!-- Modal -->
+    <div class="modal fade animated slideInUp" id="ordersPay" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog payway-box" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <a href="javascript:void(0)" class="payway" id="small">支付宝</a>
+            <a href="javascript:void(0)" class="payway" id="weixin">微信</a>
+          </div>
+          <div class="modal-footer">
+            <a type="button" class="btn form-control" data-dismiss="modal">取消</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- 加载开始 -->
+	<div class="weui-loadmore">  
+	    <i class="weui-loading"></i>  
+	    <span class="weui-loadmore__tips" id="loading">正在加载</span>  
+	</div>  
+    <!-- 加载结束 -->
+
+	<script th:src="@{/pages/mall/js/jquery-1.9.1.min.js}"></script>
+	<script th:src="@{/pages/mall/js/bootstrap.min.js}"></script>
+    <script th:src="@{/pages/mall/css/layer_mobile/layer.js}"></script>
+    <!-- 自定义 公共方法 -->
+    <script th:src="@{/pages/mall/js/commont.js}"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script th:src="@{/pages/mall/js/jquery-weui.js}"></script>
+    <script type="text/javascript" >
+    var a=$("#a").val();
+    var u=$("#u").val();
+	var pathName=window.document.location.pathname;
+    var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
+      $('html').on('click',function(){ });  
+      var pageNum = $("#pageNum").val();
+      var pages = $("#pages").val();
+      var type = $("#type").val();
+      if(pageNum >=pages){
+      	$(document.body).destroyInfinite();
+      	$(".weui-loadmore").css('display','none');
+      }
+       var loading = false;
+       $(document.body).infinite().on("infinite", function() {
+	        if(loading) return;
+	        loading = true;
+	        var orderstatus = $("#orderstatus").val();
+	        if(pageNum >=pages){
+	        	loading = false;
+	        	$("loading").val("已为最后一页");
+	        	$(document.body).destroyInfinite();
+	        	$(".weui-loadmore").css('display','none');
+	        	return;
+	        }else{
+	        	pageNum = parseInt(pageNum)+1;
+	        	$("#pageNum").val(pageNum);
+	        }
+	        var url=projectName+"/h5/admin/myOrders/"+type;
+	        if(a==1){
+	        	url+="?a=1&u="+u;
+	        }
+	        $.ajax({
+				url :url,
+				data :{
+		        	orderstatus : orderstatus,
+					pageNum:  pageNum	
+		        },
+				dataType : "html",
+				async : false,
+				traditional : true,
+				cache : true,
+				success : function(data) {
+					var $data = $("<code></code>").append($(data));//包装数据  
+					var $html=$data.find('#orderList').html(); // 获取新的地址 
+					$("#orderList").append($html);
+					loading = false;
+				}
+		    })
+       })
+    </script>
+  </body>
+</html>

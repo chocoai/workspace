@@ -1,0 +1,343 @@
+<#assign base=request.contextPath />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-fullscreen" content="true">
+    <title>微辅导</title>
+    <link rel="stylesheet" href="http://ued.t.huijiaoyun.com/tianyu_edu_dev/touch/weiLesson/css/light7.css">
+    <link rel="stylesheet" href="http://ued.t.huijiaoyun.com/tianyu_edu_dev/touch/weiLesson/css/wql_base.css">
+    <link rel="stylesheet" href="http://ued.t.huijiaoyun.com/tianyu_edu_dev/touch/weiLesson/css/weiLesson.css">
+    <script src="http://ued.t.huijiaoyun.com/tianyu_edu_dev/touch/weiLesson/js/jquery.js"></script>
+    <script src="http://ued.t.huijiaoyun.com/tianyu_edu_dev/touch/weiLesson/js/jquery.caret/dist/jquery.caret.js"></script>
+    <script src="http://ued.t.huijiaoyun.com/tianyu_edu_dev/touch/weiLesson/js/jquery.atwho.min.js"></script>
+    <script>
+        $.config = {
+            autoInit: true,
+            router:true
+        }
+    </script>
+    <style type="text/css">
+        .zxf_popup {
+            height: 100%;
+            z-index: 100;
+            position: relative;
+            left: 0;
+            bottom: -100%;
+        }
+    </style>
+    <script src="http://ued.t.huijiaoyun.com/tianyu_edu_dev/touch/weiLesson/js/light7.js"></script>
+    <script type="text/javascript" src="${base}/js/fastclick.js"></script>
+</head>
+<body>
+<div class="page">
+    <header class="bar bar-nav bgfff">
+        <a class="wql_icon wql_icon02 zindex20 fl" id="closeBtn"></a>
+        <h1 class="title">评论</h1>
+        <a class="zindex20 fr lh22">发布</a>
+    </header>
+
+    <div class="content bgfff">
+        <!-- 输入框    -->
+        <div class="wql_inputBox mgt025 pdt05 f075">
+            <textarea id="content" class="inputor needsclick wql_inp pdlr075" contenteditable="true" style="height: 8rem;width: 100%;overflow-y: auto;box-sizing: border-box;padding:.5rem;"></textarea>
+            <div class="zxf_processWp pdtb0625  pdlr075 bt bb">
+                <a href="javascript:;" class="icon_photo mgr120"></a>
+                <a href="javascript:;" class="icon_audio mgr120" style="width:1.05rem"></a>
+                <a href="javascript:;" class="icon_at"></a>
+            </div>
+        </div>
+        <form id="addForm" method="post" action="addMessage" enctype="multipart/form-data">
+            <input type="hidden" name="postId" value="${postId}">
+            <input type="hidden" name="turn" value="${turn!}" />
+            <input type="hidden" name="receiver" id="receiver" <#if receiver??>value="${receiver?c}"</#if> >
+        <!-- 上传图片 S-->
+        <div class="wql_g_upImg pdt075 pdlr075 wql_bg_fff mgt05">
+            <ul class="wql_ul clearfix" id="imgView">
+
+            </ul>
+        </div>
+        </form>
+        <!-- 上传图片 E-->
+    </div>
+    <div class="zxf_coverWp">
+        <div class="zxf_toastBox toastBox_send">
+            <i class="icon_sending"></i>
+            <p>正在上传...</p>
+        </div>
+        <div class="zxf_toastBox toastBox_ok">
+            <i class="icon_ok"></i>
+            <p>操作成功</p>
+        </div>
+    </div>
+
+    <div class="zxf_popup bgfff">
+        <jsp:include page="../manager/atPage.flt"></jsp:include>
+    </div>
+</div>
+<script>
+    //初始化FastClick实例
+    $(function() {
+        FastClick.attach(document.body);
+    });
+    <#if content??>
+    var content ="${content}";
+    $("#content").val(content);
+    </#if>
+
+$(document).on("touchstart", "#content", function(){
+    $(this).focus();
+});
+    // 删除
+    $(document).on("touchend",'.wql_delIcon',function(){
+        $li = $(this).parents('.wql_li');
+        $li.remove();
+        /*var limit = 9-$("input[name='path']").length;
+        if(limit>0){//添加+号
+            if(!$("#updateImg").hasClass("wql_btn_upimg")){
+                var html ='<li class="wql_li">\n' +
+                        '                    <div class="wql_btn_upimg" id="updateImg"/>\n' +
+                        '                </li>';
+                $("#imgView").append(html);
+            }
+        }*/
+    })
+
+    var post_flag = false;
+    $(document).on("touchstart",'.lh22',function(){
+        var content = $("#content").val().trim();
+        var myAudio = $("input[name='myAudio']").length;
+        var path =$("input[name='path']").length;
+        var ranges = [
+            '\ud83c[\udf00-\udfff]',
+            '\ud83d[\udc00-\ude4f]',
+            '\ud83d[\ude80-\udeff]'
+        ];
+        content = content .replace(new RegExp(ranges.join('|'), 'g'), '');
+        var limit = 9-$("#imgView>li").length;
+        if(limit==9){
+            if(content==null || content==''){
+                return $.alert("请填写内容！")
+            }
+        }
+        if(post_flag){
+            return $.alert("正在发送中，请勿重复操作！")
+        }
+        post_flag = true;//标记当前状态为正在提交状态
+        var form = $("#addForm");
+        var inputType=$("<input type='hidden' name='content'/>");
+        inputType.attr("value",content);
+        //注入参数到表单
+        form.append(inputType);
+        //form.hide();
+        //提交表单
+        form.submit();
+    })
+
+    $(document).on("touchend",'#closeBtn',function(){
+        var turn = "${turn!}";
+        var type = "${type!}";
+        if(turn!=null && turn!=''){
+            if(type==1){
+               return window.location.href="${base}/getPostDetail?postId=${postId!}&turn=${turn!}";
+            }
+            if(turn==1){
+                return window.location.href="${base}/index.html";
+            }
+            if(turn==2){
+                return window.location.href="${base}/index.html?plateId=${plateId!}";
+            }
+            return window.location.href="${base}/index.html";
+        }else{
+            return window.location.href="${base}/index.html";
+        }
+    })
+    $(document).on("touchstart",'#updateImg',function(){
+        var limit = 9-$("#imgView>li").length;
+        if(limit<=0){
+            return $.alert("已选9张图片或语音！")
+        }
+        if(navigator.userAgent.indexOf('Android') > -1){
+            !window.jslistener || window.jslistener.gainPicture(1,limit);
+        }else {
+            gainPicture(1,limit);
+        }
+    });
+    $(document).on('touchstart','.icon_photo.mgr120',function(){
+        var limit = 9-$("#imgView>li").length;
+        if(limit<=0){
+            return $.alert("已选9张图片或语音！")
+        }
+        if(navigator.userAgent.indexOf('Android') > -1){
+            !window.jslistener || window.jslistener.gainPicture(1,limit);
+        }else {
+            if(navigator.userAgent.indexOf('iOS_WKWebView') > -1){
+                window.webkit.messageHandlers.gainPicture.postMessage({flagId:1,limit:limit});
+            }else {
+                gainPicture(1, limit);
+            }
+        }
+    });
+
+    var mothed = {};
+    mothed.setPicture  = function (json) {
+        if(json ==null || json =='' || json.length <=0){
+            return;
+        }
+        var obj = JSON.parse(json)
+        for(var i =0;i<obj.pic.length;i++){
+            var img ='<li class=\"wql_li\"><img src=\"'+obj.pic[i]+'\"><i class=\"wql_delIcon\"></i><input type="hidden" name="path" value=\"'+obj.pic[i]+'\" /></li>';
+            $("#imgView").prepend(img);
+        }
+        /*var limit = 9-$("#imgView>li").length;
+        if(limit>0){//添加+号
+            if(!$("#updateImg").hasClass("wql_btn_upimg")){
+                var html ='<li class="wql_li">\n' +
+                        '                    <div class="wql_btn_upimg" id="updateImg"/>\n' +
+                        '                </li>';
+                $("#imgView").append(html);
+            }
+        }
+        if(limit<=0){//删除+号
+            $li = $("#updateImg").parents('.wql_li');
+            $li.remove();
+        }*/
+    };
+
+    appGoback = function(){
+        var turn = "${turn!}";
+        var type = "${type!}";
+        if(turn!=null && turn!=''){
+            if(type==1){
+                return window.location.href="${base}/getPostDetail?postId=${postId!}&turn=${turn!}";
+            }
+            if(turn==1){
+                return window.location.href="${base}/index.html";
+            }
+            if(turn==2){
+                return window.location.href="${base}/index.html?plateId=${plateId!}";
+            }
+            return window.location.href="${base}/index.html";
+        }else{
+            return window.location.href="${base}/index.html";
+        }
+    }
+
+    function getUsers(){
+        $.ajax({
+            cache : false,
+            contentType : false,
+            dataType : "html",
+            processData : false,
+            type:"get",
+            url:"${base}/page/manager/allPlateUser?postId=${postId}&plateId=${plateId}&turn=${turn!}",
+            async: true,
+            success:function(data){
+                $(".zxf_popup.bgfff").html(data);
+            }
+        })
+    }
+$(".icon_at").on("click", function () {
+    getUsers()
+    $('.zxf_popup').animate({
+        'bottom': 0
+    }, 500, function () {
+        $(".zxf_navRight").show();
+    });
+})
+function  getBack() {
+    //选完人后元素复位操作
+    $(".zxf_navRight").hide();
+    $('.zxf_popup').animate({
+        'bottom': '-100%'
+    }, 500, function () {});
+    $(".index-list-bar").remove()
+}
+function setCaretPosition(ctrl, pos) { //获取光标位置
+    if (ctrl.setSelectionRange) {
+        ctrl.focus();
+        ctrl.setSelectionRange(pos, pos);
+    } else if (ctrl.createTextRange) {
+        var range = ctrl.createTextRange();
+        range.collapse(true);
+        range.moveEnd('character', pos);
+        range.moveStart('character', pos);
+        range.select();
+    }
+}
+
+$(document).on("touchstart",'.icon_audio',function(){
+    var limit = 9-$("#imgView>li").length;
+    if(limit<=0){
+        return $.alert("已选9张图片或语音！")
+    }
+    if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){
+        if(navigator.userAgent.indexOf('iOS_WKWebView') > -1){
+            window.webkit.messageHandlers.openRecordDialog.postMessage({recordCallback:"recordCallback",limit:120});
+        }else {
+            openRecordDialog("recordCallback",120);
+        }
+    }else{
+        //0：js回调函数名
+        //1：录音最大时间
+        jslistener.openRecordDialog("recordCallback",120);
+    }
+});
+function recordCallback(ret,duration,data){
+    //ret=0成功
+    if(ret==0){
+        var taking =parseInt(duration)+1;
+        var audio ='<li class="wql_li t_c audio">                    ' +
+                '                  <audio class="myAudio" src=\"'+data+'\" type="audio/aac"></audio>' +
+                '                  <a href="javascript:;" class="zxf_audioBtn mgt05"></a>' +
+                '                  <span class="zxf_audio_durationTime mgt05">'+taking+'</span>' +
+                '                  <i class="wql_delIcon"></i>' +
+                '<input type="hidden" name="myAudio" value=\"'+data+'\" />' +
+                '<input type="hidden" name="taking" value=\"'+taking+'\" />' +
+                '                </li>'
+        $("#imgView").prepend(audio);
+        /*var limit = 9-$("#imgView>li").length;
+        if(limit>0){//添加+号
+            if(!$("#updateImg").hasClass("wql_btn_upimg")){
+                var html ='<li class="wql_li">\n' +
+                        '                    <div class="wql_btn_upimg" id="updateImg"/>\n' +
+                        '                </li>';
+                $("#imgView").append(html);
+            }
+        }*/
+    }
+}
+
+$(document).on("touchstart", ".zxf_audioBtn", function(){
+    $(".myAudio").each(function(i, item){
+        item.pause();
+        item.currentTime = 0
+        $(".zxf_audioBtn").removeClass("on");
+    });
+    var audio = $(this).prev(".myAudio")[0];
+    var obj = $(this)
+    if($(this).hasClass("on")){
+        $(this).removeClass("on");
+        audio.pause();
+        audio.currentTime = 0
+    }else{
+        $(this).parent("li").siblings().find(".zxf_audioBtn").removeClass("on");
+        if($(this).parent("li").siblings().find(".zxf_audioBtn").prev(".myAudio")[0]!=null){
+            $(this).parent("li").siblings().find(".zxf_audioBtn").prev(".myAudio")[0].pause();
+        }
+        $(this).addClass("on");
+        audio.play();
+        audio.addEventListener('ended', function () {
+            obj.removeClass("on");
+        }, false);
+    }
+});
+
+</script>
+</body>
+</html>

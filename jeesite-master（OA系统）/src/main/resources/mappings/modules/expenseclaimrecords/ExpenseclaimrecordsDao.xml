@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.thinkgem.jeesite.modules.expenseclaimrecords.dao.ExpenseclaimrecordsDao">
+    
+	<sql id="expenseclaimrecordsColumns">
+		a.id AS "id",
+		a.project_name AS "projectName",
+		a.aera_id AS "area.id",
+		a.tree_id AS "treeId",
+		a.date AS "date",
+		a.total AS "total",
+		a.create_by AS "createBy.id",
+		a.create_date AS "createDate",
+		a.update_by AS "updateBy.id",
+		a.update_date AS "updateDate",
+		a.remarks AS "remarks",
+		a.del_flag AS "delFlag",
+		a3.name AS "area.name"
+	</sql>
+	
+	<sql id="expenseclaimrecordsJoins">
+		LEFT JOIN sys_area a3 ON a3.id = a.aera_id
+	</sql>
+    
+	<select id="get" resultType="Expenseclaimrecords">
+		SELECT 
+			<include refid="expenseclaimrecordsColumns"/>
+		FROM expenseclaimrecords a
+		<include refid="expenseclaimrecordsJoins"/>
+		WHERE a.id = #{id}
+	</select>
+	
+	<select id="findList" resultType="Expenseclaimrecords">
+		SELECT 
+			<include refid="expenseclaimrecordsColumns"/>
+		FROM expenseclaimrecords a
+		<include refid="expenseclaimrecordsJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+			<if test="projectName != null and projectName != ''">
+				AND a.project_name = #{projectName}
+			</if>
+			<if test="area != null and area.id != null and area.id != ''">
+				AND a.aera_id = #{area.id}
+			</if>
+			<if test="treeId != null and treeId != ''">
+				AND a.tree_id = #{treeId}
+			</if>
+			<if test="date != null and date != ''">
+				AND a.date = #{date}
+			</if>
+		</where>
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="findAllList" resultType="Expenseclaimrecords">
+		SELECT 
+			<include refid="expenseclaimrecordsColumns"/>
+		FROM expenseclaimrecords a
+		<include refid="expenseclaimrecordsJoins"/>
+		<where>
+			a.del_flag = #{DEL_FLAG_NORMAL}
+		</where>		
+		<choose>
+			<when test="page !=null and page.orderBy != null and page.orderBy != ''">
+				ORDER BY ${page.orderBy}
+			</when>
+			<otherwise>
+				ORDER BY a.update_date DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<insert id="insert">
+		INSERT INTO expenseclaimrecords(
+			id,
+			project_name,
+			aera_id,
+			tree_id,
+			date,
+			total,
+			create_by,
+			create_date,
+			update_by,
+			update_date,
+			remarks,
+			del_flag
+		) VALUES (
+			#{id},
+			#{projectName},
+			#{area.id},
+			#{treeId},
+			#{date},
+			#{total},
+			#{createBy.id},
+			#{createDate},
+			#{updateBy.id},
+			#{updateDate},
+			#{remarks},
+			#{delFlag}
+		)
+	</insert>
+	
+	<update id="update">
+		UPDATE expenseclaimrecords SET 	
+			project_name = #{projectName},
+			aera_id = #{area.id},
+			tree_id = #{treeId},
+			date = #{date},
+			total = #{total},
+			update_by = #{updateBy.id},
+			update_date = #{updateDate},
+			remarks = #{remarks}
+		WHERE id = #{id}
+	</update>
+	
+	<update id="delete">
+		UPDATE expenseclaimrecords SET 
+			del_flag = #{DEL_FLAG_DELETE}
+		WHERE id = #{id}
+	</update>
+	
+</mapper>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="keywords" content="${site.keywords!}" />
+<meta http-equiv="description" content="${site.description!}" />
+<title>${topic.name} - 专题 - ${site.name}</title>
+
+<link rel="stylesheet" type="text/css" href="/${res}/css/global.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/zt.css" />
+
+<script type="text/javascript">
+	//主函数  
+	var s = function() {
+		var interv = 2000; //切换间隔时间  
+		var interv2 = 10; //切换速度  
+		var opac1 = 80; //文字背景的透明度  
+		var source = "show" //焦点轮换图片容器的id名称  
+		//获取对象  
+		function getTag(tag, obj) {
+			if (obj == null) {
+				return document.getElementsByTagName(tag);
+			} else {
+				return obj.getElementsByTagName(tag);
+			}
+		}
+		function getid(id) {
+			return document.getElementById(id);
+		}
+		
+		var opac = 0, j = 0, t = 63, num, scton = 0, timer, timer2, timer3;
+		var id = getid(source);
+		id.removeChild(getTag("div", id)[0]);
+		var li = getTag("li", id);
+		var div = document.createElement("div");
+		var title = document.createElement("div");
+		var span = document.createElement("span");
+		var button = document.createElement("div");
+		button.className = "button";
+		for (var i = 0; i < li.length; i++) {
+			var a = document.createElement("a");
+			a.innerHTML = i + 1;
+			a.onclick = function() {
+				clearTimeout(timer);
+				clearTimeout(timer2);
+				clearTimeout(timer3);
+				j = parseInt(this.innerHTML) - 1;
+				scton = 0;
+				t = 63;
+				opac = 0;
+				fadeon();
+			};
+			a.className = "b1";
+			a.onmouseover = function() {
+				this.className = "b2";
+			};
+			a.onmouseout = function() {
+				this.className = "b1";
+				sc(j);
+			};
+			button.appendChild(a);
+		}
+		//控制图层透明度  
+		function alpha(obj, n) {
+			if (document.all) {
+				obj.style.filter = "alpha(opacity=" + n + ")";
+			} else {
+				obj.style.opacity = (n / 100);
+			}
+		}
+		//控制焦点按钮  
+		function sc(n) {
+			for (var i = 0; i < li.length; i++) {
+				button.childNodes[i].className = "b1";
+			}
+			
+			button.childNodes[n].className = "b2";
+		}
+		title.className = "num_list";
+		title.appendChild(span);
+		alpha(title, opac1);
+		id.className = "d1";
+		div.className = "d2";
+		id.appendChild(div);
+		id.appendChild(title);
+		id.appendChild(button);
+		//渐显  
+		var fadeon = function() {
+			opac += 5;
+			div.innerHTML = li[j].innerHTML;
+			span.innerHTML = getTag("img", li[j])[0].alt;
+			alpha(div, opac);
+			if (scton == 0) {
+				sc(j);
+				num = -2;
+				scrolltxt();
+				scton = 1;
+			}
+			if (opac < 100) {
+				timer = setTimeout(fadeon, interv2);
+			} else {
+				timer2 = setTimeout(fadeout, interv);
+			}
+		};
+		//渐隐  
+		var fadeout = function() {
+			opac -= 5;
+			div.innerHTML = li[j].innerHTML;
+			alpha(div, opac);
+			if (scton == 0) {
+				num = 2;
+				scrolltxt();
+				scton = 1;
+			}
+			if (opac > 0) {
+				timer = setTimeout(fadeout, interv2);
+			} else {
+				if (j < li.length - 1) {
+					j++;
+				} else {
+					j = 0;
+				}
+				fadeon();
+			}
+		};
+		//滚动文字  
+		var scrolltxt = function() {
+			t += num;
+			span.style.marginTop = t + "px";
+			if (num<0 && t>3) {
+				timer3 = setTimeout(scrolltxt, interv2);
+			} else if (num > 0 && t < 62) {
+				timer3 = setTimeout(scrolltxt, interv2);
+			} else {
+				scton = 0
+			}
+		};
+		fadeon();
+	}
+	//初始化  
+	window.onload = s;
+</script>
+
+</head>
+
+<body class="zt_body06">
+	<!---专题top 开始--->
+	<div class="zt_top">
+		<div class="zt_top_center">
+			<div class="zt_logo">
+				<a href="${base}/">
+					<img src="/${res}/images/logo.png">
+				</a>
+			</div>
+		</div>
+	</div>
+	<!---专题top 结束--->
+
+	<!----专题内容 开始--->
+	<div class="zt_con">
+		<div class="bigbanner_box">
+			<div class="bigbanner">
+				<img src="${topic.titleImg!site.defImg}">
+			</div>
+		</div>
+		<div class="zt_con_center">
+			<div class="zt_out">
+				<div class="zt_inside">
+				[#list topicChannels as topicChannel]
+				[#if topicChannel_index = 0]
+					<div class="section1">
+						<div class="section_hd">
+							<h2>${topicChannel.channelName}</h2>
+							
+						</div>
+						<div class="section_bd">
+							<div id="show" class="d1">
+								<div class="loading">
+									Loading...
+									<br />
+									<!-- <img src="images/1.jpg" width="100" height="100" /> -->
+								</div>
+								<ul>
+								[@cms_content_list count='4' orderBy='4' typeId='1,2,3,4' titLen='18' channelOption='1' topicId=topic.id topicChannelId=topicChannel.channelId ]
+                				[#list tag_list as content]
+									<li>
+										<a href="${content.url}">
+											<img src="${content.titleImg!content.typeImg!site.defImg}" title="${content.title}" alt="[@text_cut s=content.title! len='17' append='...'/]" />
+										</a>
+									</li>
+								[/#list]
+                				[/@cms_content_list]
+								</ul>
+							</div>
+
+							<div class="section1_r">
+								[@cms_content_list count='1' first='5' orderBy='4' typeId='1,2,3,4' titLen='18' channelOption='1' topicId=topic.id topicChannelId=topicChannel.channelId ]
+                				[#list tag_list as content]
+								<h4>
+									<a href="${content.url}" title="${content.title}">[@text_cut s=content.title! len='30' append='...'/]</a>
+								</h4>
+								<p>
+									[@text_cut s=content.description! len='180' append='...'/]
+									<a href="${content.url}">[详细]</a>
+								</p>
+								[/#list]
+                				[/@cms_content_list]
+							</div>
+						</div>
+					</div>
+				[#elseif topicChannel_index = 1]
+					<div class="section2">
+						<div class="section_hd_r">
+							<h2>${topicChannel.channelName}</h2>
+							<span class="more">
+								<a href="${base}/topic/getList.jsp?topicId=${topic.id}&topicChannelId=${topicChannel.channelId}">更多>></a>
+							</span>
+						</div>
+						<div class="section_bd_r">
+						[@cms_content_list count='5' orderBy='4' typeId='1,2,3,4' titLen='18' channelOption='1' topicId=topic.id topicChannelId=topicChannel.channelId ]
+	                	[#list tag_list as content]
+		                	[#if content_index == 0]
+		                	<div class="zt_videoing">
+								<a href="${content.url}">
+									<img src="${content.titleImg!content.typeImg!site.defImg}" width="278" height="195">
+								</a>
+								<span class="zt_videoing_tit">${content.title}</span>
+							</div>
+		                	[/#if]
+	                		[#if content_index == 1]
+	                		<ul class="zt_video_list">
+								<li>
+									<a href="${content.url}" title="${content.title}">[@text_cut s=content.title! len='16' append='...'/]</a>
+								</li>
+	                		[/#if]
+	                		[#if content_index > 1]
+	                			<li>
+									<a href="${content.url}" title="${content.title}">[@text_cut s=content.title! len='16' append='...'/]</a>
+								</li>
+	                		[/#if]
+	                		[#if content_index > 0 && !content_has_next]
+	                		</ul>
+	                		[/#if]
+	                	[/#list]
+                		[/@cms_content_list]
+						</div>
+					</div>
+				[#elseif topicChannel_index = 2]
+				<div class="section3">
+						<div class="section_hd">
+							<h2>${topicChannel.channelName}</h2>
+							<span class="more">
+								<a href="${base}/topic/getList.jsp?topicId=${topic.id}&topicChannelId=${topicChannel.channelId}">更多>></a>
+							</span>
+						</div>
+						<div class="section_bd section3_top">
+							<ul class="section3_list">
+							[@cms_content_list count='10' orderBy='4' typeId='1,2,3,4' titLen='18' channelOption='1' topicId=topic.id topicChannelId=topicChannel.channelId ]
+		                	[#list tag_list as content]
+		                		<li>
+									<span class="section3_pic">
+										<a href="${content.url}" title="${content.title}">
+											<img src="${content.titleImg!content.typeImg!site.defImg}">
+										</a>
+									</span>
+									<span class="section3_text">
+										<h4>
+											<a href="${content.url}" title="${content.title}">[@text_cut s=content.title! len='20' append='...'/]</a>
+										</h4>
+										<p>
+											[@text_cut s=content.description! len='90' append='...'/]
+											<a href="${content.url}">[详细]</a>
+										</p>
+									</span>
+								</li>
+		                	[/#list]
+	                		[/@cms_content_list]
+								
+							</ul>
+
+							<div class="showmore" style="text-align: center; margin-bottom: 20px;">
+								<a href="${base}/topic/getList.jsp?topicId=${topic.id}">查看更多</a>
+							</div>
+
+						</div>
+					</div>
+				[#else]
+					<div class="section4">
+						<div class="section_hd_r">
+							<h2>${topicChannel.channelName}</h2>
+							<span class="more">
+								<a href="${base}/topic/getList.jsp?topicId=${topic.id}&topicChannelId=${topicChannel.channelId}">更多>></a>
+							</span>
+						</div>
+						<div class="section_bd_r section4_top">
+							<ul class="section4_list">
+							[@cms_content_list count='8' orderBy='4' typeId='1,2,3,4' titLen='18' channelOption='1' topicId=topic.id topicChannelId=topicChannel.channelId ]
+		                	[#list tag_list as content]
+		                		<li>
+									<a href="${content.url}" title="${content.title}">
+										<img src="${content.titleImg!content.typeImg!site.defImg}">
+									</a>
+								</li>
+		                		
+		                	[/#list]
+	                		[/@cms_content_list]
+								
+							</ul>
+						</div>
+					</div>
+				[/#if]
+				[/#list]
+
+				</div>
+			</div>
+		</div>
+	</div>
+	<!----专题内容 结束--->
+
+	<!--尾部 开始-->
+	[#include "../include/footer.html"/]
+	<!--尾部 开始-->
+
+</body>
+</html>

@@ -1,0 +1,116 @@
+/***********************************东楚视频首页************************************************/
+.sp_box { margin:0 auto; width:1280px;}
+/*********banner**********/
+.slide_fade{ float:left; width:1280px; margin-top:10px; height:528px;}
+.slide_fade .banpic_box{overflow:hidden;position:relative;width:1280px;height:450px;background:#000;z-index:4; border-bottom:3px solid #ccc;}
+.slide_fade .banpic_box a{color:#fff;}
+.slide_fade .banpic_box a:hover{text-decoration:none;}
+.slide_fade .list{overflow:hidden;height:9999px;}
+.slide_fade .list li{position:relative;width:1280px;height:450px;}
+.slide_fade .list img{_vertical-align:top;}
+.slide_fade .txt{cursor:pointer;position:absolute;bottom:20px;left:45px;font:14px/24px "\5fae\8f6f\96c5\9ed1";}
+.slide_fade .txt h3{font:30px/60px "\5fae\8f6f\96c5\9ed1"; font-weight:500;}
+.slide_fade .txt p { font:18px/30px "\5fae\8f6f\96c5\9ed1";}
+.slide_fade .btn{ float:left;position:absolute;background:#fff;z-index:5; height:75px;}
+.slide_fade .btn a{color:#555;text-decoration:none;}
+.slide_fade .btn li{overflow:hidden;float:left;width:200px; height:70px;margin:0 0 0 16px;padding-top:5px;color:#333;
+_margin:0 16px 0 0;}
+.slide_fade .btn li:first-child{margin-left:0;}
+.slide_fade .btn .selected{position:relative;top:-3px;border-top:3px solid #cc0300;}
+
+
+.sp_center { float:left; width:1280px; margin:0 0 10px;}
+.sp_center_l { float:left; width:896px;}
+.sp_center_l .sp_news { float:left; width:856px; margin-top:10px; padding:20px; background:#fff;}
+.sp_center_l .sp_news .sp_hd { float:left; width:856px; line-height:30px;}
+.sp_center_l .sp_news .sp_hd h3 { float:left; font-size:22px; border-left:3px solid #cc0303; line-height:30px; padding-left:10px;}
+.sp_center_l .sp_news .sp_hd .sp_more { float:right;}
+.sp_center_l .sp_list { float:left; width:856px;}
+.sp_center_l .sp_list li { float:left; width:199px; margin:20px 0 0 20px;}
+.sp_center_l .sp_list li:first-child { margin-left:0;}
+.sp_center_l .sp_list li.fifth { margin-left:0;}
+.sp_center_l .sp_list li .sp_pic { float:left; width:199px; height:120px;}
+.sp_center_l .sp_list li .sp_pic img { width:100%; height:100%;}
+.sp_center_l .sp_list li .sp_tit { float:left; width:199px; line-height:24px; height:24px; text-overflow:clip; overflow:hidden;}
+.sp_center_l .sp_list li .play_num { float:left; width:199px; color:#666; font-size:12px; line-height:20px;}
+.sp_center_l .sp_list li .play_num i { float:left; width:20px; height:20px; background:url(../images/play_ico.png) no-repeat;}
+
+/*******视频列表页*****/
+.sp_map { float:left; margin:10px 0 !important;}
+.sp_listpage { float:left; width:1240px; padding:0 20px; background:#fff; margin-top:10px;}
+.spmore_list { float:left; width:1240px; margin-bottom:20px;}
+.spmore_list li { float:left; width:232px; margin:20px 0 0 20px;}
+.spmore_list li:first-child { margin-left:0;}
+.spmore_list li.sixth,.spmore_list li.eleventh { margin-left:0;}
+.spmore_list li .sp_pic { float:left; width:232px; height:140px;}
+.spmore_list li .sp_pic img { width:100%; height:100%;}
+.spmore_list li .sp_tit { float:left; width:232px; line-height:24px; height:24px; text-overflow:clip; overflow:hidden;}
+.spmore_list li .play_num { float:left; width:232px; color:#666; font-size:12px; line-height:20px;}
+.spmore_list li .play_num i { float:left; width:20px; height:20px; background:url(../images/play_ico.png) no-repeat;}
+
+
+
+ /**  翻页  **/
+.list_page{ float:left; position:relative; left:50%; margin-bottom:20px;}
+.list_page .jogger { position:relative; left:-50%; font-family:Arial, Helvetica, sans-serif; padding:2px; margin:30px 0 10px;} 
+.list_page .jogger a { padding:0.8em 0.9em 0.7em 0.9em; margin:5px; color:#222; background-color:#f1f1f1; text-decoration:none;} 
+.list_page .jogger a:hover { padding:0.8em 0.9em 0.7em 0.9em;margin:5px; background-color:#cc0300; color:#fff;} 
+.list_page .jogger a:active { padding:0.8em 0.9em 0.7em 0.9em;margin:5px; background-color:#cc0300;} 
+.list_page .jogger span.current { padding:0.8em 0.9em 0.7em 0.9em;margin:5px; color:#fff;  background-color:#cc0300;} 
+.list_page .jogger span.disabled { background:#f1f1f1; padding:0.8em 0.9em 0.7em 0.9em;margin:5px; color:#aaa; }
+
+
+
+/***********************************东楚视频播放页************************************************/
+/*******************************************  左  *****************************************/
+.details_left { float:left; width:896px; background-color:#fff;}
+.def_video { float:left; width:896px; height:508px; background:url(../images/video.jpg) 0 0 no-repeat; position:relative; }
+.play_butt { float:left; width:80px; height:80px; position:absolute; cursor:pointer; left:50%; margin-left:-40px; top:50%; margin-top:-40px; }
+/****视频分享****/
+.video_share{ margin:0 auto 20px; width:896px; height:60px; background-color:#202020;}
+.video_share ul{ float:right;}
+.video_share ul li{ float:left; width:100px; height:60px; line-height:60px;}
+.video_share ul li img{ float:left; width:20px; height:20px; vertical-align:middle; margin-top:20px; margin-right:5px;}
+.video_share ul li a{ color:#fff; text-decoration:none;}
+.video_share ul li a:hover{ color:#fff; text-decoration: underline;}
+.video_share .video_ing{ float:left; width:500px; height:60px; line-height:60px; font-size:16px; color:#fff; text-indent:20px;}
+.video_share .video_ing a{ color:#ED221E;text-decoration:none;}
+.video_share .video_ing a:hover{ color:#fff; text-decoration: underline;}
+.pinglun{ margin:0 auto; width:856px;}
+/****推荐列表****/
+.details_right .recommend{ float:left; width:374px; background-color:#fff; margin:10px 0px; height:auto; overflow:hidden;!important}
+.details_right .recommend .title{ margin:0 auto;width:354px; height:40px; border-bottom:1px solid #f3f3f3; background:none;}
+.details_right .recommend .title span{ float:left; width:auto; padding-left:6px; padding-right:6px; height:39px; line-height:45px; border-bottom:2px solid #cc0303; font-size:18px; color:#272727; font-weight:bold;}
+.details_right .recommend .title i{ float:right; font-style:normal; height:39px; line-height:45px;}
+.details_right .recommend ul{ margin:10px auto; width:354px;}
+.details_right .recommend ul li { float:left; width:354px height:80px; margin-bottom:10px;}
+.details_right .recommend ul li img { float:left;  width:130px; height:80px; display:inline;}
+.details_right .recommend ul li span{ float:left; width:194px; line-height:20px; font-style:normal; padding:0px 15px; max-height:40px; text-overflow:clip; overflow:hidden; margin-top:5px;}
+.details_right .recommend ul li u{ float:left; width:194px;height:20px; line-height:20px; text-decoration:none; padding:0px 15px; font-size:12px; color:#666; margin-top:10px;}
+.details_right .recommend ul li u i { float:left; width:20px; height:20px; background:url(../images/play_ico.png) no-repeat;}
+
+.details_right .recommend ul li a{ text-decoration:none;}
+.details_right .recommend ul li a:hover{ color:#1d9dba; text-decoration: underline;}
+
+
+/******精选视频******/
+.jxsp { float:right; width:374px; background-color:#fff; height:auto; overflow:hidden!important ; padding:10px 0 30px;}
+.spindex_rtit { margin:0 auto;width:354px; height:40px; border-bottom:1px solid #f3f3f3; background:none;}
+.spindex_rtit span { float:left; width:auto; padding-left:6px; padding-right:6px; height:39px; line-height:45px; border-bottom:2px solid #cc0303; font-size:18px; color:#272727; font-weight:bold;}
+
+.jxsp_bd { float:left; width:354px; padding:0 10px;}
+.jxsp_bd .jxsp_list { float:left; width:354px;}
+.jxsp_bd .jxsp_list li { float:left; width:354px; height:80px; margin-top:30px;}
+.jxsp_bd .jxsp_list li img { float:left; width:130px; height:80px; margin-right:15px;}
+.jxsp_bd .jxsp_list li span { float:left; width:209px; line-height:20px; font-style:normal; max-height:40px; text-overflow:clip; overflow:hidden; margin-top:5px;}
+.jxsp_bd .jxsp_list li u { float:left; width:209px;height:20px; line-height:20px; text-decoration:none; font-size:12px; color:#666; margin-top:10px;}
+.jxsp_bd .jxsp_list li u i { float:left; width:20px; height:20px; background:url(../images/play_ico.png) no-repeat;}
+
+/***最新视频***/
+.zxsp { float:right; width:374px; background-color:#fff; height:auto; overflow:hidden!important ; padding-bottom:30px; margin-top:10px;}
+
+/***热点排行***/
+.rmph { float:right; width:374px; background-color:#fff; height:auto; overflow:hidden!important ; padding-bottom:62px;}
+.rmph_bd { float:left; width:354px; padding:20px 10px 0;}
+.rmph_bd .rmph_list { float:left; width:324px; padding-left:30px; background:url(../images/sp_rankbg.png) no-repeat;}
+.rmph_bd .rmph_list li { float:left; width:324px; line-height:36px; height:36px; white-space:nowrap; text-overflow:ellipsis; overflow:hidden;}

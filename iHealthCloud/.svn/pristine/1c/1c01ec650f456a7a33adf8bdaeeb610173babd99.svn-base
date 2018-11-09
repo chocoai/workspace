@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.iHealthCloud.mapper.ServicePriceMapper">
+  <resultMap id="BaseResultMap" type="com.yhcrt.iHealthCloud.entity.ServicePrice">
+    <id column="cid" jdbcType="INTEGER" property="cid" />
+    <result column="service_id" jdbcType="INTEGER" property="serviceId" />
+    <result column="price" jdbcType="DOUBLE" property="price" />
+    <result column="ori_price" jdbcType="DOUBLE" property="oriPrice" />
+    <result column="level" jdbcType="VARCHAR" property="level" />
+    <result column="unit" jdbcType="VARCHAR" property="unit" />
+    <result column="type" jdbcType="INTEGER" property="type" />
+    <result column="service_num" jdbcType="INTEGER" property="serviceNum" />
+    <result column="service_unit" jdbcType="INTEGER" property="serviceUnit" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.yhcrt.iHealthCloud.entity.ServicePrice">
+    <result column="desct" jdbcType="LONGVARCHAR" property="desct" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    cid, service_id, price, ori_price, level, unit, type, service_num, service_unit, 
+    status
+  </sql>
+  <sql id="Blob_Column_List">
+    desct
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.yhcrt.iHealthCloud.entity.ServicePriceExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from service_price
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.yhcrt.iHealthCloud.entity.ServicePriceExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from service_price
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from service_price
+    where cid = #{cid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from service_price
+    where cid = #{cid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yhcrt.iHealthCloud.entity.ServicePriceExample">
+    delete from service_price
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yhcrt.iHealthCloud.entity.ServicePrice">
+    insert into service_price (cid, service_id, price, 
+      ori_price, level, unit, 
+      type, service_num, service_unit, 
+      status, desct)
+    values (#{cid,jdbcType=INTEGER}, #{serviceId,jdbcType=INTEGER}, #{price,jdbcType=DOUBLE}, 
+      #{oriPrice,jdbcType=DOUBLE}, #{level,jdbcType=VARCHAR}, #{unit,jdbcType=VARCHAR}, 
+      #{type,jdbcType=INTEGER}, #{serviceNum,jdbcType=INTEGER}, #{serviceUnit,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{desct,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yhcrt.iHealthCloud.entity.ServicePrice">
+    insert into service_price
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="serviceId != null">
+        service_id,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="oriPrice != null">
+        ori_price,
+      </if>
+      <if test="level != null">
+        level,
+      </if>
+      <if test="unit != null">
+        unit,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="serviceNum != null">
+        service_num,
+      </if>
+      <if test="serviceUnit != null">
+        service_unit,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="desct != null">
+        desct,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="serviceId != null">
+        #{serviceId,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="oriPrice != null">
+        #{oriPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=INTEGER},
+      </if>
+      <if test="serviceNum != null">
+        #{serviceNum,jdbcType=INTEGER},
+      </if>
+      <if test="serviceUnit != null">
+        #{serviceUnit,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="desct != null">
+        #{desct,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yhcrt.iHealthCloud.entity.ServicePriceExample" resultType="java.lang.Long">
+    select count(*) from service_price
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update service_price
+    <set>
+      <if test="record.cid != null">
+        cid = #{record.cid,jdbcType=INTEGER},
+      </if>
+      <if test="record.serviceId != null">
+        service_id = #{record.serviceId,jdbcType=INTEGER},
+      </if>
+      <if test="record.price != null">
+        price = #{record.price,jdbcType=DOUBLE},
+      </if>
+      <if test="record.oriPrice != null">
+        ori_price = #{record.oriPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="record.level != null">
+        level = #{record.level,jdbcType=VARCHAR},
+      </if>
+      <if test="record.unit != null">
+        unit = #{record.unit,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=INTEGER},
+      </if>
+      <if test="record.serviceNum != null">
+        service_num = #{record.serviceNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.serviceUnit != null">
+        service_unit = #{record.serviceUnit,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.desct != null">
+        desct = #{record.desct,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update service_price
+    set cid = #{record.cid,jdbcType=INTEGER},
+      service_id = #{record.serviceId,jdbcType=INTEGER},
+      price = #{record.price,jdbcType=DOUBLE},
+      ori_price = #{record.oriPrice,jdbcType=DOUBLE},
+      level = #{record.level,jdbcType=VARCHAR},
+      unit = #{record.unit,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      service_num = #{record.serviceNum,jdbcType=INTEGER},
+      service_unit = #{record.serviceUnit,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      desct = #{record.desct,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update service_price
+    set cid = #{record.cid,jdbcType=INTEGER},
+      service_id = #{record.serviceId,jdbcType=INTEGER},
+      price = #{record.price,jdbcType=DOUBLE},
+      ori_price = #{record.oriPrice,jdbcType=DOUBLE},
+      level = #{record.level,jdbcType=VARCHAR},
+      unit = #{record.unit,jdbcType=VARCHAR},
+      type = #{record.type,jdbcType=INTEGER},
+      service_num = #{record.serviceNum,jdbcType=INTEGER},
+      service_unit = #{record.serviceUnit,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.iHealthCloud.entity.ServicePrice">
+    update service_price
+    <set>
+      <if test="serviceId != null">
+        service_id = #{serviceId,jdbcType=INTEGER},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=DOUBLE},
+      </if>
+      <if test="oriPrice != null">
+        ori_price = #{oriPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="level != null">
+        level = #{level,jdbcType=VARCHAR},
+      </if>
+      <if test="unit != null">
+        unit = #{unit,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=INTEGER},
+      </if>
+      <if test="serviceNum != null">
+        service_num = #{serviceNum,jdbcType=INTEGER},
+      </if>
+      <if test="serviceUnit != null">
+        service_unit = #{serviceUnit,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="desct != null">
+        desct = #{desct,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.yhcrt.iHealthCloud.entity.ServicePrice">
+    update service_price
+    set service_id = #{serviceId,jdbcType=INTEGER},
+      price = #{price,jdbcType=DOUBLE},
+      ori_price = #{oriPrice,jdbcType=DOUBLE},
+      level = #{level,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      service_num = #{serviceNum,jdbcType=INTEGER},
+      service_unit = #{serviceUnit,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      desct = #{desct,jdbcType=LONGVARCHAR}
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yhcrt.iHealthCloud.entity.ServicePrice">
+    update service_price
+    set service_id = #{serviceId,jdbcType=INTEGER},
+      price = #{price,jdbcType=DOUBLE},
+      ori_price = #{oriPrice,jdbcType=DOUBLE},
+      level = #{level,jdbcType=VARCHAR},
+      unit = #{unit,jdbcType=VARCHAR},
+      type = #{type,jdbcType=INTEGER},
+      service_num = #{serviceNum,jdbcType=INTEGER},
+      service_unit = #{serviceUnit,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER}
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+</mapper>

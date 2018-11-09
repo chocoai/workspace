@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.whty.mapper.TDeviceInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.whty.entity.TDeviceInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="ali_device_secret" property="aliDeviceSecret" jdbcType="VARCHAR" />
+    <result column="ali_device_name" property="aliDeviceName" jdbcType="VARCHAR" />
+    <result column="ali_product_key" property="aliProductKey" jdbcType="VARCHAR" />
+    <result column="ali_iot_id" property="aliIotId" jdbcType="VARCHAR" />
+    <result column="brand_id" property="brandId" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="province_code" property="provinceCode" jdbcType="VARCHAR" />
+    <result column="city_code" property="cityCode" jdbcType="VARCHAR" />
+    <result column="area_code" property="areaCode" jdbcType="VARCHAR" />
+    <result column="school_id" property="schoolId" jdbcType="INTEGER" />
+    <result column="last_login_time" property="lastLoginTime" jdbcType="TIMESTAMP" />
+    <result column="register_time" property="registerTime" jdbcType="TIMESTAMP" />
+    <result column="terminal_device_type_id" property="terminalDeviceTypeId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="freeze_status" property="freezeStatus" jdbcType="VARCHAR" />
+    <result column="client_soft_version" property="clientSoftVersion" jdbcType="VARCHAR" />
+    <result column="device_status" property="deviceStatus" jdbcType="TINYINT" />
+    <result column="system_version" property="systemVersion" jdbcType="VARCHAR" />
+    <result column="resolution" property="resolution" jdbcType="VARCHAR" />
+    <result column="register_count" property="registerCount" jdbcType="SMALLINT" />
+    <result column="creator" property="creator" jdbcType="INTEGER" />
+    <result column="hash" property="hash" jdbcType="VARCHAR" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="storage" property="storage" jdbcType="VARCHAR" />
+    <result column="disk_size" property="diskSize" jdbcType="VARCHAR" />
+    <result column="mac" property="mac" jdbcType="VARCHAR" />
+    <result column="device_code" property="deviceCode" jdbcType="VARCHAR" />
+    <result column="online" property="online" jdbcType="INTEGER" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, ali_device_secret, ali_device_name, ali_product_key, ali_iot_id, brand_id, name, 
+    province_code, city_code, area_code, school_id, last_login_time, register_time, terminal_device_type_id, 
+    create_time, update_time, freeze_status, client_soft_version, device_status, system_version, 
+    resolution, register_count, creator, hash, order_id, storage, disk_size, mac, device_code, 
+    online
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.whty.entity.TDeviceInfoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_device_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from t_device_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from t_device_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.whty.entity.TDeviceInfoExample" >
+    delete from t_device_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.whty.entity.TDeviceInfo" >
+    insert into t_device_info (id, ali_device_secret, ali_device_name, 
+      ali_product_key, ali_iot_id, brand_id, 
+      name, province_code, city_code, 
+      area_code, school_id, last_login_time, 
+      register_time, terminal_device_type_id, create_time, 
+      update_time, freeze_status, client_soft_version, 
+      device_status, system_version, resolution, 
+      register_count, creator, hash, 
+      order_id, storage, disk_size, 
+      mac, device_code, online
+      )
+    values (#{id,jdbcType=INTEGER}, #{aliDeviceSecret,jdbcType=VARCHAR}, #{aliDeviceName,jdbcType=VARCHAR}, 
+      #{aliProductKey,jdbcType=VARCHAR}, #{aliIotId,jdbcType=VARCHAR}, #{brandId,jdbcType=INTEGER}, 
+      #{name,jdbcType=VARCHAR}, #{provinceCode,jdbcType=VARCHAR}, #{cityCode,jdbcType=VARCHAR}, 
+      #{areaCode,jdbcType=VARCHAR}, #{schoolId,jdbcType=INTEGER}, #{lastLoginTime,jdbcType=TIMESTAMP}, 
+      #{registerTime,jdbcType=TIMESTAMP}, #{terminalDeviceTypeId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{freezeStatus,jdbcType=VARCHAR}, #{clientSoftVersion,jdbcType=VARCHAR}, 
+      #{deviceStatus,jdbcType=TINYINT}, #{systemVersion,jdbcType=VARCHAR}, #{resolution,jdbcType=VARCHAR}, 
+      #{registerCount,jdbcType=SMALLINT}, #{creator,jdbcType=INTEGER}, #{hash,jdbcType=VARCHAR}, 
+      #{orderId,jdbcType=INTEGER}, #{storage,jdbcType=VARCHAR}, #{diskSize,jdbcType=VARCHAR}, 
+      #{mac,jdbcType=VARCHAR}, #{deviceCode,jdbcType=VARCHAR}, #{online,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.whty.entity.TDeviceInfo" >
+    insert into t_device_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="aliDeviceSecret != null" >
+        ali_device_secret,
+      </if>
+      <if test="aliDeviceName != null" >
+        ali_device_name,
+      </if>
+      <if test="aliProductKey != null" >
+        ali_product_key,
+      </if>
+      <if test="aliIotId != null" >
+        ali_iot_id,
+      </if>
+      <if test="brandId != null" >
+        brand_id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="provinceCode != null" >
+        province_code,
+      </if>
+      <if test="cityCode != null" >
+        city_code,
+      </if>
+      <if test="areaCode != null" >
+        area_code,
+      </if>
+      <if test="schoolId != null" >
+        school_id,
+      </if>
+      <if test="lastLoginTime != null" >
+        last_login_time,
+      </if>
+      <if test="registerTime != null" >
+        register_time,
+      </if>
+      <if test="terminalDeviceTypeId != null" >
+        terminal_device_type_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="freezeStatus != null" >
+        freeze_status,
+      </if>
+      <if test="clientSoftVersion != null" >
+        client_soft_version,
+      </if>
+      <if test="deviceStatus != null" >
+        device_status,
+      </if>
+      <if test="systemVersion != null" >
+        system_version,
+      </if>
+      <if test="resolution != null" >
+        resolution,
+      </if>
+      <if test="registerCount != null" >
+        register_count,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="hash != null" >
+        hash,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="storage != null" >
+        storage,
+      </if>
+      <if test="diskSize != null" >
+        disk_size,
+      </if>
+      <if test="mac != null" >
+        mac,
+      </if>
+      <if test="deviceCode != null" >
+        device_code,
+      </if>
+      <if test="online != null" >
+        online,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="aliDeviceSecret != null" >
+        #{aliDeviceSecret,jdbcType=VARCHAR},
+      </if>
+      <if test="aliDeviceName != null" >
+        #{aliDeviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="aliProductKey != null" >
+        #{aliProductKey,jdbcType=VARCHAR},
+      </if>
+      <if test="aliIotId != null" >
+        #{aliIotId,jdbcType=VARCHAR},
+      </if>
+      <if test="brandId != null" >
+        #{brandId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null" >
+        #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolId != null" >
+        #{schoolId,jdbcType=INTEGER},
+      </if>
+      <if test="lastLoginTime != null" >
+        #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="registerTime != null" >
+        #{registerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="terminalDeviceTypeId != null" >
+        #{terminalDeviceTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="freezeStatus != null" >
+        #{freezeStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="clientSoftVersion != null" >
+        #{clientSoftVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceStatus != null" >
+        #{deviceStatus,jdbcType=TINYINT},
+      </if>
+      <if test="systemVersion != null" >
+        #{systemVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="resolution != null" >
+        #{resolution,jdbcType=VARCHAR},
+      </if>
+      <if test="registerCount != null" >
+        #{registerCount,jdbcType=SMALLINT},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="hash != null" >
+        #{hash,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="storage != null" >
+        #{storage,jdbcType=VARCHAR},
+      </if>
+      <if test="diskSize != null" >
+        #{diskSize,jdbcType=VARCHAR},
+      </if>
+      <if test="mac != null" >
+        #{mac,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceCode != null" >
+        #{deviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="online != null" >
+        #{online,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.whty.entity.TDeviceInfoExample" resultType="java.lang.Integer" >
+    select count(*) from t_device_info
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update t_device_info
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.aliDeviceSecret != null" >
+        ali_device_secret = #{record.aliDeviceSecret,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aliDeviceName != null" >
+        ali_device_name = #{record.aliDeviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aliProductKey != null" >
+        ali_product_key = #{record.aliProductKey,jdbcType=VARCHAR},
+      </if>
+      <if test="record.aliIotId != null" >
+        ali_iot_id = #{record.aliIotId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.brandId != null" >
+        brand_id = #{record.brandId,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.provinceCode != null" >
+        province_code = #{record.provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cityCode != null" >
+        city_code = #{record.cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaCode != null" >
+        area_code = #{record.areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schoolId != null" >
+        school_id = #{record.schoolId,jdbcType=INTEGER},
+      </if>
+      <if test="record.lastLoginTime != null" >
+        last_login_time = #{record.lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.registerTime != null" >
+        register_time = #{record.registerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.terminalDeviceTypeId != null" >
+        terminal_device_type_id = #{record.terminalDeviceTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null" >
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null" >
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.freezeStatus != null" >
+        freeze_status = #{record.freezeStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clientSoftVersion != null" >
+        client_soft_version = #{record.clientSoftVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceStatus != null" >
+        device_status = #{record.deviceStatus,jdbcType=TINYINT},
+      </if>
+      <if test="record.systemVersion != null" >
+        system_version = #{record.systemVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="record.resolution != null" >
+        resolution = #{record.resolution,jdbcType=VARCHAR},
+      </if>
+      <if test="record.registerCount != null" >
+        register_count = #{record.registerCount,jdbcType=SMALLINT},
+      </if>
+      <if test="record.creator != null" >
+        creator = #{record.creator,jdbcType=INTEGER},
+      </if>
+      <if test="record.hash != null" >
+        hash = #{record.hash,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderId != null" >
+        order_id = #{record.orderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.storage != null" >
+        storage = #{record.storage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.diskSize != null" >
+        disk_size = #{record.diskSize,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mac != null" >
+        mac = #{record.mac,jdbcType=VARCHAR},
+      </if>
+      <if test="record.deviceCode != null" >
+        device_code = #{record.deviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.online != null" >
+        online = #{record.online,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update t_device_info
+    set id = #{record.id,jdbcType=INTEGER},
+      ali_device_secret = #{record.aliDeviceSecret,jdbcType=VARCHAR},
+      ali_device_name = #{record.aliDeviceName,jdbcType=VARCHAR},
+      ali_product_key = #{record.aliProductKey,jdbcType=VARCHAR},
+      ali_iot_id = #{record.aliIotId,jdbcType=VARCHAR},
+      brand_id = #{record.brandId,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      province_code = #{record.provinceCode,jdbcType=VARCHAR},
+      city_code = #{record.cityCode,jdbcType=VARCHAR},
+      area_code = #{record.areaCode,jdbcType=VARCHAR},
+      school_id = #{record.schoolId,jdbcType=INTEGER},
+      last_login_time = #{record.lastLoginTime,jdbcType=TIMESTAMP},
+      register_time = #{record.registerTime,jdbcType=TIMESTAMP},
+      terminal_device_type_id = #{record.terminalDeviceTypeId,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      freeze_status = #{record.freezeStatus,jdbcType=VARCHAR},
+      client_soft_version = #{record.clientSoftVersion,jdbcType=VARCHAR},
+      device_status = #{record.deviceStatus,jdbcType=TINYINT},
+      system_version = #{record.systemVersion,jdbcType=VARCHAR},
+      resolution = #{record.resolution,jdbcType=VARCHAR},
+      register_count = #{record.registerCount,jdbcType=SMALLINT},
+      creator = #{record.creator,jdbcType=INTEGER},
+      hash = #{record.hash,jdbcType=VARCHAR},
+      order_id = #{record.orderId,jdbcType=INTEGER},
+      storage = #{record.storage,jdbcType=VARCHAR},
+      disk_size = #{record.diskSize,jdbcType=VARCHAR},
+      mac = #{record.mac,jdbcType=VARCHAR},
+      device_code = #{record.deviceCode,jdbcType=VARCHAR},
+      online = #{record.online,jdbcType=INTEGER}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.whty.entity.TDeviceInfo" >
+    update t_device_info
+    <set >
+      <if test="aliDeviceSecret != null" >
+        ali_device_secret = #{aliDeviceSecret,jdbcType=VARCHAR},
+      </if>
+      <if test="aliDeviceName != null" >
+        ali_device_name = #{aliDeviceName,jdbcType=VARCHAR},
+      </if>
+      <if test="aliProductKey != null" >
+        ali_product_key = #{aliProductKey,jdbcType=VARCHAR},
+      </if>
+      <if test="aliIotId != null" >
+        ali_iot_id = #{aliIotId,jdbcType=VARCHAR},
+      </if>
+      <if test="brandId != null" >
+        brand_id = #{brandId,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceCode != null" >
+        province_code = #{provinceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="cityCode != null" >
+        city_code = #{cityCode,jdbcType=VARCHAR},
+      </if>
+      <if test="areaCode != null" >
+        area_code = #{areaCode,jdbcType=VARCHAR},
+      </if>
+      <if test="schoolId != null" >
+        school_id = #{schoolId,jdbcType=INTEGER},
+      </if>
+      <if test="lastLoginTime != null" >
+        last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="registerTime != null" >
+        register_time = #{registerTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="terminalDeviceTypeId != null" >
+        terminal_device_type_id = #{terminalDeviceTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="freezeStatus != null" >
+        freeze_status = #{freezeStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="clientSoftVersion != null" >
+        client_soft_version = #{clientSoftVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceStatus != null" >
+        device_status = #{deviceStatus,jdbcType=TINYINT},
+      </if>
+      <if test="systemVersion != null" >
+        system_version = #{systemVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="resolution != null" >
+        resolution = #{resolution,jdbcType=VARCHAR},
+      </if>
+      <if test="registerCount != null" >
+        register_count = #{registerCount,jdbcType=SMALLINT},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="hash != null" >
+        hash = #{hash,jdbcType=VARCHAR},
+      </if>
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="storage != null" >
+        storage = #{storage,jdbcType=VARCHAR},
+      </if>
+      <if test="diskSize != null" >
+        disk_size = #{diskSize,jdbcType=VARCHAR},
+      </if>
+      <if test="mac != null" >
+        mac = #{mac,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceCode != null" >
+        device_code = #{deviceCode,jdbcType=VARCHAR},
+      </if>
+      <if test="online != null" >
+        online = #{online,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.whty.entity.TDeviceInfo" >
+    update t_device_info
+    set ali_device_secret = #{aliDeviceSecret,jdbcType=VARCHAR},
+      ali_device_name = #{aliDeviceName,jdbcType=VARCHAR},
+      ali_product_key = #{aliProductKey,jdbcType=VARCHAR},
+      ali_iot_id = #{aliIotId,jdbcType=VARCHAR},
+      brand_id = #{brandId,jdbcType=INTEGER},
+      name = #{name,jdbcType=VARCHAR},
+      province_code = #{provinceCode,jdbcType=VARCHAR},
+      city_code = #{cityCode,jdbcType=VARCHAR},
+      area_code = #{areaCode,jdbcType=VARCHAR},
+      school_id = #{schoolId,jdbcType=INTEGER},
+      last_login_time = #{lastLoginTime,jdbcType=TIMESTAMP},
+      register_time = #{registerTime,jdbcType=TIMESTAMP},
+      terminal_device_type_id = #{terminalDeviceTypeId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      freeze_status = #{freezeStatus,jdbcType=VARCHAR},
+      client_soft_version = #{clientSoftVersion,jdbcType=VARCHAR},
+      device_status = #{deviceStatus,jdbcType=TINYINT},
+      system_version = #{systemVersion,jdbcType=VARCHAR},
+      resolution = #{resolution,jdbcType=VARCHAR},
+      register_count = #{registerCount,jdbcType=SMALLINT},
+      creator = #{creator,jdbcType=INTEGER},
+      hash = #{hash,jdbcType=VARCHAR},
+      order_id = #{orderId,jdbcType=INTEGER},
+      storage = #{storage,jdbcType=VARCHAR},
+      disk_size = #{diskSize,jdbcType=VARCHAR},
+      mac = #{mac,jdbcType=VARCHAR},
+      device_code = #{deviceCode,jdbcType=VARCHAR},
+      online = #{online,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

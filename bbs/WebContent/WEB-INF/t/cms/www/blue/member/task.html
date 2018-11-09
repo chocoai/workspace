@@ -1,0 +1,294 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>东楚论坛</title>
+<link href="${base}/style/main.css" rel="stylesheet" type="text/css">
+<link href="${base}/style/lanmu.css" rel="stylesheet" type="text/css">
+<link href="${base}/style/personal.css" rel="stylesheet" type="text/css">
+<link href="${base}/style/upload.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${base}/js/jquery.js"></script>
+<script type="text/javascript" src="${base}/js/popwin.js"></script>
+<script type="text/javascript" src="${base}/js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+	$(document).ready(function() {
+		var user = '${user}';
+		if (user == '') {
+			location.href = "${base}/login.jspx";
+			return;
+		}
+		$(".shezhi").click(function() {
+			if ($(".setup_list").css('display') == 'none') {
+				$(".setup_list").slideDown(200);
+				$(".sev b").removeClass('slidedown');
+				$(".sev b").addClass('slideup');
+			} else {
+				$(".setup_list").slideUp(200);
+				$(".sev b").removeClass('slideup');
+				$(".sev b").addClass('slidedown');
+
+			}
+		});
+	});
+	
+	function sign(userId){
+		//alert(userId);
+		if(userId == ''){
+			location.href = "${base}/login.jspx";
+			return ;
+		}
+		$.ajax({
+			url:"${base}/member/point_sign.jspx",
+			type:"post",
+			dataType:"text",
+			success:function(data){
+				if(data == -1){
+					alert("打卡失败");
+				}else if(data == 1){
+					location.reload();
+				}
+			}
+		});
+	}
+</script>
+</head>
+
+<body class="body">
+	<!---------顶部----------->
+	<div class="p_top">
+		<div class="p_top_center">
+			<div class="p_top_l">
+				<h1>
+					<a href="${base}/"><img src="${base}/images/logo.png" alt="" /></a>
+				</h1>
+				<ul>
+					<li class="one"><a href="/">东楚网首页</a></li>
+					<li class="two"><a href="${base}/">论坛</a></li>
+					<li class="thr now"><a href="${base}/member/index.jhtml">个人中心</a></li>
+				</ul>
+			</div>
+			<div class="p_top_r">
+				<span class="p_user"><a href="${base}/member/index.jhtml"><i></i>${user.username}</a></span>
+				<span class="p_exit"><a
+					href="${base}/logout.jspx?returnUrl=/">退出</a></span>
+				<div class="here_but">
+					[#if isSign?? && isSign]
+					<a href="javascript:void(0);">已打卡</a>
+					[#else]
+					<a href="javascript:void(0);" onclick="sign('${user.id}')">每日打卡</a>
+					[/#if]
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-------用户信息-------->
+	<div class="inf_box">
+		<div class="inf">
+			<div class="inf_l">
+				<a href="${base}/member/information.jhtml">
+					[#if user.avatar??]
+					<img src="${user.avatar}" alt="" />
+					[#else]
+					<img src="${base}/images/default_user.jpg" alt="" />
+					[/#if]
+				</a>
+			</div>
+			<div class="inf_r">
+				<p class="inf_user_name">
+					<a href="${base}/member/information.jhtml">${user.username}</a>
+				</p>
+				<p class="inf_user_d">
+					<span class="inf_tz"><a href="${base}/member/mytopic.jhtml">帖子：<b>${user.topicCount}</b></a></span>
+					<span class="inf_tb"><a href="${base}/member/creditManager.jhtml"><i></i>铜币：<b>${user.point}</b></a></span>
+					<span class="inf_dj"><a href="${base}/member/level_list.jspx"><i></i>等级：<b>${user.group.name}</b></a></span>
+				</p>
+			</div>
+		</div>
+	</div>
+
+
+	<!------------------中间内容部分------------------------>
+	<div class="center">
+		<div class="content">
+			<!------菜单------->
+			<div class="menu">
+				<ul class="menu_list">
+					<li><a href="${base}/topic/collectionTopic.jspx" class="fir"><i></i>我的收藏</a></li>
+					<li><a href="${base}/member/album.jspx" class="sec"><i></i>我的相册</a></li>
+					<li><a href="${base}/member/mytopic.jhtml" class="thi"><i></i>我的帖子</a></li>
+					<li><a href="${base}/member/myfriend.jhtml" class="fou"><i></i>我的好友</a></li>
+					<li><a href="${base}/member/personal_message.jspx" class="fif"><i></i>我的消息</a></li>
+					<li><a href="${base}/member/concern_list.jspx" class="six"><i></i>我的关注</a></li>
+					<li><a href="${base}/member/creditManager.jhtml" class="sev"><i></i>我的铜币</a></li>
+					<li class="now"><a href="${base}/member/task_list.jspx" class="eig"><i></i>我的任务</a></li>
+					<li class="shezhi"><a class="nin"><i></i>设置<b class="slidedown"></b></a></li>
+					<ul class="setup_list" style="display: none;">
+						<li><a href="${base}/member/information.jhtml" class="ten"><i></i>账号</a></li>
+						<li><a href="${base}/member/personal_confirm.jspx" class="ele"><i></i>认证</a></li>
+						<li><a href="${base}/member/level_list.jspx" class="twe"><i></i>等级</a></li>
+						<li><a href="${base}/member/personal_binding.jspx" class="thir"><i></i>账号通</a></li>
+					</ul>
+				</ul>
+			</div>
+
+
+			<!--------右侧内容部分——我的任务--------->
+			<div class="content_r">
+				<div class="content_r_hd">任务列表</div>
+				<div class="task">
+					<p class="task_hd">放松时刻，来做个任务吧！任务可以帮助你更快的熟悉东楚论坛，同时这里也是获得铜币、升级的快速通道。</p>
+					<ul class="task_list">
+						<li>
+							<span class="task_ico"><img src="${base}/images/task01.png" alt="" /></span>
+							<span class="task_ico_r">
+								<b>每日打卡</b>
+								<p>每天坚持来东楚论坛打卡，可以获得5个铜币哦！</p>
+							</span>
+							<span class="task_but">
+								[#if isSign?? && isSign]
+								<a href="javascript:void(0);">已打卡</a>
+								[#else]
+								<a href="javascript:void(0);" onclick="sign('${user.id}')">每日打卡</a>
+								[/#if]
+							</span>
+						</li>
+						<li>
+							<span class="task_ico"><img src="${base}/images/task02.png" alt="" /></span>
+							<span class="task_ico_r">
+								<b>每日发帖</b>
+								<p>今天顺利吗？跟大家分享一下属于你的故事吧！可以获得铜币哦！</p>
+							</span>
+							<span class="task_but">
+								[#if isSendTopic?? && isSendTopic]
+								<a href="javascript:void(0);">已完成</a>
+								[#else]
+								<a href="javascript:void(0);" onclick="toSendTopic()">进入栏目发帖</a>
+								[/#if]
+							</span>
+						</li>
+						<li>
+							<span class="task_ico"><img src="${base}/images/task03.png" alt="" /></span>
+							<span class="task_ico_r">
+								<b>上传头像</b>
+								<p>上传个性头像，可以获得10个铜币哦！</p>
+							</span>
+							<span class="task_but">
+								[#if isUploadImg]
+								<a href="javascript:void(0);">已上传</a>
+								[#else]
+								<a href="${base}/member/information.jhtml">现在上传头像</a>
+								[/#if]
+							</span>
+						</li>
+					</ul>
+				</div>
+			</div>
+
+
+			<!------页脚------>
+			<div class="footer">
+				<div class="footer_listbox">
+					<div class="footer_list">
+						
+					</div>
+				</div>
+			</div>
+
+		</div>
+		
+		<div id="caseHistory" class="fjsc">
+			<div class="fjsc_box" style="width:300px;">
+				<div class="fjsc_top"></div>
+				<div class="fjsc_head">
+					<div class="fjsc_tit">请选择栏目</div>
+					<div class="close icon-cross"><a href="javascript:void(0);"></a>X</div>
+				</div>
+				<div class="fjsc_con">
+					<form action="" method="post" name="applyForm" enctype="multipart/form-data">
+						<table width="280px" border="0">
+							[@category_list]
+			    			[#list tag_list as ctg]
+							[@forum_list categoryId=ctg.id]
+							[#list tag_list as forum]
+							<tr>
+								<td style="width:140px;height:30px;text-align:center;">${forum.title!}</td>
+								<td style="width:140px;height:30px;text-align:center;"><a href="${base}/topic/v_add${forum.id!}.jspx">进入发帖</a></td>
+							</tr>
+							[/#list]
+							[/@forum_list]
+							[/#list]
+			    			[/@category_list]
+						</table>
+					</form>
+				</div>
+			</div>
+		</div>
+
+		<!------------------返回顶部-------------------->
+		<div id="before">
+			<a href="http://bbs.hsdcw.com/" target="_blank" title="东楚论坛"
+				class='before'></a>
+		</div>
+		<div id="wechat" class="wechat">
+			<a href="javascript:void(0)"><div class="wechath"></div></a>
+		</div>
+		<a id="moquu_top" href="javascript:void(0)"></a>
+</body>
+<script type="text/javascript">
+/*弹框JS内容*/
+	jQuery(document).ready(
+		function() {
+			//关闭窗口
+			$('#caseHistory').on(
+				'click',
+				function(event) {
+					if ($(event.target).is('.close')
+							|| $(event.target).is('#caseHistory')) {
+						event.preventDefault();
+						$(this).removeClass('is-visible3');
+						$("#apply_user_id").val("");
+					}
+				});
+
+			//ESC关闭
+			$(document).keyup(function(event) {
+				if (event.which == '27') {
+					$('#caseHistory').removeClass('is-visible3');
+					$('#contacts').removeClass('is-visible3');
+					$("#apply_user_id").val("");
+				}
+			});
+	});
+	
+	function toSendTopic(){
+		$('#caseHistory').addClass('is-visible3');
+	}
+	
+	function doUpload() {
+		$('#caseHistory').removeClass('is-visible3');
+		var formData = new FormData(document.forms.namedItem("applyForm"));
+		var url = "${base}/member/applyJson.jhtml";
+		$.ajax({
+			url : url,
+			type : 'POST',
+			data : formData,
+			async : false,
+			cache : false,
+			dataType : 'json',
+			contentType : false,
+			processData : false,
+			success : function(data) {
+				if(data.status == 1){
+					alert(data.msg);
+					location.reload();
+				}else{
+					alert(data.msg);
+				}
+				$('#applyDesc').val('');
+				$("#apply_user_id").val("");
+			}
+		});
+	}
+</script>
+</html>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.basicdata.dao.DeviceUserDao">
+
+	<resultMap type="com.whty.assis.basicdata.model.DeviceUser" id="DeviceUserResult">
+		<result property="id" column="id" />
+		<result property="deviceId" column="device_id" />
+		<result property="schoolUserId" column="school_user_id" />
+		<result property="schoolId" column="school_id" />
+		<result property="aamPersonId" column="aam_person_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="classId" column="class_id" />
+		<result property="userId" column="user_id" />
+		<result property="aliDeviceSecret" column="ali_device_secret" />
+		<result property="aliDeviceName" column="ali_device_name" />
+		<result property="aliProductKey" column="ali_product_key" />
+		<result property="aliIotId" column="ali_iot_id" />
+	</resultMap>
+	 
+	<insert id="save" parameterType="com.whty.assis.basicdata.model.DeviceUser">
+		insert into t_device_info(
+			device_id,
+			user_id,
+			classId,
+			school_user_id,
+			school_id,
+			aam_person_id,
+			create_time,
+			update_time
+			) values (
+			#{deviceId},
+			#{userId},
+			#{classId},
+			#{schoolUserId},
+			#{schoolId},
+			#{aamPersonId},
+			#{createTime},
+			#{updateTime}
+			)
+	</insert>
+	
+	<update id="update" parameterType="com.whty.assis.basicdata.model.DeviceUser">
+		update t_device_info 
+		set 
+		<trim prefixOverrides=",">
+			<if test="deviceId != null and deviceId != ''">, device_id=#{deviceId}</if>
+			<if test="schoolUserId != null and schoolUserId != ''">, school_user_id=#{schoolUserId}</if>
+			<if test="schoolId != null and schoolId != ''">, school_id=#{schoolId}</if>
+			<if test="aamPersonId != null and aamPersonId != ''">, aam_person_id=#{aamPersonId}</if>
+			<if test="updateTime != null">, update_time=#{updateTime}</if>
+		</trim>
+		where id=#{id}
+	</update>
+
+	<select id="listByCondition" parameterType="map" resultMap="DeviceUserResult">
+		SELECT t1.*,t2.ali_device_secret,t2.ali_device_name,t2.ali_product_key,t2.ali_iot_id FROM t_device_user t1 left join t_device_info t2 on t1.device_id = t2.id
+		<if test="deviceId != null and deviceId != '' ">and t1.device_id=#{deviceId}</if>
+		<if test="schoolUserId != null and schoolUserId ">and t1.school_user_id=#{schoolUserId}</if>
+		<if test="schoolId != null and schoolId != '' ">and t1.school_id=#{schoolId}</if>
+		<if test="aamPersonId != null and aamPersonId != '' ">and t1.aam_person_id=#{aamPersonId}</if>
+		<if test="schoolId != null and schoolId != '' ">and t1.school_id=#{schoolId}</if>
+		<if test="classId != null and classId != '' ">and t1.class_id=#{classId}</if>
+		<if test="userId != null and userId != '' ">and t1.user_id=#{userId}</if>
+		order by create_time desc
+	</select>
+	
+
+</mapper>

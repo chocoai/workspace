@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.manage.dao.ModularDao">
+	<resultMap type="com.whty.assis.manage.model.Modular" id="ModularResult">
+		<result column="id" property="id" jdbcType="VARCHAR" />
+		<result column="modular_name" property="modularName" jdbcType="VARCHAR" />
+		<result column="modular_path" property="modularPath" jdbcType="VARCHAR" />
+		<result column="modular_sort" property="modularSort" jdbcType="VARCHAR" />
+		<result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+		<result column="is_parent" property="isParent" jdbcType="VARCHAR" />
+		<result column="status" property="status" jdbcType="VARCHAR" />
+		<result column="imgcss" property="imgcss" jdbcType="VARCHAR" />
+		<collection property="modulars" javaType="ArrayList" column="id" select="selectModularPid" fetchType="lazy"/>
+	</resultMap>
+	
+	<select id="queryAllModular" resultMap="ModularResult">
+		select id,modular_name,modular_path,modular_sort,parent_id,is_parent,status,imgcss from sys_modular order by modular_sort
+	</select>
+	
+	<select id="selectModularPid" resultMap="ModularResult">
+		select id,modular_name,modular_path,modular_sort,parent_id,is_parent,status,imgcss from sys_modular where parent_id =#{id} order by modular_sort
+	</select>
+
+	<!-- 新增 -->
+	<insert id="addModular" parameterType="com.whty.assis.manage.model.Modular">
+		insert into sys_modular (id,modular_name,modular_path,modular_sort,parent_id,is_parent,status,imgcss) 
+		values(#{id,jdbcType=VARCHAR},#{modularName,jdbcType=VARCHAR},#{modularPath,jdbcType=VARCHAR},#{modularSort,jdbcType=INTEGER},
+			#{parentId,jdbcType=VARCHAR},#{isParent,jdbcType=INTEGER},#{status,jdbcType=INTEGER},#{imgcss,jdbcType=VARCHAR})
+	</insert>
+
+	<!-- 删除 -->
+	<delete id="deleteModular" parameterType="java.util.List">
+		delete from sys_modular
+		where id in <foreach collection="list" item="id" separator="," open="(" close=")">#{id}</foreach>
+	</delete>
+	<!-- 修改 -->
+	<update id="updateModular" parameterType="map">
+		update sys_modular 
+		set modular_name=#{modularName,jdbcType=VARCHAR},modular_path=#{modularPath,jdbcType=VARCHAR},
+			status=#{status},modular_sort=#{modularSort},imgcss=#{imgcss,jdbcType=VARCHAR}
+		where id=#{id}
+	</update>
+</mapper>

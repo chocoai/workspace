@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fxzhj.mapper.PriceMapper">
+	<resultMap id="BaseResultMap" type="com.fxzhj.model.Price">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="area_id" property="areaId" jdbcType="INTEGER" />
+		<result column="community_id" property="communityId" jdbcType="INTEGER" />
+		<result column="mins" property="mins" jdbcType="INTEGER" />
+		<result column="price" property="price" jdbcType="REAL" />
+		<result column="type" property="type" jdbcType="INTEGER" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id, area_id, community_id, mins, price, type, status
+	</sql>
+
+	<!-- 批量新增 -->
+	<insert id="batchAdd" parameterType="java.util.List" >
+		insert into t_price (id, area_id, community_id, mins, price, type ,status)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(#{item.id}, #{item.areaId}, #{item.communityId},
+			#{item.mins}, #{item.price}, #{item.type} ,#{item.status})
+		</foreach>
+	</insert>
+
+	<!-- 查询  -->
+	<select id="queryPrice" resultMap="BaseResultMap" parameterType="com.fxzhj.model.Price">
+		select
+		<include refid="Base_Column_List" />
+		from t_price
+		where 1=1 
+		<if test="areaId != null">
+			 and area_id = #{areaId}
+		</if>
+		<if test="areaId == null">
+			 and area_id is null
+		</if>
+		<if test="communityId != null">
+			 and community_id = #{communityId}
+		</if>
+		<if test="communityId == null">
+			 and community_id is null
+		</if>
+		order by mins
+	</select>
+	
+	<!-- 根据节点删除 -->
+	<delete id="deletePrice" parameterType="com.fxzhj.model.Price">
+		delete from t_price where 
+		<if test="areaId != null">
+			 area_id = #{areaId}
+		</if>
+		<if test="areaId == null">
+			 area_id is null
+		</if>
+		<if test="communityId != null">
+			 and community_id = #{communityId}
+		</if>
+		<if test="communityId == null">
+			 and community_id is null
+		</if>
+	</delete>
+	
+	<!-- 修改价格表中的状态 -->
+	<update id="updateStatus" parameterType="com.fxzhj.model.Price">
+		update t_price set status = #{status} where 
+		<if test="areaId != null">
+			 area_id = #{areaId}
+		</if>
+		<if test="areaId == null">
+			 area_id is null
+		</if>
+		<if test="communityId != null">
+			 and community_id = #{communityId}
+		</if>
+		<if test="communityId == null">
+			 and community_id is null
+		</if>
+	</update>
+	<cache />
+</mapper>

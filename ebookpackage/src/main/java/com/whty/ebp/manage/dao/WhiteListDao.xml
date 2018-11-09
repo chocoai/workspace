@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.ebp.manage.dao.WhiteListDao">
+
+	<resultMap type="com.whty.ebp.manage.model.WhiteList" id="WhiteListResult">
+		<id property="id" column="id"/>
+		<id property="modelCode" column="model_code"/>
+		<id property="memo" column="memo"/>
+		<id property="createTime" column="create_time"/>
+		<id property="updateTime" column="update_time"/>
+		<id property="memo" column="memo"/>
+		<id property="versionCode" column="version_code"/>
+		<id property="status" column="status"/>
+		<id property="interVersionCode" column="inter_version_code"/>
+		<id property="name" column="name"/>
+		
+		<id property="flatModelIds" column="flat_model_ids"/>
+	</resultMap>
+	
+	
+	<insert id="saveWhiteListFlatModel" parameterType="map">
+		insert into TA_APP_WHITE_LIST_FLAT_MODEL(
+		<trim suffixOverrides=",">
+		<if test="flatModelId != null">flat_model_id,</if>
+		<if test="appWhiteListId != null">app_white_list_id,</if>
+		</trim>
+		)
+		values(
+		<trim suffixOverrides=",">
+		<if test="flatModelId != null">#{flatModelId},</if>
+		<if test="appWhiteListId != null">#{appWhiteListId},</if>
+		</trim>
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterType="string">
+		delete from TA_APP_WHITE_LIST where id= #{_parameter}
+	</delete>
+	
+	<delete id="deleteMapByAppWhiteListId"  parameterType="string">
+		delete from TA_APP_WHITE_LIST_FLAT_MODEL where APP_WHITE_LIST_ID= #{_parameter}
+	</delete>
+	
+	<insert id="save" parameterType="com.whty.ebp.manage.model.WhiteList">
+		insert into TA_APP_WHITE_LIST(
+		<trim suffixOverrides=",">
+		<if test="id != null">id,</if>
+		<if test="pkg != null">pkg,</if>
+		<if test="createTime != null">create_time,</if>
+		<if test="memo != null">memo,</if>
+		<if test="name != null">name,</if>
+		<if test="versionCode != null">version_code,</if>
+		<if test="interVersionCode != null">inter_version_code,</if>
+		<if test="status != null">status,</if>
+		</trim>
+		)
+		values(
+		<trim suffixOverrides=",">
+		<if test="id != null">#{id},</if>
+		<if test="pkg != null">#{pkg},</if>
+		<if test="createTime != null">#{createTime},</if>
+		<if test="memo != null">#{memo},</if>
+		<if test="name != null">#{name},</if>
+		<if test="versionCode != null">#{versionCode},</if>
+		<if test="interVersionCode != null">#{interVersionCode},</if>
+		<if test="status != null">#{status},</if>
+		</trim>
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.whty.ebp.manage.model.WhiteList">
+		update TA_APP_WHITE_LIST set
+		<trim suffixOverrides=",">
+		<if test="memo != null">memo=#{memo},</if>
+		<if test="updateTime != null">update_time=#{updateTime},</if>
+		<if test="name != null">name=#{name},</if>
+		<if test="status != null">status=#{status},</if>
+		<if test="versionCode != null">version_code=#{versionCode},</if>
+		<if test="interVersionCode != null">inter_version_code=#{interVersionCode},</if>
+		</trim>
+		where id=#{id}
+	</update>
+	
+	<select id="queryById" parameterType="string" resultMap="WhiteListResult">
+		select t.*,(SELECT GROUP_CONCAT(flat_model_id) as flat_models_ids from TA_APP_WHITE_LIST_FLAT_MODEL 
+		where APP_WHITE_LIST_ID=t.id) as flat_model_ids from TA_APP_WHITE_LIST t WHERE 1=1  and t.id=#{_parameter}
+	</select>
+	
+	
+	<select id="queryWhiteListByPlatformCode" parameterType="map" resultMap="WhiteListResult">
+	select * from 
+(select t1.* from TA_APP_WHITE_LIST t1,TA_APP_WHITE_LIST_PLATFORM_INFO t2, TA_PLATFORM_INFO t3 where t1.ID=t2.APP_WHITE_LIST_ID and t2.PLATFORM_CODE=t3.PLATFORM_CODE and t3.PLATFORM_CODE=#{platformCode} and status=1) as a order by create_time desc
+	</select>
+	
+	<select id="queryWhiteListByModelCode" parameterType="map" resultMap="WhiteListResult">
+	select * from 
+(select t1.* from TA_APP_WHITE_LIST t1,TA_APP_WHITE_LIST_FLAT_MODEL t2, TA_FLAT_MODEL t3 where t1.ID=t2.APP_WHITE_LIST_ID and t2.FLAT_MODEL_ID=t3.ID and t3.MODEL_CODE=#{modelCode} and status=1) as a order by create_time desc
+	</select>
+	
+	<select id="queryWhiteList" parameterType="map" resultMap="WhiteListResult">
+		select * from TA_APP_WHITE_LIST where id not in
+		(select APP_WHITE_LIST_ID from TA_APP_WHITE_LIST_FLAT_MODEL GROUP BY APP_WHITE_LIST_ID) 
+		and id not in(select APP_WHITE_LIST_ID from TA_APP_WHITE_LIST_PLATFORM_INFO GROUP BY APP_WHITE_LIST_ID)
+		and status=1
+		order by create_time desc
+	</select>
+	
+	
+	<select id="listByCondition" parameterType="map" resultMap="WhiteListResult">
+	SELECT t.*,(SELECT GROUP_CONCAT(flat_model_id) as flat_models_ids from TA_APP_WHITE_LIST_FLAT_MODEL where APP_WHITE_LIST_ID=t.id) as flat_model_ids FROM TA_APP_WHITE_LIST t
+	where 1=1
+		 order by  t.create_time desc
+	</select>
+	
+</mapper>

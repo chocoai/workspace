@@ -1,0 +1,64 @@
+
+<div id="top">
+	<div class="set">
+		<div class="box">
+			<span>
+				<a onclick="SetHome(window.location)" href="javascript:void(0)">设为首页</a>
+				<a onclick="AddFavorite(window.location,document.title)" href="javascript:void(0)">收藏本页</a>
+			</span>
+			<!-- [#include "../include/top_login.html"/] -->
+		</div>
+	</div>
+	<div class="box">
+		<div class="search_box">
+			<div class="logo_img mt10">
+				<a href="${base}/"><img src="${base}/r/cms/www/default/images/logo.png" width="231" height="86" /></a>
+			</div>
+
+			<div class="search">
+			    <form action="${base}/findProduct.jspx" method="get" id="searchForm" target="_blank">
+                <div class="lain1_box">
+					<input type="text"  id="keywords" name="keywords" value="请输入关键词" onFocus="if(this.value=='请输入关键词'){this.value='';}"
+						onBlur="if(this.value==''){this.value='请输入关键词';}" class="sertxt"/>
+					<input type="button" value="搜 索" name="" class="serbtn" onclick="searchForm()"/>
+				</div>
+				</form>
+			</div>
+           [#include "../include/top_right.html"/]
+ 
+		</div>
+	</div>
+</div>
+<div style="clear: both;"></div>
+<script type="text/javascript" language="javascript">
+   //加入收藏
+       function AddFavorite(sURL, sTitle) {
+           sURL =encodeURI(sURL); 
+       try{   
+          window.external.addFavorite(sURL, sTitle);   
+       }catch(e) {   
+          try{   
+              window.sidebar.addPanel(sTitle, sURL, "");   
+           }catch (e){   
+              alert("您的浏览器不支持自动加入收藏功能，请使用Ctrl+D进行添加，或手动在浏览器里进行设置！");
+          }   
+       }
+   }
+   
+   //设为首页
+   function SetHome(url){
+       if (document.all) {
+          document.body.style.behavior='url(#default#homepage)';
+             document.body.setHomePage(url);
+       }else{
+           alert("您的浏览器不支持自动设置页面为首页功能，请您手动在浏览器里设置该页面为首页！");
+       }
+   }
+   function searchForm() {
+	     var keywords = $('#keywords').val();
+	     if(queryTitle == '')
+	        window.parent.location.reload();
+	     else
+	        $('#searchForm').submit();
+	   }
+</script>

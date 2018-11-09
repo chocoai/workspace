@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fxzhj.mapper.NodeGroupMapper">
+	<resultMap id="BaseResultMap" type="com.fxzhj.model.NodeGroup">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="group_name" property="groupName" jdbcType="VARCHAR" />
+		<result column="descpt" property="descpt" jdbcType="VARCHAR" />
+		<result column="field1" property="field1" jdbcType="VARCHAR" />
+		<result column="field2" property="field2" jdbcType="VARCHAR" />
+		<result column="field3" property="field3" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="create_user" property="createUser" jdbcType="INTEGER" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		id, group_name, descpt, field1, field2, field3, create_time, create_user
+	</sql>
+	
+	<!-- 节点分组类型 -->
+	<select id="showCombobox" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from t_node_group
+		order by id
+	</select>
+	
+	<cache />
+</mapper>

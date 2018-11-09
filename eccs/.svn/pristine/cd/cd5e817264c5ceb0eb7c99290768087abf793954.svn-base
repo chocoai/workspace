@@ -1,0 +1,22 @@
+log4j.rootCategory=info, stdout, logfile
+#log4j.rootCategory=INFO, stdout
+log4j.ConversionPattern=[WEB] %d{yyyy-MM-dd HH:mm:ss} [%p] %l %c%n%m%n%n
+ 
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern=${log4j.ConversionPattern}
+
+log4j.appender.logfile=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.logfile.File=../logs/eccs.log
+log4j.appender.logfile.DatePattern='.'yyyy-MM-dd
+log4j.appender.logfile.layout=org.apache.log4j.PatternLayout
+log4j.appender.logfile.layout.ConversionPattern=${log4j.ConversionPattern}
+
+log4j.logger.org.hibernate=info 
+log4j.logger.org.hibernate.SQL=trace 
+#log4j.appender.stdout.Threshold=trace
+#log4j.appender.logfile.Threshold=trace
+#log4j.logger.net.sf.hibernate.cache=INFO
+#log4j.category.org.hibernate.SQL=trace  
+#log4j.category.org.hibernate.type=trace
+log4j.logger.org.hibernate.type.descriptor.sql.BasicBinder=trace 

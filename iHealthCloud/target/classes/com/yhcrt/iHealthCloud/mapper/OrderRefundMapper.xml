@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.iHealthCloud.mapper.OrderRefundMapper">
+	<resultMap id="BaseResultMap" type="com.yhcrt.iHealthCloud.entity.OrderRefund">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="ref_id" jdbcType="INTEGER" property="refId" />
+		<result column="type" jdbcType="VARCHAR" property="type" />
+		<result column="apply_time" jdbcType="VARCHAR" property="applyTime" />
+		<result column="refund_money" jdbcType="DOUBLE" property="refundMoney" />
+		<result column="refund_time" jdbcType="VARCHAR" property="refundTime" />
+		<result column="refund_type" jdbcType="VARCHAR" property="refundType" />
+		<result column="refund_reson" jdbcType="VARCHAR" property="refundReson" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		id, ref_id, type, apply_time, refund_money, refund_time, refund_type, refund_reson, status
+	</sql>
+	<select id="selectByExample" parameterType="com.yhcrt.iHealthCloud.entity.OrderRefundExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from order_refund
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from order_refund
+		where id = #{id,jdbcType=INTEGER}
+	</select>
+	
+	<insert id="insert" parameterType="com.yhcrt.iHealthCloud.entity.OrderRefund">
+		insert into order_refund (ref_id, type, apply_time, refund_money, refund_time,
+		refund_type, refund_reson, status)
+		values (#{refId,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR},
+		#{applyTime,jdbcType=VARCHAR}, #{refundMoney,jdbcType=DOUBLE}, #{refundTime,jdbcType=VARCHAR},
+		#{refundType,jdbcType=VARCHAR},#{refundReson,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER})
+	</insert>
+	
+	<select id="countByExample" parameterType="com.yhcrt.iHealthCloud.entity.OrderRefundExample" resultType="java.lang.Long">
+		select count(*) from order_refund
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	
+	<update id="updateByExampleSelective" parameterType="map">
+		update order_refund
+		<set>
+			<if test="record.id != null">
+				id = #{record.id,jdbcType=INTEGER},
+			</if>
+			<if test="record.refId != null">
+				ref_id = #{record.refId,jdbcType=INTEGER},
+			</if>
+			<if test="record.type != null">
+				type = #{record.type,jdbcType=VARCHAR},
+			</if>
+			<if test="record.applyTime != null">
+				apply_time = #{record.applyTime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.refundMoney != null">
+				refund_money = #{record.refundMoney,jdbcType=DOUBLE},
+			</if>
+			<if test="record.refundTime != null">
+				refund_time = #{record.refundTime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.refundReson != null">
+				refund_reson = #{record.refundReson,jdbcType=VARCHAR},
+			</if>
+			<if test="record.status != null">
+				status = #{record.status,jdbcType=INTEGER},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update order_refund
+		set id = #{record.id,jdbcType=INTEGER},
+		ref_id = #{record.refId,jdbcType=INTEGER},
+		type = #{record.type,jdbcType=VARCHAR},
+		apply_time = #{record.applyTime,jdbcType=VARCHAR},
+		refund_money = #{record.refundMoney,jdbcType=DOUBLE},
+		refund_time = #{record.refundTime,jdbcType=VARCHAR},
+		refund_reson = #{record.refundReson,jdbcType=VARCHAR},
+		status = #{record.status,jdbcType=INTEGER}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.iHealthCloud.entity.OrderRefund">
+		update order_refund
+		<set>
+			<if test="refId != null">
+				ref_id = #{refId,jdbcType=INTEGER},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=VARCHAR},
+			</if>
+			<if test="applyTime != null">
+				apply_time = #{applyTime,jdbcType=VARCHAR},
+			</if>
+			<if test="refundMoney != null">
+				refund_money = #{refundMoney,jdbcType=DOUBLE},
+			</if>
+			<if test="refundTime != null">
+				refund_time = #{refundTime,jdbcType=VARCHAR},
+			</if>
+			<if test="refundReson != null">
+				refund_reson = #{refundReson,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.yhcrt.iHealthCloud.entity.OrderRefund">
+		update order_refund
+		set ref_id = #{refId,jdbcType=INTEGER},
+		type = #{type,jdbcType=VARCHAR},
+		apply_time = #{applyTime,jdbcType=VARCHAR},
+		refund_money = #{refundMoney,jdbcType=DOUBLE},
+		refund_time = #{refundTime,jdbcType=VARCHAR},
+		refund_reson = #{refundReson,jdbcType=VARCHAR},
+		status = #{status,jdbcType=INTEGER}
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+</mapper>

@@ -1,0 +1,415 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>东楚论坛</title>
+<link href="${base}/style/main.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${base}/js/jquery.js"></script>
+<script type="text/javascript" src="${base}/js/popwin.js"></script>
+<script type="text/javascript">
+	//主函数  
+	var s = function() {
+		var interv = 3000; //切换间隔时间  
+		var interv2 = 5; //切换速度  
+		var opac1 = 80; //文字背景的透明度  
+		var source = "show" //焦点轮换图片容器的id名称  
+		//获取对象  
+		function getTag(tag, obj) {
+			if (obj == null) {
+				return document.getElementsByTagName(tag);
+			} else {
+				return obj.getElementsByTagName(tag);
+			}
+		}
+		function getid(id) {
+			return document.getElementById(id);
+		}
+		;
+		var opac = 0, j = 0, t = 63, num, scton = 0, timer, timer2, timer3;
+		var id = getid(source);
+		id.removeChild(getTag("div", id)[0]);
+		var li = getTag("li", id);
+		var div = document.createElement("div");
+		var title = document.createElement("div");
+		var span = document.createElement("span");
+		var button = document.createElement("div");
+		button.className = "button";
+		for (var i = 0; i < li.length; i++) {
+			var a = document.createElement("a");
+			a.innerHTML = i + 1;
+			a.onclick = function() {
+				clearTimeout(timer);
+				clearTimeout(timer2);
+				clearTimeout(timer3);
+				j = parseInt(this.innerHTML) - 1;
+				scton = 0;
+				t = 63;
+				opac = 0;
+				fadeon();
+			};
+			a.className = "b1";
+			a.onmouseover = function() {
+				this.className = "b2";
+			};
+			a.onmouseout = function() {
+				this.className = "b1";
+				sc(j);
+			};
+			button.appendChild(a);
+		}
+		//控制图层透明度  
+		function alpha(obj, n) {
+			if (document.all) {
+				obj.style.filter = "alpha(opacity=" + n + ")";
+			} else {
+				obj.style.opacity = (n / 100);
+			}
+		}
+		//控制焦点按钮  
+		function sc(n) {
+			for (var i = 0; i < li.length; i++) {
+				button.childNodes[i].className = "b1";
+			}
+			;
+			button.childNodes[n].className = "b2";
+		}
+		title.className = "num_list";
+		title.appendChild(span);
+		alpha(title, opac1);
+		id.className = "d1";
+		div.className = "d2";
+		id.appendChild(div);
+		id.appendChild(title);
+		id.appendChild(button);
+		//渐显  
+		var fadeon = function() {
+			opac += 5;
+			div.innerHTML = li[j].innerHTML;
+			span.innerHTML = getTag("img", li[j])[0].alt;
+			alpha(div, opac);
+			if (scton == 0) {
+				sc(j);
+				num = -2;
+				scrolltxt();
+				scton = 1;
+			}
+			;
+			if (opac < 100) {
+				timer = setTimeout(fadeon, interv2);
+			} else {
+				timer2 = setTimeout(fadeout, interv);
+			}
+		};
+		//渐隐  
+		var fadeout = function() {
+			opac -= 5;
+			div.innerHTML = li[j].innerHTML;
+			alpha(div, opac);
+			if (scton == 0) {
+				num = 2;
+				scrolltxt();
+				scton = 1;
+			}
+			if (opac > 0) {
+				timer = setTimeout(fadeout, interv2);
+			} else {
+				if (j < li.length - 1) {
+					j++;
+				} else {
+					j = 0;
+				}
+				fadeon();
+			}
+		};
+		//滚动文字  
+		var scrolltxt = function() {
+			t += num;
+			span.style.marginTop = t + "px";
+			if (num<0 && t>3) {
+				timer3 = setTimeout(scrolltxt, interv2);
+			} else if (num > 0 && t < 62) {
+				timer3 = setTimeout(scrolltxt, interv2);
+			} else {
+				scton = 0
+			}
+		};
+		fadeon();
+	}
+	//初始化  
+	window.onload = s;
+	
+</script>
+</head>
+
+<body>
+	<!---------顶部----------->
+	<div class="top">
+		<div class="top_center">
+			<div class="top_l">您好，欢迎来到东楚论坛！</div>
+			<div class="top_r">
+				[#if user??]
+				<div class="user_logout" style="margin-top:9px;">
+					<span class="user_logout_name"><a href="${base}/member/index.jhtml">${user.username}</a></span>
+					<span class="logout"><a href="${base}/logout.jspx?returnUrl=/">退出</a></span>
+				</div>
+				[#else]
+				<ul>
+					<li><a href="javascript:void(0);"><img src="${base}/images/icon_signin_01.png"
+							alt="" /></a></li>
+					<li><a href="#"><img src="${base}/images/icon_signin_02.png"
+							alt="" /></a></li>
+					<li><a href="#"><img src="${base}/images/icon_signin_03.png"
+							alt="" /></a></li>
+				</ul>
+				<div class="dlzc">
+					<span><a href="${base}/login.jspx">登录</a></span>
+					<span class="register"><a href="${base}/register.jspx">注册</a></span>
+				</div>
+				[/#if]
+			</div>
+		</div>
+	</div>
+
+	<!-------logo、导航和搜索----------->
+	<div class="nav">
+		<div class="nav_center">
+			<h1>
+				<a href="${base}/"><img src="${base}/images/logo.png" alt="" /></a>
+			</h1>
+			<div class="navsearch">
+				<!----导航---->
+				<nav>
+					<ul>
+						<li><a href="/">东楚网首页</a></li>
+						<li><a href="${topForum.url}">${topForum.title}</a></li>
+					</ul>
+				</nav>
+
+				<!----搜索---->
+				<div class="search radius6">
+					<form name="searchform" id="searchForm" method="get" action="">
+						<select>
+							<option value="0">帖子</option>
+							<option value="1">用户</option>
+						</select>
+						<input type="hidden" name="searchType" value="" id="searchType"/>
+						<input class="inp_srh" type="text" id="searchContent" name="keywords" placeholder="搜索其实很简单！">
+						<input class="btn_srh" type="button" onclick="toSearch()" value="搜索">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!------------------中间内容部分------------------------>
+	<div class="big_center">
+		<!----今日发帖数----->
+		<div class="post_number" style="margin-top:10px;">
+			[@config_count]
+			<p>
+				今日发帖：<em>${configcache.postToday!}</em><span></span>&nbsp;&nbsp; 
+				昨日发帖：<em>${configcache.postYestoday!}</em><span></span>&nbsp;&nbsp;
+				最高发帖：<em>${configcache.postMax!}</em><span></span>&nbsp;&nbsp; 
+				帖子：<em>${configcache.postTotal!}</em><span></span>&nbsp;&nbsp;
+				会员：<em>${configcache.userTotal!}</em><span></span>&nbsp;&nbsp; 
+				${site.config.keywords!}
+			</p>
+			[/@config_count]
+			<!-- <wb:follow-button uid="" type="red_1" width="67" height="24"
+				style="float:left; margin:3px 0 0 10px; cursor:pointer;">
+				<img src="${base}/images/weibo_care.png" alt="" />
+			</wb:follow-button> -->
+		</div>
+
+		<!----论坛栏目----->
+		<div class="column">
+			<span class="line"><h2>论坛栏目</h2></span>
+			<ul>
+				[@category_list]
+    			[#list tag_list as ctg]
+				[@forum_list categoryId=ctg.id]
+				[#list tag_list as forum]
+				[#if forum_index lt 8]
+				<li>
+					<span class="icon_column">
+						[#if forum.forumImg?? && forum.forumImg != '']
+						<a href="${forum.url}"><img src="${forum.forumImg!}" alt="" /></a>
+						[/#if]
+					</span>
+					<div class="icon_column_r">
+						<h3>
+							<a href="${forum.url}">${forum.title}</a>
+						</h3>
+						<p>
+							主题: <em>${forum.topicTotal}</em>, 帖数: <em>${forum.postTotal}</em>
+						</p>
+						<p>
+							[#if forum.lastPost??]<a href="#"><a href="#">最后发表:<em> ${forum.lastTime!?string("yyyy-MM-dd")}</em></a></a>[#else]无[/#if]
+						</p>
+					</div>
+				</li>
+				[/#if]
+				[/#list]
+				[/@forum_list]
+				[/#list]
+    			[/@category_list]
+			</ul>
+		</div>
+
+		<!------新闻&精彩帖子------>
+		<div class="newspost">
+
+			<!------新闻------>
+			<div class="news">
+				<div id="show" class="d1">
+					<div class="loading">
+						Loading...<br />
+						<img src="${base}/images/loading.gif"/>
+					</div>
+					<ul>
+						[#if newsList??]
+						[#list newsList as topic]
+						<li>
+							<a href="${topic.url}">
+								[#if (topic.title)?length gt 18]
+									<img src="${topic.titleImg}" width="360px" height="460px" alt="${topic.title[0..16]}..." />
+								[#else]
+									<img src="${topic.titleImg}" width="360px" height="460px" alt="${topic.title}" />
+								[/#if]
+							</a>
+						</li>
+						[/#list]
+						[/#if]
+					</ul>
+				</div>
+			</div>
+			<!------精彩帖子------>
+			<div class="post">
+				<span class="line"><h2>精彩帖子</h2></span>
+				<div class="post_con">
+					<h3>
+						<!--  <a href="#">西方现反对将俄全面禁赛声音 称有失奥运精神</a> -->
+						<a href="${topTopic.url}">${topTopic.title}</a>
+					</h3>
+					<!-- <p>	
+						[#if (topTopic.firstPost.postText.content)?length gt 200]
+							${topTopic.firstPost.postText.content[0..200]}...
+						[#else]
+							${topTopic.firstPost.postText.content}
+						[/#if]
+						&nbsp; <em><a href="${topTopic.url}">[详情]</a></em>
+					</p> -->
+					<ul>
+						<!-- <li><a href="#"><em>[汽车]</em>Pokémon GO！意大利发现大批知豆电动车</a></li> -->
+						[#list topTopicList as list]
+							<li><a href="${list.url}"><em>[${list.forum.title}]</em>${list.title}</a></li>
+						[/#list]
+					</ul>
+					<h3 class="second">
+						<a href="${downTopic.url}">${downTopic.title}</a>
+					</h3>
+					<ul>
+						[#list downTopicList as list]
+							<li><a href="${list.url}"><em>[${list.forum.title}]</em>${list.title}</a></li>
+						[/#list]
+					</ul>
+				</div>
+			</div>
+		</div>
+
+
+		<!------社区活动------>
+		<div class="activity">
+			<span class="line"><h2>福利活动</h2></span>
+			<div class="activity_con">
+				<div class="activity_fir">
+					<span><a href="${topActive.url!}"><img src="${topActive.titleImg!}" alt="" /></a></span>
+					<h4>
+						<a href="${topActive.url!}">${topActive.title}</a>
+					</h4>
+				</div>
+				<ul>
+					<!-- <li><a href="#"><em>[美食]</em> 我们一起手拉手吃遍黄石</a></li> -->
+					[#list activeList as active]
+						<li><a href="${active.url}"><em>[${active.forum.title}]</em> ${active.title}</a>
+					[/#list]
+				</ul>
+			</div>
+		</div>
+
+		<!------友情链接------>
+		<div class="link">
+			<span><h3>友<br>情<br>链<br>接</h3></span>
+			<p>
+				[@cms_friendlink_list]
+				[#list tag_list as link]
+				[#if link_index!=0]
+				&nbsp;&nbsp;|&nbsp;&nbsp;
+				<a href="${link.domain}" onclick="$.get('${base}/friendlink_view.jspx?id=${link.id}')" target="_blank">${link.name}</a>
+				[#else]
+				<a href="${link.domain}" onclick="$.get('${base}/friendlink_view.jspx?id=${link.id}')" target="_blank">${link.name}</a>
+				[/#if]
+				[/#list]
+				[/@cms_friendlink_list]
+			</p>
+		</div>
+
+		<!------在线用户
+  <div class="onlineuser">
+   <p>在线用户 - 共 1806 人在线, 6 位会员, 1800 位访客, 最多 22280 人发生在 2015-09-24 04:05 </p>
+  </div>
+  ------>
+
+		<!------页脚------>
+		<div class="footer">
+			<div class="footer_listbox">
+				<div class="footer_list">
+					
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<!------------------返回顶部-------------------->
+	<div id="before">
+		<a href="http://bbs.hsdcw.com/" target="_blank" title="东楚论坛"
+			class='before'></a>
+	</div>
+	<div id="wechat" class="wechat">
+		<a href="javascript:void(0)"><div class="wechath"></div></a>
+	</div>
+	<a id="moquu_top" href="javascript:void(0)"></a>
+
+
+	<script type="text/javascript" src="${base}/js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="${base}/js/jquery.select.js"></script>
+
+</body>
+<script type="text/javascript">
+	document.onkeydown=function(event){ 
+		e = event ? event :(window.event ? window.event : null); 
+		if(e.keyCode==13){   //回车
+			//提交查询的form
+			if(document.activeElement.id == 'searchContent'){
+				toSearch();
+			}
+		} 
+	};
+
+	function toSearch(){
+		var searchType = $(".select_option li[class='selected']").html();
+		if(searchType == '帖子'){
+			$("#searchForm").attr("action",'${base}/topic/search.jhtml');
+			$("#searchType").val("0");
+			$("#searchForm").submit();
+			return ;
+		}else if(searchType == '用户'){
+			$("#searchForm").attr("action",'${base}/search/search_user.jspx');
+			$("#searchType").val("1");
+			$("#searchForm").submit();
+			return ;
+		}
+	}
+</script>
+</html>

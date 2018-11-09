@@ -1,0 +1,1196 @@
+/**
+ * 
+ */
+package com.whty.assis.basicdata.service.impl;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.aliyun.iot.util.LogUtil;
+import com.aliyuncs.DefaultAcsClient;
+import com.aliyuncs.exceptions.ClientException;
+import com.aliyuncs.iot.model.v20180120.InvokeThingServiceRequest;
+import com.aliyuncs.iot.model.v20180120.InvokeThingServiceResponse;
+import com.aliyuncs.iot.model.v20180120.QueryDeviceDetailRequest;
+import com.aliyuncs.iot.model.v20180120.QueryDeviceDetailResponse;
+import com.aliyuncs.profile.DefaultProfile;
+import com.aliyuncs.profile.IClientProfile;
+import com.whty.assis.basicdata.dao.DeviceInfoDao;
+import com.whty.assis.basicdata.model.Command;
+import com.whty.assis.basicdata.model.DeviceInfo;
+import com.whty.assis.basicdata.service.DeviceInfoService;
+import com.whty.common.util.HMACSHA1;
+import com.whty.common.util.SysConfig;
+import com.whty.common.util.TimeUtils;
+import com.whty.page.PageContext;
+import com.whty.page.util.HandlerResult;
+
+/**
+ * @author zhangzheng
+ * @date 2018年3月29日
+ */
+@Service
+public class DeviceInfoServiceImpl implements DeviceInfoService {
+
+	@Autowired
+	private DeviceInfoDao deviceInfoDao;
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.whty.assis.basicdata.service.DeviceInfoService#saveDeviceInfo(com.
+	 * whty.assis.basicdata.model.DeviceInfo)
+	 */
+	@Override
+	public void saveDeviceInfo(DeviceInfo bean) {
+		deviceInfoDao.save(bean);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.whty.assis.basicdata.service.DeviceInfoService#listByCondition(java.
+	 * util.Map)
+	 */
+	@Override
+	public List<DeviceInfo> listByCondition(Map<String, Object> paramMap) {
+		return deviceInfoDao.listByCondition(paramMap);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.whty.assis.basicdata.service.DeviceInfoService#queryDeviceInfoPage(
+	 * java.util.Map)
+	 */
+	@Override
+	public HandlerResult queryDeviceInfoPage(Map<String, Object> paramMap) {
+		HandlerResult rs = new HandlerResult();
+		rs.setResultList(deviceInfoDao.listByCondition(paramMap));
+		return rs;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.whty.assis.basicdata.service.DeviceInfoService#updateDeviceInfo(com.
+	 * whty.assis.basicdata.model.DictType)
+	 */
+	@Override
+	public void updateDeviceInfo(DeviceInfo bean) {
+		deviceInfoDao.update(bean);
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.whty.assis.basicdata.service.DeviceInfoService#queryAIOPage(java.util
+	 * .Map, com.whty.page.PageContext)
+	 */
+	@Override
+	public HandlerResult queryAIOPage(Map<String, Object> paraMap, PageContext page) {
+		HandlerResult rs = new HandlerResult();
+		rs.setResultList(deviceInfoDao.listAIODevice(paraMap));
+		rs.setPage(page);
+		return rs;
+	}
+	
+	@Override
+	public List<DeviceInfo> queryAIOPage2(Map<String, Object> paraMap) {
+		return deviceInfoDao.listAIODevice(paraMap);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.whty.assis.basicdata.service.DeviceInfoService#queryebookPackagePage(
+	 * java.util.Map, com.whty.page.PageContext)
+	 */
+	@Override
+	public HandlerResult queryEbookPackagePage(Map<String, Object> paraMap, PageContext page) {
+		HandlerResult rs = new HandlerResult();
+		rs.setResultList(deviceInfoDao.listEbookpackageDevice(paraMap));
+		rs.setPage(page);
+		return rs;
+	}
+	@Override
+	public List<DeviceInfo> queryEbookPackagePage2(Map<String, Object> paraMap) {
+		return deviceInfoDao.listEbookpackageDevice(paraMap);
+	}
+
+	/*
+	 * (non-Javadoc) 关机指令
+	 * 
+	 * @see
+	 * com.whty.assis.basicdata.service.DeviceInfoService#lockScreen(java.lang.
+	 * String)
+	 */
+	@Override
+	public String shutDown(String deviceId) {
+
+		DeviceInfo deviceInfo = deviceInfoDao.loadById(Integer.valueOf(deviceId));
+
+		if (deviceInfo == null) {
+			return "未找到设备!";
+		}
+
+		String regionId = SysConfig.getStrValue("iot.regionId");
+		String accessKeyID = SysConfig.getStrValue("user.accessKeyID");
+		String accessKeySecret = SysConfig.getStrValue("user.accessKeySecret");
+		String domain = SysConfig.getStrValue("iot.domain");
+		String result = null;
+		try {
+			IClientProfile profile = DefaultProfile.getProfile(regionId, accessKeyID, accessKeySecret);
+			DefaultProfile.addEndpoint(regionId, regionId, deviceInfo.getTerminalProductKey(), domain);
+			DefaultAcsClient client = new DefaultAcsClient(profile);
+			InvokeThingServiceRequest invokeThingServiceRequest = new InvokeThingServiceRequest();
+
+			invokeThingServiceRequest.setProductKey(deviceInfo.getProvinceCode());
+			invokeThingServiceRequest.setIotId(deviceInfo.getAliIotId());
+			invokeThingServiceRequest.setDeviceName(deviceInfo.getDeviceName());
+			invokeThingServiceRequest.setIdentifier("commandService");
+
+			Random random = new Random(new Date().getTime());
+			int keyIndex = random.nextInt(5) % (5 - 1 + 1) + 1;
+
+			String timeStamp = TimeUtils.date2String(new Date(), TimeUtils.DAY_FORMAT_2);
+			String mac = HMACSHA1.bytesToHexString(HMACSHA1.HmacSHA1Encrypt(timeStamp, keyIndex));
+			String action = SysConfig.getStrValue("mqtt.server.command.shut_down");
+			String type = SysConfig.getStrValue("mqtt.server.command.type");
+			String version = SysConfig.getStrValue("mqtt.server.command.version");
+
+			String para = String.format("[{\\\"key\\\":\\\"delayTime\\\",\\\"value\\\":\\\"%s\\\"}]", "120");
+
+			Command command = new Command(action, type, null, version, keyIndex + timeStamp, null, "200", mac, null,
+					para);
+
+			String str = null;
+			str = String.format("{%s:\"%s\"}", "commandService", command.toString());
+
+			invokeThingServiceRequest.setArgs(str);
+
+			InvokeThingServiceResponse invokeThingServiceResponse = client.getAcsResponse(invokeThingServiceRequest);
+
+			if (invokeThingServiceResponse != null && invokeThingServiceResponse.getSuccess() != false) {
+				result = "success";
+				LogUtil.print("调用命令推送成功！ " + com.alibaba.fastjson.JSONObject.toJSONString(invokeThingServiceResponse));
+			} else {
+				result = "调用命令推送失败！" + "原因：" + invokeThingServiceResponse.getErrorMessage();
+				LogUtil.error("调用命令推送失败！！requestId:" + invokeThingServiceResponse.getRequestId() + "原因："
+						+ invokeThingServiceResponse.getErrorMessage());
+			}
+		} catch (ClientException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc) 重启
+	 * 
+	 * @see
+	 * com.whty.assis.basicdata.service.DeviceInfoService#lockScreen(java.lang.
+	 * String)
+	 */
+	@Override
+	public String restart(String deviceId) {
+
+		DeviceInfo deviceInfo = deviceInfoDao.loadById(Integer.valueOf(deviceId));
+
+		if (deviceInfo == null) {
+			return "未找到设备!";
+		}
+
+		String regionId = SysConfig.getStrValue("iot.regionId");
+		String accessKeyID = SysConfig.getStrValue("user.accessKeyID");
+		String accessKeySecret = SysConfig.getStrValue("user.accessKeySecret");
+		String domain = SysConfig.getStrValue("iot.domain");
+		String result = null;
+		try {
+			IClientProfile profile = DefaultProfile.getProfile(regionId, accessKeyID, accessKeySecret);
+			DefaultProfile.addEndpoint(regionId, regionId, deviceInfo.getTerminalProductKey(), domain);
+			DefaultAcsClient client = new DefaultAcsClient(profile);
+			InvokeThingServiceRequest invokeThingServiceRequest = new InvokeThingServiceRequest();
+
+			invokeThingServiceRequest.setProductKey(deviceInfo.getProvinceCode());
+			invokeThingServiceRequest.setIotId(deviceInfo.getAliIotId());
+			invokeThingServiceRequest.setDeviceName(deviceInfo.getDeviceName());
+			invokeThingServiceRequest.setIdentifier("commandService");
+
+			Random random = new Random(new Date().getTime());
+			int keyIndex = random.nextInt(5) % (5 - 1 + 1) + 1;
+
+			String timeStamp = TimeUtils.date2String(new Date(), TimeUtils.DAY_FORMAT_2);
+			String mac = HMACSHA1.bytesToHexString(HMACSHA1.HmacSHA1Encrypt(timeStamp, keyIndex));
+			String action = SysConfig.getStrValue("mqtt.server.command.restart");
+			String type = SysConfig.getStrValue("mqtt.server.command.type");
+			String version = SysConfig.getStrValue("mqtt.server.command.version");
+
+			String para = String.format("[{\\\"key\\\":\\\"delayTime\\\",\\\"value\\\":\\\"%s\\\"}]", "120");
+
+			Command command = new Command(action, type, null, version, keyIndex + timeStamp, null, "200", mac, null,
+					para);
+
+			String str = null;
+			str = String.format("{%s:\"%s\"}", "commandService", command.toString());
+
+			invokeThingServiceRequest.setArgs(str);
+
+			InvokeThingServiceResponse invokeThingServiceResponse = client.getAcsResponse(invokeThingServiceRequest);
+
+			if (invokeThingServiceResponse != null && invokeThingServiceResponse.getSuccess() != false) {
+				result = "success";
+				LogUtil.print("调用命令推送成功！ " + com.alibaba.fastjson.JSONObject.toJSONString(invokeThingServiceResponse));
+			} else {
+				result = "调用命令推送失败！" + "原因：" + invokeThingServiceResponse.getErrorMessage();
+				LogUtil.error("调用命令推送失败！！requestId:" + invokeThingServiceResponse.getRequestId() + "原因："
+						+ invokeThingServiceResponse.getErrorMessage());
+			}
+		} catch (ClientException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc) 上传应用
+	 * 
+	 * @see
+	 * com.whty.assis.basicdata.service.DeviceInfoService#lockScreen(java.lang.
+	 * String)
+	 */
+	@Override
+	public String uploadAppInfo(String deviceId) {
+
+		DeviceInfo deviceInfo = deviceInfoDao.loadById(Integer.valueOf(deviceId));
+
+		if (deviceInfo == null) {
+			return "未找到设备!";
+		}
+
+		String regionId = SysConfig.getStrValue("iot.regionId");
+		String accessKeyID = SysConfig.getStrValue("user.accessKeyID");
+		String accessKeySecret = SysConfig.getStrValue("user.accessKeySecret");
+		String domain = SysConfig.getStrValue("iot.domain");
+		String result = null;
+		try {
+			IClientProfile profile = DefaultProfile.getProfile(regionId, accessKeyID, accessKeySecret);
+			DefaultProfile.addEndpoint(regionId, regionId, deviceInfo.getTerminalProductKey(), domain);
+			DefaultAcsClient client = new DefaultAcsClient(profile);
+			InvokeThingServiceRequest invokeThingServiceRequest = new InvokeThingServiceRequest();
+
+			invokeThingServiceRequest.setProductKey(deviceInfo.getProvinceCode());
+			invokeThingServiceRequest.setIotId(deviceInfo.getAliIotId());
+			invokeThingServiceRequest.setDeviceName(deviceInfo.getDeviceName());
+			invokeThingServiceRequest.setIdentifier("commandService");
+
+			Random random = new Random(new Date().getTime());
+			int keyIndex = random.nextInt(5) % (5 - 1 + 1) + 1;
+
+			String timeStamp = TimeUtils.date2String(new Date(), TimeUtils.DAY_FORMAT_2);
+			String mac = HMACSHA1.bytesToHexString(HMACSHA1.HmacSHA1Encrypt(timeStamp, keyIndex));
+			String action = SysConfig.getStrValue("mqtt.server.command.upload_app_info");
+			String type = SysConfig.getStrValue("mqtt.server.command.type");
+			String version = SysConfig.getStrValue("mqtt.server.command.version");
+
+			String para = "[{\\\"key\\\":\\\"appNames\\\",\\\"value\\\":\\\"互动课堂,教学助手,office\\\"}]";
+
+			Command command = new Command(action, type, null, version, keyIndex + timeStamp, null, null, mac, null,
+					para);
+
+			String str = null;
+			str = String.format("{%s:\"%s\"}", "commandService", command.toString());
+
+			invokeThingServiceRequest.setArgs(str);
+
+			InvokeThingServiceResponse invokeThingServiceResponse = client.getAcsResponse(invokeThingServiceRequest);
+
+			if (invokeThingServiceResponse != null && invokeThingServiceResponse.getSuccess() != false) {
+				result = "success";
+				LogUtil.print("调用命令推送成功！ " + com.alibaba.fastjson.JSONObject.toJSONString(invokeThingServiceResponse));
+			} else {
+				result = "调用命令推送失败！" + "原因：" + invokeThingServiceResponse.getErrorMessage();
+				LogUtil.error("调用命令推送失败！！requestId:" + invokeThingServiceResponse.getRequestId() + "原因："
+						+ invokeThingServiceResponse.getErrorMessage());
+			}
+		} catch (ClientException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.whty.assis.basicdata.service.DeviceInfoService#lockScreen(java.lang.
+	 * String)
+	 */
+	@Override
+	public String lockScreen(String deviceId) {
+
+		DeviceInfo deviceInfo = deviceInfoDao.loadById(Integer.valueOf(deviceId));
+
+		if (deviceInfo == null) {
+			return "未找到设备!";
+		}
+
+		String regionId = SysConfig.getStrValue("iot.regionId");
+		String accessKeyID = SysConfig.getStrValue("user.accessKeyID");
+		String accessKeySecret = SysConfig.getStrValue("user.accessKeySecret");
+		String domain = SysConfig.getStrValue("iot.domain");
+		String result = null;
+		try {
+			IClientProfile profile = DefaultProfile.getProfile(regionId, accessKeyID, accessKeySecret);
+			DefaultProfile.addEndpoint(regionId, regionId, deviceInfo.getTerminalProductKey(), domain);
+			DefaultAcsClient client = new DefaultAcsClient(profile);
+			InvokeThingServiceRequest invokeThingServiceRequest = new InvokeThingServiceRequest();
+
+			invokeThingServiceRequest.setProductKey(deviceInfo.getAliProductKey());
+			invokeThingServiceRequest.setIotId(deviceInfo.getAliIotId());
+			invokeThingServiceRequest.setDeviceName(deviceInfo.getDeviceName());
+			invokeThingServiceRequest.setIdentifier("commandService");
+
+			Random random = new Random(new Date().getTime());
+			int keyIndex = random.nextInt(5) % (5 - 1 + 1) + 1;
+
+			String timeStamp = TimeUtils.date2String(new Date(), TimeUtils.DAY_FORMAT_2);
+			String mac = HMACSHA1.bytesToHexString(HMACSHA1.HmacSHA1Encrypt(timeStamp, keyIndex));
+			String action = SysConfig.getStrValue("mqtt.server.command.lock_screen");
+			String type = SysConfig.getStrValue("mqtt.server.command.type");
+			String version = SysConfig.getStrValue("mqtt.server.command.version");
+
+			String para = String.format("[{\\\"key\\\":\\\"delayTime\\\",\\\"value\\\":\\\"%s\\\"}]", "0");
+
+			Command command = new Command(action, type, null, version, keyIndex + timeStamp, null, null, mac, null,
+					para);
+
+			String str = null;
+			str = String.format("{%s:\"%s\"}", "commandService", command.toString());
+
+			invokeThingServiceRequest.setArgs(str);
+
+			InvokeThingServiceResponse invokeThingServiceResponse = client.getAcsResponse(invokeThingServiceRequest);
+
+			if (invokeThingServiceResponse != null && invokeThingServiceResponse.getSuccess() != false) {
+				result = "success";
+				LogUtil.print("调用命令推送成功！ " + com.alibaba.fastjson.JSONObject.toJSONString(invokeThingServiceResponse));
+			} else {
+				result = "调用命令推送失败！" + "原因：" + invokeThingServiceResponse.getErrorMessage();
+				LogUtil.error("调用命令推送失败！！requestId:" + invokeThingServiceResponse.getRequestId() + "原因："
+						+ invokeThingServiceResponse.getErrorMessage());
+			}
+		} catch (ClientException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.whty.assis.basicdata.service.DeviceInfoService#updateImage(java.lang.
+	 * String)
+	 */
+	@Override
+	public String updateImage(String deviceId) {
+		DeviceInfo deviceInfo = deviceInfoDao.loadById(Integer.valueOf(deviceId));
+
+		if (deviceInfo == null) {
+			return "未找到设备!";
+		}
+
+		String regionId = SysConfig.getStrValue("iot.regionId");
+		String accessKeyID = SysConfig.getStrValue("user.accessKeyID");
+		String accessKeySecret = SysConfig.getStrValue("user.accessKeySecret");
+		String domain = SysConfig.getStrValue("iot.domain");
+		String result = null;
+		try {
+			IClientProfile profile = DefaultProfile.getProfile(regionId, accessKeyID, accessKeySecret);
+			DefaultProfile.addEndpoint(regionId, regionId, deviceInfo.getTerminalProductKey(), domain);
+			DefaultAcsClient client = new DefaultAcsClient(profile);
+			InvokeThingServiceRequest invokeThingServiceRequest = new InvokeThingServiceRequest();
+
+			invokeThingServiceRequest.setProductKey(deviceInfo.getProvinceCode());
+			invokeThingServiceRequest.setIotId(deviceInfo.getAliIotId());
+			invokeThingServiceRequest.setDeviceName(deviceInfo.getDeviceName());
+			invokeThingServiceRequest.setIdentifier("commandService");
+
+			Random random = new Random(new Date().getTime());
+			int keyIndex = random.nextInt(5) % (5 - 1 + 1) + 1;
+
+			String timeStamp = TimeUtils.date2String(new Date(), TimeUtils.DAY_FORMAT_2);
+			String mac = HMACSHA1.bytesToHexString(HMACSHA1.HmacSHA1Encrypt(timeStamp, keyIndex));
+			String action = SysConfig.getStrValue("mqtt.server.command.screen_shot");
+			String type = SysConfig.getStrValue("mqtt.server.command.type");
+			String version = SysConfig.getStrValue("mqtt.server.command.version");
+
+			String para = String.format("[{\\\"key\\\":\\\"delayTime\\\",\\\"value\\\":\\\"%s\\\"}]", "0");
+			Command command = new Command(action, type, null, version, keyIndex + timeStamp, null, null, mac, null,
+					para);
+			String str = null;
+			str = String.format("{%s:\"%s\"}", "commandService", command.toString());
+			invokeThingServiceRequest.setArgs(str);
+
+			InvokeThingServiceResponse invokeThingServiceResponse = client.getAcsResponse(invokeThingServiceRequest);
+
+			if (invokeThingServiceResponse != null && invokeThingServiceResponse.getSuccess() != false) {
+				result = "success";
+				LogUtil.print("调用命令推送成功！ " + com.alibaba.fastjson.JSONObject.toJSONString(invokeThingServiceResponse));
+			} else {
+				result = "调用命令推送失败！" + "原因：" + invokeThingServiceResponse.getErrorMessage();
+				LogUtil.error("调用命令推送失败！！requestId:" + invokeThingServiceResponse.getRequestId() + "原因："
+						+ invokeThingServiceResponse.getErrorMessage());
+			}
+		} catch (ClientException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.whty.assis.basicdata.service.DeviceInfoService#updateConfig(java.lang
+	 * .String)
+	 */
+	@Override
+	public String updateConfig(String deviceId) {
+		DeviceInfo deviceInfo = deviceInfoDao.loadById(Integer.valueOf(deviceId));
+
+		if (deviceInfo == null) {
+			return "未找到设备!";
+		}
+
+		String regionId = SysConfig.getStrValue("iot.regionId");
+		String accessKeyID = SysConfig.getStrValue("user.accessKeyID");
+		String accessKeySecret = SysConfig.getStrValue("user.accessKeySecret");
+		String domain = SysConfig.getStrValue("iot.domain");
+		String result = null;
+		try {
+			IClientProfile profile = DefaultProfile.getProfile(regionId, accessKeyID, accessKeySecret);
+			DefaultProfile.addEndpoint(regionId, regionId, deviceInfo.getTerminalProductKey(), domain);
+			DefaultAcsClient client = new DefaultAcsClient(profile);
+			InvokeThingServiceRequest invokeThingServiceRequest = new InvokeThingServiceRequest();
+
+			invokeThingServiceRequest.setProductKey(deviceInfo.getProvinceCode());
+			invokeThingServiceRequest.setIotId(deviceInfo.getAliIotId());
+			invokeThingServiceRequest.setDeviceName(deviceInfo.getDeviceName());
+			invokeThingServiceRequest.setIdentifier("commandService");
+
+			Random random = new Random(new Date().getTime());
+			int keyIndex = random.nextInt(5) % (5 - 1 + 1) + 1;
+
+			String timeStamp = TimeUtils.date2String(new Date(), TimeUtils.DAY_FORMAT_2);
+			String mac = HMACSHA1.bytesToHexString(HMACSHA1.HmacSHA1Encrypt(timeStamp, keyIndex));
+			String action = SysConfig.getStrValue("mqtt.server.command.screen_shot");
+			String type = SysConfig.getStrValue("mqtt.server.command.type");
+			String version = SysConfig.getStrValue("mqtt.server.command.version");
+
+			String para = "[{\\\"key\\\":\\\"appUpdateCycle\\\",\\\"value\\\":\\\"1200\\\"},{\\\"key\\\":\\\"screenMonitorCycle\\\",\\\"value\\\":\\\"200\\\"},{\\\"key\\\":\\\"appNames\\\",\\\"value\\\":\\\"互动课堂,教学助手,office\\\"}]";
+			Command command = new Command(action, type, null, version, keyIndex + timeStamp, null, null, mac, null,
+					para);
+			String str = null;
+			str = String.format("{%s:\"%s\"}", "commandService", command.toString());
+			invokeThingServiceRequest.setArgs(str);
+
+			InvokeThingServiceResponse invokeThingServiceResponse = client.getAcsResponse(invokeThingServiceRequest);
+
+			if (invokeThingServiceResponse != null && invokeThingServiceResponse.getSuccess() != false) {
+				result = "success";
+				LogUtil.print("调用命令推送成功！ " + com.alibaba.fastjson.JSONObject.toJSONString(invokeThingServiceResponse));
+			} else {
+				result = "调用命令推送失败！" + "原因：" + invokeThingServiceResponse.getErrorMessage();
+				LogUtil.error("调用命令推送失败！！requestId:" + invokeThingServiceResponse.getRequestId() + "原因："
+						+ invokeThingServiceResponse.getErrorMessage());
+			}
+		} catch (ClientException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.whty.assis.basicdata.service.DeviceInfoService#updateConfig(java.lang
+	 * .String)
+	 */
+	@Override
+	public String unLockScreen(String deviceId) {
+		DeviceInfo deviceInfo = deviceInfoDao.loadById(Integer.valueOf(deviceId));
+
+		if (deviceInfo == null) {
+			return "未找到设备!";
+		}
+
+		String regionId = SysConfig.getStrValue("iot.regionId");
+		String accessKeyID = SysConfig.getStrValue("user.accessKeyID");
+		String accessKeySecret = SysConfig.getStrValue("user.accessKeySecret");
+		String domain = SysConfig.getStrValue("iot.domain");
+		String result = null;
+		try {
+			IClientProfile profile = DefaultProfile.getProfile(regionId, accessKeyID, accessKeySecret);
+			DefaultProfile.addEndpoint(regionId, regionId, deviceInfo.getTerminalProductKey(), domain);
+			DefaultAcsClient client = new DefaultAcsClient(profile);
+			InvokeThingServiceRequest invokeThingServiceRequest = new InvokeThingServiceRequest();
+
+			invokeThingServiceRequest.setProductKey(deviceInfo.getProvinceCode());
+			invokeThingServiceRequest.setIotId(deviceInfo.getAliIotId());
+			invokeThingServiceRequest.setDeviceName(deviceInfo.getDeviceName());
+			invokeThingServiceRequest.setIdentifier("commandService");
+
+			Random random = new Random(new Date().getTime());
+			int keyIndex = random.nextInt(5) % (5 - 1 + 1) + 1;
+
+			String timeStamp = TimeUtils.date2String(new Date(), TimeUtils.DAY_FORMAT_2);
+			String mac = HMACSHA1.bytesToHexString(HMACSHA1.HmacSHA1Encrypt(timeStamp, keyIndex));
+			String action = SysConfig.getStrValue("mqtt.server.command.un_lock_screen");
+			String type = SysConfig.getStrValue("mqtt.server.command.type");
+			String version = SysConfig.getStrValue("mqtt.server.command.version");
+
+			String para = String.format("[{\\\"key\\\":\\\"delayTime\\\",\\\"value\\\":\\\"%s\\\"}]", "0");
+			Command command = new Command(action, type, null, version, keyIndex + timeStamp, null, null, mac, null,
+					para);
+			String str = null;
+			str = String.format("{%s:\"%s\"}", "commandService", command.toString());
+			invokeThingServiceRequest.setArgs(str);
+
+			InvokeThingServiceResponse invokeThingServiceResponse = client.getAcsResponse(invokeThingServiceRequest);
+
+			if (invokeThingServiceResponse != null && invokeThingServiceResponse.getSuccess() != false) {
+				result = "success";
+				LogUtil.print("调用命令推送成功！ " + com.alibaba.fastjson.JSONObject.toJSONString(invokeThingServiceResponse));
+			} else {
+				result = "调用命令推送失败！" + "原因：" + invokeThingServiceResponse.getErrorMessage();
+				LogUtil.error("调用命令推送失败！！requestId:" + invokeThingServiceResponse.getRequestId() + "原因："
+						+ invokeThingServiceResponse.getErrorMessage());
+			}
+		} catch (ClientException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.whty.assis.basicdata.service.DeviceInfoService#batchShutdown(java.
+	 * lang.String)
+	 */
+	@Override
+	public String batchShutdown(String ids) {
+		if (StringUtils.isEmpty(ids))
+			return "success";
+
+		String[] idStr = ids.split(",");
+		String result = null;
+		for (int i = 0; i < idStr.length; i++) {
+
+			DeviceInfo deviceInfo = deviceInfoDao.loadById(Integer.valueOf(idStr[i]));
+
+			if (deviceInfo == null) {
+				return "未找到设备!";
+			}
+
+			String regionId = SysConfig.getStrValue("iot.regionId");
+			String accessKeyID = SysConfig.getStrValue("user.accessKeyID");
+			String accessKeySecret = SysConfig.getStrValue("user.accessKeySecret");
+			String domain = SysConfig.getStrValue("iot.domain");
+
+			try {
+				IClientProfile profile = DefaultProfile.getProfile(regionId, accessKeyID, accessKeySecret);
+				DefaultProfile.addEndpoint(regionId, regionId, deviceInfo.getTerminalProductKey(), domain);
+				DefaultAcsClient client = new DefaultAcsClient(profile);
+
+				QueryDeviceDetailRequest queryDeviceDetailRequest = new QueryDeviceDetailRequest();
+				queryDeviceDetailRequest.setProductKey(deviceInfo.getAliProductKey());
+				queryDeviceDetailRequest.setDeviceName(deviceInfo.getAliDeviceName());
+				queryDeviceDetailRequest.setIotId(deviceInfo.getAliIotId());
+
+				QueryDeviceDetailResponse registerDeviceResponse = client.getAcsResponse(queryDeviceDetailRequest);
+
+				if (registerDeviceResponse != null && registerDeviceResponse.getSuccess() != false) {
+					// LogUtil.print("查询设备详情成功！ " +
+					// com.alibaba.fastjson.JSONObject.toJSONString(registerDeviceResponse));
+
+					String status = registerDeviceResponse.getData().getStatus();
+
+					// 设备在线才发送命令
+					if ("online".equals(status.toLowerCase())) {
+						InvokeThingServiceRequest invokeThingServiceRequest = new InvokeThingServiceRequest();
+						invokeThingServiceRequest.setProductKey(deviceInfo.getProvinceCode());
+						invokeThingServiceRequest.setIotId(deviceInfo.getAliIotId());
+						invokeThingServiceRequest.setDeviceName(deviceInfo.getDeviceName());
+						invokeThingServiceRequest.setIdentifier("commandService");
+
+						Random random = new Random(new Date().getTime());
+						int keyIndex = random.nextInt(5) % (5 - 1 + 1) + 1;
+
+						String timeStamp = TimeUtils.date2String(new Date(), TimeUtils.DAY_FORMAT_2);
+						String mac = HMACSHA1.bytesToHexString(HMACSHA1.HmacSHA1Encrypt(timeStamp, keyIndex));
+						String action = SysConfig.getStrValue("mqtt.server.command.shut_down");
+						String type = SysConfig.getStrValue("mqtt.server.command.type");
+						String version = SysConfig.getStrValue("mqtt.server.command.version");
+
+						String para = String.format("[{\\\"key\\\":\\\"delayTime\\\",\\\"value\\\":\\\"%s\\\"}]",
+								"120");
+						Command command = new Command(action, type, null, version, keyIndex + timeStamp, null, null,
+								mac, null, para);
+						String str = null;
+						str = String.format("{%s:\"%s\"}", "commandService", command.toString());
+						invokeThingServiceRequest.setArgs(str);
+
+						InvokeThingServiceResponse invokeThingServiceResponse = client
+								.getAcsResponse(invokeThingServiceRequest);
+
+						if (invokeThingServiceResponse != null && invokeThingServiceResponse.getSuccess() != false) {
+							result = "success";
+							LogUtil.print("调用命令推送成功！ "
+									+ com.alibaba.fastjson.JSONObject.toJSONString(invokeThingServiceResponse));
+						} else {
+							result = "调用命令推送失败！" + "原因：" + invokeThingServiceResponse.getErrorMessage();
+							LogUtil.error("调用命令推送失败！！requestId:" + invokeThingServiceResponse.getRequestId() + "原因："
+									+ invokeThingServiceResponse.getErrorMessage());
+						}
+					}
+				}
+			} catch (ClientException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.whty.assis.basicdata.service.DeviceInfoService#batchRestart(java.lang
+	 * .String)
+	 */
+	@Override
+	public String batchRestart(String ids) {
+		if (StringUtils.isEmpty(ids))
+			return "success";
+
+		String[] idStr = ids.split(",");
+		String result = null;
+		for (int i = 0; i < idStr.length; i++) {
+
+			DeviceInfo deviceInfo = deviceInfoDao.loadById(Integer.valueOf(idStr[i]));
+
+			if (deviceInfo == null) {
+				return "未找到设备!";
+			}
+
+			String regionId = SysConfig.getStrValue("iot.regionId");
+			String accessKeyID = SysConfig.getStrValue("user.accessKeyID");
+			String accessKeySecret = SysConfig.getStrValue("user.accessKeySecret");
+			String domain = SysConfig.getStrValue("iot.domain");
+
+			try {
+				IClientProfile profile = DefaultProfile.getProfile(regionId, accessKeyID, accessKeySecret);
+				DefaultProfile.addEndpoint(regionId, regionId, deviceInfo.getTerminalProductKey(), domain);
+				DefaultAcsClient client = new DefaultAcsClient(profile);
+
+				QueryDeviceDetailRequest queryDeviceDetailRequest = new QueryDeviceDetailRequest();
+				queryDeviceDetailRequest.setProductKey(deviceInfo.getAliProductKey());
+				queryDeviceDetailRequest.setDeviceName(deviceInfo.getAliDeviceName());
+				queryDeviceDetailRequest.setIotId(deviceInfo.getAliIotId());
+
+				QueryDeviceDetailResponse registerDeviceResponse = client.getAcsResponse(queryDeviceDetailRequest);
+
+				if (registerDeviceResponse != null && registerDeviceResponse.getSuccess() != false) {
+					// LogUtil.print("查询设备详情成功！ " +
+					// com.alibaba.fastjson.JSONObject.toJSONString(registerDeviceResponse));
+
+					String status = registerDeviceResponse.getData().getStatus();
+
+					// 设备在线才发送命令
+					if ("online".equals(status.toLowerCase())) {
+						InvokeThingServiceRequest invokeThingServiceRequest = new InvokeThingServiceRequest();
+						invokeThingServiceRequest.setProductKey(deviceInfo.getProvinceCode());
+						invokeThingServiceRequest.setIotId(deviceInfo.getAliIotId());
+						invokeThingServiceRequest.setDeviceName(deviceInfo.getDeviceName());
+						invokeThingServiceRequest.setIdentifier("commandService");
+
+						Random random = new Random(new Date().getTime());
+						int keyIndex = random.nextInt(5) % (5 - 1 + 1) + 1;
+
+						String timeStamp = TimeUtils.date2String(new Date(), TimeUtils.DAY_FORMAT_2);
+						String mac = HMACSHA1.bytesToHexString(HMACSHA1.HmacSHA1Encrypt(timeStamp, keyIndex));
+						String action = SysConfig.getStrValue("mqtt.server.command.restart");
+						String type = SysConfig.getStrValue("mqtt.server.command.type");
+						String version = SysConfig.getStrValue("mqtt.server.command.version");
+
+						String para = String.format("[{\\\"key\\\":\\\"delayTime\\\",\\\"value\\\":\\\"%s\\\"}]",
+								"120");
+						Command command = new Command(action, type, null, version, keyIndex + timeStamp, null, null,
+								mac, null, para);
+						String str = null;
+						str = String.format("{%s:\"%s\"}", "commandService", command.toString());
+						invokeThingServiceRequest.setArgs(str);
+
+						InvokeThingServiceResponse invokeThingServiceResponse = client
+								.getAcsResponse(invokeThingServiceRequest);
+
+						if (invokeThingServiceResponse != null && invokeThingServiceResponse.getSuccess() != false) {
+							result = "success";
+							LogUtil.print("调用命令推送成功！ "
+									+ com.alibaba.fastjson.JSONObject.toJSONString(invokeThingServiceResponse));
+						} else {
+							result = "调用命令推送失败！" + "原因：" + invokeThingServiceResponse.getErrorMessage();
+							LogUtil.error("调用命令推送失败！！requestId:" + invokeThingServiceResponse.getRequestId() + "原因："
+									+ invokeThingServiceResponse.getErrorMessage());
+						}
+					}
+				}
+			} catch (ClientException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.whty.assis.basicdata.service.DeviceInfoService#batchSendMessage(java.
+	 * lang.String)
+	 */
+	@Override
+	public String batchSendMessage(String ids, String excuteTime, String sendText) {
+		if (StringUtils.isEmpty(ids))
+			return "success";
+
+		String[] idStr = ids.split(",");
+		String result = null;
+		for (int i = 0; i < idStr.length; i++) {
+
+			DeviceInfo deviceInfo = deviceInfoDao.loadById(Integer.valueOf(idStr[i]));
+
+			if (deviceInfo == null) {
+				return "未找到设备!";
+			}
+
+			String regionId = SysConfig.getStrValue("iot.regionId");
+			String accessKeyID = SysConfig.getStrValue("user.accessKeyID");
+			String accessKeySecret = SysConfig.getStrValue("user.accessKeySecret");
+			String domain = SysConfig.getStrValue("iot.domain");
+
+			try {
+				IClientProfile profile = DefaultProfile.getProfile(regionId, accessKeyID, accessKeySecret);
+				DefaultProfile.addEndpoint(regionId, regionId, deviceInfo.getTerminalProductKey(), domain);
+				DefaultAcsClient client = new DefaultAcsClient(profile);
+
+				QueryDeviceDetailRequest queryDeviceDetailRequest = new QueryDeviceDetailRequest();
+				queryDeviceDetailRequest.setProductKey(deviceInfo.getAliProductKey());
+				queryDeviceDetailRequest.setDeviceName(deviceInfo.getAliDeviceName());
+				queryDeviceDetailRequest.setIotId(deviceInfo.getAliIotId());
+
+				QueryDeviceDetailResponse registerDeviceResponse = client.getAcsResponse(queryDeviceDetailRequest);
+
+				if (registerDeviceResponse != null && registerDeviceResponse.getSuccess() != false) {
+					// LogUtil.print("查询设备详情成功！ " +
+					// com.alibaba.fastjson.JSONObject.toJSONString(registerDeviceResponse));
+
+					String status = registerDeviceResponse.getData().getStatus();
+
+					// 设备在线才发送命令
+					if ("online".equals(status.toLowerCase())) {
+						InvokeThingServiceRequest invokeThingServiceRequest = new InvokeThingServiceRequest();
+						invokeThingServiceRequest.setProductKey(deviceInfo.getProvinceCode());
+						invokeThingServiceRequest.setIotId(deviceInfo.getAliIotId());
+						invokeThingServiceRequest.setDeviceName(deviceInfo.getDeviceName());
+						invokeThingServiceRequest.setIdentifier("commandService");
+
+						Random random = new Random(new Date().getTime());
+						int keyIndex = random.nextInt(5) % (5 - 1 + 1) + 1;
+
+						String timeStamp = TimeUtils.date2String(new Date(), TimeUtils.DAY_FORMAT_2);
+						String mac = HMACSHA1.bytesToHexString(HMACSHA1.HmacSHA1Encrypt(timeStamp, keyIndex));
+						String action = SysConfig.getStrValue("mqtt.server.command.broadcast_message");
+						String type = SysConfig.getStrValue("mqtt.server.command.type");
+						String version = SysConfig.getStrValue("mqtt.server.command.version");
+
+						// String para =
+						// String.format("[{\\\"key\\\":\\\"excuteTime\\\",\\\"value\\\":\\\"%s\\\"}]",
+						// "0");
+						String para = String.format(
+								"[{\\\"key\\\":\\\"delayTime\\\",\\\"value\\\":\\\"%s\\\"},{\\\"key\\\":\\\"excuteTime\\\",\\\"value\\\":\\\"%s\\\"},{\\\"key\\\":\\\"message\\\",\\\"value\\\":\\\"%s\\\"}]",
+								0, excuteTime, sendText);
+						// String para =
+						// "[{\\\"key\\\":\\\"excuteTime\\\",\\\"value\\\":\\\"%s\\\"},{\\\"key\\\":\\\"message\\\",\\\"value\\\":\\\"%s\\\"}]";
+
+						Command command = new Command(action, type, null, version, keyIndex + timeStamp, null, null,
+								mac, null, para);
+						String str = null;
+						str = String.format("{%s:\"%s\"}", "commandService", command.toString());
+						invokeThingServiceRequest.setArgs(str);
+
+						InvokeThingServiceResponse invokeThingServiceResponse = client
+								.getAcsResponse(invokeThingServiceRequest);
+
+						if (invokeThingServiceResponse != null && invokeThingServiceResponse.getSuccess() != false) {
+							result = "success";
+							LogUtil.print("调用命令推送成功！ "
+									+ com.alibaba.fastjson.JSONObject.toJSONString(invokeThingServiceResponse));
+						} else {
+							result = "调用命令推送失败！" + "原因：" + invokeThingServiceResponse.getErrorMessage();
+							LogUtil.error("调用命令推送失败！！requestId:" + invokeThingServiceResponse.getRequestId() + "原因："
+									+ invokeThingServiceResponse.getErrorMessage());
+						}
+					}
+				}
+			} catch (ClientException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return result;
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.whty.assis.basicdata.service.DeviceInfoService#sendDeviceConfig()
+	 */
+	@Override
+	public String sendDeviceConfig() {
+		String result = null;
+		List<DeviceInfo> deviceInfos = deviceInfoDao.listAIODevice(new HashMap<String, Object>(0));
+
+		for (DeviceInfo bean : deviceInfos) {
+
+			String regionId = SysConfig.getStrValue("iot.regionId");
+			String accessKeyID = SysConfig.getStrValue("user.accessKeyID");
+			String accessKeySecret = SysConfig.getStrValue("user.accessKeySecret");
+			String domain = SysConfig.getStrValue("iot.domain");
+
+			try {
+				IClientProfile profile = DefaultProfile.getProfile(regionId, accessKeyID, accessKeySecret);
+				DefaultProfile.addEndpoint(regionId, regionId, bean.getAliProductKey(), domain);
+				DefaultAcsClient client = new DefaultAcsClient(profile);
+
+				QueryDeviceDetailRequest queryDeviceDetailRequest = new QueryDeviceDetailRequest();
+				queryDeviceDetailRequest.setProductKey(bean.getAliProductKey());
+				queryDeviceDetailRequest.setDeviceName(bean.getAliDeviceName());
+				queryDeviceDetailRequest.setIotId(bean.getAliIotId());
+
+				QueryDeviceDetailResponse registerDeviceResponse = client.getAcsResponse(queryDeviceDetailRequest);
+
+				if (registerDeviceResponse != null && registerDeviceResponse.getSuccess() != false) {
+					// LogUtil.print("查询设备详情成功！ " +
+					// com.alibaba.fastjson.JSONObject.toJSONString(registerDeviceResponse));
+
+					String status = registerDeviceResponse.getData().getStatus();
+
+					// 设备在线才发送命令
+					if ("online".equals(status.toLowerCase())) {
+						InvokeThingServiceRequest invokeThingServiceRequest = new InvokeThingServiceRequest();
+						invokeThingServiceRequest.setProductKey(bean.getProvinceCode());
+						invokeThingServiceRequest.setIotId(bean.getAliIotId());
+						invokeThingServiceRequest.setDeviceName(bean.getDeviceName());
+						invokeThingServiceRequest.setIdentifier("commandService");
+
+						Random random = new Random(new Date().getTime());
+						int keyIndex = random.nextInt(5) % (5 - 1 + 1) + 1;
+
+						String timeStamp = TimeUtils.date2String(new Date(), TimeUtils.DAY_FORMAT_2);
+						String mac = HMACSHA1.bytesToHexString(HMACSHA1.HmacSHA1Encrypt(timeStamp, keyIndex));
+						String action = SysConfig.getStrValue("mqtt.server.command.update_config");
+						String type = SysConfig.getStrValue("mqtt.server.command.type");
+						String version = SysConfig.getStrValue("mqtt.server.command.version");
+
+						String para = String.format("[{\\\"key\\\":\\\"delayTime\\\",\\\"value\\\":\\\"%s\\\"}]", 0);
+
+						Command command = new Command(action, type, null, version, keyIndex + timeStamp, null, null,
+								mac, null, para);
+						String str = null;
+						str = String.format("{%s:\"%s\"}", "commandService", command.toString());
+						invokeThingServiceRequest.setArgs(str);
+
+						InvokeThingServiceResponse invokeThingServiceResponse = client
+								.getAcsResponse(invokeThingServiceRequest);
+
+						if (invokeThingServiceResponse != null && invokeThingServiceResponse.getSuccess() != false) {
+							result = "success";
+							LogUtil.print("调用命令推送成功！ "
+									+ com.alibaba.fastjson.JSONObject.toJSONString(invokeThingServiceResponse));
+						} else {
+							result = "调用命令推送失败！" + "原因：" + invokeThingServiceResponse.getErrorMessage();
+							LogUtil.error("调用命令推送失败！！requestId:" + invokeThingServiceResponse.getRequestId() + "原因："
+									+ invokeThingServiceResponse.getErrorMessage());
+						}
+					}
+				}
+			} catch (ClientException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.whty.assis.basicdata.service.DeviceInfoService#loadById(java.lang.
+	 * Integer)
+	 */
+	@Override
+	public DeviceInfo loadById(Integer deviceId) {
+		return deviceInfoDao.loadById(deviceId);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.whty.assis.basicdata.service.DeviceInfoService#batchLockScreen(java.
+	 * lang.String)
+	 */
+	@Override
+	public String batchLockScreen(String ids) {
+		if (StringUtils.isEmpty(ids))
+			return "success";
+
+		String[] idStr = ids.split(",");
+		String result = null;
+		for (int i = 0; i < idStr.length; i++) {
+
+			DeviceInfo deviceInfo = deviceInfoDao.loadById(Integer.valueOf(idStr[i]));
+
+			if (deviceInfo == null) {
+				return "未找到设备!";
+			}
+
+			String regionId = SysConfig.getStrValue("iot.regionId");
+			String accessKeyID = SysConfig.getStrValue("user.accessKeyID");
+			String accessKeySecret = SysConfig.getStrValue("user.accessKeySecret");
+			String domain = SysConfig.getStrValue("iot.domain");
+
+			try {
+				IClientProfile profile = DefaultProfile.getProfile(regionId, accessKeyID, accessKeySecret);
+				DefaultProfile.addEndpoint(regionId, regionId, deviceInfo.getTerminalProductKey(), domain);
+				DefaultAcsClient client = new DefaultAcsClient(profile);
+
+				QueryDeviceDetailRequest queryDeviceDetailRequest = new QueryDeviceDetailRequest();
+				queryDeviceDetailRequest.setProductKey(deviceInfo.getAliProductKey());
+				queryDeviceDetailRequest.setDeviceName(deviceInfo.getAliDeviceName());
+				queryDeviceDetailRequest.setIotId(deviceInfo.getAliIotId());
+
+				QueryDeviceDetailResponse registerDeviceResponse = client.getAcsResponse(queryDeviceDetailRequest);
+
+				if (registerDeviceResponse != null && registerDeviceResponse.getSuccess() != false) {
+					// LogUtil.print("查询设备详情成功！ " +
+					// com.alibaba.fastjson.JSONObject.toJSONString(registerDeviceResponse));
+
+					String status = registerDeviceResponse.getData().getStatus();
+
+					// 设备在线才发送命令
+					if ("online".equals(status.toLowerCase())) {
+						InvokeThingServiceRequest invokeThingServiceRequest = new InvokeThingServiceRequest();
+						invokeThingServiceRequest.setProductKey(deviceInfo.getProvinceCode());
+						invokeThingServiceRequest.setIotId(deviceInfo.getAliIotId());
+						invokeThingServiceRequest.setDeviceName(deviceInfo.getDeviceName());
+						invokeThingServiceRequest.setIdentifier("commandService");
+
+						Random random = new Random(new Date().getTime());
+						int keyIndex = random.nextInt(5) % (5 - 1 + 1) + 1;
+
+						String timeStamp = TimeUtils.date2String(new Date(), TimeUtils.DAY_FORMAT_2);
+						String mac = HMACSHA1.bytesToHexString(HMACSHA1.HmacSHA1Encrypt(timeStamp, keyIndex));
+						String action = SysConfig.getStrValue("mqtt.server.command.lock_screen");
+						String type = SysConfig.getStrValue("mqtt.server.command.type");
+						String version = SysConfig.getStrValue("mqtt.server.command.version");
+
+						String para = String.format("[{\\\"key\\\":\\\"delayTime\\\",\\\"value\\\":\\\"%s\\\"}]", "0");
+
+						Command command = new Command(action, type, null, version, keyIndex + timeStamp, null, null,
+								mac, null, para);
+
+						String str = null;
+						str = String.format("{%s:\"%s\"}", "commandService", command.toString());
+
+						invokeThingServiceRequest.setArgs(str);
+
+						InvokeThingServiceResponse invokeThingServiceResponse = client
+								.getAcsResponse(invokeThingServiceRequest);
+
+						if (invokeThingServiceResponse != null && invokeThingServiceResponse.getSuccess() != false) {
+							result = "success";
+							LogUtil.print("调用命令推送成功！ "
+									+ com.alibaba.fastjson.JSONObject.toJSONString(invokeThingServiceResponse));
+						} else {
+							result = "调用命令推送失败！" + "原因：" + invokeThingServiceResponse.getErrorMessage();
+							LogUtil.error("调用命令推送失败！！requestId:" + invokeThingServiceResponse.getRequestId() + "原因："
+									+ invokeThingServiceResponse.getErrorMessage());
+						}
+					}
+				}
+			} catch (ClientException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return result;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.whty.assis.basicdata.service.DeviceInfoService#batchUnLockScreen(java
+	 * .lang.String)
+	 */
+	@Override
+	public String batchUnLockScreen(String ids) {
+		if (StringUtils.isEmpty(ids))
+			return "success";
+
+		String[] idStr = ids.split(",");
+		String result = null;
+		for (int i = 0; i < idStr.length; i++) {
+
+			DeviceInfo deviceInfo = deviceInfoDao.loadById(Integer.valueOf(idStr[i]));
+
+			if (deviceInfo == null) {
+				return "未找到设备!";
+			}
+
+			String regionId = SysConfig.getStrValue("iot.regionId");
+			String accessKeyID = SysConfig.getStrValue("user.accessKeyID");
+			String accessKeySecret = SysConfig.getStrValue("user.accessKeySecret");
+			String domain = SysConfig.getStrValue("iot.domain");
+
+			try {
+				IClientProfile profile = DefaultProfile.getProfile(regionId, accessKeyID, accessKeySecret);
+				DefaultProfile.addEndpoint(regionId, regionId, deviceInfo.getTerminalProductKey(), domain);
+				DefaultAcsClient client = new DefaultAcsClient(profile);
+
+				QueryDeviceDetailRequest queryDeviceDetailRequest = new QueryDeviceDetailRequest();
+				queryDeviceDetailRequest.setProductKey(deviceInfo.getAliProductKey());
+				queryDeviceDetailRequest.setDeviceName(deviceInfo.getAliDeviceName());
+				queryDeviceDetailRequest.setIotId(deviceInfo.getAliIotId());
+
+				QueryDeviceDetailResponse registerDeviceResponse = client.getAcsResponse(queryDeviceDetailRequest);
+
+				if (registerDeviceResponse != null && registerDeviceResponse.getSuccess() != false) {
+					// LogUtil.print("查询设备详情成功！ " +
+					// com.alibaba.fastjson.JSONObject.toJSONString(registerDeviceResponse));
+
+					String status = registerDeviceResponse.getData().getStatus();
+
+					// 设备在线才发送命令
+					if ("online".equals(status.toLowerCase())) {
+						InvokeThingServiceRequest invokeThingServiceRequest = new InvokeThingServiceRequest();
+						invokeThingServiceRequest.setProductKey(deviceInfo.getProvinceCode());
+						invokeThingServiceRequest.setIotId(deviceInfo.getAliIotId());
+						invokeThingServiceRequest.setDeviceName(deviceInfo.getDeviceName());
+						invokeThingServiceRequest.setIdentifier("commandService");
+
+						Random random = new Random(new Date().getTime());
+						int keyIndex = random.nextInt(5) % (5 - 1 + 1) + 1;
+
+						String timeStamp = TimeUtils.date2String(new Date(), TimeUtils.DAY_FORMAT_2);
+						String mac = HMACSHA1.bytesToHexString(HMACSHA1.HmacSHA1Encrypt(timeStamp, keyIndex));
+						String action = SysConfig.getStrValue("mqtt.server.command.un_lock_screen");
+						String type = SysConfig.getStrValue("mqtt.server.command.type");
+						String version = SysConfig.getStrValue("mqtt.server.command.version");
+
+						String para = String.format("[{\\\"key\\\":\\\"delayTime\\\",\\\"value\\\":\\\"%s\\\"}]", "0");
+
+						Command command = new Command(action, type, null, version, keyIndex + timeStamp, null, null,
+								mac, null, para);
+
+						String str = null;
+						str = String.format("{%s:\"%s\"}", "commandService", command.toString());
+
+						invokeThingServiceRequest.setArgs(str);
+
+						InvokeThingServiceResponse invokeThingServiceResponse = client
+								.getAcsResponse(invokeThingServiceRequest);
+
+						if (invokeThingServiceResponse != null && invokeThingServiceResponse.getSuccess() != false) {
+							result = "success";
+							LogUtil.print("调用命令推送成功！ "
+									+ com.alibaba.fastjson.JSONObject.toJSONString(invokeThingServiceResponse));
+						} else {
+							result = "调用命令推送失败！" + "原因：" + invokeThingServiceResponse.getErrorMessage();
+							LogUtil.error("调用命令推送失败！！requestId:" + invokeThingServiceResponse.getRequestId() + "原因："
+									+ invokeThingServiceResponse.getErrorMessage());
+						}
+					}
+				}
+			} catch (ClientException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see com.whty.assis.basicdata.service.DeviceInfoService#loadEbookpackageById(java.lang.Integer)
+	 */
+	@Override
+	public DeviceInfo loadEbookpackageById(Integer deviceId) {
+		return deviceInfoDao.loadEbookpackageById(deviceId);
+	}
+
+}

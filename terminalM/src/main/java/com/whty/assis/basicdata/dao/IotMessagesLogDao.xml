@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.basicdata.dao.IotMessagesLogDao">
+
+	<!-- 这里的Demo是别名，需要在mybatis-config.xml中定义，或者写类全名 -->
+	<resultMap type="com.whty.assis.basicdata.model.IotMessagesLog" id="IotMessagesLogResult">
+		<id property="id" column="id" />
+		<result property="topic" column="name" />
+		<result property="createTime"  column="creator" />
+		<result property="updateTime" column="update_time" />
+		<result property="body" column="body" />
+		<result property="tag" column="tag" />
+		<result property="key" column="key" />
+		<result property="msg_id" column="msg_id" />
+		<result property="bornTimestamp" column="born_timestamp" />
+		<result property="bornHost" column="born_host" />
+	</resultMap>
+	
+	<insert id="save" parameterType="com.whty.assis.basicdata.model.IotMessagesLog">
+		insert into t_iot_messages_log (
+			id
+			,topic
+			,create_time
+			,update_time
+			,body
+			,tag
+			,key
+			,msg_id
+			,bornTimestamp
+			,born_host
+		) values (
+			#{id}
+			,#{topic}
+			,#{create_time}
+			,#{update_time}
+			,#{body}
+			,#{tag}
+			,#{key}
+			,#{msg_id}
+			,#{bornTimestamp}
+			,#{born_host}
+		)
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>

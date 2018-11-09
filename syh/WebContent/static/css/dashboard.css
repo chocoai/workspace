@@ -1,0 +1,230 @@
+/*
+ * Base structure
+ */
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+.body {
+  padding-top: 64px;
+}
+
+/*
+ * Global add-ons
+ */
+.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+/*
+ * Top navigation
+ * Hide default border to remove 1px line.
+ */
+.navbar-fixed-top {
+  border: 0;
+}
+
+/*
+ * Sidebar
+ */
+
+/* Hide for mobile, show later */
+.sidebar {
+  display: none;
+}
+
+@media (min-width:768px) {
+  .sidebar {
+    position: fixed;
+    top: 64px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 0 20px 20px;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: #fafafa;
+    border-right: 1px solid #ddd;
+  }
+
+}
+
+/* Sidebar navigation */
+.nav-sidebar {
+  margin-right: -21px; /* 20px padding + 1px border */
+  margin-bottom: 20px;
+  margin-left: -20px;
+}
+
+.nav-sidebar > li > a {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.nav-sidebar > .active > a,
+.nav-sidebar > .active > a:hover,
+.nav-sidebar > .active > a:focus {
+  color: #fff;
+  background-color: #428bca;
+}
+
+/*
+ * Main content
+ */
+.main {
+  padding: 0 15px;
+}
+
+@media (min-width:768px) {
+  .main {
+    padding-right: 0px;
+    padding-left: 0px;
+  }
+
+}
+
+.main .page-header {
+  margin-top: 0;
+}
+
+/*
+ * Placeholder dashboard ideas
+ */
+.placeholders {
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+.placeholders h4 {
+  margin-bottom: 0;
+}
+
+.placeholder {
+  margin-bottom: 20px;
+}
+
+.placeholder img {
+  display: inline-block;
+  border-radius: 50%;
+}
+
+.topest {
+  background: #337ab7;
+  height: 64px;
+}
+
+.logo {
+  color: #fff;
+  line-height: 64px;
+  margin: 0 0 0 20px;
+  font-size: 20px;
+}
+
+.collapse-color {
+  background: #337ab7;
+  border-color: #2e6da4;
+  color: #fff;
+}
+
+.navbar-nav > li > a {
+    line-height: 34px;
+    margin-right: 20px;
+}
+
+.navbar-inverse .navbar-nav > li > a {
+    color: #eee;
+}
+
+.user-list {
+  min-width: 135px;
+  z-index: 9999;
+  margin-right: 20px;
+}
+
+.navbar-inverse .navbar-nav > .open > a, .navbar-inverse .navbar-nav > .open > a:focus, .navbar-inverse .navbar-nav > .open > a:hover {
+    color: #fff;
+    background-color: #2e6da4;
+}
+
+.navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle:hover {
+    background-color: #2e6da4;
+}
+.navbar-inverse .navbar-toggle {
+    border-color: #2e6da4;
+}
+.navbar-inverse .navbar-collapse, .navbar-inverse .navbar-form {
+    border-color: #275073;
+}
+.navbar-inverse .navbar-nav .open .dropdown-menu > li > a {
+    color: #aaa;
+}
+.threeline { margin-top: 15px; margin-bottom: 15px; }
+
+
+.menu-list li a {
+  color: #585858;
+}
+
+.menu-list li a:hover {
+  background: #fff;
+  color: #337ab7;
+}
+
+.menu-list li.level01 {
+  border-bottom: 1px solid #ddd;
+}
+
+.menu-list li.level01 > a:visited {
+  background: #fafafa;
+}
+
+.menu-list li .active {
+  color: #337ab7;
+  border-bottom: 1px solid #ddd;
+}
+
+.menu-list li .active:hover {
+  background: #fafafa;
+}
+
+.menu-list li.level01 .level02 {
+  background: #fff;
+  padding-left: 25px;
+}
+
+.menu-list li.level01 .level02 li {
+  line-height: 36px;
+  border-top: 1px dotted #ddd;
+}
+
+.menu-list li.level01 .level02 li:first-child {
+  border-top: none;
+}
+
+.menu-list li.level01 .level02 li a {
+  padding-left: 16px;
+  text-decoration: none;
+  display: block;
+  border-left: 1px dotted #ccc;
+  background: #fff url(../images/line.dotted.png) no-repeat -8px center;
+}
+
+.menu-list li.level01 .level02 li a:hover {
+  color: #337ab7;
+  background: #fff;
+}
+
+.menu-list li.level01 .level02 li a.active {
+  color: #337ab7;
+  border-bottom: none;
+}
+
+.menu-list li.level01 a .icon-arrow {
+  position: absolute;
+  right: 20px;
+  font-size: 18px;
+}
+
+.menu-list li.level01 .level02 li a.active:hover {
+  background: #fff url(../images/line.dotted.png) no-repeat -8px center;
+}

@@ -1,0 +1,733 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.iHealthCloud.mapper.ServiceProviderMapper">
+  <resultMap id="BaseResultMap" type="com.yhcrt.iHealthCloud.entity.ServiceProvider">
+    <id column="provider_id" jdbcType="INTEGER" property="providerId" />
+    <result column="org_id" jdbcType="INTEGER" property="orgId" />
+    <result column="provider_name" jdbcType="VARCHAR" property="providerName" />
+    <result column="provider_type" jdbcType="VARCHAR" property="providerType" />
+    <result column="provider_nature" jdbcType="VARCHAR" property="providerNature" />
+    <result column="provider_tag" jdbcType="VARCHAR" property="providerTag" />
+    <result column="provider_logo" jdbcType="VARCHAR" property="providerLogo" />
+    <result column="title_img" jdbcType="VARCHAR" property="titleImg" />
+    <result column="area_id" jdbcType="VARCHAR" property="areaId" />
+    <result column="area" jdbcType="VARCHAR" property="area" />
+    <result column="longitude" jdbcType="DOUBLE" property="longitude" />
+    <result column="latitude" jdbcType="DOUBLE" property="latitude" />
+    <result column="linkman" jdbcType="VARCHAR" property="linkman" />
+    <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber" />
+    <result column="tel" jdbcType="VARCHAR" property="tel" />
+    <result column="email" jdbcType="VARCHAR" property="email" />
+    <result column="fax" jdbcType="VARCHAR" property="fax" />
+    <result column="address" jdbcType="VARCHAR" property="address" />
+    <result column="postcode" jdbcType="VARCHAR" property="postcode" />
+    <result column="business_license" jdbcType="VARCHAR" property="businessLicense" />
+    <result column="license_no" jdbcType="VARCHAR" property="licenseNo" />
+    <result column="provider_score" jdbcType="DOUBLE" property="providerScore" />
+    <result column="provider_intro" jdbcType="VARCHAR" property="providerIntro" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="create_time" jdbcType="VARCHAR" property="createTime" />
+    <result column="update_time" jdbcType="VARCHAR" property="updateTime" />
+    <result column="order_num" jdbcType="INTEGER" property="orderNum" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.yhcrt.iHealthCloud.entity.ServiceProviderWithBLOBs">
+    <result column="provider_facility" jdbcType="LONGVARCHAR" property="providerFacility" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    provider_id, org_id, provider_name, provider_type, provider_nature, provider_tag, 
+    provider_logo, title_img, area_id, area, longitude, latitude, linkman, phone_number, 
+    tel, email, fax, address, postcode, business_license, license_no, provider_score, 
+    provider_intro, create_user, create_time, update_time, order_num, status, remark
+  </sql>
+  <sql id="Blob_Column_List">
+    provider_facility, content
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.yhcrt.iHealthCloud.entity.ServiceProviderExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from service_provider
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.yhcrt.iHealthCloud.entity.ServiceProviderExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from service_provider
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+  <select id="getProvidersByGps" parameterType="map" resultMap="ResultMapWithBLOBs">
+  	select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from service_provider
+    where ROUND( 6378.138 * 2 * ASIN( SQRT( POW( SIN((#{lat,jdbcType=DOUBLE} * PI() / 180 - latitude * PI() / 180) / 2), 2 ) + COS(#{lat,jdbcType=DOUBLE} * PI() / 180) *
+		COS(latitude * PI() / 180) * POW( SIN((#{lng,jdbcType=DOUBLE} * PI() / 180 - longitude * PI() / 180) / 2), 2 ) ) ) * 1000 ) &lt; 10000
+  </select>
+  
+  <select id="getRecommendProviders" parameterType="map" resultMap="ResultMapWithBLOBs">
+	SELECT service_provider.*
+	  FROM service_provider INNER JOIN service
+	    ON service_provider.provider_id = service.provider_id
+	 WHERE service.service_type = #{serviceType}  
+	   AND service_provider.status = 0
+	   AND service_provider.area LIKE '%${area}%'
+	   AND service_provider.provider_name LIKE '%${providerName}%'
+  </select>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from service_provider
+    where provider_id = #{providerId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from service_provider
+    where provider_id = #{providerId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yhcrt.iHealthCloud.entity.ServiceProviderExample">
+    delete from service_provider
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yhcrt.iHealthCloud.entity.ServiceProviderWithBLOBs">
+    insert into service_provider (provider_id, org_id, provider_name, 
+      provider_type, provider_nature, provider_tag, 
+      provider_logo, title_img, area_id, 
+      area, longitude, latitude, 
+      linkman, phone_number, tel, 
+      email, fax, address, 
+      postcode, business_license, license_no, 
+      provider_score, provider_intro, create_user, 
+      create_time, update_time, order_num, 
+      status, remark, provider_facility, 
+      content)
+    values (#{providerId,jdbcType=INTEGER}, #{orgId,jdbcType=INTEGER}, #{providerName,jdbcType=VARCHAR}, 
+      #{providerType,jdbcType=VARCHAR}, #{providerNature,jdbcType=VARCHAR}, #{providerTag,jdbcType=VARCHAR}, 
+      #{providerLogo,jdbcType=VARCHAR}, #{titleImg,jdbcType=VARCHAR}, #{areaId,jdbcType=VARCHAR}, 
+      #{area,jdbcType=VARCHAR}, #{longitude,jdbcType=DOUBLE}, #{latitude,jdbcType=DOUBLE}, 
+      #{linkman,jdbcType=VARCHAR}, #{phoneNumber,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR}, 
+      #{email,jdbcType=VARCHAR}, #{fax,jdbcType=VARCHAR}, #{address,jdbcType=VARCHAR}, 
+      #{postcode,jdbcType=VARCHAR}, #{businessLicense,jdbcType=VARCHAR}, #{licenseNo,jdbcType=VARCHAR}, 
+      #{providerScore,jdbcType=DOUBLE}, #{providerIntro,jdbcType=VARCHAR}, #{createUser,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=VARCHAR}, #{updateTime,jdbcType=VARCHAR}, #{orderNum,jdbcType=INTEGER}, 
+      #{status,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, #{providerFacility,jdbcType=LONGVARCHAR}, 
+      #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yhcrt.iHealthCloud.entity.ServiceProviderWithBLOBs">
+    insert into service_provider
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="providerId != null">
+        provider_id,
+      </if>
+      <if test="orgId != null">
+        org_id,
+      </if>
+      <if test="providerName != null">
+        provider_name,
+      </if>
+      <if test="providerType != null">
+        provider_type,
+      </if>
+      <if test="providerNature != null">
+        provider_nature,
+      </if>
+      <if test="providerTag != null">
+        provider_tag,
+      </if>
+      <if test="providerLogo != null">
+        provider_logo,
+      </if>
+      <if test="titleImg != null">
+        title_img,
+      </if>
+      <if test="areaId != null">
+        area_id,
+      </if>
+      <if test="area != null">
+        area,
+      </if>
+      <if test="longitude != null">
+        longitude,
+      </if>
+      <if test="latitude != null">
+        latitude,
+      </if>
+      <if test="linkman != null">
+        linkman,
+      </if>
+      <if test="phoneNumber != null">
+        phone_number,
+      </if>
+      <if test="tel != null">
+        tel,
+      </if>
+      <if test="email != null">
+        email,
+      </if>
+      <if test="fax != null">
+        fax,
+      </if>
+      <if test="address != null">
+        address,
+      </if>
+      <if test="postcode != null">
+        postcode,
+      </if>
+      <if test="businessLicense != null">
+        business_license,
+      </if>
+      <if test="licenseNo != null">
+        license_no,
+      </if>
+      <if test="providerScore != null">
+        provider_score,
+      </if>
+      <if test="providerIntro != null">
+        provider_intro,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="orderNum != null">
+        order_num,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="providerFacility != null">
+        provider_facility,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="providerId != null">
+        #{providerId,jdbcType=INTEGER},
+      </if>
+      <if test="orgId != null">
+        #{orgId,jdbcType=INTEGER},
+      </if>
+      <if test="providerName != null">
+        #{providerName,jdbcType=VARCHAR},
+      </if>
+      <if test="providerType != null">
+        #{providerType,jdbcType=VARCHAR},
+      </if>
+      <if test="providerNature != null">
+        #{providerNature,jdbcType=VARCHAR},
+      </if>
+      <if test="providerTag != null">
+        #{providerTag,jdbcType=VARCHAR},
+      </if>
+      <if test="providerLogo != null">
+        #{providerLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="titleImg != null">
+        #{titleImg,jdbcType=VARCHAR},
+      </if>
+      <if test="areaId != null">
+        #{areaId,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        #{longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="latitude != null">
+        #{latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="linkman != null">
+        #{linkman,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null">
+        #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null">
+        #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null">
+        #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicense != null">
+        #{businessLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseNo != null">
+        #{licenseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="providerScore != null">
+        #{providerScore,jdbcType=DOUBLE},
+      </if>
+      <if test="providerIntro != null">
+        #{providerIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNum != null">
+        #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="providerFacility != null">
+        #{providerFacility,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yhcrt.iHealthCloud.entity.ServiceProviderExample" resultType="java.lang.Long">
+    select count(*) from service_provider
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update service_provider
+    <set>
+      <if test="record.providerId != null">
+        provider_id = #{record.providerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.orgId != null">
+        org_id = #{record.orgId,jdbcType=INTEGER},
+      </if>
+      <if test="record.providerName != null">
+        provider_name = #{record.providerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.providerType != null">
+        provider_type = #{record.providerType,jdbcType=VARCHAR},
+      </if>
+      <if test="record.providerNature != null">
+        provider_nature = #{record.providerNature,jdbcType=VARCHAR},
+      </if>
+      <if test="record.providerTag != null">
+        provider_tag = #{record.providerTag,jdbcType=VARCHAR},
+      </if>
+      <if test="record.providerLogo != null">
+        provider_logo = #{record.providerLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.titleImg != null">
+        title_img = #{record.titleImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.areaId != null">
+        area_id = #{record.areaId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.area != null">
+        area = #{record.area,jdbcType=VARCHAR},
+      </if>
+      <if test="record.longitude != null">
+        longitude = #{record.longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="record.latitude != null">
+        latitude = #{record.latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="record.linkman != null">
+        linkman = #{record.linkman,jdbcType=VARCHAR},
+      </if>
+      <if test="record.phoneNumber != null">
+        phone_number = #{record.phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tel != null">
+        tel = #{record.tel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.email != null">
+        email = #{record.email,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fax != null">
+        fax = #{record.fax,jdbcType=VARCHAR},
+      </if>
+      <if test="record.address != null">
+        address = #{record.address,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postcode != null">
+        postcode = #{record.postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.businessLicense != null">
+        business_license = #{record.businessLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="record.licenseNo != null">
+        license_no = #{record.licenseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.providerScore != null">
+        provider_score = #{record.providerScore,jdbcType=DOUBLE},
+      </if>
+      <if test="record.providerIntro != null">
+        provider_intro = #{record.providerIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createUser != null">
+        create_user = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.orderNum != null">
+        order_num = #{record.orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.providerFacility != null">
+        provider_facility = #{record.providerFacility,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update service_provider
+    set provider_id = #{record.providerId,jdbcType=INTEGER},
+      org_id = #{record.orgId,jdbcType=INTEGER},
+      provider_name = #{record.providerName,jdbcType=VARCHAR},
+      provider_type = #{record.providerType,jdbcType=VARCHAR},
+      provider_nature = #{record.providerNature,jdbcType=VARCHAR},
+      provider_tag = #{record.providerTag,jdbcType=VARCHAR},
+      provider_logo = #{record.providerLogo,jdbcType=VARCHAR},
+      title_img = #{record.titleImg,jdbcType=VARCHAR},
+      area_id = #{record.areaId,jdbcType=VARCHAR},
+      area = #{record.area,jdbcType=VARCHAR},
+      longitude = #{record.longitude,jdbcType=DOUBLE},
+      latitude = #{record.latitude,jdbcType=DOUBLE},
+      linkman = #{record.linkman,jdbcType=VARCHAR},
+      phone_number = #{record.phoneNumber,jdbcType=VARCHAR},
+      tel = #{record.tel,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      fax = #{record.fax,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      postcode = #{record.postcode,jdbcType=VARCHAR},
+      business_license = #{record.businessLicense,jdbcType=VARCHAR},
+      license_no = #{record.licenseNo,jdbcType=VARCHAR},
+      provider_score = #{record.providerScore,jdbcType=DOUBLE},
+      provider_intro = #{record.providerIntro,jdbcType=VARCHAR},
+      create_user = #{record.createUser,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=VARCHAR},
+      order_num = #{record.orderNum,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      provider_facility = #{record.providerFacility,jdbcType=LONGVARCHAR},
+      content = #{record.content,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update service_provider
+    set provider_id = #{record.providerId,jdbcType=INTEGER},
+      org_id = #{record.orgId,jdbcType=INTEGER},
+      provider_name = #{record.providerName,jdbcType=VARCHAR},
+      provider_type = #{record.providerType,jdbcType=VARCHAR},
+      provider_nature = #{record.providerNature,jdbcType=VARCHAR},
+      provider_tag = #{record.providerTag,jdbcType=VARCHAR},
+      provider_logo = #{record.providerLogo,jdbcType=VARCHAR},
+      title_img = #{record.titleImg,jdbcType=VARCHAR},
+      area_id = #{record.areaId,jdbcType=VARCHAR},
+      area = #{record.area,jdbcType=VARCHAR},
+      longitude = #{record.longitude,jdbcType=DOUBLE},
+      latitude = #{record.latitude,jdbcType=DOUBLE},
+      linkman = #{record.linkman,jdbcType=VARCHAR},
+      phone_number = #{record.phoneNumber,jdbcType=VARCHAR},
+      tel = #{record.tel,jdbcType=VARCHAR},
+      email = #{record.email,jdbcType=VARCHAR},
+      fax = #{record.fax,jdbcType=VARCHAR},
+      address = #{record.address,jdbcType=VARCHAR},
+      postcode = #{record.postcode,jdbcType=VARCHAR},
+      business_license = #{record.businessLicense,jdbcType=VARCHAR},
+      license_no = #{record.licenseNo,jdbcType=VARCHAR},
+      provider_score = #{record.providerScore,jdbcType=DOUBLE},
+      provider_intro = #{record.providerIntro,jdbcType=VARCHAR},
+      create_user = #{record.createUser,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=VARCHAR},
+      update_time = #{record.updateTime,jdbcType=VARCHAR},
+      order_num = #{record.orderNum,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=INTEGER},
+      remark = #{record.remark,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.iHealthCloud.entity.ServiceProviderWithBLOBs">
+    update service_provider
+    <set>
+      <if test="orgId != null">
+        org_id = #{orgId,jdbcType=INTEGER},
+      </if>
+      <if test="providerName != null">
+        provider_name = #{providerName,jdbcType=VARCHAR},
+      </if>
+      <if test="providerType != null">
+        provider_type = #{providerType,jdbcType=VARCHAR},
+      </if>
+      <if test="providerNature != null">
+        provider_nature = #{providerNature,jdbcType=VARCHAR},
+      </if>
+      <if test="providerTag != null">
+        provider_tag = #{providerTag,jdbcType=VARCHAR},
+      </if>
+      <if test="providerLogo != null">
+        provider_logo = #{providerLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="titleImg != null">
+        title_img = #{titleImg,jdbcType=VARCHAR},
+      </if>
+      <if test="areaId != null">
+        area_id = #{areaId,jdbcType=VARCHAR},
+      </if>
+      <if test="area != null">
+        area = #{area,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        longitude = #{longitude,jdbcType=DOUBLE},
+      </if>
+      <if test="latitude != null">
+        latitude = #{latitude,jdbcType=DOUBLE},
+      </if>
+      <if test="linkman != null">
+        linkman = #{linkman,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null">
+        phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="tel != null">
+        tel = #{tel,jdbcType=VARCHAR},
+      </if>
+      <if test="email != null">
+        email = #{email,jdbcType=VARCHAR},
+      </if>
+      <if test="fax != null">
+        fax = #{fax,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null">
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="postcode != null">
+        postcode = #{postcode,jdbcType=VARCHAR},
+      </if>
+      <if test="businessLicense != null">
+        business_license = #{businessLicense,jdbcType=VARCHAR},
+      </if>
+      <if test="licenseNo != null">
+        license_no = #{licenseNo,jdbcType=VARCHAR},
+      </if>
+      <if test="providerScore != null">
+        provider_score = #{providerScore,jdbcType=DOUBLE},
+      </if>
+      <if test="providerIntro != null">
+        provider_intro = #{providerIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="createUser != null">
+        create_user = #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=VARCHAR},
+      </if>
+      <if test="orderNum != null">
+        order_num = #{orderNum,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="providerFacility != null">
+        provider_facility = #{providerFacility,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where provider_id = #{providerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.yhcrt.iHealthCloud.entity.ServiceProviderWithBLOBs">
+    update service_provider
+    set org_id = #{orgId,jdbcType=INTEGER},
+      provider_name = #{providerName,jdbcType=VARCHAR},
+      provider_type = #{providerType,jdbcType=VARCHAR},
+      provider_nature = #{providerNature,jdbcType=VARCHAR},
+      provider_tag = #{providerTag,jdbcType=VARCHAR},
+      provider_logo = #{providerLogo,jdbcType=VARCHAR},
+      title_img = #{titleImg,jdbcType=VARCHAR},
+      area_id = #{areaId,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=DOUBLE},
+      latitude = #{latitude,jdbcType=DOUBLE},
+      linkman = #{linkman,jdbcType=VARCHAR},
+      phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      fax = #{fax,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      postcode = #{postcode,jdbcType=VARCHAR},
+      business_license = #{businessLicense,jdbcType=VARCHAR},
+      license_no = #{licenseNo,jdbcType=VARCHAR},
+      provider_score = #{providerScore,jdbcType=DOUBLE},
+      provider_intro = #{providerIntro,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR},
+      order_num = #{orderNum,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR},
+      provider_facility = #{providerFacility,jdbcType=LONGVARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where provider_id = #{providerId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yhcrt.iHealthCloud.entity.ServiceProvider">
+    update service_provider
+    set org_id = #{orgId,jdbcType=INTEGER},
+      provider_name = #{providerName,jdbcType=VARCHAR},
+      provider_type = #{providerType,jdbcType=VARCHAR},
+      provider_nature = #{providerNature,jdbcType=VARCHAR},
+      provider_tag = #{providerTag,jdbcType=VARCHAR},
+      provider_logo = #{providerLogo,jdbcType=VARCHAR},
+      title_img = #{titleImg,jdbcType=VARCHAR},
+      area_id = #{areaId,jdbcType=VARCHAR},
+      area = #{area,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=DOUBLE},
+      latitude = #{latitude,jdbcType=DOUBLE},
+      linkman = #{linkman,jdbcType=VARCHAR},
+      phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      tel = #{tel,jdbcType=VARCHAR},
+      email = #{email,jdbcType=VARCHAR},
+      fax = #{fax,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      postcode = #{postcode,jdbcType=VARCHAR},
+      business_license = #{businessLicense,jdbcType=VARCHAR},
+      license_no = #{licenseNo,jdbcType=VARCHAR},
+      provider_score = #{providerScore,jdbcType=DOUBLE},
+      provider_intro = #{providerIntro,jdbcType=VARCHAR},
+      create_user = #{createUser,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=VARCHAR},
+      update_time = #{updateTime,jdbcType=VARCHAR},
+      order_num = #{orderNum,jdbcType=INTEGER},
+      status = #{status,jdbcType=INTEGER},
+      remark = #{remark,jdbcType=VARCHAR}
+    where provider_id = #{providerId,jdbcType=INTEGER}
+  </update>
+</mapper>

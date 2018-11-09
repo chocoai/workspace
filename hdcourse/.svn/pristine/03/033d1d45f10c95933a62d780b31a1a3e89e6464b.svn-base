@@ -1,0 +1,27 @@
+package com.whty.assis.api.service.impl;
+
+import com.whty.assis.api.dao.TUserBackgroundDao;
+import com.whty.assis.api.model.TUserBackground;
+import com.whty.assis.api.service.TUserBackgroundService;
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class TUserBackgroundServiceImpl implements TUserBackgroundService{
+
+    @Autowired
+    private TUserBackgroundDao tUserBackgroundDao;
+
+    @Override
+    public TUserBackground getListByTUserBackground(TUserBackground entity) {
+        return tUserBackgroundDao.getListByTUserBackground(entity);
+    }
+
+    @Override
+    public void insert(TUserBackground entity) {
+        tUserBackgroundDao.insert(entity);
+    }
+
+    @Override
+    public void delete(String backgroundCode) {
+        tUserBackgroundDao.delete(backgroundCode);
+    }
+}

@@ -1,0 +1,158 @@
+var pathName=window.document.location.pathname;
+var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
+$(function(){
+    // 返回顶部
+    $(window).scroll(function(){
+	        if($(window).scrollTop()>=20){
+	           $(".gototop").fadeIn(300);
+	        }else{
+	           $(".gototop").fadeOut(300);
+	        }
+    })
+    $(".gototop a").click(function(){
+      	$("html,body").animate({scrollTop:"0px"},300)
+    })
+    
+    //支付方式
+    $(".ordersPay").click(function() {
+    	var orderNumber = $(this).attr("id");
+    	var type = $(this).attr("lang");
+    	if(!orderNumber){
+    		layer.open({
+    		    content: '订单号不存在'
+    		    ,skin: 'msg'
+    		    ,time: 2 //2秒后自动关闭
+    		});
+    		return;
+    	}
+    	$("#orderNumber").val(orderNumber);
+    	$.ajax({
+    		url : projectName+"/h5/admin/pay/getOrderNoOvertime",
+    		data : {
+    			orderNo : orderNumber,
+    			type : type
+    		},
+    		dataType : "json",
+    		success : function(result) {
+    			if(result.result==0){
+    				layer.open({
+    				    content: '操作失败'
+    				    ,skin: 'msg'
+    				    ,time: 2 //2秒后自动关闭
+    				});
+    			}else if(result.result==1){
+    				if(result.num>30){
+    					layer.open({
+    				    content: '订单已超过30分钟，请重新下单。'
+    				    ,skin: 'msg'
+    				    ,time: 2 //2秒后自动关闭
+    				  });
+    				}else{
+    					$("#ordersPay").modal("show");
+    				}
+    			}else{
+    				layer.open({
+    				    content: '此订单状态已完成支付'
+    				    ,skin: 'msg'
+    				    ,time: 2 //2秒后自动关闭
+    					  });
+    				}
+    			}
+    		})
+    })
+    //支付宝支付
+    $("#small").click(function() {
+    	var type = $("#type").val();
+    	var orderNumber = $("#orderNumber").val();
+    	var url="";
+    	if(type=='goods'){
+    		url = projectName+"/h5/pay/aliApi/ywOrderPay?cext1="+orderNumber;
+    	}else{
+    		url = projectName+"/h5/pay/aliApi/workOrderPay?cext1="+orderNumber;
+    	}
+    	window.location.href=url;
+    })
+    //微信支付
+    $("#weixin").click(function() {
+    	var type = $("#type").val();
+    	var orderNumber = $("#orderNumber").val();
+    	var url="";
+    	if(type=='goods'){
+    		wxYwOrderWxPay(orderNumber);
+    	}else{
+    		wxWordOrderWxPay(orderNumber);
+    	}
+    })
+    
+    
+    
+	
+	//订单取消
+    $(".orderDel").click(function() {
+		  var type = $("#type").val();
+		  var orderid = $(this).attr("id");
+		  $.ajax({
+			  url : projectName+"/h5/admin/myOrdersDel/"+type,
+				data : {
+					cid: orderid
+				},
+				dataType : "json",
+				async : false,
+				traditional : true,
+				cache : true,
+				success : function(data) {
+					if(data.status==202){
+						window.location.href=projectName+"/h5/login";
+					}else if(data.status==1){
+						layer.open({
+							  content: '取消成功',
+							  skin: 'msg',
+							  time: 2 ,//2秒后自动关闭
+							  end: function () {
+								  window.location.reload();
+					          }
+						 });
+					}else{
+						layer.open({
+						    content: '取消失败'
+						    ,skin: 'msg'
+						    ,time: 2 //2秒后自动关闭
+					   });
+					}
+				}
+		  })
+	  })
+	
+})
+
+//微信支付商品调起
+  function wxYwOrderWxPay(cext1){
+  	$.ajax({
+		url : projectName+"/h5/pay/wx/ywOrderWxPay",
+		data : {
+			cext1 : cext1
+		},
+		dataType : "json",
+		success : function(result) {
+			if(result.map.return_code=="SUCCESS"){
+				window.location.href=result.map.mweb_url;
+			}
+		}
+	});
+  }
+
+//微信支付服务预约调起
+function wxWordOrderWxPay(cext1){
+	$.ajax({
+		url : projectName+"/h5/pay/wx/workOrderWxPay",
+		data : {
+			cext1 : cext1
+		},
+		dataType : "json",
+		success : function(result) {
+			if(result.map.return_code=="SUCCESS"){
+				window.location.href=result.map.mweb_url;
+			}
+		}
+	});
+}

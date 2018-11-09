@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.ebp.manage.dao.AppBlackListDao">
+
+	<resultMap type="com.whty.ebp.manage.model.AppBlackList" id="AppBlackListResult">
+		<id property="id" column="id"/>
+		<id property="modelCode" column="model_code"/>
+		<id property="memo" column="memo"/>
+		<id property="createTime" column="create_time"/>
+		<id property="updateTime" column="update_time"/>
+		<id property="memo" column="memo"/>
+		<id property="versionCode" column="version_code"/>
+		<id property="status" column="status"/>
+		<id property="interVersionCode" column="inter_version_code"/>
+		<id property="name" column="name"/>
+		<id property="flatModelIds" column="flat_model_ids"/>
+	</resultMap>
+	
+	<delete id="deleteAppBlackListPlatformCodeByAppBlackListId" parameterType="string">
+		delete from TA_APP_BLACK_LIST_PLATFORM_INFO where APP_BLACK_LIST_ID= #{_parameter}
+	</delete>
+	
+	
+	<delete id="deleteAppBlackListFlatCodeByBlackListId" parameterType="string">
+		delete from TA_APP_BLACK_LIST_FLAT_MODEL  where APP_BLACK_LIST_ID= #{_parameter}
+	</delete>
+	
+	
+	<insert id="saveAppBlackListPlatformInfo" parameterType="map">
+		insert into TA_APP_BLACK_LIST_PLATFORM_INFO(
+		<trim suffixOverrides=",">
+			<if test="appBlackListId != null">app_black_list_id,</if>
+			<if test="platformCode != null">platform_code,</if>
+		</trim>
+		)
+		values(
+		<trim suffixOverrides=",">
+			<if test="appBlackListId != null">#{appBlackListId},</if>
+			<if test="platformCode != null">#{platformCode},</if>
+		</trim>
+		)
+	</insert>
+
+	<insert id="saveAppBlackListFlatModel" parameterType="map">
+		insert into TA_APP_BLACK_LIST_FLAT_MODEL(
+		<trim suffixOverrides=",">
+		<if test="flatModelId != null">flat_model_id,</if>
+		<if test="appBlackListId != null">app_black_list_id,</if>
+		</trim>
+		)
+		values(
+		<trim suffixOverrides=",">
+		<if test="flatModelId != null">#{flatModelId},</if>
+		<if test="appBlackListId != null">#{appBlackListId},</if>
+		</trim>
+		)
+	</insert>
+	
+	<delete id="deleteById" parameterType="string">
+		delete from TA_APP_BLACK_LIST where id= #{_parameter}
+	</delete>
+	
+
+	<select id="queryPlatformCodeByAppBlackListId" parameterType="map"
+		resultType="java.util.HashMap">
+		select t3.platform_code,t3.platform_name from TA_APP_BLACK_LIST_PLATFORM_INFO t1 left join
+		 TA_PLATFORM_INFO t3 on
+		t1.platform_code=t3.platform_Code
+		WHERE 1=1
+		<if test="appBlackListId != null "> and t1.app_black_list_id=#{appBlackListId}</if>
+	</select>
+
+	<select id="apiQueryMap" parameterType="map" resultType="java.util.HashMap">
+	select pkg from TA_APP_BLACK_LIST where id not in
+		(select app_black_list_id from TA_APP_BLACK_LIST_PLATFORM_INFO GROUP BY app_black_list_id) 
+		and id not in(select app_black_list_id from TA_APP_BLACK_LIST_FLAT_MODEL GROUP BY app_black_list_id)
+		and status=1
+		order by create_time desc
+	</select>
+
+	<select id="queryAppBlackListByModelCodeMap" parameterType="map" resultType="java.util.HashMap">
+	select pkg,(select group_concat(t1.platform_code) from TA_APP_BLACK_LIST_PLATFORM_INFO t1,
+TA_PLATFORM_INFO t2 where t1.platform_code=t2.platform_code and t1.APP_BLACK_LIST_ID=a.id) as platform_code from 
+(select t1.* from TA_APP_BLACK_LIST t1,TA_APP_BLACK_LIST_FLAT_MODEL t2, TA_FLAT_MODEL t3 where t1.ID=t2.APP_BLACK_LIST_ID and t2.FLAT_MODEL_ID=t3.ID and t3.MODEL_CODE=#{modelCode} and status=1) as a order by create_time desc
+	</select>
+
+	<select id="queryAppBlackListByPlatformCodeMap" parameterType="map" resultType="java.util.HashMap">
+	select pkg,(select group_concat(model_code) from TA_APP_BLACK_LIST_FLAT_MODEL t1,TA_FLAT_MODEL t2 
+   where t1.flat_model_id=t2.id and t1.APP_BLACK_LIST_ID=a.id) as flat_model from 
+(select t1.* from TA_APP_BLACK_LIST t1,TA_APP_BLACK_LIST_PLATFORM_INFO t2, TA_PLATFORM_INFO t3 where t1.ID=t2.APP_BLACK_LIST_ID and t2.PLATFORM_CODE=t3.PLATFORM_CODE and t3.PLATFORM_CODE=#{platformCode} and status=1) as a order by create_time desc
+	</select>
+
+
+
+<select id="queryAppBlackListByModelCodeAndPlatformCodeMap" parameterType="map" resultType="java.util.HashMap">
+ select pkg,(select group_concat(model_code) from TA_APP_BLACK_LIST_FLAT_MODEL t1,TA_FLAT_MODEL t2 
+   where t1.flat_model_id=t2.id and t1.APP_BLACK_LIST_ID=ttt.id) as flat_model,
+(select group_concat(t1.platform_code) from TA_APP_BLACK_LIST_PLATFORM_INFO t1,
+TA_PLATFORM_INFO t2 where t1.platform_code=t2.platform_code and t1.APP_BLACK_LIST_ID=ttt.id) as platform_code
+ from TA_APP_BLACK_LIST ttt where  ttt.status=1
+</select>
+
+<select id="queryAppBlackListByModelCodeAndPlatformCodeMap2" parameterType="map" resultType="java.util.HashMap">
+	select t1.pkg from 
+(select t1.* from TA_APP_BLACK_LIST t1,
+TA_APP_BLACK_LIST_FLAT_MODEL t2, TA_FLAT_MODEL t3 
+where t1.ID=t2.APP_BLACK_LIST_ID and t2.FLAT_MODEL_ID=t3.ID and 
+t3.MODEL_CODE=#{modelCode} and status=1) t1,
+(select t1.* from TA_APP_BLACK_LIST t1,TA_APP_BLACK_LIST_PLATFORM_INFO t2, 
+TA_PLATFORM_INFO t3 where t1.ID=t2.APP_BLACK_LIST_ID and 
+t2.PLATFORM_CODE=t3.PLATFORM_CODE and t3.PLATFORM_CODE=#{platformCode} and status=1) t2 where t1.id=t2.id
+		</select>
+
+
+	
+	<select id="apiQuery" resultMap="AppBlackListResult">
+	select * from TA_APP_BLACK_LIST where id not in
+		(select app_black_list_id from TA_APP_BLACK_LIST_PLATFORM_INFO GROUP BY app_black_list_id) 
+		and id not in(select app_black_list_id from TA_APP_BLACK_LIST_FLAT_MODEL GROUP BY app_black_list_id)
+		and status=1
+		order by create_time desc
+	</select>
+
+	<select id="queryAppBlackListByModelCode" resultMap="AppBlackListResult">
+	select * from 
+(select t1.* from TA_APP_BLACK_LIST t1,TA_APP_BLACK_LIST_FLAT_MODEL t2, TA_FLAT_MODEL t3 where t1.ID=t2.APP_BLACK_LIST_ID and t2.FLAT_MODEL_ID=t3.ID and t3.MODEL_CODE=#{modelCode} and status=1) as a order by create_time desc
+	</select>
+
+	<select id="queryAppBlackListByPlatformCode" resultMap="AppBlackListResult">
+	select * from 
+(select t1.* from TA_APP_BLACK_LIST t1,TA_APP_BLACK_LIST_PLATFORM_INFO t2, TA_PLATFORM_INFO t3 where t1.ID=t2.APP_BLACK_LIST_ID and t2.PLATFORM_CODE=t3.PLATFORM_CODE and t3.PLATFORM_CODE=#{platformCode} and status=1) as a order by create_time desc
+	</select>
+	
+	
+	
+	
+	<insert id="save" parameterType="com.whty.ebp.manage.model.AppBlackList">
+		insert into TA_APP_BLACK_LIST(
+		<trim suffixOverrides=",">
+		<if test="id != null">id,</if>
+		<if test="pkg != null">pkg,</if>
+		<if test="createTime != null">create_time,</if>
+		<if test="memo != null">memo,</if>
+		<if test="name != null">name,</if>
+		<if test="versionCode != null">version_code,</if>
+		<if test="interVersionCode != null">inter_version_code,</if>
+		<if test="status != null">status,</if>
+		</trim>
+		)
+		values(
+		<trim suffixOverrides=",">
+		<if test="id != null">#{id},</if>
+		<if test="pkg != null">#{pkg},</if>
+		<if test="createTime != null">#{createTime},</if>
+		<if test="memo != null">#{memo},</if>
+		<if test="name != null">#{name},</if>
+		<if test="versionCode != null">#{versionCode},</if>
+		<if test="interVersionCode != null">#{interVersionCode},</if>
+		<if test="status != null">#{status},</if>
+		</trim>
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.whty.ebp.manage.model.AppBlackList">
+		update TA_APP_BLACK_LIST set
+		<trim suffixOverrides=",">
+		<if test="memo != null">memo=#{memo},</if>
+		<if test="updateTime != null">update_time=#{updateTime},</if>
+		<if test="name != null">name=#{name},</if>
+		<if test="status != null">status=#{status},</if>
+		<if test="versionCode != null">version_code=#{versionCode},</if>
+		<if test="interVersionCode != null">inter_version_code=#{interVersionCode},</if>
+		</trim>
+		where id=#{id}
+	</update>
+	
+	<select id="queryById" parameterType="string" resultMap="AppBlackListResult">
+		select t.*,(SELECT GROUP_CONCAT(flat_model_id) as flat_models_ids from TA_APP_BLACK_LIST_FLAT_MODEL 
+		where APP_BLACK_LIST_ID=t.id) as flat_model_ids from TA_APP_BLACK_LIST t WHERE 1=1  and t.id=#{_parameter}
+	</select>
+	
+	
+	<select id="loadById" parameterType="string" resultMap="AppBlackListResult">
+		select t.*,(SELECT GROUP_CONCAT(flat_model_id) as flat_models_ids from TA_APP_BLACK_LIST_FLAT_MODEL 
+		where APP_BLACK_LIST_ID=t.id) as flat_model_ids from TA_APP_BLACK_LIST t WHERE 1=1  and t.id=#{_parameter}
+	</select>
+	
+	<select id="queryBlackListByPlatformCode" parameterType="map" resultMap="AppBlackListResult">
+	select * from 
+(select t1.* from TA_APP_BLACK_LIST t1,TA_APP_BLACK_LIST_PLATFORM_INFO t2, TA_PLATFORM_INFO t3 where t1.ID=t2.APP_BLACK_LIST_ID and t2.PLATFORM_CODE=t3.PLATFORM_CODE and t3.PLATFORM_CODE=#{platformCode} and status=1) as a order by create_time desc
+	</select>
+	
+	<select id="queryBlackListByModelCode" parameterType="map" resultMap="AppBlackListResult">
+	select * from 
+(select t1.* from TA_APP_BLACK_LIST t1,TA_APP_BLACK_LIST_FLAT_MODEL t2, TA_FLAT_MODEL t3 where t1.ID=t2.APP_BLACK_LIST_ID and t2.FLAT_MODEL_ID=t3.ID and t3.MODEL_CODE=#{modelCode} and status=1) as a order by create_time desc
+	</select>
+	
+	<select id="queryBLACKList" parameterType="map" resultMap="AppBlackListResult">
+		select * from TA_APP_BLACK_LIST where id not in
+		(select APP_BLACK_LIST_ID from TA_APP_BLACK_LIST_FLAT_MODEL GROUP BY APP_BLACK_LIST_ID) 
+		and id not in(select APP_BLACK_LIST_ID from TA_APP_BLACK_LIST_PLATFORM_INFO GROUP BY APP_BLACK_LIST_ID)
+		and status=1
+		order by create_time desc
+	</select>
+	
+	
+	<select id="listByCondition" parameterType="map" resultMap="AppBlackListResult">
+	SELECT t.*,(SELECT GROUP_CONCAT(flat_model_id) as flat_models_ids from TA_APP_BLACK_LIST_FLAT_MODEL where APP_BLACK_LIST_ID=t.id) as flat_model_ids FROM TA_APP_BLACK_LIST t
+	where 1=1
+		 order by  t.create_time desc
+	</select>
+	
+</mapper>

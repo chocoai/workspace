@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>app使用说明</title>
+    <!-- Bootstrap core CSS -->
+    <link href="res/css/bootstrap.min.css" rel="stylesheet">
+    <link href="res/css/mycss.css" rel="stylesheet">
+  </head>
+  <body>
+     <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-12 nopad-lr">
+              <ul class="list">
+                <li class="list-head">APP下载注册设置</li>
+                <li><a href="appinstruct01.html">1.APP下载安装</a></li>
+<!--                 <li><a href="appinstruct02.html">2.APP安装</a></li> -->
+                <li><a href="appinstruct03.html">2.APP注册</a></li>
+                <li><a href="appinstruct04.html">3.APP添加关注</a></li>
+                 <li><a href="appinstruct08.html">4.APP绑定手表</a></li>
+                <li><a href="appinstruct05.html">5.APP设置—紧急联系人设置</a></li>
+                <li><a href="appinstruct06.html">6.APP设置—围栏设置</a></li>
+                <li><a href="appinstruct07.html">7.APP健康—心率监护设置</a></li>
+                <li><a href="appinstruct09.html">8.APP权限设置</a></li>
+              </ul>
+            </div>
+        </div>
+     </div>
+  </body>
+</html>

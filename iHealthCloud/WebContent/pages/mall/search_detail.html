@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="zh-CN" id="htmlid">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>孝康通</title>
+     <!-- Bootstrap -->
+    <link th:href="@{/pages/mall/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- FontAwesome 4.7.0字体 -->
+    <link th:href="@{/pages/mall/css/font-awesome.min.css}" rel="stylesheet">
+    <!-- 自定义css -->
+    <link th:href="@{/pages/mall/css/mymall.css}" rel="stylesheet">
+    <link th:href="@{/pages/mall/css/animate.min.css}" rel="stylesheet" >
+    
+	<link rel="stylesheet" th:href="@{/pages/mall/css/jquery-weui.min.css}">
+	<link rel="stylesheet" th:href="@{/pages/mall/css/weui.min.css}">
+  </head>
+  <body style="background: #f6f6f6;" ontouchstart>
+ 	<input th:if="${a} !=null" id="a" type="hidden" th:value="${a}" />
+  	<input th:if="${u} !=null" id="u" type="hidden" th:value="${u}" />
+    <input type="hidden" id="pageNum" value="1" >
+  	<input type="hidden" id="pages" value="0" >
+  	<input type="hidden" id="type" th:value="${type}">
+    <!-- 导航 开始 -->
+    <nav class="navbar navbar-default navbar-mall-other">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a th:if="${a} ==null" href="javascript:history.back();" class="othertop-left"><i class="fa fa-angle-left icon-back"></i></a>
+          <div class="col-xs-9 col-xs-offset-1 nopad-r" th:switch="${type}">
+	          <span th:case="goods"><input type="text" class="form-control input-search" placeholder="搜索商品..." id="searchText" oninput="search()"></span>
+	          <span th:case="*"><input type="text" class="form-control input-search" placeholder="搜索服务..." id="searchText" oninput="search()"></span>
+          
+          </div>
+          <button type="submit" class="col-xs-2 btn-nobea  nopad-l"><i class="fa fa-search"></i></button>
+        </div>
+      </div>
+    </nav>
+    <!-- 导航 结束 -->
+
+    <!-- 搜索列表 开始 -->
+    <div class="search-content" id="searchList"></div>
+    <div class="no none" id="noorderId">
+      <p><img th:src="@{/pages/mall/images/noorders.png}"><br>暂无数据！</p>
+    </div>
+    <!-- 搜索列表 结束 -->
+    <!-- 返回顶部 开始 -->
+    <div class="gototop" style="display: none;">
+      <a href="javascript:void(0)"><i class="glyphicon glyphicon-menu-up"></i></a>
+    </div>
+    <!-- 返回顶部 结束 -->
+    
+    <!-- 加载开始 -->
+	<div class="weui-loadmore">  
+	    <i class="weui-loading"></i>  
+	    <span class="weui-loadmore__tips" id="loading">正在加载</span>  
+	</div>  
+    <!-- 加载结束 -->
+    <script th:src="@{/pages/mall/js/jquery-1.9.1.min.js}"></script>
+    <script th:src="@{/pages/mall/js/bootstrap.min.js}"></script>
+    
+    <script th:src="@{/pages/mall/js/jquery-weui.js}"></script>
+    <script type="text/javascript">
+    var a=$("#a").val();
+    var u=$("#u").val();
+ 	var pathName=window.document.location.pathname;
+    var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
+      $('html').on('click',function(){ });  
+      // 返回顶部
+      $(window).scroll(function(){
+        if($(window).scrollTop()>=20){
+           $(".gototop").fadeIn(300);
+        }else{
+           $(".gototop").fadeOut(300);
+        }
+      })
+      $(".gototop a").click(function(){
+        $("#htmlid,body").animate({scrollTop:"0px"},300)
+      })
+      
+      $(function() {
+	       $(document.body).destroyInfinite();
+  	  });
+       var loading = false;
+       $(document.body).infinite().on("infinite", function() {
+		    var searchText = $("#searchText").val();
+		    var pageNum = $("#pageNum").val();
+		    var pages = $("#pages").val();
+		    var type = $("#type").val();
+	        if(loading) return;
+	        loading = true;
+	        if(pageNum >=pages){
+	        	loading = false;
+	        	$("loading").val("已为最后一页");
+	        	$(document.body).destroyInfinite();
+	        	$(".weui-loadmore").hide();
+	        	return;
+	        }else{
+	        	pageNum = parseInt(pageNum)+1;
+	        	$("#pageNum").val(pageNum);
+	        	var url=projectName+"/h5/search";
+	        	if(a==1){
+		        	url+="?a=1&u="+u;
+		        }
+	        	$.ajax({
+					url : url,
+					data :{
+						searchText:searchText.trim(),
+						pageNum:pageNum,
+						type:type
+			        },
+			        type:'post',
+			        contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+			        dataType:"json",
+					async : false,
+					traditional : true,
+					cache : true,
+					success : function(data) {
+						
+						 var json = eval(data);
+						 var list = new Array();
+	 					 list = json.list;
+						 var searchHtml="" ;
+						 if(list.length>0){
+							 for(var i =0;i<list.length;i++){
+								 if(type=='goods'){
+								 	 if(a==null){
+						         		searchHtml+="<li><a href='"+projectName+"/h5/goods/detail/"+list[i].goodsId+"'>";
+						         	 }else{
+						         		searchHtml+="<li><a href='"+projectName+"/h5/goods/detail/"+list[i].goodsId+"?a=1&u="+u+"'>";
+						         	 }
+								 }else{
+									 searchHtml+="<li><a href=''>";
+								 }
+								 if(list[i].titleImg&&list[i].titleImg!=""){
+									 searchHtml+="<img src='"+list[i].titleImg+"' class='img-search' />";
+						         }else{
+						        	 if(type=='goods'){
+						        	 	searchHtml+="<img src='"+projectName+"/pages/mall/images/good01.png' class='img-search' />";
+									 }else{
+										searchHtml+="<img src='"+projectName+"/pages/mall/images/service01.jpg' class='img-search' />";
+									 }
+						         }
+								 if(type=='goods'){
+								 	var goodsIntro = list[i].goodsIntro;
+								 	if(goodsIntro!=null&&goodsIntro!=""){
+								 		if(goodsIntro.length>15){
+								 			goodsIntro=goodsIntro.substring(0,15)+"..";
+								 		}
+								 	}
+						          	searchHtml+="<div class='txt-search'><p class='title-search'>"+list[i].goodsName+"</p>";
+						          	searchHtml+="<p class='pra-search'>"+goodsIntro+"</p></div></a></li>";
+								 }else{
+									searchHtml+="<div class='txt-search'><p class='title-search'>"+list[i].serviceName+"</p>";
+						          	searchHtml+="<p class='pra-search'>"+list[i].provider.providerName+"</p></div></a></li>";
+								 }
+							 }
+						 }
+						$("#search-cell-bd").append(searchHtml);
+						loading = false;
+					}
+			    })
+	        }
+       })
+       //搜索
+      function search(){
+    	  var searchText = $("#searchText").val();
+    	  var type = $("#type").val();
+    	  if(!searchText||!searchText.trim()){
+    		  $("#searchList").html("");
+    		  $("#noorderId").hide();
+    		  $(document.body).destroyInfinite();
+			  $(".weui-loadmore").hide();
+    		  return;
+    	  }
+    	  var url=projectName+"/h5/search";
+       	  if(a==1){
+        	url+="?a=1&u="+u;
+          }
+    	  $.ajax({
+				url : url,
+				data :{
+					searchText:searchText.trim(),
+					type:type
+		        },
+		        type:'post',
+		        contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+		        dataType:"json",
+				async : false,
+				traditional : true,
+				cache : true,
+				success : function(data) {
+					
+					 var json = eval(data);
+					 var list = new Array();
+ 					 list = json.list;
+					 
+					 var searchHtml="" ;
+					 if(list.length>0){
+						 searchHtml+="<div class='search-cell'>";
+						 if(type=='goods'){
+							 searchHtml+="<div class='search-cell-hd'>商品</div>";
+						 }else{
+							 searchHtml+="<div class='search-cell-hd'>服务</div>";
+						 }
+						 searchHtml+="<div class='search-cell-bd'><ul id='search-cell-bd'>";
+						 for(var i =0;i<list.length;i++){
+							 if(type=='goods'){
+							 	 if(a==null){
+					         		searchHtml+="<li><a href='"+projectName+"/h5/goods/detail/"+list[i].goodsId+"'>";
+					         	 }else{
+					         		searchHtml+="<li><a href='"+projectName+"/h5/goods/detail/"+list[i].goodsId+"?a=1&u="+u+"'>";
+					         	 }
+							 }else{
+							 	if(a==null){
+					         		searchHtml+="<li><a href='"+projectName+"/h5/service/detail/"+list[i].serviceId+"'>";
+					         	 }else{
+					         		searchHtml+="<li><a href='"+projectName+"/h5/service/detail/"+list[i].serviceId+"?a=1&u="+u+"'>";
+					         	 }
+							 }
+							 if(list[i].titleImg&&list[i].titleImg!=""){
+								 searchHtml+="<img src='"+list[i].titleImg+"' class='img-search' />";
+					         }else{
+					        	 if(type=='goods'){
+					        	 	searchHtml+="<img src='"+projectName+"/pages/mall/images/good01.png' class='img-search' />";
+								 }else{
+									searchHtml+="<img src='"+projectName+"/pages/mall/images/service01.jpg' class='img-search' />";
+								 }
+					         }
+							 if(type=='goods'){
+							 	var goodsIntro = list[i].goodsIntro;
+							 	if(goodsIntro!=null&&goodsIntro!=""){
+							 		if(goodsIntro.length>15){
+							 			goodsIntro=goodsIntro.substring(0,15)+"..";
+							 		}
+							 	}
+					          	searchHtml+="<div class='txt-search'><p class='title-search'>"+list[i].goodsName+"</p>";
+					          	searchHtml+="<p class='pra-search'>"+goodsIntro+"</p></div></a></li>";
+							 }else{
+								searchHtml+="<div class='txt-search'><p class='title-search'>"+list[i].serviceName+"</p>";
+					          	searchHtml+="<p class='pra-search'>"+list[i].provider.providerName+"</p></div></a></li>";
+							 }
+						 }
+						 searchHtml+="</ul></div></div>";
+					 }
+ 					 
+					 $("#searchList").html(searchHtml);
+					 if(searchHtml&&searchHtml!=""){
+						 $("#noorderId").hide();
+					 }else{
+						 $("#noorderId").show();
+					 }
+					 var pageNum = json.pageNum;
+					 var pages = json.pages;
+					 if(pageNum<pages){
+						 $("#pageNum").val(pageNum);
+					     $("#pages").val(pages);
+					     $(document.body).infinite();
+		 				 $(".weui-loadmore").show();
+					 }else{
+						 $(document.body).destroyInfinite();
+		 				 $(".weui-loadmore").hide();
+					 }
+				}
+		    })
+      }
+    </script>
+  </body>
+</html>

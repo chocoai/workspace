@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN" "http://struts.apache.org/dtds/struts-2.0.dtd" >
+   
+<struts>
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.locale" value="zh_CN" />
+	<constant name="struts.i18n.encoding" value="UTF-8" />  
+	<constant name="struts.action.extension" value="htm" />
+	<constant name="struts.convention.result.path" value="/WEB-INF/content/"></constant>   
+	<constant name="struts.multipart.saveDir" value="temp"></constant>
+	<constant name="struts.ui.theme" value="simple" />
+	<constant name="struts.multipart.maxSize" value="1000000000" />
+	<constant name="struts.custom.i18n.resources" value="messages" />
+	<constant name="struts.ognl.allowStaticMethodAccess" value="true" />
+	
+	<!-- 没找到页面 -->
+	<package name="default" extends="struts-default">
+		<default-action-ref name="notFound" />
+		<action name="notFound">
+			<result type="redirect">/error/notFound.htm</result>
+		</action>
+	</package>
+
+	<!-- 前台用户 -->
+	<package name="control-user" extends="convention-default">
+		<interceptors>
+			<!-- 权限拦截器 -->
+			<interceptor name="userInterceptor" class="com.smart.web.interceptor.UserInterceptor"></interceptor>
+			<!-- 异常处理 -->
+			<interceptor name="exceptionInterceptor" class="com.smart.web.interceptor.ExceptionInterceptor"></interceptor>
+			
+			<interceptor-stack name="user">
+				<interceptor-ref name="defaultStack"/>
+		  		<interceptor-ref name="userInterceptor"/>  
+				<interceptor-ref name="exceptionInterceptor"/>
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="user"></default-interceptor-ref>
+	
+		<global-results>
+			<result name="relogin" type="redirectAction">/relogin.htm</result>
+			<result name="error1" type="redirectAction">../error500.htm</result><!-- 程序异常 -->
+			<result name="error2" type="redirectAction">/error/error2.htm</result><!-- 没有权限 -->
+			<result name="notFound" type="redirectAction">../pageNotFound.htm</result><!-- 没有找到页面 -->
+		</global-results>
+		<!--  -->
+		<global-exception-mappings>
+			<exception-mapping result="error1" exception="com.smart.web.interceptor.ExceptionInterceptor"></exception-mapping>
+		</global-exception-mappings>
+		
+	</package>
+	
+	
+</struts>   

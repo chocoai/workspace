@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.healthcloud.mall.mapper.OrderRefundMapper">
+	<resultMap id="BaseResultMap" type="com.yhcrt.healthcloud.mall.entity.OrderRefund">
+		<id column="id" jdbcType="INTEGER" property="id" />
+		<result column="ref_id" jdbcType="INTEGER" property="refId" />
+		<result column="type" jdbcType="VARCHAR" property="type" />
+		<result column="apply_time" jdbcType="VARCHAR" property="applyTime" />
+		<result column="refund_money" jdbcType="DOUBLE" property="refundMoney" />
+		<result column="refund_time" jdbcType="VARCHAR" property="refundTime" />
+		<result column="refund_type" jdbcType="VARCHAR" property="refundType" />
+		<result column="refund_reson" jdbcType="VARCHAR" property="refundReson" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+		
+		<result column="price" jdbcType="DOUBLE" property="price" />
+		<result column="amount" jdbcType="INTEGER" property="amount" />
+		<result column="actual_payment" jdbcType="DOUBLE" property="actualPayment" />
+		<result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		id, ref_id, type, apply_time, refund_money, refund_time, refund_type, refund_reson, status
+	</sql>
+	
+	<!-- 查询服务退款信息 -->
+	<select id="queryByMap" parameterType="map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from order_refund
+		where ref_id = #{orderId} and type = #{type}
+	</select>
+	
+	<!-- 查询商品退款信息 -->
+	<select id="queryGoodsList" parameterType="map" resultMap="BaseResultMap">
+		select a.price,a.amount,a.actual_payment,b.ref_id,b.apply_time,b.refund_money, b.refund_type, b.refund_reson,b.status,c.goods_name 
+		from order_detail a 
+		left join order_refund b on a.cid = b.ref_id 
+		left join goods c on a.goods_id = c.goods_id 
+		where a.order_id = #{orderId}  
+	</select>
+	
+	<!-- 修改退款数据状态 -->
+	<update id="updateById" parameterType="com.yhcrt.healthcloud.mall.entity.OrderRefund">
+		update order_refund set refund_time = #{refundTime}, status = #{status} where id = #{id}
+	</update>
+	
+</mapper>

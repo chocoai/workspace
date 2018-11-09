@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.ebp.manage.dao.MessageDao">
+	<resultMap type="com.whty.ebp.manage.model.Message" id="messageResult">
+		<result column="id" property="Id" jdbcType="VARCHAR"/>
+		<result column="message_type_id" property="messageTypeId" jdbcType="VARCHAR"/>
+		<result column="message_type_name" property="messageTypeName" jdbcType="VARCHAR"/>
+		<result column="theme" property="theme" jdbcType="VARCHAR"/>
+		<result column="content" property="content" jdbcType="VARCHAR"/>
+		<result column="sender_id" property="senderId" jdbcType="VARCHAR"/>
+		<result column="sender_name" property="senderName" jdbcType="VARCHAR"/>
+		<result column="send_org_id" property="sendOrgId" jdbcType="VARCHAR"/>
+		<result column="send_org_name" property="sendOrgName" jdbcType="VARCHAR"/>
+		<result column="receive_obj_type" property="receiveObjType" jdbcType="VARCHAR"/>
+		<result column="receive_obj_id" property="receiveObjId" jdbcType="VARCHAR"/>
+		<result column="receive_obj_name" property="receiveObjName" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="release_time" property="releaseTime" jdbcType="TIMESTAMP"/>
+		<result column="status" property="status" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<resultMap type="com.whty.ebp.manage.model.Message" id="apiMessageResult">
+		<result column="id" property="Id" jdbcType="VARCHAR"/>
+		<result column="message_type_id" property="messageTypeId" jdbcType="VARCHAR"/>
+		<result column="message_type_name" property="messageTypeName" jdbcType="VARCHAR"/>
+		<result column="theme" property="theme" jdbcType="VARCHAR"/>
+		<result column="content" property="content" jdbcType="VARCHAR"/>
+		<result column="sender_id" property="senderId" jdbcType="VARCHAR"/>
+		<result column="sender_name" property="senderName" jdbcType="VARCHAR"/>
+		<result column="send_org_id" property="sendOrgId" jdbcType="VARCHAR"/>
+		<result column="send_org_name" property="sendOrgName" jdbcType="VARCHAR"/>
+		<result column="receive_obj_type" property="receiveObjType" jdbcType="VARCHAR"/>
+		<result column="receive_obj_id" property="receiveObjId" jdbcType="VARCHAR"/>
+		<result column="receive_obj_name" property="receiveObjName" jdbcType="VARCHAR"/>
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+		<result column="release_time" property="releaseTime" jdbcType="TIMESTAMP"/>
+		<result column="status" property="status" jdbcType="VARCHAR"/>
+		<result column="message_state_status" property="messageStateStatus" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<select id="queryMessage" parameterType="map" resultMap="messageResult">
+		select m.id,
+			   m.message_type_id,
+			   t.name as message_type_name,
+			   m.theme,
+			   m.content,
+			   m.sender_id,
+			   m.sender_name,
+			   m.send_org_id,
+			   m.send_org_name,
+			   m.receive_obj_type,
+			   m.receive_obj_id,
+			   m.receive_obj_name,
+			   m.create_time,
+			   m.release_time,
+			   m.status
+		from EBP_MESSAGE m 
+		left join ebp_message_type t on m.message_type_id=t.id
+		where 1=1
+		<if test="status != null and status != ''">and m.status=#{status}</if>
+		<if test="theme != null and theme != ''">and m.theme like '%'||#{theme}||'%'</if>
+		<if test="receiveObjId != null and receiveObjId !=''">and m.receive_obj_id like '%'||#{receiveObjId}||'%'</if>
+		<if test="createTimeStart != null and createTimeStart != ''">and to_char(m.create_time,'YYYY-MM-DD')>=#{createTimeStart}</if>
+		<if test="createTimeEnd != null and createTimeEnd != ''"><![CDATA[and to_char(m.create_time,'YYYY-MM-DD')<=#{createTimeEnd}]]></if>
+		<if test="releaseTimeStart != null and releaseTimeStart != ''">and to_char(m.release_time,'YYYY-MM-DD')>=#{releaseTimeStart}</if>
+		<if test="releaseTimeEnd != null and releaseTimeEnd != ''"><![CDATA[and to_char(m.release_time,'YYYY-MM-DD')<=#{releaseTimeEnd}]]></if>
+	</select>
+	
+	<select id="queryMessageDetail" parameterType="string" resultMap="messageResult">
+		select m.id,
+			   m.message_type_id,
+			   t.name as message_type_name,
+			   m.theme,
+			   m.content,
+			   m.sender_id,
+			   m.sender_name,
+			   m.send_org_id,
+			   m.send_org_name,
+			   m.receive_obj_type,
+			   m.receive_obj_id,
+			   m.receive_obj_name,
+			   m.create_time,
+			   m.release_time,
+			   m.status
+		from EBP_MESSAGE m 
+		left join ebp_message_type t on m.message_type_id=t.id
+		where m.id=#{_parameter}
+	</select>
+	
+	<insert id="addMessage" parameterType="com.whty.ebp.manage.model.Message">
+		insert into EBP_MESSAGE(
+		<trim suffixOverrides=",">
+			<if test="id != null">id,</if>
+			<if test="messageTypeId != null">message_type_id,</if>
+			<if test="theme != null">theme,</if>
+			<if test="content != null">content,</if>
+			<if test="senderId != null">sender_id,</if>
+			<if test="senderName != null">sender_name,</if>
+			<if test="sendOrgId != null">send_org_id,</if>
+			<if test="sendOrgName != null">send_org_name,</if>
+			<if test="receiveObjType != null">receive_obj_type,</if>
+			<if test="receiveObjId != null">receive_obj_id,</if>
+			<if test="receiveObjName != null">receive_obj_name,</if>
+			<if test="createTime != null">create_time,</if>
+			<if test="releaseTime != null">release_time,</if>
+			<if test="status != null">status,</if>
+		</trim>
+		)
+		values(
+		<trim suffixOverrides=",">
+			<if test="id != null">#{id},</if>
+			<if test="messageTypeId != null">#{messageTypeId},</if>
+			<if test="theme != null">#{theme},</if>
+			<if test="content != null">#{content},</if>
+			<if test="senderId != null">#{senderId},</if>
+			<if test="senderName != null">#{senderName},</if>
+			<if test="sendOrgId != null">#{sendOrgId},</if>
+			<if test="sendOrgName != null">#{sendOrgName},</if>
+			<if test="receiveObjType != null">#{receiveObjType},</if>
+			<if test="receiveObjId != null">#{receiveObjId},</if>
+			<if test="receiveObjName != null">#{receiveObjName},</if>
+			<if test="createTime != null">#{createTime,jdbcType=TIMESTAMP},</if>
+			<if test="releaseTime != null">#{releaseTime,jdbcType=TIMESTAMP},</if>
+			<if test="status != null">#{status},</if>
+		</trim>
+		)
+	</insert>
+	
+	<update id="updateMessageStatus" parameterType="map">
+		update EBP_MESSAGE set status=#{status} where id=#{id}
+	</update>
+	
+	<!-- 查询后台发送通知页面的消息类型  -->
+	<select id="queryMessageType" resultType="java.util.HashMap">
+		select id,name
+		from EBP_MESSAGE_TYPE
+		where status='0' and display='0'
+		order by sort_num
+	</select>
+	
+	<!-- 接口-查询针对产品发送的消息 -->
+	<select id="queryMessageForApi1" parameterType="map" resultMap="apiMessageResult">
+		 select m.id,
+			   m.message_type_id,
+			   t.name as message_type_name,
+			   m.theme,
+			   m.content,
+			   m.sender_id,
+			   m.sender_name,
+			   m.send_org_id,
+			   m.send_org_name,
+			   m.receive_obj_type,
+			   m.receive_obj_id,
+			   m.receive_obj_name,
+			   m.create_time,
+			   m.release_time,
+			   m.status
+		 from (select * from EBP_MESSAGE where status='0' and receive_obj_type='0') m
+		 left join (select * from EBP_MESSAGE_TYPE where status='0') t on m.message_type_id=t.id
+		 where 1=1
+		 <if test="theme != null and theme != ''">and m.theme like '%'||#{theme}||'%'</if>
+		  <if test="releaseTime != null and releaseTime != ''">and to_char(m.release_time,'YYYY-MM-DD HH24:MI:SS')>=#{releaseTime}</if>
+		 order by m.release_time desc
+	</select>
+	
+	<!-- 接口-查询针对产品的消息 -->
+	<select id="queryMessageForApi2" parameterType="map" resultMap="apiMessageResult">
+		 select m.id,
+			   m.message_type_id,
+			   t.name as message_type_name,
+			   m.theme,
+			   m.content,
+			   m.sender_id,
+			   m.sender_name,
+			   m.send_org_id,
+			   m.send_org_name,
+			   m.receive_obj_type,
+			   m.receive_obj_id,
+			   m.receive_obj_name,
+			   m.create_time,
+			   m.release_time,
+			   m.status
+		 from (select * from EBP_MESSAGE where status='0' 
+		 		and receive_obj_type='0' and (receive_obj_id='all' or receive_obj_id like '%'||#{productId}||'%') 
+		 	 ) m
+		 left join (select * from EBP_MESSAGE_TYPE where status='0') t on m.message_type_id=t.id
+		 where 1=1
+		 <if test="theme != null and theme != ''">and m.theme like '%'||#{theme}||'%'</if>
+		  <if test="releaseTime != null and releaseTime != ''">and to_char(m.release_time,'YYYY-MM-DD HH24:MI:SS')>=#{releaseTime}</if>
+		 order by m.release_time desc
+	</select>
+	
+	<!-- 接口-查询针对个人和产品的消息  -->
+	<select id="queryMessageForApi3" parameterType="map" resultMap="apiMessageResult">
+		 select m.id,
+			   m.message_type_id,
+			   t.name as message_type_name,
+			   m.theme,
+			   m.content,
+			   m.sender_id,
+			   m.sender_name,
+			   m.send_org_id,
+			   m.send_org_name,
+			   m.receive_obj_type,
+			   m.receive_obj_id,
+			   m.receive_obj_name,
+			   m.create_time,
+			   m.release_time,
+			   m.status,
+		 	   NVL(s.status,'1') as  message_state_status
+		 from (select * from EBP_MESSAGE where status='0' 
+		 	and  (    (receive_obj_type='0' and (receive_obj_id='all' or receive_obj_id like '%'||#{productId}||'%') )
+		 	       or (receive_obj_type='1' and receive_obj_id=#{userId} )
+		 		 )
+		 	  ) m
+		 left join (select * from EBP_MESSAGE_TYPE where status='0') t on m.message_type_id=t.id
+		 left join (select * from EBP_MESSAGE_STATE where user_id=#{userId}) s on m.id=s.message_id
+		 where 1=1
+		 <if test='status == "0"'>
+		 	and s.status='0'
+		 </if>
+		 <if test='status == "1"'>
+		 	and (s.status is null or s.status='1')
+		 </if>
+		 <if test='status == "2"'>
+		 	and s.status='2'
+		 </if>
+		 <if test="theme != null and theme != ''">and m.theme like '%'||#{theme}||'%'</if>
+		 <if test="releaseTime != null and releaseTime != ''">and to_char(m.release_time,'YYYY-MM-DD HH24:MI:SS')>=#{releaseTime}</if>
+		 order by m.release_time desc
+	</select>
+	
+	<!-- 批量标记操作-->
+	<insert id="markMessage" parameterType="map">
+		insert into EBP_MESSAGE_STATE(id,message_id,user_id,create_time,status)
+		select sys_guid(),m.id,#{userId},sysdate,#{status}
+		from ebp_message m
+		where m.status='0' 
+			and m.id in <foreach collection="idList" item="id" open="(" close=")" separator=",">#{id}</foreach>
+			and not exists (
+				select 1 from ebp_message_state s
+				where s.user_id=#{userId}  and s.message_id=m.id)
+	</insert>
+	
+	<!--批量删除操作-->
+	<update id="markMessageDelete" parameterType="map">
+		update EBP_MESSAGE_STATE set status='2'
+		where user_id=#{userId} 
+			and message_id in <foreach collection="idList" item="id" open="(" close=")" separator=",">#{id}</foreach>
+	</update>
+	
+	<!-- 全部标记为已读 -->
+	<insert id="batchMarkMessageRead" parameterType="map">
+		insert into EBP_MESSAGE_STATE(id,message_id,user_id,create_time,status)
+		select sys_guid(),m.id,#{userId},sysdate,'0'
+		from ebp_message m
+		where m.status='0' 
+			and ( (m.receive_obj_type='0' and (m.receive_obj_id='all' or m.receive_obj_id like '%'||#{productId}||'%') )
+		 	       or (m.receive_obj_type='1' and m.receive_obj_id=#{userId} )  )
+			and not exists (
+				select 1 from EBP_MESSAGE_STATE s
+				where s.user_id=#{userId} and s.message_id=m.id)
+	</insert>
+</mapper>

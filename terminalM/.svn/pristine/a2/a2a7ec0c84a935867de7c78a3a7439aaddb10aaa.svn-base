@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.basicdata.dao.OrderSchoolDao">
+
+	<!-- 这里的Demo是别名，需要在mybatis-config.xml中定义，或者写类全名 -->
+	<resultMap type="com.whty.assis.basicdata.model.OrderSchool" id="OrderSchoolResult">
+		<id property="id" column="id" />
+		
+		<result property="orderId" column="order_id" />
+		
+		<result property="schoolId"     column="school_id" />
+		
+		<result property="createTime" column="create_time" />
+		
+		<result property="updateTime" column="update_time" />
+		
+		<result property="licenceCode" column="licence_code" />
+		
+		<result property="schoolName" column="school_name" />
+		
+		<result property="deviceCount" column="device_count" />
+		
+		<result property="deviceUseCount" column="device_use_count" />
+		
+	</resultMap>
+	
+	
+	<update id="update" parameterType="com.whty.assis.basicdata.model.OrderSchool">
+		update t_order_school
+		set 
+		<trim prefixOverrides=",">
+			<if test="licenceCode != null  and licenceCode != '' ">, licence_code=#{licenceCode}</if>
+			<if test="updateTime != null ">, update_time=#{updateTime}</if>
+		</trim>
+		where id=#{id}
+	</update>
+	
+	<insert id="save" parameterType="com.whty.assis.basicdata.model.OrderSchool">
+		insert into t_order_school (
+			id
+			,order_id
+			,school_id
+			,create_time
+			,update_time
+			<if test="licenceCode != null and licenceCode != ''">,licence_code</if>
+		) values (
+			#{id}
+			,#{orderId}
+			,#{schoolId}
+			,#{createTime}
+			,#{updateTime}
+			<if test="licenceCode != null and licenceCode != '' ">,#{licenceCode}</if>
+		)
+	</insert>
+	
+	<select id="loadById" parameterType="int" resultMap="OrderSchoolResult">
+		select t1.*,t2.name as school_name from t_order_school t1 left join t_school t2 on t1.school_id = t2.id
+		where 1=1 and t1.id=#{_parameter}
+	</select>
+	
+	
+	<delete id="deleteById" parameterType="int">
+		delete from t_order_school where id=#{_parameter}
+	</delete>
+	
+	<delete id="deleteByOrder" parameterType="int">
+		delete from t_order_school where order_id=#{_parameter}
+	</delete>
+	
+	<select id="listByOrder" parameterType="map" resultMap="OrderSchoolResult">
+	select t1.*,t2.name as school_name,
+(select sum(quan) from t_order_school_terminal_device where order_school_id=t1.id) as device_count,
+(select count(*) from t_device_info where school_id=t1.school_id and device_status=2 and order_id = #{orderId}) as device_use_count
+from t_order_school t1 left join t_school t2 on t1.school_id = t2.id
+		where 1=1
+		<if test="id != null ">and t1.id=#{id}</if>
+		and t1.order_id=#{orderId}
+		<if test="schoolId != null ">and t1.school_id=#{schoolId}</if>
+		<if test="licenceCode != null ">and t1.licence_code=#{licenceCode}</if>
+		order by t1.create_time desc
+	</select>
+	
+	<select id="listByCondition" parameterType="map" resultMap="OrderSchoolResult">
+		select t1.*,t2.name as school_name
+from t_order_school t1 left join t_school t2 on t1.school_id = t2.id
+		where 1=1
+		<if test="id != null ">and t1.id=#{id}</if>
+		<if test="orderId != null ">and t1.order_id=#{orderId}</if>
+		<if test="schoolId != null ">and t1.school_id=#{schoolId}</if>
+		<if test="licenceCode != null ">and t1.licence_code=#{licenceCode}</if>
+		order by t1.create_time desc
+	</select>
+	
+	
+</mapper>

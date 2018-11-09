@@ -1,0 +1,47 @@
+package #package#;
+
+import org.springframework.stereotype.Service;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import java.util.List;
+import #model#;
+import #dao#;
+
+/**
+ * #serviceName#. @author Auto Tools by 充满智慧的威哥
+ */
+@Service
+public class #serviceName# {
+	
+	private final Log log = LogFactory.getLog(getClass());
+	
+	@Autowired
+	private #daoName# #daoEntity#;
+	
+	
+	
+	
+	
+	//====================== 基本 C R U D 方法  ===========================
+	public #entityName# get(#idType# id) {
+		return #daoEntity#.get(id);
+	}
+	
+	public void save(#entityName# entity) {
+		#daoEntity#.save(entity);
+	}
+	
+	public void update(#entityName# entity) {
+		#daoEntity#.update(entity);
+	}
+	
+	public void delete(#idType# id) {
+		#daoEntity#.delete(id);
+	}
+	
+	public List<#entityName#> getAll() {
+		return #daoEntity#.getAll();
+	}
+	
+}

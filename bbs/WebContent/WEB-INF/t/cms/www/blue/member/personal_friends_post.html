@@ -1,0 +1,248 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>东楚论坛</title>
+<link href="style/main.css" rel="stylesheet" type="text/css">
+<link href="style/lanmu.css" rel="stylesheet" type="text/css">
+<link href="style/personal.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/popwin.js"></script>
+<script type="text/javascript" src="js/jquery-1.11.1.min.js"></script>
+<script type="text/javascript">
+ $(document).ready(function(){
+	 $(".shezhi").click(function(){
+		 if($(".setup_list").css('display')=='none'){
+			$(".setup_list").slideDown(200);
+			$(".sev b").removeClass('slidedown');
+			$(".sev b").addClass('slideup');
+			 }else{
+				 $(".setup_list").slideUp(200);
+			     $(".sev b").removeClass('slideup');
+			     $(".sev b").addClass('slidedown');
+				 
+				 }
+		 });
+	 });
+</script>
+</head>
+
+<body class="body">
+ <!---------顶部----------->
+ <div class="p_top">
+  <div class="p_top_center">
+   <div class="p_top_l">
+     <h1><a href="index.html"><img src="images/logo.png" alt=""/></a></h1>
+     <ul>
+       <li class="one"><a href="/">东楚网首页</a></li>
+       <li class="two"><a href="index.html">论坛</a></li>
+       <li class="thr now"><a href="personal_mypost.html">个人中心</a></li>
+     </ul>
+   </div>
+   <div class="p_top_r">
+    <span class="p_user"><a href="personal_mypost.html"><i></i>我就是我</a></span>
+    <span class="p_exit"><a href="index.html">退出</a></span>
+    <div class="here_but"><a href="#">每日打卡</a></div>
+   </div>
+  </div>
+ </div>
+ 
+ <!-------用户信息-------->
+ <div class="inf_box">
+  <div class="inf">
+    <div class="inf_l"><a href="personal_account .html"><img src="images/default_user.jpg" alt=""/></a></div>
+    <div class="inf_r">
+      <p class="inf_user_name"><a href="personal_mypost.html">我就是我</a></p>
+      <p class="inf_user_d">
+        <span class="inf_tz"><a href="personal_mypost.html">帖子：<b>6</b></a></span>
+        <span class="inf_tb"><a href="personal_coin.html"><i></i>铜币：<b>12</b></a></span>
+        <span class="inf_dj"><a href="personal_level.html"><i></i>等级：<b>幼儿园</b></a></span>
+      </p>
+    </div>
+  </div>
+ </div>
+ 
+
+ <!------------------中间内容部分------------------------>
+ <div class="center">
+  <div class="content">
+ <!------菜单------->
+   <div class="menu">
+    <ul class="menu_list">
+      <li><a href="personal_collection_post.html" class="fir"><i></i>我的收藏</a></li>
+      <li><a href="personal_album.html" class="sec"><i></i>我的相册</a></li>
+      <li><a href="personal_mypost.html" class="thi"><i></i>我的帖子</a></li>
+      <li class="now"><a href="personal_myfriends.html" class="fou"><i></i>我的好友</a></li>
+      <li><a href="personal_myfriends.html" class="fif"><i></i>我的消息</a></li>
+      <li><a href="personal_care.html" class="six"><i></i>我的关注</a></li>
+      <li><a href="personal_coin.html" class="sev"><i></i>我的铜币</a></li>
+      <li><a href="personal_task.html" class="eig"><i></i>我的任务</a></li>
+      <li class="shezhi"><a class="nin"><i></i>设置<b class="slidedown"></b></a></li>
+      <ul class="setup_list" style="display:none;">
+          <li><a href="personal_account .html" class="ten"><i></i>账号</a></li>
+          <li><a href="personal_confirm.html" class="ele"><i></i>认证</a></li>
+          <li><a href="personal_level.html" class="twe"><i></i>等级</a></li>
+          <li><a href="personal_binding.html" class="thir"><i></i>账号通</a></li>
+      </ul>
+    </ul>
+   </div>
+   
+   <!--------右侧内容部分——好友新帖--------->
+   <div class="content_r">
+     <div class="content_r_hd">我的好友</div>
+     <div class="xxk">
+       <span><a href="#">好友资料</a></span>
+       <span class="now"><a href="#">好友新帖</a></span>
+     </div>
+     <div class="friends">
+      <div class="mypost">
+       <div class="mypost_hd">
+         <div class="mypost_hd_title">话题</div>
+         <div class="mypost_hd_write">作者</div>
+         <div class="mypost_hd_count">回复/点击</div>
+         <div class="mypost_hd_from">所在栏目</div>
+       </div>
+       <ul class="tie_list">
+        <li>
+          <input type="checkbox">
+          <p class="tie_title"><a href="post.html">命苦！印度13个月大男婴被偷走后又被转卖两次</a></p>
+          <p class="tie_write">
+            <a href="personal_other_information.html">大傻子</a>
+            <span class="date">2016-09-10</span>
+          </p>
+          <p class="tie_count">26/233</p>
+          <p class="tie_from"><a href="lanmu6.html">网友沙龙</a></p>
+        </li>
+        <li>
+          <input type="checkbox">
+          <p class="tie_title"><a href="#">命苦！印度13个月大男婴被偷走后又被转卖两次</a></p>
+          <p class="tie_write">
+            <a href="#">大傻子</a>
+            <span class="date">2016-09-10</span>
+          </p>
+          <p class="tie_count">26/233</p>
+          <p class="tie_from">网友沙龙</p>
+        </li>
+        <li>
+          <input type="checkbox">
+          <p class="tie_title"><a href="#">命苦！印度13个月大男婴被偷走后又被转卖两次</a></p>
+          <p class="tie_write">
+            <a href="#">大傻子</a>
+            <span class="date">2016-09-10</span>
+          </p>
+          <p class="tie_count">26/233</p>
+          <p class="tie_from">网友沙龙</p>
+        </li>
+        <li>
+          <input type="checkbox">
+          <p class="tie_title"><a href="#">命苦！印度13个月大男婴被偷走后又被转卖两次</a></p>
+          <p class="tie_write">
+            <a href="#">大傻子</a>
+            <span class="date">2016-09-10</span>
+          </p>
+          <p class="tie_count">26/233</p>
+          <p class="tie_from">网友沙龙</p>
+        </li>
+        <li>
+          <input type="checkbox">
+          <p class="tie_title"><a href="#">命苦！印度13个月大男婴被偷走后又被转卖两次</a></p>
+          <p class="tie_write">
+            <a href="#">大傻子</a>
+            <span class="date">2016-09-10</span>
+          </p>
+          <p class="tie_count">26/233</p>
+          <p class="tie_from">网友沙龙</p>
+        </li>
+        <li>
+          <input type="checkbox">
+          <p class="tie_title"><a href="#">命苦！印度13个月大男婴被偷走后又被转卖两次</a></p>
+          <p class="tie_write">
+            <a href="#">大傻子</a>
+            <span class="date">2016-09-10</span>
+          </p>
+          <p class="tie_count">26/233</p>
+          <p class="tie_from">网友沙龙</p>
+        </li>
+        <li>
+          <input type="checkbox">
+          <p class="tie_title"><a href="#">命苦！印度13个月大男婴被偷走后又被转卖两次</a></p>
+          <p class="tie_write">
+            <a href="#">大傻子</a>
+            <span class="date">2016-09-10</span>
+          </p>
+          <p class="tie_count">26/233</p>
+          <p class="tie_from">网友沙龙</p>
+        </li>
+        <li>
+          <input type="checkbox">
+          <p class="tie_title"><a href="#">命苦！印度13个月大男婴被偷走后又被转卖两次</a></p>
+          <p class="tie_write">
+            <a href="#">大傻子</a>
+            <span class="date">2016-09-10</span>
+          </p>
+          <p class="tie_count">26/233</p>
+          <p class="tie_from">网友沙龙</p>
+        </li>
+        <li>
+          <input type="checkbox">
+          <p class="tie_title"><a href="#">命苦！印度13个月大男婴被偷走后又被转卖两次</a></p>
+          <p class="tie_write">
+            <a href="#">大傻子</a>
+            <span class="date">2016-09-10</span>
+          </p>
+          <p class="tie_count">26/233</p>
+          <p class="tie_from">网友沙龙</p>
+        </li>
+        <li>
+          <input type="checkbox">
+          <p class="tie_title"><a href="#">命苦！印度13个月大男婴被偷走后又被转卖两次</a></p>
+          <p class="tie_write">
+            <a href="#">大傻子</a>
+            <span class="date">2016-09-10</span>
+          </p>
+          <p class="tie_count">26/233</p>
+          <p class="tie_from">网友沙龙</p>
+        </li>
+       </ul>
+       <div class="selectall">
+        <input type="checkbox"><b>全选</b> |
+        <span class="cancel_but">&nbsp;&nbsp;<a href="#">批量删除</a></span>
+       </div>
+       <!--分页--->
+       <div class="page_box">
+        <div class="per_page">
+          <i class="page_prev disabled"></i>
+          <span class="page_num">1/4页</span>
+          <i class="page_next"></i>
+        </div>
+       </div>
+     </div>
+
+   </div>
+  </div>
+  
+
+ <!------页脚------>
+  <div class="footer">
+   <div class="footer_listbox">
+    <div class="footer_list">
+      <span class="firstspan"><a href="#">联系我们</a></span>
+      <span><a href="#">无图版</a></span>
+      <span><a href="#">手机浏览</a></span>
+      <span><a href="#">清除Cookies</a></span>
+    </div>
+   </div>
+   <p>Powered by <a href="#">phpwind v8.7</a> <a href="#">Certificate</a> Copyright Time now is:08-25 10:12 </p>
+   <p>©2003-2011 <a href="#">鄂B2-20090110</a> <a href="#">东楚论坛</a> 版权所有 Gzip disabled Total 0.075699(s) query 2,</p>
+  </div>
+ </div>
+</div>
+ 
+
+ <!------------------返回顶部-------------------->
+ <div id="before"><a href="http://bbs.hsdcw.com/" target="_blank" title="东楚论坛" class='before'></a></div>
+ <div id="wechat" class="wechat"><a href="javascript:void(0)"><div class="wechath"></div></a></div>
+ <a id="moquu_top" href="javascript:void(0)"></a>
+
+</body>
+</html>

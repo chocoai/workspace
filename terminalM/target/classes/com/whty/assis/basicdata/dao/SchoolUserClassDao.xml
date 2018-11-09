@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.basicdata.dao.SchoolUserClassDao">
+
+	<!-- 这里的Demo是别名，需要在mybatis-config.xml中定义，或者写类全名 -->
+	<resultMap type="com.whty.assis.basicdata.model.SchoolUserClass" id="SchoolUserClassResult">
+		<result property="id" column="id" />
+		<result property="schoolUserId" column="school_user_id" />
+		<result property="schoolClassId"  column="school_class_id" />
+		<result property="aamPersonId" column="aam_person_id" />
+		<result property="aamClassId" column="aam_class_id" />
+	</resultMap>
+	
+	<insert id="save" parameterType="com.whty.assis.basicdata.model.SchoolUserClass">
+		insert into t_school_user_class (
+			school_user_id,
+			school_class_id,
+			aam_person_id,
+			aam_class_id
+		) values (
+			#{schoolUserId},
+			#{schoolClassId},
+			#{aamPersonId},
+			#{aamClassId}
+		)
+	</insert> 
+	
+	<update id="update" parameterType="com.whty.assis.basicdata.model.SchoolUserClass">
+		update t_school_user_class
+		set 
+		<trim prefixOverrides=",">
+			<if test="schoolUserId != null ">, school_user_id=#{schoolUserId}</if>
+			<if test="schoolClassId != null ">, school_class_id=#{schoolClassId}</if>
+			<if test="aamPersonId != null ">, aam_person_id=#{aamPersonId}</if>
+			<if test="aamClassId != null ">, aam_class_id=#{aamClassId}</if>
+		</trim>
+		where id=#{id}
+	</update>
+	
+
+	<select id="listByCondition" parameterType="map" resultMap="SchoolUserClassResult">
+		select * from t_school_user_class
+	</select>
+	
+	<delete id="deleteById" parameterType="int">
+		delete from t_school_user_class where id = #{_parameter}
+	</delete>
+	
+	<delete id="deleteBySchoolClassId" parameterType="int">
+		delete from t_school_user_class where school_class_id = #{schoolClassId}
+	</delete>
+	
+</mapper>

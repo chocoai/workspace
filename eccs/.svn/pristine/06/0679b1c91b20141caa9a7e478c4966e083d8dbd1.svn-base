@@ -1,0 +1,33 @@
+#datasource
+dataSource.alias=eccs
+dataSource.driverClass=com.mysql.jdbc.Driver
+
+#dataSource.url=jdbc:mysql://127.0.0.1:3306/eccs?characterEncoding=UTF-8&mysqlEncoding=utf-8&autoReconnect=true
+#dataSource.user=root
+#dataSource.password=1qaz2WSX
+
+dataSource.url=jdbc:mysql://localhost:3306/eccs?characterEncoding=UTF-8&mysqlEncoding=utf-8&autoReconnect=true
+dataSource.user=root
+dataSource.password=123456
+
+dataSource.minPoolSize=10
+dataSource.maxPoolSize=200
+dataSource.maxActiveTime=30000
+dataSource.initialPoolSize=20
+
+# hibernate
+hibernate.dialect=org.hibernate.dialect.MySQLDialect
+hibernate.jdbc.batch_size=20
+hibernate.collection.isolation=2
+hibernate.cache.use_query_cache=false
+hibernate.cache.use_second_level_cache=false
+hibernate.cache.provider_class=org.hibernate.cache.EhCacheProvider
+#hibernate.cache.provider_class=com.googlecode.hibernate.memcached.MemcachedCacheProvider
+#hibernate.hbm2ddl.auto=update
+hibernate.show_sql=true
+hibernate.format_sql=true
+hibernate.use_sql_comments=true
+
+# application
+security=true
+

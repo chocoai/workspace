@@ -1,0 +1,38 @@
+package com.whty.assis.api.service.impl;
+
+import com.whty.assis.api.dao.UserBackgroundPicDao;
+import com.whty.assis.api.model.UserBackgroundPic;
+import com.whty.assis.api.service.UserBackgroundPicService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
+
+@Service
+@Transactional
+public class UserBackgroundPicServiceImpl implements UserBackgroundPicService {
+
+    @Autowired
+    private UserBackgroundPicDao userBackgroundPicDao;
+
+    @Override
+    public void insert(UserBackgroundPic userBackgroundPic) {
+        userBackgroundPicDao.insert(userBackgroundPic);
+    }
+
+    @Override
+    public UserBackgroundPic selectByPrimaryKey(String resourceId) {
+        return userBackgroundPicDao.selectByPrimaryKey(resourceId);
+    }
+
+    @Override
+    public List<UserBackgroundPic> selectByUserBackgroundCode(String userBackgroundCode) {
+        return userBackgroundPicDao.selectByUserBackgroundCode(userBackgroundCode);
+    }
+
+    @Override
+    public void delete(String resourceId) {
+        userBackgroundPicDao.delete(resourceId);
+    }
+}

@@ -1,0 +1,757 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>weihu | Dashboard</title>
+<link rel="icon" href="http://v3.bootcss.com/favicon.ico">
+<link href="../../resource/css/bootstrap.min.css" rel="stylesheet">
+<link href="../../resource/font-awesome/css/font-awesome.css" rel="stylesheet">
+<link href="${base}/resource/css/animate.css" rel="stylesheet">
+<link href="${base}/resource/css/style.css" rel="stylesheet">
+</head>
+
+<body>
+	<div id="wrapper">
+		<nav class="navbar-default navbar-static-side" role="navigation">
+		<div class="sidebar-collapse">
+			<ul class="nav" id="side-menu">
+				<li class="nav-header">
+					<div class="dropdown profile-element">
+						<span>
+							<img alt="image" class="img-circle" src="../../resource/img/profile_small.jpg" />
+						</span>
+						<a data-toggle="dropdown" class="dropdown-toggle" href="#">
+							<span class="clear">
+								<span class="block m-t-xs">
+									<strong class="font-bold">用户名</strong>
+								</span>
+								<span class="text-muted text-xs block">
+									Art Director
+									<b class="caret"></b>
+								</span>
+							</span>
+						</a>
+						<ul class="dropdown-menu animated fadeInRight m-t-xs">
+							<li>
+								<a href="pages/profile.html">个人中心</a>
+							</li>
+							<li>
+								<a href="pages/contacts.html">通讯录</a>
+							</li>
+							<li>
+								<a href="pages/mailbox.html">邮箱</a>
+							</li>
+							<li class="divider"></li>
+							<li>
+								<a href="pages/login_two_columns.html">退出</a>
+							</li>
+						</ul>
+					</div>
+					<!-- <div class="logo-element">WH</div> -->
+				</li>
+				<li>
+					<a href="http://localhost:8080/whmag/">
+						<i class="fa fa-desktop"></i>
+						<span class="nav-label">我的工作台 </span>
+						<!-- <span class="fa arrow"></span> -->
+					</a>
+					<!-- <ul class="nav nav-second-level">
+						<li>
+							<a href="index.jsp">Dashboard v.1</a>
+						</li>
+						<li>
+							<a href="dashboard_2.html">Dashboard v.2</a>
+						</li>
+						<li>
+							<a href="dashboard_3.html">Dashboard v.3</a>
+						</li>
+						<li>
+							<a href="dashboard_4_1.html">Dashboard v.4</a>
+						</li>
+					</ul> -->
+				</li>
+				<li class="active">
+					<a href="http://localhost:8080/cms/admin/cms/login.do">
+						<i class="fa fa-th-large"></i>
+						<span class="nav-label">CMS内容管理</span>
+					</a>
+				</li>
+				<li>
+					<a href="http://localhost:8080/bbs/admin/bbs/index.do" target="_blank">
+						<i class="fa fa-flask"></i>
+						<span class="nav-label">BBS论坛管理</span>
+					</a>
+				</li>
+
+				<li>
+					<a href="">
+						<i class="fa fa-film"></i>
+						<span class="nav-label">视频管理</span>
+					</a>
+				</li>
+				<li>
+					<a href="#">
+						<i class="fa fa-flask"></i>
+						<span class="nav-label">咨询管理</span>
+					</a>
+				</li>
+
+				<li>
+					<a href="www.baidu.com">
+						<i class="fa fa-users"></i>
+						<span class="nav-label">用户管理</span>
+						<span class="fa arrow"></span>
+					</a>
+					<ul class="nav nav-second-level">
+						<li>
+							<a href="#">
+								平台用户管理
+								<span class="fa arrow"></span>
+							</a>
+							<ul class="nav nav-third-level">
+								<li>
+									<a href="#">基本信息管理</a>
+								</li>
+								<li>
+									<a href="#">积分管理</a>
+								</li>
+								<li>
+									<a href="#">账号管理</a>
+								</li>
+								<li>
+									<a href="#">账户管理(钱包)</a>
+								</li>
+								<li>
+									<a href="#">患者病历管理</a>
+								</li>
+								<li>
+									<a href="#">邀请码管理</a>
+								</li>
+								<li>
+									<a href="#">医生认证管理</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a href="#">
+								系统用户管理
+								<span class="fa arrow"></span>
+							</a>
+							<ul class="nav nav-third-level">
+								<li>
+									<a href="#">组织结构管理</a>
+								</li>
+								<li>
+									<a href="#">用户管理</a>
+								</li>
+								<li>
+									<a href="#">账号管理</a>
+								</li>
+								<li>
+									<a href="#">账户管理(钱包)</a>
+								</li>
+								<li>
+									<a href="#">患者病历管理</a>
+								</li>
+								<li>
+									<a href="#">邀请码管理</a>
+								</li>
+								<li>
+									<a href="#">医生认证管理</a>
+								</li>
+							</ul>
+						</li>
+
+					</ul>
+				</li>
+
+
+				<li>
+					<a href="#">
+						<i class="fa fa-sitemap"></i>
+						<span class="nav-label">综合管理</span>
+						<span class="fa arrow"></span>
+					</a>
+					<ul class="nav nav-second-level">
+						<li>
+							<a href="#">
+								报表管理
+								<span class="fa arrow"></span>
+							</a>
+							<ul class="nav nav-third-level">
+								<li>
+									<a href="#">业务报表 1</a>
+								</li>
+								<li>
+									<a href="#">业务报表 2</a>
+								</li>
+								<li>
+									<a href="#">业务报表 3</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a href="#">应用统计管理</a>
+						</li>
+						<li>
+							<a href="#">信息推送管理</a>
+						</li>
+
+					</ul>
+				</li>
+
+				<li>
+					<a href="#">
+						<i class="glyphicon glyphicon-cog"></i>
+						<span class="nav-label">系统管理</span>
+						<span class="fa arrow"></span>
+					</a>
+					<ul class="nav nav-second-level">
+						<li>
+							<a href="#">
+								配置管理
+								<span class="fa arrow"></span>
+							</a>
+							<ul class="nav nav-third-level">
+								<li>
+									<a href="#">Third Level Item</a>
+								</li>
+								<li>
+									<a href="#">Third Level Item</a>
+								</li>
+								<li>
+									<a href="#">Third Level Item</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a href="#">角色定义</a>
+						</li>
+						<li>
+							<a href="#">权限管理</a>
+						</li>
+						<li>
+							<a href="#">系统设置</a>
+						</li>
+						<li>
+							<a href="#">意见管理</a>
+						</li>
+						<li>
+							<a href="#">意见管理</a>
+						</li>
+
+					</ul>
+				</li>
+
+
+				<li class="landing_link">
+					<a target="_blank" href="http://localhost:8080/whnet/">
+						<i class="fa fa-star"></i>
+						<span class="nav-label">站点首页</span>
+
+					</a>
+				</li>
+
+			</ul>
+
+		</div>
+		</nav>
+
+		<div id="page-wrapper" class="gray-bg">
+			<div class="row border-bottom">
+				<nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
+				<div class="navbar-header">
+					<a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#">
+						<i class="fa fa-bars"></i>
+					</a>
+					<!-- <form role="search" class="navbar-form-custom" action="search_results.html">
+						<div class="form-group">
+							<input type="text" placeholder="输入关键字进行搜索..." class="form-control" name="top-search" id="top-search">
+						</div>
+					</form> -->
+				</div>
+				<ul class="nav navbar-top-links navbar-right">
+					<li>
+						<span class="m-r-sm text-muted welcome-message">欢迎您，${user.realname}</span>
+					</li>
+					<li class="dropdown">
+						<a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+							<i class="fa fa-envelope"></i>
+							<span class="label label-warning">16</span>
+						</a>
+						<ul class="dropdown-menu dropdown-messages">
+							<li>
+								<div class="dropdown-messages-box">
+									<a href="pages/profile.html" class="pull-left">
+										<img alt="image" class="img-circle" src="../../resource/img/a7.jpg">
+									</a>
+									<div class="media-body">
+										<small class="pull-right">46h ago</small>
+										<strong>Mike Loreipsum</strong>
+										started following
+										<strong>Monica Smith</strong>
+										.
+										<br>
+										<small class="text-muted">3 days ago at 7:58 pm - 10.06.2014</small>
+									</div>
+								</div>
+							</li>
+							<li class="divider"></li>
+							<li>
+								<div class="dropdown-messages-box">
+									<a href="pages/profile.html" class="pull-left">
+										<img alt="image" class="img-circle" src="../../resource/img/a4.jpg">
+									</a>
+									<div class="media-body ">
+										<small class="pull-right text-navy">5h ago</small>
+										<strong>Chris Johnatan Overtunk</strong>
+										started following
+										<strong>Monica Smith</strong>
+										.
+										<br>
+										<small class="text-muted">Yesterday 1:21 pm - 11.06.2014</small>
+									</div>
+								</div>
+							</li>
+							<li class="divider"></li>
+							<li>
+								<div class="dropdown-messages-box">
+									<a href="pages/profile.html" class="pull-left">
+										<img alt="image" class="img-circle" src="../../resource/img/profile.jpg">
+									</a>
+									<div class="media-body ">
+										<small class="pull-right">23h ago</small>
+										<strong>Monica Smith</strong>
+										love
+										<strong>Kim Smith</strong>
+										.
+										<br>
+										<small class="text-muted">2 days ago at 2:30 am - 11.06.2014</small>
+									</div>
+								</div>
+							</li>
+							<li class="divider"></li>
+							<li>
+								<div class="text-center link-block">
+									<a href="pages/mailbox.html">
+										<i class="fa fa-envelope"></i>
+										阅读所有消息
+									</a>
+								</div>
+							</li>
+						</ul>
+					</li>
+					<li class="dropdown">
+						<a class="dropdown-toggle count-info" data-toggle="dropdown" href="#">
+							<i class="fa fa-bell"></i>
+							<span class="label label-primary">8</span>
+						</a>
+						<ul class="dropdown-menu dropdown-alerts">
+							<li>
+								<a href="pages/mailbox.html">
+									<div>
+										<i class="fa fa-envelope fa-fw"></i>
+										You have 16 messages
+										<span class="pull-right text-muted small">4 minutes ago</span>
+									</div>
+								</a>
+							</li>
+							<li class="divider"></li>
+							<li>
+								<a href="pages/profile.html">
+									<div>
+										<i class="fa fa-twitter fa-fw"></i>
+										3 New Followers
+										<span class="pull-right text-muted small">12 minutes ago</span>
+									</div>
+								</a>
+							</li>
+							<li class="divider"></li>
+							<li>
+								<a href="pages/grid_options.html">
+									<div>
+										<i class="fa fa-upload fa-fw"></i>
+										Server Rebooted
+										<span class="pull-right text-muted small">4 minutes ago</span>
+									</div>
+								</a>
+							</li>
+							<li class="divider"></li>
+							<li>
+								<div class="text-center link-block">
+									<a href="pages/notifications.html">
+										查看所有通知
+										<i class="fa fa-angle-right"></i>
+									</a>
+								</div>
+							</li>
+						</ul>
+					</li>
+
+
+					<li>
+						<a href="pages/login.html">
+							<i class="fa fa-sign-out"></i>
+							退出
+						</a>
+					</li>
+				</ul>
+
+				</nav>
+			</div>
+			<div class="row wrapper border-bottom white-bg page-heading">
+				<div class="col-sm-4">
+					<h2>
+						<!-- This is main title -->
+					</h2>
+					<ol class="breadcrumb">
+						<li>
+							<a href="http://localhost:8080/whmag/">我的工作台</a>
+						</li>
+						<li class="active">
+							<strong>CMS内容管理</strong>
+						</li>
+					</ol>
+				</div>
+				<div class="col-sm-8">
+					<!-- <div class="title-action">
+						<a href="" class="btn btn-primary">This is action area</a>
+					</div> -->
+				</div>
+			</div>
+
+
+			<div class="wrapper wrapper-content animated fadeIn">
+
+				<div class="row">
+					<div class="col-lg-6">
+						<div class="panel blank-panel">
+
+							<div class="panel-heading">
+								<div class="panel-title m-b-md">
+									<h4>待审内容</h4>
+								</div>
+								<div class="panel-options">
+
+									<ul class="nav nav-tabs">
+										<li class="active">
+											<a data-toggle="tab" href="#tab-1">最新內容</a>
+										</li>
+										<li class="">
+											<a data-toggle="tab" href="#tab-2">待审内容</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+
+							<div class="panel-body">
+
+								<div class="tab-content">
+									<div id="tab-1" class="tab-pane active">
+										<div class="ibox float-e-margins">
+
+											<div class="ibox-content">
+
+												<table class="table">
+													<thead>
+														<tr>
+															<th>标题</th>
+															<th>发布时间</th>
+														</tr>
+													</thead>
+													<tbody>
+														<#list newcontents as c>
+														<tr>
+															<td>
+																<a href="${c.url}" title="${c.title}" target="_blank"> 
+																	<span><@text_cut s=c.title len=titLen /></span> 
+																</a>
+															</td>
+															<td>${c.releaseDate?string("yyyy-MM-dd")}</td>
+														</tr>
+														</#list>
+													</tbody>
+												</table>
+
+											</div>
+										</div>
+									</div>
+
+									<div id="tab-2" class="tab-pane">
+										<div class="ibox float-e-margins">
+
+											<div class="ibox-content">
+
+												<table class="table">
+													<thead>
+														<tr>
+															<th>标题</th>
+															<th>发布时间</th>
+															<th></th>
+														</tr>
+													</thead>
+													<tbody>
+														<#list contents as c>
+														<tr>
+															<td>
+																<a href="${c.url}" title="${c.title}" target="_blank"> 
+																	<span><@text_cut s=c.title len=titLen /></span> 
+																</a>
+															</td>
+															<td>
+																${c.releaseDate?string("yyyy-MM-dd")}
+																
+		                        							</td>
+		                        							<td>
+		                        								<a href="#" id="check_${c.id}" ><@s.m "content.opt.check"/></a>&nbsp;
+		                        								<a href="#" id="reject_${c.id}" ><@s.m "content.opt.reject"/></a>
+		                        							</td>
+														</tr>
+														</#list>
+													</tbody>
+												</table>
+
+											</div>
+										</div>
+
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+
+					<div class="col-lg-6">
+						<div class="panel blank-panel">
+
+							<div class="panel-heading">
+								<div class="panel-title m-b-md">
+									<h4>访问排行榜</h4>
+								</div>
+								<div class="panel-options">
+
+									<ul class="nav nav-tabs">
+										<li class="active">
+											<a data-toggle="tab" href="#tab-3">月访问量</a>
+										</li>
+										<li class="">
+											<a data-toggle="tab" href="#tab-4">周访问量</a>
+										</li>
+										<li class="">
+											<a data-toggle="tab" href="#tab-5">日访问量</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+
+							<div class="panel-body">
+
+								<div class="tab-content">
+									<div id="tab-3" class="tab-pane active">
+										<div class="ibox float-e-margins">
+
+											<div class="ibox-content">
+
+												<table class="table">
+													<thead>
+														<tr>
+															<th>标题</th>
+															<th>访问量</th>
+														</tr>
+													</thead>
+													<tbody>
+														<@cms_content_list count='10' titLen='12' orderBy='8' channelOption='1' >
+		                    							<#list tag_list as a>
+														<tr>
+															<td>
+																<a href="${a.url}" title="${a.title}" target="_blank">
+																	<span><@text_cut s=a.title len=titLen /></span>
+																</a>
+															</td>
+															<td>${a.viewsMonth!}</td>
+														</tr>
+														</#list>
+		                    							</@cms_content_list>
+													</tbody>
+												</table>
+
+											</div>
+										</div>
+									</div>
+
+									<div id="tab-4" class="tab-pane">
+										<div class="ibox float-e-margins">
+
+											<div class="ibox-content">
+
+												<table class="table">
+													<thead>
+														<tr>
+															<th>标题</th>
+															<th>访问量</th>
+														</tr>
+													</thead>
+													<tbody>
+														<@cms_content_list count='10' titLen='12' orderBy='7' channelOption='1' >
+		                    							<#list tag_list as a>	
+														<tr>
+															<td>
+																<a href="${a.url}" title="${a.title}" target="_blank">
+																	<span><@text_cut s=a.title len=titLen /></span>
+																</a>
+															</td>
+															<td>${a.viewsWeek!}</td>
+														</tr>
+														</#list>
+		                    							</@cms_content_list>
+													</tbody>
+												</table>
+
+											</div>
+										</div>
+
+									</div>
+
+									<div id="tab-5" class="tab-pane">
+										<div class="ibox float-e-margins">
+
+											<div class="ibox-content">
+
+												<table class="table">
+													<thead>
+														<tr>
+															<th>标题</th>
+															<th>访问量</th>
+														</tr>
+													</thead>
+													<tbody>
+														<@cms_content_list count='10' titLen='12' orderBy='6' channelOption='1' >
+		                    							<#list tag_list as a>
+														<tr>
+															<td>
+																<a href="${a.url}" title="${a.title}" target="_blank">
+																	<span><@text_cut s=a.title len=titLen /></span>
+																</a>
+															</td>
+															<td>${a.viewDay!}</td>
+														</tr>
+														</#list>
+		                    							</@cms_content_list>
+													</tbody>
+												</table>
+
+											</div>
+										</div>
+										
+
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+					</div>
+
+					<!-- <div class="col-lg-6">
+						<div class="panel blank-panel">
+
+							<div class="panel-heading">
+								<div class="panel-title m-b-md">
+									<h4>访问排行榜</h4>
+								</div>
+								<div class="panel-options">
+
+									<ul class="nav nav-tabs">
+										<li class="active">
+											<a data-toggle="tab" href="#tab-month">月访问量</a>
+										</li>
+										<li class="">
+											<a data-toggle="tab" href="#tab-week">周访问量</a>
+										</li>
+										<li class="">
+											<a data-toggle="tab" href="#tab-day">日访问量</a>
+										</li>
+									</ul>
+								</div>
+							</div>
+
+							<div class="panel-body">
+
+								<div class="tab-content">
+									<div id="#tab-month" class="tab-pane active">
+										<strong>Lorem ipsum dolor sit amet, consectetuer adipiscing</strong>
+
+										<p>A wonderful serenity has taken possession of my entire soul, like these sweet mornings of spring which
+											I enjoy with my whole heart. I am alone, and feel the charm of existence in this spot, which was created for
+											the bliss of souls like mine.</p>
+
+										<p>I am so happy, my dear friend, so absorbed in the exquisite sense of mere tranquil existence, that I
+											neglect my talents. I should be incapable of drawing a single stroke at the present moment; and yet I feel
+											that I never was a greater artist than now. When.</p>
+									</div>
+
+									<div id="#tab-week" class="tab-pane">
+										<strong>Donec quam felis</strong>
+
+										<p>Thousand unknown plants are noticed by me: when I hear the buzz of the little world among the stalks,
+											and grow familiar with the countless indescribable forms of the insects and flies, then I feel the presence
+											of the Almighty, who formed us in his own image, and the breath</p>
+
+										<p>I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like
+											mine. I am so happy, my dear friend, so absorbed in the exquisite sense of mere tranquil existence, that I
+											neglect my talents. I should be incapable of drawing a single stroke at the present moment; and yet.</p>
+
+									</div>
+									
+									<div id="#tab-day" class="tab-pane">
+										<strong>Donec quam felis</strong>
+
+										<p>Thousand unknown plants are noticed by me: when I hear the buzz of the little world among the stalks,
+											and grow familiar with the countless indescribable forms of the insects and flies, then I feel the presence
+											of the Almighty, who formed us in his own image, and the breath</p>
+
+										<p>I am alone, and feel the charm of existence in this spot, which was created for the bliss of souls like
+											mine. I am so happy, my dear friend, so absorbed in the exquisite sense of mere tranquil existence, that I
+											neglect my talents. I should be incapable of drawing a single stroke at the present moment; and yet.</p>
+
+									</div>
+								</div>
+
+							</div>
+
+						</div>
+					</div> -->
+
+
+				</div>
+
+
+			</div>
+
+
+
+
+			<div class="footer">
+				<div align="center">武汉市微护信息科技有限公司 Copyright &copy; 2016</div>
+			</div>
+
+		</div>
+	</div>
+
+	<!-- Mainly scripts -->
+	<script src="${base}/resource/js/jquery-2.1.1.js"></script>
+	<script src="${base}/resource/js/bootstrap.min.js"></script>
+	<script src="${base}/resource/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+	<script src="${base}/resource/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+	<!-- Custom and plugin javascript -->
+	<script src="${base}/resource/js/inspinia.js"></script>
+	<script src="${base}/resource/js/plugins/pace/pace.min.js"></script>
+
+</body>
+</html>

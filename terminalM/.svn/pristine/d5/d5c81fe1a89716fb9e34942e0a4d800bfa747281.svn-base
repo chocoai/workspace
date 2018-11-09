@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.devicemanage.dao.UrlBlackListDao">
+	
+	<resultMap type="com.whty.assis.devicemanage.model.UrlBlackList" id="UrlBlackListResult">
+		<result property="id" column="id" />
+		<result property="url" column="url" />
+		<result property="urlBlackListRuleId" column="url_black_list_rule_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	
+	<insert id="save" parameterType="com.whty.assis.devicemanage.model.UrlBlackList">
+		insert into t_url_blacklist(
+		url
+		,url_blacklist_rule_id
+			) values (
+				#{url}
+				,#{urlBlackListRuleId}
+			)
+	</insert>
+
+	<delete id="deleteByRuleId" parameterType="int" >
+		delete from t_url_blacklist where url_blacklist_rule_id=#{_parameter}
+	</delete>
+
+	<delete id="deleteById" parameterType="int" >
+		delete from t_url_blacklist where id=#{_parameter}
+	</delete>
+
+	<select id="listByCondition" parameterType="map" resultMap="UrlBlackListResult">
+		select * from t_url_blacklist
+		where 1=1
+		<if test="id != null ">and id=#{id}</if>
+		<if test="urlBlackListRuleId != null ">and url_blacklist_rule_id=#{urlBlackListRuleId}</if>
+	</select>
+	
+	
+</mapper>

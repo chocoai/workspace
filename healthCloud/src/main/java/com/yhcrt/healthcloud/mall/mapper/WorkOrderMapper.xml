@@ -1,0 +1,712 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.healthcloud.mall.mapper.WorkOrderMapper">
+	<resultMap id="BaseResultMap" type="com.yhcrt.healthcloud.mall.entity.WorkOrder">
+		<id column="order_id" jdbcType="INTEGER" property="orderId" />
+		<result column="service_id" jdbcType="INTEGER" property="serviceId" />
+		<result column="member_id" jdbcType="INTEGER" property="memberId" />
+		<result column="order_content" jdbcType="VARCHAR" property="orderContent" />
+		<result column="service_object" jdbcType="VARCHAR" property="serviceObject" />
+		<result column="tel" jdbcType="VARCHAR" property="tel" />
+		<result column="address" jdbcType="VARCHAR" property="address" />
+		<result column="start_time" jdbcType="VARCHAR" property="startTime" />
+		<result column="end_time" jdbcType="VARCHAR" property="endTime" />
+		<result column="handler" jdbcType="VARCHAR" property="handler" />
+		<result column="to_user" jdbcType="VARCHAR" property="toUser" />
+		<result column="create_time" jdbcType="VARCHAR" property="createTime" />
+		<result column="handle_time" jdbcType="VARCHAR" property="handleTime" />
+		<result column="order_status" jdbcType="INTEGER" property="orderStatus" />
+		<result column="unit_price" jdbcType="DOUBLE" property="unitPrice" />
+		<result column="amount" jdbcType="INTEGER" property="amount" />
+		<result column="service_fee" jdbcType="DOUBLE" property="serviceFee" />
+		<result column="discounts" jdbcType="DOUBLE" property="discounts" />
+		<result column="actual_payment" jdbcType="DOUBLE" property="actualPayment" />
+		<result column="pay_status" jdbcType="INTEGER" property="payStatus" />
+		<result column="pay_type" jdbcType="VARCHAR" property="payType" />
+		<result column="pay_account" jdbcType="VARCHAR" property="payAccount" />
+		<result column="pay_value" jdbcType="DOUBLE" property="payValue" />
+		<result column="pay_time" jdbcType="VARCHAR" property="payTime" />
+		<result column="remark" jdbcType="VARCHAR" property="remark" />
+		<result column="cext1" jdbcType="VARCHAR" property="cext1" />
+		<result column="cext2" jdbcType="VARCHAR" property="cext2" />
+		<result column="cext3" jdbcType="VARCHAR" property="cext3" />
+		<result column="iext1" jdbcType="INTEGER" property="iext1" />
+		<result column="iext2" jdbcType="INTEGER" property="iext2" />
+		<result column="dext1" jdbcType="DATE" property="dext1" />
+		<result column="dext2" jdbcType="DATE" property="dext2" />
+		
+		<result column="toUserName" jdbcType="VARCHAR" property="toUserName" />
+		<result column="handlerName" jdbcType="VARCHAR" property="handlerName" />
+		<result column="provider_name" jdbcType="VARCHAR" property="providerName" />
+		
+		<association property="member" column="member_id" select="com.yhcrt.healthcloud.memberBack.mapper.MemberBackMapper.selectByPrimaryKey"></association>
+		<association property="service" column="service_id" select="com.yhcrt.healthcloud.mall.mapper.ServiceMapper.selectByPrimaryKey"></association>
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		order_id, service_id, member_id, order_content, service_object, tel, address,
+		start_time,
+		end_time, handler, to_user, create_time, handle_time, order_status, unit_price,
+		amount,
+		service_fee, discounts, actual_payment, pay_status, pay_type, pay_account,
+		pay_value,
+		pay_time, remark, cext1, cext2, cext3, iext1, iext2, dext1, dext2
+	</sql>
+	<select id="selectByExample" parameterType="com.yhcrt.healthcloud.mall.entity.WorkOrderExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from work_order
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from work_order
+		where order_id = #{orderId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from work_order
+		where order_id = #{orderId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.yhcrt.healthcloud.mall.entity.WorkOrderExample">
+		delete from work_order
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.yhcrt.healthcloud.mall.entity.WorkOrder">
+		insert into work_order (order_id, service_id, member_id,
+		order_content, service_object, tel,
+		address, start_time, end_time,
+		handler, to_user, create_time,
+		handle_time, order_status, unit_price,
+		amount, service_fee, discounts,
+		actual_payment, pay_status, pay_type,
+		pay_account, pay_value, pay_time,
+		remark, cext1, cext2,
+		cext3, iext1, iext2,
+		dext1, dext2)
+		values (#{orderId,jdbcType=INTEGER}, #{serviceId,jdbcType=INTEGER},
+		#{memberId,jdbcType=INTEGER},
+		#{orderContent,jdbcType=VARCHAR}, #{serviceObject,jdbcType=VARCHAR}, #{tel,jdbcType=VARCHAR},
+		#{address,jdbcType=VARCHAR}, #{startTime,jdbcType=VARCHAR},
+		#{endTime,jdbcType=VARCHAR},
+		#{handler,jdbcType=VARCHAR}, #{toUser,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR},
+		#{handleTime,jdbcType=VARCHAR}, #{orderStatus,jdbcType=INTEGER},
+		#{unitPrice,jdbcType=DOUBLE},
+		#{amount,jdbcType=INTEGER}, #{serviceFee,jdbcType=DOUBLE}, #{discounts,jdbcType=DOUBLE},
+		#{actualPayment,jdbcType=DOUBLE}, #{payStatus,jdbcType=INTEGER},
+		#{payType,jdbcType=VARCHAR},
+		#{payAccount,jdbcType=VARCHAR}, #{payValue,jdbcType=DOUBLE}, #{payTime,jdbcType=VARCHAR},
+		#{remark,jdbcType=VARCHAR}, #{cext1,jdbcType=VARCHAR},
+		#{cext2,jdbcType=VARCHAR},
+		#{cext3,jdbcType=VARCHAR}, #{iext1,jdbcType=INTEGER}, #{iext2,jdbcType=INTEGER},
+		#{dext1,jdbcType=DATE}, #{dext2,jdbcType=DATE})
+	</insert>
+	<insert id="insertSelective" parameterType="com.yhcrt.healthcloud.mall.entity.WorkOrder">
+		insert into work_order
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="orderId != null">
+				order_id,
+			</if>
+			<if test="serviceId != null">
+				service_id,
+			</if>
+			<if test="memberId != null">
+				member_id,
+			</if>
+			<if test="orderContent != null">
+				order_content,
+			</if>
+			<if test="serviceObject != null">
+				service_object,
+			</if>
+			<if test="tel != null">
+				tel,
+			</if>
+			<if test="address != null">
+				address,
+			</if>
+			<if test="startTime != null">
+				start_time,
+			</if>
+			<if test="endTime != null">
+				end_time,
+			</if>
+			<if test="handler != null">
+				handler,
+			</if>
+			<if test="toUser != null">
+				to_user,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="handleTime != null">
+				handle_time,
+			</if>
+			<if test="orderStatus != null">
+				order_status,
+			</if>
+			<if test="unitPrice != null">
+				unit_price,
+			</if>
+			<if test="amount != null">
+				amount,
+			</if>
+			<if test="serviceFee != null">
+				service_fee,
+			</if>
+			<if test="discounts != null">
+				discounts,
+			</if>
+			<if test="actualPayment != null">
+				actual_payment,
+			</if>
+			<if test="payStatus != null">
+				pay_status,
+			</if>
+			<if test="payType != null">
+				pay_type,
+			</if>
+			<if test="payAccount != null">
+				pay_account,
+			</if>
+			<if test="payValue != null">
+				pay_value,
+			</if>
+			<if test="payTime != null">
+				pay_time,
+			</if>
+			<if test="remark != null">
+				remark,
+			</if>
+			<if test="cext1 != null">
+				cext1,
+			</if>
+			<if test="cext2 != null">
+				cext2,
+			</if>
+			<if test="cext3 != null">
+				cext3,
+			</if>
+			<if test="iext1 != null">
+				iext1,
+			</if>
+			<if test="iext2 != null">
+				iext2,
+			</if>
+			<if test="dext1 != null">
+				dext1,
+			</if>
+			<if test="dext2 != null">
+				dext2,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="orderId != null">
+				#{orderId,jdbcType=INTEGER},
+			</if>
+			<if test="serviceId != null">
+				#{serviceId,jdbcType=INTEGER},
+			</if>
+			<if test="memberId != null">
+				#{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="orderContent != null">
+				#{orderContent,jdbcType=VARCHAR},
+			</if>
+			<if test="serviceObject != null">
+				#{serviceObject,jdbcType=VARCHAR},
+			</if>
+			<if test="tel != null">
+				#{tel,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				#{address,jdbcType=VARCHAR},
+			</if>
+			<if test="startTime != null">
+				#{startTime,jdbcType=VARCHAR},
+			</if>
+			<if test="endTime != null">
+				#{endTime,jdbcType=VARCHAR},
+			</if>
+			<if test="handler != null">
+				#{handler,jdbcType=VARCHAR},
+			</if>
+			<if test="toUser != null">
+				#{toUser,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=VARCHAR},
+			</if>
+			<if test="handleTime != null">
+				#{handleTime,jdbcType=VARCHAR},
+			</if>
+			<if test="orderStatus != null">
+				#{orderStatus,jdbcType=INTEGER},
+			</if>
+			<if test="unitPrice != null">
+				#{unitPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="amount != null">
+				#{amount,jdbcType=INTEGER},
+			</if>
+			<if test="serviceFee != null">
+				#{serviceFee,jdbcType=DOUBLE},
+			</if>
+			<if test="discounts != null">
+				#{discounts,jdbcType=DOUBLE},
+			</if>
+			<if test="actualPayment != null">
+				#{actualPayment,jdbcType=DOUBLE},
+			</if>
+			<if test="payStatus != null">
+				#{payStatus,jdbcType=INTEGER},
+			</if>
+			<if test="payType != null">
+				#{payType,jdbcType=VARCHAR},
+			</if>
+			<if test="payAccount != null">
+				#{payAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="payValue != null">
+				#{payValue,jdbcType=DOUBLE},
+			</if>
+			<if test="payTime != null">
+				#{payTime,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="cext1 != null">
+				#{cext1,jdbcType=VARCHAR},
+			</if>
+			<if test="cext2 != null">
+				#{cext2,jdbcType=VARCHAR},
+			</if>
+			<if test="cext3 != null">
+				#{cext3,jdbcType=VARCHAR},
+			</if>
+			<if test="iext1 != null">
+				#{iext1,jdbcType=INTEGER},
+			</if>
+			<if test="iext2 != null">
+				#{iext2,jdbcType=INTEGER},
+			</if>
+			<if test="dext1 != null">
+				#{dext1,jdbcType=DATE},
+			</if>
+			<if test="dext2 != null">
+				#{dext2,jdbcType=DATE},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample" parameterType="com.yhcrt.healthcloud.mall.entity.WorkOrderExample"
+		resultType="java.lang.Long">
+		select count(*) from work_order
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update work_order
+		<set>
+			<if test="record.orderId != null">
+				order_id = #{record.orderId,jdbcType=INTEGER},
+			</if>
+			<if test="record.serviceId != null">
+				service_id = #{record.serviceId,jdbcType=INTEGER},
+			</if>
+			<if test="record.memberId != null">
+				member_id = #{record.memberId,jdbcType=INTEGER},
+			</if>
+			<if test="record.orderContent != null">
+				order_content = #{record.orderContent,jdbcType=VARCHAR},
+			</if>
+			<if test="record.serviceObject != null">
+				service_object = #{record.serviceObject,jdbcType=VARCHAR},
+			</if>
+			<if test="record.tel != null">
+				tel = #{record.tel,jdbcType=VARCHAR},
+			</if>
+			<if test="record.address != null">
+				address = #{record.address,jdbcType=VARCHAR},
+			</if>
+			<if test="record.startTime != null">
+				start_time = #{record.startTime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.endTime != null">
+				end_time = #{record.endTime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.handler != null">
+				handler = #{record.handler,jdbcType=VARCHAR},
+			</if>
+			<if test="record.toUser != null">
+				to_user = #{record.toUser,jdbcType=VARCHAR},
+			</if>
+			<if test="record.createTime != null">
+				create_time = #{record.createTime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.handleTime != null">
+				handle_time = #{record.handleTime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.orderStatus != null">
+				order_status = #{record.orderStatus,jdbcType=INTEGER},
+			</if>
+			<if test="record.unitPrice != null">
+				unit_price = #{record.unitPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="record.amount != null">
+				amount = #{record.amount,jdbcType=INTEGER},
+			</if>
+			<if test="record.serviceFee != null">
+				service_fee = #{record.serviceFee,jdbcType=DOUBLE},
+			</if>
+			<if test="record.discounts != null">
+				discounts = #{record.discounts,jdbcType=DOUBLE},
+			</if>
+			<if test="record.actualPayment != null">
+				actual_payment = #{record.actualPayment,jdbcType=DOUBLE},
+			</if>
+			<if test="record.payStatus != null">
+				pay_status = #{record.payStatus,jdbcType=INTEGER},
+			</if>
+			<if test="record.payType != null">
+				pay_type = #{record.payType,jdbcType=VARCHAR},
+			</if>
+			<if test="record.payAccount != null">
+				pay_account = #{record.payAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="record.payValue != null">
+				pay_value = #{record.payValue,jdbcType=DOUBLE},
+			</if>
+			<if test="record.payTime != null">
+				pay_time = #{record.payTime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.remark != null">
+				remark = #{record.remark,jdbcType=VARCHAR},
+			</if>
+			<if test="record.cext1 != null">
+				cext1 = #{record.cext1,jdbcType=VARCHAR},
+			</if>
+			<if test="record.cext2 != null">
+				cext2 = #{record.cext2,jdbcType=VARCHAR},
+			</if>
+			<if test="record.cext3 != null">
+				cext3 = #{record.cext3,jdbcType=VARCHAR},
+			</if>
+			<if test="record.iext1 != null">
+				iext1 = #{record.iext1,jdbcType=INTEGER},
+			</if>
+			<if test="record.iext2 != null">
+				iext2 = #{record.iext2,jdbcType=INTEGER},
+			</if>
+			<if test="record.dext1 != null">
+				dext1 = #{record.dext1,jdbcType=DATE},
+			</if>
+			<if test="record.dext2 != null">
+				dext2 = #{record.dext2,jdbcType=DATE},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update work_order
+		set order_id = #{record.orderId,jdbcType=INTEGER},
+		service_id = #{record.serviceId,jdbcType=INTEGER},
+		member_id = #{record.memberId,jdbcType=INTEGER},
+		order_content = #{record.orderContent,jdbcType=VARCHAR},
+		service_object = #{record.serviceObject,jdbcType=VARCHAR},
+		tel = #{record.tel,jdbcType=VARCHAR},
+		address = #{record.address,jdbcType=VARCHAR},
+		start_time = #{record.startTime,jdbcType=VARCHAR},
+		end_time = #{record.endTime,jdbcType=VARCHAR},
+		handler = #{record.handler,jdbcType=VARCHAR},
+		to_user = #{record.toUser,jdbcType=VARCHAR},
+		create_time = #{record.createTime,jdbcType=VARCHAR},
+		handle_time = #{record.handleTime,jdbcType=VARCHAR},
+		order_status = #{record.orderStatus,jdbcType=INTEGER},
+		unit_price = #{record.unitPrice,jdbcType=DOUBLE},
+		amount = #{record.amount,jdbcType=INTEGER},
+		service_fee = #{record.serviceFee,jdbcType=DOUBLE},
+		discounts = #{record.discounts,jdbcType=DOUBLE},
+		actual_payment = #{record.actualPayment,jdbcType=DOUBLE},
+		pay_status = #{record.payStatus,jdbcType=INTEGER},
+		pay_type = #{record.payType,jdbcType=VARCHAR},
+		pay_account = #{record.payAccount,jdbcType=VARCHAR},
+		pay_value = #{record.payValue,jdbcType=DOUBLE},
+		pay_time = #{record.payTime,jdbcType=VARCHAR},
+		remark = #{record.remark,jdbcType=VARCHAR},
+		cext1 = #{record.cext1,jdbcType=VARCHAR},
+		cext2 = #{record.cext2,jdbcType=VARCHAR},
+		cext3 = #{record.cext3,jdbcType=VARCHAR},
+		iext1 = #{record.iext1,jdbcType=INTEGER},
+		iext2 = #{record.iext2,jdbcType=INTEGER},
+		dext1 = #{record.dext1,jdbcType=DATE},
+		dext2 = #{record.dext2,jdbcType=DATE}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.healthcloud.mall.entity.WorkOrder">
+		update work_order
+		<set>
+			<if test="serviceId != null">
+				service_id = #{serviceId,jdbcType=INTEGER},
+			</if>
+			<if test="memberId != null">
+				member_id = #{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="orderContent != null">
+				order_content = #{orderContent,jdbcType=VARCHAR},
+			</if>
+			<if test="serviceObject != null">
+				service_object = #{serviceObject,jdbcType=VARCHAR},
+			</if>
+			<if test="tel != null">
+				tel = #{tel,jdbcType=VARCHAR},
+			</if>
+			<if test="address != null">
+				address = #{address,jdbcType=VARCHAR},
+			</if>
+			<if test="startTime != null">
+				start_time = #{startTime,jdbcType=VARCHAR},
+			</if>
+			<if test="endTime != null">
+				end_time = #{endTime,jdbcType=VARCHAR},
+			</if>
+			<if test="handler != null">
+				handler = #{handler,jdbcType=VARCHAR},
+			</if>
+			<if test="toUser != null">
+				to_user = #{toUser,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=VARCHAR},
+			</if>
+			<if test="handleTime != null">
+				handle_time = #{handleTime,jdbcType=VARCHAR},
+			</if>
+			<if test="orderStatus != null">
+				order_status = #{orderStatus,jdbcType=INTEGER},
+			</if>
+			<if test="unitPrice != null">
+				unit_price = #{unitPrice,jdbcType=DOUBLE},
+			</if>
+			<if test="amount != null">
+				amount = #{amount,jdbcType=INTEGER},
+			</if>
+			<if test="serviceFee != null">
+				service_fee = #{serviceFee,jdbcType=DOUBLE},
+			</if>
+			<if test="discounts != null">
+				discounts = #{discounts,jdbcType=DOUBLE},
+			</if>
+			<if test="actualPayment != null">
+				actual_payment = #{actualPayment,jdbcType=DOUBLE},
+			</if>
+			<if test="payStatus != null">
+				pay_status = #{payStatus,jdbcType=INTEGER},
+			</if>
+			<if test="payType != null">
+				pay_type = #{payType,jdbcType=VARCHAR},
+			</if>
+			<if test="payAccount != null">
+				pay_account = #{payAccount,jdbcType=VARCHAR},
+			</if>
+			<if test="payValue != null">
+				pay_value = #{payValue,jdbcType=DOUBLE},
+			</if>
+			<if test="payTime != null">
+				pay_time = #{payTime,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="cext1 != null">
+				cext1 = #{cext1,jdbcType=VARCHAR},
+			</if>
+			<if test="cext2 != null">
+				cext2 = #{cext2,jdbcType=VARCHAR},
+			</if>
+			<if test="cext3 != null">
+				cext3 = #{cext3,jdbcType=VARCHAR},
+			</if>
+			<if test="iext1 != null">
+				iext1 = #{iext1,jdbcType=INTEGER},
+			</if>
+			<if test="iext2 != null">
+				iext2 = #{iext2,jdbcType=INTEGER},
+			</if>
+			<if test="dext1 != null">
+				dext1 = #{dext1,jdbcType=DATE},
+			</if>
+			<if test="dext2 != null">
+				dext2 = #{dext2,jdbcType=DATE},
+			</if>
+		</set>
+		where order_id = #{orderId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.yhcrt.healthcloud.mall.entity.WorkOrder">
+		update work_order
+		set service_id = #{serviceId,jdbcType=INTEGER},
+		member_id = #{memberId,jdbcType=INTEGER},
+		order_content = #{orderContent,jdbcType=VARCHAR},
+		service_object = #{serviceObject,jdbcType=VARCHAR},
+		tel = #{tel,jdbcType=VARCHAR},
+		address = #{address,jdbcType=VARCHAR},
+		start_time = #{startTime,jdbcType=VARCHAR},
+		end_time = #{endTime,jdbcType=VARCHAR},
+		handler = #{handler,jdbcType=VARCHAR},
+		to_user = #{toUser,jdbcType=VARCHAR},
+		create_time = #{createTime,jdbcType=VARCHAR},
+		handle_time = #{handleTime,jdbcType=VARCHAR},
+		order_status = #{orderStatus,jdbcType=INTEGER},
+		unit_price = #{unitPrice,jdbcType=DOUBLE},
+		amount = #{amount,jdbcType=INTEGER},
+		service_fee = #{serviceFee,jdbcType=DOUBLE},
+		discounts = #{discounts,jdbcType=DOUBLE},
+		actual_payment = #{actualPayment,jdbcType=DOUBLE},
+		pay_status = #{payStatus,jdbcType=INTEGER},
+		pay_type = #{payType,jdbcType=VARCHAR},
+		pay_account = #{payAccount,jdbcType=VARCHAR},
+		pay_value = #{payValue,jdbcType=DOUBLE},
+		pay_time = #{payTime,jdbcType=VARCHAR},
+		remark = #{remark,jdbcType=VARCHAR},
+		cext1 = #{cext1,jdbcType=VARCHAR},
+		cext2 = #{cext2,jdbcType=VARCHAR},
+		cext3 = #{cext3,jdbcType=VARCHAR},
+		iext1 = #{iext1,jdbcType=INTEGER},
+		iext2 = #{iext2,jdbcType=INTEGER},
+		dext1 = #{dext1,jdbcType=DATE},
+		dext2 = #{dext2,jdbcType=DATE}
+		where order_id = #{orderId,jdbcType=INTEGER}
+	</update>
+	<select id="search" parameterType="map" resultMap="BaseResultMap">
+		select
+		work_order.order_id, work_order.service_object, work_order.order_status,
+		work_order.service_fee, work_order.pay_status, work_order.to_user,
+		service.service_name serviceName, work_order.cext1, service_provider.provider_name, 
+		(select real_name from member where member_id=work_order.member_id) as memberName  <!-- member.real_name memberName -->
+		from work_order 
+		left join service on work_order.service_id = service.service_id
+		left join service_provider on service.provider_id = service_provider.provider_id
+		where 1=1
+		<if test="providerId != null ">
+			and service.provider_id = #{providerId}
+		</if>
+		<if test="cext1 != null and cext1 !='' ">
+			and work_order.cext1 LIKE CONCAT('%',#{cext1},'%')
+		</if>
+		<if test="orderStatus !=null ">
+			and work_order.order_status = #{orderStatus}
+		</if>
+		order by work_order.end_time desc,work_order.order_id desc
+	</select>
+
+	<select id="getToDoWorkNum" parameterType="map" resultType="INTEGER">
+		select count(1) from work_order, service
+		where work_order.service_id = service.service_id
+		<if test="proList !=null and proList.size()>0">
+			and service.provider_id in
+			<foreach item="item" collection="proList" index="index" open="(" separator="," close=")">
+				#{item}
+			</foreach>
+		</if>
+		and work_order.order_status in ('1', '3', '5')   <!-- 1,3,5 表示未处理的工单 -->
+	</select>
+
+	<select id="getToDoGoodsNum" parameterType="map" resultType="INTEGER">
+		select count(1) from yw_order where yw_order.order_status = 1   <!-- 1 表示未处理的订单 -->
+	</select>
+
+	<!-- 修改服务工单 -->
+	<update id="updateById" parameterType="com.yhcrt.healthcloud.mall.entity.WorkOrder">
+		update work_order set handle_time = #{handleTime}, order_status = #{orderStatus} where order_id = #{orderId}
+	</update>
+	
+	<!-- 根据订单id查询信息 -->
+	<select id="queryByOrderId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    	select a.*,b.real_name toUserName,c. real_name handlerName  
+		from work_order a
+		left join employee b on a.to_user = b.emp_id
+		left join employee c on a.handler = c.user_id 
+    	where a.order_id = #{0}
+   	</select>
+
+</mapper>

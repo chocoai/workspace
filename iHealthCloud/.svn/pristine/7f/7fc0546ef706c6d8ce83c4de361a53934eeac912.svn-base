@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>孝康通</title>
+    <!-- Bootstrap -->
+    <link th:href="@{/pages/mall/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- FontAwesome 4.7.0字体 -->
+    <link th:href="@{/pages/mall/css/font-awesome.min.css}" rel="stylesheet">
+    <!-- 自定义css -->
+    <link th:href="@{/pages/mall/css/mymall.css}" rel="stylesheet">
+    <link th:href="@{/pages/mall/css/layer_mobile/need/layer.css}" rel="stylesheet">
+  </head>
+  <body style="padding-top: 50px;">
+  	<!--  必须 -->
+  	<input type="hidden" th:value="${url}" id="url">
+    <input type="hidden" th:value="${status}" id="status" th:if="${status}!=null">
+    <input type="hidden" th:value="${type}" id="type" th:if="${type}!=null">
+    <input type="hidden" th:value="${orderId}" id="orderId" th:if="${orderId}!=null">
+    <!-- 导航 开始 -->
+    <nav class="navbar navbar-default navbar-fixed-top navbar-mall-other">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a th:href="${url}" class="othertop-left"><i class="fa fa-angle-left icon-back"></i></a>
+          收货地址选择
+          <div class="othertop-right new-address">
+            <a th:href="@{'/h5/admin/member/getAddAddress?status='+${status}+'&type='+${type}+'&url='+${url}}">新建</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- 导航 结束 -->
+	<div class="no" th:if="${list}==null">
+      <p><img th:src="@{/pages/mall/images/nothing.png}"><br>暂无收货数据，赶紧新建吧！<br></p>
+    </div>
+    <div class="choose-address" th:if="${list}!=null">
+      <ul>
+        <li th:each="dto,dtoStat:${list}" th:id="${dto.cid}" class="removeAddress">
+          <div class="address-hd">
+            <a href="javascript:void(0)" th:id="${dto.cid}" class="address-edit pull-left"><i class="fa fa-pencil"></i> 编辑</a></span>
+            <a  href="javascript:void(0)" th:id="${dto.cid}" th:lang="${dtoStat.index}" class="address-delete pull-right"><i class="fa fa-trash-o"></i> 删除</a></span>
+          </div>
+          <div class="address-bd">
+              <a href="javascript:void(0)">
+                <div class="address-bd-top">
+                  <span class="pull-left" th:text="${dto.recipient}"></span>
+                  <span class="pull-right" th:text="${dto.tel}"></span>
+                </div>
+                <div class="address-bd-bot">
+                  <div class="col-xs-11 nopad-l" th:text="${dto.address}"></div>
+                  <div class="col-xs-1 nopad-lr">
+                  <img th:if="${dto.isDefault}==1" th:src="@{/pages/mall/images/c_checkbox_on.png}" class="img-responsive" th:id="${dto.cid}">
+                  <img th:if="${dto.isDefault}!=1" th:src="@{/pages/mall/images/c_checkbox_off.png}" class="img-responsive" th:id="${dto.cid}">
+                  </div>
+                </div>
+              </a>
+          </div>
+        </li>
+      </ul>
+    </div>
+    
+
+    <!-- 返回顶部 开始 -->
+    <div class="gototop" style="display: none;">
+      <a href="javascript:void(0)"><i class="glyphicon glyphicon-menu-up"></i></a>
+    </div>
+    <!-- 返回顶部 结束 -->
+
+    <script th:src="@{/pages/mall/js/jquery-1.9.1.min.js}"></script>
+    <script th:src="@{/pages/mall/js/bootstrap.min.js}"></script>
+    <script th:src="@{/pages/mall/css/layer_mobile/layer.js}"></script>
+    <script type="text/javascript">
+	var pathName=window.document.location.pathname;
+    var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
+      // 返回顶部
+      $(window).scroll(function(){
+        if($(window).scrollTop()>=20){
+           $(".gototop").fadeIn(300);
+        }else{
+           $(".gototop").fadeOut(300);
+        }
+      })
+      $(".gototop a").click(function(){
+        $("html,body").animate({scrollTop:"0px"},300)
+      })
+	  //删除收货地址
+	  $(".address-delete").click(function(){
+	  	var id = $(this).attr("id");
+	  	var index = $(this).attr("lang");
+	  	layer.open({
+		    content: '您确定要进行删除操作吗？'
+		    ,btn: ['确定', '取消']
+		    ,yes: function(index){
+		      deleteMemberAddress(id,index);
+		      layer.close(index);
+		    }
+		  });
+      })
+      //编辑收货地址
+      $(".address-edit").click(function(){
+      		var type=$("#type").val();
+	  		window.location.href=projectName+"/h5/admin/member/getAddAddress?memberAddressId="+$(this).attr("id")+"&status="+$("#status").val()+"&type="+type+"&url="+$("#url").val();
+      })
+      
+      // 更换收货地址
+      $(".address-bd a").click(function(){
+      	var id = $(this).find(".img-responsive").attr("id");
+        $(".img-responsive").each(function(){
+        	if($(this).attr("id")==id){
+        		$(this).attr("src",projectName+"/pages/mall/images/c_checkbox_on.png");
+        	}else{
+        		$(this).attr("src",projectName+"/pages/mall/images/c_checkbox_off.png");
+        	}
+        })
+        var status = $("#status").val();
+        var data= {};
+        if(status=="1"){
+        	data ={
+        		cid:id,
+        		status:status
+        	}
+        }else if(status=="2"){
+        	var type = $("#type").val();
+        	var orderId = $("#orderId").val();
+        	data ={
+           		cid:id,
+           		status:status,
+           		type:type,
+           		orderId:orderId
+           }
+        }
+        $.ajax({
+			type:"get",
+			url:projectName+"/h5/admin/member/updateMemberAddressIsdefault",
+			data:data,
+			dataType:"json",
+			success : function(result) {
+				//将从后台接收的json字符串转换成json对象
+		         if(result.result!=1){
+		         	layer.open({
+					content: '操作失败'
+					,skin: 'msg'
+					,time: 2 //2秒后自动关闭
+					});
+		         }
+			}
+		}) 
+      })
+      //删除
+      function deleteMemberAddress(id,index){
+      	 $.ajax({
+			type:"get",
+			url:projectName+"/h5/admin/member/deleteMemberAddress",
+			data:{cid:id},
+			dataType:"json",
+			success : function(result) {
+				//将从后台接收的json字符串转换成json对象
+		         if(result.result!=1){
+		         	layer.open({
+							    content: '操作失败'
+							    ,skin: 'msg'
+							    ,time: 2 //2秒后自动关闭
+							  });
+		         }else{
+		         	window.location.reload();
+		         }
+			}
+		})
+      }
+    </script>
+  </body>
+</html>

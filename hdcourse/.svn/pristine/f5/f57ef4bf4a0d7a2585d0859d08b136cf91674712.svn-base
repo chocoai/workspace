@@ -1,0 +1,938 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.demo.dao.LoginHistoryDao">
+	<resultMap type="com.whty.assis.demo.model.AreaMonthUseTakingCount" id="AreaMonthUseTakingCountResult">
+		<result property="areaCode" column="area_code" />
+		<result property="year" column="year" />
+		<result property="month" column="month" />
+		<result property="platformCode" column="platform_code" />
+		<result property="createTime" column="create_time" />
+		<result property="rate" column="rate" />
+		<result property="previousUseTaking" column="previous_use_taking" />
+		<result property="useTaking" column="use_taking" />
+		<result property="orgNumber" column="org_number" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+
+
+	<resultMap type="com.whty.assis.demo.model.OrgMonthUseTakingCount" id="OrgMonthUseTakingCountResult">
+		<result property="orgName" column="org_name" />
+		<result property="orgId" column="orgId" />
+		<result property="rate" column="rate" />
+		<result property="platformCode" column="platform_code" />
+		<result property="createTime" column="create_time" />
+		<result property="rate" column="rate" />
+		<result property="previousUseTaking" column="previous_use_taking" />
+		<result property="useTaking" column="use_taking" />
+		<result property="updateTime" column="update_time" />
+		<result property="year" column="year" />
+		<result property="month" column="month" />
+	</resultMap>
+
+	<resultMap type="com.whty.assis.demo.model.UserMonthUseTakingCount" id="UserMonthUseTakingCountResult">
+		<result property="orgName" column="org_name" />
+		<result property="orgId" column="org_Id" />
+		<result property="rate" column="rate" />
+		<result property="platformCode" column="platform_code" />
+		<result property="createTime" column="create_time" />
+		<result property="rate" column="rate" />
+		<result property="previousUseTaking" column="previous_use_taking" />
+		<result property="useTaking" column="use_taking" />
+		<result property="updateTime" column="update_time" />
+		<result property="year" column="year" />
+		<result property="month" column="month" />
+		<result property="userId" column="user_id" />
+		<result property="userName" column="user_name" />
+	</resultMap>
+
+
+	<resultMap type="com.whty.assis.demo.model.LoginHistory" id="LoginHistoryResult">
+		<id property="id" column="id" />
+		<result property="userId" column="user_id" />
+		<result property="userName" column="user_name" />
+		<result property="classId" column="class_id" />
+		<result property="classType" column="class_type" />		
+		<result property="orgId" column="org_id" />
+		<result property="orgName" column="org_name" />
+		<result property="runNumber" column="run_number" />
+		<result property="createTime" column="create_time" />
+		<result property="areaCode" column="area_code" />
+		<result property="areaName" column="area_name" />
+		<result property="platformCode" column="platform_code" />		
+		<result property="loginTaking" column="login_taking"/>
+		<result property="loginSource" column="login_source"/>
+		<result property="courseNum" column="course_num"/>
+		<result property="useTaking" column="use_taking"/>
+	</resultMap>
+
+	<resultMap type="com.whty.assis.demo.model.AreaMonthUsageCount" id="AreaMonthUsageCountResult">	
+		<result property="useCount" column="use_count" />
+		<result property="createTime" column="create_time" />
+		<result property="areaCode" column="area_code" />
+		<result property="areaName" column="area_name" />
+		<result property="rate" column="rate" />
+		<result property="previousUseCount" column="previous_use_count" />
+		<result property="updateTime" column="update_time" />
+		<result property="year" column="year" />
+		<result property="month" column="month" />
+		<result property="platformCode" column="platform_code"/>
+		
+		<result property="orgId" column="org_Id"/>
+		<result property="orgName" column="org_name"/>
+
+		<result property="orgUseRanking" column="org_use_ranking"/>
+		<result property="areaPercent" column="area_percent"/>
+	</resultMap>
+
+	<resultMap type="com.whty.assis.demo.model.OrgMonthUsageCount" id="OrgMonthUsageCountResult">		
+		<result property="orgId" column="org_id" />
+		<result property="orgName" column="org_name" />
+		<result property="useCount" column="use_count" />
+		<result property="createTime" column="create_time" />
+		<result property="areaCode" column="area_code" />
+		<result property="areaName" column="area_name" />
+		<result property="rate" column="rate" />
+		<result property="previousUseCount" column="previous_use_count" />
+		<result property="updateTime" column="update_time" />
+		<result property="year" column="year" />
+		<result property="month" column="month" />
+		<result property="platformCode" column="platform_code"/>
+		<result property="platformName" column="platform_name"/>
+		
+		<result property="classId" column="class_id"/>
+		<result property="className" column="class_name"/>
+		<result property="orgPercent" column="org_percent"/>
+		<result property="classRanking" column="classRanking"/>
+		
+	</resultMap>
+
+
+	<resultMap type="com.whty.assis.demo.model.UserMonthUsageCount" id="UserMonthUsageCountResult">		
+		<result property="userId" column="user_id" />
+		<result property="userName" column="user_name" />
+		<result property="orgId" column="org_id" />
+		<result property="orgName" column="org_name" />
+		<result property="useCount" column="use_count" />
+		<result property="createTime" column="create_time" />
+		<result property="areaCode" column="area_code" />
+		<result property="areaName" column="area_name" />
+		<result property="rate" column="rate" />
+		<result property="previousUseCount" column="previous_use_count" />
+		<result property="updateTime" column="update_time" />
+		<result property="year" column="year" />
+		<result property="month" column="month" />
+		<result property="platformCode" column="platform_code"/>
+		<result property="platformName" column="platform_name"/>
+		
+		<result property="classId" column="class_id"/>
+		<result property="className" column="class_name"/>
+		<result property="classRanking" column="class_ranking"/>
+		<result property="classPercent" column="class_percent"/>
+	</resultMap>
+
+
+	<resultMap type="com.whty.assis.demo.model.UserMonthActivityCount" id="UserMonthActivityCountResult">		
+		<result property="userId" column="user_id" />
+		<result property="userName" column="user_name" />
+		<result property="orgId" column="org_id" />
+		<result property="orgName" column="org_name" />
+		<result property="createTime" column="create_time" />
+		<result property="areaCode" column="area_code" />
+		<result property="areaName" column="area_name" />
+		<result property="loginTaking" column="login_taking" />
+		<result property="previousLoginTaking" column="previous_login_taking" />		
+		<result property="rate" column="rate" />
+		<result property="updateTime" column="update_time" />
+		<result property="year" column="year" />
+		<result property="month" column="month" />
+		<result property="platformCode" column="platform_code"/>
+		<result property="platformName" column="platform_name"/>
+		<result property="classId" column="class_id"/>
+		<result property="className" column="class_name"/>
+		<result property="platformName" column="platform_name"/>
+	</resultMap>
+
+
+	<resultMap type="com.whty.assis.demo.model.AreaMonthActivityCount" id="AreaMonthActivityCountResult">		
+		<result property="createTime" column="create_time" />
+		<result property="areaCode" column="area_code" />
+		<result property="areaName" column="area_name" />
+		<result property="loginTaking" column="login_taking" />
+		<result property="previousLoginTaking" column="previous_login_Taking" />
+		<result property="rate" column="rate" />
+		<result property="updateTime" column="update_time" />
+		<result property="year" column="year" />
+		<result property="month" column="month" />
+		<result property="platformCode" column="platform_code"/>
+		<result property="platformName" column="platform_name"/>
+		<result property="orgLoginTakingRanking" column="org_login_taking_ranking"/>
+		<result property="areaPercent" column="area_percent"/>
+		
+		<result property="orgId" column="org_id"/>
+		<result property="orgName" column="org_name"/>
+		<result property="areaName" column="area_name"/>
+		<result property="platformName" column="platform_name"/>
+	</resultMap>
+
+	<resultMap type="com.whty.assis.demo.model.OrgMonthActivityCount" id="OrgMonthActivityCountResult">		
+		<result property="orgId" column="org_id" />
+		<result property="orgName" column="org_name" />
+		<result property="createTime" column="create_time" />
+		<result property="areaCode" column="area_code" />
+		<result property="areaName" column="area_name" />
+		<result property="rate" column="rate" />
+		<result property="previousLoginTaking" column="previous_login_taking" />
+		<result property="loginTaking" column="login_taking" />
+		<result property="updateTime" column="update_time" />
+		<result property="year" column="year" />
+		<result property="month" column="month" />
+		<result property="platformCode" column="platform_code"/>
+		<result property="platformName" column="platform_name"/>
+		<result property="classRanking" column="class_ranking"/>
+		<result property="orgPercent" column="org_percent"/>
+		
+		<result property="classId" column="class_id"/>
+		<result property="className" column="class_name"/>
+		<result property="areaName" column="area_name"/>
+		<result property="platformName" column="platform_name"/>
+	</resultMap>
+
+
+	<select id="getOrgActivityCount" parameterType="map" resultMap="OrgMonthActivityCountResult">
+		select area_code,platform_code,sum(use_activity) as use_activity
+		from TA_ORG_MONTH_ACTIVITY_COUNT 
+		where 1=1
+		<if test="month != null ">and month=#{month}</if>
+		<if test="year != null ">and year=#{year}</if>
+		group by area_code,platform_code
+	</select>
+
+
+	<select id="getUserUseTakingByCurrentMonth" parameterType="map" resultMap="LoginHistoryResult">
+		select user_id,user_name,org_id,org_name,sum(use_taking) as use_taking,area_code,platform_code from TA_LOGIN_HISTORY 
+		where 1=1
+		<if test="orgId != null and orgId != ''">and org_id =#{orgId}</if>
+		<if test="userId != null and userId !=''">and user_id = #{userId}</if>
+		<if test="startTime != null and startTime != ''">and create_time >=#{startTime}</if>
+		<if test="endTime != null and endTime != ''"><![CDATA[and create_time <=#{endTime}]]></if>
+		and user_id is not null and area_code is not null and platform_code is not null and org_id is not null group by user_id,org_id,org_name,area_code,platform_code
+	</select>
+
+	<select id="getOrgUseTakingByCurrentMonth" parameterType="map" resultMap="LoginHistoryResult">
+		select org_id,org_name,sum(use_taking) as use_taking,area_code,platform_code from TA_LOGIN_HISTORY 
+		where 1=1 
+		<if test="orgId != null and orgId != ''">and org_id =#{orgId}</if>
+		<if test="startTime != null and startTime != ''">and create_time >=#{startTime}</if>
+		<if test="endTime != null and endTime != ''"><![CDATA[and create_time <=#{endTime}]]></if>
+		and area_code is not null and platform_code is not null and org_id is not null group by org_id,org_name,area_code,platform_code
+	</select>
+
+	<select id="getUserActivityCountByCurrentMonth" parameterType="map" resultMap="LoginHistoryResult">
+		select user_id,user_name,org_id,org_name,sum(login_taking) as login_taking,area_code,platform_code from TA_LOGIN_HISTORY 
+		where 1=1
+		<if test="orgId != null and orgId != ''">and org_id =#{orgId}</if>
+		<if test="userId != null and userId !=''">and user_id = #{userId}</if>
+		<if test="startTime != null and startTime != ''">and create_time >=#{startTime}</if>
+		<if test="endTime != null and endTime != ''"><![CDATA[and create_time <=#{endTime}]]></if>
+		and user_id is not null  and area_code is not null and platform_code is not null and org_id is not null group by user_id,user_name,org_id,org_name,area_code,platform_code
+	</select>
+
+	<insert id="saveOrgMonthActivityCount" parameterType ="com.whty.assis.demo.model.OrgMonthActivityCount">
+		insert into TA_ORG_MONTH_ACTIVITY_COUNT (
+			org_id,
+			year,
+			month
+			<if test="orgName != null and orgName != ''">,org_name</if>
+			<if test="areaCode != null and areaCode != ''">,area_code</if>
+			<if test="loginTaking != null ">,login_taking</if>
+			<if test="rate != null ">,rate</if>
+			<if test="previousLoginTaking != null ">,previous_login_taking</if>
+			<if test="platformCode != null ">,platform_code</if>
+			<if test="createTime != null ">,create_Time</if>
+			<if test="classRanking != null ">,class_ranking</if>
+			<if test="orgPercent != null ">,org_percent</if>
+			<if test="classId !=null">,class_id</if>
+			<if test="className !=null">,class_name</if>
+		) values(
+			#{orgId,jdbcType=VARCHAR}
+			,#{year}
+			,#{month}
+			<if test="orgName != null and orgName != ''">,#{orgName,jdbcType=VARCHAR}</if>
+			<if test="areaCode != null and areaCode != ''">,#{areaCode,jdbcType=VARCHAR}</if>
+			<if test="loginTaking != null ">,#{loginTaking}</if>
+			<if test="rate != null ">,#{rate}</if>
+			<if test="previousLoginTaking != null ">,#{previousLoginTaking}</if>
+			<if test="platformCode != null ">,#{platformCode}</if>
+			<if test="createTime != null ">,#{createTime}</if>
+			<if test="classRanking != null ">,#{classRanking}</if>
+			<if test="orgPercent != null ">,#{orgPercent}</if>
+			<if test="classId != null ">,#{classId}</if>
+			<if test="className != null ">,#{className}</if>
+		)
+	</insert>
+
+
+	<insert id="saveUserMonthActivityCount" parameterType ="com.whty.assis.demo.model.UserMonthActivityCount">
+		insert into TA_USER_MONTH_ACTIVITY_COUNT (
+			area_code,
+			year,
+			month,
+			platform_code,
+			user_Id
+			<if test="userName != null ">,user_name</if>
+			<if test="orgId != null ">,org_id</if>
+			<if test="orgName != null ">,org_name</if>
+			<if test="loginTaking != null ">,login_taking</if>
+			<if test="rate != null ">,rate</if>
+			<if test="previousLoginTaking != null ">,previous_login_taking</if>
+			<if test="createTime != null ">,create_time</if>
+			<if test="classId != null ">,class_id</if>
+			<if test="className != null ">,class_name</if>
+			<if test="ranking != null ">,ranking</if>
+		) values(
+			#{areaCode,jdbcType=VARCHAR}
+			,#{year}
+			,#{month}
+			,#{platformCode}
+			,#{userId}
+			<if test="userName != null ">,#{userName}</if>
+			<if test="orgId != null ">,#{orgId}</if>
+			<if test="orgName != null ">,#{orgName}</if>
+			<if test="loginTaking != null ">,#{loginTaking}</if>
+			<if test="rate != null ">,#{rate}</if>
+			<if test="previousLoginTaking != null ">,#{previousLoginTaking}</if>
+			<if test="createTime != null ">,#{createTime}</if>
+			<if test="classId != null ">,#{classId}</if>
+			<if test="className != null ">,#{className}</if>
+			<if test="ranking != null ">,#{ranking}</if>
+		)
+	</insert>
+
+	<insert id="saveAreaMonthActivityCount" parameterType ="com.whty.assis.demo.model.AreaMonthActivityCount">
+		insert into TA_AREA_MONTH_ACTIVITY_COUNT (
+			area_code,
+			year,
+			month,
+			platform_code
+			<if test="loginTaking != null">,login_taking</if>
+			<if test="rate != null ">,rate</if>
+			<if test="previousLoginTaking != null ">,previous_login_taking</if>
+			<if test="createTime != null ">,create_time</if>
+			<if test="orgLoginTakingRanking != null ">,org_login_taking_ranking</if>
+			<if test="areaPercent != null ">,area_Percent</if>
+			<if test="orgId != null and orgId !=''">,org_id</if>
+			<if test="orgName != null and orgName!=''">,org_name</if>
+		) values(
+			#{areaCode,jdbcType=VARCHAR}
+			,#{year}
+			,#{month}
+			,#{platformCode}
+			<if test="loginTaking != null ">,#{loginTaking}</if>
+			<if test="rate != null ">,#{rate}</if>
+			<if test="previousLoginTaking != null ">,#{previousLoginTaking}</if>
+			<if test="createTime != null ">,#{createTime}</if>
+			<if test="orgLoginTakingRanking != null ">,#{orgLoginTakingRanking}</if>
+			<if test="areaPercent != null ">,#{areaPercent}</if>
+			<if test="orgId != null and orgId != ''">,#{orgId}</if>
+			<if test="orgName != null and orgName != ''">,#{orgName}</if>
+		)
+	</insert>
+
+
+
+	<select id="getOrgMonthActivityCount" parameterType="map" resultMap="OrgMonthActivityCountResult">
+	select t1.activity_user_num,t1.platform_code,t1.org_id,t1.org_name,t1.use_activity,T1.YEAR,t1.month,t1.create_time,t1.update_time,t1.rate,t1.previous_use_activity,t1.area_code,t2.area_name
+            from TA_ORG_MONTH_ACTIVITY_COUNT t1 left join TA_AREA t2 on t1.area_code = t2.area_code 
+    where 1=1
+			<if test="orgId != null and orgId != ''">and t1.org_id=#{orgId}</if>
+			<if test="areaCode != null and areaCode != ''">and t1.area_code=#{areaCode}</if>
+			<if test="year != null">and t1.year = #{year}</if>
+			<if test="month != null">and t1.month = #{month}</if>
+			<if test="platformCode !=null">and t1.platform_code=#{platformCode}</if>
+	</select>
+
+
+	<update id="updateOrgMonthActivityCount" parameterType="com.whty.assis.demo.model.OrgMonthActivityCount">
+		update TA_ORG_MONTH_ACTIVITY_COUNT 
+		set 
+		<trim prefixOverrides=",">
+			<if test="orgName != null and orgName != ''">, org_name=#{orgName,jdbcType=VARCHAR}</if>
+			<if test="areaCode != null and areaCode != ''">, area_code=#{areaCode,jdbcType=VARCHAR}</if>
+			<if test="useActivity != null ">,use_activity=#{useActivity}</if>
+			<if test="rate != null ">,rate=#{rate}</if>
+			<if test="previousUseActivity != null ">,previous_use_activity=#{previousUseActivity}</if>
+			<if test="updateTime != null ">,update_time=#{updateTime}</if>
+		</trim>
+		where org_id = #{orgId,jdbcType=VARCHAR}  and year = #{year} and month = #{month}
+	</update>
+
+	
+	
+	<select id="getUserMonthActivityCount" parameterType="map" resultMap="UserMonthActivityCountResult">
+select t1.login_taking,t1.previous_login_taking,t1.class_id,t1.class_name,t1.org_id,t1.org_name,t1.user_id,t1.user_name,t1.platform_code,t1.login_taking,T1.YEAR,t1.month,t1.create_time,t1.update_time,t1.rate,t1.previous_login_taking,t1.area_code,t2.area_name
+            from TA_USER_MONTH_ACTIVITY_COUNT t1 left join TA_AREA t2 on t1.area_code = t2.area_code  
+		where 1=1
+			<if test="areaCode != null">and t1.area_code = #{areaCode}</if>
+			<if test="year != null ">and t1.year = #{year}</if>
+			<if test="month != null">and t1.month = #{month}</if>
+			<if test="platformCode!=null">and t1.platform_code = #{platformCode}</if>
+			<if test="orgId!=null">and t1.org_id = #{orgId}</if>
+			<if test="userId!=null">and t1.user_id = #{userId}</if>
+			<if test="classId!=null">and t1.class_id = #{classId}</if>
+	</select>
+	
+	<select id="getAreaMonthActivityCount" parameterType="map" resultMap="AreaMonthActivityCountResult">
+		select t1.platform_code,t1.use_activity,T1.YEAR,t1.month,t1.create_time,t1.update_time,t1.rate,t1.previous_use_activity,t1.area_code,t2.area_name
+			from TA_AREA_MONTH_ACTIVITY_COUNT t1 left join TA_AREA t2 on t1.area_code = t2.area_code 
+		where 1=1
+			<if test="areaCode != null">and t1.area_code = #{areaCode}</if>
+			<if test="year != null ">and t1.year = #{year}</if>
+			<if test="month != null">and t1.month = #{month}</if>
+			<if test="platformCode!=null">and t1.platform_code = #{platformCode}</if>
+	</select>
+
+
+	<update id="updateUserMonthActivityCount" parameterType="com.whty.assis.demo.model.UserMonthActivityCount">
+		update TA_USER_MONTH_ACTIVITY_COUNT 
+		set 
+		<trim prefixOverrides=",">
+			<if test="loginTaking != null ">,login_taking=#{loginTaking}</if>
+			<if test="rate != null ">,rate=#{rate}</if>
+			<if test="previousLoginTaking != null ">,previous_login_taking=#{previousLoginTaking}</if>
+			<if test="updateTime != null ">,update_time=#{updateTime}</if>
+			<if test="ranking != null ">,ranking=#{ranking}</if>
+		</trim>
+		where user_id=#{userId} and org_id=#{orgId} and area_code=#{areaCode,jdbcType=VARCHAR}  and year = #{year} and month = #{month}
+		<if test="classId !=null">and class_id=#{classId}</if>
+	</update>
+
+	<update id="updateAreaMonthActivityCount" parameterType="com.whty.assis.demo.model.AreaMonthActivityCount">
+		update TA_AREA_MONTH_ACTIVITY_COUNT 
+		set 
+		<trim prefixOverrides=",">
+			<if test="useActivity != null ">,use_activity=#{useActivity}</if>
+			<if test="rate != null ">,rate=#{rate}</if>
+			<if test="previousUseActivity != null ">,previous_use_activity=#{previousUseActivity}</if>
+			<if test="updateTime != null ">,update_time=#{updateTime}</if>
+		</trim>
+		where area_code=#{areaCode,jdbcType=VARCHAR} and year = #{year} and month = #{month}
+	</update>
+
+
+
+	<select id="getUserMonthUsageCount" parameterType="map" resultMap="UserMonthUsageCountResult">
+	select t1.class_id,t1.class_name,t1.class_ranking,t1.class_percent,t1.platform_code,t1.user_id,t1.user_name,t1.org_id,t1.org_name,t1.use_count,T1.YEAR,t1.month,t1.create_time,t1.update_time,t1.rate,t1.previous_use_count,t1.area_code,t2.area_name
+            from TA_USER_MONTH_USAGE_COUNT t1 left join TA_AREA t2 on t1.area_code = t2.area_code
+    where 1=1
+			<if test="orgId != null and orgId != ''">and t1.org_id=#{orgId}</if>
+			<if test="userId != null and userId != ''">and t1.user_id=#{userId}</if>
+			<if test="year != null ">and t1.year = #{year}</if>
+			<if test="month != null">and t1.month = #{month}</if>
+			<if test="areaCode != null">and t1.area_Code = #{areaCode}</if>
+			<if test="classId !=null">and t1.class_id=#{classId}</if>
+			<if test="platformCode != null">and t1.platform_code = #{platformCode}</if>
+	</select>
+
+<!-- /////////////////////////////////////////////////////////////////// -->
+
+	<select id="getOrgMonthUsageCount" parameterType="map" resultMap="OrgMonthUsageCountResult">
+	select t1.class_Ranking,t1.org_percent,t1.class_id,t1.class_name,t1.platform_code,t1.org_id,t1.org_name,t1.use_count,T1.YEAR,t1.month,t1.create_time,t1.update_time,t1.rate,t1.previous_use_count,t1.area_code,t2.area_name
+            from TA_ORG_MONTH_USAGE_COUNT t1 left join TA_AREA t2 on t1.area_code = t2.area_code
+    where 1=1
+			<if test="orgId != null and orgId != ''">and t1.org_id=#{orgId}</if>
+			<if test="userId != null and userId != ''">and t1.user_id=#{userId}</if>
+			<if test="year != null ">and t1.year = #{year}</if>
+			<if test="month != null">and t1.month = #{month}</if>		
+	</select>
+	
+
+	<insert id="saveUserMonthUsageCount" parameterType ="com.whty.assis.demo.model.UserMonthUsageCount">
+		insert into TA_USER_MONTH_USAGE_COUNT (
+			user_id,
+			year,
+			month,
+			platform_code
+			<if test="orgId != null and orgId != ''">,org_id</if>
+			<if test="areaCode != null and areaCode != ''">,area_code</if>
+			<if test="userName != null and userName != ''">,user_name</if>
+			<if test="orgName != null and orgName != ''">,org_name</if>
+			<if test="useCount != null ">,use_count</if>
+			<if test="rate != null ">,rate</if>
+			<if test="previousUseCount != null ">,previous_use_count</if>
+			<if test="createTime != null ">,create_time</if>
+			<if test="classId != null ">,class_id</if>
+			<if test="className != null ">,class_name</if>
+			<if test="classRanking != null ">,class_ranking</if>
+			<if test="classPercent != null ">,class_percent</if>
+		) values(
+			#{userId}
+			,#{year}
+			,#{month}
+			,#{platformCode}
+			<if test="orgId != null and orgId != ''">,#{orgId,jdbcType=VARCHAR}</if>
+			<if test="areaCode != null and areaCode != ''">,#{areaCode,jdbcType=VARCHAR}</if>
+			<if test="userName != null and userName != ''">,#{userName,jdbcType=VARCHAR}</if>
+			<if test="orgName != null and orgName != ''">,#{orgName,jdbcType=VARCHAR}</if>
+			<if test="useCount != null ">,#{useCount}</if>
+			<if test="rate != null ">,#{rate}</if>
+			<if test="previousUseCount != null ">,#{previousUseCount}</if>
+			<if test="createTime != null ">,#{createTime}</if>
+			<if test="classId != null ">,#{classId}</if>
+			<if test="className != null ">,#{className}</if>
+			<if test="classRanking != null ">,#{classRanking}</if>
+			<if test="classPercent != null ">,#{classPercent}</if>
+		)
+	</insert>
+
+	<update id="updateUserMonthUsageCount" parameterType="com.whty.assis.demo.model.UserMonthUsageCount">
+		update TA_USER_MONTH_USAGE_COUNT 
+		set 
+		<trim prefixOverrides=",">
+			<if test="useCount != null ">,use_count=#{useCount}</if>
+			<if test="rate != null ">,rate=#{rate}</if>
+			<if test="previousUseCount != null ">,previous_use_count=#{previousUseCount}</if>
+			<if test="updateTime != null ">,update_time=#{updateTime}</if>
+			<if test="className!=null">,class_name=#{className}</if>
+			<if test="classRanking!=null">,class_ranking=#{classRanking}</if>
+			<if test="classPercent!=null">,class_percent=#{classPercent}</if>
+		</trim>
+		where user_id = #{userId,jdbcType=VARCHAR} and area_code = #{areaCode,jdbcType=VARCHAR} and org_id=#{orgId,jdbcType=VARCHAR} and year = #{year} and month = #{month}
+	</update>
+
+	<delete id="deleteAreaMonthActivity" parameterType="java.util.Map">
+		delete from TA_AREA_MONTH_ACTIVITY_COUNT 
+		where 1=1 and year=#{year} and month=#{month}
+	</delete>
+
+	<delete id="deleteOrgMonthActivity" parameterType="java.util.Map">
+		delete from TA_ORG_MONTH_ACTIVITY_COUNT 
+		where 1=1 and year=#{year} and month=#{month}
+	</delete>
+	
+
+	<delete id="deleteOrgMonthUsage" parameterType="java.util.Map">
+		delete from TA_ORG_MONTH_USAGE_COUNT 
+		where 1=1 and year=#{year} and month=#{month}
+	</delete>
+
+
+	<select id="countAreaMonthActivity" parameterType="map" resultMap="AreaMonthActivityCountResult">
+		select org_id,org_name,platform_code,area_code,month,year,sum(login_taking) 
+		as login_taking from TA_ORG_MONTH_ACTIVITY_COUNT 
+		where 1=1
+		<if test="year != null ">and year=#{year}</if>
+		<if test="month != null ">and month=#{month}</if>
+		group by org_id,org_name,platform_code,area_code,year,month
+	</select>
+
+	<select id ="countOrgMonthActivity" parameterType="map" resultMap="OrgMonthActivityCountResult">
+		select class_id,class_name,org_id,org_name,platform_code,area_code,month,year,sum(login_taking) 
+		as login_taking from TA_USER_MONTH_ACTIVITY_COUNT 
+		where 1=1
+		<if test="year != null ">and year=#{year}</if>
+		<if test="month != null ">and month=#{month}</if>
+		group by class_id,org_id,org_name,platform_code,area_code,year,month,class_name
+	</select>
+
+
+	<select id="countOrgMonthUsage" parameterType="map" resultMap="OrgMonthUsageCountResult">
+		select class_id,class_name,org_id,org_name,platform_code,area_code,month,year,sum(use_count) 
+		as use_count from TA_USER_MONTH_USAGE_COUNT 
+		where 1=1
+		<if test="year != null ">and year=#{year}</if>
+		<if test="month != null ">and month=#{month}</if>
+		group by class_id,org_id,org_name,platform_code,area_code,year,month,class_name
+	</select>
+
+	<insert id="saveOrgMonthUsageCount" parameterType ="com.whty.assis.demo.model.OrgMonthUsageCount">
+		insert into TA_ORG_MONTH_USAGE_COUNT (
+			org_id,
+			year,
+			month,
+			platform_code
+			<if test="orgName != null ">,org_name</if>
+			<if test="areaCode != null ">,area_code</if>
+			<if test="useCount != null ">,use_count</if>
+			<if test="rate != null ">,rate</if>
+			<if test="previousUseCount != null ">,previous_use_count</if>
+			<if test="createTime != null ">,create_time</if>
+			<if test="classRanking != null ">,class_ranking</if>
+			<if test="orgPercent != null ">,org_percent</if>
+			<if test="className != null ">,class_name</if>
+			<if test="classId != null ">,class_id</if>
+		) values(
+			#{orgId}
+			,#{year}
+			,#{month}
+			,#{platformCode}
+			<if test="orgName != null ">,#{orgName}</if>
+			<if test="areaCode != null ">,#{areaCode}</if>
+			<if test="useCount != null ">,#{useCount}</if>
+			<if test="rate != null ">,#{rate}</if>
+			<if test="previousUseCount != null ">,#{previousUseCount}</if>
+			<if test="createTime != null ">,#{createTime}</if>
+			<if test="classRanking != null ">,#{classRanking}</if>
+			<if test="orgPercent != null ">,#{orgPercent}</if>
+			<if test="className != null ">,#{className}</if>
+			<if test="classId != null ">,#{classId}</if>
+		)
+	</insert>
+
+	<update id="updateOrgMonthUsageCount" parameterType="com.whty.assis.demo.model.OrgMonthUsageCount">
+		update TA_ORG_MONTH_USAGE_COUNT 
+		set 
+		<trim prefixOverrides=",">
+			<if test="useCount != null ">,use_count=#{useCount}</if>
+			<if test="rate != null ">,rate=#{rate}</if>
+			<if test="previousUseCount != null ">,previous_use_count=#{previousUseCount}</if>
+			<if test="updateTime != null ">,update_time=#{updateTime}</if>
+			<if test="classRanking != null ">,class_ranking=#{classRanking}</if>
+			<if test="classId != null ">,class_id=#{classId}</if>
+			<if test="className != null ">,class_name=#{className}</if>
+			<if test="orgPercent != null ">,org_percent=#{orgPercent}</if>
+		</trim>
+		where area_code = #{areaCode,jdbcType=VARCHAR} and org_id=#{orgId,jdbcType=VARCHAR}  and year = #{year} and month = #{month}
+	</update>
+
+
+
+<select id="getUserMonthUseTakingCount" parameterType="map" resultMap="UserMonthUseTakingCountResult">
+	select t1.user_id,t1.user_name,t1.org_id,t1.org_name,t1.platform_code,t1.use_taking,T1.YEAR,t1.month,t1.create_time,t1.update_time,t1.rate,t1.previous_use_taking,t1.area_code,t2.area_name
+			from TA_USER_MONTH_USE_TAKING_COUNT t1 left join TA_AREA t2 on t1.area_code = t2.area_code
+		where 1=1
+			<if test="areaCode != null and areaCode != ''">and t1.area_code=#{areaCode}</if>
+			<if test="year != null ">and t1.year = #{year}</if>
+			<if test="month != null">and t1.month = #{month}</if>
+			<if test="platformCode !=null">and t1.platform_code=#{platformCode}</if>
+			<if test="orgId !=null and orgId!=''">and t1.org_id=#{orgId}</if>
+			<if test="userId !=null and userId != ''">and t1.user_id=#{userId}</if>
+	</select>
+	
+	
+<select id="getOrgMonthUseTakingCount" parameterType="map" resultMap="OrgMonthUseTakingCountResult">
+	select t1.org_id,t1.org_name,t1.platform_code,t1.use_taking,T1.YEAR,t1.month,t1.create_time,t1.update_time,t1.rate,t1.previous_use_taking,t1.area_code,t2.area_name
+			from TA_ORG_MONTH_USE_TAKING_COUNT t1 left join TA_AREA t2 on t1.area_code = t2.area_code
+		where 1=1
+			<if test="areaCode != null and areaCode != ''">and t1.area_code=#{areaCode}</if>
+			<if test="year != null ">and t1.year = #{year}</if>
+			<if test="month != null">and t1.month = #{month}</if>
+			<if test="platformCode !=null">and t1.platform_code=#{platformCode}</if>
+			<if test="orgId !=null and orgId!=''">and t1.org_id=#{orgId}</if>
+	</select>
+
+	<select id="getAreaMonthUseTakingCount" parameterType="map" resultMap="AreaMonthUseTakingCountResult">
+	select t1.org_id,t1.org_name,t1.platform_code,t1.use_taking,T1.YEAR,t1.month,t1.create_time,t1.update_time,t1.rate,t1.previous_use_taking,t1.area_code,t2.area_name
+			from TA_AREA_MONTH_USE_TAKING_COUNT t1 left join TA_AREA t2 on t1.area_code = t2.area_code
+		where 1=1
+			<if test="areaCode != null and areaCode != ''">and t1.area_code=#{areaCode}</if>
+			<if test="year != null ">and t1.year = #{year}</if>
+			<if test="month != null">and t1.month = #{month}</if>
+			<if test="platformCode !=null">and t1.platform_code=#{platformCode}</if>
+			<if test="orgId !=null and orgId!=''">and t1.org_id=#{orgId}</if>
+	</select>
+
+
+	<select id="getAreaMonthUsageCount" parameterType="map" resultMap="AreaMonthUsageCountResult">
+		select t1.org_id,t1.org_name,t1.platform_code,t1.use_count,T1.YEAR,t1.month,t1.create_time,t1.update_time,t1.rate,t1.previous_use_count,t1.area_code,t2.area_name
+			from TA_AREA_MONTH_USAGE_COUNT t1 left join TA_AREA t2 on t1.area_code = t2.area_code
+		where 1=1
+			<if test="areaCode != null and areaCode != ''">and t1.area_code=#{areaCode}</if>
+			<if test="year != null ">and t1.year = #{year}</if>
+			<if test="month != null">and t1.month = #{month}</if>
+			<if test="platformCode !=null">and t1.platform_code=#{platformCode}</if>
+			<if test="orgId !=null and orgId!=''">and t1.org_id=#{orgId}</if>
+	</select>
+
+
+	<update id="updateOrgRanking" parameterType ="com.whty.assis.demo.model.AreaMonthUsageCount">
+		update TA_AREA_MONTH_USAGE_COUNT set org_use_ranking=#{orgUseRanking}
+		where area_code=#{areaCode,jdbcType=VARCHAR} and year = #{year} and month = #{month} and org_id=#{orgId} and platform_code=#{platformCode}
+	</update>
+
+
+
+<insert id="saveUserMonthUseTakingCount"  parameterType ="com.whty.assis.demo.model.UserMonthUseTakingCount">
+		insert into TA_USER_MONTH_USE_TAKING_COUNT (
+			year,
+			month,
+			area_Code,
+			org_id,
+			platform_code,
+			user_id
+			<if test="userName != null ">,user_name</if>
+			<if test="orgName != null ">,org_name</if>
+			<if test="rate != null ">,rate</if>
+			<if test="previousUseTaking != null ">,previous_use_taking</if>
+			<if test="createTime != null ">,create_Time</if>
+			<if test="useTaking != null ">,use_taking</if>
+		) values(
+			#{year}
+			,#{month}
+			,#{areaCode}
+			,#{orgId}
+			,#{platformCode}
+			,#{userId}
+			<if test="userName != null ">,#{userName}</if>
+			<if test="orgName != null ">,#{orgName}</if>
+			<if test="rate != null ">,#{rate}</if>
+			<if test="previousUseTaking != null ">,#{previousUseTaking}</if>
+			<if test="createTime != null ">,#{createTime}</if>
+			<if test="useTaking != null ">,#{useTaking}</if>
+		)
+	</insert>
+
+	<update id="updateUserMonthUseTakingCount" parameterType="com.whty.assis.demo.model.UserMonthUsageCount">
+		update TA_USER_MONTH_USE_TAKING_COUNT 
+		set 
+		<trim prefixOverrides=",">
+			<if test="useTaking != null ">,use_taking=#{useTaking}</if>
+			<if test="rate != null ">,rate=#{rate}</if>
+			<if test="previousUseTaking != null ">,previous_use_taking=#{previousUseTaking}</if>
+			<if test="updateTime != null ">,update_time=#{updateTime}</if>
+		</trim>
+		where area_code=#{areaCode,jdbcType=VARCHAR} and year = #{year} and month = #{month} and org_id=#{orgId} and user_id=#{userId}
+	</update>
+
+
+
+	<insert id="saveOrgMonthUseTakingCount"  parameterType ="com.whty.assis.demo.model.OrgMonthUseTakingCount">
+		insert into TA_ORG_MONTH_USE_TAKING_COUNT (
+			year,
+			month,
+			area_Code,
+			org_id,
+			platform_code
+			<if test="orgName != null ">,org_name</if>
+			<if test="rate != null ">,rate</if>
+			<if test="previousUseTaking != null ">,previous_use_taking</if>
+			<if test="createTime != null ">,create_Time</if>
+			<if test="useTaking != null ">,use_taking</if>
+		) values(
+			#{year}
+			,#{month}
+			,#{areaCode}
+			,#{orgId}
+			,#{platformCode}
+			<if test="orgName != null ">,#{orgName}</if>
+			<if test="rate != null ">,#{rate}</if>
+			<if test="previousUseTaking != null ">,#{previousUseTaking}</if>
+			<if test="createTime != null ">,#{createTime}</if>
+			<if test="useTaking != null ">,#{useTaking}</if>
+		)
+	</insert>
+
+	<update id="updateOrgMonthUseTakingCount" parameterType="com.whty.assis.demo.model.OrgMonthUsageCount">
+		update TA_ORG_MONTH_USE_TAKING_COUNT 
+		set 
+		<trim prefixOverrides=",">
+			<if test="useTaking != null ">,use_taking=#{useTaking}</if>
+			<if test="rate != null ">,rate=#{rate}</if>
+			<if test="previousUseTaking != null ">,previous_use_taking=#{previousUseTaking}</if>
+			<if test="updateTime != null ">,update_time=#{updateTime}</if>
+		</trim>
+		where area_code=#{areaCode,jdbcType=VARCHAR} and year = #{year} and month = #{month} and org_id=#{orgId}
+	</update>
+
+
+	<insert id="saveAreaMonthUseTakingCount"  parameterType ="com.whty.assis.demo.model.AreaMonthUseTakingCount">
+		insert into TA_AREA_MONTH_USE_TAKING_COUNT (
+			year,
+			month,
+			area_Code,
+			org_id,
+			platform_code
+			<if test="orgName != null ">,org_name</if>
+			<if test="rate != null ">,rate</if>
+			<if test="previousUseTaking != null ">,previous_use_taking</if>
+			<if test="createTime != null ">,create_Time</if>
+			<if test="useTaking != null ">,use_taking</if>
+		) values(
+			#{year}
+			,#{month}
+			,#{areaCode}
+			,#{orgId}
+			,#{platformCode}
+			<if test="orgName != null ">,#{orgName}</if>
+			<if test="rate != null ">,#{rate}</if>
+			<if test="previousUseTaking != null ">,#{previousUseTaking}</if>
+			<if test="createTime != null ">,#{createTime}</if>
+			<if test="useTaking != null ">,#{useTaking}</if>
+		)
+	</insert>
+
+	<update id="updateAreaMonthUseTakingCount" parameterType="com.whty.assis.demo.model.AreaMonthUsageCount">
+		update TA_AREA_MONTH_USE_TAKING_COUNT 
+		set 
+		<trim prefixOverrides=",">
+			<if test="useTaking != null ">,use_taking=#{useTaking}</if>
+			<if test="rate != null ">,rate=#{rate}</if>
+			<if test="previousUseTaking != null ">,previous_use_taking=#{previousUseTaking}</if>
+			<if test="updateTime != null ">,update_time=#{updateTime}</if>
+		</trim>
+		where area_code=#{areaCode,jdbcType=VARCHAR} and year = #{year} and month = #{month} and org_id=#{orgId}
+	</update>
+
+	<insert id="saveAreaMonthUsageCount" parameterType ="com.whty.assis.demo.model.AreaMonthUsageCount">
+		insert into TA_AREA_MONTH_USAGE_COUNT (
+			year,
+			month,
+			area_Code,
+			org_id,
+			platform_code
+			<if test="useCount != null ">,use_count</if>
+			<if test="orgName != null ">,org_name</if>
+			<if test="rate != null ">,rate</if>
+			<if test="previousUseCount != null ">,previous_use_count</if>
+			<if test="createTime != null ">,create_Time</if>
+			<if test="orgUseRanking != null ">,org_use_ranking</if>
+			<if test="areaPercent != null ">,area_percent</if>
+		) values(
+			#{year}
+			,#{month}
+			,#{areaCode}
+			,#{orgId}
+			,#{platformCode}
+			<if test="useCount != null ">,#{useCount}</if>
+			<if test="orgName != null ">,#{orgName}</if>
+			<if test="rate != null ">,#{rate}</if>
+			<if test="previousUseCount != null ">,#{previousUseCount}</if>
+			<if test="createTime != null ">,#{createTime}</if>
+			<if test="orgUseRanking != null ">,#{orgUseRanking}</if>
+			<if test="areaPercent != null ">,#{areaPercent}</if>
+		)
+	</insert>
+
+	<update id="updateAreaMonthUsageCount" parameterType="com.whty.assis.demo.model.AreaMonthUsageCount">
+		update TA_AREA_MONTH_USAGE_COUNT 
+		set 
+		<trim prefixOverrides=",">
+			<if test="useCount != null ">,use_count=#{useCount}</if>
+			<if test="rate != null ">,rate=#{rate}</if>
+			<if test="previousUseCount != null ">,previous_use_count=#{previousUseCount}</if>
+			<if test="updateTime != null ">,update_time=#{updateTime}</if>
+			<if test="orgUseRanking !=null">,org_use_ranking=#{orgUseRanking}</if>
+			<if test="areaPercent !=null">,area_percent=#{areaPercent}</if>
+		</trim>
+		where area_code=#{areaCode,jdbcType=VARCHAR} and year = #{year} and month = #{month} and org_id=#{orgId}
+	</update>
+
+	<select id="getAreaUseCountByCurrentMonth" parameterType="map" resultMap="LoginHistoryResult">
+		select sum(run_number) as run_Number,area_code,platform_code from TA_LOGIN_HISTORY 
+		where 1=1
+		<if test="areaCode != null and areaCode != ''">and area_code=#{areaCode}</if>
+		<if test="startTime != null and startTime != ''">and create_time>=#{startTime}</if>
+		<if test="endTime != null and endTime != ''"><![CDATA[and create_time <=#{endTime}]]></if>
+		and area_code is not null  group by area_code,platform_code
+	</select>
+
+
+
+	<select id="getOrgActivityByCurrentMonth" parameterType="map" resultMap="LoginHistoryResult">
+		select org_id,org_name,sum(run_number) as run_Number,area_code,platform_code from TA_LOGIN_HISTORY 
+		where 1=1
+		<if test="orgId != null and orgId != ''">and org_id=#{orgId}</if>
+		<if test="areaCode != null and areaCode != ''">and area_code=#{areaCode}</if>
+		<if test="startTime != null and startTime != ''">and create_time >=#{startTime}</if>
+		<if test="endTime != null and endTime != ''"><![CDATA[and create_time <= #{endTime}]]></if>
+		and org_id is not null and platform_code is not null and area_code is not null group by org_id,org_name,area_code,platform_code
+	</select>
+
+	<!-- 当月学校使用统计 -->
+	<select id="getOrgUseCountByCurrentMonth" parameterType="map" resultMap="LoginHistoryResult">
+		select org_id,org_name,sum(run_number) as run_Number,area_code,platform_code from TA_LOGIN_HISTORY 
+		where 1=1
+		<if test="orgId != null and orgId != ''">and org_id=#{orgId}</if>
+		<if test="areaCode != null and areaCode != ''">and area_code=#{areaCode}</if>
+		<if test="startTime != null and startTime != ''">and create_time >=#{startTime}</if>
+		<if test="endTime != null and endTime != ''"><![CDATA[and create_time <=#{endTime}]]></if>
+		and org_id is not null and platform_code is not null and area_code is not null group by org_id,org_name,area_code,platform_code
+	</select>
+
+
+	<select id="getUserCountByCurrentMonth" parameterType="map" resultMap="LoginHistoryResult">
+		select user_id,user_name,org_id,org_name,sum(run_number) as run_Number,area_code,platform_code from TA_LOGIN_HISTORY 
+		where 1=1
+		<if test="orgId != null and orgId != ''">and org_id=#{orgId}</if>
+		<if test="userId != null and userId !=''">and user_id = #{userId}</if>
+		<if test="startTime != null and startTime != ''">and create_time>=#{startTime}</if>
+		<if test="endTime != null and endTime != ''"><![CDATA[and create_time<=#{endTime}]]></if>
+		and user_id is not null  and area_code is not null and platform_code is not null and org_id is not null group by user_id,user_name,org_id,org_name,area_code,platform_code
+	</select>
+
+	<delete id="deleteById" parameterType="string">
+		delete from TA_LOGIN_HISTORY where id=#{id}
+	</delete>
+
+	<insert id="saveLoginHistoryFiling" parameterType="com.whty.assis.demo.model.LoginHistory">
+		insert into TA_LOGIN_HISTORY_FILING (
+			id
+			<if test="userId != null and userId != ''">,user_id</if>
+			<if test="userName != null and userName != ''">,user_name</if>
+			<if test="areaCode != null and areaCode != ''">,area_code</if>
+			<if test="orgId != null and orgId != ''">,org_id</if>
+			<if test="orgName != null and orgName != ''">,org_name</if>
+			<if test="runNumber != null ">,run_number</if>
+			<if test="platformCode != null and platformCode != ''">,platform_code</if>
+			<if test="classId != null and classId != ''">,class_id</if>
+			<if test="classType != null and classType != ''">,class_type</if>
+			<if test="createTime !=null">,create_time</if>
+			<if test="loginTaking !=null">,login_taking</if>
+			<if test="loginSource !=null">,login_source</if>
+			<if test="courseNum !=null and courseNum !=''">,course_Num</if>
+		) values (
+			#{id,jdbcType=VARCHAR}
+			<if test="userId != null and userId != ''">,#{userId,jdbcType=VARCHAR}</if>
+			<if test="userName != null and userName != ''">,#{userName,jdbcType=VARCHAR}</if>
+			<if test="areaCode != null and areaCode != ''">,#{areaCode,jdbcType=VARCHAR}</if>
+			<if test="orgId != null and orgId != ''">,#{orgId,jdbcType=VARCHAR}</if>
+			<if test="orgName != null and orgName != ''">,#{orgName,jdbcType=VARCHAR}</if>
+			<if test="runNumber != null ">,#{runNumber,jdbcType=INTEGER}</if>
+			<if test="platformCode != null and platformCode != ''">,#{platformCode,jdbcType=VARCHAR}</if>
+			<if test="classId != null and classId != ''">,#{classId,jdbcType=VARCHAR}</if>
+			<if test="classType != null and classType != ''">,#{classType,jdbcType=VARCHAR}</if>
+			<if test="createTime != null ">,#{createTime}</if>
+			<if test="loginTaking != null ">,#{loginTaking}</if>
+			<if test="loginSource != null ">,#{loginSource}</if>
+			<if test="courseNum !=null and courseNum !=''">,#{courseNum}</if>
+		)
+	</insert>
+
+
+
+	<insert id="addLoginHistory" parameterType="com.whty.assis.demo.model.LoginHistory">
+		insert into TA_LOGIN_HISTORY (
+			id
+			<if test="userId != null and userId != ''">,user_id</if>
+			<if test="userName != null and userName != ''">,user_name</if>
+			<if test="areaCode != null and areaCode != ''">,area_code</if>
+			<if test="orgId != null and orgId != ''">,org_id</if>
+			<if test="orgName != null and orgName != ''">,org_name</if>
+			<if test="runNumber != null ">,run_number</if>
+			<if test="platformCode != null and platformCode != ''">,platform_code</if>
+			<if test="classId != null and classId != ''">,class_id</if>
+			<if test="classType != null and classType != ''">,class_type</if>
+			<if test="createTime != null ">,create_time</if>
+			<if test="loginTaking !=null">,login_taking</if>
+			<if test="loginSource !=null">,login_source</if>
+			<if test="courseNum !=null and courseNum !=''">,course_Num</if>
+			<if test="useTaking !=null and useTaking !=''">,use_Taking</if>
+		) values (
+			#{id,jdbcType=VARCHAR}
+			<if test="userId != null and userId != ''">,#{userId,jdbcType=VARCHAR}</if>
+			<if test="userName != null and userName != ''">,#{userName,jdbcType=VARCHAR}</if>
+			<if test="areaCode != null and areaCode != ''">,#{areaCode,jdbcType=VARCHAR}</if>
+			<if test="orgId != null and orgId != ''">,#{orgId,jdbcType=VARCHAR}</if>
+			<if test="orgName != null and orgName != ''">,#{orgName,jdbcType=VARCHAR}</if>
+			<if test="runNumber != null ">,#{runNumber,jdbcType=INTEGER}</if>
+			<if test="platformCode != null and platformCode != ''">,#{platformCode,jdbcType=VARCHAR}</if>
+			<if test="classId != null and classId != ''">,#{classId,jdbcType=VARCHAR}</if>
+			<if test="classType != null and classType != ''">,#{classType,jdbcType=VARCHAR}</if>
+			<if test="createTime != null ">,#{createTime}</if>
+			<if test="loginTaking != null ">,#{loginTaking}</if>
+			<if test="loginSource != null ">,#{loginSource}</if>
+			<if test="courseNum !=null and courseNum !=''">,#{courseNum}</if>
+			<if test="useTaking !=null and useTaking !=''">,#{useTaking}</if>
+		)
+	</insert>
+
+</mapper>

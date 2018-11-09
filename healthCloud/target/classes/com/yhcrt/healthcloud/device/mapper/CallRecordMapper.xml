@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.healthcloud.device.mapper.CallRecordMapper">
+	<resultMap id="BaseResultMap" type="com.yhcrt.healthcloud.device.entity.CallRecord">
+		<id column="call_id" jdbcType="INTEGER" property="callId" />
+		<result column="ref_id" jdbcType="INTEGER" property="refId" />
+		<result column="call_in_out" jdbcType="INTEGER" property="callInOut" />
+		<result column="type" jdbcType="VARCHAR" property="type" />
+		<result column="call_name" jdbcType="VARCHAR" property="callName" />
+		<result column="phone_no" jdbcType="VARCHAR" property="phoneNo" />
+		<result column="is_answer" jdbcType="INTEGER" property="isAnswer" />
+		<result column="call_duration" jdbcType="VARCHAR" property="callDuration" />
+		<result column="create_time" jdbcType="VARCHAR" property="createTime" />
+		<result column="call_time" jdbcType="VARCHAR" property="callTime" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		call_id, ref_id, call_in_out, type, call_name, phone_no, is_answer, call_duration, create_time, call_time
+	</sql>
+	<select id="selectByExample" parameterType="com.yhcrt.healthcloud.device.entity.CallRecordExample" resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from call_record
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from call_record
+		where call_id = #{callId,jdbcType=INTEGER}
+	</select>
+	
+	<!-- 呼叫列表 -->
+	<select id="queryList" parameterType="map" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from call_record
+		where 1=1 
+		<if test="callName != null and callName != '' ">
+			and call_name LIKE CONCAT('%',#{callName},'%')  
+		</if>
+		<if test="phoneNo != null and phoneNo != '' ">
+			and phone_no LIKE CONCAT('%',#{phoneNo},'%')
+		</if>
+		<if test="callType != null ">
+			and call_in_out = #{callType}
+		</if>
+		<if test="createTime != null and createTime != '' ">
+			<![CDATA[ and DATE_FORMAT(create_time,'%y-%m-%d') = DATE_FORMAT(#{createTime},'%y-%m-%d') ]]>
+		</if>
+		order by create_time desc
+	</select>
+	
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from call_record
+		where call_id = #{callId,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample" parameterType="com.yhcrt.healthcloud.device.entity.CallRecordExample">
+		delete from call_record
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.yhcrt.healthcloud.device.entity.CallRecord" >
+		insert into call_record ( ref_id,call_in_out, type,
+		call_name, phone_no, is_answer,
+		call_duration, create_time, call_time)
+		values ( #{refId,jdbcType=INTEGER},
+		 #{callInOut,jdbcType=INTEGER},#{type,jdbcType=VARCHAR},
+		#{callName,jdbcType=VARCHAR}, #{phoneNo,jdbcType=VARCHAR}, #{isAnswer,jdbcType=INTEGER},
+		#{callDuration,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{callTime,jdbcType=VARCHAR})
+	</insert>
+	<insert id="insertSelective" parameterType="com.yhcrt.healthcloud.device.entity.CallRecord">
+		insert into call_record
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="callId != null">
+				call_id,
+			</if>
+			<if test="refId != null">
+				ref_id,
+			</if>
+			<if test="callInOut != null">
+				call_in_out,
+			</if>
+			<if test="type != null">
+				type,
+			</if>
+			<if test="callName != null">
+				call_name,
+			</if>
+			<if test="phoneNo != null">
+				phone_no,
+			</if>
+			<if test="isAnswer != null">
+				is_answer,
+			</if>
+			<if test="callDuration != null">
+				call_duration,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="callTime != null">
+				call_time,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="callId != null">
+				#{callId,jdbcType=INTEGER},
+			</if>
+			<if test="refId != null">
+				#{refId,jdbcType=INTEGER},
+			</if>
+			<if test="callInOut != null">
+				#{callInOut,jdbcType=INTEGER},
+			</if>
+			<if test="type != null">
+				#{type,jdbcType=VARCHAR},
+			</if>
+			<if test="callName != null">
+				#{callName,jdbcType=VARCHAR},
+			</if>
+			<if test="phoneNo != null">
+				#{phoneNo,jdbcType=VARCHAR},
+			</if>
+			<if test="isAnswer != null">
+				#{isAnswer,jdbcType=INTEGER},
+			</if>
+			<if test="callDuration != null">
+				#{callDuration,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=VARCHAR},
+			</if>
+			<if test="callTime != null">
+				#{callTime,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample"
+		parameterType="com.yhcrt.healthcloud.device.entity.CallRecordExample"
+		resultType="java.lang.Long">
+		select count(*) from call_record
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update call_record
+		<set>
+			<if test="record.callId != null">
+				call_id = #{record.callId,jdbcType=INTEGER},
+			</if>
+			<if test="record.refId != null">
+				ref_id = #{record.refId,jdbcType=INTEGER},
+			</if>
+			<if test="record.callInOut != null">
+				call_in_out = #{record.callInOut,jdbcType=INTEGER},
+			</if>
+			<if test="record.type != null">
+				type = #{record.type,jdbcType=VARCHAR},
+			</if>
+			<if test="record.callName != null">
+				call_name = #{record.callName,jdbcType=VARCHAR},
+			</if>
+			<if test="record.phoneNo != null">
+				phone_no = #{record.phoneNo,jdbcType=VARCHAR},
+			</if>
+			<if test="record.isAnswer != null">
+				is_answer = #{record.isAnswer,jdbcType=INTEGER},
+			</if>
+			<if test="record.callDuration != null">
+				call_duration = #{record.callDuration,jdbcType=VARCHAR},
+			</if>
+			<if test="record.createTime != null">
+				create_time = #{record.createTime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.callTime != null">
+				call_time = #{record.callTime,jdbcType=VARCHAR},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update call_record
+		set call_id = #{record.callId,jdbcType=INTEGER},
+		ref_id = #{record.refId,jdbcType=INTEGER},
+		call_in_out = #{record.callInOut,jdbcType=INTEGER},
+		type = #{record.type,jdbcType=VARCHAR},
+		call_name = #{record.callName,jdbcType=VARCHAR},
+		phone_no = #{record.phoneNo,jdbcType=VARCHAR},
+		is_answer = #{record.isAnswer,jdbcType=INTEGER},
+		call_duration = #{record.callDuration,jdbcType=VARCHAR},
+		create_time = #{record.createTime,jdbcType=VARCHAR},
+		call_time = #{record.callTime,jdbcType=VARCHAR}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.healthcloud.device.entity.CallRecord">
+		update call_record
+		<set>
+			<if test="refId != null">
+				ref_id = #{refId,jdbcType=INTEGER},
+			</if>
+			<if test="callInOut != null">
+				call_in_out = #{callInOut,jdbcType=INTEGER},
+			</if>
+			<if test="type != null">
+				type = #{type,jdbcType=VARCHAR},
+			</if>
+			<if test="callName != null">
+				call_name = #{callName,jdbcType=VARCHAR},
+			</if>
+			<if test="phoneNo != null">
+				phone_no = #{phoneNo,jdbcType=VARCHAR},
+			</if>
+			<if test="isAnswer != null">
+				is_answer = #{isAnswer,jdbcType=INTEGER},
+			</if>
+			<if test="callDuration != null">
+				call_duration = #{callDuration,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=VARCHAR},
+			</if>
+			<if test="callTime != null">
+				call_time = #{callTime,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where call_id = #{callId,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.yhcrt.healthcloud.device.entity.CallRecord">
+		update call_record
+		set ref_id = #{refId,jdbcType=INTEGER},
+		call_in_out = #{callInOut,jdbcType=INTEGER},
+		type = #{type,jdbcType=VARCHAR},
+		call_name = #{callName,jdbcType=VARCHAR},
+		phone_no = #{phoneNo,jdbcType=VARCHAR},
+		is_answer = #{isAnswer,jdbcType=INTEGER},
+		call_duration = #{callDuration,jdbcType=VARCHAR},
+		create_time = #{createTime,jdbcType=VARCHAR},
+		call_time = #{callTime,jdbcType=VARCHAR}
+		where call_id = #{callId,jdbcType=INTEGER}
+	</update>
+</mapper>

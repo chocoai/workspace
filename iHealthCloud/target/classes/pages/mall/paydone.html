@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>孝康通</title>
+<!-- Bootstrap -->
+<link th:href="@{/pages/mall/css/bootstrap.min.css}" rel="stylesheet">
+<!-- FontAwesome 4.7.0字体 -->
+<link th:href="@{/pages/mall/css/font-awesome.min.css}" rel="stylesheet">
+<!-- 自定义css -->
+<link th:href="@{/pages/mall/css/mymall.css}" rel="stylesheet">
+</head>
+<body style="background: #f3f3f3;">
+	<input th:if="${u} !=null" id="u" type="hidden" th:value="${u}" />
+	<input id="cext1" type="hidden" th:value="${cext1}"
+		th:if="${cext1} !=null" />
+	<input id="result" type="hidden" th:value="${result}"
+		th:if="${result} !=null" />
+	<!-- 导航 开始 -->
+	<nav class="navbar navbar-default navbar-mall-other">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<!-- <a href="#" class="othertop-left"><i class="fa fa-angle-left icon-back"></i></a> -->
+				付款结果
+			</div>
+		</div>
+	</nav>
+	<!-- 导航 结束 -->
+
+	<div class="paydone">
+		<p class="paydone-icon" th:if="${dto.orderStatus==1}">
+			<i class="fa fa-check-circle"></i>
+		</p>
+		<p class="paydone-icon" th:if="${dto.orderStatus==0}" style="color:#333333">
+			<i class="fa fa-times-circle"></i>
+		</p>
+		<p class="paydone-txt" th:text="${message}" id="message"></p>
+	</div>
+
+	<!-- 商品 开始 -->
+	<div class="paydone-info">
+		<table th:if="${type==1}">
+			<tr>
+				<th>订单号</th>
+				<td th:text="${dto.cext1}"></td>
+			</tr>
+			<tr>
+				<th>下单时间</th>
+				<td th:text="${dto.createTime}"></td>
+			</tr>
+			<tr th:if="${dto.orderStatus==1}">
+				<th>支付金额</th>
+				<td th:text="${dto.payValue}" id="payValue"></td>
+			</tr>
+			<tr th:if="${dto.orderStatus==1}">
+				<th>支付时间</th>
+				<td th:text="${dto.payTime}" id="payTime"></td>
+			</tr>
+		</table>
+		<table th:if="${type==2}">
+			<tr>
+				<th>订单号</th>
+				<td th:text="${dto.cext1}"></td>
+			</tr>
+			<tr>
+				<th>下单时间</th>
+				<td th:text="${dto.createTime}"></td>
+			</tr>
+			<tr th:if="${dto.orderStatus==1}">
+				<th>支付金额</th>
+				<td th:text="${dto.payValue}" id="payValue"></td>
+			</tr>
+			<tr th:if="${dto.orderStatus==1}">
+				<th>支付时间</th>
+				<td th:text="${dto.payTime}" id="payTime"></td>
+			</tr>
+		</table>
+	</div>
+	<!-- 服务信息列表 结束 -->
+
+	<div class="paydone-bottom"  >
+		<a th:href="@{/h5}" class="btn-paydone" th:if="${dto.orderStatus==1}">返回首页</a>
+	</div>
+
+
+	<!-- 返回顶部 开始 -->
+	<div class="gototop" style="display: none;">
+		<a href="javascript:void(0)"><i
+			class="glyphicon glyphicon-menu-up"></i></a>
+	</div>
+	<!-- 返回顶部 结束 -->
+
+	<script th:src="@{/pages/mall/js/jquery-1.9.1.min.js}"></script>
+	<script th:src="@{/pages/mall/js/bootstrap.min.js}"></script>
+	<script type="text/javascript">
+		var pathName = window.document.location.pathname;
+		var projectName = pathName.substring(0, pathName.substr(1).indexOf('/') + 1);
+		var u = navigator.userAgent.toLowerCase();
+		var mobile = u.indexOf('mobile') > -1; //移动手机端
+		if(mobile){
+			$(".btn-paydone").attr("href",projectName+"/h5?a=1&u="+$("#u").val());
+		}
+      // 返回顶部
+      $(window).scroll(function(){
+        if($(window).scrollTop()>=20){
+           $(".gototop").fadeIn(300);
+        }else{
+           $(".gototop").fadeOut(300);
+        }
+      })
+      $(".gototop a").click(function(){
+        $("html,body").animate({scrollTop:"0px"},300)
+      })
+     
+    </script>
+</body>
+</html>

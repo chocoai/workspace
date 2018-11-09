@@ -1,0 +1,118 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>网友沙龙</title>
+<link href="style/main.css" rel="stylesheet" type="text/css">
+<link href="style/lanmu.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="js/jquery.js"></script>
+<script type="text/javascript" src="js/popwin.js"></script>
+
+</head>
+
+<body class="body">
+ <!---------顶部----------->
+ <div class="top">
+  <div class="top_center">
+   <div class="top_l">您好，欢迎来到东楚论坛！</div>
+   <div class="top_r">
+    <ul>
+     <li><a href="#"><img src="images/icon_signin_01.png" alt=""/></a></li>
+     <li><a href="#"><img src="images/icon_signin_02.png" alt=""/></a></li>
+     <li><a href="#"><img src="images/icon_signin_03.png" alt=""/></a></li>
+    </ul>
+    <div class="dlzc">
+     <span><a href="login">登录</a></span>
+     <span class="register"><a href="register.html">注册</a></span>
+    </div>
+   </div>
+  </div>
+ </div>
+ 
+ <!-------logo、导航和搜索----------->
+ <div class="nav">
+  <div class="nav_center">
+   <h1><a href="index.html"><img src="images/logo.png" alt=""/></a></h1>
+   <div class="navsearch">
+    <!----导航---->
+    <nav>
+     <ul>
+      <li><a href="/">东楚网首页</a></li>
+      <li><a href="${base}/dakaquan/index.jhtml">大咖圈</a></li>
+     </ul>
+    </nav>
+    
+    <!----搜索---->
+    <div class="search radius6">
+	 <form name="searchform" method="post" action="/e/search/index.php">
+		<input name='ecmsfrom' type='hidden' value='9'>
+		<input type="hidden" name="show" value="title,newstext">
+		<select name="classid" id="choose">
+			<option value="0" selected>帖子</option>
+            <option value="1">话题</option>
+			<option value="2">用户</option>
+            <option value="3">栏目</option>
+		</select> 
+		<input class="inp_srh" name="keyboard"  placeholder="搜索其实很简单！" >
+		<input class="btn_srh" type="submit" name="submit" value="搜索">
+	 </form>
+    </div>
+   </div>
+  </div>
+ </div>
+
+
+ <!------------------中间内容部分------------------------>
+ <div class="big_center">
+  <!------当前位置------>
+  <div class="location">
+   <i></i> &nbsp;<a href="index.html">东楚论坛</a> &nbsp;> &nbsp; <a href="index.html">论坛栏目</a> &nbsp;> &nbsp; <a href="lanmu6.html">网友沙龙</a> &nbsp;> &nbsp; 发帖
+  </div>
+  
+  <!-----发帖----->
+  <div class="wpost">
+     <div class="wpost_hd">我要发帖</div>
+     <div class="wpost_bd">
+       <div class="wpost_bd_t">
+           <input type="text" class="wpost_tit" placeholder="标题">
+           <span>可输入35个汉字</span>
+       </div>
+       <div class="wpost_bd_b">
+         <div class="posteditor">
+            <i class="expression"></i>
+            <i class="picture"></i>
+            <i class="video"></i>
+         </div>
+         <div class="postedit"><textarea></textarea></div>
+       </div>
+       <button class="postsend_but"><a href="#">发布帖子</a></button>
+     </div>
+  </div>
+
+ <!------页脚------>
+  <div class="footer">
+   <div class="footer_listbox">
+    <div class="footer_list">
+     <span class="firstspan"><a href="#">联系我们</a></span>
+     <span><a href="#">无图版</a></span>
+     <span><a href="#">手机浏览</a></span>
+     <span><a href="#">清除Cookies</a></span>
+    </div>
+   </div>
+   <p>Powered by <a href="#">phpwind v8.7</a> <a href="#">Certificate</a> Copyright Time now is:08-25 10:12 </p>
+   <p>©2003-2011 <a href="#">鄂B2-20090110</a> <a href="#">东楚论坛</a> 版权所有 Gzip disabled Total 0.075699(s) query 2,</p>
+  </div>
+ </div>
+ 
+
+ <!------------------返回顶部-------------------->
+ <div id="before"><a href="http://bbs.hsdcw.com/" target="_blank" title="东楚论坛" class='before'></a></div>
+ <div id="wechat" class="wechat"><a href="javascript:void(0)"><div class="wechath"></div></a></div>
+ <a id="moquu_top" href="javascript:void(0)"></a>
+
+ 
+<script type="text/javascript" src="js/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="js/jquery.select.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.wfd.page.dao.CountMapper">
+  <resultMap id="BaseResultMap" type="com.whty.wfd.page.vo.Count">
+    <result column="id"  property="id" />
+    <result column="name"  property="name" />
+    <result column="teacherReceiveCount"  property="teacherReceiveCount" />
+    <result column="teacherLikeCount"  property="teacherLikeCount" />
+    <result column="studentPost"  property="studentPost" />
+    <result column="hotQeustion" property="hotQeustion" />
+  </resultMap>
+
+  <select id="getTeacherReceiveCount" resultMap="BaseResultMap" parameterType="int">
+    SELECT tu.name,tu.id,COUNT(tpm.user_id) teacherReceiveCount from t_post_message tpm
+    left join t_user tu on tpm.user_id = tu.id
+    where tu.user_type =1 and tpm.user_id in(select id from t_user where school_id =#{_parameter})
+    group by tpm.user_id order by teacherReceiveCount desc
+  </select>
+
+  <select id="getTeacherLikeCount" resultMap="BaseResultMap" parameterType="int">
+    select tu.name,COUNT(tpml.post_message_id)teacherLikeCount from t_post_message_like tpml
+    LEFT JOIN t_post_message tpm on tpm.id = tpml.post_message_id
+    LEFT JOIN t_user tu on tu.id = tpm.user_id
+    where tu.user_type =1 and tpm.user_id in(select id from t_user where school_id = #{_parameter})
+    GROUP BY tpm.user_id order by teacherLikeCount desc
+  </select>
+
+  <select id="getStudentPost" resultMap="BaseResultMap" parameterType="int">
+  SELECT tu.name,tu.id,COUNT(tpp.creator)studentPost from t_plate_post tpp
+  left join t_user tu on tpp.creator = tu.id
+  where tu.user_type =0 and plate_id in (select id from t_plate where school_id=#{_parameter})
+  group by tpp.creator order by studentPost desc
+  </select>
+
+  <select id="getHotQeustion" resultMap="BaseResultMap" parameterType="int">
+  SELECT tpm.plate_post_id,count(tpm.plate_post_id)hotQeustion from t_post_message tpm where is_delete=0 group by tpm.plate_post_id HAVING hotQeustion>10
+  </select>
+
+
+
+</mapper>

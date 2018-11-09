@@ -1,0 +1,215 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="keywords" content="${site.keywords!}" />
+<meta http-equiv="description" content="${site.description!}" />
+<title>${channel.title!channel.name} - ${site.name}</title>
+
+<link rel="stylesheet" type="text/css" href="/${res}/css/index_fc.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/public_all.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/global.css" />
+<link rel="stylesheet" type="text/css" href="${resSys}/front.css" />
+<link rel="stylesheet" type="text/css" href="${resSys}/jqueryUI/jquery.ui.css" />
+
+<script src="/${res}/js/dc/jquery-1.7.2.min.js"></script>
+<script src="${resSys}/jqueryUI/jquery-ui.js"></script>
+<script src="${resSys}/front.js"></script>
+<script src="${resSys}/ckplayer/ckplayer.js"></script>
+<script src="${resSys}/ckplayer/offlights.js"></script>
+
+<script type="text/javascript">
+	$(function() {
+		Cms.checkPerm("${base}", "${content.id}");
+		Cms.collectCsi("${base}", "collectCsiDiv", "collect_csi",
+				"${content.id}");
+		Cms.attachment("${base}", "${content.id}",
+				"${content.attachments?size}", "attach");
+		Cms.viewCount("${base}", "${content.id}");
+		Cms.siteFlow("${base}", location.href, document.referrer,
+				"${site.config.flowSwitch?string}");
+	});
+</script>
+
+</head>
+
+<body>
+
+	[#include "../include/fc_nav.html"/]
+
+	<div style="clear: both;"></div>
+
+	<!--内容 开始-->
+	<div class="content">
+		<div class="box mt10">
+			<div class="map">
+				<img src="/${res}/images/home.png" width="20" height="18">
+				<a href="${base}/">首页</a>> 
+				[#list channel.nodeList as n]
+				<a target="_blank" href="${n.url}">${n.name}</a>
+					[#if n_has_next] > [/#if]
+				[/#list] > ${content.title}
+			</div>
+			<div class="details">
+
+				<div class="details_left">
+
+					<div id="DB_gallery">
+						<div class="DB_imgSet">
+							<div class="DB_imgWin">
+								[#if content.pictures?size > 0]
+								<img src="${content.pictures[0].imgPath}" alt="" />
+								[#else]
+								<img src="${content.titleImg!content.typeImg!}" alt="" />
+								[/#if] 
+							</div>
+							<div class="DB_page">
+								<span class="DB_current">0</span>
+								-
+								<span class="DB_total">0</span>
+							</div>
+							<div class="DB_prevBtn">
+								<img src="/${res}/images/prev_off.png" alt="" />
+							</div>
+							<div class="DB_nextBtn">
+								<img src="/${res}/images/next_off.png" alt="" />
+							</div>
+						</div>
+
+						<div class="DB_thumSet">
+							<ul class="DB_thumMove">
+								[#list content.pictures as img]
+								<li>
+									<a href="${img.imgPath}">
+										<img src="${img.imgPath}" alt="" />
+									</a>
+								</li>
+								[/#list]
+							</ul>
+							<div class="DB_thumLine"></div>
+							<div class="DB_prevPageBtn">
+								<img src="/${res}/images/prev_page.png" alt="上一页" />
+							</div>
+							<div class="DB_nextPageBtn">
+								<img src="/${res}/images/next_page.png" alt="下一页" />
+							</div>
+						</div>
+					</div>
+
+					<div class="cont">
+						<div class="name">[@text_cut s=content.title! len='10' append='...'/]</div>
+						
+						<!-- JiaThis Button BEGIN -->
+						<div class="jiathis_style">
+							<a class="jiathis_button_qzone"></a>
+							<a class="jiathis_button_tsina"></a>
+							<a class="jiathis_button_tqq"></a>
+							<a class="jiathis_button_weixin"></a>
+							<a class="jiathis_button_renren"></a>
+							<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+							<a class="jiathis_counter_style"></a>
+						</div>
+						<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+						<!-- JiaThis Button END -->
+
+						<br>
+						<div class="money">
+							<div class="des">均价：</div>
+							<div class="num">${content.attr.price}元/平方米</div>
+						</div>
+						<div class="money">
+							<div class="des">开盘信息：</div>
+							<div class="about">${content.attr.openInfo}</div>
+						</div>
+						<div class="money">
+							<div class="des">楼盘地址：</div>
+							<div class="about">${content.attr.houseAddress}</div>
+						</div>
+						<div class="money">
+							<div class="des">售楼地址：</div>
+							<div class="about">${content.attr.saleAddress}</div>
+						</div>
+						<div class="money">
+							<div class="des">楼盘简介：</div>
+							<div class="about">${content.description}</div>
+						</div>
+						<div class="money">
+							<div class="des">销售电话：</div>
+							<div class="num">${content.attr.saleTel}</div>
+						</div>
+						<div style="clear: both;"></div>
+						<div class="money">
+							<!-- <input type="button" value="团购此房" /> -->
+						</div>
+
+					</div>
+					
+					<div style="clear: both;"></div>
+					<div>
+						<p><b>楼盘详细信息：</b></p>
+					</div>
+					<div>
+						<p>${txt!}</p>
+					</div>
+
+					<!-- <div style="clear: both;"></div>
+					<div class="map_pic">
+						<img src="${content.typeImg!}" width="856" height="337" />
+					</div> -->
+
+					<div style="clear: both;"></div>
+					[#if channel.commentControl!=2]
+					<div class="send_mess mt10">
+						<span style="float: left">我要评论</span>
+						<span style="float: right;">
+							<a href="${base}/comment.jspx?contentId=${content.id}" target="_blank">
+								已有
+								<span id="comments"></span>
+								条评论
+							</a>
+						</span>
+					</div>
+					[#include "inc_comment_input.html"/]
+					[#include "../special/comment_list.html"/]
+					[/#if]
+				</div>
+
+				[#include "../include/right.html"/]
+
+			</div>
+		</div>
+	</div>
+	<!--内容 end-->
+
+	<!--尾部 开始-->
+	[#include "../include/footer.html"/]
+	<!--尾部 开始-->
+	
+	<script src="/${res}/js/dc/settitle.js"></script>
+	<!-- <script src="/${res}/js/dc/jquery-1.2.6.pack.js"</script> -->
+	<script src="/${res}/js/dc/base.js"></script>
+	<script src="/${res}/js/dc/jquery.DB_gallery.js"></script>
+	
+	<script src="/${res}/js/dc/jquery.select.js"></script>
+	
+	<!-- <script src="/${res}/js/dc/lib.js"></script> -->
+	<!-- <script src="/${res}/js/dc/97zzw.js"></script> -->
+
+	<script type=text/javascript>
+		$(function() {
+			
+			$('#DB_gallery').DB_gallery({
+				thumWidth:110,            
+				thumGap:8,                
+				thumMoveStep:2,           
+				moveSpeed:300,            
+				fadeSpeed:500            
+			});
+			
+		})
+
+
+	</script>
+</body>
+</html>

@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.iHealthCloud.mapper.DoctorProposalMapper">
+  <resultMap id="BaseResultMap" type="com.yhcrt.iHealthCloud.entity.DoctorProposal">
+    <id column="cid" jdbcType="INTEGER" property="cid" />
+    <result column="doc_id" jdbcType="INTEGER" property="docId" />
+    <result column="member_id" jdbcType="INTEGER" property="memberId" />
+    <result column="proposal_content" jdbcType="VARCHAR" property="proposalContent" />
+    <result column="proposal_time" jdbcType="VARCHAR" property="proposalTime" />
+    <association property="doctor" column="doc_id" select="com.yhcrt.iHealthCloud.mapper.DoctorMapper.selectByPrimaryKey"></association>
+    <association property="member" column="member_id" select="com.yhcrt.iHealthCloud.mapper.MemberMapper.selectByPrimaryKey"></association>
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    cid, doc_id, member_id, proposal_content, proposal_time
+  </sql>
+  <select id="selectByExample" parameterType="com.yhcrt.iHealthCloud.entity.DoctorProposalExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from doctor_proposal
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from doctor_proposal
+    where cid = #{cid,jdbcType=INTEGER}
+  </select>
+  
+  <select id="getDoctorProposalById" parameterType="java.lang.Integer" resultType="com.yhcrt.iHealthCloud.pojo.DoctorProposalItem">
+	SELECT doctor_proposal.cid AS cid,
+	       member.real_name AS memberRealName,
+	       member.nick_name AS memberNickName,
+	       doctor.real_name AS doctorRealName,
+	       doctor_proposal.proposal_content AS proposalContent,
+	       doctor_proposal.proposal_time AS proposalTime
+	  FROM doctor_proposal, member, doctor
+	 WHERE doctor_proposal.cid = #{cid,jdbcType=INTEGER}
+	       AND member.member_id = doctor_proposal.member_id
+	       AND doctor.doc_id = doctor_proposal.doc_id
+  </select>
+  
+  <select id="listDoctorProposal" parameterType="java.lang.String" resultType="com.yhcrt.iHealthCloud.pojo.DoctorProposalItem">
+	SELECT doctor_proposal.cid AS cid,
+	       member.real_name AS memberRealName,
+	       member.nick_name AS memberNickName,
+	       doctor.real_name AS doctorRealName,
+	       doctor_proposal.proposal_content AS proposalContent,
+	       doctor_proposal.proposal_time AS proposalTime
+	  FROM doctor_proposal, member, doctor
+	 WHERE doctor_proposal.member_id = #{memberId,jdbcType=VARCHAR}
+	       AND member.member_id = doctor_proposal.member_id
+	       AND doctor.doc_id = doctor_proposal.doc_id
+	ORDER BY doctor_proposal.proposal_time DESC
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from doctor_proposal
+    where cid = #{cid,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yhcrt.iHealthCloud.entity.DoctorProposalExample">
+    delete from doctor_proposal
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yhcrt.iHealthCloud.entity.DoctorProposal">
+    insert into doctor_proposal (cid, doc_id, member_id, 
+      proposal_content, proposal_time)
+    values (#{cid,jdbcType=INTEGER}, #{docId,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER}, 
+      #{proposalContent,jdbcType=VARCHAR}, #{proposalTime,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yhcrt.iHealthCloud.entity.DoctorProposal">
+    insert into doctor_proposal
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="docId != null">
+        doc_id,
+      </if>
+      <if test="memberId != null">
+        member_id,
+      </if>
+      <if test="proposalContent != null">
+        proposal_content,
+      </if>
+      <if test="proposalTime != null">
+        proposal_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        #{cid,jdbcType=INTEGER},
+      </if>
+      <if test="docId != null">
+        #{docId,jdbcType=INTEGER},
+      </if>
+      <if test="memberId != null">
+        #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="proposalContent != null">
+        #{proposalContent,jdbcType=VARCHAR},
+      </if>
+      <if test="proposalTime != null">
+        #{proposalTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yhcrt.iHealthCloud.entity.DoctorProposalExample" resultType="java.lang.Long">
+    select count(*) from doctor_proposal
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update doctor_proposal
+    <set>
+      <if test="record.cid != null">
+        cid = #{record.cid,jdbcType=INTEGER},
+      </if>
+      <if test="record.docId != null">
+        doc_id = #{record.docId,jdbcType=INTEGER},
+      </if>
+      <if test="record.memberId != null">
+        member_id = #{record.memberId,jdbcType=INTEGER},
+      </if>
+      <if test="record.proposalContent != null">
+        proposal_content = #{record.proposalContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.proposalTime != null">
+        proposal_time = #{record.proposalTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update doctor_proposal
+    set cid = #{record.cid,jdbcType=INTEGER},
+      doc_id = #{record.docId,jdbcType=INTEGER},
+      member_id = #{record.memberId,jdbcType=INTEGER},
+      proposal_content = #{record.proposalContent,jdbcType=VARCHAR},
+      proposal_time = #{record.proposalTime,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.iHealthCloud.entity.DoctorProposal">
+    update doctor_proposal
+    <set>
+      <if test="docId != null">
+        doc_id = #{docId,jdbcType=INTEGER},
+      </if>
+      <if test="memberId != null">
+        member_id = #{memberId,jdbcType=INTEGER},
+      </if>
+      <if test="proposalContent != null">
+        proposal_content = #{proposalContent,jdbcType=VARCHAR},
+      </if>
+      <if test="proposalTime != null">
+        proposal_time = #{proposalTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yhcrt.iHealthCloud.entity.DoctorProposal">
+    update doctor_proposal
+    set doc_id = #{docId,jdbcType=INTEGER},
+      member_id = #{memberId,jdbcType=INTEGER},
+      proposal_content = #{proposalContent,jdbcType=VARCHAR},
+      proposal_time = #{proposalTime,jdbcType=VARCHAR}
+    where cid = #{cid,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SysRoleMapper">
+	<resultMap id="BaseResultMap" type="com.yhcrt.entity.system.SysRole">
+		<id column="CID" jdbcType="INTEGER" property="cid" />
+		<result column="ROLE_NAME" jdbcType="VARCHAR" property="roleName" />
+		<result column="ROLE_CODE" jdbcType="VARCHAR" property="roleCode" />
+		<result column="STATE" jdbcType="INTEGER" property="state" />
+		<result column="BACKUP" jdbcType="VARCHAR" property="backup" />
+		<result column="ORDER_NUM" jdbcType="INTEGER" property="orderNum" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		CID cid, ROLE_NAME roleName, ROLE_CODE roleCode, STATE
+		state, BACKUP backup,ORDER_NUM orderNum
+	</sql>
+	<!-- 单个插入 -->
+	<insert id="saveSelective" parameterType="com.yhcrt.entity.system.SysRole">
+		insert into sys_role
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="cid != null">
+				CID,
+			</if>
+			<if test="roleName != null">
+				ROLE_NAME,
+			</if>
+			<if test="roleCode != null">
+				ROLE_CODE,
+			</if>
+			<if test="state != null">
+				STATE,
+			</if>
+			<if test="orderNum != null">
+				ORDER_NUM,
+			</if>
+			<if test="backup != null">
+				BACKUP,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="cid != null">
+				#{cid,jdbcType=INTEGER},
+			</if>
+			<if test="roleName != null">
+				#{roleName,jdbcType=VARCHAR},
+			</if>
+			<if test="roleCode != null">
+				#{roleCode,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				#{state,jdbcType=INTEGER},
+			</if>
+			<if test="orderNum != null">
+				#{orderNum,jdbcType=INTEGER},
+			</if>
+			<if test="backup != null">
+				#{backup,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<!-- 更新信息 -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.entity.system.SysRole">
+		update sys_role
+		<set>
+			<if test="roleName != null">
+				ROLE_NAME = #{roleName,jdbcType=VARCHAR},
+			</if>
+			<if test="roleCode != null">
+				ROLE_CODE = #{roleCode,jdbcType=VARCHAR},
+			</if>
+			<if test="state != null">
+				STATE = #{state,jdbcType=INTEGER},
+			</if>
+			<if test="backup != null">
+				BACKUP = #{backup,jdbcType=VARCHAR},
+			</if>
+			<if test="orderNum != null">
+				ORDER_NUM = #{orderNum,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where CID = #{cid,jdbcType=INTEGER}
+	</update>
+	<!-- 根据角色ID查询 -->
+	<select id="getByCid" parameterType="java.lang.Integer"
+		resultType="com.yhcrt.entity.system.SysRole">
+		select
+		<include refid="Base_Column_List" />
+		from sys_role
+		where CID = #{cid,jdbcType=INTEGER}
+	</select>
+	<!-- 根据角色编号查询 -->
+	<select id="getByRoleCode" parameterType="java.lang.Integer"
+		resultType="com.yhcrt.entity.system.SysRole">
+		select
+		<include refid="Base_Column_List" />
+		from sys_role
+		where ROLE_CODE = #{roleCode,jdbcType=VARCHAR}
+	</select>
+	<!-- 根据角色ID集合查询 -->
+	<select id="getByRoleCid" parameterType="java.lang.Integer"
+		resultType="java.lang.String">
+		select
+		ROLE_NAME
+		from sys_role
+		where CID  = #{roleCid,jdbcType=INTEGER}
+	</select>
+	
+	
+	<!--多条件查询所有  -->
+	<select id="quertByParam" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_role
+		where 1 = 1 and CID != -1
+		<include refid="where_all" />
+		order by ORDER_NUM  DESC,ROLE_CODE,CID
+	</select>
+	<!--多条件查询 没有禁用 -->
+	<select id="quertByNotDisabledParam" parameterType="java.lang.String"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_role
+		where STATE = 0 and  CID != -1
+		<include refid="where_all" />
+		order by ORDER_NUM  DESC,ROLE_CODE,CID
+	</select>
+
+	<sql id="where_all">
+		<if test="findContent != null and findContent!='' ">
+			and (LOWER(ROLE_CODE) like CONCAT("%",#{findContent},"%")
+			or
+			LOWER(ROLE_NAME) like CONCAT("%",#{findContent},"%"))
+		</if>
+	</sql>
+	<!-- 更新用户状态 -->
+	<update id="updateByCidSates" parameterType="Map">
+		update sys_role set STATE = #{state,jdbcType=INTEGER}
+		where CID = #{id,jdbcType=INTEGER}
+	</update>
+	<!-- 根据用户ID获取角色-->
+	<select id="getByUserCid" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		SELECT urr.*
+		FROM (SELECT
+			r.*,
+			ur.USER_ID
+			FROM
+			sys_user_role AS ur
+			INNER JOIN sys_role AS r 
+			ON ur.ROLE_CID = r.CID)  urr
+		where urr.USER_ID = #{userCid,jdbcType=INTEGER}
+	</select>
+		<!-- 批量删除 -->
+	<delete id="deleteAll" parameterType="java.lang.Integer"
+		flushCache="false">
+		delete
+		from sys_role
+		where
+		CID in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+</mapper>

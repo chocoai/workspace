@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>孝康通</title>
+<!-- Bootstrap -->
+  	<link th:href="@{/pages/mall/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- FontAwesome 4.7.0字体 -->
+    <link th:href="@{/pages/mall/css/font-awesome.min.css}" rel="stylesheet">
+    <!-- 自定义css -->
+    <link th:href="@{/pages/mall/css/mymall.css}" rel="stylesheet">
+	<!-- 筛选侧边栏 -->
+    <link th:href="@{/pages/mall/css/sidenav.min.css}" rel="stylesheet">
+    
+    <link rel="stylesheet" th:href="@{/pages/mall/css/jquery-weui.min.css}">
+<link rel="stylesheet" th:href="@{/pages/mall/css/weui.min.css}">
+</head>
+<body class="list-mall"  ontouchstart>
+  	<input th:if="${a} !=null" id="a" type="hidden" th:value="${a}" />
+  	<input th:if="${u} !=null" id="u" type="hidden" th:value="${u}" />
+	<input type="hidden" id="pageNum" value="1" >
+  	<input type="hidden" id="pages" value="0" >
+	<!-- 导航 开始 -->
+	<nav class="navbar navbar-default navbar-fixed-top navbar-mall-other">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<a th:href="@{/h5}" class="othertop-left" th:if="${a} ==null"><i
+					class="fa fa-angle-left icon-back"></i></a> 商品
+			</div>
+		</div>
+	</nav>
+	<!-- 导航 结束 -->
+
+	<!-- tab 开始 -->
+	<div class="mall-list-tab">
+		<ul>
+			<li class="col-xs-4 nopad-lr active"><a href="#">推荐</a></li>
+			<li class="col-xs-4 nopad-lr"><a href="#">价格<i class="fa fa-unsorted"></i></a></li>
+			<!-- 20171228修改 开始 -->
+	        <li class="col-xs-4 nopad-lr"><a href="javascript:;" class="toggle" id="sidenav-toggle">筛选 <i class="fa fa-filter"></i></a></li>
+	        <!-- 20171228修改 结束 -->
+		</ul>
+	</div>
+	<!-- tab 结束 -->
+
+	<!-- 商品列表 开始 -->
+	<div class="mall-list-content">
+		<!-- 默认列表 开始 -->
+		<ul class="goods-list list-cell" id="orderNum">
+		
+		</ul>	
+	</div>
+	 <div class="goods-info mar-t0 list-cell none" style="padding-top:15px;display:none;" id="noorderId">
+        <div class="mar-tper30">
+          <div class="col-xs-4 col-xs-offset-4">
+            <img th:src="@{/pages/mall/images/noorders.png}" class="img-responsive">
+          </div>
+          <p class="noorders-txt">没有找到相关的商品信息</p>
+        </div>
+    </div>
+	<!-- 商品列表 结束 -->
+	<!-- 20171228 开始 -->
+    <!-- 筛选侧边栏 开始 -->
+    <nav class="sidenav col-xs-9" data-sidenav data-sidenav-toggle="#sidenav-toggle">
+      <form class="form-filter">
+        <div class="filter-cell">
+          <div class="filter-cell-hd">商品类型</div>
+          <div class="filter-cell-bd">
+            <ul class="firstlevel-list" >
+              <li th:each="dict:${dictList}"><a href="javascript:void(0);" th:text="${dict.dictKey}" th:id="${dict.dictId}" th:lang="${dict.dictValue}"></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="filter-cell related" style="display: none;">
+          <div class="filter-cell-hd">品牌</div>
+          <div class="filter-cell-bd">
+            <ul class="secondlevel-list" >
+            </ul>
+          </div>
+        </div>
+        <div class="filter-fixed">
+          <a href="javascript:void(0)" class="col-xs-6 btn-filter-reset" id="reset">重置</a>
+          <a href="javascript:void(0)" class="col-xs-6 btn-filter-ok" id="search">确认</a>
+        </div>
+      </form>
+    </nav>
+    <!-- 筛选侧边栏 结束 -->
+    <!-- 20171228 结束 -->
+	
+	<!-- 加载开始 -->
+ 	<div class="weui-loadmore" >  
+	    <i class="weui-loading" ></i>  
+	    <span class="weui-loadmore__tips" id="loading" >正在加载</span>  
+	</div>
+	
+	<!-- 返回顶部 开始 -->
+	<div class="gototop" style="display: none;">
+		<a href="javascript:void(0)"><i
+			class="glyphicon glyphicon-menu-up"></i></a>
+	</div>
+	<!-- 返回顶部 结束 -->
+
+	<script th:src="@{/pages/mall/js/jquery-1.9.1.min.js}"></script>
+	<script th:src="@{/pages/mall/js/bootstrap.min.js}"></script>
+    <!-- 筛选侧边栏 -->
+    <script th:src="@{/pages/mall/js/filter.js}"></script>
+	<script th:src="@{/pages/mall/js/fastclick.js}"></script>
+    <script th:src="@{/pages/mall/js/jquery-weui.js}"></script>
+	<script type="text/javascript">
+	var pathName=window.document.location.pathname;
+    var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
+    $('html').on('click',function(){ }); 
+    var dictValue ='';
+	var orderNum = 0;// 排序
+	var first='';    //分类1
+	var second='';   //分类2
+	 $(document).ready(function(){
+	        $(document.body).destroyInfinite();
+	      	//$(".weui-loadmore").hide();
+  			getGoods(1,0,first,second);
+		});
+		
+    	// tab
+      $(".mall-list-tab ul li").click(function(){
+        $(this).addClass("active").siblings().removeClass("active");
+        var index = $(this).index();
+        if(index==2){
+			orderNum=0;
+		}else if(index==1){
+			//价格
+        	if(orderNum==1){
+        		orderNum=2;
+        		getGoods(1,2,first,second);
+        	}else{
+        		orderNum=1;
+        		getGoods(1,1,first,second);
+        	}
+        }else{
+            //默认
+         	orderNum=0;
+        	getGoods(1,0,first,second);
+        }
+      })
+
+      // 返回顶部
+      $(window).scroll(function(){
+        if($(window).scrollTop()>=20){
+           $(".gototop").fadeIn(300);
+        }else{
+           $(".gototop").fadeOut(300);
+        }
+      })
+      $(".gototop a").click(function(){
+        $("html,body").animate({scrollTop:"0px"},300)
+      }) 
+      
+      //20171228
+      //筛选侧边栏
+      $('[data-sidenav]').sidenav();
+
+      //筛选二级分类
+      var $firstli = $(".firstlevel-list li");
+ 
+      $firstli.find("a").click(function(){
+        $(this).parent("li").addClass('active').siblings().removeClass('active');
+        $(".related").show();
+        var m = $(this).parent("li").index();
+        $(".secondlevel-list").eq(m).show().siblings().hide();
+        first=$(this).attr("lang");
+        getSysDictParentId($(this).attr("id"));
+      });
+      
+       //重置
+	   $("#reset").click(function(){
+	    	$(".filter-cell-bd ul li").removeClass('active');
+	    	$(".filter-cell-hd ul li").removeClass('active');
+	    	first='';
+	    	second='';
+	   })
+	    
+	   //完成
+	   $("#search").click(function(){
+	    	getGoods(1,orderNum,first,second);
+	    	$("#sidenav-toggle").click();
+	   })
+	   
+	     //下一页
+	  var loading = false; 
+        $(document.body).infinite().on("infinite", function() {
+	        if(loading) return;
+	        loading = true;
+	        var pageNum = $("#pageNum").val();
+		    var pages = $("#pages").val();
+	        if(pageNum >=pages){
+	        	loading = false;
+	        	$("#loading").val("已为最后一页");
+	        	$(document.body).destroyInfinite();
+	        	$(".weui-loadmore").css('display','none');
+	        	return;
+	        }else{
+	        	pageNum = parseInt(pageNum)+1;
+			    $("#pageNum").val(pageNum);
+        		getGoods(pageNum,orderNum,first,second);
+			    loading = false;
+	        }
+        })
+	
+	
+	 
+	
+      
+      //分页
+	  function getGoods(pageValue,orderNum,first,second){
+         var a = $("#a").val();
+         var u = $("#u").val();
+		 $.ajax({
+			url:projectName+"/h5/goods/getGoodsAjax",
+			data:{pageValue:pageValue,dictValue:dictValue,orderNum:orderNum,first:first,second:second},
+			dataType:"json",
+			success : function(result) {
+				//将从后台接收的json字符串转换成json对象
+		         var json = eval(result);
+		         totalPage = json.pages;
+		         currentPage = json.pageNum;
+		    	 var goods = new Array();
+		    	 goods=json.goods;
+		         var goodsHtml="" ;
+		         if(goods.length>0){
+		         	for(var i =0;i<goods.length;i++){
+			         	 goodsHtml+="<li class='col-xs-6 col-md-3' >";
+			         	 if(a==null){
+			         		 goodsHtml+="<a href='"+projectName+"/h5/goods/detail/"+goods[i].goodsId+"'>";
+			         	 }else{
+			         		goodsHtml+="<a href='"+projectName+"/h5/goods/detail/"+goods[i].goodsId+"?a=1&u="+u+"'>";
+			         	 }
+			        	 goodsHtml+="<img src='"+goods[i].titleImg+"' class='img-responsive img-goods' />";
+			        	 goodsHtml+="<p class='mallcell-title' >"+goods[i].goodsName+"</p>";
+			        	 goodsHtml+="<p class='mallcell-smalltitle' >"+goods[i].goodsIntro+"</p>";
+			          	 goodsHtml+="<p class='mallcell-price' >￥"+goods[i].unitPrice+"</p></a></li>";
+			         }
+		         }
+		         var pageNum = json.pageNum;
+				 var pages = json.pages;
+				 $("#pageNum").val(pageNum);
+			     $("#pages").val(pages);
+		     	 if(pageNum==1){
+			         $("#orderNum").html(goodsHtml);
+					 if(goodsHtml&&goodsHtml!=""){
+						 $("#noorderId").hide();
+					 }else{
+						 $("#noorderId").show();
+					 }
+		         }else{
+		        	 $("#orderNum").append(goodsHtml);
+				 	 loading = false;
+		         }
+		         if(pageNum<pages){
+				     $(document.body).infinite();
+	 				 $(".weui-loadmore").show();
+				 }else{
+					 $(document.body).destroyInfinite();
+	 				 $(".weui-loadmore").hide();
+				 }
+				}
+			}) 
+		}
+		
+		
+		function getSysDictParentId(parentId){
+			second="";
+			$.ajax({
+			type:"get",
+			url:projectName+"/h5/dict/getSysDictParentId",
+			data:{parentId:parentId},
+			dataType:"json",
+			success : function(result) {
+				//将从后台接收的json字符串转换成json对象
+		         var json = eval(result);
+		    	 var sysDictList = new Array();
+		    	 sysDictList=json.list;
+		         $(".secondlevel-list").empty();
+		         var sysDictHtml="" ;
+		         if(sysDictList.length>0){
+		         	for(var i =0;i<sysDictList.length;i++){
+			        	 sysDictHtml+="<li ><a href='javascript:secondValue("+sysDictList[i].dictId+")' id='second_"+sysDictList[i].dictId+"' lang='"+sysDictList[i].dictValue+"'>"+sysDictList[i].dictKey+"</a></li>";
+			        }
+		         	$(".secondlevel-list").html(sysDictHtml);
+		         }
+				}
+			}) 
+		}
+		 
+		function secondValue(id){
+			$("#second_"+id).parent("li").addClass('active').siblings().removeClass('active');
+       	    second=$("#second_"+id).attr("lang");
+		}
+		
+    </script>
+</body>
+</html>

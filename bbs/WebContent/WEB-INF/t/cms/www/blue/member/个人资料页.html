@@ -1,0 +1,479 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>东楚论坛</title>
+<link href="${base}/style/main.css" rel="stylesheet" type="text/css">
+<link href="${base}/style/lanmu.css" rel="stylesheet" type="text/css">
+<link href="${base}/style/personal.css" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="${base}/js/jquery.js"></script>
+<script type="text/javascript" src="${base}/js/popwin.js"></script>
+<script type="text/javascript" src="${base}/js/jquery-1.11.1.min.js"></script>
+<script src="${base}/js/mydate/WdatePicker.js" type="text/javascript"></script>
+<script type="text/javascript">
+	var flag1 = true;
+	var flag2 = true;
+	var flag3 = true;
+	$(document).ready(function() {
+		var user = '${user!}';
+		if(user == ''){
+			location.href = "${base}/login.jspx";
+			return ;
+		}
+		var typeId = $("#typeId").val();
+		if(typeId == 2){
+			$("#con_one_1").hide();
+			$("#con_one_2").show();
+			$("#con_one_3").hide();
+		}else if(typeId == 3){
+			$("#con_one_1").hide();
+			$("#con_one_2").hide();
+			$("#con_one_3").show();
+		}else{
+			$("#con_one_1").show();
+			$("#con_one_2").hide();
+			$("#con_one_3").hide();
+		}
+		$(".shezhi").click(function() {
+			if ($(".setup_list").css('display') == 'none') {
+				$(".setup_list").slideDown(200);
+				$(".sev b").removeClass('slidedown');
+				$(".sev b").addClass('slideup');
+			} else {
+				$(".setup_list").slideUp(200);
+				$(".sev b").removeClass('slideup');
+				$(".sev b").addClass('slidedown');
+
+			}
+		});
+		$("#oldpassword").focus(function(){
+			$("#oldMessage").html('');
+		});
+		$("#oldpassword").blur(function(){
+			var password = $("#oldpassword").val();
+			if(password == ''){
+				$("#oldMessage").html("密码不能为空");
+				flag3 = false;
+			}
+		});
+		$("#newPassword").focus(function(){
+			$("#newMessage").html('');
+		});
+		$("#newPassword").blur(function(){
+			var password = $("#newPassword").val();
+			if(password == ''){
+				$("#newMessage").html("请填写新密码");
+				flag3 = false;
+			}
+		});
+		$("#chnewPassword").focus(function(){
+			$("#chMessage").html('');
+		});
+		$("#chnewPassword").blur(function(){
+			var password = $("#chnewPassword").val();
+			if(password == ''){
+				$("#chMessage").html("请再输入新密码");
+				flag3 = false;
+				return ;
+			}
+			var upPassword = $("#newPassword").val();
+			if(password != upPassword){
+				$("#chMessage").html("两次输入密码不一致");
+				flag3 = false;
+				return ;
+			}
+		});
+	});
+</script>
+
+<script>
+	function setTab(name, cursel) {
+		cursel_0 = cursel;
+		for (var i = 1; i <= links_len; i++) {
+			var menu = document.getElementById(name + i);
+			var menudiv = document.getElementById("con_" + name + "_" + i);
+			if (i == cursel) {
+				menu.className = "off";
+				menudiv.style.display = "block";
+			} else {
+				menu.className = "";
+				menudiv.style.display = "none";
+			}
+		}
+	}
+	function Next() {
+		cursel_0++;
+		if (cursel_0 > links_len)
+			cursel_0 = 1
+		setTab(name_0, cursel_0);
+	}
+	var name_0 = 'one';
+	var cursel_0 = 1;
+	//循环周期，可任意更改（毫秒）
+	var links_len, iIntervalId;
+	onload = function() {
+		var links = document.getElementById("content_r").getElementsByTagName(
+				'li')
+		links_len = links.length;
+		setTab(name_0, cursel_0);
+	}
+	
+	function sign(userId){
+		//alert(userId);
+		if(userId == ''){
+			location.href = "${base}/login.jspx";
+			return ;
+		}
+		$.ajax({
+			url:"${base}/member/point_sign.jspx",
+			type:"post",
+			dataType:"text",
+			success:function(data){
+				if(data == -1){
+					alert("打卡失败");
+				}else if(data == 1){
+					location.reload();
+				}
+			}
+		});
+	}
+	
+	function formSubmit(formId){
+		var userId = '${user.id}';
+		if(userId == ''){
+			return ;
+		}
+		if(formId == 'passWordForm'){
+			if($("#oldpassword").val()==''){
+				$("#oldMessage").html("密码不能为空");
+				return ;
+			}
+			if($("#newPassword").val()==''){
+				$("#newMessage").html("请填写新密码");
+				return ;
+			}
+			if($("#chnewPassword").val()==''){
+				$("#chMessage").html("请再输入新密码");
+				return ;
+			}
+			if($("#newPassword").val()==$("#chnewPassword").val()){
+				flag3 = true;
+			}
+			if(flag3){
+				$.ajax({
+					url:"${base}/member/isPassWord${user.id}.jspx",
+					type:"post",
+					data:{"oldPassWord":$("#oldpassword").val()},
+					dataType:"text",
+					success:function(data){
+						if(data == 1){
+							$("#"+formId).submit();
+						}else{
+							$("#oldMessage").html("当前密码错误");
+						}
+					}
+				});
+			}
+			return ;
+		}else if(formId == 'messageForm'){
+			$("#"+formId).submit();
+		}else{
+			
+		}
+	}
+	
+	function uploadImgForm(){
+		$("#jvForm").submit();
+	}
+	
+</script>
+</head>
+
+<body class="body">
+	<!---------顶部----------->
+	<div class="p_top">
+		<div class="p_top_center">
+			<div class="p_top_l">
+				<h1>
+					<a href="${base}/"><img src="${base}/images/logo.png" alt="" /></a>
+				</h1>
+				<ul>
+					<li class="one"><a href="/">东楚网首页</a></li>
+					<li class="two"><a href="${base}/">论坛</a></li>
+					<li class="thr now"><a href="${base}/member/index.jhtml">个人中心</a></li>
+				</ul>
+			</div>
+			<div class="p_top_r">
+				<span class="p_user"><a href="${base}/member/index.jhtml"><i></i>${user.username}</a></span>
+				<span class="p_exit"><a
+					href="${base}/logout.jspx?returnUrl=/">退出</a></span>
+				<div class="here_but">
+					[#if isSign?? && isSign]
+					<a href="javascript:void(0);">已打卡</a>
+					[#else]
+					<a href="javascript:void(0);" onclick="sign('${user.id}')">每日打卡</a>
+					[/#if]
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	[#if typeId??]
+	<input type="hidden" value="${typeId}" id="typeId"/>
+	[#else]
+	<input type="hidden" value="" id="typeId"/>
+	[/#if]
+
+	<!-------用户信息-------->
+	<div class="inf_box">
+		<div class="inf">
+			<div class="inf_l">
+				<a href="${base}/member/information.jhtml">
+					[#if user.avatar??]
+					<img src="${user.avatar}" alt="" />
+					[#else]
+					<img src="${base}/images/default_user.jpg" alt="" />
+					[/#if]
+				</a>
+			</div>
+			<div class="inf_r">
+				<p class="inf_user_name">
+					<a href="${base}/member/information.jhtml">${user.username}</a>
+				</p>
+				<p class="inf_user_d">
+					<span class="inf_tz"><a href="${base}/member/mytopic.jhtml">帖子：<b>${user.topicCount}</b></a></span>
+					<span class="inf_tb"><a href="${base}/member/creditManager.jhtml"><i></i>铜币：<b>${user.point}</b></a></span>
+					<span class="inf_dj"><a href="${base}/member/level_list.jspx"><i></i>等级：<b>${user.group.name}</b></a></span>
+				</p>
+			</div>
+		</div>
+	</div>
+
+
+	<!------------------中间内容部分------------------------>
+	<div class="center">
+		<div class="content">
+			<!------菜单------->
+			<div class="menu">
+				<ul class="menu_list">
+					<li><a href="${base}/topic/collectionTopic.jspx" class="fir"><i></i>我的收藏</a></li>
+					<li><a href="${base}/member/album.jspx" class="sec"><i></i>我的相册</a></li>
+					<li><a href="${base}/member/mytopic.jhtml" class="thi"><i></i>我的帖子</a></li>
+					<li><a href="${base}/member/myfriend.jhtml" class="fou"><i></i>我的好友</a></li>
+					<li><a href="${base}/member/personal_message.jspx" class="fif"><i></i>我的消息</a></li>
+					<li><a href="${base}/member/concern_list.jspx" class="six"><i></i>我的关注</a></li>
+					<li><a href="${base}/member/creditManager.jhtml" class="sev"><i></i>我的铜币</a></li>
+					<li><a href="${base}/member/task_list.jspx" class="eig"><i></i>我的任务</a></li>
+					<li class="shezhi"><a class="nin"><i></i>设置<b class="slidedown"></b></a></li>
+					<ul class="setup_list" style="display: none;">
+						<li class="now"><a href="${base}/member/information.jhtml" class="ten"><i></i>账号</a></li>
+						<li><a href="${base}/member/personal_confirm.jspx" class="ele"><i></i>认证</a></li>
+						<li><a href="${base}/member/level_list.jspx" class="twe"><i></i>等级</a></li>
+						<li><a href="${base}/member/personal_binding.jspx" class="thir"><i></i>账号通</a></li>
+					</ul>
+				</ul>
+			</div>
+
+			<!--------右侧内容部分——账号--------->
+			<div class="content_r" id="content_r">
+				<div class="content_r_hd">账号设置</div>
+				<div class="tab_menu">
+					<ul>
+						<li id="one1" onclick="setTab('one',1)">修改头像</li>
+						<li id="one2" onclick="setTab('one',2)">基本资料</li>
+						<li id="one3" onclick="setTab('one',3)">密码安全</li>
+					</ul>
+				</div>
+				<div class="menudiv">
+					<div class="change_pho" id="con_one_1" style="display: none;">
+						[#include "image_upload.html"/]
+						<form id="jvForm" action="${base}/member/updateUserImg.jhtml" method="post">
+							<!-- <div class="change_pho_hd">
+								<div class="filebox">
+									<input class="inp_file" type="file" accept="image/*">
+								</div>
+								<span class="tips">仅支持jpg,gif,png格式图片，图片大小不超过2M</span>
+							</div> -->
+							<div class="change_pho_bd">
+								<div class="cutbox">
+									[#if user.userImg??]
+									<img id="preImg1" src="${user.userImg!}" style="max-width:300px;max-height:300px;"/>
+									[#elseif user.avatar??]
+									<img id="preImg1" src="${user.avatar!}" style="max-width:300px;max-height:300px;"/>
+									[#else]
+									<img src="${base}/images/default_user.jpg" alt="" />
+									[/#if]
+								</div>
+								<div class="preview_pic">
+									[#if user.avatar??]
+									<img src="${user.avatar!}" alt="" />
+									[#else]
+									<img src="${base}/images/default_user.jpg" alt="" />
+									[/#if]
+								</div>
+								<!-- <div class="preview_pic" style="width:400px;height:50px;margin-top:20px;border:none;">
+									<div class="pho_save">
+					         			<span id="ufc1" style="position:relative">
+						       				<input type='text' id='uploadFileText1' size="14"/>  
+											<input class="member_button" type='button' value='浏览...'/>
+											<input onchange="$('#uploadFileText1').val(this.value)" size="14" type="file" id="uploadFile1" style="height:24px;opacity:0;filter:alpha(opacity=0);position:absolute;right:5px;top:-5px; *top:50px; *left:10; _left:0px;"/>
+					         			</span>
+					         			<input type="button" value="上传" onclick="upload(1);" class="member_button"/>
+										<span style="display: none;">
+											宽: <input type="text" id="zoomWidth1" value="10" size="5"/>
+											高: <input type="text" id="zoomHeight1" value="10" size="5"/>
+										</span> 
+										<input type="button" value="剪裁" onclick="imgCut(1);" class="member_button"/> 
+							 			<input type="button" value="预览" onclick="previewImg(1);" class="member_button"/><br/>
+							
+										<input id="uploadImgPath1" name="avatar" style="width:220px" value="${user.userImg!}" type="hidden"/>
+										<input type="hidden" name="nextUrl" value="index.jhtml"/>
+							     		<input class="input" type="hidden" maxlength="75" name="id" value="${user.id!}"/>
+									</div>
+									<div class="pho_save">
+										<button class="pho_save_but" type="button" onclick="uploadImgForm()">保存</button>
+									</div>
+								</div> -->
+							</div>
+							<div class="pho_save">
+			         			<span id="ufc1" style="position:relative">
+				       				<input type='text' id='uploadFileText1' size="14"/>  
+									<input class="member_button" type='button' value='浏览...'/>
+									<input onchange="$('#uploadFileText1').val(this.value)" size="14" type="file" id="uploadFile1" style="height:24px;opacity:0;filter:alpha(opacity=0);position:absolute;right:5px;top:-5px; *top:50px; *left:10; _left:0px;"/>
+			         			</span>
+			         			<input type="button" value="上传" onclick="upload(1);" class="member_button"/>
+								<span style="display: none;">
+									宽: <input type="text" id="zoomWidth1" value="10" size="5"/>
+									高: <input type="text" id="zoomHeight1" value="10" size="5"/>
+								</span> 
+								<input type="button" value="剪裁" onclick="imgCut(1);" class="member_button"/> 
+					 			<input type="button" value="预览" onclick="previewImg(1);" class="member_button"/><br/>
+					
+								<input id="uploadImgPath1" name="avatar" style="width:220px" value="${user.userImg!}" type="hidden"/>
+								<input type="hidden" name="nextUrl" value="index.jhtml"/>
+					     		<input class="input" type="hidden" maxlength="75" name="id" value="${user.id!}"/>
+							</div>
+							<div class="pho_save">
+								<button class="pho_save_but" type="button" onclick="uploadImgForm()">保存</button>
+							</div>
+							
+						</form>
+					</div>
+					<div class="basic_inf" id="con_one_2">
+						<form action="${base}/member/update2.jspx" method="post" enctype="multipart/form-data" id="messageForm">
+							<div class="h35">
+								<div class="bscl">性别：</div>
+								<div class="bscr">
+									[#if user.gender??]
+									[#if user.gender]
+									<label><input type="radio" value="1" checked="checked" name="gender"><span>男</span></label>
+									<label><input type="radio" value="0" name="gender"><span>女</span></label>
+									[#else]
+									<label><input type="radio" value="1" name="gender"><span>男</span></label>
+									<label><input type="radio" value="0" checked="checked" name="gender"><span>女</span></label>
+									[/#if]
+									[#else]
+									<label><input type="radio" value="1" checked="checked" name="gender"><span>男</span></label>
+									<label><input type="radio" value="0" name="gender"><span>女</span></label>
+									[/#if]
+								</div>
+							</div>
+							<div class="h35">
+								<div class="bscl">生日：</div>
+								<div class="bscr">
+									<input type="text" name="birthday" style="width:360px;height:25px;" value="${user.birthday!}" onFocus="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss',maxDate: '%y-%M-%d'})" readonly= "true"/>
+								</div>
+							</div>
+							<div class="h35">
+								<div class="bscl">现居住地：</div>
+								<div class="bscr">
+									<input type="text" name="address" maxlength="30" style="width:360px;height:25px;" value="${user.address!}"/>
+								</div>
+							</div>
+							<div class="h35">
+								<div class="bscl">家乡：</div>
+								<div class="bscr">
+									<input type="text" name="comefrom" maxlength="30" style="width:360px;height:25px;" value="${user.comefrom!}"/>
+								</div>
+							</div>
+							<div class="h40">
+								<div class="bscl">自我简介：</div>
+								<div class="bscr line">
+									<textarea class="bsctxt" maxlength="50" name="intro">${user.intro!}</textarea>
+								</div>
+							</div>
+							<div class="h35">
+								<div class="bscl"></div>
+								<div class="bscr">
+									<a class="save"  href="javascript:void(0);" onclick="formSubmit('messageForm')">保存</a>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="password" id="con_one_3" style="display: none;">
+						<form action="${base}/member/update3.jspx" method="post" enctype="multipart/form-data" id="passWordForm">
+							<div class="h38">
+								<div class="passwordl">当前密码：</div>
+								<div class="passwordr">
+									<input type="password" class="currpwd" name="oldpassword" id="oldpassword"/>
+									<span style="color:red;" id="oldMessage"></span>
+								</div>
+							</div>
+							<div class="h38">
+								<div class="passwordl">新密码：</div>
+								<div class="passwordr">
+									<input type="password" class="currpwd" name="newPassword" id="newPassword"/>
+									<span style="color:red;" id="newMessage"></span>
+								</div>
+							</div>
+							<div class="h38 h20">
+								<div class="passwordl"></div>
+								<div class="passwordr">6-20个字符，建议使用字母加数字或符号的组合密码</div>
+							</div>
+							<div class="h38">
+								<div class="passwordl">确认密码：</div>
+								<div class="passwordr">
+									<input type="password" class="currpwd" name="chnewPassword" id="chnewPassword"/>
+									<span style="color:red;" id="chMessage"></span>
+								</div>
+							</div>
+							<input type="hidden" name="id" value="${user.id}"/>
+							<div class="h38">
+								<div class="passwordl"></div>
+								<div class="passwordr">
+									<a class="yes_but" href="javascript:void(0);" onclick="formSubmit('passWordForm')">确认修改密码</a>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+
+
+			<!------页脚------>
+			<div class="footer">
+				<div class="footer_listbox">
+					<div class="footer_list">
+						
+					</div>
+				</div>
+			</div>
+
+		</div>
+
+
+		<!------------------返回顶部-------------------->
+		<div id="before">
+			<a href="http://bbs.hsdcw.com/" target="_blank" title="东楚论坛"
+				class='before'></a>
+		</div>
+		<div id="wechat" class="wechat">
+			<a href="javascript:void(0)"><div class="wechath"></div></a>
+		</div>
+		<a id="moquu_top" href="javascript:void(0)"></a>
+</body>
+</html>
+
+
+
+

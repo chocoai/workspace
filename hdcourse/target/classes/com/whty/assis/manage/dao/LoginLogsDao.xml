@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.manage.dao.LoginLogsDao">
+	<resultMap type="com.whty.assis.manage.model.LoginLogsVo" id="logslist">
+		<id column="id" property="id" jdbcType="VARCHAR"/>
+		<result column="user_name" property="user_name" jdbcType="VARCHAR"/>
+		<result column="real_name" property="real_name" jdbcType="VARCHAR"/>
+		<result column="user_type" property="user_type" jdbcType="VARCHAR"/>
+		<result column="org_name" property="org_name" jdbcType="VARCHAR"/>
+		<result column="login_ip" property="login_ip" jdbcType="VARCHAR"/>
+		<result column="create_time" property="create_time" jdbcType="TIMESTAMP"/>
+		<result column="login_count" property="login_count" jdbcType="INTEGER"/>
+	</resultMap>
+	<!-- 查询所有登录日志信息 -->
+	<select id="queryalllogs"  parameterType="map"  resultMap="logslist">
+		select a.id as id,b.user_name as user_name,b.real_name as real_name,
+		b.user_type as user_type,b.org_name as org_name,a.login_ip as login_ip,
+		a.create_time as create_time,b.login_count as login_count
+		from  ta_user_login_logs a left join ta_user b on a.user_id=b.user_id 
+		where 1=1
+		<if test="user_type!= null and user_type != ''">and user_type=#{user_type}</if>
+		<if test="org_name!= null and org_name != ''">and org_name like '%'||#{org_name}||'%'</if>
+		<if test="user_name!= null and user_name != ''">and user_name like '%' || #{user_name}||'%'</if>
+		order by create_time desc	
+	</select>
+
+	<!-- 如果插入的字段可能为空，则要设置jdbcType -->
+	<!-- 新增登录日志 -->
+	<insert id="saveLoginLogs" parameterType="com.whty.assis.manage.model.LoginLogs">
+		insert into ta_user_login_logs (
+			id
+			<if test="user_id!= null">,user_id</if>
+			<if test="login_ip!= null">,login_ip</if>
+			<if test="create_time!= null">,create_time</if>
+			<if test="platform_code!= null">,platform_code</if>
+			<if test="login_platform_code!= null">,login_platform_code</if>
+			) values (
+				#{id,jdbcType=VARCHAR}
+				<if test="user_id!= null">,#{user_id,jdbcType=VARCHAR}</if>
+			    <if test="login_ip!= null">,#{login_ip,jdbcType=VARCHAR}</if>
+			    <if test="create_time!= null">,#{create_time,jdbcType=TIMESTAMP}</if>
+			    <if test="platform_code!= null">,#{platform_code,jdbcType=VARCHAR}</if>
+			    <if test="login_platform_code!= null">,#{login_platform_code,jdbcType=VARCHAR}</if>
+			)
+	</insert>
+
+	<!-- 查询活动期间用户登录次数 -->
+	<select id="loginCountByActivity" parameterType="map" resultType="int">
+	    select count(1) from ta_user_login_logs t,TA_ACTIVITY ta
+	    where t.user_id = #{user_id}
+	    <if test="login_platform_code!= null">and t.login_platform_code = #{login_platform_code}</if>
+	    <if test="act_id!= null">
+			 <![CDATA[and ta.pkid = #{act_id} and t.create_time >= ta.start_time and t.create_time <= ta.end_time]]>
+		</if>
+		<if test="cur_time != null">
+	         <![CDATA[ and t.create_time >= #{cur_time} ]]>
+	     </if>
+	</select>
+</mapper>

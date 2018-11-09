@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>孝康通</title>
+<!-- Bootstrap -->
+<link th:href="@{/pages/mall/css/bootstrap.min.css}" rel="stylesheet">
+<!-- FontAwesome 4.7.0字体 -->
+<link th:href="@{/pages/mall/css/font-awesome.min.css}" rel="stylesheet">
+<!-- 自定义css -->
+<link th:href="@{/pages/mall/css/mymall.css}" rel="stylesheet">
+ <link th:href="@{/pages/mall/css/layer_mobile/need/layer.css}" rel="stylesheet">
+</head>
+<body style=" float:left; width:100%;background: #f3f3f3; padding-bottom: 60px;">
+	<!-- 导航 开始 -->
+	<nav class="navbar navbar-default navbar-mall-other">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				个人中心
+				<div class="othertop-right">
+					<a href="javascript:void(0)" onclick="getPersonalCart()"><i
+						class="fa fa-shopping-cart"></i></a> <a th:href="@{/h5}"><i
+						class="fa fa-home"></i></a>
+				</div>
+			</div>
+		</div>
+	</nav>
+	<!-- 导航 结束 -->
+	<input th:if="${session.memberSession} !=null" id="memberId" type="hidden" th:value="${session.memberSession.memberId}" />
+	<!-- 个人中心内容 开始 -->
+	<div class="mycenter">
+		<div class="mycenter-top">
+			<div class="mycenter-photo">
+				<div class="userphoto"  th:if="${session.memberSession} !=null">
+					<img th:if="${session.memberSession.headPic} !=''" th:src="${session.memberSession.headPic}" class="img-responsive userphoto" />
+			        <img th:if="${session.memberSession.headPic} ==''" th:src="@{/pages/mall/images/user-photo.png}" class="img-responsive" />
+					<span class="sex">
+						<span th:if="${session.memberSession.gender==null}" >
+							<i class="fa fa-venus"></i>
+						</span>
+						<span th:if="${session.memberSession.gender!= null}" >
+							<i th:class="${session.memberSession.gender==0}?'fa fa-venus':'fa fa-mars'"></i>
+						</span>
+					</span>
+				</div>
+				<div class="userphoto"  th:if="${session.memberSession} ==null">
+					<img th:src="@{/pages/mall/images/user-photo.png}" class="img-responsive" />
+					<span class="sex">
+						<i class="fa fa-venus"></i>
+					</span>
+				</div>
+				
+				<div class="username" th:if="${session.memberSession} !=null"><td th:text="${session.memberSession.nickName}"></td></div>
+				<div class="username" th:if="${session.memberSession} ==null"><td>昵称</td></div>
+		<!-- 	<div class="integral">
+					<i class="fa fa-database"></i> 积分：250
+				</div> -->
+			</div>
+		</div>
+
+		<div class="mycenter-bottom nomar-t">
+			<div class="mycenter-cell-hd">我的订单</div>
+			<ul class="app-about-list">
+				<li>
+					<a th:href="@{/h5/admin/myOrders/goods}"> 
+						<span class="app-about-l"> <i class="fa fa-file-image-o"></i> 我的商品订单</span> 
+						<span class="app-about-r"><i class="fa fa-angle-right"></i></span>
+					</a>
+				</li>
+				<li>
+					<a th:href="@{/h5/admin/myOrders/service}"> 
+						<span class="app-about-l"><i class="fa fa-file-archive-o"></i> 我的服务订单</span> 
+						<span class="app-about-r"><i class="fa fa-angle-right"></i></span>
+					</a>
+				</li>
+			</ul>
+		</div>
+		<div class="mycenter-bottom mar-b20">
+	        <div class="mycenter-cell-hd">我的收藏</div>
+	        <ul class="app-about-list">
+	          <li>
+	            <a th:href="@{/h5/admin/myColl/goods}">
+	              <span class="app-about-l"><i class="fa fa-shopping-basket"></i> 我收藏的商品</span>
+	              <span class="app-about-r"><i class="fa fa-angle-right"></i></span>
+	            </a>
+	          </li>
+	          <li>
+	            <a th:href="@{/h5/admin/myColl/service}">
+	              <span class="app-about-l"><i class="fa fa-handshake-o"></i> 我的收藏的服务</span>
+	              <span class="app-about-r"><i class="fa fa-angle-right"></i></span>
+	            </a>
+	          </li>
+	        </ul>
+      </div>
+	</div>
+	<!-- 个人中心内容 结束 -->
+
+	<!-- 个人中心页脚 开始 -->
+	<div class="mycenter-footer">
+		<ul class="mycenter-footer-list">
+			<li><a th:href="@{/h5}">首页</a></li>
+			<li><a
+				href="https://healthcloud.ejyhealth.com/api/userDirection/appshare.html">客户端</a></li>
+			<li><a th:href="@{/h5/register}"
+				th:if="${session.memberSession} ==null">注册</a><a th:href="@{/h5/mycenter}"
+				th:if="${session.memberSession} !=null">个 人中心</a></li>
+			<li><a th:href="@{/h5/login}" th:if="${session.memberSession} ==null">登陆</a><a
+				th:href="@{/h5/relogin}" th:if="${session.memberSession} !=null">退出</a></li>
+		</ul>
+	</div>
+	<!-- 个人中心页脚 结束 -->
+
+	<!-- 返回顶部 开始 -->
+	<div class="gototop" style="display: none;">
+		<a href="javascript:void(0)"><i
+			class="glyphicon glyphicon-menu-up"></i></a>
+	</div>
+	<!-- 返回顶部 结束 -->
+
+	<script th:src="@{/pages/mall/js/jquery-1.9.1.min.js}"></script>
+	<script th:src="@{/pages/mall/js/bootstrap.min.js}"></script>
+	<script th:src="@{/mall/css/layer_mobile/layer.js}"></script>
+	<script type="text/javascript">
+	var pathName=window.document.location.pathname;
+    var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
+		// tab
+		$(".mall-list-tab ul li").click(function() {
+			$(this).addClass("active").siblings().removeClass("active");
+			var index = $(".mall-list-tab ul li").index(this);
+			$(".list-cell").eq(index).show().siblings().hide();
+		})
+
+		// 返回顶部
+		$(window).scroll(function() {
+			if ($(window).scrollTop() >= 20) {
+				$(".gototop").fadeIn(300);
+			} else {
+				$(".gototop").fadeOut(300);
+			}
+		})
+		$(".gototop a").click(function() {
+			$("html,body").animate({
+				scrollTop : "0px"
+			}, 300)
+		})
+		
+		 //查看购物车
+	      function getPersonalCart(){
+	      		if($("#memberId").val()>0){
+	      			window.location.href=projectName+"/h5/cart/getPersonalCart";
+	      		}else{
+	      			layer.open({
+					    content: '您还没登录，请您先登录！'
+					    ,skin: 'msg'
+					    ,time: 2 //2秒后自动关闭
+					  });
+					  setTimeout(function(){
+					  	window.location.href=projectName+"/h5/login?url="+window.location.href
+					  },2000);
+	      		}
+	      }
+	</script>
+</body>
+</html>

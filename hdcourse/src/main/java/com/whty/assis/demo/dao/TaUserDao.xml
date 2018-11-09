@@ -1,0 +1,662 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.demo.dao.TaUserDao">
+
+	<!-- 这里的Ta_user是别名，需要在mybatis-config.xml中定义，或者写类全名 -->
+	<resultMap type="Ta_user" id="Ta_userResult">
+		<id property="id" column="id" />
+		<result property="user_id" column="user_id" />
+		<result property="user_name" column="user_name" />
+		<result property="user_account" column="user_account" />
+		<result property="org_id" column="org_id" />
+		<result property="org_name" column="org_name" />
+		<result property="status" column="status" />
+		<result property="login_count" column="login_count" />
+		<result property="use_time" column="use_time" />
+		<result property="last_time" column="last_time" />
+		<result property="create_time" column="create_time" />
+		<result property="update_time" column="update_time" />
+		<result property="gender" column="gender" />
+		<result property="phone_number" column="phone_number" />
+		<result property="email" column="email" />
+		<result property="real_name" column="real_name" />
+		<result property="user_type" column="user_type" />
+		<result property="birthday" column="birthday" />
+		<result property="address" column="address" />
+		<result property="area_code" column="area_code" />
+		<result property="area_name" column="area_name" />
+		<result property="platform_id" column="platform_id" />
+	</resultMap>
+	
+
+	
+
+	<resultMap type="com.whty.assis.demo.model.WidgetLog" id="widgetLogResult">
+		<id property="id" column="id" />
+		<result property="useCount" column="use_count" />
+		<result property="userId" column="user_id" />
+		<result property="orgId" column="org_Id" />
+		<result property="platformCode" column="platform_code" />
+		<result property="machineInfo" column="machine_info" />
+		<result property="widgetId" column="widget_id" />
+		<result property="memory" column="memory" />
+		<result property="classId" column="class_id" />
+		<result property="cpuInfo" column="cpu_info" />
+		<result property="isTransfer" column="is_transfer" />
+		<result property="createTime" column="create_time" />
+		<result property="operationSystemInfo" column="operation_system_info" />
+		<result property="operationSystemType" column="operation_system_type" />
+		<result property="classType" column="class_type" />	
+		<result property="terminalVersion" column="terminal_version" />	
+		<result property="courseNum" column="course_Num" />
+		<result property="loginTaking" column="login_taking"/>
+		<result property="loginSource" column="login_source"/>
+		<result property="useTaking" column="use_taking"/>
+	</resultMap>
+	 
+	<update id="updateWidgetLog" parameterType="java.util.HashMap">
+		update TA_WIDGET_LOG set is_transfer = #{transfer} 
+		where id in <foreach collection="idList" item="id" separator="," open="(" close=")">#{id}</foreach>
+	</update>
+	
+	
+	<select id="getUserLoginLogByTime"  parameterType="java.util.HashMap" resultType="map">
+		SELECT DATE_FORMAT( CREATE_TIME, "%Y-%m-%d" ) as create_time , COUNT( * ) 
+		FROM T_USER_LOGIN_LOG WHERE 1=1 
+		<if test="startTime != null and startTime != ''"> and create_time >=#{startTime}</if>
+		<if test="endTime != null and endTime != ''"><![CDATA[ and create_time <=#{endTime}]]></if>
+		<if test="userId != null and userId != ''">and user_id =#{userId}</if>
+		<if test="userPlatformCode != null and userPlatformCode != ''">and user_platform_code = #{userPlatformCode}</if>
+		GROUP BY DATE_FORMAT(CREATE_TIME, "%Y-%m-%d" ) 
+	</select>
+	
+	<insert id="saveUserLoginLog" parameterType="map">
+		insert into T_USER_LOGIN_LOG (
+			user_id
+			<if test="userPlatformCode != null">,user_platform_code</if>
+			<if test="userType != null">,user_type</if>
+			<if test="loginPlatformCode != null">,login_platform_code</if>
+			,create_time
+			<if test="account != null">,account</if>
+			<if test="orgName != null">,org_name</if>
+			<if test="orgId != null">,org_id</if>
+			<if test="realName != null">,real_name</if>
+		) values (
+			#{userId,jdbcType=VARCHAR}
+			<if test="userPlatformCode != null">,#{userPlatformCode} </if>
+			<if test="userType != null">,#{userType}</if>
+			<if test="loginPlatformCode != null">,#{loginPlatformCode}</if>
+			,now()
+			<if test="account != null">,#{account}</if>
+			<if test="orgName != null">,#{orgName}</if>
+			<if test="orgId != null">,#{orgId}</if>
+			<if test="realName != null">,#{realName}</if>
+		)
+	
+	</insert>
+	
+	<!-- 过滤掉测试和演示帐号 -->
+	<select id="getWidgetLogNotLoginTransfer" parameterType="java.util.HashMap" resultMap="widgetLogResult">
+		select login_source,login_taking,class_type,class_id,course_num,id,org_id,platform_code,machine_info,memory,cpu_info,operation_system_info,operation_system_type,create_time,
+		user_id,class_id,widget_id,use_count,use_taking from TA_WIDGET_LOG where 1=1 and is_transfer = '0' and widget_id ='1' and org_id is not null and platform_code is not null and user_id is not null
+		and user_id not in('1887d34571734dbd803311d745066a8d','191ac780686340f59d9f61dad257aa27','693969a793dc4ce9b0ec2e1b835a0fcd','c09136920c0c494293472ea9b9f9d382','b716935a3071420188e6cd596890782a','bd95709453b74957ad22a8e98568cf30','68826bf165644712950e52241cea5b06','2979d70b433d47359b7fb5f64b400957','9bec4a18dea74ebf8173c37758bf8fac')
+		<if test="startTime != null and startTime != ''"> and create_time >=#{startTime}</if>
+		<if test="endTime != null and endTime != ''"><![CDATA[ and create_time <=#{endTime}]]></if>
+		
+	
+	</select>
+	
+	<insert id="saveJfLog" parameterType="map">
+		insert into T_JF_LOG (
+			user_id
+			,platform_code
+			,action_num
+			,create_time
+			,result_msg
+			,use_taking
+		) values (
+			#{userId,jdbcType=VARCHAR}
+			,#{platformCode,jdbcType=VARCHAR}
+			,#{actionNum,jdbcType=VARCHAR}
+			,#{createTime,jdbcType=VARCHAR}
+			,#{resultMsg,jdbcType=VARCHAR}
+			,#{useTaking,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<select id="getAllWidgetLog" resultMap="widgetLogResult" parameterType="java.util.HashMap">
+		select * from TA_WIDGET_LOG where 1=1
+		<if test="startTime != null and startTime != ''"> and create_time>= #{startTime} </if>
+		<if test="endTime != null and endTime != ''"><![CDATA[ and create_time<= #{endTime}]]></if>
+	</select>
+	
+	<select id="getOp" parameterType="java.util.HashMap" resultMap="widgetLogResult">
+		select id, name as user_id from TA_OP 
+	</select>
+	
+	<select id="visitCount" parameterType="java.util.HashMap" resultType="string">
+		select sum(use_count) as useCount from TA_WIDGET_LOG where widget_id=1 
+		<if test="startTime != null and startTime != ''"> and create_time>= #{startTime} </if>
+		<if test="endTime != null and endTime != ''"><![CDATA[ and create_time<= #{endTime}]]></if>
+		<if test="platformCode != null and platformCode != ''">and platform_code =#{platformCode}</if>
+	</select>
+	
+	<select id="getWidgetLog2" parameterType="java.util.HashMap" resultMap="widgetLogResult">
+		select * from ta_widget_log where 1=1
+		<if test="startTime != null and startTime != ''"> and create_time >= #{startTime} </if>
+		<if test="endTime != null and endTime != ''"><![CDATA[ and create_time<= #{endTime} ]]></if>
+	</select>
+	
+	<select id="getWidgetLog3" parameterType="java.util.HashMap" resultMap="widgetLogResult">
+		select user_id,create_time,widget_id from ta_widget_log where 1=1
+		<if test="startTime != null and startTime != ''"> and create_time >= #{startTime} </if>
+		<if test="endTime != null and endTime != ''"><![CDATA[ and create_time<= #{endTime} ]]></if>
+		
+		<if test="userId != null and userId != ''">and user_Id = #{userId} </if>
+		<if test="platformCode != null and platformCode != '' ">and platform_code = #{platformCode}</if>
+	</select>
+	
+	<!--  -->
+	<select id="getWidgetLog" parameterType="java.util.HashMap" resultMap="widgetLogResult">
+		select id,org_id,platform_code,machine_info,memory,cpu_info,operation_system_info,operation_system_type,create_time,
+		user_id,class_id,widget_id,use_count,terminal_Version,course_Num from TA_WIDGET_LOG where 1=1
+		and org_id is not null and platform_code is not null and user_id is not null
+		and user_id not in('1887d34571734dbd803311d745066a8d','191ac780686340f59d9f61dad257aa27','693969a793dc4ce9b0ec2e1b835a0fcd','c09136920c0c494293472ea9b9f9d382','b716935a3071420188e6cd596890782a','bd95709453b74957ad22a8e98568cf30','68826bf165644712950e52241cea5b06','2979d70b433d47359b7fb5f64b400957','9bec4a18dea74ebf8173c37758bf8fac')
+		<if test="id != null">and id=#{id}</if>
+		<if test="isTransfer != null">and is_transfer=#{isTransfer}</if>
+		<if test="widgetId != null">and widget_id=#{widgetId}</if>
+		<if test="startTime != null and startTime != ''"> and create_time >= #{startTime} </if>
+		<if test="endTime != null and endTime != ''"><![CDATA[ and create_time<= #{endTime} ]]></if>
+		<if test="widgetIds != null and widgetIds != ''">
+			and widget_id in <foreach collection="idList" item="id" separator="," open="(" close=")">#{id}</foreach>
+		</if>
+	</select>
+	
+	<!-- 如果插入的字段可能为空，则要设置jdbcType -->
+	<insert id="addUser" parameterType="Ta_user">
+		insert into TA_USER (
+			id,user_id
+			,user_name
+			,user_account
+			,org_id
+			,org_name
+			,status
+			,login_count
+			,use_time
+			,last_time
+			,create_time
+			,update_time
+			<if test="gender != null">,gender</if>
+			,phone_number
+			,email
+			,real_name
+			,user_type
+			,birthday
+			,address
+			,area_code
+			,area_name
+			,platform_id
+		) values (
+			#{id,jdbcType=VARCHAR},#{user_id,jdbcType=VARCHAR}
+			,#{user_name,jdbcType=VARCHAR}
+			,#{user_account,jdbcType=VARCHAR}
+			,#{org_id,jdbcType=VARCHAR}
+			,#{org_name,jdbcType=VARCHAR}
+			,'0'
+			,1
+			,#{use_time,jdbcType=TIMESTAMP}
+			,#{last_time,jdbcType=TIMESTAMP}
+			,#{create_time,jdbcType=TIMESTAMP}
+			,#{update_time,jdbcType=TIMESTAMP}
+			<if test="gender != null">,#{gender,jdbcType=INTEGER}</if>
+			,#{phone_number,jdbcType=VARCHAR}
+			,#{email,jdbcType=VARCHAR}
+			,#{real_name,jdbcType=VARCHAR}
+			,#{user_type,jdbcType=VARCHAR}
+			,#{birthday,jdbcType=VARCHAR}
+			,#{address,jdbcType=VARCHAR}
+			,#{area_code,jdbcType=VARCHAR}
+			,#{area_name,jdbcType=VARCHAR}
+			,#{platform_id,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	
+	
+	
+	<!-- 绑定软件使用许可licence-->
+	<update id="updateUser" parameterType="Ta_user">
+		update TA_USER 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="user_name != null">user_name=#{user_name},</if>
+			<if test="user_account != null">user_account=#{user_account},</if>
+			<if test="org_id != null">org_id=#{org_id},</if>
+			<if test="org_name != null">org_name=#{org_name},</if>
+			<if test="status != null">status=#{status},</if>
+			<if test="login_count != null">login_count=login_count+1,</if>
+			<if test="last_time != null">last_time=#{last_time},</if>
+			<if test="update_time != null">update_time=#{update_time},</if>
+			<if test="gender != null">gender=#{gender},</if>
+			<if test="phone_number != null">phone_number=#{phone_number},</if>
+			<if test="email != null">email=#{email},</if>
+			<if test="real_name != null">real_name=#{real_name},</if>
+			<if test="user_type != null">user_type=#{user_type},</if>
+			<if test="birthday != null">birthday=#{birthday},</if>
+			<if test="address != null">address=#{address},</if>
+			<if test="area_code != null">area_code=#{area_code},</if>
+			<if test="area_name != null">area_name=#{area_name},</if>
+		</trim>
+		where user_id=#{user_id}
+		<if test="platform_id != null">and platform_id=#{platform_id}</if>
+	</update>
+	
+	
+	
+	 
+	<!-- 查询客户端登录用户信息 -->
+	<select id="getUserByParam" parameterType="java.util.HashMap" resultType="Ta_user">
+		select id,user_id
+		,user_name
+		,user_account
+		,org_id
+		,org_name
+		,status
+		,login_count
+		,use_time
+		,last_time
+		,create_time
+		,update_time
+		,gender
+		,phone_number
+		,email
+		,real_name
+		,user_type
+		,birthday
+		,address
+		,area_code
+		,area_name
+		,platform_id
+		from TA_USER
+		where 1=1
+		<if test="id != null">and id=#{id}</if>
+		<if test="user_id != null">and user_id=#{user_id}</if>
+		<if test="platform_id != null">and platform_id=#{platform_id}</if>
+	</select>
+	
+	<insert id="saveTerminalUseLog" parameterType="java.util.Map">
+		insert into TA_TERMINAL_USE_LOG(
+			id,
+			<if test="linkNum != null">link_num,</if>
+			<if test="userId != null">user_id,</if>
+			<if test="orgId != null">org_id,</if>
+			<if test="platformCode != null">platform_code,</if>
+			<if test="courseNum != null">course_num,</if>
+			<if test="classId != null">class_id,</if>
+			<if test="classType != null">class_type,</if>
+			<if test="hdktVersion != null">hdkt_version,</if>
+			<if test="isTransfer != null">is_transfer,</if>
+			terminal_type
+		) 
+		values (
+			#{id,jdbcType=VARCHAR}
+			<if test="linkNum != null">,#{linkNum}</if>
+			<if test="userId != null">,#{userId,jdbcType=VARCHAR}</if>
+			<if test="orgId != null">,#{orgId}</if>
+			<if test="platformCode != null">,#{platformCode,jdbcType=VARCHAR}</if>
+			<if test="courseNum != null">,#{courseNum,jdbcType=VARCHAR}</if>
+			<if test="classId != null">,#{classId,jdbcType=VARCHAR}</if>
+			<if test="classType != null">,#{classType,jdbcType=VARCHAR}</if>
+			<if test="hdktVersion != null">,#{hdktVersion,jdbcType=VARCHAR}</if>
+			<if test="isTransfer != null">,#{isTransfer}</if>
+			,#{terminalType,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<insert id="saveInstallMac" parameterType="java.util.Map">
+		insert into TA_INSTALL_MAC(
+			id
+			<if test="mac != null and mac != ''">,mac</if>
+			<if test="version != null and mac != ''">,version</if>
+		)
+		values (
+			#{id,jdbcType=VARCHAR}
+			<if test="mac != null and mac != ''">,#{mac,jdbcType=VARCHAR}</if>
+			<if test="version != null and mac != ''">,#{version,jdbcType=VARCHAR}</if>
+		)
+	</insert>
+	
+	
+	<insert id="saveInstallLog" parameterType="java.util.Map">
+		insert into TA_INSTALL_LOG(
+			id
+			<if test="area != null and area!= ''">,area</if>
+			<if test="school != null and school!= ''">,school</if>
+			<if test="className != null and className!= ''">,class_name</if>
+			<if test="cpu != null and cpu!= ''">,cpu</if>
+			<if test="terminalVersion != null and terminalVersion!= ''">,terminal_Version</if>
+			<if test="memery != null and memery!= ''">,memery</if>
+			<if test="disk != null and disk!= ''">,disk</if>
+			<if test="version != null and version!=''">,version</if>
+			<if test="mac != null and mac!= '' ">,mac</if>		
+			<if test="remarks != null and remarks!= '' ">,remarks</if>
+			<if test="areacode != null and areacode !='' ">,area_code</if>
+			<if test="schoolcode != null and schoolcode !='' ">,school_code</if>
+			<if test="classcode != null and classcode !='' ">,class_code</if>
+			<if test="username != null and username !='' ">,user_name</if>
+			<if test="userid != null and userid !='' ">,user_id</if>
+			<if test="freedisk != null and freedisk !='' ">,freedisk</if>
+		)
+		values (
+			#{id,jdbcType=VARCHAR}
+			<if test="area != null and area!= ''">,#{area,jdbcType=VARCHAR}</if>
+			<if test="school != null and school!= ''">,#{school}</if>
+			<if test="className != null and className!= ''">,#{className,jdbcType=VARCHAR}</if>
+			<if test="cpu != null and cpu!= ''">,#{cpu,jdbcType=VARCHAR}</if>
+			<if test="terminalVersion != null and terminalVersion!= ''">,#{terminalVersion,jdbcType=VARCHAR}</if>
+			<if test="memery != null and memery!= ''">,#{memery,jdbcType=VARCHAR}</if>
+			<if test="disk != null and disk!=''">,#{disk,jdbcType=VARCHAR}</if>
+			<if test="version != null and version!= ''">,#{version,jdbcType=VARCHAR}</if>
+			<if test="mac != null and mac!= ''">,#{mac,jdbcType=VARCHAR}</if>
+			<if test="remarks != null and remarks!= ''">,#{remarks}</if>
+			<if test="areacode != null and areacode !=''">,#{areacode}</if>
+			<if test="schoolcode != null and schoolcode !=''">,#{schoolcode}</if>
+			<if test="classcode != null and classcode !=''">,#{classcode}</if>
+			<if test="username != null and username !=''">,#{username}</if>
+			<if test="userid != null and userid !=''">,#{userid}</if>
+			<if test="freedisk != null and freedisk !=''">,#{freedisk}</if>
+		)
+	</insert>
+	
+	
+	<insert id="saveWidgetInfoLogBack" parameterType="java.util.Map">
+		insert into TA_WIDGET_LOG_BACK(
+			id,
+			<if test="userId != null">user_id,</if>
+			<if test="orgId != null">org_id,</if>
+			<if test="platformCode != null">platform_code,</if>
+			<if test="classId != null">class_id,</if>
+			<if test="cpuInfo != null">cpu_info,</if>
+			<if test="memory != null">memory,</if>
+			<if test="operationSystemsType != null">operation_system_type,</if>
+			<if test="isTransfer != null">is_transfer,</if>
+			<if test="terminalVersion != null">terminal_version,</if>
+			<if test="classType != null">class_type,</if>			
+			<if test="loginSource != null">login_source,</if>
+			<if test="loginTaking != null">login_taking,</if>
+			<if test="courseNum != null">course_num,</if>
+			<if test="useTaking != null">use_taking,</if>
+			<if test="useName != null">use_name,</if>
+			<if test="orgName != null">org_name,</if>
+			<if test="areaCode != null">area_code,</if>
+			
+			<if test="userType != null">user_type,</if>
+			
+			<if test="loginPlatformCode != null and loginPlatformCode !='' ">login_platform_code,</if>
+			<if test="chapterId != null and chapterId !='' ">chapter_Id,</if>
+			<if test="chapterName != null and chapterId !='' ">chapter_Name,</if>
+			<if test="subjectId != null and subjectId !='' ">subject_Id,</if>
+			<if test="subjectName != null and subjectName != '' ">subject_name,</if>
+			<if test="editionId != null and editionId != '' ">edition_Id,</if>
+			<if test="editionName != null and editionName!= '' ">edition_Name,</if>
+			<if test="userName != null and userName !='' ">user_name,</if>
+	
+			<if test="cpuSn != null and cpuSn !='' ">cpu_Sn,</if>
+			<if test="monthBoardSn != null and monthBoardSn != '' ">main_Board_Sn,</if>
+			<if test="biosSn != null and biosSn != '' ">bios_Sn,</if>
+			<if test="diskSn != null and diskSn != '' ">disk_Sn,</if>
+			
+			use_Count,
+			widget_Id,
+			machine_Info,
+			operation_System_Info
+		)
+		values (
+			#{id,jdbcType=VARCHAR}
+			<if test="userId != null">,#{userId,jdbcType=VARCHAR}</if>
+			<if test="orgId != null">,#{orgId}</if>
+			<if test="platformCode != null">,#{platformCode,jdbcType=VARCHAR}</if>
+			<if test="classId != null">,#{classId,jdbcType=VARCHAR}</if>
+			<if test="cpuInfo != null">,#{cpuInfo,jdbcType=VARCHAR}</if>
+			<if test="memory != null">,#{memory,jdbcType=VARCHAR}</if>
+			<if test="operationSystemsType != null">,#{operationSystemsType,jdbcType=VARCHAR}</if>
+			<if test="isTransfer != null">,#{isTransfer,jdbcType=VARCHAR}</if>
+			<if test="terminalVersion != null">,#{terminalVersion,jdbcType=VARCHAR}</if>
+			<if test="classType != null">,#{classType,jdbcType=VARCHAR}</if>
+			<if test="loginSource != null" >,#{loginSource}</if>
+			<if test="loginTaking != null" >,#{loginTaking}</if>
+			<if test="courseNum != null" >,#{courseNum,jdbcType=VARCHAR}</if>
+			<if test="useTaking != null" >,#{useTaking}</if>
+			
+			<if test="userName != null and userName !='' ">userName!=,</if>
+			<if test="orgName != null" >,#{orgName}</if>
+			<if test="areaCode != null" >,#{areaCode}</if>
+			<if test="userType != null" >,#{userType}</if>
+			
+			
+			<if test="loginPlatformCode != null and loginPlatformCode !='' ">loginPlatformCode,</if>
+			<if test="chapterId != null and chapterId !='' ">chapterId,</if>
+			<if test="chapterName != null and chapterName !='' ">chapterId,</if>
+			<if test="subjectId != null and subjectId !='' ">subjectId,</if>
+			<if test="subjectName != null and subjectName != '' ">subjectName,</if>
+			<if test="editionId != null and editionId != '' ">editionId,</if>
+			<if test="editionName != null and editionName!= '' ">editionName,</if>
+			
+			
+			<if test="cpuSn != null and cpuSn !='' ">cpuSn,</if>
+			<if test="monthBoardSn != null and monthBoardSn != '' ">monthBoardSn,</if>
+			<if test="biosSn != null and biosSn != '' ">biosSn,</if>
+			<if test="diskSn != null and diskSn != '' ">diskSn,</if>
+			
+			
+			,#{useCount,jdbcType=INTEGER}
+			,#{widgetId,jdbcType=INTEGER}
+			,#{machineInfo,jdbcType=VARCHAR}
+			,#{operationSystemInfo,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<insert id="saveWidgetInfoLog" parameterType="java.util.Map">
+		insert into TA_WIDGET_LOG(
+			id,
+			<if test="userId != null">user_id,</if>
+			<if test="orgId != null">org_id,</if>
+			<if test="platformCode != null">platform_code,</if>
+			<if test="classId != null">class_id,</if>
+			<if test="cpuInfo != null">cpu_info,</if>
+			<if test="memory != null">memory,</if>
+			<if test="operationSystemsType != null">operation_system_type,</if>
+			<if test="isTransfer != null">is_transfer,</if>
+			<if test="terminalVersion != null">terminal_version,</if>
+			<if test="classType != null">class_type,</if>			
+			<if test="loginSource != null">login_source,</if>
+			<if test="loginTaking != null">login_taking,</if>
+			<if test="courseNum != null">course_num,</if>
+			<if test="useTaking != null">use_taking,</if>
+			
+			<if test="userName != null">user_name,</if>
+			<if test="userType != null">user_type,</if>
+			<if test="orgName != null">org_name,</if>
+			<if test="areaCode != null">area_code,</if>
+			
+			<if test="loginPlatformCode != null and loginPlatformCode !='' ">login_platform_code,</if>
+			<if test="chapterId != null and chapterId !='' ">chapter_Id,</if>
+			<if test="chapterName != null and chapterName !='' ">chapter_Name,</if>
+			<if test="subjectId != null and subjectId !='' ">subject_Id,</if>
+			<if test="subjectName != null and subjectName != '' ">subject_name,</if>
+			<if test="editionId != null and editionId != '' ">edition_Id,</if>
+			<if test="editionName != null and editionName!= '' ">edition_Name,</if>
+			
+	
+			<if test="cpuSn != null and cpuSn !='' ">cpu_Sn,</if>
+			<if test="monthBoardSn != null and monthBoardSn != '' ">main_Board_Sn,</if>
+			<if test="biosSn != null and biosSn != '' ">bios_Sn,</if>
+			<if test="diskSn != null and diskSn != '' ">disk_Sn,</if>
+			
+			
+			use_Count,
+			widget_Id,
+			machine_Info,
+			operation_System_Info
+		)
+		values (
+			#{id,jdbcType=VARCHAR}
+			<if test="userId != null">,#{userId,jdbcType=VARCHAR}</if>
+			<if test="orgId != null">,#{orgId}</if>
+			<if test="platformCode != null">,#{platformCode,jdbcType=VARCHAR}</if>
+			<if test="classId != null">,#{classId,jdbcType=VARCHAR}</if>
+			<if test="cpuInfo != null">,#{cpuInfo,jdbcType=VARCHAR}</if>
+			<if test="memory != null">,#{memory,jdbcType=VARCHAR}</if>
+			<if test="operationSystemsType != null">,#{operationSystemsType,jdbcType=VARCHAR}</if>
+			<if test="isTransfer != null">,#{isTransfer,jdbcType=VARCHAR}</if>
+			<if test="terminalVersion != null">,#{terminalVersion,jdbcType=VARCHAR}</if>
+			<if test="classType != null">,#{classType,jdbcType=VARCHAR}</if>
+			<if test="loginSource != null" >,#{loginSource}</if>
+			<if test="loginTaking != null" >,#{loginTaking}</if>
+			<if test="courseNum != null" >,#{courseNum,jdbcType=VARCHAR}</if>
+			<if test="useTaking != null" >,#{useTaking}</if>
+			
+			<if test="userName != null" >,#{userName}</if>
+			<if test="userType != null" >,#{userType}</if>
+			<if test="orgName != null" >,#{orgName}</if>
+			<if test="areaCode != null" >,#{areaCode}</if>
+			
+			
+			<if test="loginPlatformCode != null and loginPlatformCode !='' ">,#{loginPlatformCode}</if>
+			<if test="chapterId != null and chapterId !='' ">,#{chapterId}</if>
+			<if test="chapterName != null and chapterName !='' ">,#{chapterName}</if>
+			<if test="subjectId != null and subjectId !='' ">,#{subjectId}</if>
+			<if test="subjectName != null and subjectName != '' ">,#{subjectName}</if>
+			<if test="editionId != null and editionId != '' ">,#{editionId}</if>
+			<if test="editionName != null and editionName!= '' ">,#{editionName}</if>
+			
+			
+			<if test="cpuSn != null and cpuSn !='' ">,#{cpuSn}</if>
+			<if test="monthBoardSn != null and monthBoardSn != '' ">, #{monthBoardSn}</if>
+			<if test="biosSn != null and biosSn != '' ">,#{biosSn}</if>
+			<if test="diskSn != null and diskSn != '' ">,#{diskSn}</if>
+			
+			,#{useCount,jdbcType=INTEGER}
+			,#{widgetId,jdbcType=INTEGER}
+			,#{machineInfo,jdbcType=VARCHAR}
+			,#{operationSystemInfo,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<insert id="powerOff" parameterType="java.util.Map">
+		insert into TA_POWEROFF (
+			id,
+			MACHINe_INFO
+		) values (
+			#{id,jdbcType=VARCHAR},
+			#{machine_info,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	
+	<!-- 删除用户 -->
+	<delete id="deleteUser" parameterType="java.util.Map">
+		delete from TA_USER where id in <foreach collection="idList" item="id" separator="," open="(" close=")">#{id}</foreach>
+	</delete>
+	
+	
+	
+	
+	<!-- 更新用户信息-->
+	<update id="updateUserStatus" parameterType="map">
+		update TA_USER 
+		set status=#{status}
+		where id in <foreach collection="idList" item="id" separator="," open="(" close=")">#{id}</foreach>
+	</update>
+	
+	<!-- 按条件查询用户 -->
+	<select id="queryUser" parameterType="java.util.Map" resultType="Ta_user">
+		select t.id,t.user_id
+		,t.user_name
+		,t.user_account
+		,t.org_id
+		,t.org_name
+		,t.status
+		,t.login_count
+		,t.use_time
+		,t.last_time
+		,t.create_time
+		,t.update_time
+		,t.gender
+		,t.phone_number
+		,t.email
+		,t.real_name
+		,t.user_type
+		,t.birthday
+		,t.address
+		,t.area_code
+		,t.area_name
+		,t.platform_id
+		,(select p.platform_name from TA_BASE_PROPERTY p where p.platform_code=t.platform_id and p.property_key = 'platform_url') AS platformName
+		from TA_USER t
+		where 1=1
+		<if test="org_name != null and org_name != ''">and t.org_name like CONCAT('%',#{org_name},'%')</if>
+		<if test="user_type != null and user_type != ''">and t.user_type=#{user_type}</if>
+		<if test="status != null and status != ''">and t.status=#{status}</if>
+		<if test="user_account != null and user_account != ''">and t.user_account like CONCAT('%',#{user_account},'%')</if>
+		<if test="platform_id != null and platform_id != ''">and t.platform_id=#{platform_id}</if>
+		<if test="areaid != null and areaid != ''">and t.area_code like CONCAT('%',#{areaid},'%') </if>
+		<if test="orderField != null and orderField != ''">
+			order by ${orderField} <if test="orderState != null and orderState != ''">${orderState}</if>
+		</if>
+	</select>
+	
+	<select id="qqbb" parameterType="map" resultType="map">
+select t1.*,t2.real_name,t2.last_time,t2.login_count,t2.org_name from 
+(select user_id,sum(use_taking) as use_taking from ta_widget_log where use_taking > 0 and platform_code='420100' group by user_id order by platform_code desc) t1 
+left join ta_user t2 on t1.user_id = t2.user_id
+	</select>
+	
+	<select id="qqbb4" parameterType="map" resultType="map">
+	select t1.user_id,t1.platform_code,(select sum(use_count) as use_count from ta_widget_log t2 where widget_id=23 and t1.user_id = t2.user_id) from ta_widget_log t1 where t1.platform_code ='420100' group by t1.user_id,t1.platform_code;
+	</select>
+	
+	<select id="qqbb2" parameterType="map" resultType="map">
+		select user_id,platform_code from ta_widget_log where create_time >='2017-01-01' 
+		<![CDATA[and create_time <= '2017-09-10' ]]> and platform_code='420100'
+		and user_id is not null and org_id is not null and platform_code is not null
+		and widget_id in(23,38,39,37,45,40,20,9,11,18,19,22,23,24)
+		group by user_id,platform_code
+	</select>
+	
+	<select id="qqbb3" parameterType="map" resultType="map">	
+select user_id,sum(use_taking) as platform_code from ta_widget_log where use_taking > 0 and platform_code='420100' group by user_id order by platform_code desc
+	</select>
+	
+	
+	<select id="getUserList2" parameterType="map" resultType="Ta_user">	
+	select * from ta_user where platform_id like CONCAT('33%') and last_time >='2018-03-27 00:00:00' 
+	<![CDATA[ and last_time <='2018-03-27 23:59:59']]>
+	</select>
+	
+	<select id="getUserList" parameterType="java.util.Map" resultType="Ta_user">
+	    select id,user_id
+		,user_name
+		,user_account
+		,org_id
+		,org_name
+		,status
+		,login_count
+		,use_time
+		,last_time
+		,create_time
+		,update_time
+		,gender
+		,phone_number
+		,email
+		,real_name
+		,user_type
+		,birthday
+		,address
+		,area_code
+		,area_name
+		,platform_id
+		from TA_USER
+		where 1=1
+		<if test="startTime != null and startTime != ''">and update_time >= date_format(#{startTime},'yyyy-mm-dd')-1</if>
+	</select>
+</mapper>

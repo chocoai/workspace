@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx" 
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd 
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd 
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd 
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+
+	<!-- 加载配置文件 -->
+	<context:property-placeholder location="classpath:config.properties" />
+
+	<!-- 扫描类，完成自动装配 -->
+	<context:component-scan base-package="com.smart.dao" />
+	<context:component-scan base-package="com.smart.service" />
+
+	<!-- 数据源 -->
+	<bean id="dataSource" class="org.logicalcobwebs.proxool.ProxoolDataSource">
+		<property name="alias" value="${dataSource.alias}" />
+		<property name="driver" value="${dataSource.driverClass}" />
+		<property name="driverUrl" value="${dataSource.url}" />
+		<property name="user" value="${dataSource.user}" />
+		<property name="password" value="${dataSource.password}" />
+		<property name="minimumConnectionCount" value="${dataSource.minPoolSize}" />
+		<property name="maximumConnectionCount" value="${dataSource.maxPoolSize}" />
+		<property name="maximumActiveTime" value="${dataSource.maxActiveTime}" />
+		<property name="statistics" value="1m,15m,1d" />
+	</bean>
+	
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- 要扫描的包 hibernate model位置 -->
+		<property name="packagesToScan" value="com.smart.model" />
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">com.smart.util.MySQLLocalDialect</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<!-- 批量跟新或删除时使用 -->
+				<prop key="hibernate.jdbc.batch_size">${hibernate.jdbc.batch_size}</prop>
+				<prop key="hibernate.collection.isolation">${hibernate.collection.isolation}</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<!-- spring 事务管理 -->
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="save*" propagation="REQUIRED" />
+			<tx:method name="update*" propagation="REQUIRED" />
+			<tx:method name="delete*" propagation="REQUIRED" />
+			<tx:method name="toNextStep*" propagation="REQUIRED" />
+			<tx:method name="get*" propagation="REQUIRED" read-only="true" />
+			<tx:method name="*" propagation="REQUIRED" read-only="true" />
+		</tx:attributes>
+	</tx:advice>
+
+	<!-- spring aop 管理 service -->
+	<aop:config>
+		<aop:pointcut id="serviceOperation" expression="execution(* com.smart.service.*.*(..))" />
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="serviceOperation" />
+	</aop:config>
+	
+	<!-- freemarker配置，mvc和mail中都需要 -->
+	<bean id="freemarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPath" value="/WEB-INF/content"/>
+		<property name="freemarkerSettings" ref="freemarkerConfiguration"/>
+	</bean>
+	
+	<bean id="freemarkerConfiguration" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="location" value="classpath:freemarker.properties"/>
+	</bean>
+	
+</beans>

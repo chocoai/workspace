@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.devicemanage.dao.BrowserTagDao">
+	
+	<resultMap type="com.whty.assis.devicemanage.model.BrowserTag" id="BrowserTagResult">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="memo" column="memo" />
+		<result property="logo" column="logo" />
+		<result property="creator" column="creator" />
+		<result property="creatorName" column="creator_name" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="urlTotal" column="url_total" />
+		<result property="groupNum" column="group_num" />
+		<result property="groupName" column="group_name" />
+	</resultMap>
+	
+	<insert id="save" parameterType="com.whty.assis.devicemanage.model.BrowserTag">
+		insert into t_browser_tag(
+		url
+		,name
+		,logo
+		,group_num
+		,group_name
+		,browser_tag_rule_id
+			) values (
+				#{url}
+				,#{name}
+				,#{logo}
+				,#{groupNum}
+				,#{groupName}
+				,#{browserTagRuleId}
+			)
+	</insert>
+
+	<delete id="deleteByRuleId" parameterType="int" >
+		delete from t_browser_tag where browser_tag_rule_id=#{_parameter}
+	</delete>
+
+	<delete id="deleteById" parameterType="int" >
+		delete from t_browser_tag where id=#{_parameter}
+	</delete>
+
+	<select id="loadById" parameterType="int" resultMap="BrowserTagResult">
+			select * from t_browser_tag 
+			where 1=1
+			and id=#{_parameter}
+	</select>
+
+	<select id="listByCondition" parameterType="map" resultMap="BrowserTagResult">
+		select * from t_browser_tag 
+		where 1=1
+		<if test="browserTagRuleId != null ">and browser_tag_rule_id=#{browserTagRuleId}</if>
+	</select>
+	
+</mapper>

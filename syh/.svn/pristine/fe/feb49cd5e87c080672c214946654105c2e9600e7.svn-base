@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="UnitInfoMapper">
+	<resultMap id="BaseResultMap" type="UnitInfo">
+		<id column="CID" jdbcType="INTEGER" property="cid" />
+		<result column="UNIT_NAME" jdbcType="VARCHAR" property="unitName" />
+		<result column="ABBREVIATION" jdbcType="VARCHAR" property="abbreviation" />
+		<result column="ATHLETE_NUM" jdbcType="INTEGER" property="athleteNum" />
+		<result column="CONTACT_PHONE" jdbcType="VARCHAR" property="contactPhone" />
+		<result column="UNIT_CONTACT" jdbcType="VARCHAR" property="unitContact" />
+		<result column="ORDER_NUM" jdbcType="INTEGER" property="orderNum" />
+		<result column="ERSION_NUM" jdbcType="INTEGER" property="ersionNum" />
+		<result column="BACKUP" jdbcType="VARCHAR" property="backup" />
+		<result column="CREA_REN" jdbcType="VARCHAR" property="creaRen" />
+		<result column="CREA_TIME" jdbcType="VARCHAR" property="creaTime" />
+		<result column="EXP1" jdbcType="INTEGER" property="exp1" />
+		<result column="EXP2" jdbcType="INTEGER" property="exp2" />
+		<result column="EXP3" jdbcType="VARCHAR" property="exp3" />
+		<result column="EXP4" jdbcType="VARCHAR" property="exp4" />
+		<result column="EXP5" jdbcType="VARCHAR" property="exp5" />
+		<result column="EXP6" jdbcType="VARCHAR" property="exp6" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		CID, UNIT_NAME, ABBREVIATION,ATHLETE_NUM, CONTACT_PHONE,
+		UNIT_CONTACT, ORDER_NUM,ERSION_NUM,
+		BACKUP, CREA_REN, CREA_TIME, EXP1, EXP2, EXP3, EXP4, EXP5, EXP6
+	</sql>
+	<select id="getById" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from
+		unit_info
+		where
+		CID = #{cid,jdbcType=INTEGER}
+	</select>
+
+
+	<select id="countByName" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select count(*) from unit_info where 
+		<if test="ersionNum != null">
+	    	AND ERSION_NUM = #{ersionNum,jdbcType=INTEGER}
+	    </if>
+		<if test="unitName != null and unitName!=''">
+			and UNIT_NAME = #{unitName,jdbcType=INTEGER}
+	    </if>
+	</select>
+	<select id="selectByExample" parameterType="UnitInfo" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from
+		unit_info
+		where
+		1=1
+		<if test="ersionNum != null">
+	    	AND ERSION_NUM = #{ersionNum,jdbcType=INTEGER}
+	    </if>
+		<if test="unitName != null">
+			and UNIT_NAME LIKE #{unitName,jdbcType=INTEGER}
+		</if>
+		<if test="abbreviation != null">
+			and ABBREVIATION LIKE #{abbreviation,jdbcType=VARCHAR}
+		</if>
+		order by ORDER_NUM  DESC,CREA_TIME DESC
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete
+		from unit_info
+		where
+		CID = #{cid,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteAll" parameterType="java.lang.Integer"
+		flushCache="false">
+		delete
+		from unit_info
+		where
+		CID in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	<insert id="insert" parameterType="UnitInfo">
+		insert into unit_info (CID, UNIT_NAME, ABBREVIATION,
+		ATHLETE_NUM, CONTACT_PHONE,
+		UNIT_CONTACT, ORDER_NUM,ERSION_NUM, BACKUP,
+		CREA_REN, CREA_TIME, EXP1,
+		EXP2, EXP3, EXP4, EXP5,
+		EXP6)
+		values (#{cid,jdbcType=INTEGER}, #{unitName,jdbcType=VARCHAR},
+		#{abbreviation,jdbcType=VARCHAR},
+		#{athleteNum,jdbcType=INTEGER}, #{contactPhone,jdbcType=VARCHAR},
+		#{unitContact,jdbcType=VARCHAR}, #{orderNum,jdbcType=INTEGER},#{ersionNum,jdbcType=INTEGER},
+		#{backup,jdbcType=VARCHAR},
+		#{creaRen,jdbcType=VARCHAR}, #{creaTime,jdbcType=VARCHAR}, #{exp1,jdbcType=INTEGER},
+		#{exp2,jdbcType=INTEGER}, #{exp3,jdbcType=VARCHAR},
+		#{exp4,jdbcType=VARCHAR}, #{exp5,jdbcType=VARCHAR},
+		#{exp6,jdbcType=VARCHAR}
+		)
+	</insert>
+	<update id="updateByPrimaryKey" parameterType="UnitInfo">
+		update unit_info
+	    set
+	      UNIT_NAME = #{unitName,jdbcType=VARCHAR},
+	      ABBREVIATION = #{abbreviation,jdbcType=VARCHAR},
+	      ATHLETE_NUM = #{athleteNum,jdbcType=INTEGER},
+	      CONTACT_PHONE = #{contactPhone,jdbcType=VARCHAR},
+	      UNIT_CONTACT = #{unitContact,jdbcType=VARCHAR},
+	      ORDER_NUM = #{orderNum,jdbcType=INTEGER},
+	      ERSION_NUM = #{ersionNum,jdbcType=INTEGER},
+	      BACKUP = #{backup,jdbcType=VARCHAR},
+	      CREA_REN = #{creaRen,jdbcType=VARCHAR},
+	      CREA_TIME = #{creaTime,jdbcType=VARCHAR},
+	      EXP1 = #{exp1,jdbcType=INTEGER},
+	      EXP2 = #{exp2,jdbcType=INTEGER},
+	      EXP3 = #{exp3,jdbcType=VARCHAR},
+	      EXP4 = #{exp4,jdbcType=VARCHAR},
+	      EXP5 = #{exp5,jdbcType=VARCHAR},
+	      EXP6 = #{exp6,jdbcType=VARCHAR}
+		where
+		CID = #{cid,jdbcType=INTEGER}
+	</update>
+
+	<!-- 通过公司名称查询公司信息 -->
+	<select id="quertByUnitName" parameterType="String" resultMap="BaseResultMap">
+		select
+		CID,
+		unit_name
+		from
+		unit_info
+		where
+		<if test="ersionNum != null">
+	    	AND ERSION_NUM = #{ersionNum,jdbcType=INTEGER}
+	    </if>
+		<if test="unitName != null and unitName!='' ">
+	    	and unit_name like "%"#{unitName}"%"
+	    </if>
+		order by ORDER_NUM  DESC,CREA_TIME DESC
+	</select>
+
+	<!-- 通过公司简称查询公司信息 -->
+	<select id="quertByAbbreviation" parameterType="String"
+		resultMap="BaseResultMap">
+		select
+		CID,
+		unit_name
+		from
+		unit_info
+		where
+		<if test="ersionNum != null">
+	    	AND ERSION_NUM = #{ersionNum,jdbcType=INTEGER}
+	    </if>
+		<if test="unitAbbreviation != null and unitAbbreviation!=''">
+	    	AND abbreviation like "%"#{unitAbbreviation}"%"
+	    </if>
+		
+		order by ORDER_NUM  DESC,CREA_TIME DESC
+	</select>
+	<!-- 通过公司名称/简称查询参赛单位信息 -->
+	<select id="quertByUnitContent" parameterType="java.util.Map"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from
+		unit_info
+		<include refid="where_all" />
+		order by ORDER_NUM  DESC,CREA_TIME DESC
+	</select>
+
+	<sql id="where_all">
+		where 1 = 1
+		<if test="ersionNum != null">
+	    	AND ERSION_NUM = #{ersionNum,jdbcType=INTEGER}
+	    </if>
+		<if test="findContent != null and findContent!='' ">
+			and (LOWER(unit_name) like CONCAT("%",#{findContent},"%")
+			or
+			LOWER(abbreviation) like CONCAT("%",#{findContent},"%"))
+		</if>
+	</sql>
+</mapper>

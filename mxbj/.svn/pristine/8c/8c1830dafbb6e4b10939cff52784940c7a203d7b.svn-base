@@ -1,0 +1,2 @@
+2017-07-14 17:52:34.711 [main] INFO  com.whty.mxbj.common.utils.HttpUtils -Get请求httpUrl:http://whty.bj.bcebos.com/mnote/b5d03e8e7ec242baaffc94fa1103b1e2888888/notebooks/3_212_5/1.png
+2017-07-14 17:54:45.311 [main] INFO  com.whty.mxbj.common.utils.HttpUtils -Get请求httpUrl:http://whty.bj.bcebos.com/mnote/08cb02eae74b46d2af860775563dd886420100/notebooks/3_212_8/2.png

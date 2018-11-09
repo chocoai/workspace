@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.basicdata.dao.DeviceInfoDao">
+
+	<resultMap type="com.whty.assis.basicdata.model.DeviceInfo" id="DeviceInfoResult">
+		<result property="aliDeviceSecret" column="ali_device_secret" />
+		<result property="aliDeviceName" column="ali_device_name" />
+		<result property="aliProductKey" column="ali_product_key" />
+		<result property="aliIotId" column="ali_iot_id" />
+		<result property="name" column="name" />
+		<result property="provinceCode" column="province_code" />
+		<result property="cityCode" column="city_code" />
+		<result property="areaCode" column="area_code" />
+		<result property="schoolId" column="school_id" />
+		<result property="lastLoginTime" column="last_login_time" />
+		<result property="registerTime" column="register_time" />
+		<result property="terminalDeviceTypeId" column="terminal_device_type_id" />
+		<result property="freezeStatus" column="freeze_status" />
+		<result property="clientSoftVersion" column="client_soft_version" />
+		<result property="systemVersion" column="system_version" />
+		<result property="resolution" column="resolution" />
+		<result property="registerCount" column="register_count" />
+		<result property="creator" column="creator" />
+		<result property="orderId" column="order_id" />
+		<result property="hash" column="hash" />
+		
+		
+		<result property="brandName" column="brand_name" />
+		<result property="modelName" column="model_name" />
+		<result property="deviceName" column="device_name" />
+		<result property="schoolLocationName" column="school_location_name" />
+		
+		<result property="schoolLocationAreaName" column="school_location_area_name" />
+		
+		
+		<result property="schoolName" column="school_name" />
+		<result property="account" column="account" />
+		<result property="loginTime" column="login_time" />
+		<result property="userName" column="user_name" />
+		<result property="className" column="class_name" />
+		<result property="terminalProductKey" column="terminal_product_key" />
+		<result property="storage" column="storage" />
+		<result property="mac" column="mac" />
+		<result property="diskSize" column="disk_size" />
+		<result property="deviceStatus" column="device_status" />
+		
+		<result property="studentName" column="student_name" />
+		
+		<result property="deviceCode" column="device_code" />
+	</resultMap>
+	
+	<insert id="save" parameterType="com.whty.assis.basicdata.model.DeviceInfo">
+		insert into t_device_info(
+			device_status,
+			<if test="aliDeviceSecret != null and aliDeviceSecret != ''">ali_device_secret,</if>
+			<if test="aliDeviceName != null and aliDeviceName != ''">ali_device_name,</if>
+			<if test="aliProductKey != null and aliProductKey != ''">ali_product_key,</if>
+			<if test="aliIotId != null and aliIotId != ''">ali_iot_id,</if>
+			creator,
+			<if test="terminalDeviceTypeId != null and terminalDeviceTypeId != ''">terminal_device_type_id,</if>
+			<if test="provinceCode != null and provinceCode != ''">province_code,</if>
+			<if test="cityCode != null and cityCode != ''">city_code,</if>
+			<if test="areaCode != null and areaCode != ''">area_code,</if>
+			create_time,
+			update_time,
+			order_id
+			) values (
+			#{deviceStatus},
+			<if test="aliDeviceSecret != null and aliDeviceSecret != ''">#{aliDeviceSecret},</if>
+			<if test="aliDeviceName != null and aliDeviceName != ''">#{aliDeviceName},</if>
+			<if test="aliDeviceName != null and aliDeviceName != ''">#{aliDeviceName},</if>
+			<if test="aliIotId != null and aliIotId != ''">#{aliIotId},</if>
+			#{creator},
+			<if test="terminalDeviceTypeId != null and terminalDeviceTypeId != ''">#{terminalDeviceTypeId},</if>
+			<if test="provinceCode != null and provinceCode != ''">#{provinceCode},</if>
+			<if test="cityCode != null and cityCode != ''">#{cityCode},</if>
+			<if test="areaCode != null and areaCode != ''">#{areaCode},</if>
+			#{createTime},
+			#{updateTime},
+			#{orderId}
+			)
+	</insert>
+	
+	
+	<update id="update" parameterType="com.whty.assis.basicdata.model.DeviceInfo">
+		update t_device_info 
+		set 
+		<trim prefixOverrides=",">
+			,school_id = #{schoolId}
+			<if test="aliDeviceSecret != null and aliDeviceSecret != ''">, ali_device_secret=#{aliDeviceSecret}</if>
+			<if test="aliDeviceName != null and aliDeviceName != ''">, ali_device_name=#{aliDeviceName}</if>
+			<if test="aliProductKey != null and aliProductKey != ''">, ali_product_key=#{aliProductKey}</if>
+			<if test="aliIotId != null and aliIotId != ''">, ali_iot_id=#{aliIotId}</if>
+			<if test="updateTime != null">, update_time=#{updateTime}</if>
+			<if test="deviceCode != null and deviceCode != '' ">, device_code =#{deviceCode}</if>
+		</trim>
+		where id=#{id}
+	</update>
+	
+	
+	<select id="loadByIdAliIotId" parameterType="string" resultMap="DeviceInfoResult" >
+			select t1.mac,t1.disk_size,t1.storage,t1.system_version,t1.resolution,t1.client_soft_version,t1.register_time,t1.ali_device_secret,t1.ali_device_name,t1.ali_product_key,t1.id,t1.ali_iot_id,t5.brand_name,t5.model_name,last_login_time,t1.name as deviceName,t3.name as school_location_name,t4.name as school_location_area_name  from t_device_info t1 
+left join t_device_school_location t2 on t1.id=t2.device_id 
+left join t_school_location t3 on t2.school_location_id=t3.id left join
+t_school_location_area t4 on t2.school_location_area_id = t4.id left join t_brand t5 on t1.brand_id = t5.id
+where t1.device_status=2 and  t1.terminal_device_type_id=1
+		and t1.ali_iot_id = #{_parameter}
+	</select>
+	
+	
+		<select id="loadEbookpackageById" parameterType="int" resultMap="DeviceInfoResult" >
+			select t6.name as student_name,t6.school_name,t1.mac,t1.disk_size,t1.storage,t1.system_version,t1.resolution,t1.client_soft_version,
+t1.register_time,t1.ali_device_secret,t1.ali_device_name,t1.ali_product_key,t1.id,t1.ali_iot_id,
+t5.brand_name,t5.model_name,last_login_time,t1.name as deviceName,
+t3.name as school_location_name,t4.name as school_location_area_name  from t_device_info t1 
+left join t_device_school_location t2 on t1.id=t2.device_id 
+left join t_school_location t3 on t2.school_location_id=t3.id left join
+t_school_location_area t4 on t2.school_location_area_id = t4.id left join t_brand t5 on t1.brand_id = t5.id
+left join (select device_user.device_id,school_user.name,school.name as school_name from t_device_user device_user left join t_school_user school_user on school_user_id = school_user.id left join t_school school on device_user.school_id = school.id) as t6 on t6.device_id=t1.id
+where t1.device_status=2
+		and t1.id = #{_parameter}
+	</select>
+	
+	
+	<select id="loadById" parameterType="int" resultMap="DeviceInfoResult" >
+			select t6.ali_product_key as terminal_product_key,t1.mac,t1.disk_size,t1.storage,t1.system_version,t1.resolution,t1.client_soft_version,t1.register_time,t1.ali_device_secret,t1.ali_device_name,t1.ali_product_key,t1.id,t1.ali_iot_id,t5.brand_name,t5.model_name,last_login_time,t1.name as deviceName,t3.name as school_location_name,t4.name as school_location_area_name  from t_device_info t1 
+left join t_device_school_location t2 on t1.id=t2.device_id 
+left join t_school_location t3 on t2.school_location_id=t3.id left join
+t_school_location_area t4 on t2.school_location_area_id = t4.id left join t_brand t5 on t1.brand_id = t5.id
+left join t_terminal_device_type t6 on t1.terminal_device_type_id = t6.id
+where t1.device_status=2 
+		and t1.id = #{_parameter}
+	</select>
+	
+	<!-- 一体机 -->
+	<select id="listAIODevice" parameterType="map" resultMap="DeviceInfoResult">
+	select t1.terminal_device_type_id,t1.device_code,t1.mac,t1.disk_size,t1.storage,t1.system_version,t1.resolution,t1.client_soft_version,t1.register_time,t1.ali_device_secret,t1.ali_device_name,t1.ali_product_key,t1.id,t1.ali_iot_id,t5.brand_name,t5.model_name,last_login_time,t1.name as deviceName,t3.name as school_location_name,t4.name as school_location_area_name  from t_device_info t1 
+left join t_device_school_location t2 on t1.id=t2.device_id 
+left join t_school_location t3 on t2.school_location_id=t3.id 
+left join t_school_location_area t4 on t2.school_location_area_id = t4.id 
+left join t_brand t5 on t1.brand_id = t5.id 
+left join t_school t6 on t1.school_id = t6.id
+where t1.device_status=2 and  t1.terminal_device_type_id=1
+<if test="schoolId != null and schoolId != '' ">and t1.school_id=#{schoolId}</if>
+<if test="provinceCode != null and provinceCode != '' ">and t1.province_code=#{provinceCode}</if>
+<if test="cityCode != null and cityCode != '' ">and t1.city_code=#{cityCode}</if>
+<if test="areaCode != null and areaCode != '' ">and t1.area_code=#{areaCode}</if>
+
+<if test="searchAreaCode != null and searchAreaCode != '' ">and t6.province_code = #{searchAreaCode} or t6.city_code =#{searchAreaCode} or t6.area_code=#{searchAreaCode}</if>
+
+<if test="brandName != null and brandName != '' ">and t2.brand_name like CONCAT('%',#{brandName},'%')</if>
+<if test="modelName != null and modelName != '' ">and t2.model_name like CONCAT('%',#{modelName},'%')</if>
+	</select>
+	
+	<!-- 电子书包 -->
+	<select id="listEbookpackageDevice" parameterType="map" resultMap="DeviceInfoResult">
+	select t2.update_time as login_time,t7.brand_name as brand_name,t7.model_name as model_name,t1.device_code,t1.register_time,t1.ali_device_secret,t1.ali_device_name,t1.ali_product_key,t1.id,t1.ali_iot_id,t1.name as deviceName,
+t3.name as school_name,t6.class_name as class_name,t4.name as user_name
+from t_device_info t1 left join t_device_user t2 on t1.id = t2.device_id 
+left join t_school t3 on t2.school_id=t3.id
+left join t_school_user t4 on t2.school_user_id = t4.id
+left join t_school_user_class t5 on t2.school_user_id = t5.school_user_id
+left join t_school_class t6 on t5.school_class_id = t6.id
+left join t_brand t7 on t1.brand_id = t7.id
+where t1.device_status=2 and t1.terminal_device_type_id=2
+	<if test="schoolId != null and schoolId != '' ">and t1.school_id=#{schoolId}</if>
+	<if test="provinceCode != null and provinceCode != '' ">and t1.province_code=#{provinceCode}</if>
+	<if test="cityCode != null and cityCode != '' ">and t1.city_code=#{cityCode}</if>
+	<if test="areaCode != null and areaCode != '' ">and t1.area_code=#{areaCode}</if>
+	
+	<if test="brandName != null and brandName != '' ">and t7.brand_name like CONCAT('%',#{brandName},'%')</if>
+<if test="modelName != null and modelName != '' ">and t7.model_name like CONCAT('%',#{modelName},'%')</if>
+	</select>
+	
+	<select id="listByCondition" parameterType="map" resultMap="DeviceInfoResult">
+		select t1.*,t2.ali_product_key as terminal_product_key from t_device_info t1 left join t_terminal_device_type t2 on t1.terminal_device_type_id = t2.id where 1=1
+		<if test="terminalDeviceTypeId != null ">and t1.terminal_device_type_id=#{terminalDeviceTypeId}</if>
+		<if test="brandId != null and brandId ">and t1.brand_id=#{brandId}</if>
+		<if test="orderId != null and orderId != '' ">and t1.order_id=#{orderId}</if>
+		<if test="deviceCode != null and deviceCode != '' ">and t1.device_code=#{deviceCode}</if>
+		<if test="deviceStatus != null and deviceStatus != '' ">and t1.device_status=#{deviceStatus}</if>
+		<if test="schoolId != null and schoolId != '' ">and t1.school_id=#{schoolId}</if>
+		order by t1.create_time desc
+	</select>
+	
+	
+	<select id="listDeviceSchoolLocation" parameterType="map" resultType="map" >
+		select * from t_device_school_location where 1=1
+		<if test="deviceId != null and deviceId != '' ">and device_id=#{deviceId}</if>
+		<if test="schoolLocationId != null and schoolLocationId != '' ">and school_location_id=#{schoolLocationId}</if>
+		<if test="schoolLocationAreaId != null and schoolLocationAreaId != '' ">and school_location_area_id=#{schoolLocationAreaId}</if>
+		<if test="schoolLocationLayerId != null and schoolLocationLayerId !='' ">and school_location_layer_id=#{schoolLocationLayerId}</if>
+	</select>
+
+
+	<delete id="deleteSchoolLocationLayerBySchoolId" parameterType="int">
+		delete from t_school_location_layer where school_location_id=#{_parameter}
+	</delete>
+
+
+	<delete id="deleteById" parameterType="int">
+		delete from t_device_info where id=#{_parameter}
+	</delete>
+
+	<select id="selectDeviceInfo" resultType="int">
+		SELECT COUNT(*) from t_device_info t where t.terminal_device_type_id = 1
+	</select>
+</mapper>

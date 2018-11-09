@@ -1,0 +1,2 @@
+INSERT INTO res (id,pid,name,url,status)values('007004009','007004','印章借用-选择项目','/t_seal/selectproject.htm',1);
+INSERT INTO res (id,pid,name,url,status)values('007005011','007005','信息登记-删除学历and证书','/t_reso/deletess.htm',1);

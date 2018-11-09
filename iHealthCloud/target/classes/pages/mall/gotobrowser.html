@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link th:href="@{/pages/mall/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/pages/mall/css/font-awesome.min.css}" rel="stylesheet">
+    <link th:href="@{/pages/mall/css/mymall.css}" rel="stylesheet">
+	<script th:src="@{/pages/mall/js/jquery-1.9.1.min.js}"></script>
+    <script th:src="@{/pages/mall/js/bootstrap.min.js}"></script>
+</head>
+<body style="padding-top: 50px; background: #f3f3f8;">
+	<input type="hidden" th:value="${type}" id="type"/>
+	<input type="hidden" th:value="${cext1}" id="cext1"/>
+    <!-- 导航 开始 
+    <nav class="navbar navbar-default navbar-fixed-top navbar-mall-other">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a href="#" class="othertop-left"><i class="fa fa-angle-left icon-back"></i></a>
+          支付提示
+          <div class="othertop-right morebrowser">
+            <a href="#"><i class="fa fa-ellipsis-h"></i></a>
+          </div>
+        </div>
+      </div>
+    </nav> 导航 结束 -->
+
+    <div class="gotobrowser">
+      <div class="gotobrowser-t col-xs-10 pull-right">
+        <div class="col-xs-10 nopad-lr tips" style="color:#5d5b5b;">请在菜单中选择在浏览器中打开，以完成支付</div>
+        <div class="col-xs-2 nopad-lr arrow-top">
+          <img th:src="@{/pages/mall/images/gotoclick.png}" alt="">
+        </div>
+      </div>
+      <div class="gotobrowser-b">
+        <div class="circle">
+          <img th:src="@{/pages/mall/images/safari.png}" class="img-responsive col-xs-8 col-xs-offset-2">
+          <p id="gotobrowser"></p>
+        </div>
+      </div>
+    </div>
+	
+	<script type="text/javascript">
+		var pathName=window.document.location.pathname;
+     	var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
+		var type=$("#type").val();
+		var cext1 =$("#cext1").val();
+		var u = navigator.userAgent.toLowerCase();
+		var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+		var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+		var weixin=isWeiXin();
+		if(weixin){
+			if(u.indexOf('iphone')>-1){
+				$("#gotobrowser").prev("img").attr("src",projectName+"/pages/mall/images/safari.png");
+				$("#gotobrowser").html("在Safari中打开");
+			}else{
+				$("#gotobrowser").prev("img").attr("src",projectName+"/pages/mall/images/androidbrowser.png");
+				$("#gotobrowser").html("在原生浏览器中打开");
+			}
+		}else{
+			if(type=="goods")
+			{
+				window.location.href=projectName+"/h5/pay/aliApi/ywOrderPay?cext1="+cext1;
+			}else{
+				window.location.href=projectName+"/h5/pay/aliApi/workOrderPay?cext1="+cext1;
+			}
+		}
+		
+		function isWeiXin(){
+		    if(u.match(/MicroMessenger/i) == 'micromessenger'){
+		        return true;
+		    }else{
+		        return false;
+		    }
+		}
+		
+	</script>
+</body>
+</html>

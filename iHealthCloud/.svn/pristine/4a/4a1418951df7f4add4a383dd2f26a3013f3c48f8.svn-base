@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.iHealthCloud.mapper.MemberRelationshipMapper">
+	<resultMap id="BaseResultMap" type="com.yhcrt.iHealthCloud.entity.MemberRelationship">
+		<id column="cid" jdbcType="INTEGER" property="cid" />
+		<result column="member_id" jdbcType="INTEGER" property="memberId" />
+		<result column="follower_id" jdbcType="INTEGER" property="followerId" />
+		<result column="relation_desc" jdbcType="VARCHAR" property="relationDesc" />
+		<result column="create_time" jdbcType="VARCHAR" property="createTime" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+		<association property="member" column="member_id" select="com.yhcrt.iHealthCloud.mapper.MemberMapper.selectByPrimaryKey"></association>
+		<association property="follower" column="follower_id" select="com.yhcrt.iHealthCloud.mapper.MemberMapper.selectByPrimaryKey"></association>
+	</resultMap>
+	<resultMap id="smallResultMap" type="com.yhcrt.iHealthCloud.pojo.MemberRelationshipDTO">
+		<id column="cid" jdbcType="INTEGER" property="cid" />
+		<result column="member_id" jdbcType="INTEGER" property="memberId" />
+		<result column="follower_id" jdbcType="INTEGER" property="followerId" />
+		<result column="head_pic" jdbcType="VARCHAR" property="headPic" />
+		<result column="real_name" jdbcType="VARCHAR" property="realName" />
+		<result column="relation_desc" jdbcType="VARCHAR" property="relationDesc" />
+		<result column="tel" jdbcType="VARCHAR" property="tel" />
+		<result column="imei" jdbcType="VARCHAR" property="imei" />
+		<result column="create_time" jdbcType="VARCHAR" property="createTime" />
+		<result column="status" jdbcType="INTEGER" property="status" />
+	</resultMap>
+	<sql id="Example_Where_Clause">
+		<where>
+			<foreach collection="oredCriteria" item="criteria" separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Update_By_Example_Where_Clause">
+		<where>
+			<foreach collection="example.oredCriteria" item="criteria"
+				separator="or">
+				<if test="criteria.valid">
+					<trim prefix="(" prefixOverrides="and" suffix=")">
+						<foreach collection="criteria.criteria" item="criterion">
+							<choose>
+								<when test="criterion.noValue">
+									and ${criterion.condition}
+								</when>
+								<when test="criterion.singleValue">
+									and ${criterion.condition} #{criterion.value}
+								</when>
+								<when test="criterion.betweenValue">
+									and ${criterion.condition} #{criterion.value} and
+									#{criterion.secondValue}
+								</when>
+								<when test="criterion.listValue">
+									and ${criterion.condition}
+									<foreach close=")" collection="criterion.value" item="listItem"
+										open="(" separator=",">
+										#{listItem}
+									</foreach>
+								</when>
+							</choose>
+						</foreach>
+					</trim>
+				</if>
+			</foreach>
+		</where>
+	</sql>
+	<sql id="Base_Column_List">
+		cid, member_id, follower_id, relation_desc, create_time, status
+	</sql>
+	<select id="selectByExample"
+		parameterType="com.yhcrt.iHealthCloud.entity.MemberRelationshipExample"
+		resultMap="BaseResultMap">
+		select
+		<if test="distinct">
+			distinct
+		</if>
+		<include refid="Base_Column_List" />
+		from member_relationship
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+		<if test="orderByClause != null">
+			order by ${orderByClause}
+		</if>
+	</select>
+	<select id="getMyFollowingForSmall"
+		parameterType="string"
+		resultMap="smallResultMap">
+		select
+		cid, member_id, 
+		(SELECT phone_no from member T3 where T3.member_id = T1.member_id ) as tel,
+		(SELECT real_name from member T3 where T3.member_id = T1.member_id ) as real_name,
+		(SELECT head_pic from member T3 where T3.member_id = T1.member_id ) as head_pic,
+		(SELECT imei from member_device T4 where T4.member_id = T1.member_id ) as imei,
+		follower_id, relation_desc, create_time,  
+		CASE  T1.CID WHEN  (SELECT MIN(T2.CID) FROM  member_relationship T2 WHERE T2.member_id = T1.member_id GROUP BY T2.member_id ) THEN 1 ELSE 0 END AS status
+		from member_relationship T1 
+		where T1.follower_id = #{memberId,jdbcType=VARCHAR}
+	</select>
+	<select id="selectByPrimaryKey" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from member_relationship
+		where cid = #{cid,jdbcType=INTEGER}
+	</select>
+	<select id="selectMemRelaF" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from member_relationship
+		where member_id = #{memberId,jdbcType=INTEGER}
+	</select>
+	<select id="selectFMemRela" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from member_relationship
+		where follower_id = #{followerId,jdbcType=INTEGER}
+	</select>
+	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+		delete from member_relationship
+		where cid = #{cid,jdbcType=INTEGER}
+	</delete>
+	<delete id="deleteByExample"
+		parameterType="com.yhcrt.iHealthCloud.entity.MemberRelationshipExample">
+		delete from member_relationship
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</delete>
+	<insert id="insert" parameterType="com.yhcrt.iHealthCloud.entity.MemberRelationship">
+		insert into member_relationship (cid, member_id, follower_id,
+		relation_desc, create_time, status
+		)
+		values (#{cid,jdbcType=INTEGER}, #{memberId,jdbcType=INTEGER},
+		#{followerId,jdbcType=INTEGER}, 
+		#{relationDesc,jdbcType=VARCHAR}, #{createTime,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}
+		)
+	</insert>
+	<insert id="insertSelective" parameterType="com.yhcrt.iHealthCloud.entity.MemberRelationship">
+		insert into member_relationship
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="cid != null">
+				cid,
+			</if>
+			<if test="memberId != null">
+				member_id,
+			</if>
+			<if test="followerId != null">
+				follower_id,
+			</if>
+			<if test="relationDesc != null">
+				relation_desc,
+			</if>
+			<if test="createTime != null">
+				create_time,
+			</if>
+			<if test="status != null">
+				status,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="cid != null">
+				#{cid,jdbcType=INTEGER},
+			</if>
+			<if test="memberId != null">
+				#{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="followerId != null">
+				#{followerId,jdbcType=INTEGER},
+			</if>
+			<if test="relationDesc != null">
+				#{relationDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				#{createTime,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				#{status,jdbcType=INTEGER},
+			</if>
+		</trim>
+	</insert>
+	<select id="countByExample"
+		parameterType="com.yhcrt.iHealthCloud.entity.MemberRelationshipExample"
+		resultType="java.lang.Long">
+		select count(*) from member_relationship
+		<if test="_parameter != null">
+			<include refid="Example_Where_Clause" />
+		</if>
+	</select>
+	<update id="updateByExampleSelective" parameterType="map">
+		update member_relationship
+		<set>
+			<if test="record.cid != null">
+				cid = #{record.cid,jdbcType=INTEGER},
+			</if>
+			<if test="record.memberId != null">
+				member_id = #{record.memberId,jdbcType=INTEGER},
+			</if>
+			<if test="record.followerId != null">
+				follower_id = #{record.followerId,jdbcType=INTEGER},
+			</if>
+			<if test="record.relationDesc != null">
+				relation_desc = #{record.relationDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="record.createTime != null">
+				create_time = #{record.createTime,jdbcType=VARCHAR},
+			</if>
+			<if test="record.status != null">
+				status = #{record.status,jdbcType=INTEGER},
+			</if>
+		</set>
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByExample" parameterType="map">
+		update member_relationship
+		set cid = #{record.cid,jdbcType=INTEGER},
+		member_id = #{record.memberId,jdbcType=INTEGER},
+		follower_id = #{record.followerId,jdbcType=INTEGER},
+		relation_desc = #{record.relationDesc,jdbcType=VARCHAR},
+		create_time = #{record.createTime,jdbcType=VARCHAR},
+		status = #{record.status,jdbcType=INTEGER}
+		<if test="_parameter != null">
+			<include refid="Update_By_Example_Where_Clause" />
+		</if>
+	</update>
+	<update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.iHealthCloud.entity.MemberRelationship">
+		update member_relationship
+		<set>
+			<if test="memberId != null">
+				member_id = #{memberId,jdbcType=INTEGER},
+			</if>
+			<if test="followerId != null">
+				follower_id = #{followerId,jdbcType=INTEGER},
+			</if>
+			<if test="relationDesc != null">
+				relation_desc = #{relationDesc,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=VARCHAR},
+			</if>
+			<if test="status != null">
+				status = #{status,jdbcType=INTEGER},
+			</if>
+		</set>
+		where cid = #{cid,jdbcType=INTEGER}
+	</update>
+	<update id="updateByPrimaryKey" parameterType="com.yhcrt.iHealthCloud.entity.MemberRelationship">
+		update member_relationship
+		set member_id = #{memberId,jdbcType=INTEGER},
+		follower_id = #{followerId,jdbcType=INTEGER},
+		relation_desc = #{relationDesc,jdbcType=VARCHAR},
+		create_time = #{createTime,jdbcType=VARCHAR},
+		status = #{status,jdbcType=INTEGER}
+		where cid = #{cid,jdbcType=INTEGER}
+	</update>
+</mapper>

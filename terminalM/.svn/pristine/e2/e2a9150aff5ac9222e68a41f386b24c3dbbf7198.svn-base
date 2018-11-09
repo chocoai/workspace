@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.manage.dao.ButtonDao">
+	<resultMap type="com.whty.assis.manage.model.Button" id="ButtonResult">
+		<result column="id" property="id"/>
+		<result column="button_name" property="buttonName"/>
+		<result column="sort_num" property="sortNum"/>
+		<result column="status" property="status"/>
+		<result column="modular_id" property="modularId"/>
+		<result column="modular_name" property="modularName"/>
+	</resultMap>
+	
+	<select id="queryButton" parameterType="map" resultMap="ButtonResult">
+		select b.*,m.modular_name from sys_button b left join sys_modular m on b.modular_id= m.id where modular_id=#{modularId} order by sort_num 
+	</select>
+	<!-- 新增菜单按钮-->
+	<insert id="addButton" parameterType="com.whty.assis.manage.model.Button">
+		insert into sys_button (
+			<if test="id != null">id,</if>
+			<if test="buttonName != null">button_name,</if>
+			<if test="sortNum != null">sort_num,</if>
+			<if test="status != null">status,</if>
+			<if test="modularId != null">modular_id</if>
+		) values (
+			<if test="id != null">#{id,jdbcType=VARCHAR},</if>
+			<if test="buttonName != null">#{buttonName,jdbcType=VARCHAR},</if>
+			<if test="sortNum != null">#{sortNum},</if>
+			<if test="status != null">#{status,jdbcType=VARCHAR},</if>
+			<if test="modularId != null">#{modularId,jdbcType=VARCHAR}</if>
+		)
+	</insert>
+	<!-- 更新菜单按钮-->
+	<update id="updateButton" parameterType="com.whty.assis.manage.model.Button">
+		update sys_button 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="buttonName != null">button_name=#{buttonName},</if>
+			<if test="sortNum != null">sort_num=#{sortNum},</if>
+			<if test="status != null">status=#{status},</if>
+			<if test="modularId != null">modular_id=#{modularId},</if>
+		</trim>
+		where id=#{id}
+	</update>
+	<delete id="deleteButton" parameterType="string">
+		delete from sys_button
+		where id=#{id}
+	</delete>
+</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.devicemanage.dao.BrowserWhitelistRuleDao">
+	
+	<resultMap type="com.whty.assis.devicemanage.model.BrowserWhitelistRule" id="BrowserWhitelistRuleResult">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="memo" column="memo" />
+		<result property="creator" column="creator" />
+		<result property="creatorName" column="creator_name" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		
+		<result property="urlTotal" column="url_total" />
+	</resultMap>
+	
+	<insert id="save" parameterType="com.whty.assis.devicemanage.model.BrowserWhitelistRule">
+		insert into t_browser_whitelist_rule(
+		name
+		<if test="memo != null and memo != ''">,memo</if>
+		 ,creator
+		,create_time
+		,update_time
+			) values (
+				#{name}
+				<if test="memo != null and memo != ''">,#{memo}</if>
+				,#{creator}
+				,#{createTime}
+				,#{updateTime}
+			)
+	</insert>
+
+	<delete id="deleteById" parameterType="int" >
+		delete from t_browser_whitelist_rule where id=#{_parameter}
+	</delete>
+
+	<select id="loadById" parameterType="int" resultMap="BrowserWhitelistRuleResult">
+		select t1.*,t2.user_name as creator_name ,(select count(*) from t_browser_whitelist where browser_whitelist_rule_id = t1.id) as urlTotal from t_browser_whitelist_rule t1 left join ta_manage_user_info t2 on t1.creator=t2.id 
+			where 1=1
+			and t1.id=#{_parameter}
+	</select>
+
+	<select id="listByCondition" parameterType="map" resultMap="BrowserWhitelistRuleResult">
+		select t1.*,t2.user_name as creator_name ,(select count(*) from t_browser_whitelist where browser_whitelist_rule_id = t1.id) as urlTotal from t_browser_whitelist_rule t1 left join ta_manage_user_info t2 on t1.creator=t2.id 
+			where 1=1
+		<if test="id != null ">and t1.id=#{id}</if>
+		order by t1.create_time desc
+	</select>
+	
+	<select id="listBySchoolClassRule" parameterType="int" resultMap="BrowserWhitelistRuleResult">
+		select *,(select count(*) from t_browser_whitelist where browser_whitelist_rule_id = t1.id) as urlTotal from t_browser_whitelist_rule t1
+where id in(select browser_whitelist_rule_id from t_school_class_browser_whitelist_rule where school_class_id=#{_parameter})
+	</select>
+	
+</mapper>

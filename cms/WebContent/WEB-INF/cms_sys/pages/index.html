@@ -1,0 +1,257 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>东楚网 | Dashboard</title>
+<link rel="icon" href="http://v3.bootcss.com/favicon.ico">
+<link href="../../resource/css/bootstrap.min.css" rel="stylesheet">
+<link href="../../resource/font-awesome/css/font-awesome.css" rel="stylesheet">
+<link href="${base}/resource/css/animate.css" rel="stylesheet">
+<link href="${base}/resource/css/style.css" rel="stylesheet">
+</head>
+
+<body style="background: #e9f4f8;">
+
+	<div class="wrapper wrapper-content animated fadeIn">
+
+		<div class="row">
+			<div class="col-lg-6">
+				<div class="panel blank-panel">
+
+					<div class="panel-heading">
+						<div class="panel-title m-b-md">
+							<h4>待审内容</h4>
+						</div>
+						<div class="panel-options">
+
+							<ul class="nav nav-tabs">
+								<li class="active">
+									<a data-toggle="tab" href="#tab-1">最新內容</a>
+								</li>
+								<li class="">
+									<a data-toggle="tab" href="#tab-2">待审内容</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="panel-body">
+
+						<div class="tab-content">
+							<div id="tab-1" class="tab-pane active">
+								<div class="ibox float-e-margins">
+
+									<div class="ibox-content">
+
+										<table class="table">
+											<thead>
+												<tr>
+													<th>标题</th>
+													<th>发布时间</th>
+												</tr>
+											</thead>
+											<tbody>
+												<#list newcontents as c>
+												<tr>
+													<td>
+														<a href="${c.url}" title="${c.title}" target="_blank">
+															<span><@text_cut s=c.title len=titLen /></span>
+														</a>
+													</td>
+													<td>${c.releaseDate?string("yyyy-MM-dd")}</td>
+												</tr>
+												</#list>
+											</tbody>
+										</table>
+
+									</div>
+								</div>
+							</div>
+
+							<div id="tab-2" class="tab-pane">
+								<div class="ibox float-e-margins">
+
+									<div class="ibox-content">
+
+										<table class="table">
+											<thead>
+												<tr>
+													<th>标题</th>
+													<th>发布时间</th>
+													<th></th>
+												</tr>
+											</thead>
+											<tbody>
+												<#list contents as c>
+												<tr>
+													<td>
+														<a href="${c.url}" title="${c.title}" target="_blank">
+															<span><@text_cut s=c.title len=titLen /></span>
+														</a>
+													</td>
+													<td>${c.releaseDate?string("yyyy-MM-dd")}</td>
+													<td>
+														<a href="#" id="check_${c.id}"><@s.m "content.opt.check"/></a>
+														&nbsp;
+														<a href="#" id="reject_${c.id}"><@s.m "content.opt.reject"/></a>
+													</td>
+												</tr>
+												</#list>
+											</tbody>
+										</table>
+
+									</div>
+								</div>
+
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+
+			<div class="col-lg-6">
+				<div class="panel blank-panel">
+
+					<div class="panel-heading">
+						<div class="panel-title m-b-md">
+							<h4>访问排行榜</h4>
+						</div>
+						<div class="panel-options">
+
+							<ul class="nav nav-tabs">
+								<li class="active">
+									<a data-toggle="tab" href="#tab-3">月访问量</a>
+								</li>
+								<li class="">
+									<a data-toggle="tab" href="#tab-4">周访问量</a>
+								</li>
+								<li class="">
+									<a data-toggle="tab" href="#tab-5">日访问量</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="panel-body">
+
+						<div class="tab-content">
+							<div id="tab-3" class="tab-pane active">
+								<div class="ibox float-e-margins">
+
+									<div class="ibox-content">
+
+										<table class="table">
+											<thead>
+												<tr>
+													<th>标题</th>
+													<th>访问量</th>
+												</tr>
+											</thead>
+											<tbody>
+												<@cms_content_list count='10' titLen='12' orderBy='8' channelOption='1' > <#list tag_list as a>
+												<tr>
+													<td>
+														<a href="${a.url}" title="${a.title}" target="_blank">
+															<span><@text_cut s=a.title len=titLen /></span>
+														</a>
+													</td>
+													<td>${a.viewsMonth!}</td>
+												</tr>
+												</#list> </@cms_content_list>
+											</tbody>
+										</table>
+
+									</div>
+								</div>
+							</div>
+
+							<div id="tab-4" class="tab-pane">
+								<div class="ibox float-e-margins">
+
+									<div class="ibox-content">
+
+										<table class="table">
+											<thead>
+												<tr>
+													<th>标题</th>
+													<th>访问量</th>
+												</tr>
+											</thead>
+											<tbody>
+												<@cms_content_list count='10' titLen='12' orderBy='7' channelOption='1' > <#list tag_list as a>
+												<tr>
+													<td>
+														<a href="${a.url}" title="${a.title}" target="_blank">
+															<span><@text_cut s=a.title len=titLen /></span>
+														</a>
+													</td>
+													<td>${a.viewsWeek!}</td>
+												</tr>
+												</#list> </@cms_content_list>
+											</tbody>
+										</table>
+
+									</div>
+								</div>
+
+							</div>
+
+							<div id="tab-5" class="tab-pane">
+								<div class="ibox float-e-margins">
+
+									<div class="ibox-content">
+
+										<table class="table">
+											<thead>
+												<tr>
+													<th>标题</th>
+													<th>访问量</th>
+												</tr>
+											</thead>
+											<tbody>
+												<@cms_content_list count='10' titLen='12' orderBy='6' channelOption='1' > <#list tag_list as a>
+												<tr>
+													<td>
+														<a href="${a.url}" title="${a.title}" target="_blank">
+															<span><@text_cut s=a.title len=titLen /></span>
+														</a>
+													</td>
+													<td>${a.viewDay!}</td>
+												</tr>
+												</#list> </@cms_content_list>
+											</tbody>
+										</table>
+
+									</div>
+								</div>
+							</div>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+
+	</div>
+
+
+	<!-- Mainly scripts -->
+	<script src="${base}/resource/js/jquery-2.1.1.js"></script>
+	<script src="${base}/resource/js/bootstrap.min.js"></script>
+	<script src="${base}/resource/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+	<script src="${base}/resource/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+
+	<!-- Custom and plugin javascript -->
+	<script src="${base}/resource/js/inspinia.js"></script>
+	<script src="${base}/resource/js/plugins/pace/pace.min.js"></script>
+
+</body>
+</html>

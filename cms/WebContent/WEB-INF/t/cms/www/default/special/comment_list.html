@@ -1,0 +1,252 @@
+
+<div class="send_mess">
+	最新评论<!--  全部评论（ <span id="comments"></span> ）-->
+</div>
+<div class="review_all">
+
+	<ul id="remarkList">
+		[@cms_comment_list contentId=content.id ] 
+		[#if tag_list?size = 0]
+		<li>暂无评论！ </span>
+		</li> 
+		[#else] 
+		[#assign x = 0]
+		[#list tag_list as c]
+        <input type="hidden" id="content${c.id}" name="text" />
+    	[#if c_index+1 < 5]
+		<li>
+			<div class="review_all_l">
+				<a href="#"> 
+				[#if c.user??]
+	          	 [#if c.user.userImg??]<img src="${c.user.userImg!}" width="60" height="60"/>
+	             [#else]<img src="/${res}/images/people.png" width="60" height="60"/>
+                 [/#if]
+                [#else]<img src="/${res}/images/people.png" width="60" height="60"/>
+                [/#if]
+				</a>
+			</div>
+			<div class="review_all_r">
+
+				<div class="reviewer">
+					<span>${(c.commentUser.username)!"匿名网友"}</span> <u>${c.createTime!string("yyyy-MM-dd
+						HH:mm")}</u>
+				</div>
+
+				<div class="review_cont">${c.text!}</div>
+
+				<ul class="reply">
+					<li class="zan" onclick="addUPs(${c.id})" id="agree${c.id}">
+						赞（ <span id="ups_${c.id}">${c.ups}</span> ） </span>
+					</li>
+					<li class="reversion" onclick="showReply('${c.id}')">回复</li>
+					[@cms_comment_list parentId= c.id][#if tag_list?size > 0]
+					<li class="search_reply"
+						onclick="showList('${c.id}','${(c.commentUser.username)!'匿名网友'}:${c.textHtml!}')"><span id="remarkCount${c.id}">${tag_list?size}</span>条回复
+					</li>
+					[#else]
+					<li id ="search_reply${c.id}" class="search_reply" style="display:none"
+						onclick="showList('${c.id}','${(c.commentUser.username)!'匿名网友'}:${c.textHtml!}')"><span id="remarkCount${c.id}">${tag_list?size}</span>条回复
+					</li>
+					[/#if][/@cms_comment_list]
+				</ul>
+
+				<div id="reply${c.id}" title="" class="send_mess_box2"
+					style="display: none">
+					<textarea id="re_content${c.id}" name="text"></textarea>
+					<span id="face${c.id}"> <img
+						src="/${res}/images/icon_biaoqing.png" alt="" />
+					</span>
+					<div class="send_butt">
+						<a href="javascript:addReply('${c.id}');">确认</a>
+					</div>
+				</div>
+			</div>
+		</li> 
+		[/#if]
+		[#if (c_index+1)=5][#assign x = x+1]
+		 <li>
+			<div class="review_all_l">
+				<a href="#"> 
+				[#if c.user??]
+	          	 [#if c.user.userImg??]<img src="${c.user.userImg!}" width="60" height="60"/>
+	             [#else]<img src="/${res}/images/people.png" width="60" height="60"/>
+                 [/#if]
+                [#else]<img src="/${res}/images/people.png" width="60" height="60"/>
+                [/#if]
+				</a>
+			</div>
+			<div class="review_all_r">
+
+				<div class="reviewer">
+					<span>${(c.commentUser.username)!"匿名网友"}</span> <u>${c.createTime!string("yyyy-MM-dd
+						HH:mm")}</u>
+				</div>
+
+				<div class="review_cont">${c.text!}</div>
+
+				<ul class="reply">
+					<li class="zan" onclick="addUPs(${c.id})" id="agree${c.id}">
+						赞（ <span id="ups_${c.id}">${c.ups}</span> ） </span>
+					</li>
+					<li class="reversion" onclick="showReply('${c.id}')">回复</li>
+					[@cms_comment_list parentId= c.id] [#if tag_list?size gt 0]
+					<li class="search_reply"
+						onclick="showList('${c.id}','${(c.commentUser.username)!'匿名网友'}:${c.textHtml!}')"><span id="remarkCount${c.id}">${tag_list?size}</span>条回复</li>
+					[/#if] [/@cms_comment_list]
+				</ul>
+
+				<div id="reply${c.id}" title="" class="send_mess_box2"
+					style="display: none">
+					<textarea id="re_content${c.id}" name="text"></textarea>
+					<span id="face${c.id}"> <img
+						src="/${res}/images/icon_biaoqing.png" alt="" />
+					</span> 
+					<div class="send_butt">
+						<a href="javascript:addReply('${c.id}');">确认</a>
+					</div>
+				</div>
+			</div>
+		</li> 
+		[#if c_has_next]
+		<li id="load1" style="text-align:center"><a href="javascript:void(0);" onclick="more()">加载更多……</a></li>[/#if]
+		[/#if]
+		[#if (c_index+1)>5]
+		<li id="more${c_index+1}" title="" style="display:none">
+			<div class="review_all_l">
+				<a href="#">
+               [#if c.user??]
+	          	[#if c.user.userImg??]<img src="${c.user.userImg!}" width="60" height="60"/>
+	            [#else]<img src="/${res}/images/people.png" width="60" height="60"/>
+                [/#if]
+               [#else]<img src="/${res}/images/people.png" width="60" height="60"/>
+               [/#if]
+				</a>
+			</div>
+			<div class="review_all_r">
+
+				<div class="reviewer">
+					<span>${(c.commentUser.username)!"匿名网友"}</span> <u>${c.createTime!string("yyyy-MM-dd
+						HH:mm")}</u>
+				</div>
+
+				<div class="review_cont">${c.text!}</div>
+
+				<ul class="reply">
+					<li class="zan" onclick="addUPs(${c.id})" id="agree${c.id}">
+						赞（ <span id="ups_${c.id}">${c.ups}</span> ）
+					</li>
+					<li class="reversion" onclick="showReply('${c.id}')">回复</li>
+					[@cms_comment_list parentId= c.id] [#if tag_list?size gt 0]
+					<li class="search_reply"
+						onclick="showList('${c.id}','${(c.commentUser.username)!'匿名网友'}:${c.textHtml!}')"><span id="remarkCount${c.id}">${tag_list?size}</span>条回复</li>
+					[/#if] [/@cms_comment_list]
+				</ul>
+
+				<div id="reply${c.id}" title="" class="send_mess_box2"
+					style="display: none">
+					<textarea id="re_content${c.id}" name="text"></textarea>
+					<span id="face${c.id}"> <img
+						src="/${res}/images/icon_biaoqing.png" alt="" />
+					</span>
+					<div class="send_butt">
+						<a href="javascript:addReply('${c.id}');">确认</a>
+					</div>
+				</div>
+			</div>
+		</li> 
+		[/#if]
+		
+		[/#list]
+		
+		[/#if] [/@cms_comment_list]
+
+	</ul>
+</div>
+
+<script type="text/javascript" src="/${res}/js/layer/layer.js"></script>
+<script type="text/javascript">
+	
+	function more() {
+		$('#load1').hide();
+		$('li[title=]').show();
+		
+	}
+	function showList(id, text) {
+		//iframe层
+		layer.open({
+			type: 2,
+			title: "回复" + text,
+			shadeClose: true,
+			shade: 0.8,
+			area: ['780px', '80%'],
+			content: '${base}/comment_list.jspx?commentId=' + id //iframe的url
+		});
+	}
+	
+	function showReply(obj) {
+		// 绑定表情
+		$('#face' + obj).SinaEmotion($("#re_content" + obj));
+		if (document.getElementById("reply" + obj).style.display == "none") {
+			$('div[id=reply' + obj + '][title=]').show();
+		} else {
+			$('div[id=reply' + obj + '][title=]').hide();
+		}
+	
+		$('div[id!=reply' + obj + '][title=]').hide();
+	}
+	
+	function addReply(pid) {
+		[#if user??]
+		var text = $("#re_content" + pid).val();
+		if (text == '') {
+			alert('请输入回复内容！');
+			$("#re_content" + pid).focus();
+			return;
+		}
+		$("#content" + pid).val(AnalyticEmotion(text));
+		var content = $("#content" + pid).val();
+		$.ajax({
+			url: "${base}/comment_reply.jspx",
+			type: "post",
+			data: "pid=" + pid + "&text=" + content + "&contentId=" + ${content.id},
+			dataType: 'json',
+			success: function(data) {
+				if (data.status == 0) {
+					alert("回复成功");
+					location.href = location.href;
+					
+				} else {
+					alert("回复失败");
+				}
+			}
+		});
+		[#else]window.location.href="${base}/login.jspx?returnUrl=${content.url}";
+		[/#if]
+	}
+	/**
+	 * 点赞
+	 * @param id
+	 * @return
+	 */
+	function addUPs(id) {
+	
+		$.ajax({
+			type: "post",
+			url: "${base}/comment_up.jspx?commentId=" + id,
+			asyn: true, //false为同步提交
+			dataType: 'text', //返回文本
+			success: function(d) {
+				//支持+1
+				var ups = $('#ups_' + id).html();
+				$('#agree' + id).removeClass("zan").addClass("support");
+				$('#agree' + id).html('赞（' + parseInt(parseInt(ups) + 1) + '）');
+				//点击失效
+				$('#agree' + id).attr("onclick", "").click(function() {
+	
+				});
+	
+			}
+		});
+	}
+
+</script>

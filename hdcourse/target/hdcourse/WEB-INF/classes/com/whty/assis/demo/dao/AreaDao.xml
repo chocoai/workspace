@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.demo.dao.AreaDao">
+
+	<resultMap type="com.whty.assis.demo.model.Area" id="Area">
+		<id property="id" column="id" />
+		<result property="areaCode" column="area_code" />
+		<result property="parentId" column="parent_id" />
+		<result property="sortNum" column="sort_num" />
+		<result property="levelName" column="level_name" />		
+		<result property="areaName" column="area_name"/>
+	</resultMap>
+
+
+	<resultMap type="java.util.HashMap" id="AreaResult">
+		<result column="AREA_CODE" property="areaCode"/>
+		<result column="AREA_NAME" property="areaName"/>
+	</resultMap>
+	<select id="queryArea" parameterType="map" resultMap="AreaResult">
+		select area_code,area_name
+		from TA_AREA
+		where status=0
+		<if test="parentId != null and parentId != ''">and parent_id=#{parentId}</if>
+		<if test="levelId != null">and level_id=#{levelId}</if>
+	</select>
+	
+	<select id="getTAreaByCity" parameterType="map" resultMap="AreaResult">
+		select area_code,area_name from T_AREA where parent_Id=#{parentId} 
+	</select>
+	
+	<select id="getArea" parameterType="map" resultMap="Area">
+		select area_code,parent_id,area_name from TA_AREA where status=0
+		<if test="areaCode != null and areaCode != ''">and area_code=#{areaCode}</if>
+	</select>
+	
+	<select id="queryAreaNameByAreaCode" parameterType="map" resultType="string">
+		select distinct area_name
+		from TA_AREA
+		where status=0
+		<if test="areaCode != null and areaCode != ''">
+			and area_code like #{areaCode}||'%'
+		</if>
+		<if test="levelId != null">and level_id=#{levelId}</if>
+	</select>
+</mapper>

@@ -1,0 +1,218 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>${channel.title!channel.name} - ${site.name}</title>
+
+<link rel="stylesheet" type="text/css" href="/${res}/css/index_con.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/public_all.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/global.css" />
+
+<script type="text/javascript" src="/${res}/js/dc/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="/${res}/js/dc/settitle.js"></script>
+<script type="text/javascript" src="/${res}/js/dc/pic_tab.js"></script>
+
+</head>
+
+<body>
+
+	[#include "../include/header.html"/] 
+	[#include "../include/navi.html"/]
+	<!--nav 开始-->
+	<div style="clear: both;"></div>
+
+	<!--内容 开始-->
+	<div class="box">
+		<div class="details">
+			<div class="details_left2">
+				<!--图片切换 开始-->
+				<div class="ban" id="demo1">
+					<div class="ban2" id="ban_pic1">
+						<div class="prev1" id="prev1">
+							<img src="/${res}/images/index_tab_l.png" width="28" height="51" alt="">
+						</div>
+						<div class="next1" id="next1">
+							<img src="/${res}/images/index_tab_r.png" width="28" height="51" alt="">
+						</div>
+						<ul>
+						[@cms_content_list count='5' orderBy='4' titLen='20' typeId="3" channelOption='1' channelId=channel.id] 
+						[#list tag_list as tw] 
+							<li>
+							    <a href="${tw.url}" target="_blank">
+								<img src="${tw.titleImg!tw.typeImg!}">
+								</a>
+							</li>
+						[/#list] 
+						[/@cms_content_list]
+						</ul>
+					</div>
+
+				</div>
+				<script type="text/javascript">
+					jq('#demo1').banqh({
+					    box:"#demo1",//总框架
+					    pic:"#ban_pic1",//大图框架
+					    pnum:"#ban_num1",//小图框架
+					    prev_btn:"#prev_btn1",//小图左箭头
+					    next_btn:"#next_btn1",//小图右箭头
+					    pop_prev:"#prev2",//弹出框左箭头
+					    pop_next:"#next2",//弹出框右箭头
+					    prev:"#prev1",//大图左箭头
+					    next:"#next1",//大图右箭头
+					    pop_div:"#demo2",//弹出框框架
+					    pop_pic:"#ban_pic2",//弹出框图片框架
+					    pop_xx:".pop_up_xx",//关闭弹出框按钮	
+					    autoplay:true,//是否自动播放
+					    interTime:5000,//图片自动切换间隔
+					    delayTime:400,//切换一张图片时间
+					    pop_delayTime:400,//弹出框切换一张图片时间
+					    order:0,//当前显示的图片（从0开始）
+					    picdire:true,//大图滚动方向（true为水平方向滚动）
+					    mindire:true,//小图滚动方向（true为水平方向滚动）
+					    min_picnum:5,//小图显示数量
+					    
+					})
+				</script>
+				<!--图片切换 结束-->
+
+
+				<!--头条 开始-->
+				<div class="hot_box">
+					[@cms_content_list count='1' orderBy='4' titLen='22' typeId="4" channelOption='1' channelId=channel.id] 
+					[#if tag_list?size gt 0] 
+					[#list tag_list as a]
+					<div class="title">
+						<a href="${a.url}" title="${a.title}" target="_blank">[@text_cut s=a.title len=titLen /]</a>
+					</div>
+					<div class="title_detail">
+						<a href="${a.url}">[@text_cut s=a.desc! len='50' append='...'/]</a>
+					</div>
+					[/#list] 
+					[#else]
+					<div class="title">&nbsp;</div>
+					<div class="title_detail">&nbsp;</div>
+					[/#if] 
+					[/@cms_content_list]
+
+
+					<ul class="list">
+						[@cms_content_list count='6' orderBy='4' titLen='22' typeId="1,2" channelOption='1' channelId=channel.id] 
+						[#list tag_list as j]
+						<li>
+							<span>${j.date?string('yyyy-MM-dd')}</span>
+							<a href="${j.url}" title="${j.title}" target="_blank">[@text_cut s=j.title len=titLen /]</a>
+						</li>
+
+						[/#list] 
+						[/@cms_content_list]
+					</ul>
+				</div>
+				<!--头条 结束-->
+				<div style="clear: both;"></div>
+
+
+				<!--地方新闻 开始-->
+				<div class="place mv10">
+					<div id="Tab_link">
+						<div class="Menubox">
+							<ul>
+								[@cms_channel_list parentId=channel.id] 
+								[#list tag_list as c] 
+								[#if c_index = 0]
+								<a href="${c.url}"><li id="menuc1" onmouseover="setTab('menuc',1,7)" class="hover">${c.name}</li></a>
+								[#else]
+								<a href="${c.url}"><li id="menuc${c_index+1}" onmouseover="setTab('menuc',${c_index+1},7)">${c.name}</li></a>
+								[/#if] 
+								[/#list] 
+								[/@cms_channel_list]
+							</ul>
+						</div>
+
+						<div class="Contentbox">
+							[@cms_channel_list parentId=channel.id] 
+							[#list tag_list as ch] 
+							[#if ch_index+1 = 1]
+							<div id="con_menuc_${ch_index+1}" class="hover">
+								[@cms_content_list count='5' orderBy='4' titLen='22' channelOption='1' channelId=ch.id] 
+								[#if tag_list?size > 0]
+								<ul>
+									[#list tag_list as ct]
+									<li>
+										<div class="title">
+											<a href="${ct.url}" title="${ct.title}" target="_blank">[@text_cut s=ct.title len=titLen /]</a>
+										</div>
+										<div class="cont">
+											[#if ct.typeImg?? || ct.titleImg??]
+											<img src="${ct.titleImg!ct.typeImg!site.typeImg}" width="120" height="90" />
+											[/#if]
+											<div class="content">
+												<a href="#">[@text_cut s=ct.desc! len='200' append='...'/]</a>
+											</div>
+										</div>
+									</li>
+									[/#list]
+								</ul>
+
+								[#else]
+								<ul>
+									<li>暂无相关新闻</li>
+								</ul>
+								[/#if] 
+								[/@cms_content_list]
+							</div>
+							[#else]
+							<div id="con_menuc_${ch_index+1}" style="display: none">
+								[@cms_content_list count='3' orderBy='4' titLen='22' channelOption='1' channelId=ch.id] 
+								[#if tag_list?size > 0]
+								<ul>
+									[#list tag_list as co]
+									<li>
+										<div class="title">
+											<a href="${co.url}" title="${co.title}" target="_blank">[@text_cut s=co.title len=titLen /]</a>
+										</div>
+										<div class="cont">
+											[#if co.titleImg?? || co.typeImg??]
+											<img src="${co.titleImg!co.typeImg!site.typeImg}" width="120" height="90" />
+											[/#if]
+											<div class="content">
+												<a href="#">[@text_cut s=co.desc! len='200' append='...'/]</a>
+											</div>
+										</div>
+									</li>
+									[/#list]
+
+								</ul>
+
+								[#else]
+								<ul>
+									<li>暂无相关新闻</li>
+								</ul>
+								[/#if] 
+								[/@cms_content_list]
+							</div>
+
+							[/#if] 
+							[/#list] 
+							[/@cms_channel_list]
+						</div>
+
+					</div>
+
+				</div>
+				<!--地方新闻 结束-->
+			</div>
+
+
+			[#include "../include/right.html"/]
+
+		</div>
+
+
+
+	</div>
+	<!--内容 end-->
+
+[#include "../include/footer.html"/]
+</body>
+</html>

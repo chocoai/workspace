@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SysRolePowerMapper">
+	<resultMap id="BaseResultMap" type="com.yhcrt.entity.system.SysRolePower">
+		<id column="ROLE_CID" jdbcType="INTEGER" property="roleCid" />
+		<id column="RES_CID" jdbcType="INTEGER" property="resCid" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		ROLE_CID, RES_CID
+	</sql>
+	<!-- 单条记录插入 -->
+	<insert id="saveSelective">
+		insert into sys_role_power (ROLE_CID,RES_CID)
+		values (#{roleCid,jdbcType=VARCHAR}, #{resCid,jdbcType=INTEGER})
+	</insert>
+	<!-- 批量插入 -->
+	<insert id="saveSelectives">
+		insert into sys_role_power (ROLE_CID,RES_CID)
+		values
+		<foreach collection="resIds" item="item" index="index"
+			separator=",">
+			(#{roleId,jdbcType=VARCHAR}, #{item,jdbcType=INTEGER})
+		</foreach>
+	</insert>
+	<!-- 删除角色的所有权限 -->
+	<delete id="removeByRoleCid" parameterType="java.lang.Integer">
+		delete from
+		sys_role_power
+		where ROLE_CID = #{roleId,jdbcType=INTEGER}
+	</delete>
+	<!-- 删除角色的集合 -->
+	<delete id="removeByRoleCids" parameterType="java.lang.Integer">
+		delete from
+		sys_role_power
+		where ROLE_CID in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<!-- 删除所有角色的某个权限 -->
+	<delete id="removeByResCid" parameterType="java.lang.Integer">
+		delete from
+		sys_role_power
+		where RES_CID = #{resCid,jdbcType=INTEGER}
+	</delete>
+	<!-- 删除所有角色的权限集合 -->
+	<delete id="removeByResCids" parameterType="java.lang.Integer">
+		delete from
+		sys_role_power
+		where RES_CID in
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	<!-- 获取角色的权限 -->
+	<select id="getByRoleCid" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		SELECT RES_CID FROM
+		sys_role_power
+		where ROLE_CID = #{roleCid,jdbcType=INTEGER}
+	</select>
+	<!-- 获取多个角色的权限url集合 -->
+	<select id="getByRoleCids" parameterType="java.lang.Integer" resultType="java.lang.String">
+		SELECT pr.RES_URL FROM(
+		SELECT
+		p.ROLE_CID,
+		r.RES_URL
+		FROM
+		sys_role_power AS p
+		LEFT JOIN sys_res AS r ON p.RES_CID = r.CID) pr
+		where pr.ROLE_CID in
+		<foreach item="item" index="index" collection="list" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</select>
+</mapper>

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.mxbj.api.dao.NoteDao">
+
+	<resultMap type="com.whty.mxbj.api.model.Note" id="NoteResult">
+		<result column="user_id" property="userId" />
+		<result column="note_id" property="noteId" />
+		<result column="user_platform_code" property="userPlatformCode" />
+		<result column="note_name" property="noteName" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="last_edit_time" property="lastEditTime" />
+		<result column="subject_id" property="subjectId" />
+		<result column="subject_name" property="subjectName" />
+		<result column="platform_name" property="platformName"/>
+		<result column="user_name" property="userName"/>
+		<result column="account" property="account"/>
+		<result column="account_Type" property="accountType"/>
+		<result column="phone_number" property="phoneNumber"/>
+		<result column="cover_Image_Url" property="coverImageUrl"/>
+		<result column="reader_Image_Url" property="readerImageUrl"/>
+	</resultMap>
+
+	<resultMap type="com.whty.mxbj.api.model.BaseNote" id="BaseNoteResult">
+		<result column="user_id" property="userId" />
+		<result column="note_id" property="noteId" />
+		<result column="user_platform_code" property="userPlatformCode" />
+		<result column="note_name" property="noteName" />
+		<result column="create_time" property="createTime" />
+		<result column="cover_Image_Url" property="coverImageUrl"/>
+		<result column="reader_Image_Url" property="readerImageUrl"/>
+		<result column="note_type" property="noteType"/>
+		<result column="start_time" property="startTime" />
+		<result column="end_time" property="endTime" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+
+
+	<insert id="save" parameterType="com.whty.mxbj.api.model.Note" >
+		insert into T_NOTE (
+		NOTE_ID
+		,USER_ID
+		,USER_PLATFORM_CODE
+		<if test="noteName != null and noteName != ''">,note_name</if>
+		<if test="lastEditTime != null ">,last_edit_time</if>
+		<if test="createTime != null ">,create_time</if>
+		<if test="subjectId != null ">,subject_id</if>
+		) values(
+		#{noteId}
+		,#{userId}
+		,#{userPlatformCode}
+		<if test="noteName != null and noteName != ''">,#{noteName}</if>
+		<if test="lastEditTime != null ">,#{lastEditTime}</if>
+		<if test="createTime != null ">,#{createTime}</if>
+		<if test="subjectId != null ">,#{subjectId}</if>
+		)
+	</insert>
+
+	<delete id="deleteNote"  parameterType="com.whty.mxbj.api.model.Note">
+		delete from T_NOTE where note_id=#{noteId} and user_id=#{userId} and user_platform_code=#{userPlatformCode}
+	</delete>
+
+	<update id="update" parameterType="com.whty.mxbj.api.model.Note">
+		update T_NOTE
+		set
+		<trim prefixOverrides=",">
+			<if test="noteName != null ">,note_name=#{noteName}</if>
+			<if test="lastEditTime != null ">,last_edit_time=#{lastEditTime}</if>
+			<if test="updateTime != null ">,update_time=#{updateTime}</if>
+			<if test="subjectId != null ">,subject_id=#{subjectId}</if>
+		</trim>
+		where note_id = #{noteId} and user_id = #{userId} and user_platform_code = #{userPlatformCode}
+	</update>
+
+	<select id="loadNote" parameterType="map" resultMap="NoteResult">
+		select * from T_NOTE where note_id = #{noteId} and user_id= #{userId} and user_platform_code = #{userPlatformCode}
+	</select>
+
+	<select id="listByCondition" parameterType="map" resultMap="NoteResult">
+	select t5.COVER_IMAGE_URL,t5.READER_IMAGE_URL,t1.*,t2.user_name,t2.account,t2.account_type,t2.phone_number,(select platform_name from T_BASE_PROPERTY  where platform_code=t1.user_platform_code and property_key = 'aam_url'),t4.subject_id,t4.subject_name from T_NOTE t1 left join T_USER t2 on 
+ t1.user_id = t2.user_id and t1.user_platform_code= t2.user_platform_code
+ left join T_SUBJECT t4 on t1.subject_id= t4.subject_id left join T_NOTE_TEMPLATE t5 on t1.note_id=t5.note_id where 1=1 
+ <if test="userId != null and userId != '' "> and t1.user_id=#{userId}</if>
+ <if test="noteId != null and noteId != '' "> and t1.note_Id=#{noteId}</if>
+ <if test="noteName != null and noteName != '' "> and t1.note_name like CONCAT('%',#{noteName},'%') </if>
+ <if test="userPlatformCode != null and userPlatformCode != '' "> and t1.user_platform_code=#{userPlatformCode}</if>
+<if test="account != null and account != '' "> and (t2.account=#{account} or t2.phone_number = #{account})</if>
+	</select>
+
+	<select id="findAllNote" parameterType="map" resultMap="BaseNoteResult">
+	select * from 
+(select t1.update_time,t1.note_id,t1.user_id,t1.user_platform_code,t1.note_name,t2.cover_image_url,t2.reader_image_url,t1.create_time,1 as note_type,null as start_time,null as end_time from T_NOTE t1 left join T_NOTE_TEMPLATE t2 on t1.note_id = t2.note_id
+union all
+select t1.update_time,t1.archive_note_id as note_id,t1.user_id,t1.user_platform_code,t1.note_name,t2.cover_image_url,t2.reader_image_url,t1.create_time,2 as note_type,t1.start_time,t1.end_time from T_ARCHIVE_NOTE t1 left join T_NOTE_TEMPLATE t2 on t1.note_id=t2.note_id) ttt
+where 1=1 
+<if test="userId != null and userId != '' "> and ttt.user_id=#{userId}</if>
+<if test="noteName != null and noteName != '' "> and ttt.note_name like CONCAT('%',#{noteName},'%') </if>
+<if test="userPlatformCode != null and userPlatformCode != '' "> and ttt.user_platform_code=#{userPlatformCode}</if>	
+<if test="noteType != null and noteType != '' "> and ttt.note_type=#{noteType}</if>	
+order by note_type, create_time desc
+	</select>
+
+	<select id="queryByUserId" resultMap="NoteResult">
+		select tn.NOTE_ID,tn.NOTE_NAME,tn.CREATE_TIME,tnt.COVER_IMAGE_URL from t_note tn
+		left join t_note_template tnt on tn.NOTE_ID = tnt.NOTE_ID
+		where tn.USER_ID=#{userId} and tn.USER_PLATFORM_CODE=#{loginPlatformCode}
+	</select>
+
+</mapper>

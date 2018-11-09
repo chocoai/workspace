@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.mxbj.api.dao.ArchiveNotePageDao">
+
+	<resultMap type="com.whty.mxbj.api.model.ArchiveNotePage" id="ArchiveNotePageResult">
+		<result column="archive_note_page_id" property="archiveNotePageId" />
+		<result column="archive_note_id" property="archiveNoteId" />
+		<result column="note_id" property="noteId" />
+		<result column="page_id" property="pageId" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="last_edit_time" property="lastEditTime" />
+		<result column="page_file_url" property="pageFileUrl" />
+		<result column="media_type" property="mediaType" />
+		<result column="user_id" property="userId" />
+		<result column="user_platform_code" property="userPlatformCode" />
+		<result column="note_name" property="noteName" />
+	</resultMap>
+
+	<update id="updateUrl" parameterType="com.whty.mxbj.api.model.ArchiveNotePage">
+		update T_ARCHIVE_NOTE_PAGE SET PAGE_FILE_URL = #{pageFileUrl} where archive_Note_Page_Id = #{archiveNotePageId}
+	</update>
+
+	<insert id="save" parameterType="com.whty.mxbj.api.model.ArchiveNotePage">
+		insert into T_ARCHIVE_NOTE_PAGE (
+		archive_note_page_id
+		,archive_note_id
+		,user_id
+		,note_id
+		,page_id
+		,last_edit_time
+		,create_time
+		,user_platform_code
+		<if test="pageFileUrl != null and pageFileUrl != ''">,page_file_url</if>
+		<if test="mediaType != null ">,media_type</if>
+		) values(
+		#{archiveNotePageId}
+		,#{archiveNoteId}
+		,#{userId}
+		,#{noteId}
+		,#{pageId}
+		,#{lastEditTime}
+		,#{createTime}
+		,#{userPlatformCode}
+		<if test="pageFileUrl != null and pageFileUrl != '' ">,#{pageFileUrl}</if>
+		<if test="mediaType != null ">,#{mediaType}</if>
+		)
+	</insert>
+
+	<delete id="deleteByArchiveNoteId" parameterType="string">
+		delete from
+		T_ARCHIVE_NOTE_PAGE WHERE ARCHIVE_NOTE_ID = #{_parameter}
+	</delete>
+
+	<!-- <select id="loadById" parameterType="string" resultMap="ArchiveNotePageResult"> 
+		select * from T_NOTE where note_id = #{_parameter} </select> -->
+
+	<!-- order by page_id -->
+	<select id="listByCondition" parameterType="map"
+		resultMap="ArchiveNotePageResult">
+		select T1.*,T2.NOTE_NAME from T_ARCHIVE_NOTE_PAGE T1 LEFT JOIN
+		T_ARCHIVE_NOTE T2 ON T1.ARCHIVE_NOTE_ID=T2.ARCHIVE_NOTE_ID
+		WHERE 1=1
+		<if test="noteId != null and noteId !='' ">and T1.note_id=#{noteId}</if>
+		<if test="pageId != null ">and T1.page_id=#{pageId}</if>
+		<if test="userId != null ">and T1.user_id=#{userId}</if>
+		<if test="archiveNoteId != null and archiveNoteId !='' ">and T1.archive_note_id=#{archiveNoteId}</if>
+		<if test="archiveNotePageId != null and archiveNotePageId !='' ">and T1.archive_note_page_id=#{archiveNotePageId}</if>
+		<if test="mediaType != null  ">and T1.media_type=#{mediaType}</if>
+		<if test="userPlatformCode != null and userPlatformCode !='' ">and T1.user_platform_code=#{userPlatformCode}</if>
+	</select>
+
+
+</mapper>

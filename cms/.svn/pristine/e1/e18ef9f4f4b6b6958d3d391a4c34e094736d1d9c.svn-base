@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>天天信息首页 - ${site.name}</title>
+<link rel="stylesheet" type="text/css" href="/${res}/css/ttxx.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/public_all.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/global.css" />
+<script type="text/javascript" src="/${res}/js/dc/settitle.js"></script><!--菜单切换-->
+<script src="/${res}/js/dc/jquery-1.8.3.min.js"></script><!--左边图片切换-->
+<!--右边图片切换-->
+</head>
+
+<body>
+	[#include "../include/header1.html"/] 
+	[#include "../include/navi.html"/]
+<!--nav 开始-->
+<div style=" clear:both;"></div>
+
+<div class="top">
+     <div class="box">
+         <div class="logo">天天信息</div>
+         <div class="right_but"><!--<input type="button" class="free" value="免费发布信息" /><input type="button" class="bbs" value="到东楚论坛发布" />--></div>
+     </div>
+</div>
+<div style=" clear:both;"></div>
+
+
+<!--内容 开始-->
+<div class="box">
+		<div class="ttxx bg_white">
+			<div id="Tab_link">
+              <div class="Contentbox">
+				<div id="con_menuc_2">
+					<ul class="title">
+						<b>分类:</b>
+					  [#list typeList as t]
+					    <li [#if typeId ?? && t.id== typeId ]class="now"[/#if]><a id="${t.id}" href="${base}/tt.jspx?typeId=${t.id}" >${t.name}</a></li>
+					   [/#list]
+	
+					</ul>
+					[@cms_tt_page typeId=typeId siteId=site.id checked='1' ]   
+					<ul class="list">
+                       
+					   [#list tag_pagination.list as m]
+					   [#if (m_index+1)%2 == 0]
+						<li class="two">
+							<div class="title">
+									<b><a href="${base}/tt/${m.id}.jspx">${m.title!}</a></b><u>[${m.type.name!}]</u><span>${m.createTime}</span>
+								</div>
+								<div class="content">
+								    [#if m.pictures?size gt 0]
+									[#list m.pictures as pic]
+									[#if pic_index = 0]
+								<img src="${pic.imgPath!}" width="120" height="90"/>
+									[/#if]
+								    [/#list]
+								    [#else]<img src="/${res}/images/culture.jpg" width="130" height="90"/>
+									[/#if]  
+									
+									<a href="${base}/tt/${m.id}.jspx"><p>[@text_cut s=m.description len=60/]</a>
+								</div>
+						</li>
+                        [#else]
+						<li >
+						<div class="title">
+									<b><a href="${base}/tt/${m.id}.jspx">${m.title!}</a></b><u>[${m.type.name!}]</u><span>${m.createTime}</span>
+								</div>
+								<div class="content">
+									[#if m.pictures?size gt 0]
+									[#list m.pictures as pic1]
+									[#if pic1_index = 0]
+								<img src="${pic1.imgPath!}" width="120" height="90"/>
+									[/#if]
+								    [/#list]
+								    [#else]<img src="/${res}/images/culture.jpg" width="130" height="90"/>
+									[/#if]  
+									<a href="${base}/tt/${m.id}.jspx"><p>[@text_cut s=m.description len=60/]</a>
+								</div>
+						</li>
+                       [/#if]
+                       [/#list]
+                      
+					</ul>
+					
+					 <div style=" clear:both;"></div>
+                     <div class="list_dis">
+                          <div class="jogger"> 
+                              <div class="pagesite">[@cms_pagination sysPage='1'/]</div>
+                           </div>
+                     </div>
+                      [/@cms_tt_page]
+				</div>
+
+
+			</div>
+
+		</div>
+	</div>
+           
+</div>
+<!--内容 end-->
+
+<!--尾部 开始-->
+[#include "../include/footer.html"/]
+<!--尾部 开始-->
+
+</body>
+</html>

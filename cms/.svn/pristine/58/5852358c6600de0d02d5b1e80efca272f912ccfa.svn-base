@@ -1,0 +1,34 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<script src="/${res}/js/dc/jquery-1.11.1.min.js"></script>
+<script>
+var temp = '';
+
+$(function(){
+//过滤重复数据	
+$('.c1-bline').each(function(){
+if(temp.indexOf($(this).html())!=-1){
+	$(this).remove();
+}
+temp += $(this).html();
+});
+//选取前5条
+var length = $('.c1-bline').length;
+for (var i=1;i<=length;i++)
+{
+ if (i>5)
+ {
+   $('.c1-bline').eq(i-1).remove();
+ }
+}
+});
+</script>
+<div class="related_news">
+	<h6>相关内容</h6>
+	<ul id="relation" class="relation">
+		[#if content.tagStr??] [@cms_content_list styleList='1-1'
+	    headMark='4' lineHeight='7' bottomLine='1' dateFormat='yyyy-MM-dd' datePosition='2'
+		tagName=content.tagStr excludeId=content.id channelOption='1'
+		emptyMsg='本文暂无相关内容' emptyStyle='color:red;margin:5px;' tpl='2'/]  [#else] 本文暂无相关内容！ [/#if]
+
+	</ul>
+</div>

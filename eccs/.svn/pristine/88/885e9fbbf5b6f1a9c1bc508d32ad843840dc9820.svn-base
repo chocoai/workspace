@@ -1,0 +1,4 @@
+#Wed Nov 04 12:25:49 CST 2015
+eclipse.preferences.version=1
+validator.Checked=WebRoot/js/kindeditor/plugins/code/prettify.js
+validator.Unchecked=

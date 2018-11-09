@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.demo.dao.AuthorityDao">
+    <resultMap id="baseMap" type="com.yhcrt.demo.model.Authority">
+        <result property="id" column="id"/>
+        <result property="sortOrder" column="sort_order"/>
+        <result property="menuCode" column="menu_code"/>
+        <result property="menuName" column="menu_name"/>
+        <result property="menuConfig" column="menu_config"/>
+        <result property="buttons" column="buttons"/>
+        <result property="expanded" column="expanded"/>
+        <result property="checked" column="checked"/>
+        <result property="leaf" column="leaf"/>
+        <result property="url" column="url"/>
+        <result property="iconCls" column="icon_cls"/>
+        <result property="parentId" column="parent_id"/>                   
+    </resultMap>
+
+    <sql id="column">
+        id,sort_order,menu_code,menu_name,menu_config, buttons,expanded,checked,leaf,url,icon_cls,parent_id
+    </sql>
+
+    <select id="queryByRole" resultMap="baseMap" parameterType="_short">
+        SELECT  a.id,a.sort_order,a.menu_code,a.menu_name,a.menu_config,a.buttons,a.expanded,a.checked,a.leaf,a.url,a.icon_cls,a.parent_id
+        FROM authority a,role_authority ra
+        WHERE concat(a.id,'') = ra.authority_id 
+        AND a.parent_id is null AND
+        ra.role = #{role,jdbcType=INTEGER}
+    </select>
+    
+    <select id="queryChildrenByParentIdAndRole" resultMap="baseMap" parameterType="map">
+        SELECT  a.id,a.sort_order,a.menu_code,a.menu_name,a.menu_config,a.buttons,a.expanded,a.checked,a.leaf,a.url,a.icon_cls,a.parent_id
+      	FROM authority a,role_authority ra
+        WHERE concat(a.id,'') = ra.authority_id 
+        AND ra.role = #{role,jdbcType=INTEGER}
+        <if test="parentId != null and parentId != ''">
+           AND  parent_id = #{parentId,jdbcType=BIGINT}
+        </if>  
+    </select>
+    
+    <select id="queryByParentId" resultMap="baseMap" parameterType="java.lang.Long">
+        SELECT <include refid="column"/>
+        FROM authority 
+        WHERE 1=1
+        <if test="parentId != null and parentId != ''">
+           AND  parent_id = #{parentId,jdbcType=BIGINT}
+        </if>  
+        <if test="parentId == null || parentId == ''">
+           AND  parent_id is null
+        </if>  
+    </select>
+    
+    <select id="getByMenuCode" resultMap="baseMap" parameterType="string">
+        SELECT <include refid="column"/>
+        FROM authority 
+        WHERE  menu_code = #{menuCode,jdbcType=VARCHAR}
+    </select>
+    
+    <update id="update" parameterType="com.yhcrt.demo.model.Authority">
+        UPDATE authority
+        <set>
+            <if test="sortOrder != null and sortOrder != ''">
+                sort_order = #{sortOrder},
+            </if>
+            <if test="menuCode != null and menuCode != ''">
+                menu_code = #{menuCode},
+            </if>
+            <if test="menuName != null and menuName != ''">
+                menu_name = #{menuName},
+            </if>
+            <if test="menuConfig != null and menuConfig != ''">
+                menu_config = #{menuConfig},
+            </if>
+            <if test="buttons != null and buttons != ''">
+                buttons = #{buttons},
+            </if>
+            <if test="expanded != null and expanded != ''">
+                expanded = #{expanded},
+            </if>
+            <if test="checked != null and checked != ''">
+                checked = #{checked},
+            </if>
+            <if test="leaf != null and leaf != ''">
+                leaf = #{leaf},
+            </if>
+            <if test="url != null and url != ''">
+                url = #{url},
+            </if>
+            <if test="iconCls != null and iconCls != ''">
+                icon_cls = #{iconCls},
+            </if>
+            <if test="parentId != null and parentId != ''">
+                parent_id = #{parentId},
+            </if>
+        </set>
+        <where>
+                id = #{id}
+        </where>
+    </update>
+
+    <update id="updateBySelected" parameterType="com.yhcrt.demo.model.Authority">
+        UPDATE authority
+        SET 
+                sort_order = #{sortOrder},
+                menu_code = #{menuCode},
+                menu_name = #{menuName},
+                menu_config = #{menuConfig},
+                buttons = #{buttons},
+                expanded = #{expanded},
+                checked = #{checked},
+                leaf = #{leaf},
+                url = #{url},
+                icon_cls = #{iconCls},
+                parent_id = #{parentId}
+         WHERE id = #{id}
+    </update>
+
+    <insert id="insert"  parameterType="com.yhcrt.demo.model.Authority">
+        INSERT INTO authority
+        <set>
+            <if test="sortOrder != null and sortOrder != ''">
+                sort_order = #{sortOrder},
+            </if>
+            <if test="menuCode != null and menuCode != ''">
+                menu_code = #{menuCode},
+            </if>
+            <if test="menuName != null and menuName != ''">
+                menu_name = #{menuName},
+            </if>
+            <if test="menuConfig != null and menuConfig != ''">
+                menu_config = #{menuConfig},
+            </if>
+            <if test="buttons != null and buttons != ''">
+                buttons = #{buttons},
+            </if>
+            <if test="expanded != null and expanded != ''">
+                expanded = #{expanded},
+            </if>
+            <if test="checked != null and checked != ''">
+                checked = #{checked},
+            </if>
+            <if test="leaf != null and leaf != ''">
+                leaf = #{leaf},
+            </if>
+            <if test="url != null and url != ''">
+                url = #{url},
+            </if>
+            <if test="iconCls != null and iconCls != ''">
+                icon_cls = #{iconCls},
+            </if>
+            <if test="parentId != null and parentId != ''">
+                parent_id = #{parentId},
+            </if>
+        </set>
+    </insert>
+
+    <select id="doPaginationQuery" resultMap="baseMap" parameterType="com.yhcrt.demo.model.Authority">
+        SELECT <include refid="column"/>
+        FROM authority
+        LIMIT #{firstResult} , #{maxResults}
+    </select>
+
+    <delete id="deleteByPK" parameterType="long[]">
+        DELETE FROM authority
+        WHERE 1=1  
+        <if test="ids != null and ids[0] != ''">
+            and id in
+            <foreach collection="ids" item="authority" index="index" open="(" separator="," close=")">
+                #{authority}
+            </foreach>
+        </if>
+    </delete>
+
+</mapper>

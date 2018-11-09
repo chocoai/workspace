@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.healthcloud.security.mapper.AlarmMapper">
+
+	<resultMap id="baseResultMap" type="com.yhcrt.healthcloud.security.entity.Alarm">
+		<result column="cid" property="alarmId" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<result column="member_id" property="memberId" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<result column="real_name" property="realName" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="alarm_type" property="alarmType" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="alarm_content" property="alarmContent" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="is_read" property="isRead" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<result column="status" property="status" jdbcType="INTEGER" javaType="java.lang.Integer"/>
+		<result column="create_time" property="alarmTime" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="imei" property="imei" jdbcType="VARCHAR" javaType="java.lang.String"/>
+		<result column="sim" property="phoneNum" jdbcType="VARCHAR" javaType="java.lang.String"/>
+	</resultMap>
+	
+	<select id="listAlarm" resultMap="baseResultMap">
+		SELECT alarm_msg.cid, alarm_msg.member_id, member.real_name, alarm_msg.imei, device.sim, alarm_msg.alarm_type, 
+		       alarm_msg.alarm_content, alarm_msg.is_read, alarm_msg.status, alarm_msg.create_time
+		  FROM alarm_msg
+		       LEFT JOIN member ON alarm_msg.member_id = member.member_id
+		       LEFT JOIN device ON device.imei = alarm_msg.imei
+		 WHERE 1 = 1
+		<if test="memberName != null and memberName != ''">
+			and member.real_name LIKE CONCAT('%',#{memberName},'%')
+		</if>
+		<if test="imei != null and imei != ''">
+			and alarm_msg.imei = #{imei}
+		</if>
+		<if test="alarmTime != null and alarmTime != ''">
+			and alarm_msg.create_time LIKE CONCAT(#{alarmTime},'%')
+		</if>
+		<if test="alarmType != null and alarmType != ''">
+			and alarm_msg.alarm_type = #{alarmType}
+		</if>
+		<if test="isRead != null and isRead != ''">
+			and alarm_msg.is_read = #{isRead}
+		</if>
+		ORDER BY alarm_msg.create_time DESC		
+	</select>
+	
+	<select id="getAlarmById" resultMap="baseResultMap">
+		SELECT alarm_msg.cid, alarm_msg.member_id, member.real_name, alarm_msg.imei, device.sim, alarm_msg.alarm_type, 
+		       alarm_msg.alarm_content, alarm_msg.is_read, alarm_msg.status, alarm_msg.create_time
+		  FROM alarm_msg
+		       LEFT JOIN member ON alarm_msg.member_id = member.member_id
+		       LEFT JOIN device ON device.imei = alarm_msg.imei
+		 WHERE alarm_msg.cid = #{alarmId}
+	</select>
+	
+	<select id="countUnreadAlarm" resultType="java.lang.Integer">
+		select count(*) from alarm_msg where is_read = 0
+	</select>
+	
+	<update id="updateAlarmStatus">
+		update alarm_msg set is_read = 1 where cid = #{alarmId}
+	</update>
+
+</mapper>

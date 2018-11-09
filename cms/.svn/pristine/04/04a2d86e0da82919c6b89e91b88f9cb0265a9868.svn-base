@@ -1,0 +1,53 @@
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<form id="submitForm" action="${base}/baoliaocommt.jspx" method="post">
+	<input type="hidden" name="baoliaoId" value="${baoliao.id}" />
+	<input type="hidden" name="sessionId" id="sessionId" /> 
+	<input type="hidden" id="text" name="text" />
+	<div class="send_mess_box">
+		<textarea id="kcontent" name="kcontent"></textarea>
+		 <span id="facect"><img src="/${res}/images/icon_biaoqing.png" alt="" /></span>
+		<div class="send_butt">
+			<a href="javascript:void(0);" onclick="addForm()">评论</a>
+		</div>
+	</div>
+</form>
+<div style="clear: both;"></div>
+<script type="text/javascript" src="/${res}/js/face/jquery-1.8.0.min.js"></script> 
+<link href="/${res}/js/face/jquery.sinaEmotion.css" rel="stylesheet" type="text/css"/>
+<script src="/${res}/js/face/jquery.sinaEmotion.js" type="text/javascript"></script>
+<script >
+	// 绑定表情
+	$('#facect').SinaEmotion($('#kcontent'));
+	  function  addForm(){
+		 [#if user??]
+		  var kcontent = $('#kcontent').val();
+			if (kcontent.trim() == '') {
+				alert('请先填写评论内容');
+				$('#kcontent').focus();
+				return;
+			}
+			$('#text').val(AnalyticEmotion(kcontent));
+			//$('#text').val($('#kcontent').val());
+			var s = $("#submitForm");
+			var url = s[0].action;
+			var data = s.serialize();
+			$.ajax({
+				url:url,
+	     		type:"post",
+				data:data,
+				dataType: 'json',
+				success:function(data){
+					if(data.status==0) {
+		                alert("评论成功");
+		                $("#kcontent").val("");
+		                location.href = location.href;
+		            }  else {
+		                alert("评论失败");
+		            }
+	            }
+	        });
+	     	  [#else]window.location.href="${base}/login.jspx?returnUrl=baoliao/${baoliao.id}.jspx";
+	     	  [/#if]
+         }
+
+      </script> 

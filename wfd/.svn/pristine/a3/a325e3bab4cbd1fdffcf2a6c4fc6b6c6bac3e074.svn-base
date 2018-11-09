@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.wfd.page.dao.TPlatePostMapper">
+  <resultMap id="BaseResultMap" type="com.whty.wfd.page.model.TPlatePost">
+    <id column="id" jdbcType="VARCHAR"  property="id" />
+    <result column="plate_id" jdbcType="VARCHAR" property="plateId" />
+    <result column="creator" jdbcType="INTEGER" property="creator" />
+    <result column="create_time"  property="createTime" />
+    <result column="update_time"  property="updateTime" />
+    <result column="is_top" jdbcType="BIT" property="isTop" />
+    <result column="is_delete" jdbcType="BIT" property="isDelete" />
+    
+    <result column="view_count" jdbcType="INTEGER" property="viewCount" />
+    <result column="plate_name" jdbcType="VARCHAR" property="plateName" />
+    <result column="img_count" jdbcType="INTEGER" property="imgCount" />
+    <result column="message_count" jdbcType="INTEGER" property="messageCount" />
+    <result column="like_count" jdbcType="INTEGER" property="likeCount" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="logo_url" jdbcType="VARCHAR" property="logoUrl" />
+	<result column="user_type" jdbcType="VARCHAR" property="userType" />
+	
+    <collection property="postImgList" ofType="com.whty.wfd.page.model.TPlatePostImg">
+     <!-- <id property="id" column="img_id"/>-->
+      <id property="downUrl" column="down_url"/>
+      <id property="md5" column="md5"/>
+      <!--<id property="platePostId" column="id"/>
+      <id property="creator" column="creator"/>
+      <id property="updateTime" column="create_time1"/>
+      <id property="createTime" column="update_time1"/>-->
+    </collection>
+
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.whty.wfd.page.model.TPlatePost">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, plate_id, creator, create_time, update_time, is_top, is_delete
+  </sql>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  
+  <!-- ��ѯ������� -->
+  <select id="selectPlatePost" parameterType="map"  resultMap="ResultMapWithBLOBs">
+  	select t1.*,(select count(*) from t_post_view_log where plate_post_id = t1.id) as view_count,t2.name as plate_name, 
+(select count(*) from t_plate_post_img where plate_post_id = t1.id) as img_count, 
+(select count(*) from t_post_message where plate_post_id = t1.id) as message_count, 
+(select count(*) from t_post_like where plate_post_id = t1.id) as like_count, 
+(select create_time from t_post_message where plate_post_id=t1.id order by create_time desc limit 1) as last_message_time,
+t3.name as user_name from t_plate_post t1 left join t_plate t2 on t1.plate_id=t2.id left join t_user t3 on t1.creator=t3.id 
+where t1.plate_id in(select plate_id from t_plate_user where user_id = #{userId}) 
+	<if test="platePostId != null">
+		and t1.id= #{platePostId}   
+	</if>
+	
+	<if test="plateId != null">
+		and t1.plate_id= #{plateId}   
+	</if>
+
+	<if test="isTop != null">
+		 and is_top = #{isTop}
+	</if>
+	<if test="isDelete != null">
+		 and is_delete = #{isDelete}
+	</if>
+	
+	<if test="sortType == 1">
+		 order by t1.create_time desc
+	</if>
+	
+	<if test="sortType == 2">
+		 order by last_message_time desc
+	</if>
+	
+	limit #{startLine},#{endLine}
+  </select>
+  
+  <select id="selectByExampleWithBLOBs" parameterType="com.whty.wfd.page.model.TPlatePostExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_plate_post
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.whty.wfd.page.model.TPlatePostExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_plate_post
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_plate_post
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from t_plate_post
+    where id = #{id,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.whty.wfd.page.model.TPlatePostExample">
+    delete from t_plate_post
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.whty.wfd.page.model.TPlatePost">
+    insert into t_plate_post (id, plate_id, creator, 
+      create_time, update_time, is_top, 
+      is_delete, content)
+    values (#{id,jdbcType=VARCHAR}, #{plateId,jdbcType=VARCHAR}, #{creator,jdbcType=INTEGER},
+      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{isTop,jdbcType=BIT}, 
+      #{isDelete,jdbcType=BIT}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.whty.wfd.page.model.TPlatePost">
+    insert into t_plate_post
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="plateId != null">
+        plate_id,
+      </if>
+      <if test="creator != null">
+        creator,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="isTop != null">
+        is_top,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=VARCHAR},
+      </if>
+      <if test="plateId != null">
+        #{plateId,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isTop != null">
+        #{isTop,jdbcType=BIT},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.whty.wfd.page.model.TPlatePostExample" resultType="java.lang.Long">
+    select count(*) from t_plate_post
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_plate_post
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=VARCHAR},
+      </if>
+      <if test="record.plateId != null">
+        plate_id = #{record.plateId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.creator != null">
+        creator = #{record.creator,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.isTop != null">
+        is_top = #{record.isTop,jdbcType=BIT},
+      </if>
+      <if test="record.isDelete != null">
+        is_delete = #{record.isDelete,jdbcType=BIT},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update t_plate_post
+    set id = #{record.id,jdbcType=VARCHAR},
+      plate_id = #{record.plateId,jdbcType=VARCHAR},
+      creator = #{record.creator,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      is_top = #{record.isTop,jdbcType=BIT},
+      is_delete = #{record.isDelete,jdbcType=BIT},
+      content = #{record.content,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_plate_post
+    set id = #{record.id,jdbcType=VARCHAR},
+      plate_id = #{record.plateId,jdbcType=VARCHAR},
+      creator = #{record.creator,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      is_top = #{record.isTop,jdbcType=BIT},
+      is_delete = #{record.isDelete,jdbcType=BIT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.whty.wfd.page.model.TPlatePost">
+    update t_plate_post
+    <set>
+      <if test="plateId != null">
+        plate_id = #{plateId,jdbcType=VARCHAR},
+      </if>
+      <if test="creator != null">
+        creator = #{creator,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isTop != null">
+        is_top = #{isTop,jdbcType=BIT},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.whty.wfd.page.model.TPlatePost">
+    update t_plate_post
+    set plate_id = #{plateId,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_top = #{isTop,jdbcType=BIT},
+      is_delete = #{isDelete,jdbcType=BIT},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.whty.wfd.page.model.TPlatePost">
+    update t_plate_post
+    set plate_id = #{plateId,jdbcType=VARCHAR},
+      creator = #{creator,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      is_top = #{isTop,jdbcType=BIT},
+      is_delete = #{isDelete,jdbcType=BIT}
+    where id = #{id,jdbcType=VARCHAR}
+  </update>
+  <select id="getPostByUserId" resultMap="ResultMapWithBLOBs">
+    SELECT tpp.message_count message_count,tpp.like_count like_count,tpp.plate_name plate_name,tpp.id id ,tppi.down_url,tppi.md5,
+    tpp.plate_id,tpp.creator,tpp.create_time,tpp.update_time,tpp.content,tpp.is_top,tpp.is_delete FROM
+     (select tpmg.pnum message_count,tplg.dnum like_count,tp.name plate_name,tpp .id id ,tppi.down_url,tppi.md5,
+    tpp.plate_id,tpp.creator,tpp.create_time,tpp.update_time,tpp.content,tpp.is_top,tpp.is_delete
+    from t_plate_post tpp
+    LEFT JOIN t_plate tp on tpp.plate_id = tp.id
+    LEFT JOIN (SELECT count(tpm.id)pnum,tpm.plate_post_id from t_post_message tpm GROUP BY tpm.plate_post_id) tpmg on tpmg.plate_post_id = tpp.id
+    LEFT JOIN (SELECT count(tpl.plate_post_id)dnum,tpl.plate_post_id from t_post_like tpl GROUP BY tpl.plate_post_id) tplg on tplg.plate_post_id = tpp.id
+    LEFT JOIN t_plate_post_img tppi on tppi.plate_post_id = tpp.id
+    where tpp.is_delete =0 and tpp.creator =#{userId} GROUP BY tpp.id  order by tpp.create_time desc ,id  limit #{pageNum},#{pageSize}
+     )tpp LEFT JOIN t_plate_post_img tppi ON tppi.plate_post_id = tpp.id
+  </select>
+  
+    <select id="getPostByPlateList" parameterType="map" resultMap="ResultMapWithBLOBs">
+    select tpmg.pnum message_count,tplg.dnum like_count,tp.name plate_name,tu.name user_name,
+    tpp .id id ,tpp.plate_id,tpp.creator,tpp.create_time,tpp.update_time,tpp.content,tpp.is_top,tpp.is_delete,tppi.down_url,tppi.md5
+    from t_plate_post tpp
+    LEFT JOIN t_plate tp on tpp.plate_id = tp.id
+    LEFT JOIN (SELECT count(tpm.id)pnum,tpm.plate_post_id from t_post_message tpm GROUP BY tpm.plate_post_id) tpmg on tpmg.plate_post_id = tpp.id
+    LEFT JOIN (SELECT count(tpl.plate_post_id)dnum,tpl.plate_post_id from t_post_like tpl GROUP BY tpl.plate_post_id) tplg on tplg.plate_post_id = tpp.id
+    LEFT JOIN t_plate_post_img tppi on tppi.plate_post_id = tpp.id
+    LEFT JOIN t_user tu on tu.id = tpp.creator
+    where tpp.is_delete =0
+    <if test="idList != null">
+			<foreach collection="idList" index="index" item="item" open="and (" separator="or" close=")">     
+				  tpp.id=#{item}
+			</foreach>
+	</if>
+
+	<if test="timeSort != null">
+			order by tpp.create_time desc
+	</if>
+
+	<if test="messageSort != null">
+			order by tpmg.pnum desc
+	</if>
+
+  </select>
+  
+  
+  <select id="getPostByPlateId"  resultMap="ResultMapWithBLOBs">
+    select tpp.id ,tpp.plate_id,tpp.creator,tpp.create_time,tpp.update_time,tpp.content,tpp.is_top,tpp.is_delete
+    ,tpp.message_count message_count,tpp.like_count like_count,tpp.plate_name plate_name,tpp.user_name user_name,tpp.img_count img_count,tpp.view_count view_count,tpp.logo_url logo_url
+    ,tppi.down_url,tppi.md5 from (
+    select  tpp.id id ,tpp.plate_id,tpp.creator,tpp.create_time,tpp.update_time,tpp.content,tpp.is_top,tpp.is_delete
+    ,tpmg.pnum message_count,tplg.dnum like_count,tp.name plate_name,tu.name user_name,tpl3.user_id img_count,tpvl2.userIds view_count,tu.logo_url logo_url
+    ,tppi.down_url,tppi.md5
+    from t_plate_post tpp
+    LEFT JOIN t_plate tp on tpp.plate_id = tp.id
+    LEFT JOIN t_class_plate tcp on tcp.plate_id = tp.id
+    LEFT JOIN t_class_user tcu on tcu.class_id = tcp.class_id
+    LEFT JOIN (SELECT count(tpm.id)pnum,tpm.plate_post_id from t_post_message tpm GROUP BY tpm.plate_post_id) tpmg on tpmg.plate_post_id = tpp.id
+    LEFT JOIN (SELECT count(tpl.plate_post_id)dnum,tpl.plate_post_id from t_post_like tpl GROUP BY tpl.plate_post_id) tplg on tplg.plate_post_id = tpp.id
+    LEFT JOIN t_plate_post_img tppi on tppi.plate_post_id = tpp.id
+    LEFT JOIN t_user tu on tu.id = tpp.creator
+    left JOIN (select tpl2.* from t_post_like tpl2 where tpl2.user_id =5565)tpl3 on tpl3.plate_post_id = tpp.id
+    left join (select count(tpvl.user_id) userIds,tpvl.plate_post_id ppid from t_post_view_log tpvl group by tpvl.plate_post_id) tpvl2 on tpvl2.ppid = tpp.id
+    where tpp.is_delete =0 and tcu.user_id = 5565
+    <if test="plateId != null and plateId != '' ">
+      and tpp.plate_id =#{plateId,jdbcType=VARCHAR}
+    </if>
+    group by tpp.id
+    <if test="orderByClause != null and orderByClause !='' ">
+      order by ${orderByClause}
+    </if>
+    limit #{pageNum},#{pageSize}
+    )tpp LEFT JOIN t_plate_post_img tppi ON tppi.plate_post_id = tpp.id
+  </select>
+
+  <select id="getPostByPlateIdAllTeacher"  resultMap="ResultMapWithBLOBs">
+    select tpp.id,tpp.plate_id,tpp.creator,tpp.create_time,tpp.update_time,tpp.content,tpp.is_top,tpp.is_delete
+    ,tpp.message_count message_count,tpp.like_count like_count,tpp.plate_name plate_name,tpp.user_name user_name,tpp.img_count img_count,tpp.view_count view_count,tpp.logo_url logo_url
+    ,tppi.down_url,tppi.md5 from (
+    select tpp .id id ,tpp.plate_id,tpp.creator,tpp.create_time,tpp.update_time,tpp.content,tpp.is_top,tpp.is_delete
+    ,tpmg.pnum message_count,tplg.dnum like_count,tp.name plate_name,tu.name user_name,tpl3.user_id img_count,tpvl2.userIds view_count,tu.logo_url logo_url
+    ,tppi.down_url,tppi.md5
+    from t_plate_post tpp
+    LEFT JOIN t_plate tp on tpp.plate_id = tp.id
+    LEFT JOIN t_plate_user tpu on tpu.plate_id = tp.id
+    LEFT JOIN (SELECT count(tpm.id)pnum,tpm.plate_post_id from t_post_message tpm GROUP BY tpm.plate_post_id) tpmg on tpmg.plate_post_id = tpp.id
+    LEFT JOIN (SELECT count(tpl.plate_post_id)dnum,tpl.plate_post_id from t_post_like tpl GROUP BY tpl.plate_post_id) tplg on tplg.plate_post_id = tpp.id
+    LEFT JOIN t_plate_post_img tppi on tppi.plate_post_id = tpp.id
+    LEFT JOIN t_user tu on tu.id = tpp.creator
+    left JOIN (select tpl2.* from t_post_like tpl2 where tpl2.user_id =#{userId})tpl3 on tpl3.plate_post_id = tpp.id
+    left join (select count(tpvl.user_id) userIds,tpvl.plate_post_id ppid from t_post_view_log tpvl group by tpvl.plate_post_id) tpvl2 on tpvl2.ppid = tpp.id
+    where tpp.is_delete =0 and tpu.user_id = #{userId}
+    <if test="plateId != null and plateId != '' ">
+      and tpp.plate_id =#{plateId,jdbcType=VARCHAR}
+    </if>
+    group by tpp.id
+    <if test="orderByClause != null and orderByClause !='' ">
+      order by ${orderByClause}
+    </if>
+    limit #{pageNum},#{pageSize}
+    )tpp LEFT JOIN t_plate_post_img tppi ON tppi.plate_post_id = tpp.id
+
+  </select>
+
+  <select id="getPostByPlateIdAll"  resultMap="ResultMapWithBLOBs">
+    select tpp.id,tpp.plate_id,tpp.creator,tpp.create_time,tpp.update_time,tpp.content,tpp.is_top,tpp.is_delete
+    ,tpp.message_count message_count,tpp.like_count like_count,tpp.plate_name plate_name,tpp.user_name user_name,tpp.img_count img_count,tpp.view_count view_count,tpp.logo_url logo_url
+    ,tppi.down_url,tppi.md5 from (
+    select tu.user_type,tpp .id id ,tpp.plate_id,tpp.creator,tpp.create_time,tpp.update_time,tpp.content,tpp.is_top,tpp.is_delete
+    ,tpmg.pnum message_count,tplg.dnum like_count,tp.name plate_name,tu.name user_name,tpvl2.userIds view_count,tu.logo_url logo_url,tpl3.user_id img_count
+    ,tppi.down_url,tppi.md5
+    from t_plate_post tpp
+    left join t_user tu2 on tpp.creator = tu2.id
+    LEFT JOIN t_plate tp on tpp.plate_id = tp.id
+    left join t_user tu on tpp.creator = tu.id
+    LEFT JOIN (SELECT count(tpm.id)pnum,tpm.plate_post_id from t_post_message tpm GROUP BY tpm.plate_post_id) tpmg on tpmg.plate_post_id = tpp.id
+    LEFT JOIN (SELECT count(tpl.plate_post_id)dnum,tpl.plate_post_id from t_post_like tpl GROUP BY tpl.plate_post_id) tplg on tplg.plate_post_id = tpp.id
+    LEFT JOIN t_plate_post_img tppi on tppi.plate_post_id = tpp.id
+
+    left JOIN (select tpl2.* from t_post_like tpl2 where tpl2.user_id =#{userId})tpl3 on tpl3.plate_post_id = tpp.id
+    left join (select count(tpvl.user_id) userIds,tpvl.plate_post_id ppid from t_post_view_log tpvl group by tpvl.plate_post_id) tpvl2 on tpvl2.ppid = tpp.id
+
+    where tpp.is_delete =0 and tp.is_delete = 0 and tp.school_id = #{schoolId}
+    <if test="plateId != null and plateId != '' ">
+      and tpp.plate_id =#{plateId,jdbcType=VARCHAR}
+    </if>
+    group by tpp.id
+    <if test="orderByClause != null and orderByClause !='' ">
+      order by ${orderByClause}
+    </if>
+    limit #{pageNum},#{pageSize}
+    )tpp LEFT JOIN t_plate_post_img tppi ON tppi.plate_post_id = tpp.id
+  </select>
+
+
+  <select id="getPostByPlateIdIsTop"  resultMap="ResultMapWithBLOBs">
+    select distinct tpp .id id ,tpp.plate_id,tpp.creator,tpp.create_time,tpp.update_time,tpp.content,tpp.is_top,tpp.is_delete
+    ,tp.name plate_name,tu.name user_name,tu.logo_url logo_url
+    from t_plate_post tpp
+    LEFT JOIN t_plate tp on tpp.plate_id = tp.id
+    LEFT JOIN t_class_plate tcp on tcp.plate_id = tp.id
+    LEFT JOIN t_class_user tcu on tcu.class_id = tcp.class_id
+    LEFT JOIN t_user tu on tu.id = tpp.creator
+    where tpp.is_delete =0 and tcu.user_id = #{userId} and tpp.is_top =1
+    <if test="plateId != null and plateId != '' ">
+      and tpp.plate_id =#{plateId,jdbcType=VARCHAR}
+    </if>
+    order by tpp.update_time desc
+  </select>
+
+  <select id="getPostByPlateIdAllTeacherIsTop"  resultMap="ResultMapWithBLOBs">
+    select distinct tpp .id id ,tpp.plate_id,tpp.creator,tpp.create_time,tpp.update_time,tpp.content,tpp.is_top,tpp.is_delete
+    ,tp.name plate_name,tu.name user_name,tu.logo_url logo_url
+    from t_plate_post tpp
+    LEFT JOIN t_plate tp on tpp.plate_id = tp.id
+    LEFT JOIN t_plate_user tpu on tpu.plate_id = tp.id
+    LEFT JOIN t_user tu on tu.id = tpp.creator
+    where tpp.is_delete =0 and tpu.user_id = #{userId} and tpp.is_top =1
+    <if test="plateId != null and plateId != '' ">
+      and tpp.plate_id =#{plateId,jdbcType=VARCHAR}
+    </if>
+    order by tpp.update_time desc
+  </select>
+
+  <select id="getPostByPlateIdAllIsTop"  resultMap="ResultMapWithBLOBs">
+    select distinct tpp .id id ,tpp.plate_id,tpp.creator,tpp.create_time,tpp.update_time,tpp.content,tpp.is_top,tpp.is_delete
+    ,tp.name plate_name,tu.name user_name,tu.logo_url logo_url
+    from t_plate_post tpp
+    LEFT JOIN t_plate tp on tpp.plate_id = tp.id
+    LEFT JOIN t_user tu on tu.id = tpp.creator
+    where tpp.is_delete =0 and tpp.is_top =1
+    <if test="plateId != null and plateId != '' ">
+      and tpp.plate_id =#{plateId,jdbcType=VARCHAR}
+    </if>
+    order by tpp.update_time desc
+  </select>
+
+  <select id="getPostByPostId"  resultMap="ResultMapWithBLOBs">
+    select tpvl2.num view_count,tu.name user_name,tpl.num like_count, tpp.* ,i.down_url down_url,tpl3.user_id img_count,tu.logo_url logo_url from t_plate_post tpp
+    LEFT JOIN (select count(tpvl.id)num,tpvl.plate_post_id from t_post_view_log tpvl GROUP BY tpvl.plate_post_id )tpvl2 ON tpvl2.plate_post_id = tpp.id
+    left join (select count(plate_post_id)num,pl.plate_post_id id from t_post_like pl group by pl.plate_post_id)tpl on tpl.id = tpp.id
+    left join t_user tu on tu.id =tpp.creator
+    left join t_plate_post_img i on i.plate_post_id =tpp.id
+    left JOIN (select tpl2.* from t_post_like tpl2 where tpl2.user_id =#{userId})tpl3 on tpl3.plate_post_id = tpp.id
+    where tpp.is_delete =0  and tpp.id = #{postId}
+  </select>
+</mapper>

@@ -1,0 +1,55 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+	"-//Hibernate/Hibernate Mapping DTD//EN"
+	"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+
+<hibernate-mapping package="com.yhcrt.weihu.bbs.entity">
+	<class
+		name="BbsSendCaptcha"
+		table="bbs_send_captcha"
+		>
+		<meta attribute="sync-DAO">false</meta>
+		<cache usage="read-write"/>
+		<id
+			name="id"
+			type="java.lang.Integer"
+			column="CAPTCHA_ID"
+			>
+			<generator class="native"/>
+		</id>
+		<property
+			name="expireTime"
+			column="EXPIRE_TIME"
+			type="timestamp"
+			not-null="true"
+			/>
+		<property
+			name="captcha"
+			column="CAPTCHA"
+			type="string"
+			not-null="false"
+			length="6"
+			/>
+		<property
+			name="target"
+			column="TARGET"
+			type="string"
+			not-null="false"
+			length="64"
+			/>
+		<property
+			name="businessType"
+			column="BUSINESS_TYPE"
+			type="string"
+			not-null="false"
+			length="64"
+			/>
+		<many-to-one
+			name="creater"
+			column="user_id"
+			class="BbsUser"
+			not-null="true"
+			>
+		</many-to-one>
+	</class>	
+</hibernate-mapping>

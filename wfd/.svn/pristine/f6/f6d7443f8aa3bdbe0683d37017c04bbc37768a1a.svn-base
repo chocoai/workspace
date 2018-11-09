@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.wfd.page.dao.TPostMessageMapper">
+  <resultMap id="BaseResultMap" type="com.whty.wfd.page.model.TPostMessage">
+    <id column="id"  property="id" />
+    <result column="plate_post_id" jdbcType="INTEGER" property="platePostId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="receiver" jdbcType="INTEGER" property="receiver" />
+    <result column="is_read" jdbcType="BIT" property="isRead" />
+    <result column="is_top" jdbcType="BIT" property="isTop" />
+    <result column="is_delete" jdbcType="BIT" property="isDelete" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="postContent" property="postContent" />
+    <result column="logo_url" property="logoUrl" />
+
+    <result column="user_name" property="userName" />
+    <result column="receiverName" property="receiverName" />
+    <result column="user_type"  property="userType" />
+    <result column="like_count"  property="likeCount" />
+    <result column="messageName" property="messageName" />
+	<result column="favorite_time" property="favoriteTime" />
+    
+
+    <collection property="tPostMessageImgs"  ofType="com.whty.wfd.page.model.TPostMessageImg" >
+      <id property="id" column="img_id"/>
+      <id property="downUrl" column="down_url"/>
+      <id property="md5" column="md5"/>
+      <!--<id property="postMessageId" column="id"/>-->
+      <id property="creator" column="creator"/>
+      <id property="updateTime" column="create_time1"/>
+      <id property="createTime" column="update_time1"/>
+    </collection>
+
+    <collection property="tPostMessageAudios" ofType="com.whty.wfd.page.model.TPostMessageAudio">
+      <id property="id" column="audio_id"/>
+      <id property="downUrl" column="audio_down_url"/>
+      <id property="audioUsetaking" column="audio_usetaking"/>
+      <!--<id property="postMessageId" column="id"/>-->
+      <id property="updateTime" column="create_time2"/>
+      <id property="createTime" column="update_time2"/>
+    </collection>
+
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.whty.wfd.page.model.TPostMessage">
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, plate_post_id, user_id,receiver,content, is_read, is_top, create_time, update_time,is_delete
+  </sql>
+  <sql id="Blob_Column_List">
+    content
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.whty.wfd.page.model.TPostMessageExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_post_message
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  
+  
+  <select id="selectByPlatePost" parameterType="com.whty.wfd.page.model.TPostMessageExample" resultMap="ResultMapWithBLOBs">
+  	select t1.*,t2.name as user_name,t2.user_type,
+(select count(*) from t_post_message_like where post_message_id=t1.id) as like_count
+from t_post_message t1 left join t_user t2 on t1.user_id=t2.id where 1=1
+	<if test="platePostId != null">
+      and plate_post_id= #{platePostId}
+    </if>
+ 	order by create_time desc
+  </select>
+  
+  <select id="selectByExample" parameterType="com.whty.wfd.page.model.TPostMessageExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from t_post_message
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from t_post_message
+    where id = #{id,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from t_post_message
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.whty.wfd.page.model.TPostMessageExample">
+    delete from t_post_message
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.whty.wfd.page.model.TPostMessage">
+    insert into t_post_message (id, plate_post_id, user_id,receiver,
+      is_read, is_top, create_time, 
+      update_time, content,is_delete)
+    values (#{id,jdbcType=INTEGER}, #{platePostId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{receiver,jdbcType=INTEGER},
+      #{isRead,jdbcType=BIT}, #{isTop,jdbcType=BIT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{content,jdbcType=LONGVARCHAR},#{isDelete,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.whty.wfd.page.model.TPostMessage">
+    insert into t_post_message
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="platePostId != null">
+        plate_post_id,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="isRead != null">
+        is_read,
+      </if>
+      <if test="isTop != null">
+        is_top,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="platePostId != null">
+        #{platePostId,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="isRead != null">
+        #{isRead,jdbcType=BIT},
+      </if>
+      <if test="isTop != null">
+        #{isTop,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.whty.wfd.page.model.TPostMessageExample" resultType="java.lang.Long">
+    select count(*) from t_post_message
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update t_post_message
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.platePostId != null">
+        plate_post_id = #{record.platePostId,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.isRead != null">
+        is_read = #{record.isRead,jdbcType=BIT},
+      </if>
+      <if test="record.isTop != null">
+        is_top = #{record.isTop,jdbcType=BIT},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.content != null">
+        content = #{record.content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update t_post_message
+    set id = #{record.id},
+      plate_post_id = #{record.platePostId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      is_read = #{record.isRead,jdbcType=BIT},
+      is_top = #{record.isTop,jdbcType=BIT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      content = #{record.content,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update t_post_message
+    set id = #{record.id},
+      plate_post_id = #{record.platePostId,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      is_read = #{record.isRead,jdbcType=BIT},
+      is_top = #{record.isTop,jdbcType=BIT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.whty.wfd.page.model.TPostMessage">
+    update t_post_message
+    <set>
+      <if test="platePostId != null">
+        plate_post_id = #{platePostId},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="isRead != null">
+        is_read = #{isRead,jdbcType=BIT},
+      </if>
+      <if test="isTop != null">
+        is_top = #{isTop,jdbcType=BIT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.whty.wfd.page.model.TPostMessage">
+    update t_post_message
+    set plate_post_id = #{platePostId},
+      user_id = #{userId,jdbcType=INTEGER},
+      is_read = #{isRead,jdbcType=BIT},
+      is_top = #{isTop,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.whty.wfd.page.model.TPostMessage">
+    update t_post_message
+    set plate_post_id = #{platePostId},
+      user_id = #{userId,jdbcType=INTEGER},
+      is_read = #{isRead,jdbcType=BIT},
+      is_top = #{isTop,jdbcType=BIT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="getPostMessagesByPostId"  resultMap="ResultMapWithBLOBs">
+    SELECT tpm.id id,tpm.plate_post_id,tpm.user_id user_id,tpm.is_read,tpm.is_top,tpm.create_time,tpm.update_time,tpm.content,tpmi.down_url,tpm.receiver receiver,tu2.name receiverName,
+    tu.user_type user_type,tpm.is_top is_top,tpml2.likeNum like_count,tu.name user_name,tpml4.post_message_id messageName,tpmi.id img_id,tu.logo_url logo_url,tpma.down_url audio_down_url,
+    tpma.audio_usetaking audio_usetaking
+    from t_post_message tpm
+    left JOIN  t_post_message_img tpmi on tpmi.post_message_id = tpm.id
+    left JOIN (select tpml.post_message_id,COUNT(tpml.post_message_id)likeNum  from t_post_message_like tpml GROUP BY tpml.post_message_id )tpml2 on tpml2.post_message_id= tpm.id
+    left JOIN t_user tu on tu.id = tpm.user_id
+    left JOIN t_user tu2 on tu2.id = tpm.receiver
+    left JOIN (select * from t_post_message_like tpml3 where tpml3.user_id =#{userId})tpml4 on tpml4.post_message_id = tpm.id
+    left join t_post_message_audio tpma on tpma.post_message_id = tpm.id
+    WHERE tpm.is_delete = 0  and tpm.plate_post_id =#{postId}
+    
+   	<if test="orderByClause == null">
+   		order by tu.user_type desc,tpm.is_top desc
+   	</if>	
+   		
+    <if test="orderByClause != null">
+       order by ${orderByClause}
+    </if>
+  </select>
+
+  <select id="getPostMessagesByUserId" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    SELECT tm.*,tpp.content postContent,tu.name messageName,tu.logo_url logo_url
+    from t_post_message tm
+    left JOIN  t_plate_post tpp on tpp.id =tm.plate_post_id
+    left join t_user tu on tu.id = tm.user_id
+    WHERE tm.is_delete = 0  and tpp.creator =#{userId}
+    order by tm.create_time desc
+  </select>
+  <update id="updateByPostId" parameterType="java.lang.String">
+    update t_post_message
+    set  is_delete = 1
+    where plate_post_id = #{postId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByMessageId" parameterType="java.lang.String">
+    update t_post_message
+    set  is_delete = 1
+    where id = #{messageId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateMessageIsRead" parameterType="java.lang.Integer">
+    update t_post_message tpm
+    LEFT JOIN t_plate_post tpp on tpm.plate_post_id = tpp.id
+    set  tpm.is_read = 1 WHERE tpp.creator=#{userId}
+  </update>
+  <select id="getReply" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select tufm.create_time as favorite_time,tu.user_type,tpm.id id,tpm.plate_post_id,tpm.user_id user_id,tpm.is_read,tpm.is_top,tpm.create_time,tu.logo_url logo_url,
+    tpm.update_time,tpm.content,tpm.receiver ,tu.name user_name,tpp.content postContent
+    FROM  t_post_message tpm
+    LEFT JOIN t_plate_post tpp on tpm.plate_post_id = tpp.id
+    LEFT JOIN t_user tu on tu.id = tpm.user_id
+    INNER JOIN t_post_message_alt tpma on tpma.message_id = tpm.id
+    left join t_user_favorite_message tufm on tufm.post_message_id = tpm.id
+    where tpma.alt_user_id = #{userId,jdbcType=INTEGER} and tpm.is_delete=0
+</select>
+</mapper>

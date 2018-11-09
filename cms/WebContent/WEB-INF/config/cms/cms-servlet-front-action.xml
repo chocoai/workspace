@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd"
+	default-lazy-init="true">
+	
+	<bean id="dynamicAct" class="com.yhcrt.weihu.cms.action.front.DynamicPageAct"/>
+	<bean id="tagAct" class="com.yhcrt.weihu.cms.action.front.TagAct"/>
+	<bean id="topicAct" class="com.yhcrt.weihu.cms.action.front.TopicAct"/>
+	<bean id="searchAct" class="com.yhcrt.weihu.cms.action.front.SearchAct"/>
+	<bean id="voteAct" class="com.yhcrt.weihu.cms.action.front.VoteAct"/>
+	<bean id="friendlinkAct" class="com.yhcrt.weihu.cms.action.front.FriendlinkAct"/>
+	<bean id="picUploadAct" class="com.yhcrt.weihu.cms.action.front.PicUploadAct"/>
+	<bean id="contentCountAct" class="com.yhcrt.weihu.cms.action.front.ContentCountAct"/>
+	<bean id="attachmentAct" class="com.yhcrt.weihu.cms.action.front.AttachmentAct"/>
+	<bean id="commentAct" class="com.yhcrt.weihu.cms.action.front.CommentAct"/>
+	<bean id="guestbookAct" class="com.yhcrt.weihu.cms.action.front.GuestbookAct"/>
+	<bean id="rssAct" class="com.yhcrt.weihu.cms.action.front.RssAct"/>
+	<bean id="csiCustomAct" class="com.yhcrt.weihu.cms.action.front.CsiCustomAct"/>
+	<bean id="advertisingAct" class="com.yhcrt.weihu.cms.action.front.AdvertisingAct"/>
+	<bean id="baoliaoAct" class="com.yhcrt.weihu.cms.action.front.BaoLiaoAct"/>
+	<bean id="ttAct" class="com.yhcrt.weihu.cms.action.front.TTAct"/>
+	
+	
+	<bean id="baoliaoMemberAct" class="com.yhcrt.weihu.cms.action.member.BaoLiaoMemberAct"/>
+	<bean id="casLoginAct" class="com.yhcrt.weihu.cms.action.member.CasLoginAct"/>
+	<bean id="loginAct" class="com.yhcrt.weihu.cms.action.member.LoginAct"/>
+	<bean id="memberAct" class="com.yhcrt.weihu.cms.action.member.MemberAct"/>
+	<bean id="contributeAct" class="com.yhcrt.weihu.cms.action.member.ContributeAct"/>
+	<bean id="fckAct" class="com.yhcrt.weihu.cms.action.member.FckAct"/>
+	<bean id="ueditorAct" class="com.yhcrt.weihu.cms.action.member.UeditorAct"/>
+	<bean id="registerAct" class="com.yhcrt.weihu.cms.action.member.RegisterAct"/>
+	<bean id="forgotPasswordAct" class="com.yhcrt.weihu.cms.action.member.ForgotPasswordAct"/>
+	<bean id="imageCutAct" class="com.yhcrt.weihu.cms.action.member.ImageCutAct"/>
+	<bean id="imageUploadAct" class="com.yhcrt.weihu.cms.action.member.ImageUploadAct"/>
+	<bean id="commentMemberAct" class="com.yhcrt.weihu.cms.action.member.CommentMemberAct"/>
+	<bean id="guestbookMemberAct" class="com.yhcrt.weihu.cms.action.member.GuestbookMemberAct"/>
+	<bean id="collectionMemberAct" class="com.yhcrt.weihu.cms.action.member.CollectionMemberAct"/>
+	<bean id="messageAct" class="com.yhcrt.weihu.cms.action.member.MessageAct"/>
+    <bean id="exchangeAct" class="com.yhcrt.weihu.cms.action.member.ExchangeAct"/>
+    <bean id="productAct" class="com.yhcrt.weihu.cms.action.member.ProductAct"/>
+    <bean id="ttxxAct" class="com.yhcrt.weihu.cms.action.member.TTXXAct"/>
+    
+	<bean id="siteFlowAct" class="com.yhcrt.weihu.cms.action.front.CmsSiteFlowAct"/>
+	<bean id="resumeAct" class="com.yhcrt.weihu.cms.action.member.ResumeAct"/>
+	<bean id="docAct" class="com.yhcrt.weihu.cms.action.member.DocAct"/>
+	<bean id="visualAct" class="com.yhcrt.weihu.cms.action.front.VisualAct"/>
+	<bean id="swfUploadAct" class="com.yhcrt.weihu.cms.action.member.SwfUploadAct"/>
+	<bean id="contentScoreAct" class="com.yhcrt.weihu.cms.action.front.ContentScoreAct"/>
+	<bean id="thirdLoginAct" class="com.yhcrt.weihu.cms.action.front.ThirdLoginAct"/>
+	<bean id="staticPageCheckPermAct" class="com.yhcrt.weihu.cms.action.front.StaticPageCheckPermAct"/>
+	<bean id="channelCountAct" class="com.yhcrt.weihu.cms.action.front.ChannelCountAct"/>
+	
+</beans>

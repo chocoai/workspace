@@ -1,0 +1,8 @@
+attach.dir=E:\\apache-tomcat-8.0.30-windows-x64\\9090\\webapps\\
+attach.http=http://120.202.36.12:9090/
+
+#attach.dir=E:\\software\\apache-tomcat-8.0.30\\webapps\\
+#attach.http=http://127.0.0.1:8080/
+
+attach.root.dir=up_file
+attach.struts=true

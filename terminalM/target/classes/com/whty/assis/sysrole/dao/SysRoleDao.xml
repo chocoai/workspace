@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.sysrole.dao.SysRoleDao">
+
+	<!-- 这里的ManageUserInfo是别名，需要在mybatis-config.xml中定义，或者写类全名 -->
+	<resultMap type="com.whty.assis.sysrole.model.SysRole" id="SysRoleResult">
+		<id property="id" column="id" jdbcType="VARCHAR"/>
+		<id property="role_name" column="role_name" jdbcType="VARCHAR"/>
+		<id property="role_comment" column="role_comment" jdbcType="VARCHAR"/>
+		<id property="role_sort" column="role_sort" jdbcType="INTEGER"/>
+		<id property="status" column="status" jdbcType="INTEGER"/>
+		<id property="create_time" column="create_time" jdbcType="TIMESTAMP"/>
+		<id property="update_time" column="update_time" jdbcType="TIMESTAMP"/>
+	</resultMap>
+	
+	<!-- 根据条件查询 -->
+	<select id="querySysRole" parameterType="map" resultMap="SysRoleResult">
+		select id,role_name,role_comment,role_sort,status,create_time,update_time
+		from sys_role
+		where 1=1
+		<if test="startTime != null and startTime != ''">and create_time>=#{startTime}</if>
+		<if test="endTime != null and endTime != ''"><![CDATA[and create_time <=#{endTime}]]></if>
+		<if test="role_name != null and role_name != ''">and role_name like CONCAT('%',#{role_name},'%')</if>
+		<if test="status != null and status != ''">and status=#{status}</if>
+	</select>
+	
+	<insert id="addSysRole" parameterType="com.whty.assis.sysrole.model.SysRole">
+		insert into sys_role(
+			id
+			<if test="role_name != null">,role_name</if>
+			<if test="role_comment != null">,role_comment</if>
+			<if test="role_sort != null">,role_sort</if>
+			<if test="status != null">,status</if>
+			<if test="create_time != null">,create_time</if>
+			<if test="update_time != null">,update_time</if>
+		) values (
+			#{id}
+			<if test="role_name != null">,#{role_name}</if>
+			<if test="role_comment != null">,#{role_comment}</if>
+			<if test="role_sort != null">,#{role_sort}</if>
+			<if test="status != null">,#{status}</if>
+			<if test="create_time != null">,#{create_time}</if>
+			<if test="update_time != null">,#{update_time}</if>
+		)
+	</insert>
+	
+	<update id="updateSysRole" parameterType="com.whty.assis.sysrole.model.SysRole">
+		update sys_role
+		<set>
+			id=#{id}
+			<if test="role_name != null">,role_name=#{role_name}</if>
+			<if test="role_comment != null">,role_comment=#{role_comment}</if>
+			<if test="update_time != null">,update_time=#{update_time}</if>
+		</set>
+		where id=#{id}
+	</update>
+	
+	<update id="updateSysRoleStatus" parameterType="map">
+		update sys_role set status=#{status}
+		where id in <foreach collection="idList" item="item" open="(" separator="," close=")">#{item}</foreach>
+	</update>
+	
+	<delete id="deleteSysRole" parameterType="map">
+		delete from sys_role
+		where id in <foreach collection="idList" item="item" open="(" separator="," close=")">#{item}</foreach>
+	</delete>
+	
+	<select id="queryModularByRoleId" parameterType="string" resultType="java.util.HashMap">
+		select m.id,m.modular_name,m.parent_id,
+			(case when m.is_parent='0' or bt.num>0 then 0 else 1 end) is_parent,
+			if(rm.modular_id is null,0,1) checked
+		from sys_modular m
+		left join (select modular_id from sys_role_modular where role_id=#{_parameter}) rm
+		on m.id=rm.modular_id
+		left join (select modular_id,count(*) num from sys_button where status='0' group by modular_id) bt
+		on m.id=bt.modular_id
+		where status='0'
+		order by modular_sort
+	</select>
+	
+	<select id="queryButtonByRoleId" parameterType="map" resultType="java.util.HashMap">
+		select bt.id,bt.button_name,bt.modular_id,if(rbt.button_id is null,0,1) checked
+		from (select id,button_name,modular_id,sort_num from sys_button where status='0') bt
+		left join (select button_id from sys_role_button where role_id=#{role_id}) rbt
+		on bt.id=rbt.button_id
+		order by bt.sort_num
+	</select>
+	
+	<!-- 异步加载使用
+	<select id="queryButtonByRoleId" parameterType="map" resultType="java.util.HashMap">
+		select bt.id,bt.button_name,bt.modular_id,decode(rbt.button_id,null,0,1) checked
+		from (select id,button_name,modular_id,sort_num from sys_button where status='0' and modular_id=#{modular_id}) bt
+		left join (select button_id from sys_role_button where modular_id=#{modular_id} and role_id=#{role_id}) rbt
+		on bt.id=rbt.button_id
+		order by bt.sort_num
+	</select> -->
+	
+	<delete id="deleteSysRoleModular" parameterType="string">
+		delete from sys_role_modular
+		where role_id=#{_parameter}
+	</delete>
+	
+	<delete id="deleteSysRoleButton" parameterType="string">
+		delete from sys_role_button
+		where role_id=#{_parameter}
+	</delete>
+	
+	<insert id="saveSysRoleModularBatch" parameterType="java.util.List">
+		insert into sys_role_modular (id,role_id,modular_id)  values
+		<foreach collection="list" item="item" index="index" separator=",">  
+		 (#{item.id},#{item.role_id},#{item.modular_id})  
+		</foreach>
+	</insert>
+	
+	<insert id="saveSysRoleButtonBatch" parameterType="java.util.List">
+		insert into sys_role_button (id,role_id,modular_id,button_id) values
+		<foreach collection="list" item="item" index="index" separator=",">  
+		 (#{item.id},#{item.role_id},#{item.modular_id},#{item.button_id})  
+		</foreach>
+	</insert>
+	
+	<select id="querySysRoleByUserId" parameterType="string" resultType="java.util.HashMap">
+		select r.id,r.role_name,if(ur.role_id is null,0,1) checked
+		from sys_role r
+		left join (select role_id from sys_user_role where user_id=#{_parameter}) ur
+		on r.id=ur.role_id
+		where r.status='0'
+	</select>
+	
+	<select id="queryAllSysRole" resultType="java.util.HashMap">
+		select r.id,r.role_name,'0' checked
+		from sys_role r
+		where r.status='0'
+	</select>
+	
+	<delete id="deleteSysUserRole" parameterType="java.util.List">
+		delete from sys_user_role
+		where user_id in <foreach collection="list" item="item" open="(" separator="," close=")">#{item}</foreach>
+	</delete>
+	
+	<insert id="saveSysUserRoleBatch" parameterType="java.util.List">
+		insert into sys_user_role (id,user_id,role_id) values
+		<foreach collection="list" item="item" index="index" separator=",">  
+		 (#{item.id},#{item.user_id},#{item.role_id})  
+		</foreach>
+	</insert>
+	
+	<!-- 查询当前用户在当前模块下的按钮列表 -->
+	<select id="queryButtonByCurrUser" parameterType="map" resultType="java.util.HashMap">
+		select bt.id,bt.button_name,IF(rbt.button_id is null,0,1) granted
+		from (select id,button_name,status from sys_button where modular_id=#{modular_id}) bt
+		left join (select rb.button_id 
+			from sys_role_button rb,sys_user_role ur 
+			where rb.role_id=ur.role_id and rb.modular_id=#{modular_id} and ur.user_id=#{user_id}) rbt
+		on bt.id=rbt.button_id
+		where bt.status='0'
+	</select>
+	
+	<select id="selectByRoleId" parameterType="String" resultMap="SysRoleResult">
+		select *
+		from sys_role r
+		where r.status='0' and r.role_id =#{roleId}
+	</select>
+</mapper>

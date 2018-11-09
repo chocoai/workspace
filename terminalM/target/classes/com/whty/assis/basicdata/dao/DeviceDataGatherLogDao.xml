@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.basicdata.dao.DeviceDataGatherLogDao">
+
+	<resultMap type="com.whty.assis.basicdata.model.DeviceDataGatherLog" id="DeviceDataGatherLogResult">
+		<result property="week" column="week" />
+		<result property="useDate" column="use_date" />
+		<result property="subjectName" column="subject_name" />
+		<result property="subjectId" column="subject_id" />
+		<result property="gradeId" column="grade_id" />
+		<result property="gradeName" column="grade_name" />
+		<result property="softwareName" column="software_name" />
+		<result property="softwareVersion" column="software_version" />
+		<result property="corporateName" column="corporate_name" />
+		<result property="useAccount" column="use_account" />
+		<result property="textbookEdition" column="textbook_edition" />
+		<result property="deviceId" column="device_id" />
+		<result property="useTaking" column="use_taking" />
+		<result property="imgAttr" column="img_attr" />
+		<result property="userName" column="user_name" />
+		
+		<result property="imgPaths" column="img_paths" />
+	</resultMap>
+
+	
+	<insert id="save" parameterType="com.whty.assis.basicdata.model.DeviceInfo">
+		insert into t_device_data_gather_log(
+			week
+			<if test="useDate != null and useDate != ''">,use_date</if>
+			<if test="subjectId != null and subjectId != ''">,subject_id</if>
+			<if test="gradeId != null and gradeId != ''">,grade_id</if>
+			<if test="softwareName != null and softwareName != ''">,software_name</if>
+			<if test="softwareVersion != null and softwareVersion != ''">,software_version</if>
+			<if test="corporateName != null and corporateName != ''">,corporate_name</if>
+			<if test="userAccount != null and userAccount != ''">,user_account</if>
+			<if test="userName != null and userName != ''">,user_name</if>
+			<if test="textbookEdition != null and textbookEdition != ''">,textbook_edition</if>
+			<if test="deviceId != null and deviceId != ''">,device_id</if>
+			<if test="createTime != null and createTime != ''">,create_time</if>
+			<if test="updateTime != null and updateTime != ''">,update_time</if>
+			<if test="useTaking != null and useTaking != ''">,use_taking</if>
+			) values (
+			#{week}
+			<if test="useDate != null and useDate != ''">,#{useDate}</if>
+			<if test="subjectId != null and subjectId != ''">,#{subjectId}</if>
+			<if test="gradeId != null and gradeId != ''">,#{gradeId}</if>
+			<if test="softwareName != null and softwareName != ''">,#{softwareName}</if>
+			<if test="softwareVersion != null and softwareVersion != ''">,#{softwareVersion}</if>
+			<if test="corporateName != null and corporateName != ''">,#{corporateName}</if>
+			<if test="userAccount != null and userAccount != ''">,#{userAccount}</if>
+			<if test="userName != null and userName != ''">,#{userName},</if>
+			<if test="textbookEdition != null and textbookEdition != ''">,#{textbookEdition}</if>
+			<if test="deviceId != null and deviceId != ''">,#{deviceId}</if>
+			<if test="createTime != null and createTime != ''">,#{createTime}</if>
+			<if test="updateTime != null and updateTime != ''">,#{updateTime}</if>
+			<if test="useTaking != null and useTaking != ''">,#{useTaking}</if>
+			)
+	</insert>
+	
+	<select id="listByCondition" parameterType="map" resultMap="DeviceDataGatherLogResult">
+		select t2.name as subject_name,t3.name as grade_name,t1.*,(select group_concat(tt2.path) from t_device_data_monitor_map tt1 left join t_device_monitor_log 
+tt2 on tt1.device_monitor_log_id = tt2.id where tt1.device_data_gather_log_id=t1.id) as img_paths from t_device_data_gather_log t1 
+left join t_base_subject t2 on t1.subject_id = t2.id left join t_base_grade t3 on t1.grade_id = t3.id
+		<if test="deviceId != null and deviceId != ''">and t1.device_id = #{deviceId}</if>
+	</select>
+	
+	
+</mapper>

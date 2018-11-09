@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.mall.dao.AppImgDao">
+
+	<resultMap type="com.whty.assis.mall.model.AppImg" id="AppImgResult">
+		<result property="id" column="id" />
+		<result property="appId" column="app_id" />
+		<result property="url" column="url" />
+	</resultMap>
+	
+	
+	<delete id="deleteById" parameterType="int">
+		delete from t_app_img where id=#{_parameter}
+	</delete>
+	
+	<delete id="deleteByAppId" parameterType="int">
+		delete from t_app_img where app_id=#{_parameter}
+	</delete>
+	
+	<insert id="save" parameterType="com.whty.assis.mall.model.AppImg">
+		insert into t_app_img(
+			app_id,
+			url
+			) values (
+				#{appId},
+				#{url}
+			)
+	</insert>
+	
+	<select id="listByCondition" parameterType="map" resultMap="AppImgResult">
+		select * from t_app_img where 1=1
+		<if test="appId != null and appId != '' ">and app_id=#{appId}</if>
+	</select>
+	
+	
+	
+</mapper>

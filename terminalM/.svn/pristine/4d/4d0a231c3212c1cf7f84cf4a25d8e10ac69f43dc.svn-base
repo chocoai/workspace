@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.manage.dao.TaUserDao">
+
+	<!-- 这里的Ta_user是别名，需要在mybatis-config.xml中定义，或者写类全名 -->
+	<resultMap type="Ta_user" id="Ta_userResult">
+		<id property="id" column="id" />
+		<result property="user_id" column="user_id" />
+		<result property="user_name" column="user_name" />
+		<result property="user_account" column="user_account" />
+		<result property="org_id" column="org_id" />
+		<result property="org_name" column="org_name" />
+		<result property="status" column="status" />
+		<result property="login_count" column="login_count" />
+		<result property="use_time" column="use_time" />
+		<result property="last_time" column="last_time" />
+		<result property="create_time" column="create_time" />
+		<result property="update_time" column="update_time" />
+		<result property="gender" column="gender" />
+		<result property="phone_number" column="phone_number" />
+		<result property="email" column="email" />
+		<result property="real_name" column="real_name" />
+		<result property="user_type" column="user_type" />
+		<result property="birthday" column="birthday" />
+		<result property="address" column="address" />
+		<result property="area_code" column="area_code" />
+		<result property="area_name" column="area_name" />
+		<result property="platform_id" column="platform_id" />
+	</resultMap>
+	
+
+	
+	
+	
+
+	
+	<!-- 如果插入的字段可能为空，则要设置jdbcType -->
+	<insert id="addUser" parameterType="Ta_user">
+		insert into ta_user (
+			id,user_id
+			,user_name
+			,user_account
+			,org_id
+			,org_name
+			,status
+			,login_count
+			,use_time
+			,last_time
+			,create_time
+			,update_time
+			<if test="gender != null">,gender</if>
+			,phone_number
+			,email
+			,real_name
+			,user_type
+			,birthday
+			,address
+			,area_code
+			,area_name
+			,platform_id
+		) values (
+			#{id,jdbcType=VARCHAR},#{user_id,jdbcType=VARCHAR}
+			,#{user_name,jdbcType=VARCHAR}
+			,#{user_account,jdbcType=VARCHAR}
+			,#{org_id,jdbcType=VARCHAR}
+			,#{org_name,jdbcType=VARCHAR}
+			,'0'
+			,1
+			,#{use_time,jdbcType=TIMESTAMP}
+			,#{last_time,jdbcType=TIMESTAMP}
+			,#{create_time,jdbcType=TIMESTAMP}
+			,#{update_time,jdbcType=TIMESTAMP}
+			<if test="gender != null">,#{gender,jdbcType=INTEGER}</if>
+			,#{phone_number,jdbcType=VARCHAR}
+			,#{email,jdbcType=VARCHAR}
+			,#{real_name,jdbcType=VARCHAR}
+			,#{user_type,jdbcType=VARCHAR}
+			,#{birthday,jdbcType=VARCHAR}
+			,#{address,jdbcType=VARCHAR}
+			,#{area_code,jdbcType=VARCHAR}
+			,#{area_name,jdbcType=VARCHAR}
+			,#{platform_id,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	
+	
+	
+	<!-- 绑定软件使用许可licence-->
+	<update id="updateUser" parameterType="Ta_user">
+		update ta_user 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="user_name != null">user_name=#{user_name},</if>
+			<if test="user_account != null">user_account=#{user_account},</if>
+			<if test="org_id != null">org_id=#{org_id},</if>
+			<if test="org_name != null">org_name=#{org_name},</if>
+			<if test="status != null">status=#{status},</if>
+			<if test="login_count != null">login_count=login_count+1,</if>
+			<if test="last_time != null">last_time=#{last_time},</if>
+			<if test="update_time != null">update_time=#{update_time},</if>
+			<if test="gender != null">gender=#{gender},</if>
+			<if test="phone_number != null">phone_number=#{phone_number},</if>
+			<if test="email != null">email=#{email},</if>
+			<if test="real_name != null">real_name=#{real_name},</if>
+			<if test="user_type != null">user_type=#{user_type},</if>
+			<if test="birthday != null">birthday=#{birthday},</if>
+			<if test="address != null">address=#{address},</if>
+			<if test="area_code != null">area_code=#{area_code},</if>
+			<if test="area_name != null">area_name=#{area_name},</if>
+		</trim>
+		where user_id=#{user_id}
+		<if test="platform_id != null">and platform_id=#{platform_id}</if>
+	</update>
+	
+	
+	
+	 
+	<!-- 查询客户端登录用户信息 -->
+	<select id="getUserByParam" parameterType="java.util.HashMap" resultType="Ta_user">
+		select id,user_id
+		,user_name
+		,user_account
+		,org_id
+		,org_name
+		,status
+		,login_count
+		,use_time
+		,last_time
+		,create_time
+		,update_time
+		,gender
+		,phone_number
+		,email
+		,real_name
+		,user_type
+		,birthday
+		,address
+		,area_code
+		,area_name
+		,platform_id
+		from ta_user
+		where 1=1
+		<if test="id != null">and id=#{id}</if>
+		<if test="user_id != null">and user_id=#{user_id}</if>
+		<if test="platform_id != null">and platform_id=#{platform_id}</if>
+	</select>
+	
+	
+	
+	
+	<!-- 删除用户 -->
+	<delete id="deleteUser" parameterType="java.util.Map">
+		delete from ta_user where id in <foreach collection="idList" item="id" separator="," open="(" close=")">#{id}</foreach>
+	</delete>
+
+	
+	<!-- 更新用户信息-->
+	<update id="updateUserStatus" parameterType="map">
+		update TA_USER 
+		set status=#{status}
+		where id in <foreach collection="idList" item="id" separator="," open="(" close=")">#{id}</foreach>
+	</update>
+	
+	<!-- 按条件查询用户 -->
+	<select id="queryUser" parameterType="java.util.Map" resultType="Ta_user">
+		select t.id,t.user_id
+		,t.user_name
+		,t.user_account
+		,t.org_id
+		,t.org_name
+		,t.status
+		,t.login_count
+		,t.use_time
+		,t.last_time
+		,t.create_time
+		,t.update_time
+		,t.gender
+		,t.phone_number
+		,t.email
+		,t.real_name
+		,t.user_type
+		,t.birthday
+		,t.address
+		,t.area_code
+		,t.area_name
+		,t.platform_id
+		,(select p.platform_name from ta_base_property p where p.platform_code=t.platform_id and p.property_key = 'platform_url') AS platformName
+		from ta_user t
+		where 1=1
+		<if test="org_name != null and org_name != ''">and t.org_name like CONCAT('%',#{org_name},'%')</if>
+		<if test="user_type != null and user_type != ''">and t.user_type=#{user_type}</if>
+		<if test="status != null and status != ''">and t.status=#{status}</if>
+		<if test="user_account != null and user_account != ''">and t.user_account like CONCAT('%',#{user_account},'%')</if>
+		<if test="platform_id != null and platform_id != ''">and t.platform_id=#{platform_id}</if>
+		<if test="areaid != null and areaid != ''">and t.area_code like CONCAT('%',#{areaid},'%') </if>
+		<if test="orderField != null and orderField != ''">
+			order by ${orderField} <if test="orderState != null and orderState != ''">${orderState}</if>
+		</if>
+	</select>
+	
+	
+	<select id="getUserList" parameterType="java.util.Map" resultType="Ta_user">
+	    select id,user_id
+		,user_name
+		,user_account
+		,org_id
+		,org_name
+		,status
+		,login_count
+		,use_time
+		,last_time
+		,create_time
+		,update_time
+		,gender
+		,phone_number
+		,email
+		,real_name
+		,user_type
+		,birthday
+		,address
+		,area_code
+		,area_name
+		,platform_id
+		from ta_user
+		where 1=1
+		<if test="startTime != null and startTime != ''">and update_time >= date_format(#{startTime},'yyyy-mm-dd')-1</if>
+	</select>
+</mapper>

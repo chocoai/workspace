@@ -1,0 +1,98 @@
+.lookfor {
+   padding: 15px 20px;
+   background: #f5f5f5;
+}
+
+.mar-t10 {
+	margin-top: 10px;
+}
+
+.nobor-radius {
+	border-radius: 0;
+}
+
+.bg-lightgray {
+	background: #f8f8f8;
+}
+
+.nomar-t {
+	margin-top: 0;
+}
+
+.mytable td,.mytable th {
+    text-align: center;
+}
+
+.ysjy-con {
+	text-align: left !important;
+	padding: 30px !important;
+	line-height: 2 !important;
+	font-size: 15px;
+
+}
+
+.font-s20 {
+	font-size: 20px;
+}
+
+.pad-t30 {
+	padding-top: 30px;
+}
+
+.bg-orange {
+	background: #fcf8e3;
+	color: #8a6d3b;
+}
+
+.font-s18 {
+	font-size: 18px;
+}
+
+.mar-b20 {
+	margin-bottom: 20px;
+}
+
+.bg-darkorange {
+	background: #D74C1C;
+}
+
+.color-white {
+	color: #fff;
+}
+
+/*·µ»Ø¶¥²¿ 20170613*/
+.gototop {
+	position: fixed;
+	width: 40px;
+	height: 40px;
+	background: #888;
+	border-radius: 2px;
+	right: 50px;
+	bottom: 80px;
+	text-align: center;
+	line-height: 40px;
+	font-size: 24px;
+	color: #fff;
+	cursor: pointer;
+	display: none;
+}
+
+.gototop:hover {
+    background: #337ab7;
+}
+
+.doctor-advice-bg {
+	background: url(../../img/doctor-advice.png);
+	background-repeat: no-repeat;
+	background-position: center 0;
+	-webkit-background-size: cover;
+	background-size: cover;
+	margin-bottom: 30px;
+	text-align: center;
+	min-height: 400px;
+	position: relative;
+}
+
+.pad-b100 {
+	padding-bottom: 100px;
+}

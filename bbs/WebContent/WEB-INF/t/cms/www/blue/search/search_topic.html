@@ -1,0 +1,238 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>搜索详情结果页</title>
+<link href="${base}/style/main.css" rel="stylesheet" type="text/css">
+<link href="${base}/style/lanmu.css" rel="stylesheet" type="text/css">
+<link href="${resSys}/front.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="${base}/js/jquery.js"></script>
+<script type="text/javascript" src="${base}/js/popwin.js"></script>
+</head>
+
+<body class="body">
+	<!---------顶部----------->
+	<div class="top">
+		<div class="top_center">
+			<div class="top_l">您好，欢迎来到东楚论坛！</div>
+			<div class="top_r">
+				[#if user??]
+				<div class="user_logout" style="margin-top:9px;">
+					<span class="user_logout_name">
+						<a href="${base}/member/index.jhtml">${user.username}</a>
+					</span>
+					<span class="logout">
+						<a href="${base}/logout.jspx?returnUrl=/">退出</a>
+					</span>
+				</div>
+				[#else]
+				<ul>
+					<li><a href="#"><img src="${base}/images/icon_signin_01.png"
+							alt="" /></a></li>
+					<li><a href="#"><img src="${base}/images/icon_signin_02.png"
+							alt="" /></a></li>
+					<li><a href="#"><img src="${base}/images/icon_signin_03.png"
+							alt="" /></a></li>
+				</ul>
+				<div class="dlzc">
+					<span><a href="${base}/login.jspx">登录</a></span>
+					<span class="register"><a href="${base}/register.jspx">注册</a></span>
+				</div>
+				[/#if]
+			</div>
+		</div>
+	</div>
+
+
+	<!-------logo、导航和搜索----------->
+	<div class="nav">
+		<div class="nav_center">
+			<h1>
+				<a href="${base}/"><img src="${base}/images/logo.png" alt="" /></a>
+			</h1>
+			<div class="navsearch">
+				<!----导航---->
+				<nav>
+					<ul>
+						<li><a href="/">东楚网首页</a></li>
+						[#if forum?? && forum.id==9]
+						<li class="now"><a href="${forum.url}">大咖圈</a></li>
+						[#else]
+						<li><a href="${base}/dakaquan/index.jhtml">大咖圈</a></li>
+						[/#if]
+					</ul>
+				</nav>
+
+				<!----搜索---->
+				<div class="search radius6">
+					<form name="searchform" id="searchForm" method="get" action="">
+						<select>
+							<option value="0">帖子</option>
+							<option value="1">用户</option>
+						</select>
+						<input type="hidden" name="searchType" value="" id="searchType"/>
+						<input class="inp_srh" type="text" id="searchContent" name="keywords" placeholder="搜索其实很简单！">
+						<input class="btn_srh" type="button" onclick="toSearch()" value="搜索">
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!------------------中间内容部分------------------------>
+	<div class="big_center">
+		<!------当前位置------>
+		<div class="location">
+			<i></i> &nbsp;<a href="${base}/">东楚论坛</a> &nbsp;> &nbsp;
+			<a href="javascript:void(0);">搜索帖子结果页</a>
+		</div>
+
+		<!-----帖子列表----->
+		<div class="bbs_list">
+			<div class="board_list_hd" style="background-color:#f5f5f5;">
+				<div class="board_list_title">话题</div>
+				<div class="right">
+					<div class="board_list_writer">作者</div>
+					<div class="board_list_count">回复/点击</div>
+					<div class="board_list_reply">最后发表</div>
+				</div>
+			</div>
+			
+			[#if forumId?? && forumId gt 0]
+			<div class="board_list_bd">
+				[@topic_page keyWords=keywords forumId=forumId count='20' tpl='0']
+				[#if tag_pagination.list?size==0]
+				<div style="clear:left;height:8px;"></div>
+				<div style="clear:left;text-align:center">
+					<span style="font-size:14px;">没有搜索到符合条件的帖子</span>
+				</div>
+				<div style="clear:left;height:200px;"></div>
+				[/#if]
+				[#list tag_pagination.list as list]
+				<div [#if list_index %2 ==0 ]class="board_list_one even"[#else]class="board_list_one odd"[/#if]>
+					<div class="board_list_title">
+						<span class="article_icon icon_up"></span>
+						<span class="article_title">
+							<a target="_blank" href="${list.url}">${list.title}</a>
+						</span>
+					</div>
+					<div class="board_list_wrire">
+						<a href="javascript:void(0);">${list.creater.username}</a>
+						<span class="date">${list.createTime}</span>
+					</div>
+					<div class="board_list_count_inner">${list.replyCount}/${list.viewCount}</div>
+					<div class="board_list_reply_inner">
+						<a href="javascript:void(0);">${list.lastReply.username}</a>
+						<span class="date">${list.lastTime}</span>
+					</div>
+				</div>
+				[/#list]
+        		[/@topic_page]
+			</div>
+			[@topic_page keyWords=keywords forumId=forumId count='20' tpl='0']
+				[#if tag_pagination.list?size!=0]
+				<div class="board_tab_down">
+					<div class="board_page">
+						[#include "../tag/forumtopic.html"/]
+					</div>
+				</div>
+				[/#if]
+			[/@topic_page]
+			[#else]
+			<div class="board_list_bd">
+				[@topic_page keyWords=keywords count='20' tpl='0']
+				[#if tag_pagination.list?size==0]
+				<div style="clear:left;height:8px;"></div>
+				<div style="clear:left;text-align:center">
+					<span style="font-size:14px;">没有搜索到符合条件的帖子</span>
+				</div>
+				<div style="clear:left;height:200px;"></div>
+				[/#if]
+				[#list tag_pagination.list as list]
+				<div [#if list_index %2 ==0 ]class="board_list_one even"[#else]class="board_list_one odd"[/#if]>
+					<div class="board_list_title">
+						<span class="article_icon icon_up"></span>
+						<span class="article_title">
+							<a target="_blank" href="${list.url}">${list.title}</a>
+						</span>
+					</div>
+					<div class="board_list_wrire">
+						<a href="javascript:void(0);">${list.creater.username}</a>
+						<span class="date">${list.createTime}</span>
+					</div>
+					<div class="board_list_count_inner">${list.replyCount}/${list.viewCount}</div>
+					<div class="board_list_reply_inner">
+						<a href="javascript:void(0);">${list.lastReply.username}</a>
+						<span class="date">${list.lastTime}</span>
+					</div>
+				</div>
+				[/#list]
+        		[/@topic_page]
+			</div>
+			[@topic_page keyWords=keywords count='20' tpl='0']
+				[#if tag_pagination.list?size!=0]
+				<div class="board_tab_down">
+					<div class="board_page">
+						[#include "../tag/forumtopic.html"/]
+					</div>
+				</div>
+				[/#if]
+			[/@topic_page]
+			[/#if]
+
+		</div>
+
+		<!------页脚------>
+		<div class="footer">
+			<div class="footer_listbox">
+				<div class="footer_list">
+					
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+
+	<!------------------返回顶部-------------------->
+	<div id="before">
+		<a href="http://bbs.hsdcw.com/" target="_blank" title="东楚论坛"
+			class='before'></a>
+	</div>
+	<div id="wechat" class="wechat">
+		<a href="javascript:void(0)"><div class="wechath"></div></a>
+	</div>
+	<a id="moquu_top" href="javascript:void(0)"></a>
+
+
+	<script type="text/javascript" src="${base}/js/jquery-1.8.3.min.js"></script>
+	<script type="text/javascript" src="${base}/js/jquery.select.js"></script>
+
+</body>
+<script type="text/javascript">
+	document.onkeydown=function(event){ 
+		e = event ? event :(window.event ? window.event : null); 
+		if(e.keyCode==13){   //回车
+			//提交查询的form
+			if(document.activeElement.id == 'searchContent'){
+				toSearch();
+			}
+		} 
+	};
+
+	function toSearch(){
+		var searchType = $(".select_option li[class='selected']").html();
+		if(searchType == '帖子'){
+			$("#searchForm").attr("action",'${base}/topic/search.jhtml');
+			$("#searchType").val("0");
+			$("#searchForm").submit();
+			return ;
+		}else if(searchType == '用户'){
+			$("#searchForm").attr("action",'${base}/search/search_user.jspx');
+			$("#searchType").val("1");
+			$("#searchForm").submit();
+			return ;
+		}
+	}
+</script>
+</html>

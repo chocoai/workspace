@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.yhcrt.weihu.cms.entity.assist">
+	<class name="CmsTT" table="jc_tt">
+		<meta attribute="sync-DAO">false</meta>
+		<cache usage="read-write"/>
+		<id name="id" type="integer" column="id"><generator class="identity"/></id>
+		<property name="demand" column="demand" type="java.lang.Integer" not-null="true"/>
+		<property name="title" column="title" type="string" not-null="true" length="150"/>
+		<property name="name" column="name" type="string" not-null="true" length="100"/>
+		<property name="contact" column="contact" type="string" not-null="true" length="20"/>
+		<property name="description" column="description" type="string" not-null="true"/>
+		<property name="createTime" column="create_time" type="timestamp" not-null="true"/>
+		<property name="expTime" column="exp_time" type="timestamp" not-null="false"/>
+		<property name="readCount" column="read_count" type="java.lang.Integer" not-null="false"/>
+		<property name="checked" column="is_checked" type="java.lang.Boolean" not-null="true"/>
+		<property name="recommend" column="is_recommend" type="java.lang.Boolean" not-null="true"/>
+		<property name="isAdmin" column="is_admin" type="java.lang.Integer" not-null="false"/>
+		<many-to-one name="type" column="type_id" class="CmsTType" not-null="true"></many-to-one>
+		<many-to-one name="user" column="user_id" class="com.yhcrt.weihu.core.entity.CmsUser" not-null="false"></many-to-one>
+		<many-to-one name="admin" column="admin_id" class="com.yhcrt.weihu.core.entity.CmsUser" not-null="false"></many-to-one>
+	    <many-to-one name="site" column="site_id" class="com.yhcrt.weihu.core.entity.CmsSite" not-null="true"></many-to-one>
+	    <list name="pictures" table="jc_tt_pic">
+			<cache usage="read-write"/>
+			<key column="tt_id"/>
+			<list-index column="priority"/>
+			<composite-element class="TTPicture">
+				<property name="imgPath" column="img_path" type="string" length="100" not-null="true"/>
+				<property name="description" column="description" type="string" length="255" not-null="false"/>
+			</composite-element>
+		</list>
+	</class>
+</hibernate-mapping>

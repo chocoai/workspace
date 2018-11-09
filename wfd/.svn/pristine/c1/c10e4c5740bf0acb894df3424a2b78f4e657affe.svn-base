@@ -1,0 +1,210 @@
+<#assign base=request.contextPath />
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+	<title>一体机管控系统</title>
+	<link rel="stylesheet" type="text/css" href="http://zhkt.huijiaoyun.com/hdcourse/css/adm_login.css">
+	<script type="text/javascript" src="http://zhkt.huijiaoyun.com/hdcourse/js/action.js"></script>
+	<script type="text/javascript">
+	function Userlogin(){
+		if($("#account").val()=='请输入您的用户名'){
+			 var str ='<em><img src="images/login_error.jpg" /></em><i>请您输入账号后再登录。</i>';
+			 $("#date").html(str);
+			 return false;
+		}
+		if($("#account").val()!='请输入您的用户名'&&$("#password").val()==''){
+			 var str ='<em><img src="images/login_error.jpg" /></em><i>请您输入密码后再登录。</i>';
+			 $("#date").html(str);
+			 return false;
+		}
+		if($("#account").val()!='请输入您的用户名'&&$("#password").val()!=''){
+			$(".btn").val('登录中...');
+			$(".btn").attr("disabled","disabled");
+		$.ajax({
+			   type: "POST",
+			   url: "${base}/user/login",
+			   data: {"account":$("#account").val(),"password":$("#password").val()},
+			   async: true,
+			   dataType:'json',
+			   success: function(msg){
+				   //console.log(msg);
+				   if(msg.result =='000012'){
+					   var str ='<em><img src="http://zhkt.huijiaoyun.com/hdcourse/images/login_error.jpg" /></em><i>您输入的密码不正确，请确认后重新输入。</i>';
+					   $("#date").html(str);
+					   $(".btn").val('登录');
+					   $(".btn").removeAttr("disabled");
+				   }else if(msg.result =='301001'){
+					   var str ='<em><img src="http://zhkt.huijiaoyun.com/hdcourse/images/login_error.jpg" /></em><i>您输入的账号不存在，请确认后重新输入。</i>';
+					   $("#date").html(str);
+					   $(".btn").val('登录');
+					   $(".btn").removeAttr("disabled");
+				   }
+				   else if(msg.code=='000401'){
+				   		var str ='<em><img src="http://zhkt.huijiaoyun.com/hdcourse/images/login_error.jpg" /></em><i>用户信息查询失败，请稍候在登录，或联系管理员。</i>';
+					   	$("#date").html(str);
+					   	$(".btn").val('登录');
+					   	$(".btn").removeAttr("disabled");
+				   }
+				   else{
+					   window.location="${base}/page/school/index.html";
+				   }
+			   }
+		});
+		}
+	}
+
+function clickEnt(e){
+	var keynum;
+
+	if(window.event) // IE
+	  {
+	  keynum = e.keyCode;
+	  if(keynum==13){
+		  Userlogin();
+		  }
+	  }
+	else if(e.which) // Netscape/Firefox/Opera
+	  {
+	  keynum = e.which;
+	  if(keynum==13){
+		  Userlogin();
+		  }
+	  }
+
+
+}
+</script>
+</head>
+<body>
+	<div class="login_wrapper">
+		<p class="meteor meteor-1"></p>
+        <p class="meteor meteor-2"></p>
+        <p class="meteor meteor-3"></p>
+        <p class="meteor meteor-4"></p>
+        <p class="meteor meteor-5"></p>
+        <p class="meteor meteor-6"></p>
+        <p class="meteor meteor-7"></p>
+        <p class="meteor meteor-8"></p>
+		<div class="main_w">
+			<div class="showArea">
+				<em class="light l04 animate"></em>
+				<em class="light l03 animate"></em>
+				<em class="light l02 animate"></em>
+				<em class="light l01 animate"></em>
+				<ul class="stars" id="stars">
+					<li><span class="star s01" style="left: 109px;top: 403px;"></span></li>
+					<li><span class="star s02" style="left: 150px;top: 100px;"></span></li>
+					<li><span class="star s03 animate s03_1" style="left: 250px;top: 0px;"></span></li>
+					<li><span class="star s03 animate s03_2" style="left: 450px;top: 210px;"></span></li>
+					<li><span class="star s03 animate s03_3" style="left: 180px;top: 400px;"></span></li>
+					<li><span class="star s01" style="left: 50px;top: 66px;"></span></li>
+					<li><span class="star s02" style="left: 367px;top: 140px;"></span></li>
+				</ul>
+				<div class="line animate">
+					<span class="item01"><img src="http://zhkt.huijiaoyun.com/hdcourse/images/login/adm_logo.png"></span>
+					<span class="item02"><img src="http://zhkt.huijiaoyun.com/hdcourse/images/login/item02.png"></span>
+					<span class="item03"><img src="http://zhkt.huijiaoyun.com/hdcourse/images/login/item03.png"></span>
+					<span class="item04"><img src="http://zhkt.huijiaoyun.com/hdcourse/images/login/item04.png"></span>
+					<span class="item05"><img src="http://zhkt.huijiaoyun.com/hdcourse/images/login/item05.png"></span>
+					<span class="item06"><img src="http://zhkt.huijiaoyun.com/hdcourse/images/login/item06.png"></span>
+					<span class="item07"><img src="http://zhkt.huijiaoyun.com/hdcourse/images/login/item07.png"></span>
+				</div>
+				<div class="center animate"></div>
+			</div>
+			<div class="loginArea animate">
+				<a class="logo"><img src="http://zhkt.huijiaoyun.com/hdcourse/images/login/adm_logo.png">一体机管控系统</a>
+				<span class="loginBoxShadow animate"></span>
+				<div class="loginBox">
+					<div class="loginForm">
+						<form>
+							<p class="guideWords">请登录</p>
+							<span class="txt" id="date"></span>
+							<div class="inpWrap">
+								<em class="icon_inp icon01"></em>
+								<input type="text" class="inp loginInp nam" placeholder="请输入您的用户名" id="account" name="account"/>
+							</div>
+							<div class="inpWrap">
+								<em class="icon_inp icon02"></em>
+								<input type="password" class="inp loginInp psw" placeholder="请输入您的密码" id="password" name="password" onkeydown="clickEnt(event)"/>
+							</div>
+							<a class="loginBtn" href="JavaScript:void(0)" onclick="Userlogin()">登录</a>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+		<ul class="cloudgroup" id="scene">
+			<li class="layer" data-depth="0.50">
+				<span class="cloud01"></span>
+			</li>
+			<li class="layer" data-depth="0.90">
+				<span class="cloud02"></span>
+			</li>
+			<li class="layer" data-depth="0.10">
+				<span class="cloud03"></span>
+			</li>
+		</ul>
+		<!--footer begin-->
+		<div class="adm_footer">
+			<div class="info clearfix">
+				<span class="fl">技术运营支持：武汉天喻信息产业股份有限公司　　客户服务热线：4001801818转1<br/>Copyright&copy; 2012-2016 Tianyu. All rights reserved 鄂ICP备11012000号</span>
+				<span class="fr linkTo"></span>
+			</div>
+		</div>
+		<!--footer end-->
+	</div>
+<script type="text/javascript" src="http://zhkt.huijiaoyun.com/hdcourse/js/jquery.js"></script>
+<script type="text/javascript">
+$(function(){
+	//上下居中begin
+	var _prefix = (function(temp){
+		var aPrefix = ['webkit','Moz','o','ms'],
+			props = '';
+		for(var i in aPrefix){
+			props = aPrefix[i] + 'Transform';
+			if(temp.style[props] !== undefined){
+				return '-' + aPrefix[i].toLowerCase() + '-';
+			}
+		}
+		return false;
+	})(document.documentElement);
+	function v_m(pWrap,obj){
+		var obj_h = $(obj).height();
+		var footer_h = $('.adm_footer').height();
+		$(pWrap).css({'position':'relative'});
+		$(obj).css({'marginTop':-(obj_h+footer_h)/2,'position':'absolute','top':'50%'});
+
+	};
+	if(!_prefix){v_m('.main_w','.loginArea');};
+	//上下居中end
+
+	var stars_n = $('#stars li').length;
+	var starsGroup = [];
+	var starsWrap_w = $('#stars').width();
+	var starsWrap_h = $('#stars').height();
+	for(var n=0;n<stars_n;n++){
+		var rangeX = Math.random()*starsWrap_w;
+		var rangeY = Math.random()*starsWrap_h;
+		var pos = {
+			'left':rangeX,
+			'top':rangeY
+		};
+		starsGroup.push(pos);
+	};
+
+	$('#stars .star').each(function(eq){
+		$(this).css({'left':starsGroup[eq].left,'top':starsGroup[eq].top});
+	});
+
+	$('.loginForm .inpWrap input').on('focus',function(){
+		$(this).prev('.icon_inp').addClass('focus');
+	});
+	$('.loginForm .inpWrap input').on('blur',function(){
+		$(this).prev('.icon_inp').removeClass('focus');
+	});
+
+});
+</script>
+</body>
+</html>

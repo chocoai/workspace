@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.wfd.page.dao.MessageMapper">
+  <resultMap id="BaseResultMap" type="com.whty.wfd.page.vo.Message">
+    <result column="total"  property="total" />
+    <result column="commentTotal"  property="commentTotal" />
+    <result column="postLikeTotal"  property="postLikeTotal" />
+    <result column="commentLikeTotal"  property="commentLikeTotal" />
+    <result column="replyTotal"  property="replyTotal" />
+    <result column="sendPostNum" property="sendPostNum" />
+    <result column="postReceiveNum" property="postReceiveNum" />
+    <result column="commentReceiveNum" property="commentReceiveNum" />
+    <result column="postLikeNum" property="postLikeNum" />
+    <result column="commentLikeNum" property="commentLikeNum" />
+  </resultMap>
+
+  <select id="getNoReadMessage" parameterType="java.lang.Integer" resultType="com.whty.wfd.page.vo.Message">
+    select * from
+    (select count(*) replyTotal from t_post_message_alt tpma where tpma.is_read =0 and tpma.alt_user_id =#{userId})a ,
+    (select count(*) commentLikeTotal from t_post_message_like tpml left join t_post_message tpm on tpm.id = tpml.post_message_id
+        left join t_plate_post tpp on tpp.id = tpm.plate_post_id where tpml.is_read =0 and tpm.user_id =#{userId})b,
+    (select count(*) postLikeTotal from t_post_like tpl left join t_plate_post tpp on tpp.id = tpl.plate_post_id where tpl.is_read =0 and tpp.creator =#{userId})c,
+    (select count(*) commentTotal from t_post_message tpm left JOIN t_plate_post tpp on tpp.id = tpm.plate_post_id where tpm.is_read =0 and tpp.creator =#{userId})d
+  </select>
+
+  <select id="getMessage" parameterType="java.lang.Integer" resultType="com.whty.wfd.page.vo.Message">
+    select * from
+    (select count(*) sendPostNum from t_plate_post tpp where tpp.creator = #{userId})a,
+    (select count(*) postReceiveNum from t_post_message tpm left join t_plate_post tpp on tpp.id = tpm.plate_post_id where tpp.creator = #{userId})b,
+    (select count(*) commentReceiveNum from t_post_message_reply tpmr where tpmr.sender = #{userId})c,
+    (select count(*) postLikeNum from t_post_like tpl left join t_plate_post tpp on tpp.id = tpl.plate_post_id where tpp.creator =#{userId})d,
+    (select count(*) commentLikeNum from t_post_message_like tpml left join t_post_message tpm on tpm.id = tpml.post_message_id left join t_plate_post tpp on tpp.id = tpm.plate_post_id where tpp.creator =#{userId})e
+  </select>
+
+</mapper>

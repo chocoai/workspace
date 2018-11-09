@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8" ?>  
+<!DOCTYPE tiles-definitions PUBLIC
+     "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+     "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+	<!-- 网站默认布局 -->
+	<definition name="baseLayout" template="/WEB-INF/pages/framework/baseLayout.jsp">
+		<put-attribute name="header"
+			value="/WEB-INF/pages/framework/header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/pages/framework/body.jsp" />
+		<put-attribute name="footer"
+			value="/WEB-INF/pages/framework/footer.jsp" />
+	</definition>
+	
+	<definition name="login" extends="baseLayout">
+		<put-attribute name="header"
+			value="" />
+		<put-attribute name="body" value="/login.jsp" />
+		<put-attribute name="footer"
+			value="" />
+	</definition>
+
+	<!-- demo -->
+	<definition name="demo.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/demo/list.jsp" />
+	</definition>
+
+	<!-- 用户管理页面 -->
+	<definition name="managerUser.adminList" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/managerUser/adminList.jsp" />
+	</definition>	
+
+	<!-- 学校管理页面 -->
+	<definition name="school.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/school/list.jsp" />
+	</definition>	
+	
+	<!-- 教师管理页面 -->
+	<definition name="teacher.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/teacher/list.jsp" />
+	</definition>	
+	
+	<!-- 学生管理页面 -->
+	<definition name="student.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/student/list.jsp" />
+	</definition>	
+
+	<!-- 基础数据页面 -->
+	<definition name="dict.typeList" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/dict/typeList.jsp" />
+	</definition>
+	
+	<definition name="dict.dataList" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/dict/dataList.jsp" />
+	</definition>
+
+
+	<definition name="terminalDeviceType.list" extends="baseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/pages/terminalDeviceType/list.jsp" />
+	</definition>
+
+	<definition name="schoolLocation.list" extends="baseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/pages/schoolLocation/list.jsp" />
+	</definition>
+
+	<definition name="brand.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/brand/list.jsp" />
+	</definition>
+
+	<definition name="supplierInfo.list" extends="baseLayout">
+		<put-attribute name="body"
+			value="/WEB-INF/pages/supplierInfo/list.jsp" />
+	</definition>
+
+	<definition name="order.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/order/list.jsp" />
+	</definition>
+
+	<definition name="order.add" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/order/add.jsp" />
+	</definition>
+
+	<definition name="order.schoolPage" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/order/schoolPage.jsp" />
+	</definition>
+
+	<definition name="order.setBuildSchoolPage" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/order/setBuildSchoolPage.jsp" />
+	</definition>
+
+	<!-- 设备管控页面 -->
+	<definition name="aio.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/aio/list.jsp" />
+	</definition>
+
+	<definition name="aio.detail" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/aio/deviceDetail.jsp" />
+	</definition>
+
+	<definition name="ebookpackage.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/ebookpackage/list.jsp" />
+	</definition>
+
+	<definition name="ebookpackage.detail" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/ebookpackage/detail.jsp" />
+	</definition>
+
+
+	<definition name="appInfo.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/appInfo/list.jsp" />
+	</definition>
+
+	<definition name="appPush.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/appPush/list.jsp" />
+	</definition>
+
+	<definition name="appPush.addPage" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/appPush/addPage.jsp" />
+	</definition>
+
+	<definition name="urlBlackListRule.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/urlBlackListRule/list.jsp" />
+	</definition>
+	
+	<definition name="useTimeRule.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/useTimeRule/list.jsp" />
+	</definition>
+
+	<definition name="browserWhitelistRule.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/browserWhitelistRule/list.jsp" />
+	</definition>
+	
+	<definition name="browserTagRule.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/browserTagRule/list.jsp" />
+	</definition>
+	
+	<definition name="schoolClassRule.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/schoolClassRule/list.jsp" />
+	</definition>
+	
+	<definition name="schoolClassRule.classRuleDetail" template="/WEB-INF/pages/schoolClassRule/classRuleDetail.jsp">
+		
+	</definition>
+	
+	
+	<definition name="addSchoolClassUsetimeRule.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/schoolClassRule/addSchoolClassUsetimeRule.jsp" />
+	</definition>
+	
+	<definition name="addSchoolClassUrlBlacklistRule.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/schoolClassRule/addSchoolClassUrlBlacklistRule.jsp" />
+	</definition>
+	
+	<definition name="addSchoolClassBrowserWhitelistRule.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/schoolClassRule/addSchoolClassBrowserWhitelistRule.jsp" />
+	</definition>
+	
+	<definition name="addSchoolClassBrowserTagRule.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/schoolClassRule/addSchoolClassBrowserTagRule.jsp" />
+	</definition>
+	
+	<definition name="addSchoolClassAppWhitelistRule.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/schoolClassRule/addSchoolClassAppWhitelistRule.jsp" />
+	</definition>
+	
+	<definition name="addSchoolClassAppNetBlacklist.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/schoolClassRule/addSchoolClassAppNetBlacklist.jsp" />
+	</definition>
+
+	<definition name="appWhitelistRule.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/appWhitelistRule/list.jsp" />
+	</definition>
+	
+	<definition name="index" extends="baseLayout">
+		<put-attribute name="body" value="/index.jsp" />
+	</definition>
+	
+	<definition name="modular.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/modular/list.jsp" />
+	</definition>
+	
+	<definition name="sysrole.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/sysrole/list.jsp" />
+	</definition>
+	
+	<definition name="appNetBlacklist.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/appNetBlacklist/list.jsp" />
+	</definition>
+
+	<definition name="count.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/count/list.jsp" />
+	</definition>
+
+	<definition name="teacherCount.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/count/teacherCount.jsp" />
+	</definition>
+
+	<definition name="deviceCount.list" extends="baseLayout">
+		<put-attribute name="body" value="/WEB-INF/pages/count/deviceCount.jsp" />
+	</definition>
+	
+</tiles-definitions>  

@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.demo.dao.EbpSoftLicenceDao">
+
+	
+	<!-- 这里的EbpSoftLicence是别名，需要在mybatis-config.xml中定义，或者写类全名 -->
+	<resultMap type="com.whty.assis.demo.model.EbpSoftLicence" id="EbpSoftLicenceResult">
+		<id property="id" column="id" />
+		<result property="licence_code" column="licence_code" />
+		<result property="status" column="status" />
+		<result property="create_time" column="create_time" />
+		<result property="start_time" column="start_time" />
+		<result property="end_time" column="end_time" />
+		<result property="max_use_count" column="max_use_count" />
+		<result property="org_id" column="org_id" />
+		<result property="mac_card_info" column="mac_card_info" />
+		<result property="cpu_info" column="cpu_info" />
+		<result property="harddisk_info" column="harddisk_info" />
+		<result property="bind_time" column="bind_time" />
+		<result property="update_time" column="update_time" />
+		
+		<result property="ebp_auth" column="ebp_auth" />
+		<result property="sdp_auth" column="sdp_auth" />
+		<result property="am_auth" column="am_auth" />
+		<result property="batch_number" column="batch_number" />
+		
+		<result property="contract_number" column="contract_number" />
+		<result property="school_name" column="school_name" />
+		<result property="creator" column="creator" />
+		<result property="last_editor" column="last_editor" />
+		
+	</resultMap>
+	
+	
+	
+	
+	<!-- 如果插入的字段可能为空，则要设置jdbcType -->
+	<insert id="save" parameterType="com.whty.assis.demo.model.EbpSoftLicence">
+		insert into EBP_SOFT_LICENCE (
+			<if test="id != null">id,</if>
+			<if test="licence_code != null">licence_code,</if>
+			<if test="create_time != null">create_time,</if>
+			<if test="start_time != null">start_time,</if>
+			<if test="end_time != null">end_time,</if>
+			<if test="org_id != null">org_id,</if>
+			<if test="max_use_count != null">max_use_count,</if>
+			<if test="update_time != null">update_time,</if>
+			<if test="ebp_auth != null">ebp_auth,</if>
+			<if test="sdp_auth != null">sdp_auth,</if>
+			<if test="am_auth != null">am_auth,</if>
+			<if test="batch_number != null">batch_number,</if>
+			<if test="limit_day != null">limit_day,</if>
+			<if test="creator != null">creator</if>
+		) values (
+			<if test="id != null">#{id,jdbcType=VARCHAR},</if>
+			<if test="licence_code != null">#{licence_code,jdbcType=VARCHAR},</if>
+			<if test="create_time != null">#{create_time,jdbcType=TIMESTAMP},</if>
+			<if test="start_time != null">#{start_time,jdbcType=TIMESTAMP},</if>
+			<if test="end_time != null">#{end_time,jdbcType=TIMESTAMP},</if>
+			<if test="org_id != null">#{org_id,jdbcType=VARCHAR},</if>
+			<if test="max_use_count != null">#{max_use_count},</if>
+			<if test="update_time != null">#{update_time},</if>
+			<if test="ebp_auth != null">#{ebp_auth},</if>
+			<if test="sdp_auth != null">#{sdp_auth},</if>
+			<if test="am_auth != null">#{am_auth},</if>
+			<if test="batch_number != null">#{batch_number},</if>
+			<if test="limit_day != null">#{limit_day},</if>
+			<if test="creator != null">#{creator}</if>
+		)
+	</insert>
+	
+	<!-- 更新软件授权码-->
+	<update id="update" parameterType="com.whty.assis.demo.model.EbpSoftLicence">
+		update EBP_SOFT_LICENCE 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="licence_code != null and licence_code != ''">licence_code=#{licence_code},</if>
+			<if test="status != null">status=#{status},</if>
+			<if test="start_time != null">start_time=#{start_time},</if>
+			<if test="end_time != null">end_time=#{end_time},</if>
+			<if test="max_use_count != null">max_use_count=#{max_use_count},</if>
+			<if test="org_id != null and org_id != ''">org_id=#{org_id},</if>
+			<if test="mac_card_info != null and mac_card_info != ''">mac_card_info=#{mac_card_info},</if>
+			<if test="cpu_info != null and cpu_info != ''">cpu_info=#{cpu_info},</if>
+			<if test="harddisk_info != null and harddisk_info != ''">harddisk_info=#{harddisk_info},</if>
+			<if test="bind_time != null">bind_time=#{bind_time},</if>
+			<if test="update_time != null">update_time=#{update_time},</if>
+			
+			<if test="ebp_auth != null">ebp_auth=#{ebp_auth},</if>
+			<if test="sdp_auth != null">sdp_auth=#{sdp_auth},</if>
+			<if test="am_auth != null">am_auth=#{am_auth},</if>
+			<if test="last_editor != null">last_editor=#{last_editor}</if>
+		</trim>
+		where 1=1 
+		<if test="licence_code != null and licence_code != ''">and licence_code=#{licence_code}</if>
+		<if test="id != null and id != ''">and id=#{id}</if>
+	</update>
+	
+	
+	<update id="cancelLicenceCode" parameterType="java.util.List">
+		update  EBP_SOFT_LICENCE set status = 3
+		<where>
+			<foreach collection="list" index="index" item="item" open="(" separator="or" close=")">     
+			  id=#{item}
+			</foreach>
+		</where>
+	</update>
+	
+	<!-- 查询授权码信息 -->
+	<select id="loadByLicence" parameterType="java.util.HashMap" resultType="com.whty.assis.demo.model.EbpSoftLicence">
+		select t.id,t.licence_code,t.status,t.create_time,t.start_time,t.end_time,t.ebp_auth,t.sdp_auth,t.am_auth,
+			t.limit_day,t.max_use_count,t.org_id,t.mac_card_info,t.cpu_info,t.harddisk_info,t.bind_time,t.update_time,t.creator,t.last_editor
+		from EBP_SOFT_LICENCE t
+		where t.licence_code=#{licence_code}
+	</select>
+	<!-- 查询客户端激活码授权管理列表 -->
+	<select id="querySoftLicence" parameterType="map" resultMap="EbpSoftLicenceResult">
+		select t1.id,t1.licence_code,t1.status,t1.create_time,t1.start_time,t1.end_time,t1.limit_day,t1.creator,t1.last_editor,
+			t1.max_use_count,t1.org_id,t1.mac_card_info,t1.cpu_info,t1.harddisk_info,t1.bind_time,t1.update_time,t1.ebp_auth,
+      t1.sdp_auth,t1.am_auth,t1.batch_number,t2.contract_number,t2.school_name
+		 from EBP_SOFT_LICENCE t1 left join EBP_LICENCE_ORG t2 on t1.org_id = t2.id
+		 where 1=1 
+		<if test="id != null and id != ''">and t1.id=#{id}</if>
+		<if test="orgId != null and orgId != ''">and t1.org_id=#{orgId}</if>
+		<if test="licence_code != null and licence_code != ''">and t1.licence_code like CONCAT('%',#{licence_code},'%')</if>
+		<if test="status != null and status != ''">and t1.status=#{status}</if>
+		<if test="startTime != null and startTime != ''">and date_format(t1.create_time,'yyyy-mm-dd')>=#{startTime}</if>
+		<if test="endTime != null and endTime != ''"><![CDATA[and date_format(t1.create_time,'yyyy-mm-dd')<=#{endTime}]]></if>
+		<if test="batch_number != null and batch_number != ''">and t1.batch_number like CONCAT('%',#{batch_number},'%')</if>
+		<if test="contract_number != null and contract_number != ''">and t2.contract_number=#{contract_number}</if>
+		
+		<if test="idList != null">
+			and t1.id in <foreach collection="idList" open="(" close=")" separator="," item="item">#{item}</foreach>
+		</if>
+
+		order by t1.create_time desc
+	</select>
+	<select id="loadById" parameterType="string" resultMap="EbpSoftLicenceResult">
+		select id,licence_code,status,create_time,start_time,end_time,limit_day,creator,last_editor,
+			max_use_count,org_id,mac_card_info,cpu_info,harddisk_info,bind_time,update_time,ebp_auth,sdp_auth,am_auth,batch_number
+		 from EBP_SOFT_LICENCE where id = #{id}
+	</select>
+	<!-- 查询授权码数 -->
+	<select id="licenceCount" parameterType="string" resultType="Integer">
+		select count(id) from EBP_SOFT_LICENCE where licence_code = #{licence_code}
+	</select>
+	
+	<!-- 查询授权码信息 -->
+	<select id="queryByMch" parameterType="java.util.HashMap" resultType="com.whty.assis.demo.model.EbpSoftLicence">
+		select t.id,t.licence_code,t.status,t.create_time,t.start_time,t.ebp_auth,t.sdp_auth,am_auth,batch_number,limit_day,t.creator,t.last_editor,
+			t.end_time,t.max_use_count,t.org_id,t.mac_card_info,t.cpu_info,t.harddisk_info,t.bind_time,t.update_time
+		from EBP_SOFT_LICENCE t
+		where t.status = '1'
+		<if test="mac_card_info != null ">and 
+				<foreach collection="mac_card_info" index="index" item="item" open="(" separator="or" close=")">  
+					t.mac_card_info like CONCAT(CONCAT('%',#{item},'%'))
+				</foreach>
+		</if>
+		<if test="cpu_info != null">and 
+				<foreach collection="cpu_info" index="index" item="item" open="(" separator="or" close=")">  
+					t.cpu_info like CONCAT(CONCAT('%',#{item},'%'))
+				</foreach>
+		</if>
+		<if test="harddisk_info != null">and 
+				<foreach collection="harddisk_info" index="index" item="item" open="(" separator="or" close=")">  
+					t.harddisk_info like CONCAT(CONCAT('%',#{item},'%'))
+				</foreach>
+		</if>
+		order by t.end_time desc,t.create_time desc
+	</select>
+	
+</mapper>

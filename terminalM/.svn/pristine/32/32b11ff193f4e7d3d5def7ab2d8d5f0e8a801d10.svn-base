@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.manage.dao.PlatformInfoDao">
+	
+	<resultMap type="com.whty.assis.manage.model.PlatformInfo" id="PlatformInfoResult">
+		<result column="platform_code" property="platformCode" jdbcType="VARCHAR" />
+		<result column="platform_name" property="platformName" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+	</resultMap>
+	
+	
+	
+	<select id="listByCondition" parameterType="map" resultMap="PlatformInfoResult">
+		select * from t_platform_info where 1=1
+		<if test="platformCode != null"> and platform_code = #{platformCode}</if>
+		<if test="platformName != null"> and platform_name = #{platformName}</if>
+	</select>
+	
+	<insert id="save" parameterType="com.whty.assis.manage.model.PlatformInfo">
+		insert into t_platform_info (platform_code,platform_name,create_time,update_time) 
+		values(#{platformCode,jdbcType=VARCHAR},#{platformName,jdbcType=VARCHAR},#{createTime},#{updateTime})
+	</insert>
+	
+	<update id="update" parameterType="com.whty.assis.manage.model.PlatformInfo">
+		update t_platform_info 
+		<trim prefix="set" suffixOverrides=",">
+			<if test="platformName != null">platform_name=#{platformName},</if>
+		</trim>
+		where platform_code=#{platformCode}
+	</update>
+	
+	<delete id="deleteByPlatformCode" parameterType="string">
+		delete from t_platform_info where platform_code = #{_parameter}
+	</delete>
+	
+
+</mapper>

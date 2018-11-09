@@ -1,0 +1,160 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>孝康通</title>
+    <!-- Bootstrap -->
+    <link th:href="@{/pages/mall/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- FontAwesome 4.7.0字体 -->
+    <link th:href="@{/pages/mall/css/font-awesome.min.css}" rel="stylesheet">
+    <!-- 自定义css -->
+    <link th:href="@{/pages/mall/css/mymall.css}" rel="stylesheet">
+  </head>
+  <body style="background: #f6f6f6;">
+   	<input th:if="${a} !=null" id="a" type="hidden" th:value="${a}" />
+  	<input th:if="${u} !=null" id="u" type="hidden" th:value="${u}" />
+    <!-- 导航 开始 -->
+    <nav class="navbar navbar-default navbar-mall-other">
+      <div class="container-fluid">
+        <div class="navbar-header">
+	          <a th:if="${a} ==null" href="javascript:history.back();" class="othertop-left"><i class="fa fa-angle-left icon-back"></i></a>
+	          <div class="col-xs-9 col-xs-offset-1 nopad-r">
+	            <input type="text" class="form-control input-search" placeholder="搜索..." id="searchText" autofocus oninput="search()">
+	          </div>
+        </div>
+      </div>
+    </nav>
+    <!-- 导航 结束 -->
+
+    <!-- 搜索指定内容 开始 -->
+    <div class="finger" id="fingerId">
+      <p class="finger-pra">搜索指定内容</p>
+      <div class="finger-content">
+        <a th:if="${a} !=null" th:href="@{'/h5/search/goods?a=1&u='+${u}}">商品</a>
+        <a th:if="${a} ==null" th:href="@{/h5/search/goods}">商品</a>
+        <a th:if="${a} !=null" th:href="@{'/h5/search/service?a=1&u='+${u}}">服务项目</a>
+        <a th:if="${a} ==null" th:href="@{/h5/search/service}">服务项目</a>
+      </div>
+    </div>
+    <!-- 搜索指定内容 结束 -->
+	<div  class="search-content" id="searchList"></div>
+	
+    <div class="no none" id="noorderId">
+      <p><img th:src="@{/pages/mall/images/noorders.png}"><br>暂无数据！</p>
+    </div>
+    <!-- 搜索列表 结束 -->
+    <!-- 返回顶部 开始 -->
+    <div class="gototop" style="display: none;">
+      <a href="javascript:void(0)"><i class="glyphicon glyphicon-menu-up"></i></a>
+    </div>
+    <!-- 返回顶部 结束 -->
+
+    <script th:src="@{/pages/mall/js/jquery-1.9.1.min.js}"></script>
+    <script th:src="@{/pages/mall/js/bootstrap.min.js}"></script>
+    <script type="text/javascript">
+    var a=$("#a").val();
+    var u=$("#u").val();
+ 	var pathName=window.document.location.pathname;
+    var projectName=pathName.substring(0,pathName.substr(1).indexOf('/')+1);
+      // 返回顶部
+      $(window).scroll(function(){
+        if($(window).scrollTop()>=20){
+           $(".gototop").fadeIn(300);
+        }else{
+           $(".gototop").fadeOut(300);
+        }
+      })
+      $(".gototop a").click(function(){
+        $("html,body").animate({scrollTop:"0px"},300)
+      })
+      //搜索
+      function search(){
+    	  var searchText = $("#searchText").val();
+    	  if(!searchText||!searchText.trim()){
+    		  $("#searchList").html("");
+    		  $("#fingerId").show();
+			  $("#noorderId").hide();
+    		  return;
+    	  }
+    	  var url=projectName+"/h5/search";
+          if(a==1){
+        	url+="?a=1&u="+u;
+          }
+    	  $.ajax({
+				url : url,
+				data :{
+					searchText:searchText.trim()
+		        },
+		        type:'post',
+		        contentType:'application/x-www-form-urlencoded; charset=UTF-8',
+		        dataType:"json",
+				async : false,
+				traditional : true,
+				cache : true,
+				success : function(data) {
+					
+					 var json = eval(data);
+					 var listg = new Array();
+					 var lists = new Array();
+					 
+ 					 listg = json.listg;
+					 lists = json.lists;
+					 
+					 var searchHtml="" ;
+					 if(listg.length>0){
+						 searchHtml+="<div class='search-cell'><div class='search-cell-hd'>商品</div><div class='search-cell-bd'><ul>";
+						 for(var i =0;i<listg.length;i++){
+							 if(a==null){
+				         		searchHtml+="<li><a href='"+projectName+"/h5/goods/detail/"+listg[i].goodsId+"'>";
+				         	 }else{
+				         		searchHtml+="<li><a href='"+projectName+"/h5/goods/detail/"+listg[i].goodsId+"?a=1&u="+u+"'>";
+				         	 }
+							 if(listg[i].titleImg&&listg[i].titleImg!=""){
+								 searchHtml+="<img src='"+listg[i].titleImg+"' class='img-search' />";
+					         }else{
+					        	 searchHtml+="<img src='"+projectName+"/pages/mall/images/good01.png' class='img-search' />";
+					         }
+				          	searchHtml+="<div class='txt-search'><p class='title-search'>"+listg[i].goodsName+"</p>";
+				          	var goodsIntro = listg[i].goodsIntro;
+						 	if(goodsIntro!=null&&goodsIntro!=""){
+						 		if(goodsIntro.length>15){
+						 			goodsIntro=goodsIntro.substring(0,15)+"..";
+						 		}
+						 	}
+				          	searchHtml+="<p class='pra-search'>"+goodsIntro+"</p></div></a></li>";
+						 }
+						 searchHtml+="</ul></div></div>";
+					 }
+ 					 if(lists&&lists.length>0){
+						 searchHtml+="<div class='search-cell'><div class='search-cell-hd'>服务</div><div class='search-cell-bd'><ul>";
+						 for(var i =0;i<lists.length;i++){
+						 	 if(a==null){
+				         		searchHtml+="<li><a href='"+projectName+"/h5/service/detail/"+lists[i].serviceId+"'>";
+				         	 }else{
+				         		searchHtml+="<li><a href='"+projectName+"/h5/service/detail/"+lists[i].serviceId+"?a=1&u="+u+"'>";
+				         	 }
+							if(lists[i].titleImg&&lists[i].titleImg!=""){
+								 searchHtml+="<img src='"+lists[i].titleImg+"' class='img-search' />";
+					        }else{
+					        	 searchHtml+="<img src='"+projectName+"/pages/mall/images/service01.jpg' class='img-search' />";
+					        }
+				          	searchHtml+="<div class='txt-search'><p class='title-search'>"+lists[i].serviceName+"</p>";
+				          	searchHtml+="<p class='pra-search'>"+lists[i].provider.providerName+"</p></div></a></li>";
+						 }
+					     searchHtml+="</ul></div></div>"; 
+					 }
+					 $("#searchList").html(searchHtml);
+					 $("#fingerId").hide();
+					 if(searchHtml&&searchHtml!=""){
+						 $("#noorderId").hide();
+					 }else{
+						 $("#noorderId").show();
+					 }
+				}
+		    })
+      }
+    </script>
+  </body>
+</html>

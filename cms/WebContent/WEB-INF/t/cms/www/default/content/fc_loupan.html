@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>${channel.title!channel.name} - ${site.name}</title>
+<meta http-equiv="keywords" content="${site.keywords!}"/>
+<meta http-equiv="description" content="${site.description!}"/>
+<link rel="stylesheet" type="text/css" href="${base}/${res}/css/index_fc.css" />
+<link rel="stylesheet" type="text/css" href="${base}/${res}/css/global.css" />
+<script src="${resSys}/jquery.js" type="text/javascript"></script>
+<script src="${resSys}/jqueryUI/jquery-ui.js" type="text/javascript"></script>
+<script src="${resSys}/front.js" type="text/javascript"></script>
+<script src="/${res}/js/common.js" type="text/javascript"></script>
+<script type="text/javascript">
+$(function() {
+Cms.checkPerm("${base}","${content.id}");
+Cms.collectCsi("${base}","collectCsiDiv","collect_csi","${content.id}");
+Cms.attachment("${base}","${content.id}","${content.attachments?size}","attach");
+Cms.viewCount("${base}","${content.id}");
+Cms.siteFlow("${base}", location.href, document.referrer,"${site.config.flowSwitch?string}");
+});
+</script>
+</head>
+
+<body>
+
+<!--top 开始-->
+<div class="top">
+     <div class="box">
+         <div class="logo">东楚房产</div>
+     </div>
+</div>
+<div style=" clear:both;"></div>
+
+<!--top end-->
+
+<!--nav 开始-->
+<div class="nav">
+    <div class="box">
+          <ul class="nav_box">
+                <li><a href="#">首 页</a></li>
+                <li><a href="#" class="current">行业动态</a></li>
+                <li><a href="#">热门楼盘</a></li>
+                <li><a href="#">钜惠活动</a></li>
+                <li><a href="#">家装建材</a></li>
+                <li><a href="#">二手房</a></li> 
+                       
+           </ul>
+    </div>      
+ </div>
+<!--nav 开始-->
+
+<div style=" clear:both;"></div>
+
+<!--内容 开始-->
+<div class="content">
+   <div class="box mt10">
+        <div class="map"><img src="${base}/${res}/images/home.png" width="20" height="18"> [#list channel.nodeList as n]<a href="${n.url}">${n.name}</a>[#if n_has_next] > [/#if][/#list] > 正文</div>
+        
+        <div class="details">
+        
+              <div class="detail_left">
+                    <div class="article_title">${content.title}</div>
+                    <div class="time">发布时间：${content.releaseDate} &nbsp;&nbsp;来源： ${content.origin!'本站原创'} &nbsp; 浏览次数：<span id="views"></div>
+                    <div class="article">
+                    <img src="images/adds.jpg" />
+                    ${txt!}
+    
+    
+                            <div style=" clear:both;"></div>
+                            <div class="related_news">
+                                <h6>相关新闻</h6>
+                                <ul class="relation">
+                                    <li><span>2016-06-13</span><a href="#">高考前你都做了哪些很ZUO的事情呢？</a></li>
+                                    <li><span>2016-06-13</span><a href="#">高考前你都做了哪些很ZUO的事情呢？</a></li>
+                                    <li><span>2016-06-13</span><a href="#">高考前你都做了哪些很ZUO的事情呢？</a></li>
+                                    <li><span>2016-06-13</span><a href="#">高考前你都做了哪些很ZUO的事情呢？</a></li>
+                                </ul>
+                            </div> 
+                            
+                            <div style=" clear:both;"></div>
+                            <div class="page_til">我有话说</div>
+                            <div style=" clear:both;"></div>
+                            <div class="dp_input">
+                               <textarea class="dp_input2" id="kcontent" name="kcontent" ></textarea></div>
+                               <div class="dp_input">
+                                    <a class="dp_input_btn" style="color:#ffffff" href="javascript:addRemark();">提交</a>
+                                    <div style="float:left;"><span class="emotion">表情&nbsp;&nbsp;(最多140个字)</span>
+                               </div>
+                            </div>
+                        
+                        </div>         
+
+                    
+              </div>
+              
+              
+              <div class="detail_right">
+                      <div class="notice">
+                           <div class="title"><span>行业新闻</span></div>
+                           <ul class="com_list">
+                                <li><a href="#">公交司机救人闯红灯 盼受助人出来作证公交司机</a></li>
+                                <li><a href="#">高考前你都做了哪些很ZUO的事情呢？</a></li>
+                                <li><a href="#">高考前你都做了哪些很ZU</a></li>
+                                <li><a href="#">黄石人力资源数据信息质量进入全国十强我市未来</a></li>
+                                <li><a href="#">公交司机救人闯红灯 盼受助人出来作证</a></li>
+                                <li><a href="#">盼受助人出来作证公交司机</a></li>
+                                <li><a href="#">高考前你都做了哪些很ZUO的事情呢？</a></li>
+                           </ul>
+                      </div>
+                      
+                      <div class="ads_img"><img src="images/adds.jpg" width="374" height="281" /></div>
+                      
+                      <div style=" clear:both;"></div>
+                          
+                      <div class="title"><span>楼盘推荐</span></div>
+                      <div style=" clear:both;"></div>
+                      <ul class="hot_house">
+                                     <li class="num_one">
+                                           <div class="title"><i>01</i><u><a href="#">黄石公园</a></u></div>
+                                           <div class="about">
+                                              <img src="images/house01.jpg" width="156" height="123" />
+                                              <div class="desc">
+                                                <b>简介：</b>黄金山新城的第一个、也是<br />
+                                                <b>区域：</b>黄石港区<br />
+                                                <b>价格：</b>4000元/平
+                                              </div>
+                                            </div>
+                                      </li>
+                                      
+                                      <li class="two"><i style="color:#ff876c;">02</i><b><a href="#">仁智山水</a></b><u>黄石港区</u><span>4689元/平</span></li>
+                                      <li class="two"><i style="color:#ff876c;">03</i><b><a href="#">仁智山水</a></b><u>黄石港区</u><span>4689元/平</span></li>
+                                      <li class="two"><i>04</i><b><a href="#">仁智山水</a></b><u>黄石港区</u><span>4689元/平</span></li>
+                                      <li class="two"><i>05</i><b><a href="#">仁智山水</a></b><u>黄石港区</u><span>4689元/平</span></li>
+                                      <li class="two last"><i>06</i><b><a href="#">仁智山水</a></b><u>黄石港区</u><span>4689元/平</span></li>
+                    
+                              </ul>
+                      
+                      
+                      </div>
+              
+              </div>
+           
+        
+        </div>
+        
+</div>
+<!--内容 end-->
+
+[#include "../include/footer.html"/]
+</body>
+</html>

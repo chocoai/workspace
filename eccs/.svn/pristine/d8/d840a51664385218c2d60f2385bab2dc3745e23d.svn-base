@@ -1,0 +1,1 @@
+INSERT INTO `res` VALUES ('002010006', '002010', '项目信息-选择多用户', '/information/saveUser.htm', '2');

@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Implementation-Title: yhnet
+Implementation-Version: 1.0
+Built-By: lx
+Implementation-Vendor-Id: yhnet
+Build-Jdk: 1.8.0_131
+Implementation-URL: http://projects.spring.io/spring-boot/yhnet/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bigdata.assis.manage.dao.TestDao">
+
+	<resultMap type="com.bigdata.assis.manage.model.Test" id="TestResult">
+		<result property="provCode" column="PROV_CODE" />
+	</resultMap>
+	
+	<select id="listByCondition" resultMap="TestResult">
+		select * from DW.RPT_ZHKT_ALLMETRIC_CITY_D
+	</select>
+	
+	
+</mapper>

@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+    <form action="/ecs/api/device/errorLog" method="post" enctype="multipart/form-data" accept-charset="UTF-8">
+    
+    	<input type="file" name="file" />
+		<input type="text" name="account" />
+		<input type="text" name="deviceName" />
+		<input type="text" name="sn" />
+		<input type="text" name="systemName" />
+		<input type="text" name="softType" />
+		
+		<input type="text" name="deviceCode" />
+		<input type="text" name="version" />
+		
+    	<input type="submit" value="上传文件" />
+
+    </form>
+
+</body>
+</html>

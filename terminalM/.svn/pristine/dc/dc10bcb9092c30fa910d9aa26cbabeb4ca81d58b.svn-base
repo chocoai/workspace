@@ -1,0 +1,197 @@
+@charset "utf-8";
+/*鏁版嵁浜ゆ崲涓績-棣栭〉 begin*/
+/*鍏抽敭鎸囨爣 begin*/
+.m_target_rank{ border-bottom: #f5f5f5 solid 1px; height: 239px; overflow: hidden; zoom:1;}
+.m_target_rank ul{ margin-left: -2px; }
+.m_target_rank li{ float: left; width: 319px; border-left: #f5f5f5 solid 1px; height: 239px; text-align: center;}
+.m_target_rank .ico{ padding-top: 34px; display: block; }
+.m_target_rank .name{ font-size: 20px; margin-top: 20px; line-height: 100%; }
+.m_target_rank .num{ font-weight: normal; color: #60bdff;  font-size: 30px; margin-top: 12px;}
+.m_target_rank .num strong{font-weight: normal;}
+/*鍏抽敭鎸囨爣 end*/
+
+/*鎼滅储缁撴灉 begin*/
+.item_QueryResult{}
+.item_QueryResult .seleautoBox .name{ vertical-align: middle; }
+.item_QueryResult .site_sysinp{ width: 150px; }
+/*鎼滅储缁撴灉 end*/
+/*鏁版嵁浜ゆ崲涓績-棣栭〉 end*/
+
+/*鏁版嵁鏈嶅姟瀹℃牳 begin*/
+/*鏁版嵁璁㈤槄瀹℃牳-鏈嶅姟璇︽儏 begin*/
+.g_serviceDetail{font-size:14px;}
+.g_serviceDetail li{margin-bottom:15px;}
+.g_serviceDetail li span{display:inline-block;vertical-align:middle;width:120px;margin-right:20px;}
+.g_serviceDetail li em{display:inline-block;vertical-align:middle;}
+
+.site_scetit{font-weight: normal;color: #222;line-height: 100%;padding-top: 15px;padding-bottom: 15px;font-size:18px;}
+
+.textarea_text{display:inline-block;vertical-align:top;}
+/*鏁版嵁璁㈤槄瀹℃牳-鏈嶅姟璇︽儏 end*/
+/*鏁版嵁鏈嶅姟瀹℃牳 end*/
+
+/*鏁版嵁鍙戝竷鎺堟潈 begin*/
+.g_edit_list{padding-left:30px;}
+.g_edit_list li{margin-bottom:15px;}
+.g_edit_list li label{display:inline-block;vertical-align:middle;width:100px;}
+.g_edit_list li label.v_t{vertical-align:top;}
+.g_edit_list li i{font-size:18px;color:#179fff;cursor:pointer;margin-left:10px;display:inline-block;vertical-align:middle;width:15px;text-align:center;}
+/*鏁版嵁鍙戝竷鎺堟潈 end*/
+
+/*鏁版嵁浜ゆ崲涓績-閰嶇疆绠＄悊-鏁版嵁鎶ユ枃绠＄悊-璁剧疆鎶ユ枃瑙勫垯 begin*/
+.gs_adde{display:inline-block;width:21px;height:21px;font-size:26px;color:#179fff;border:1px solid #ccc;line-height:17px;text-align:center;border-radius:4px;}
+/*鏁版嵁浜ゆ崲涓績-閰嶇疆绠＄悊-鏁版嵁鎶ユ枃绠＄悊-璁剧疆鎶ユ枃瑙勫垯 end*/
+
+
+
+
+
+/*淇℃伅鍒楄〃 S*/
+.ni_g_tableOfList{width: 100%;border-collapse: collapse;}
+.ni_g_tableOfList td{line-height: 40px;}
+.c008000{color: #008000;}
+.cFF0000{color: #FF0000;}
+.cFFCC00{color: #FFCC00;}
+.ni_g_home_s_big,.ni_g_home_s_small{width: 100%;}
+.ni_g_home_s_big .ni_li{width:33%;margin-right: 0.5%;padding:10px 0;}
+.ni_g_home_s_big .ni_li.ni_last,.ni_g_home_s_small .ni_li.ni_li.ni_last{margin-right: 0%;}
+.ni_g_home_s_big .ni_li .ni_tit{font-size:20px;line-height: 40px;}
+.ni_g_home_s_big .ni_li .ni_num,.ni_g_home_s_big .ni_li .ni_pb{font-size:22px;line-height: 30px;}
+.ni_g_home_s_big .ni_li .ni_pb{color:#888;}
+
+.ni_g_home_s_small .ni_li{width: 18%;margin-right: 2.5%;}
+.ni_g_home_s_small .ni_li .ni_tit{font-size:18px;line-height: 40px;}
+.ni_g_home_s_small .ni_li .ni_num{font-size:20px;line-height: 30px}
+/*淇℃伅鍒楄〃 E*/
+
+/*鎺ュ彛缁熻 S*/
+.tip_box{ position:relative;}
+.tip_box:hover .tips_content{ display:block;}
+.tip_box .tips_content{ display:none; z-index:30; position:absolute; width:240px; padding:10px; top:100%; right:20px; background:#F5F7F9;}
+.tip_box .tips_content h3{ font-weight:normal; color:#222;}
+.tip_box .tips_content p{ color:#999; margin-bottom:10px;}
+.subtitle{ height:40px; line-height:40px; font-size:14px; background:#F4F5F9; padding:0 20px;}
+.subtitle a{ padding:0 10px; font-size:14px; display:inline-block; height:40px; margin-right:5px;}
+.subtitle a:hover,.subtitle a.on{ background:#44B549; color:#fff;}
+.kpi ul{padding:20px 0; border-bottom:1px solid #ECECEF;}
+.kpi ul li{ float:left; width:218px; text-align:center;  height:160px; font-size:16px; border-left:1px solid #ECECEF;}
+.kpi ul li:first-child{ border-left:0;}
+.kpi ul li p{ margin-top:10px;}
+/*鎺ュ彛缁熻 E*/
+
+
+/*鍥藉鏁欒偛璧勬簮鏈嶅姟骞冲彴*/
+.zy_header{ height:87px;}
+.zy_logo{ padding:2px 0 0 0;}
+
+.zy_indexBannerWrap{width: 100%;background:#75bbfa url(../images/login_bg.jpg) no-repeat center bottom ;height: 500px;}
+.zy_indexBannerWrap .indexBanner{height: 100%;position: relative;}
+.zy_indexBannerWrap .indexBanner .py_tips{ position:absolute; top:0px; left:0px;background: url(../images/tips.png) no-repeat; width:300px; height:121px;}
+.zy_indexBannerWrap .indexBanner .py_txt{ position:absolute; top:50%; right:446px;background: url(../images/txt.png) no-repeat; width:503px; height:225px; margin-top:-150px;}
+.zy_indexBannerWrap .indexBanner .py_m_login{display: block;position: absolute;right: 0;top: 50%;-moz-transform:translateY(-50%);-webkit-transform:translateY(-50%);-ms-transform:translateY(-50%);-o-transform:translateY(-50%);transform:translateY(-50%);}
+
+.py_m_login{ width:412px; height:376px; background: url(../images/loginbg01.png) repeat;  overflow:hidden; zoom:1; }
+.py_m_login .item-newLogo-rect{ position:relative; top:0px; right:0px;padding:30px 38px 30px 40px;}
+.py_m_login h4{ font-size:25px; line-height:25px; padding-bottom:8px; font-weight:normal; color:#4997c8;}
+.py_m_login .passWord-case .inputlist li{ width:332px; height:44px; border-radius:5px; border:#b4d1ec solid 1px; background:#fff; margin-top:20px;}
+.py_m_login .passWord-case .inputlist li.acitve{ border-color:#328fe6;}
+.py_m_login .passWord-case .inputlist li.u_inputtext{ background:url(../images/logo_ico1_2.png) no-repeat left top #fff;}
+.py_m_login .passWord-case .inputlist li.u_inputpassword{ background:url(../images/logo_ico2_2.png) no-repeat left top #fff;}
+.py_m_login .passWord-case .inputlist li input{ float:left; width:250px; line-height:42px; height:42px; margin:0 0px 0px 68px; border:0px; font-size:14px; background:none;}
+.py_m_login .passWord-case .inputlist li input::-moz-selection{background: #faffbd;}
+.py_m_login .passWord-case .inputlist li input::selection{background: #faffbd;}
+.py_m_login .passWord-case .inputlist li.u_code{ background:none; border:0;}
+.py_m_login .passWord-case .inputlist li.u_code span{ float:left; font-size:16px; color:#acacac; line-height:48px; padding-right:8px;}
+.py_m_login .passWord-case .inputlist li.u_code input{ width:98px; height:46px; padding:0 10px; line-height:46px; background:#fff; border:1px solid #cbcbcb; margin:0 10px 0 0;}
+.py_m_login .passWord-case .inputlist li.u_code .codeimg{ float:left; width:93px; height:48px;}
+.py_m_login .passWord-case .inputlist li.u_code .codeimg img{ width:93px; height:48px; cursor:pointer;}
+
+.py_m_login .passWord-case .test_code{ margin-top:20px;}
+.py_m_login .passWord-case .test_code input{float:left; width:180px; padding:0 10px; line-height:42px; height:42px; border-radius:5px; border:#383838 solid 2px; background:#fff;}
+.py_m_login .passWord-case .test_code .codeimg{float:right; width:112px; height:42px; margin-top:2px; margin-left:10px;}
+.py_m_login .passWord-case .test_code img{ display:block; width:112px; height:42px;}
+.py_m_login .passWord-case .test_code.acitve input{ border-color:#15ae4d;}
+
+.py_m_login .passWord-case .login_other_rect{ height:24px; line-height:24px; margin-top:15px;}
+.py_m_login .passWord-case .m_btn{ display:block; width:100%; height:50px; text-align:center; line-height:50px; background:#15ae4d; font-size:22px; color:#fff; border-radius:5px; border:0px; cursor:pointer; margin-top:25px;}
+.py_m_login .passWord-case  .m_btn:hover{ background:#129441;}
+
+.py_m_login .passWord-case .no_account{ padding-top:26px; text-align:right; color:#3c637c;}
+.py_m_login .passWord-case .no_account a{ color:#ff8400;  }
+.py_m_login .passWord-case .no_account a:hover{color: #ff6b31;text-decoration: none;}
+.py_m_login .passWord-case .no_account a.a1{margin:0 0 0 5px;}
+
+.py_m_login .passWord-case .rememberMe{color:#888;cursor: pointer;}
+.py_m_login .passWord-case .rememberMe:hover{color: #13415e;}
+.py_m_login .passWord-case .rememberMe p{ width:40px; height:24px; border-radius:12px;  margin-right:7px; cursor:pointer; background:#b2d1df;}
+.py_m_login .passWord-case .rememberMe p.on{ background:#15ae4d;-webkit-transition:all .5s ease;-ms-transition:all .5s ease;-moz-transition:all .5s ease; transition:all .5s ease; }
+.py_m_login .passWord-case .rememberMe span{ float:right; width:20px; height:20px; border-radius:11px; background:#fff; margin:2px 17px 0px 0px;}
+.py_m_login .passWord-case .forget{ margin-left:31px; color:#888;}
+.py_m_login .passWord-case .forget:hover{ color: #13415e;text-decoration: none;}
+
+.py_m_login .passWord-case .err-tips{ position:absolute; top:30px; left:38px; height:30px; border:#ffc3b9 solid 1px; line-height:30px; color:#555; background:#fef2f2; width:332px; }
+.py_m_login .passWord-case .err-tips .ico{ background:url(../images/error_ico1.gif) no-repeat left top; width:18px; height:18px; vertical-align:middle; margin:0 13px; display:inline-block; margin-top:-3px;}
+.py_m_login .passWord-case .err-tips .close{ background:url(../images/error_ico2.gif) no-repeat; width:13px; height:14px; margin:8px 14px 0px 0px; cursor:pointer;}
+.py_m_login .passWord-case .err-tips .close:hover{ background-image:url(../images/error_ico2_2.gif);}
+
+
+.py_m_login .wql_forgetPwd{color: #38adff;}
+.py_m_login .wql_forgetPwd:active,
+.py_m_login .wql_forgetPwd:hover{color: #ef3b6a;text-decoration:underline; }
+
+.zy_footer{ height:100px; background:#fafbfc;font-size:13px; border-top:1px solid #d4d4d4;}
+.footbox{height:80px; background:#fafbfc; line-height:30px; padding-top:20px; overflow:hidden;}
+.footbox a{ color:#555;}
+
+
+/*鍚庡彴棣栭〉*/
+.ht_header{ height:80px; border-bottom:2px solid #4ebaf3; overflow:hidden;}
+.ht_logo{ float:left;}
+.ht_info{ float:right; font-size:15px; padding:30px 0 0 0;}
+.ht_info span{ padding:0 22px 0 10px; color:#888;}
+.ht_info a{ margin-right:22px; color:#5a8fd1;}
+.ht_info a:hover{ color:#49a7fd;}
+
+.ht_list{ padding:10px 0; overflow:hidden; min-height:730px; background:#f5fcff;}
+.ht_list ul{ margin-right:-90px;}
+.ht_list ul li{ float:left; width:330px; height:72px; padding:25px 80px 25px 20px; font-size:14px;}
+.ht_list ul li a { display:block; width:400px; height:72px;}
+.ht_list ul li a .pic{ float:left; width:72px; height:72px;}
+.ht_list ul li a .txt{ float:left; padding:10px 0 0 15px; width:243px;}
+.ht_list ul li a .txt h4{ color:#222222; font-size:18px; font-weight:normal;}
+.ht_list ul li a .txt p{ color:#888; padding-top:5px;}
+.ht_list ul li a:hover .txt h4{ color:#49a7fd;}
+
+/*瀹夊叏鐩戞帶绯荤粺-鏁忔劅璇嶇鐞�*/
+.site_sysTable{position:relative;}
+.gs_right_nav{position:absolute;top:-40px;right:1px;text-align:center;width:26px;border-radius:13px;font-size:14px;background:rgba(255,255,255,0.7);box-shadow:0 0 15px #ececec;padding:10px 0;}
+.gs_right_nav li{}
+.gs_right_nav li a{color:#b4b4b4;}
+.gs_right_nav li a:hover,.gs_right_nav li a.on{color:#53b8ff;}
+.mgl35{margin-left:35px;}
+
+/*table鐨勫乏鍙虫粴鍔ㄦ潯*/
+.gs_scroll_wrap{position:relative;overflow:hidden;width:100%;padding-bottom:10px;}
+.site_sysTable .scroll_table{width:auto;}
+.site_sysTable table p{line-height:20px;}
+
+/*缁熶竴璁よ瘉涓績鐨勮处鍙锋彁绀�*/
+.gs_help{display:inline-block;vertical-align:middle;position:relative;width:18px;height:18px;background:url(../images/help.png) no-repeat center center;margin-left:5px;margin-bottom:2px;}
+.gs_help span{position:absolute;display:none;width:120px;border:1px solid #eee;background:#fff;top:20px;border-radius:4px;z-index:10;left:-30px;padding:10px;box-shadow:0 0 20px #eee;color:#888;}
+.gs_help:hover span{display:block;}
+
+/*涓嬫媺鍖归厤鐨勬牱寮�*/
+.inpMatching {height: 32px;position: relative;display: inline-block;}
+.inpMatching .holdbox {border: 1px solid #ccc;position: absolute;left: 0;top: 30px;min-width: 100%;_width: 100%;border-radius: 0;background: #fff;display: none;max-height: 150px; overflow: auto; overflow-x: hidden;z-index:10;}
+.inpMatching .holdbox a {display: block;height: 30px;line-height: 30px;min-width: 100%;_width: 100%;text-decoration: none;color: #555;text-indent: .5em;white-space: nowrap;}
+
+/*鏈嶅姟绠＄悊绯荤粺-璧勬枡搴撶鐞�-寮€鍙戞枃妗ｇ鐞�*/
+.site_sysTable table .cata_box{position:relative;overflow:visible;}
+.cata_list{position:absolute;top:20px;left:80px;width:100px;border:1px solid #ccc;border-radius:4px;height:110px;background:#fff;}
+
+/*绠＄悊鍚庡彴閰嶇疆绠＄悊绯荤粺-鑿滃崟绠＄悊*/
+.cata_container{position:relative;cursor:pointer;}
+.cata_container .cata_list{top:30px;left:-30px;width:180px;text-align:center;}
+
+/*input鍚庣殑tip*/
+em.tips{margin-left:10px;color:#ccc;}

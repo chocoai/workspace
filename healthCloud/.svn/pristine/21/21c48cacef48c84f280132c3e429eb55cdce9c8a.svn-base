@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.healthcloud.memberBack.mapper.MemberRechargeMapper">
+  <resultMap id="BaseResultMap" type="com.yhcrt.healthcloud.memberBack.entity.MemberRecharge">
+    <result column="cid" jdbcType="VARCHAR" property="cid" />
+    <result column="member_id" jdbcType="VARCHAR" property="memberId" />
+    <result column="kangbi" jdbcType="INTEGER" property="kangbi" />
+    <result column="score" jdbcType="INTEGER" property="score" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="create_user" jdbcType="VARCHAR" property="createUser" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="cext1" jdbcType="VARCHAR" property="cext1" />
+    <result column="cext2" jdbcType="VARCHAR" property="cext2" />
+    <result column="cext3" jdbcType="VARCHAR" property="cext3" />
+    <result column="iext1" jdbcType="INTEGER" property="iext1" />
+    <result column="iext2" jdbcType="INTEGER" property="iext2" />
+    <result column="dext1" jdbcType="DATE" property="dext1" />
+    <result column="dext2" jdbcType="DATE" property="dext2" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    cid, member_id, kangbi, score, create_time, create_user, remark, cext1, cext2, cext3, 
+    iext1, iext2, dext1, dext2
+  </sql>
+  <select id="selectByExample" parameterType="com.yhcrt.healthcloud.memberBack.entity.MemberRechargeExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from member_recharge
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <delete id="deleteByExample" parameterType="com.yhcrt.healthcloud.memberBack.entity.MemberRechargeExample">
+    delete from member_recharge
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yhcrt.healthcloud.memberBack.entity.MemberRecharge">
+    insert into member_recharge (cid, member_id, kangbi, 
+      score, create_time, create_user, 
+      remark, cext1, cext2, 
+      cext3, iext1, iext2, 
+      dext1, dext2)
+    values (#{cid,jdbcType=VARCHAR}, #{memberId,jdbcType=VARCHAR}, #{kangbi,jdbcType=INTEGER}, 
+      #{score,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{createUser,jdbcType=VARCHAR}, 
+      #{remark,jdbcType=VARCHAR}, #{cext1,jdbcType=VARCHAR}, #{cext2,jdbcType=VARCHAR}, 
+      #{cext3,jdbcType=VARCHAR}, #{iext1,jdbcType=INTEGER}, #{iext2,jdbcType=INTEGER}, 
+      #{dext1,jdbcType=DATE}, #{dext2,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yhcrt.healthcloud.memberBack.entity.MemberRecharge">
+    insert into member_recharge
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        cid,
+      </if>
+      <if test="memberId != null">
+        member_id,
+      </if>
+      <if test="kangbi != null">
+        kangbi,
+      </if>
+      <if test="score != null">
+        score,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="createUser != null">
+        create_user,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="cext1 != null">
+        cext1,
+      </if>
+      <if test="cext2 != null">
+        cext2,
+      </if>
+      <if test="cext3 != null">
+        cext3,
+      </if>
+      <if test="iext1 != null">
+        iext1,
+      </if>
+      <if test="iext2 != null">
+        iext2,
+      </if>
+      <if test="dext1 != null">
+        dext1,
+      </if>
+      <if test="dext2 != null">
+        dext2,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="cid != null">
+        #{cid,jdbcType=VARCHAR},
+      </if>
+      <if test="memberId != null">
+        #{memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="kangbi != null">
+        #{kangbi,jdbcType=INTEGER},
+      </if>
+      <if test="score != null">
+        #{score,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUser != null">
+        #{createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="cext1 != null">
+        #{cext1,jdbcType=VARCHAR},
+      </if>
+      <if test="cext2 != null">
+        #{cext2,jdbcType=VARCHAR},
+      </if>
+      <if test="cext3 != null">
+        #{cext3,jdbcType=VARCHAR},
+      </if>
+      <if test="iext1 != null">
+        #{iext1,jdbcType=INTEGER},
+      </if>
+      <if test="iext2 != null">
+        #{iext2,jdbcType=INTEGER},
+      </if>
+      <if test="dext1 != null">
+        #{dext1,jdbcType=DATE},
+      </if>
+      <if test="dext2 != null">
+        #{dext2,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yhcrt.healthcloud.memberBack.entity.MemberRechargeExample" resultType="java.lang.Long">
+    select count(*) from member_recharge
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update member_recharge
+    <set>
+      <if test="record.cid != null">
+        cid = #{record.cid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memberId != null">
+        member_id = #{record.memberId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.kangbi != null">
+        kangbi = #{record.kangbi,jdbcType=INTEGER},
+      </if>
+      <if test="record.score != null">
+        score = #{record.score,jdbcType=INTEGER},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.createUser != null">
+        create_user = #{record.createUser,jdbcType=VARCHAR},
+      </if>
+      <if test="record.remark != null">
+        remark = #{record.remark,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cext1 != null">
+        cext1 = #{record.cext1,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cext2 != null">
+        cext2 = #{record.cext2,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cext3 != null">
+        cext3 = #{record.cext3,jdbcType=VARCHAR},
+      </if>
+      <if test="record.iext1 != null">
+        iext1 = #{record.iext1,jdbcType=INTEGER},
+      </if>
+      <if test="record.iext2 != null">
+        iext2 = #{record.iext2,jdbcType=INTEGER},
+      </if>
+      <if test="record.dext1 != null">
+        dext1 = #{record.dext1,jdbcType=DATE},
+      </if>
+      <if test="record.dext2 != null">
+        dext2 = #{record.dext2,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update member_recharge
+    set cid = #{record.cid,jdbcType=VARCHAR},
+      member_id = #{record.memberId,jdbcType=VARCHAR},
+      kangbi = #{record.kangbi,jdbcType=INTEGER},
+      score = #{record.score,jdbcType=INTEGER},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      create_user = #{record.createUser,jdbcType=VARCHAR},
+      remark = #{record.remark,jdbcType=VARCHAR},
+      cext1 = #{record.cext1,jdbcType=VARCHAR},
+      cext2 = #{record.cext2,jdbcType=VARCHAR},
+      cext3 = #{record.cext3,jdbcType=VARCHAR},
+      iext1 = #{record.iext1,jdbcType=INTEGER},
+      iext2 = #{record.iext2,jdbcType=INTEGER},
+      dext1 = #{record.dext1,jdbcType=DATE},
+      dext2 = #{record.dext2,jdbcType=DATE}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+</mapper>

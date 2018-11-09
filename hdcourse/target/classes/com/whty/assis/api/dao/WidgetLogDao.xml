@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.api.dao.WidgetLogDao">
+
+	<select id="queryWidget"  resultType="java.util.HashMap">
+		select * from TA_WIDGET_LOG where user_id !='' and cpu_sn != '' and main_board_sn != '' and bios_sn != '' and disk_sn != ''
+		and use_count >0 and create_time >=#{startTime}
+		<![CDATA[and create_time <= #{endTime}]]>
+	</select>
+	
+	<select id="test" resultType="int">
+	select count(*) from 
+(select user_id from ta_widget_log where create_time >='2018-05-01' 
+<![CDATA[and  create_time <='2018-05-31']]> and user_id is not null group by user_id ) t
+	</select>
+	
+	<select id="queryTerminal"  resultType="java.util.HashMap">
+		select * from TA_TERMINAL_USE_LOG where user_id !='' and platform_code !='' and link_num >0 
+		and create_time >=#{startTime}
+		<![CDATA[and create_time <= #{endTime}]]>
+	</select>
+	
+	<insert id="saveFuncDemo" parameterType="map">
+		insert into T_WIDGET_INFO(event_id,event_name,subsection,event_type,description)
+		values(
+		#{eventId},#{eventName},#{subsection},#{eventType},#{description}
+		)
+	</insert>
+	
+	<select id="count" parameterType="map" resultType="java.util.HashMap">
+		select sum(use_count) as use_count from TA_WIDGET_LOG where
+		platform_code like CONCAT(#{platformCode},'%')
+		and create_time >=
+		#{startTime}
+		<![CDATA[and create_time <= #{endTime}]]>
+	</select>
+	
+</mapper>
+

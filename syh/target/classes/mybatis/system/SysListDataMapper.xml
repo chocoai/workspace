@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="SysListDataMapper">
+	<resultMap id="BaseResultMap" type="SysListData">
+		<id column="CID" jdbcType="INTEGER" property="cid" />
+		<result column="ITEM_TYPE" jdbcType="VARCHAR" property="itemType" />
+		<result column="ITEM_KEY" jdbcType="VARCHAR" property="itemKey" />
+		<result column="ITEM_VALUE" jdbcType="VARCHAR" property="itemValue" />
+		<result column="ORDER_NUM" jdbcType="INTEGER" property="orderNum" />
+		<result column="BACKUP" jdbcType="VARCHAR" property="backup" />
+		<result column="EXP1" jdbcType="INTEGER" property="exp1" />
+		<result column="EXP2" jdbcType="INTEGER" property="exp2" />
+		<result column="EXP3" jdbcType="VARCHAR" property="exp3" />
+		<result column="EXP4" jdbcType="VARCHAR" property="exp4" />
+		<result column="EXP5" jdbcType="VARCHAR" property="exp5" />
+		<result column="EXP6" jdbcType="VARCHAR" property="exp6" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		CID, ITEM_TYPE, ITEM_KEY, ITEM_VALUE, ORDER_NUM, BACKUP, EXP1, EXP2, EXP3,
+		EXP4,
+		EXP5, EXP6
+	</sql>
+	<!--插入记录 -->
+	<insert id="saveSelective" parameterType="com.yhcrt.entity.system.SysListData">
+		insert into sys_list_data
+		<trim prefix="(" suffix=")" suffixOverrides=",">
+			<if test="cid != null">
+				CID,
+			</if>
+			<if test="itemType != null">
+				ITEM_TYPE,
+			</if>
+			<if test="itemKey != null">
+				ITEM_KEY,
+			</if>
+			<if test="itemValue != null">
+				ITEM_VALUE,
+			</if>
+			<if test="orderNum != null">
+				ORDER_NUM,
+			</if>
+			<if test="backup != null">
+				BACKUP,
+			</if>
+			<if test="exp1 != null">
+				EXP1,
+			</if>
+			<if test="exp2 != null">
+				EXP2,
+			</if>
+			<if test="exp3 != null">
+				EXP3,
+			</if>
+			<if test="exp4 != null">
+				EXP4,
+			</if>
+			<if test="exp5 != null">
+				EXP5,
+			</if>
+			<if test="exp6 != null">
+				EXP6,
+			</if>
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides=",">
+			<if test="cid != null">
+				#{cid,jdbcType=INTEGER},
+			</if>
+			<if test="itemType != null">
+				#{itemType,jdbcType=VARCHAR},
+			</if>
+			<if test="itemKey != null">
+				#{itemKey,jdbcType=VARCHAR},
+			</if>
+			<if test="itemValue != null">
+				#{itemValue,jdbcType=VARCHAR},
+			</if>
+			<if test="orderNum != null">
+				#{orderNum,jdbcType=INTEGER},
+			</if>
+			<if test="backup != null">
+				#{backup,jdbcType=VARCHAR},
+			</if>
+			<if test="exp1 != null">
+				#{exp1,jdbcType=INTEGER},
+			</if>
+			<if test="exp2 != null">
+				#{exp2,jdbcType=INTEGER},
+			</if>
+			<if test="exp3 != null">
+				#{exp3,jdbcType=VARCHAR},
+			</if>
+			<if test="exp4 != null">
+				#{exp4,jdbcType=VARCHAR},
+			</if>
+			<if test="exp5 != null">
+				#{exp5,jdbcType=VARCHAR},
+			</if>
+			<if test="exp6 != null">
+				#{exp6,jdbcType=VARCHAR},
+			</if>
+		</trim>
+	</insert>
+	<!-- 根据字典类型查询 -->
+	<select id="selectByItemType" parameterType="SysListData"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from
+		sys_list_data
+		where
+		ITEM_TYPE = #{itemType}
+		order by ORDER_NUM  DESC,ITEM_TYPE,CID
+	</select>
+	<!-- 根据字典类型查询 -->
+	<select id="selectByItemKey" parameterType="String" resultType="java.lang.String">
+		select ITEM_KEY
+		from
+		sys_list_data
+		where
+		ITEM_TYPE = #{itemType}
+		order by ORDER_NUM  DESC,ITEM_TYPE,CID
+	</select>
+	<!--根据ID查询 -->
+	<select id="getByCid" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_list_data
+		where CID = #{cid,jdbcType=INTEGER}
+	</select>
+	<update id="updateType" parameterType="com.yhcrt.entity.system.SysListData">
+	update sys_list_data set ITEM_TYPE = #{itemType2,jdbcType=VARCHAR}  where ITEM_TYPE = #{itemType1,jdbcType=VARCHAR};
+	</update>
+	<!-- 更新信息 -->
+	<update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.entity.system.SysListData">
+		update sys_list_data
+		<set>
+			<if test="itemType != null">
+				ITEM_TYPE = #{itemType,jdbcType=VARCHAR},
+			</if>
+			<if test="itemKey != null">
+				ITEM_KEY = #{itemKey,jdbcType=VARCHAR},
+			</if>
+			<if test="itemValue != null">
+				ITEM_VALUE = #{itemValue,jdbcType=VARCHAR},
+			</if>
+			<if test="orderNum != null">
+				ORDER_NUM = #{orderNum,jdbcType=INTEGER},
+			</if>
+			<if test="backup != null">
+				BACKUP = #{backup,jdbcType=VARCHAR},
+			</if>
+			<if test="exp1 != null">
+				EXP1 = #{exp1,jdbcType=INTEGER},
+			</if>
+			<if test="exp2 != null">
+				EXP2 = #{exp2,jdbcType=INTEGER},
+			</if>
+			<if test="exp3 != null">
+				EXP3 = #{exp3,jdbcType=VARCHAR},
+			</if>
+			<if test="exp4 != null">
+				EXP4 = #{exp4,jdbcType=VARCHAR},
+			</if>
+			<if test="exp5 != null">
+				EXP5 = #{exp5,jdbcType=VARCHAR},
+			</if>
+			<if test="exp6 != null">
+				EXP6 = #{exp6,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where CID = #{cid,jdbcType=INTEGER}
+	</update>
+
+	<!-- 根据ID删除 -->
+	<delete id="removeByCid" parameterType="java.lang.Integer">
+		delete from sys_list_data
+		where CID = #{cid,jdbcType=INTEGER}
+	</delete>
+	<!-- 根据ID批量删除 -->
+	<delete id="removeByCids" parameterType="java.lang.Integer">
+		delete from sys_list_data
+		where CID in 
+		<foreach item="item" index="index" collection="array" open="("
+			separator="," close=")">
+			#{item}
+		</foreach>
+	</delete>
+	
+	<!--多条件查询 -->
+	<select id="quertByParam" parameterType="com.yhcrt.entity.system.SysListData"
+		resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from sys_list_data
+		where 1 = 1
+		<if test="itemType != null and itemType!='' ">
+			and ITEM_TYPE = #{itemType,jdbcType=VARCHAR}
+		</if>
+		<if test="itemValue != null and itemValue!='' ">
+			and ITEM_VALUE = #{itemValue,jdbcType=VARCHAR}
+		</if>
+		order by ORDER_NUM  DESC,ITEM_TYPE,CID
+	</select>
+</mapper>

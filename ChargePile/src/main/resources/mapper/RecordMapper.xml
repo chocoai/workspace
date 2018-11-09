@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fxzhj.mapper.RecordMapper">
+	<resultMap id="BaseResultMap" type="com.fxzhj.model.Record">
+		<id column="id" property="id" jdbcType="BIGINT" />
+		<result column="device_id" property="deviceId" jdbcType="BIGINT" />
+		<result column="port_id" property="portId" jdbcType="BIGINT" />
+		<result column="user_account" property="userAccount" jdbcType="VARCHAR" />
+		<result column="start_time" property="startTime" jdbcType="TIMESTAMP" />
+		<result column="end_time" property="endTime" jdbcType="TIMESTAMP" />
+		<result column="f_end_time" property="fEndTime" jdbcType="TIMESTAMP" />
+		<result column="expect_time" property="expectTime" jdbcType="INTEGER" />
+		<result column="money" property="money" jdbcType="REAL" />
+		<result column="fact_time" property="factTime" jdbcType="INTEGER" />
+		<result column="pay_way" property="payWay" jdbcType="INTEGER" />
+		<result column="pay_type" property="payType" jdbcType="INTEGER" />
+		<result column="status" property="status" jdbcType="INTEGER" />
+		<!-- 界面显示字段  -->
+		<result column="site_name" property="siteName" jdbcType="VARCHAR" />
+		<result column="device_no" property="deviceNo" jdbcType="VARCHAR" />
+		<result column="port_no" property="portNo" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_List">
+		id, device_id, port_id, user_account, start_time, end_time, f_end_time,
+		expect_time, money, fact_time, pay_way, pay_type, status
+	</sql>
+	
+	<!-- 根据小区id查询充电记录 -->
+	<select id="queryByCId" resultMap="BaseResultMap" parameterType="com.fxzhj.model.Record">
+		SELECT d.site_name,b.device_no,e.port_no,a.id,a.device_id,a.port_id,a.user_account,
+		a.expect_time, a.money, a.fact_time, a.pay_way, a.pay_type, a.status,
+		date_format(a.start_time,'%Y-%m-%d %H:%i:%S') start_time,
+		date_format(a.end_time,'%Y-%m-%d %H:%i:%S') end_time,
+		date_format(a.f_end_time,'%Y-%m-%d %H:%i:%S') f_end_time 
+		FROM t_record a 
+		LEFT JOIN t_device b ON a.device_id = b.id 
+		LEFT JOIN t_community c ON b.community_id=c.community_id 
+		LEFT JOIN t_range_device d ON a.device_id=d.device_id
+		LEFT JOIN t_port e ON a.device_id=e.device_id and a.port_id=e.id
+		where c.community_id=#{comOrareId} 
+		<if test="deviceNo !=null and deviceNo !=''">
+			and b.device_no=#{deviceNo}
+		</if>
+		<if test="cardNo !=null and cardNo !=''">
+			and b.card_no=#{cardNo}
+		</if>
+		<if test="payWay !=null ">
+			and a.pay_way=#{payWay}
+		</if>
+		<if test="userAccount !=null and userAccount !='' ">
+			and a.user_account=#{userAccount}
+		</if>
+		<if test="qStartTime !=null and qStartTime !=''">
+        	<![CDATA[ 
+        		and a.start_time >= #{qStartTime}
+           	]]>
+      	</if>
+		<if test="qEndTime !=null and qEndTime !=''">
+        	<![CDATA[ 
+        		and a.start_time <= #{qEndTime}
+           	]]>
+      	</if>
+      	order by a.start_time desc
+	</select>
+	
+	<!-- 根据区域id查询充电记录 -->
+	<select id="queryByAId" resultMap="BaseResultMap" parameterType="com.fxzhj.model.Record">
+		SELECT d.site_name,b.device_no,e.port_no,a.id,a.device_id,a.port_id,a.user_account,
+		a.expect_time, a.money, a.fact_time, a.pay_way, a.pay_type, a.status,
+		date_format(a.start_time,'%Y-%m-%d %H:%i:%S') start_time,
+		date_format(a.end_time,'%Y-%m-%d %H:%i:%S') end_time,
+		date_format(a.f_end_time,'%Y-%m-%d %H:%i:%S') f_end_time 
+		FROM t_record a 
+		LEFT JOIN t_device b ON a.device_id = b.id 
+		LEFT JOIN t_area c ON b.area_id=c.id 
+		LEFT JOIN t_range_device d ON a.device_id=d.device_id
+		LEFT JOIN t_port e ON a.device_id=e.device_id and a.port_id=e.id
+		where c.id=#{comOrareId} 
+		<if test="deviceNo !=null and deviceNo !=''">
+			and b.device_no=#{deviceNo}
+		</if>
+		<if test="cardNo !=null and cardNo !=''">
+			and b.card_no=#{cardNo}
+		</if>
+		<if test="payWay !=null ">
+			and a.pay_way=#{payWay}
+		</if>
+		<if test="userAccount !=null and userAccount !='' ">
+			and a.user_account=#{userAccount}
+		</if>
+		<if test="qStartTime !=null and qStartTime !=''">
+        	<![CDATA[ 
+        		and a.start_time >= #{qStartTime}
+           	]]>
+      	</if>
+		<if test="qEndTime !=null and qEndTime !=''">
+        	<![CDATA[ 
+        		and a.start_time <= #{qEndTime}
+           	]]>
+      	</if>
+      	order by a.start_time desc
+	</select>
+	
+	<cache />
+</mapper>

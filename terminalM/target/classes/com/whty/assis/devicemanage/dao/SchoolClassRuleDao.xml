@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.devicemanage.dao.SchoolClassRuleDao">
+
+	<resultMap type="com.whty.assis.devicemanage.model.SchoolClassRule" id="SchoolClassRuleResult">
+		<result property="id" column="id" />
+		<result property="usetimeRuleId" column="usetime_rule_id" />
+		<result property="urlBlacklistRuleId"  column="url_blacklist_rule_id" />
+		<result property="browserTagRuleId" column="browser_tag_rule_id" />
+		<result property="browserWhitelistRuleId" column="browser_whitelist_rule_id" />
+		<result property="appWhitelistRuleId" column="app_whitelist_rule_id" />
+		<result property="usetimeRuleName" column="usetime_rule_name" />
+		<result property="urlBlacklistRuleName"  column="url_blacklist_rule_name" />
+		<result property="browserTagRuleName" column="browser_tag_rule_name" />
+		<result property="browserWhitelistRuleName" column="browser_whitelist_rule_name" />
+		<result property="appWhitelistRuleName" column="app_whitelist_rule_name" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="schoolClassId" column="school_class_id" />
+	</resultMap>
+	
+	<resultMap type="com.whty.assis.basicdata.model.SchoolClassUsetimeRule" id="SchoolClassUsetimeRuleResult">
+		<result property="id" column="id" />
+		<result property="schoolClassId" column="school_class_id" />
+		<result property="usetimeRuleId"  column="usetime_rule_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	
+	
+	<resultMap type="com.whty.assis.basicdata.model.SchoolClassBrowserWhitelistRule" id="SchoolClassBrowserWhitelistRuleResult">
+		<result property="id" column="id" />
+		<result property="schoolClassId" column="school_class_id" />
+		<result property="browserWhitelistRuleId"  column="browser_whitelist_rule_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	
+	
+	<resultMap type="com.whty.assis.basicdata.model.SchoolClassBrowserTagRule" id="SchoolClassBrowserTagRuleResult">
+		<result property="id" column="id" />
+		<result property="schoolClassId" column="school_class_id" />
+		<result property="browserTagRuleId"  column="browser_tag_rule_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	
+	
+	<resultMap type="com.whty.assis.basicdata.model.SchoolClassAppWhitelistRule" id="SchoolClassAppWhitelistRuleResult">
+		<result property="id" column="id" />
+		<result property="schoolClassId" column="school_class_id" />
+		<result property="appWhitelistRuleId"  column="app_whitelist_rule_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	
+	
+	<resultMap type="com.whty.assis.basicdata.model.SchoolClassUrlBlacklistRule" id="SchoolClassUrlBlacklistRuleResult">
+		<result property="id" column="id" />
+		<result property="schoolClassId" column="school_class_id" />
+		<result property="urlBlacklistRuleId"  column="url_blacklist_rule_id" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+	</resultMap>
+	
+	
+	<insert id="saveSchoolClassUsetimeRule" parameterType="com.whty.assis.basicdata.model.SchoolClassUsetimeRule">
+		insert into t_school_class_usetime_rule (
+			create_time,
+			update_time,
+			school_class_id,
+			usetime_rule_id
+		) values (
+			#{createTime},
+			#{updateTime},
+			#{schoolClassId},
+			#{usetimeRuleId}
+		)
+	</insert>
+	
+	
+	<insert id="saveSchoolClassAppNetBlacklist" parameterType="com.whty.assis.devicemanage.model.SchoolClassAppNetBlacklist">
+		insert into t_school_class_app_net_blacklist(
+			create_time,
+			update_time,
+			school_class_id,
+			app_net_blacklist_id
+		)values (
+			#{createTime},
+			#{updateTime},
+			#{schoolClassId},
+			#{appNetBlacklistId}
+		)
+	</insert>
+
+	
+	<insert id="saveSchoolClassBrowserWhitelistRule" parameterType="com.whty.assis.basicdata.model.SchoolClassBrowserWhitelistRule">
+		insert into t_school_class_browser_whitelist_rule (
+			create_time,
+			update_time,
+			school_class_id,
+			browser_whitelist_rule_id
+		) values (
+			#{createTime},
+			#{updateTime},
+			#{schoolClassId},
+			#{browserWhitelistRuleId}
+		)
+	</insert>
+	
+	
+	<insert id="saveSchoolClassAppWhitelistRule" parameterType="com.whty.assis.basicdata.model.SchoolClassAppWhitelistRule">
+		insert into t_school_class_app_whitelist_rule (
+			create_time,
+			update_time,
+			school_class_id,
+			app_whitelist_rule_id
+		) values (
+			#{createTime},
+			#{updateTime},
+			#{schoolClassId},
+			#{appWhitelistRuleId}
+		)
+	</insert>
+	
+	
+	<insert id="saveSchoolClassBrowserTagRule" parameterType="com.whty.assis.basicdata.model.SchoolClassBrowserTagRule">
+		insert into t_school_class_browser_tag_rule (
+			create_time,
+			update_time,
+			school_class_id,
+			browser_tag_rule_id
+		) values (
+			#{createTime},
+			#{updateTime},
+			#{schoolClassId},
+			#{browserTagRuleId}
+		)
+	</insert>
+	
+	
+	<insert id="saveSchoolClassUrlBlacklistRule" parameterType="com.whty.assis.basicdata.model.SchoolClassUrlBlacklistRule">
+		insert into t_school_class_url_blacklist_rule (
+			create_time,
+			update_time,
+			school_class_id,
+			url_blacklist_rule_id
+		) values (
+			#{createTime},
+			#{updateTime},
+			#{schoolClassId},
+			#{urlBlacklistRuleId}
+		)
+	</insert>
+	
+	
+	
+	<delete id="deleteSchoolClassBrowserWhitelistRuleBySchoolClassAndRuleId" parameterType="map">
+		delete from t_school_class_browser_whitelist_rule where school_class_id = #{schoolClassId} 
+		and browser_whitelist_rule_id =#{browserWhitelistRuleId}
+	</delete>
+	
+	<delete id="deleteSchoolClassUrlBlacklistRuleBySchoolClassAndRule" parameterType="map">
+		delete from t_school_class_url_blacklist_rule where school_class_id = #{schoolClassId}
+		and url_blacklist_rule_id = #{urlBlacklistRuleId}
+	</delete>
+	
+	<delete id="deleteAppWhitelistRuleBySchoolClassAndRule" parameterType="map">
+		delete from t_school_class_app_whitelist_rule where school_class_id = #{schoolClassId}
+		and app_whitelist_rule_id = #{appWhitelistRuleId}
+	</delete>
+	
+	<delete id="deleteSchoolClassUsetimeRuleBySchoolClassAndRule" parameterType="map">
+		delete from t_school_class_usetime_rule where school_class_id = #{schoolClassId}
+		and usetime_rule_id = #{usetimeRuleId}
+	</delete>
+	
+	<delete id="deleteSchoolClassBrowserTagRuleBySchoolClassAndRule" parameterType="map">
+		delete from t_school_class_browser_tag_rule where school_class_id = #{schoolClassId}
+		and browser_tag_rule_id = #{browserTagRuleId}
+	</delete>
+	
+	
+	
+	<delete id="deleteSchoolClassAppNetBlacklistBySchoolClassAndRule" parameterType="map">
+		delete from t_school_class_app_net_blacklist where school_class_id = #{schoolClassId} 
+		and app_net_blacklist_id = #{appNetBlacklistId}
+	</delete>
+	
+	
+	
+	
+	
+	<insert id="save" parameterType="com.whty.assis.devicemanage.model.SchoolClassRule">
+		insert into t_school_class_rule (
+			create_time,
+			update_time,
+			school_class_id
+			<if test="usetimeRuleId != null and usetimeRuleId != ''">,usetime_rule_id</if>
+			<if test="appWhitelistRuleId != null and appWhitelistRuleId != ''">,app_whitelist_rule_id</if>
+			<if test="urlBlacklistRuleId != null and urlBlacklistRuleId != '' ">,url_blacklist_rule_id</if>
+			<if test="browserTagRuleId != null and browserTagRuleId != '' " >,browser_tag_rule_id</if>
+			<if test="browserWhitelistRuleId != null and browserWhitelistRuleId != '' ">,browser_whitelist_rule_id</if>
+		) values (
+			#{createTime},
+			#{updateTime},
+			#{schoolClassId}
+			<if test="usetimeRuleId != null and usetimeRuleId != ''">,#{usetimeRuleId}</if>
+			<if test="appWhitelistRuleId != null and appWhitelistRuleId != ''">,#{appWhitelistRuleId}</if>
+			<if test="urlBlacklistRuleId != null and urlBlacklistRuleId != '' ">,#{urlBlacklistRuleId}</if>
+			<if test="browserTagRuleId != null and browserTagRuleId != '' " >,#{browserTagRuleId}</if>
+			<if test="browserWhitelistRuleId != null and browserWhitelistRuleId != '' ">,#{browserWhitelistRuleId}</if>
+		)
+	</insert>
+	
+	<update id="update" parameterType="com.whty.assis.devicemanage.model.SchoolClassRule">
+		update t_school_class_rule
+		set 
+		<trim prefixOverrides=",">
+			<if test="appWhitelistRuleId != null and appWhitelistRuleId != ''">,app_whitelist_rule_id=#{appWhitelistRuleId}</if>
+			<if test="usetimeRuleId != null and usetimeRuleId != ''">,usetime_rule_id=#{usetimeRuleId}</if>
+			<if test="urlBlacklistRuleId != null and urlBlacklistRuleId != '' ">,url_blacklist_rule_id=#{urlBlacklistRuleId}</if>
+			<if test="browserTagRuleId != null and browserTagRuleId != '' " >,browser_tag_rule_id=#{browserTagRuleId}</if>
+			<if test="browserWhitelistRuleId != null and browserWhitelistRuleId != '' ">,browser_whitelist_rule_id=#{browserWhitelistRuleId}</if>
+		</trim>
+		where id=#{id}
+	</update>
+	
+	<update id="deleteSchoolClassRule" parameterType="com.whty.assis.devicemanage.model.SchoolClassRule">
+		update t_school_class_rule
+		set 
+		<trim prefixOverrides=",">
+			<if test="appWhitelistRuleId == null ">,app_whitelist_rule_id = null</if>
+			<if test="usetimeRuleId ==null ">,usetime_rule_id = null</if>
+			<if test="urlBlacklistRuleId == null  ">,url_blacklist_rule_id = null</if>
+			<if test="browserTagRuleId == null " >,browser_tag_rule_id = null</if>
+			<if test="browserWhitelistRuleId ==null ">,browser_whitelist_rule_id = null</if>
+		</trim>
+		where id=#{id}
+	
+	</update>
+	
+	
+	<select id="getBySchoolClassId" parameterType="int" resultMap="SchoolClassRuleResult">
+		select t1.*,
+t2.name as usetime_rule_name,
+t3.name as  browser_tag_rule_name,
+t4.name as browser_whitelist_rule_name,
+t5.name as url_blacklist_rule_name,
+t6.name as app_whitelist_rule_name
+from t_school_class_rule t1 
+left join t_usetime_rule t2 on t1.usetime_rule_id = t2.id
+left join t_browser_tag_rule t3 on t1.browser_tag_rule_id = t3.id
+left join t_browser_whitelist_rule t4 on t1.browser_whitelist_rule_id = t4.id
+left join t_url_blacklist_rule t5 on t1.url_blacklist_rule_id = t5.id
+left join t_app_whitelist_rule t6 on t1.app_whitelist_rule_id = t6.id
+ where 1=1 and t1.school_class_id = #{schoolClassId}
+	</select>
+	
+	
+	<select id="loadById" parameterType="int" resultMap="SchoolClassRuleResult">
+		select * from t_school_class_rule where 1=1 and id = #{id}
+	</select>
+	
+	<select id="listGradeTree" parameterType="int" resultType="map">
+select t1.grade_id,t2.name,
+cast((SELECT GROUP_CONCAT(id,':',class_name separator ',' )  from t_school_class 
+		where grade_id=t1.grade_id )as char) as sub_value from t_school_class t1 left join t_base_grade t2 on t1.grade_id=t2.id where t1.school_id=#{schoolId} group by t1.grade_id
+	</select>
+	
+	<select id="listByCondition" parameterType="map" resultMap="SchoolClassRuleResult">
+		select * from t_school_class_rule where 1=1 
+		<if test="id != null ">and id=#{id}</if>
+		<if test="classId != null and classId != '' ">and class_id=#{class_id}</if>
+		<if test="appWhitelistRuleId != null and appWhitelistRuleId != '' ">and app_whitelist_rule_id=#{appWhitelistRuleId}</if>
+		<if test="urlBlacklistRuleId != null and urlBlacklistRuleId != '' ">and url_blacklist_rule_id=#{urlBlacklistRuleId}</if>
+		<if test="usetimeRuleId != null and usetimeRuleId != '' ">and usetime_rule_id=#{usetimeRuleId}</if>
+		<if test="browserTagRuleId != null and browserTagRuleId != '' ">and browser_tag_rule_id=#{browserTagRuleId}</if>
+		<if test="browserWhitelistRuleId != null and browserWhitelistRuleId != '' ">and browser_whitelist_rule_id=#{browserWhitelistRuleId}</if>
+		order by create_time desc
+	</select>
+	
+</mapper>

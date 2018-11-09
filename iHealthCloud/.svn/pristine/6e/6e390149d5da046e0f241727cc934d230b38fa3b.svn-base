@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yhcrt.iHealthCloud.mapper.LocationMapper">
+  <resultMap id="BaseResultMap" type="com.yhcrt.iHealthCloud.entity.Location">
+    <id column="location_id" jdbcType="INTEGER" property="locationId" />
+    <result column="imei" jdbcType="VARCHAR" property="imei" />
+    <result column="longitude" jdbcType="VARCHAR" property="longitude" />
+    <result column="latitude" jdbcType="VARCHAR" property="latitude" />
+    <result column="addr" jdbcType="VARCHAR" property="addr" />
+    <result column="location_time" jdbcType="VARCHAR" property="locationTime" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    location_id, imei, longitude, latitude, addr, location_time
+  </sql>
+  <select id="selectByExample" parameterType="com.yhcrt.iHealthCloud.entity.LocationExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from location
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="getLocation" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from location a 
+  	where not exists(select 1 from location b where b.imei=a.imei and b.location_time>a.location_time)
+  </select>
+  
+  <select id="ListOnlineDeviceLocation" parameterType="java.lang.String" resultType="com.yhcrt.iHealthCloud.pojo.LocationData">
+	  SELECT CASE
+		          WHEN length(member.real_name) > 0 THEN member.real_name
+		          WHEN length(member.nick_name) > 0 THEN member.nick_name
+		          ELSE '-'
+		       END AS name,
+		       member.member_id as memberId, location.imei as imei, longitude as longitude, latitude as latitude , 
+		       addr as addr, max(location_time) as locationTime
+		  FROM member, member_device, location
+		 WHERE member.member_id = member_device.member_id
+		       AND member_device.org_id = #{orgId,jdbcType=VARCHAR}
+		       AND location.imei = member_device.imei
+		       AND location.location_time > curdate()
+		GROUP BY location.imei;
+  </select>
+  
+  <select id="searchOnlineDeviceLocation" parameterType="map" resultType="com.yhcrt.iHealthCloud.pojo.LocationData">
+  	<bind name="param" value="'%'+ param2 + '%'" />
+	  SELECT CASE
+		          WHEN length(member.real_name) > 0 THEN member.real_name
+		          WHEN length(member.nick_name) > 0 THEN member.nick_name
+		          ELSE '-'
+		       END AS name,
+		       member.member_id as memberId, location.imei as imei, longitude as longitude, latitude as latitude , 
+		       addr as addr, max(location_time) as locationTime
+		  FROM member, member_device, location
+		 WHERE member.member_id = member_device.member_id
+		       AND member_device.org_id = #{orgId,jdbcType=VARCHAR}
+		       AND (member_device.imei like #{param} or member.real_name like #{param} or member.nick_name like #{param})
+		       AND location.imei = member_device.imei
+		       AND location.location_time > curdate()
+		GROUP BY location.imei;
+  </select>  
+  
+  <select id="getOrbit" parameterType="java.lang.String" resultMap="BaseResultMap">
+  	select 
+  	<include refid="Base_Column_List" />
+  	from location
+  	where imei=#{imei,jdbcType=VARCHAR} and DATE_FORMAT(location_time,'%Y-%m-%d')=DATE_FORMAT(NOW(),#{locationTime,jdbcType=VARCHAR})
+  </select>
+  
+  <select id="selectByPrimaryKey" parameterType="java.lang.String"  resultMap="BaseResultMap">
+  	<bind name="imei" value="'%'+ _parameter + '%'" />
+    select 
+    <include refid="Base_Column_List" />
+    from location a
+    where not exists(select 1 from location b where b.imei=a.imei and b.location_time>a.location_time) and a.imei LIKE #{imei}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from location
+    where location_id = #{locationId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.yhcrt.iHealthCloud.entity.LocationExample">
+    delete from location
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.yhcrt.iHealthCloud.entity.Location">
+    insert into location (location_id, imei, longitude, 
+      latitude, addr, location_time
+      )
+    values (#{locationId,jdbcType=INTEGER}, #{imei,jdbcType=VARCHAR}, #{longitude,jdbcType=VARCHAR}, 
+      #{latitude,jdbcType=VARCHAR}, #{addr,jdbcType=VARCHAR}, #{locationTime,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.yhcrt.iHealthCloud.entity.Location">
+    insert into location
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="locationId != null">
+        location_id,
+      </if>
+      <if test="imei != null">
+        imei,
+      </if>
+      <if test="longitude != null">
+        longitude,
+      </if>
+      <if test="latitude != null">
+        latitude,
+      </if>
+      <if test="addr != null">
+        addr,
+      </if>
+      <if test="locationTime != null">
+        location_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="locationId != null">
+        #{locationId,jdbcType=INTEGER},
+      </if>
+      <if test="imei != null">
+        #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null">
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null">
+        #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="locationTime != null">
+        #{locationTime,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.yhcrt.iHealthCloud.entity.LocationExample" resultType="java.lang.Long">
+    select count(*) from location
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update location
+    <set>
+      <if test="record.locationId != null">
+        location_id = #{record.locationId,jdbcType=INTEGER},
+      </if>
+      <if test="record.imei != null">
+        imei = #{record.imei,jdbcType=VARCHAR},
+      </if>
+      <if test="record.longitude != null">
+        longitude = #{record.longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.latitude != null">
+        latitude = #{record.latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="record.addr != null">
+        addr = #{record.addr,jdbcType=VARCHAR},
+      </if>
+      <if test="record.locationTime != null">
+        location_time = #{record.locationTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update location
+    set location_id = #{record.locationId,jdbcType=INTEGER},
+      imei = #{record.imei,jdbcType=VARCHAR},
+      longitude = #{record.longitude,jdbcType=VARCHAR},
+      latitude = #{record.latitude,jdbcType=VARCHAR},
+      addr = #{record.addr,jdbcType=VARCHAR},
+      location_time = #{record.locationTime,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yhcrt.iHealthCloud.entity.Location">
+    update location
+    <set>
+      <if test="imei != null">
+        imei = #{imei,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        longitude = #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null">
+        latitude = #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="addr != null">
+        addr = #{addr,jdbcType=VARCHAR},
+      </if>
+      <if test="locationTime != null">
+        location_time = #{locationTime,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where location_id = #{locationId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yhcrt.iHealthCloud.entity.Location">
+    update location
+    set imei = #{imei,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=VARCHAR},
+      addr = #{addr,jdbcType=VARCHAR},
+      location_time = #{locationTime,jdbcType=VARCHAR}
+    where location_id = #{locationId,jdbcType=INTEGER}
+  </update>
+</mapper>

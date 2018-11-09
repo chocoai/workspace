@@ -1,0 +1,193 @@
+@charset "UTF-8";
+html {
+  font-size: 62.5%;
+  font-family: Helvetica, "Microsoft YaHei",Arial, sans-serif,"寰蒋闆呴粦";
+  background: #f8f8f8;
+  color: #000; }
+
+body, html {
+  height: 100%;
+  line-height: 1.5; }
+
+body {
+  font-size: 14px;
+  font-size: 1.4rem; }
+
+html {
+  position: relative; }
+
+@media only screen and (min-width: 480px) {
+  html {
+    font-size: 94% !important; } }
+@media only screen and (min-width: 561px) {
+  html {
+    font-size: 109% !important; } }
+@media only screen and (min-width: 641px) {
+  html {
+    font-size: 125% !important; } }
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent; }
+
+article, aside, details, figcaption, figure, footer, header, hgroup, main, menu, nav, section, summary {
+  display: block; }
+
+input, textarea, select {
+  border-radius: 0;
+  appearance: none;
+  -webkit-appearance: none;
+  border: 0 none;
+  resize: none;
+  font: inherit;
+  line-height: 1; }
+
+::-webkit-input-placeholder {
+  /* WebKit browsers */
+  color: #ccc; }
+
+:-moz-placeholder {
+  /* Mozilla Firefox 4 to 18 */
+  color: #ccc; }
+
+::-moz-placeholder {
+  /* Mozilla Firefox 19+ */
+  color: #ccc; }
+
+:-ms-input-placeholder {
+  /* Internet Explorer 10+ */
+  color: #ccc; }
+
+input:focus {
+  outline: none; }
+
+table {
+  border-collapse: collapse; }
+
+img {
+  border: 0;
+  vertical-align: middle; }
+
+em, i, dfn {
+  font-style: normal; }
+
+ul, ol, li {
+  list-style-type: none; }
+
+a {
+  color: #000;
+  text-decoration: none;
+  outline: none; }
+
+a:hover {
+  text-decoration: none; }
+
+.tc {
+  text-align: center; }
+
+.fl {
+  float: left; }
+
+.fr {
+  float: right; }
+
+.clearfix:before, .clearfix:after {
+  display: table;
+  line-height: 0;
+  content: "";
+  clear: both; }
+
+body {
+  background: #f3f3f1; }
+
+.d_warp {
+  padding-top: 2.15rem; }
+  .d_warp .logo {
+    display: block;
+    margin: auto;
+    width: 27.6%; }
+  .d_warp .d_content p.c_button {
+    width: 100%;
+    background: #f3f3f1;
+    overflow: hidden; }
+    .d_warp .d_content p.c_button a {
+      display: block;
+      width: 15.5rem;
+      height: 4rem;
+      margin: 3.15rem  auto 3.1rem auto;
+      background: #17b5bd url(../../images/index/buttonTxt.png) 50% 50% no-repeat;
+      background-size: 40.3%;
+      border-radius: 2.5rem; }
+  .d_warp .d_content span {
+    display: block;
+    width: 100%;
+    padding-top: 4.15rem;
+    padding-bottom: 6rem;
+    background: #eaebe7; }
+    .d_warp .d_content span img {
+      width: 86.67%;
+      display: block;
+      margin-left: 11%; }
+  .d_warp .d_content .d_c_pic1 {
+    display: block;
+    width: 100%;
+    background: #f3f3f1;
+    padding: 2.95rem 0 0 0; }
+    .d_warp .d_content .d_c_pic1 img {
+      width: 72.67%;
+      margin: auto;
+      display: block; }
+  .d_warp .d_content em {
+    display: block;
+    width: 100%;
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+    background: #f3f3f1; }
+    .d_warp .d_content em img {
+      width: 100%; }
+  .d_warp .d_content strong {
+    display: block;
+    width: 100%;
+    padding-bottom: 3rem;
+    background: #eaebe7; }
+    .d_warp .d_content strong img {
+      width: 100%; }
+  .d_warp .d_footer {
+    background: #f3f3f1;
+    overflow: hidden;
+    padding-bottom: 4.35rem; }
+    .d_warp .d_footer .scan {
+      display: block;
+      width: 16.7rem;
+      height: 9.95rem;
+      margin: 2.35rem auto 2.75rem auto;
+      background: url(../../images/index/scan.png) 0 0 no-repeat;
+      background-size: contain; }
+    .d_warp .d_footer .connection {
+      display: block;
+      width: 26.55rem;
+      height: 6.4rem;
+      margin: auto;
+      background: url(../../images/index/connection.png) 0 0 no-repeat;
+      background-size: contain; }
+
+.moban {
+  width: 100%;
+  height: 100%;
+  background: #000;
+  opacity: 0.6;
+  position: absolute;
+  z-index: 999;
+  top: 0; }
+  .moban img {
+    width: 22.8%;
+    float: right;
+    margin-right: 1.5rem; }
+
+.moban.dis_none {
+  display: none; }
+
+/*# sourceMappingURL=index.css.map */

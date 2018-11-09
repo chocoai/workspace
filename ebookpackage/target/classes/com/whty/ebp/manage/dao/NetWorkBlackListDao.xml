@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.ebp.manage.dao.NetWorkBlackListDao">
+
+	<resultMap type="com.whty.ebp.manage.model.NetWorkBlackList" id="netWorkBlackListResultPage">
+		<result column="id" property="id" jdbcType="VARCHAR" />
+		<result column="net_work_address" property="netWorkAddress" jdbcType="VARCHAR" />
+		<result column="memo" property="memo" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="flat_model_Ids" property="flatModelIds" />
+		<result column="platform_codes" property="platform_codes" />
+			
+	</resultMap>
+
+	<select id="loadById" parameterType="string" resultMap="netWorkBlackListResultPage">
+		select t.*, (SELECT GROUP_CONCAT(flat_model_id) as flat_models_ids from TA_NETWORK_BLACK_LIST_FLAT_MODEL 
+		where NET_WORK_BLACK_LIST_ID=t.id) as flat_model_ids
+		from TA_NETWORK_BLACK_LIST t where t.id= #{_parameter}
+	</select>
+
+
+	<delete id="deleteNetWorkBlackListFlatModeByBlackListId" parameterType="string">
+		delete from TA_NETWORK_BLACK_LIST_FLAT_MODEL where NET_WORK_BLACK_LIST_ID= #{_parameter}
+	</delete>
+
+	<delete id="deleteNetWorkBlackListPlatformCodeByBlackListId" parameterType="string">
+		delete from TA_NETWORK_BLACK_LIST_PLATFORM_INFO where NET_WORK_BLACK_LIST_ID= #{_parameter}
+	</delete>
+
+	<delete id="deleteById" parameterType="string">
+		delete from TA_NETWORK_BLACK_LIST
+		where id=#{_parameter}
+	</delete>
+
+<select id="apiQueryMap" parameterType="map" resultType="java.util.HashMap">
+	select net_work_address from TA_NETWORK_BLACK_LIST where id not in
+		(select net_work_black_list_id from TA_NETWORK_BLACK_LIST_PLATFORM_INFO GROUP BY net_work_black_list_id) 
+		and id not in(select net_work_black_list_id from TA_NETWORK_BLACK_LIST_FLAT_MODEL GROUP BY net_work_black_list_id)
+		and status=1
+		order by create_time desc
+	</select>
+
+	<select id="queryNetWorkBlackListByModelCodeMap" parameterType="map" resultType="java.util.HashMap">
+	select net_work_address,(select group_concat(t1.platform_code) from TA_NETWORK_BLACK_LIST_PLATFORM_INFO t1,
+TA_PLATFORM_INFO t2 where t1.platform_code=t2.platform_code and t1.NET_WORK_BLACK_LIST_ID=a.id) as platform_code from 
+(select t1.* from TA_NETWORK_BLACK_LIST t1,TA_NETWORK_BLACK_LIST_FLAT_MODEL t2, TA_FLAT_MODEL t3 where t1.ID=t2.NET_WORK_BLACK_LIST_ID and t2.FLAT_MODEL_ID=t3.ID and t3.MODEL_CODE=#{modelCode} and status=1) as a order by create_time desc
+	</select>
+
+	<select id="queryNetWorkBlackListByPlatformCodeMap" parameterType="map" resultType="java.util.HashMap">
+	select net_work_address,(select group_concat(model_code) from TA_NETWORK_BLACK_LIST_FLAT_MODEL t1,TA_FLAT_MODEL t2 
+   where t1.flat_model_id=t2.id and t1.NET_WORK_BLACK_LIST_ID=a.id) as flat_model from 
+(select t1.* from TA_NETWORK_BLACK_LIST t1,TA_NETWORK_BLACK_LIST_PLATFORM_INFO t2, TA_PLATFORM_INFO t3 where t1.ID=t2.NET_WORK_BLACK_LIST_ID and t2.PLATFORM_CODE=t3.PLATFORM_CODE and t3.PLATFORM_CODE=#{platformCode} and status=1) as a order by create_time desc
+	</select>
+
+<select id="queryNetWorkBlackListByPlatformCodeAndModelCode" parameterType="map" resultType="java.util.HashMap">
+ select net_work_address,(select group_concat(model_code) from TA_NETWORK_BLACK_LIST_FLAT_MODEL t1,TA_FLAT_MODEL t2 
+   where t1.flat_model_id=t2.id and t1.NET_WORK_BLACK_LIST_ID=ttt.id) as flat_model,
+(select group_concat(t1.platform_code) from TA_NETWORK_BLACK_LIST_PLATFORM_INFO t1,
+TA_PLATFORM_INFO t2 where t1.platform_code=t2.platform_code and t1.NET_WORK_BLACK_LIST_ID=ttt.id) as platform_code
+ from TA_NETWORK_BLACK_LIST ttt where status=1
+	</select>
+
+
+	<select id="queryNetWorkBlackListByPlatformCodeAndModelCode2" parameterType="map" resultType="java.util.HashMap">
+	select t1.net_work_address from 
+(select t1.* from TA_NETWORK_BLACK_LIST t1,
+TA_NETWORK_BLACK_LIST_FLAT_MODEL t2, TA_FLAT_MODEL t3 
+where t1.ID=t2.NET_WORK_BLACK_LIST_ID and t2.FLAT_MODEL_ID=t3.ID and 
+t3.MODEL_CODE=#{modelCode} and status=1) t1,
+(select t1.* from TA_NETWORK_BLACK_LIST t1,TA_NETWORK_BLACK_LIST_PLATFORM_INFO t2, 
+TA_PLATFORM_INFO t3 where t1.ID=t2.NET_WORK_BLACK_LIST_ID and 
+t2.PLATFORM_CODE=t3.PLATFORM_CODE and t3.PLATFORM_CODE=#{platformCode} and status=1) t2 where t1.id=t2.id
+	</select>
+
+
+
+	<select id="apiQuery" resultMap="netWorkBlackListResultPage">
+	select * from TA_NETWORK_BLACK_LIST where id not in
+		(select net_work_black_list_id from TA_NETWORK_BLACK_LIST_PLATFORM_INFO GROUP BY net_work_black_list_id) 
+		and id not in(select net_work_black_list_id from TA_NETWORK_BLACK_LIST_FLAT_MODEL GROUP BY net_work_black_list_id)
+		and status=1
+		order by create_time desc
+	</select>
+
+	<select id="queryNetWorkBlackListByModelCode" resultMap="netWorkBlackListResultPage">
+	select * from 
+(select t1.* from TA_NETWORK_BLACK_LIST t1,TA_NETWORK_BLACK_LIST_FLAT_MODEL t2, TA_FLAT_MODEL t3 where t1.ID=t2.NET_WORK_BLACK_LIST_ID and t2.FLAT_MODEL_ID=t3.ID and t3.MODEL_CODE=#{modelCode} and status=1) as a order by create_time desc
+	</select>
+
+	<select id="queryNetWorkBlackListByPlatformCode" resultMap="netWorkBlackListResultPage">
+	select * from 
+(select t1.* from TA_NETWORK_BLACK_LIST t1,TA_NETWORK_BLACK_LIST_PLATFORM_INFO t2, TA_PLATFORM_INFO t3 where t1.ID=t2.NET_WORK_BLACK_LIST_ID and t2.PLATFORM_CODE=t3.PLATFORM_CODE and t3.PLATFORM_CODE=#{platformCode} and status=1) as a order by create_time desc
+	</select>
+
+
+	<insert id="saveNetWorkBlackListFlatModel" parameterType="map">
+		insert into TA_NETWORK_BLACK_LIST_FLAT_MODEL(
+		<trim suffixOverrides=",">
+			<if test="netWorkBlackListId != null">net_work_black_list_id,</if>
+			<if test="flatModelId != null">flat_model_id,</if>
+		</trim>
+		)
+		values(
+		<trim suffixOverrides=",">
+			<if test="netWorkBlackListId != null">#{netWorkBlackListId},</if>
+			<if test="flatModelId != null">#{flatModelId},</if>
+		</trim>
+		)
+	</insert>
+
+	<insert id="saveNetWorkBlackListPlatformInfo" parameterType="map">
+		insert into TA_NETWORK_BLACK_LIST_PLATFORM_INFO(
+		<trim suffixOverrides=",">
+			<if test="netWorkBlackListId != null">net_work_black_list_id,</if>
+			<if test="platformCode != null">platform_code,</if>
+		</trim>
+		)
+		values(
+		<trim suffixOverrides=",">
+			<if test="netWorkBlackListId != null">#{netWorkBlackListId},</if>
+			<if test="platformCode != null">#{platformCode},</if>
+		</trim>
+		)
+	</insert>
+
+	<select id="queryFlatModelByNetWorkBlackListId" parameterType="map"
+		resultType="java.util.HashMap">
+		select t3.id,t3.model_code from TA_NETWORK_BLACK_LIST_FLAT_MODEL t1 left join
+		 TA_FLAT_MODEL t3 on
+		t1.FLAT_MODEL_ID=t3.ID
+		WHERE 1=1
+		<if test="netWorkBlackListId != null "> and t1.net_work_black_list_id=#{netWorkBlackListId}</if>
+	</select>
+
+	<select id="queryPlatformCodeByNetWorkBlackListId" parameterType="map"
+		resultType="java.util.HashMap">
+		select t3.platform_code,t3.platform_name from TA_NETWORK_BLACK_LIST_PLATFORM_INFO t1 left join
+		 TA_PLATFORM_INFO t3 on
+		t1.platform_code=t3.platform_Code
+		WHERE 1=1
+		<if test="netWorkBlackListId != null "> and t1.net_work_black_list_id=#{netWorkBlackListId}</if>
+	</select>
+
+
+	<select id="listByCondition" parameterType="map" resultMap="netWorkBlackListResultPage">
+		SELECT * FROM TA_NETWORK_BLACK_LIST where 1=1
+		 order by  create_time desc
+	</select>
+
+	<insert id="save">
+		insert into TA_NETWORK_BLACK_LIST(
+		<trim suffixOverrides=",">
+			<if test="id != null">id,</if>
+			<if test="netWorkAddress != null">net_work_address,</if>
+			<if test="memo != null">memo,</if>
+			<if test="status != null">status,</if>
+			<if test="createTime != null">create_Time,</if>
+		</trim>
+		)
+		values(
+		<trim suffixOverrides=",">
+			<if test="id != null">#{id},</if>
+			<if test="netWorkAddress != null">#{netWorkAddress},</if>
+			<if test="memo != null">#{memo},</if>
+			<if test="status != null">#{status},</if>
+			<if test="createTime != null">#{createTime},</if>
+		</trim>
+		)
+	</insert>
+
+
+	<update id="update">
+		update TA_NETWORK_BLACK_LIST set
+		<trim suffixOverrides=",">
+			<if test="memo != null">memo=#{memo},</if>
+			<if test="netWorkAddress != null">netWorkAddress = #{netWorkAddress},</if>
+			<if test="updateTime != null">update_Time = #{updateTime},</if>
+			<if test="status != null">status = #{status},</if>
+		</trim>
+		where id=#{id}
+	</update>
+
+</mapper>

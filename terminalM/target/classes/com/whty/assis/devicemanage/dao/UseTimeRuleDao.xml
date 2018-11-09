@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.devicemanage.dao.UseTimeRuleDao">
+	
+	<resultMap type="com.whty.assis.devicemanage.model.UseTimeRule" id="UseTimeRuleResult">
+		<result property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="dateType" column="date_type" />
+		<result property="startDate" column="start_date" />
+		<result property="endDate" column="end_date" />
+		<result property="timeType" column="time_type" />
+		<result property="startTime" column="start_Time" />		
+		<result property="endTime" column="end_Time" />
+		<result property="creator" column="creator" />
+		<result property="creatorName" column="creator_name" />
+		<result property="memo" column="memo" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="typeName" column="type_name" />
+	</resultMap>
+	
+	
+	<update id="update" parameterType="com.whty.assis.devicemanage.model.UseTimeRule">
+		update t_usetime_rule
+		set 
+		<trim prefixOverrides=",">
+			<if test="name != null and name != ''">,name=#{name}</if>
+			<if test="dateType != null and dateType != '' ">,date_type=#{dateType}</if>
+			<if test="startDate != null  " >,start_date=#{startDate}</if>
+			<if test="endDate != null  ">,end_date=#{endDate}</if>
+			<if test="memo != null and memo != '' ">,memo=#{memo}</if>
+			<if test="timeType != null and timeType != '' ">,time_type=#{timeType}</if>
+			<if test="startTime != null and startTime != '' ">,start_time=#{startTime}</if>
+			<if test="endTime != null and endTime != '' ">,end_time=#{endTime}</if>
+			<if test="updateTime != null ">,update_time=#{updateTime}</if>
+		</trim>
+		where id=#{id}
+	</update>
+	
+	<insert id="save" parameterType="com.whty.assis.devicemanage.model.UseTimeRule">
+		insert into t_usetime_rule(
+		name
+		,date_type
+		<if test="startDate != null ">,start_date</if>
+		<if test="endDate != null ">,end_date</if>
+		<if test="memo != null and memo != ''">,memo</if>
+		 ,creator
+		<if test="timeType != null and timeType !='' ">,time_type</if>
+		<if test="startTime != null and startTime != ''">,start_time</if>
+		<if test="endTime != null and endTime != ''">,end_Time</if>
+		,create_time
+		,update_time
+			) values (
+				#{name}
+				,#{dateType}
+				<if test="startDate != null ">,#{startDate}</if>
+				<if test="endDate != null ">,#{endDate}</if>
+				<if test="memo != null and memo != ''">,#{memo}</if>
+				,#{creator}
+				<if test="timeType != null and timeType != ''">,#{timeType}</if>
+				<if test="startTime != null and startTime != ''">,#{startTime}</if>
+				<if test="endTime != null and endTime != ''">,#{endTime}</if>
+				,#{createTime}
+				,#{updateTime}
+			)
+	</insert>
+
+	<delete id="deleteById" parameterType="int" >
+		delete from t_usetime_rule where id=#{_parameter}
+	</delete>
+
+	<select id="loadById" parameterType="int" resultMap="UseTimeRuleResult">
+	select t1.*,t2.user_name as creator_name,t3.value as type_name from t_usetime_rule t1 left join ta_manage_user_info t2 on t1.creator=t2.id left join v_usetime_type t3 on t1.date_Type=t3.key
+		where 1=1
+		and t1.id=#{id}
+	</select>
+
+	<select id="listByCondition" parameterType="map" resultMap="UseTimeRuleResult">
+		select t1.*,t2.user_name as creator_name,t3.value as type_name from t_usetime_rule t1 left join ta_manage_user_info t2 on t1.creator=t2.id left join v_usetime_type t3 on t1.date_Type=t3.key
+		where 1=1
+		<if test="id != null ">and t1.id=#{id}</if>
+		<if test="name != null and name != '' ">and t1.name=#{name}</if>
+		order by t1.create_time desc
+	</select>
+	
+	<select id="listBySchoolClassRule" parameterType="int" resultMap="UseTimeRuleResult">
+		select * from t_usetime_rule 
+where id in(select usetime_rule_id from t_school_class_usetime_rule where school_class_id=#{_parameter})
+	</select>
+	
+</mapper>

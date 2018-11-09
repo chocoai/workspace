@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="keywords" content="${site.keywords!}" />
+<meta http-equiv="description" content="${site.description!}" />
+<title>${channel.title!channel.name} - ${site.name}</title>
+
+<link rel="stylesheet" type="text/css" href="/${res}/css/index_fc.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/public_all.css" />
+<link rel="stylesheet" type="text/css" href="/${res}/css/global.css" />
+
+
+<script type="text/javascript" src="/${res}/js/dc/settitle.js"></script>
+<script type="text/javascript" src="${resSys}/jquery.js"></script>
+<script type="text/javascript" src="${resSys}/jqueryUI/jquery-ui.js"></script>
+<script type="text/javascript" src="${resSys}/front.js"></script>
+<script type="text/javascript" src="/${res}/js/common.js"></script>
+<script type="text/javascript" src="/${res}/js/dc/jquery-1.8.3.min.js"></script>
+<script type="text/javascript" src="/${res}/js/dc/jquery.select.js"></script>
+
+<script type="text/javascript">
+	$(function() {
+		Cms.checkPerm("${base}", "${content.id}");
+		Cms.collectCsi("${base}", "collectCsiDiv", "collect_csi",
+				"${content.id}");
+		Cms.attachment("${base}", "${content.id}",
+				"${content.attachments?size}", "attach");
+		Cms.viewCount("${base}", "${content.id}");
+		Cms.siteFlow("${base}", location.href, document.referrer,
+				"${site.config.flowSwitch?string}");
+	});
+</script>
+
+</head>
+
+<body>
+
+	[#include "../include/fc_nav.html"/]
+
+	<div style="clear: both;"></div>
+
+	<!--内容 开始-->
+	<div class="content">
+		<div class="box mt10">
+			<div class="map">
+				<img src="/${res}/images/home.png" width="20" height="18">
+				<a href="${base}/">首页</a>> 
+				[#list channel.nodeList as n]
+				<a href="${n.url}">${n.name}</a>
+				[#if n_has_next] > [/#if] [/#list] > 正文
+			</div>
+
+			<div class="details">
+				<div class="details_left">
+					<div class="article_title">${content.title}</div>
+					<div class="time">
+						<span>发布时间：${content.releaseDate}</span>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<span>来源： ${content.origin!'本站原创'}</span>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<span>浏览次数：</span>
+						<span id="views"></span>
+						&nbsp;&nbsp;&nbsp;&nbsp;
+						<span> </span>
+
+					</div>
+					<div class="article">
+						${txt!}
+						 [#if content.channel.allowShare]
+                             [#include "inc_share.html"/]
+                          [/#if]
+                            [#if content.channel.allowScore]
+				             <!-- 评分开始 -->
+				             <div style="margin-top:20px;width:730px;text-align:center;clear:both;">
+				               [#include "inc_score.html"/]
+				             </div>
+				             <!-- 评分结束 -->
+				            [/#if]
+						<div style="clear: both;"></div>
+						[#include "inc_relation.html"/]
+					</div>
+					
+					<!-- JiaThis Button BEGIN -->
+					<div class="jiathis_style">
+						<a class="jiathis_button_qzone"></a>
+						<a class="jiathis_button_tsina"></a>
+						<a class="jiathis_button_tqq"></a>
+						<a class="jiathis_button_weixin"></a>
+						<a class="jiathis_button_renren"></a>
+						<a href="http://www.jiathis.com/share" class="jiathis jiathis_txt jtico jtico_jiathis" target="_blank"></a>
+						<a class="jiathis_counter_style"></a>
+					</div>
+					
+					<!-- JiaThis Button END -->
+
+					<div style="clear: both;"></div>
+					[#if channel.commentControl!=2]
+					<div class="send_mess mt10">
+						<span style="float: left">我要评论</span>
+						<span style="float: right;">
+							<a href="${base}/comment.jspx?contentId=${content.id}" target="_blank">
+								已有
+								<span id="comments"></span>
+								条评论
+							</a>
+						</span>
+					</div>
+					[#include "inc_comment_input.html"/]
+					[#include "../special/comment_list.html"/]
+					[/#if]
+				</div>
+
+				[#include "../include/right.html"/]
+
+			</div>
+
+		</div>
+	</div>
+	<!--内容 end-->
+
+	[#include "../include/footer.html"/]
+	<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js" charset="utf-8"></script>
+</body>
+</html>

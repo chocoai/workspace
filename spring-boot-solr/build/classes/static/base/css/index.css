@@ -1,0 +1,50 @@
+.downloadBox span {
+	display: block;
+	float: left;
+}
+
+.downloadBox .dow1 {
+	width: 292px;
+	color: #fa9801;
+	font-size: 40px;
+	line-height: 60px;
+	margin: 103px 50px;
+	text-align: right;
+}
+
+.downloadBox .dow2 {
+	width: 216px;
+	margin: 51px 0;
+}
+
+.downloadBox .dow2 img {
+	display: block;
+	width: 216px;
+	height: 224px;
+}
+
+.downloadBox .dow3 {
+	width: 392px;
+}
+
+.downloadBox .dow3 a {
+	display: block;
+	width: 179px;
+	height: 48px;
+	text-align: center;
+	line-height: 48px;
+	font-size: 18px;
+	margin-left: 80px;
+}
+
+.downloadBox .dow3 .iphoneW {
+	margin-top: 107px;
+	color: #fff;
+	background: url(/img/index/button1.png) no-repeat;
+}
+
+.downloadBox .dow3 .androidW {
+	margin-top: 16px;
+	color: #fa9801;
+	background: url(/img/index/button2.png) no-repeat;
+}

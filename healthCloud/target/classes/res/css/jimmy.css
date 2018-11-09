@@ -1,0 +1,49 @@
+@CHARSET "UTF-8";
+/*
+        机构用户管理和会员管理的样式统一写在此处
+   Created By jimmy     
+*/
+
+.container-fluid ul:first-child{margin-bottom: 10px;}
+
+#subDiv {margin-bottom: 10px; }
+
+#table {margin-bottom: 10px;}
+#table tr th{text-align:center;}
+#table tr td{text-align:center;}
+#table tr{height:32px;}
+#table tr td:last-child a:last-child{color:red;}
+
+#roleDiv label:first-child{padding-left:0px;}
+
+.requriedRed {color:red;}
+
+/** 菜单栏 start */
+#left,#openClose, #right {
+	float: left;
+}
+
+#left {
+    position:fixed;    
+}
+
+#openClose {
+	width: 10px;
+	cursor: pointer;
+	position:fixed;
+	left: 140px;
+	top:45%;
+}
+
+#right {
+    position:relative;
+    left:160px;
+}
+#openClose.close {
+	background-position: 1px center;
+}
+
+#openClose, #openClose.close {
+	background: #fdfdfd url(../../res/img/openclose.png) no-repeat -29px center;
+}
+/** 菜单栏 end */

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.basicdata.dao.TerminalDeviceTypeDao">
+
+	<!-- 这里的Demo是别名，需要在mybatis-config.xml中定义，或者写类全名 -->
+	<resultMap type="com.whty.assis.basicdata.model.TerminalDeviceType" id="TerminalDeviceResult">
+		<id property="id" column="id" />
+		<result property="name" column="name" />
+		<result property="creator"  column="creator" />
+		<result property="terminalUserType" column="terminal_user_type" />
+		<result property="memo" column="memo" />
+		<result property="screenType" column="screen_type" />
+		<result property="touchType" column="touch_type" />
+		<result property="createTime" column="create_time" />
+		<result property="updateTime" column="update_time" />
+		<result property="count" column="count" />
+		<result property="iconPath" column="icon_path" />
+	</resultMap>
+	
+	
+	<delete id="deleteById"  parameterType="int">
+		delete from t_terminal_device_type where 1=1 and id=#{id}
+	</delete>
+	
+	
+	
+	<insert id="save" parameterType="com.whty.assis.basicdata.model.TerminalDeviceType">
+		insert into t_terminal_device_type(
+			name,
+			terminal_user_type,
+			memo,
+			screen_type,
+			screen_size,
+			touch_type,
+			create_time,
+			update_time,
+			creator
+			) values (
+				#{name},
+				#{terminalUserType},
+				#{memo},
+				#{screenType},
+				#{screenSize},
+				#{touchType},
+				#{createTime},
+				#{updateTime},
+				#{creator}
+			)
+	</insert>
+	
+	<update id="update" parameterType="com.whty.assis.basicdata.model.TerminalDeviceType">
+		update t_terminal_device_type
+		set 
+		<trim prefixOverrides=",">
+			<if test="updateTime != null ">, update_time=#{updateTime}</if>
+			<if test="name != null and name != ''">, name=#{name}</if>
+			<if test="memo != null ">, memo=#{memo}</if>
+		</trim>
+		where id=#{id}
+	</update>
+	
+	
+	
+	
+	<select id="listTerminalType" resultType="map">
+		select t1.*,ifnull(t2.count ,0) as count from v_terminal_type t1 left join (select terminal_user_type,count(*) as count from t_terminal_device_type group by terminal_user_type) t2 
+on t1.key = t2.terminal_user_type 
+	</select>
+	
+	<!-- 各种类型的终端数量 -->
+	<select id="listTerminalUserTypeCount" resultMap="TerminalDeviceResult">
+		select terminal_user_type,count(*) as count from t_terminal_device_type group by terminal_user_type
+	</select>
+	
+	
+	
+	<select id="listByCondition" parameterType="map" resultMap="TerminalDeviceResult">
+		select t1.*,t2.user_name as creator_name from t_terminal_device_type t1 left join ta_manage_user_info t2 on t1.creator=t2.id
+		where 1=1
+		<if test="id != null ">and t1.id=#{id}</if>
+		<if test="name != null ">and t1.name=#{name}</if>
+		<if test="terminalUserType != null ">and t1.terminal_user_type=#{terminalUserType}</if>
+		<if test="aliProductKey != null and aliProductKey !='' ">and t1.ali_product_key=#{aliProductKey}</if>
+		order by t1.create_time desc
+	</select>
+	
+	
+</mapper>

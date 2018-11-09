@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.mxbj.api.dao.TextbookNoteDao">
+
+	<resultMap type="com.whty.mxbj.api.model.TextbookNote" id="TextbookNoteResult">
+		<result column="user_id" property="userId" />
+		<result column="note_id" property="noteId" />
+		<result column="login_platform_code" property="loginPlatformCode" />
+		<result column="note_name" property="noteName" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="last_edit_time" property="lastEditTime" />
+		<result column="archive_note_id" property="archiveNoteId" />
+		<result column="plan_id" property="planId" />
+		<result column="pushed_id" property="pushedId"/>
+		<result column="plan_name" property="planName"/>
+		<result column="note_type" property="noteType"/>
+		<result column="note_name" property="noteName"/>
+		<result column="cover_image_url" property="coverImageUrl"/>
+		<result column="text_book_id" property="textBookId"/>
+		<result column="text_book_name" property="textBookName"/>
+	</resultMap>
+
+	
+	<insert id="save" parameterType="com.whty.mxbj.api.model.TextbookNote" >
+		insert into T_TEXTBOOK_NOTE (
+		NOTE_ID
+		,USER_ID
+		,LOGIN_PLATFORM_CODE
+		,NOTE_TYPE
+		<if test="textBookId != null and textBookId != ''">,text_book_id</if>
+		<if test="textBookName != null  and textBookName != '' ">,text_book_name</if>
+		<if test="planId != null  and planId != '' ">,plan_id</if>
+		<if test="planName != null  and planName != '' ">,plan_name</if>
+		<if test="pushedId != null  and pushedId != '' ">,pushed_id</if>
+		<if test="archiveNoteId != null  and archiveNoteId != '' ">,archive_note_id</if>
+		<if test="createTime != null  ">,create_time</if>
+		<if test="updateTime != null  ">,update_time</if>
+		) values(
+		#{noteId}
+		,#{userId}
+		,#{loginPlatformCode}
+		,#{noteType}
+		<if test="textBookId != null and textBookId != '' ">,#{textBookId}</if>
+		<if test="textBookName != null and textBookName != '' ">,#{textBookName}</if>
+		<if test="planId != null and planId != '' ">,#{planId}</if>
+		<if test="planName != null and planName != '' ">,#{planName}</if>
+		<if test="pushedId != null and pushedId != '' ">,#{pushedId}</if>
+		<if test="archiveNoteId != null and archiveNoteId != '' ">,#{archiveNoteId}</if>
+		<if test="createTime != null  ">,#{createTime}</if>
+		<if test="updateTime != null  ">,#{updateTime}</if>
+		)
+	</insert>
+
+	<delete id="deleteNote"  parameterType="com.whty.mxbj.api.model.TextbookNote">
+		delete from T_TEXTBOOK_NOTE where id=#{id}
+	</delete>
+
+<!-- 
+	<update id="update" parameterType="com.whty.mxbj.api.model.TextbookNote">
+		update T_TEXTBOOK_NOTE
+		set
+		<trim prefixOverrides=",">
+			<if test="noteName != null ">,note_name=#{noteName}</if>
+			<if test="lastEditTime != null ">,last_edit_time=#{lastEditTime}</if>
+			<if test="updateTime != null ">,update_time=#{updateTime}</if>
+			<if test="subjectId != null ">,subject_id=#{subjectId}</if>
+		</trim>
+		where note_id = #{noteId} and user_id = #{userId} and user_platform_code = #{userPlatformCode}
+	</update>
+ -->
+ 
+ <!-- 
+	<select id="loadNote" parameterType="map" resultMap="NoteResult">
+		select * from T_NOTE where note_id = #{noteId} and user_id= #{userId} and user_platform_code = #{userPlatformCode}
+	</select>
+ -->
+	<select id="listByCondition" parameterType="map" resultMap="TextbookNoteResult">
+	select t1.*,t2.COVER_IMAGE_URL,t2.note_name  from T_TEXTBOOK_NOTE t1 left join  T_NOTE_TEMPLATE t2 ON t1.note_id = t2.note_id
+	where 1=1
+		<if test="noteId != null and noteId != '' ">and t1.note_id=#{noteId}</if>
+		<if test="userId != null and userId != '' ">and t1.user_id=#{userId}</if>
+		<if test="loginPlatformCode != null and loginPlatformCode != '' ">and t1.login_platform_code=#{loginPlatformCode}</if>
+		<if test="noteType != null and noteType != '' ">and t1.note_type = #{noteType}</if>
+	</select>
+
+	
+	
+
+</mapper>

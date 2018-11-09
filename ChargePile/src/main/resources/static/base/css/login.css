@@ -1,0 +1,197 @@
+* {
+	margin: 0;
+	padding: 0;
+	font-family: 'Microsoft YaHei';
+	outline: none
+}
+
+ul {
+	list-style: none
+}
+
+img {
+	border: 0px;
+}
+
+#header {
+	width: 100%;
+	height: 74px;
+	border-bottom: 1px solid #e3e3e3;
+	background-color: #fff;
+	padding: 0px
+}
+
+#header .header-layout {
+	padding: 17px 0;
+	overflow: hidden
+}
+
+#header .header-layout .logo {
+	background:
+		url(https://gtms04.alicdn.com/tps/i4/TB17vzoHXXXXXXkXXXXS4Sb7pXX-228-800.png)
+		no-repeat -26px -322px;
+	float: left;
+	display: inline-block;
+	height: 40px
+}
+
+#header .header-layout .logo a {
+	float: left;
+	display: inline-block;
+	height: 40px;
+	width: 140px;
+	overflow: hidden;
+	text-indent: -999em
+}
+
+#header .header-layout .logo-title {
+	float: left;
+	display: inline-block;
+	width: auto;
+	height: 30px;
+	line-height: 30px;
+	font-size: 20px;
+	font-weight: normal;
+	margin-top: 2px;
+	color: #3c3c3c
+}
+
+#header .header-layout .header-nav {
+	width: auto;
+	height: 14px;
+	float: right;
+	line-height: 14px;
+	margin-top: 10px
+}
+
+#header .header-layout .header-nav li {
+	float: left;
+	padding: 0 0 0 10px;
+	margin-right: 10px;
+}
+
+#header .header-layout .header-nav li.nav-first {
+	border-left: 0
+}
+
+#header .header-layout .header-nav li a {
+	color: #666;
+	font-size: 12px;
+	text-decoration: none
+}
+
+.copyright-100 {
+	clear: both;
+	background: #fff;
+	border-top: 1px solid #e5e5e5
+}
+
+.copyright-100 .copyright {
+	text-align: center;
+	color: #999;
+	font-size: 12px;
+	padding: 35px 0 40px
+}
+
+.copyright-100 .copyright .img {
+	display: inline-block;
+	width: 22px;
+	height: 22px;
+}
+
+.copyright-100 .copyright .img.img-1 {
+	background-position: 85px 113px
+}
+
+.copyright-100 .copyright .img.img-2 {
+	background-position: 85px 91px
+}
+
+.copyright-100 .copyright p {
+	padding: 5px 0
+}
+
+.copyright-100 .copyright p a {
+	padding: 0 5px;
+	color: #b3b3b3
+}
+
+.copyright-100 .copyright p.big {
+	font-size: 14px a;
+	font-size-color: #666
+}
+
+.content {
+	position: relative;
+	margin-top: 95px;
+	min-height: 485px;
+	vertical-align: middle;
+	*padding-top: 100px
+}
+
+.content #login-banner {
+	float: right;
+	margin-right: 628px
+}
+
+.content #login-banner img {
+	width: 100%;
+	height: 100%
+}
+
+.content #login-module {
+	position: absolute;
+	border: 1px solid #D4D4D4;
+	padding-top: 20px;
+	right: 160px;
+	margin-bottom: 10px;
+	background-color: #fff;
+	min-width: 292px;
+	min-height: 320px;
+	*min-height: 340px;
+	background: rgba(255, 255, 255, 0.3);
+	z-index: 2
+}
+
+.y-row {
+	min-width: 1000px;
+	max-width: 1200px;
+	margin-left: auto;
+	margin-right: auto;
+	zoom: 1;
+	*width: 1000px
+}
+
+#login-iframe {
+	font-size: 13px;
+	font-family: 'Microsoft Yahei';
+	font: 400 12px arial;
+}
+
+#login-iframe a {
+	text-decoration: none;
+	color: #00a2ca;
+}
+
+#login-iframe div {
+	display: block;
+	width: 100%;
+	margin-bottom: 8px;
+	height: 30px;
+	line-height: 30px;
+	display: block;
+}
+
+#login-iframe span {
+	height: 30px;
+	line-height: 30px;
+	margin-top: 4px;
+}
+
+#login-iframe input {
+	height: 26px;
+	line-height: 26px;
+	padding-left: 8px;
+	width: 240px;
+	border: 1px solid #ccc; 
+}

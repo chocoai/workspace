@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.whty.assis.sysres.dao.SysModularMapper">
+  <resultMap id="BaseResultMap" type="com.whty.assis.sysres.model.SysModular">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="modular_name" jdbcType="VARCHAR" property="modularName" />
+    <result column="modular_path" jdbcType="VARCHAR" property="modularPath" />
+    <result column="modular_sort" jdbcType="INTEGER" property="modularSort" />
+    <result column="parent_id" jdbcType="VARCHAR" property="parentId" />
+    <result column="is_parent" jdbcType="INTEGER" property="isParent" />
+    <result column="buttons" jdbcType="VARCHAR" property="buttons" />
+    <result column="status" jdbcType="INTEGER" property="status" />
+    <result column="imgcss" jdbcType="VARCHAR" property="imgcss" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, modular_name, modular_path, modular_sort, parent_id, is_parent, buttons, status, 
+    imgcss
+  </sql>
+  <select id="selectByExample" parameterType="com.whty.assis.sysres.model.SysModularExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sys_modular
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sys_modular
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sys_modular
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.whty.assis.sysres.model.SysModularExample">
+    delete from sys_modular
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.whty.assis.sysres.model.SysModular">
+    insert into sys_modular (id, modular_name, modular_path, 
+      modular_sort, parent_id, is_parent, 
+      buttons, status, imgcss
+      )
+    values (#{id,jdbcType=INTEGER}, #{modularName,jdbcType=VARCHAR}, #{modularPath,jdbcType=VARCHAR}, 
+      #{modularSort,jdbcType=INTEGER}, #{parentId,jdbcType=VARCHAR}, #{isParent,jdbcType=INTEGER}, 
+      #{buttons,jdbcType=VARCHAR}, #{status,jdbcType=INTEGER}, #{imgcss,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.whty.assis.sysres.model.SysModular">
+    insert into sys_modular
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="modularName != null">
+        modular_name,
+      </if>
+      <if test="modularPath != null">
+        modular_path,
+      </if>
+      <if test="modularSort != null">
+        modular_sort,
+      </if>
+      <if test="parentId != null">
+        parent_id,
+      </if>
+      <if test="isParent != null">
+        is_parent,
+      </if>
+      <if test="buttons != null">
+        buttons,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="imgcss != null">
+        imgcss,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="modularName != null">
+        #{modularName,jdbcType=VARCHAR},
+      </if>
+      <if test="modularPath != null">
+        #{modularPath,jdbcType=VARCHAR},
+      </if>
+      <if test="modularSort != null">
+        #{modularSort,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="isParent != null">
+        #{isParent,jdbcType=INTEGER},
+      </if>
+      <if test="buttons != null">
+        #{buttons,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="imgcss != null">
+        #{imgcss,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.whty.assis.sysres.model.SysModularExample" resultType="java.lang.Long">
+    select count(*) from sys_modular
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sys_modular
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.modularName != null">
+        modular_name = #{record.modularName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modularPath != null">
+        modular_path = #{record.modularPath,jdbcType=VARCHAR},
+      </if>
+      <if test="record.modularSort != null">
+        modular_sort = #{record.modularSort,jdbcType=INTEGER},
+      </if>
+      <if test="record.parentId != null">
+        parent_id = #{record.parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isParent != null">
+        is_parent = #{record.isParent,jdbcType=INTEGER},
+      </if>
+      <if test="record.buttons != null">
+        buttons = #{record.buttons,jdbcType=VARCHAR},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=INTEGER},
+      </if>
+      <if test="record.imgcss != null">
+        imgcss = #{record.imgcss,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sys_modular
+    set id = #{record.id,jdbcType=INTEGER},
+      modular_name = #{record.modularName,jdbcType=VARCHAR},
+      modular_path = #{record.modularPath,jdbcType=VARCHAR},
+      modular_sort = #{record.modularSort,jdbcType=INTEGER},
+      parent_id = #{record.parentId,jdbcType=VARCHAR},
+      is_parent = #{record.isParent,jdbcType=INTEGER},
+      buttons = #{record.buttons,jdbcType=VARCHAR},
+      status = #{record.status,jdbcType=INTEGER},
+      imgcss = #{record.imgcss,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.whty.assis.sysres.model.SysModular">
+    update sys_modular
+    <set>
+      <if test="modularName != null">
+        modular_name = #{modularName,jdbcType=VARCHAR},
+      </if>
+      <if test="modularPath != null">
+        modular_path = #{modularPath,jdbcType=VARCHAR},
+      </if>
+      <if test="modularSort != null">
+        modular_sort = #{modularSort,jdbcType=INTEGER},
+      </if>
+      <if test="parentId != null">
+        parent_id = #{parentId,jdbcType=VARCHAR},
+      </if>
+      <if test="isParent != null">
+        is_parent = #{isParent,jdbcType=INTEGER},
+      </if>
+      <if test="buttons != null">
+        buttons = #{buttons,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="imgcss != null">
+        imgcss = #{imgcss,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.whty.assis.sysres.model.SysModular">
+    update sys_modular
+    set modular_name = #{modularName,jdbcType=VARCHAR},
+      modular_path = #{modularPath,jdbcType=VARCHAR},
+      modular_sort = #{modularSort,jdbcType=INTEGER},
+      parent_id = #{parentId,jdbcType=VARCHAR},
+      is_parent = #{isParent,jdbcType=INTEGER},
+      buttons = #{buttons,jdbcType=VARCHAR},
+      status = #{status,jdbcType=INTEGER},
+      imgcss = #{imgcss,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectModularPid" resultMap="BaseResultMap">
+	select 
+    <include refid="Base_Column_List" />
+    from sys_modular
+    where status = 0
+    and parent_id = #{id,jdbcType=INTEGER} 
+    order by modular_sort
+	</select>
+	
+	<select id="getChildrenModular" parameterType="com.whty.assis.sysres.model.SysModular" resultMap="BaseResultMap">
+		SELECT 
+		<include refid="Base_Column_List" />
+		from sys_modular 
+		where status = 0
+		<if test="id != null">
+        	and FIND_IN_SET(id,getChildrenModular(#{id,jdbcType=INTEGER}))
+        </if>
+        <if test="modularName != null and modularName != '' " >
+        	and modular_name like CONCAT('%',#{modularName,jdbcType=VARCHAR},'%') 
+        </if>
+        order by modular_sort
+	</select>
+	
+	<select id="listAllSysModular" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+		select distinct m.* from sys_modular m
+		left join sys_role_modular r on m.id = r.modular_id
+		left join sys_user_role u on u.role_id = r.role_id
+		where m.status = 0 and u.user_id = #{userId,jdbcType=INTEGER}
+		order by modular_sort
+	</select>
+  
+</mapper>

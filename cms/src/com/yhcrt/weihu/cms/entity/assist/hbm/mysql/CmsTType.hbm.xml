@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping package="com.yhcrt.weihu.cms.entity.assist">
+	<class name="CmsTType" table="jc_tt_type">
+		<meta attribute="sync-DAO">false</meta>
+		<cache usage="read-write"/>
+		<id name="id" type="integer" column="type_id"><generator class="identity"/></id>
+		<property name="name" column="type_name" type="string" not-null="true" length="20"/>
+	    <many-to-one name="site" column="site_id" class="com.yhcrt.weihu.core.entity.CmsSite" not-null="true"></many-to-one>
+	</class>
+</hibernate-mapping>

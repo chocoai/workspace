@@ -1,0 +1,53 @@
+		<!--top 开始-->
+		<!-- <div class="sh_top">
+			<div class="box">
+				<a href="${base}/life/index.jhtml">
+					<div class="logo">东楚生活</div>
+				</a>
+			</div>
+		</div> -->
+		[#include "../include/header.html"/]
+		<div style="clear: both;"></div>
+		<!--top end-->
+		
+		<!--nav 开始-->
+		<div class="sh_nav_box">
+			<div class="sh_nav">
+				<div class="sh_nav_lis">
+					<span class="sh_nav_cell">
+						
+						<a href="${base}/fashion/index.jhtml" class="bigtext firsttext">时尚</a>
+						<a href="${base}/shizhuang/index.jhtml">时装</a>
+						<a href="${base}/jiepai/index.jhtml">街拍</a>
+						<a href="${base}/chaoliu/index.jhtml">潮流</a>
+						<a href="${base}/mingxing/index.jhtml" class="lasttext">明星</a>
+					</span>
+					<span class="sh_nav_cell">
+						<a href="${base}/food/index.jhtml" class="bigtext">美食</a>
+						<a href="${base}/msdt/index.jhtml">美食地图</a>
+						<a href="${base}/msls/index.jhtml" class="lasttext">美食历史</a>
+					</span>
+					<span class="sh_nav_cell">
+						<a href="${base}/beauty/index.jhtml" class="bigtext">美容</a>
+						<a href="${base}/hufu/index.jhtml">护肤</a>
+						<a href="${base}/caizhuang/index.jhtml" class="lasttext">彩妆</a>
+					</span>
+					<span class="sh_nav_cell">
+						<a href="${base}/bbs/" class="bigtext">互动</a>
+						<a href="${base}/bbs/">论坛</a>
+					</span>
+					<span class="sh_nav_cell">
+						<a href="${base}/brand/index.jhtml" class="bigtext">品牌库</a>
+						<a href="${base}/brand/index.jhtml">合作商家</a>
+					</span>
+				</div>
+				<div class="sh_search">
+					<div class="sh_search01"></div>
+					<div class="sh_search02" style="display: none;">
+						<input id="sh_input" name="keyword" type="text" placeholder="搜索..." />
+						<button id="searchBtn" type="button" style="opacity: 1; display: block;"></button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--nav 结束-->
